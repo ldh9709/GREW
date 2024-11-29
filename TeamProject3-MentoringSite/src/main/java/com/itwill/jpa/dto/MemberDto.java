@@ -18,16 +18,10 @@ import net.bytebuddy.asm.Advice.Local;
 
 public class MemberDto {
 	
-	private Long memberNo;
 	private String memberId;
 	private String memberPassword;
 	private String memberEmail;
 	private String memberName;
-	private String memberRole;
-	private String memberPoints;
-	private String memberStatus;
-	private LocalDate memberJoinDate;
-	private String memberReportCount;
 	
 	/*
 	 * Entitiy -> DTO
