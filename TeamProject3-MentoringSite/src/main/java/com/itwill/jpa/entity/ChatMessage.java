@@ -1,5 +1,6 @@
 package com.itwill.jpa.entity;
 
+
 import java.time.LocalDateTime;
 
 import org.hibernate.annotations.CreationTimestamp;

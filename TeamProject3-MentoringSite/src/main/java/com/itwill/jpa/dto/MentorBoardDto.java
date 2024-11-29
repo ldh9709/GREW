@@ -1,5 +1,6 @@
 package com.itwill.jpa.dto;
 
+import com.itwill.jpa.entity.Member;
 import com.itwill.jpa.entity.MentorBoard;
 
 import lombok.AllArgsConstructor;
@@ -12,7 +13,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class MentorBoardDto {
-    private Long mentorBoardNo;
     private String mentorBoardTitle;
     private String mentorBoardContent;
     private String mentorBoardImage;
@@ -23,7 +23,6 @@ public class MentorBoardDto {
      */
     public static MentorBoardDto toDto(MentorBoard mentorBoardEntity) {
         return MentorBoardDto.builder()
-                .mentorBoardNo(mentorBoardEntity.getMentorBoardNo())
                 .mentorBoardTitle(mentorBoardEntity.getMentorBoardTitle())
                 .mentorBoardContent(mentorBoardEntity.getMentorBoardContent())
                 .mentorBoardImage(mentorBoardEntity.getMentorBoardImage())
@@ -31,5 +30,8 @@ public class MentorBoardDto {
                 .build();
     }
 
-   
+  
 }
+   
+   
+
