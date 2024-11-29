@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.aspectj.weaver.patterns.TypePatternQuestions.Question;
+import org.hibernate.annotations.ColumnDefault;
 
 import com.itwill.jpa.dto.MemberDto;
 
@@ -49,7 +50,7 @@ public class Member {
 	private Integer memberPoints;//멤버 연필 포인트
 	
 	private String memberStatus;//멤버의 상태(활동, 정지 등)
-	
+	@ColumnDefault("sysdate")
 	private LocalDate memberJoinDate;//멤버 가입 날짜
 	
 	private Integer memberReportCount;//신고 당한 횟수
