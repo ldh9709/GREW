@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.aspectj.weaver.patterns.TypePatternQuestions.Question;
+import org.hibernate.annotations.ColumnDefault;
 
 import com.itwill.jpa.dto.MemberDto;
 
@@ -42,10 +43,20 @@ public class Member {
 	private String memberPassword;
 	private String memberEmail;
 	private String memberName;
+	
+	
+	@ColumnDefault("USER")
 	private String memberRole;
+	
+	@ColumnDefault("0")
 	private String memberPoints;
+	
+	@ColumnDefault("활동")
 	private String memberStatus;
+	
+	@ColumnDefault("sysdate")//기본값 : 생성되는 날짜
 	private LocalDate memberJoinDate;
+	
 	private String memberReportCount;
 	
 	 /*
@@ -53,16 +64,10 @@ public class Member {
      */
 	public static Member toEntity(MemberDto userDto) {
 	    return Member.builder()
-	            .memberNo(userDto.getMemberNo())
 	            .memberId(userDto.getMemberId())
 	            .memberPassword(userDto.getMemberPassword())
 	            .memberEmail(userDto.getMemberEmail())
 	            .memberName(userDto.getMemberName())
-	            .memberRole(userDto.getMemberRole())
-	            .memberPoints(userDto.getMemberPoints())
-	            .memberStatus(userDto.getMemberStatus())
-	            .memberJoinDate(userDto.getMemberJoinDate())
-	            .memberReportCount(userDto.getMemberReportCount())
 	            .build();
 	}
 	
@@ -102,54 +107,54 @@ public class Member {
 	 * 사용 여부 체크
 	 */
 	
-	/* 한 명의 유저가 멘토 프로필은 한개 보유 가능 */
-	@OneToOne(mappedBy = "user", fetch = FetchType.LAZY)
-	private MentorProfile mentorProfile;
-
-	/* 한 명의 유저가 관심사 여러개 보유 가능 */
-	@OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
-	private List<Interest> interests = new ArrayList<>();
-	
-	/* 한 명의 유저가 멘트 게시글은 여러개 보유 가능 */
-	@OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
-	private List<MentorBoard> mentorBoards = new ArrayList<>();
-	
-	/* 한 명의 유저가 팔로우는 여러개 보유 가능 */
-	@OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
-	private List<Follow> follows = new ArrayList<>();
-	
-	/* 한 명의 유저가 신고는 여러개 보유 가능 */
-	@OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
-	private List<Report> reports = new ArrayList<>();
-	
-	/* 한 명의 유저가 채팅방은 여러개 보유 가능 */
-	@OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
-	private List<ChatMessage> chatMessages = new ArrayList<>();
-	
-	/***** 한 명의 유저가 채팅방의 상태는 여러개 보유 가능?? *****/
-	@OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
-	private List<ChatRoomStatus> chatRoomStatus = new ArrayList<>();
-	
-	/* 한 명의 유저가 채팅방 신청 여러개 보유 가능 */
-	@OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
-	private List<MentoringRequest> mentoringRequests = new ArrayList<>();
-	
-	/* 한 명의 유저가 채팅방 좋아요/싫어요 여러개 보유 가능 */
-	@OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
-	private List<Vote> votes = new ArrayList<>();
-	
-	/* 한 명의 유저가 알람 여러개 보유 가능 */
-	@OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
-	private List<Alarm> alarms = new ArrayList<>();
-	
-	/* 한 명의 유저(멘티)가 질문글 여러개 보유 가능 */
-	@OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
-	private List<Question> questions = new ArrayList<>();
-	
-	/* 한 명의 유저(멘토)가 답변글 여러개 보유 가능 */
-	@OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
-	private List<Answer> answers = new ArrayList<>();
-	
+//	/* 한 명의 유저가 멘토 프로필은 한개 보유 가능 */
+//	@OneToOne(mappedBy = "user", fetch = FetchType.LAZY)
+//	private MentorProfile mentorProfile;
+//
+//	/* 한 명의 유저가 관심사 여러개 보유 가능 */
+//	@OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+//	private List<Interest> interests = new ArrayList<>();
+//	
+//	/* 한 명의 유저가 멘트 게시글은 여러개 보유 가능 */
+//	@OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+//	private List<MentorBoard> mentorBoards = new ArrayList<>();
+//	
+//	/* 한 명의 유저가 팔로우는 여러개 보유 가능 */
+//	@OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+//	private List<Follow> follows = new ArrayList<>();
+//	
+//	/* 한 명의 유저가 신고는 여러개 보유 가능 */
+//	@OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+//	private List<Report> reports = new ArrayList<>();
+//	
+//	/* 한 명의 유저가 채팅방은 여러개 보유 가능 */
+//	@OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+//	private List<ChatMessage> chatMessages = new ArrayList<>();
+//	
+//	/***** 한 명의 유저가 채팅방의 상태는 여러개 보유 가능?? *****/
+//	@OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+//	private List<ChatRoomStatus> chatRoomStatus = new ArrayList<>();
+//	
+//	/* 한 명의 유저가 채팅방 신청 여러개 보유 가능 */
+//	@OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+//	private List<MentoringRequest> mentoringRequests = new ArrayList<>();
+//	
+//	/* 한 명의 유저가 채팅방 좋아요/싫어요 여러개 보유 가능 */
+//	@OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+//	private List<Vote> votes = new ArrayList<>();
+//	
+//	/* 한 명의 유저가 알람 여러개 보유 가능 */
+//	@OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+//	private List<Alarm> alarms = new ArrayList<>();
+//	
+//	/* 한 명의 유저(멘티)가 질문글 여러개 보유 가능 */
+//	@OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+//	private List<Question> questions = new ArrayList<>();
+//	
+//	/* 한 명의 유저(멘토)가 답변글 여러개 보유 가능 */
+//	@OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+//	private List<Answer> answers = new ArrayList<>();
+//	
 	
 	
 	
