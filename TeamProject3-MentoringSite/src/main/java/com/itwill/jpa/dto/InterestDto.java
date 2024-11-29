@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class InterestDto {
     private Long interestNo;
-    private MemberDto user;
+    private MemberDto member;
     private CategoryDto category;
 
     /*
@@ -22,7 +22,7 @@ public class InterestDto {
     public static InterestDto toDto(Interest interestEntity) {
         return InterestDto.builder()
                 .interestNo(interestEntity.getInterestNo())
-                .user(MemberDto.toDto(interestEntity.getUser()))
+                .member(MemberDto.toDto(interestEntity.getMember()))
                 .category(CategoryDto.toDto(interestEntity.getCategory()))
                 .build();
     }

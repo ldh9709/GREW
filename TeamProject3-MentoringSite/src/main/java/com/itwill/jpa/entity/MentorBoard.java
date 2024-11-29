@@ -24,6 +24,6 @@ public class MentorBoard {
     private String mentorBoardImage;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_no")
-    private Member user;
+    @JoinColumn(name = "member_no")
+    private Member member;
 }
