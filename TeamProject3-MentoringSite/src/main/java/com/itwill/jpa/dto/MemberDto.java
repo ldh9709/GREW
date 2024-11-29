@@ -17,7 +17,7 @@ import net.bytebuddy.asm.Advice.Local;
 @AllArgsConstructor
 
 public class MemberDto {
-	
+	private Long memberNo;
 	private String memberId;
 	private String memberPassword;
 	private String memberEmail;
@@ -27,6 +27,7 @@ public class MemberDto {
 	 /* Entitiy -> DTO*/
 	public static MemberDto toDto(Member memberEntity) {
 		return MemberDto.builder()
+				.memberNo(memberEntity.getMemberNo())
 	            .memberId(memberEntity.getMemberId())
 	            .memberPassword(memberEntity.getMemberPassword())
 	            .memberEmail(memberEntity.getMemberEmail())
