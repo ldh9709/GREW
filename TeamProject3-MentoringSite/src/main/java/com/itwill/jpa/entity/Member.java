@@ -9,6 +9,7 @@ import org.hibernate.annotations.ColumnDefault;
 
 import com.itwill.jpa.dto.MemberDto;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -44,15 +45,19 @@ public class Member {
 	private String memberEmail;
 	private String memberName;
 	
-	
+	@Column(columnDefinition = "varchar(255) default 'USER'")
 	private String memberRole;//역할
 	
+	@Column(columnDefinition = "int default '0'")
 	private Integer memberPoints;//멤버 연필 포인트
 	
+	@Column(columnDefinition = "varchar(255) default '활동'")
 	private String memberStatus;//멤버의 상태(활동, 정지 등)
-	@ColumnDefault("sysdate")
+	
+	@Column(columnDefinition = "date default sysdate")
 	private LocalDate memberJoinDate;//멤버 가입 날짜
 	
+	@Column(columnDefinition = "int default '0'")
 	private Integer memberReportCount;//신고 당한 횟수
 	
 	 /*
@@ -60,6 +65,7 @@ public class Member {
      */
 	public static Member toEntity(MemberDto memberDto) {
 	    return Member.builder()
+	    		.memberNo(memberDto.getMemberNo())
 	            .memberId(memberDto.getMemberId())
 	            .memberPassword(memberDto.getMemberPassword())
 	            .memberEmail(memberDto.getMemberEmail())
