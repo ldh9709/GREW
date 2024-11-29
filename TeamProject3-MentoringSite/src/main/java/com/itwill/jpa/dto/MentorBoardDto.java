@@ -16,7 +16,7 @@ public class MentorBoardDto {
     private String mentorBoardTitle;
     private String mentorBoardContent;
     private String mentorBoardImage;
-    private MemberDto user;
+    private MemberDto member;
 
     /*
      * Entity -> DTO
@@ -27,7 +27,7 @@ public class MentorBoardDto {
                 .mentorBoardTitle(mentorBoardEntity.getMentorBoardTitle())
                 .mentorBoardContent(mentorBoardEntity.getMentorBoardContent())
                 .mentorBoardImage(mentorBoardEntity.getMentorBoardImage())
-                .user(MemberDto.toDto(mentorBoardEntity.getUser()))
+                .member(MemberDto.toDto(mentorBoardEntity.getMember()))
                 .build();
     }
 

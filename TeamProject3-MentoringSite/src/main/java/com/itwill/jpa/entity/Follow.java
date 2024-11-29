@@ -23,12 +23,12 @@ public class Follow {
     private Long followNo;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_no")
-    private Member user;
+    @JoinColumn(name = "member_no")
+    private Member member;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "followed_user_no") // 팔로우 대상 유저와의 관계
-    private Member followedUser;
+    @JoinColumn(name = "followed_member_no") // 팔로우 대상 유저와의 관계
+    private Member followedMember;
  
     /*
      * DTO -> Entity
@@ -36,8 +36,8 @@ public class Follow {
     public static Follow toEntity(FollowDto followDto) {
         return Follow.builder()
                 .followNo(followDto.getFollowNo())
-                .user(Member.toEntity(followDto.getUser()))
-                .followedUser(Member.toEntity(followDto.getFollowedUser()))
+                .member(Member.toEntity(followDto.getMember()))
+                .followedMember(Member.toEntity(followDto.getFollowedMember()))
                 .build();
     }
 }
