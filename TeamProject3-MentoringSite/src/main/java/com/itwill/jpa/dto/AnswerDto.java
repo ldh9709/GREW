@@ -34,8 +34,8 @@ public class AnswerDto {
                 .answerTime(answerEntity.getAnswerTime())
                 .answerAccept(answerEntity.getAnswerAccept())
                 .answerStatus(answerEntity.getAnswerStatus())
-                .member(MemberDto.toDto(answerEntity.getMember()))  // Assuming Answer has a relation to User
-                .inquiry(InquiryDto.toDto(answerEntity.getInquiry()))  // Assuming Answer has a relation to Inquiry
+                .member(MemberDto.toDto(answerEntity.getMember()))  
+                .inquiry(InquiryDto.toDto(answerEntity.getInquiry()))  
                 .build();
     }
 }
