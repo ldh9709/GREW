@@ -24,8 +24,8 @@ public class InquiryDto {
     private String inquiryStatus;
     private int inquiryViews;
     
-    private Long categoryNo;
-    private Long userNo;
+    private CategoryDto category;
+    private MemberDto member;
 
     /*
      * Entity -> DTO 변환 메소드
@@ -39,8 +39,8 @@ public class InquiryDto {
                 .inquiryDate(inquiryEntity.getInquiryDate())
                 .inquiryStatus(inquiryEntity.getInquiryStatus())
                 .inquiryViews(inquiryEntity.getInquiryViews())
-                .categoryNo(inquiryEntity.getCategory().getCategoryNo())
-                .userNo(inquiryEntity.getUser().getMemberNo())
+                .category(CategoryDto.toDto( inquiryEntity.getCategory()))
+                .member(MemberDto.toDto(inquiryEntity.getMember()))
                 .build();
     }
 }

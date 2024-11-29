@@ -33,7 +33,6 @@ public class Interest {
     
     public static Interest toEntity(InterestDto interestDto) {
         return Interest.builder()
-                .interestNo(interestDto.getInterestNo())
                 .member(Member.toEntity(interestDto.getMember()))
                 .category(Category.toEntity(interestDto.getCategory()))
                 .build();
