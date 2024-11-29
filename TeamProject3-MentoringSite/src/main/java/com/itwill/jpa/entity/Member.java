@@ -114,9 +114,13 @@ public class Member {
 	@OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
 	private List<MentorBoard> mentorBoards = new ArrayList<>();
 	
-	/* 한 명의 유저가 팔로우는 여러개 보유 가능 */
-	@OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
-	private List<Follow> follows = new ArrayList<>();
+	/* (멘토)한 명의 유저가 팔로우는 여러개 보유 가능 */
+	@OneToMany(mappedBy = "followerMember", fetch = FetchType.LAZY)
+	private List<Follow> followers = new ArrayList<>();
+	
+	/* (멘티)한 명의 유저가 팔로우는 여러개 보유 가능 */
+	@OneToMany(mappedBy = "followedMember", fetch = FetchType.LAZY)
+	private List<Follow> followeds = new ArrayList<>();
 	
 	/* 한 명의 유저가 신고는 여러개 보유 가능 */
 	@OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
