@@ -25,5 +25,5 @@ public class MentorBoard {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_no")
-    private User user;
+    private Member user;
 }

@@ -1,12 +1,13 @@
 package com.itwill.jpa.entity;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import org.aspectj.weaver.patterns.TypePatternQuestions.Question;
 
-import com.itwill.jpa.dto.UserDto;
+import com.itwill.jpa.dto.MemberDto;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
@@ -23,43 +24,45 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+
 @Builder
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+
 @Entity
-public class User {
+public class Member {
 	
 	@Id//PK설정
-	@SequenceGenerator(name = "user_seq", initialValue = 1, allocationSize = 1)
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_seq")
-	private Long userNo;
+	@SequenceGenerator(name = "member_seq", initialValue = 1, allocationSize = 1)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "member_seq")
+	private Long memberNo;
 	
-	private String userId;
-	private String userPassword;
-	private String userEmail;
-	private String userName;
-	private String userRole;
-	private String userPoints;
-	private String userStatus;
-	private Date userJoinDate;
-	private String userReportCount;
+	private String memberId;
+	private String memberPassword;
+	private String memberEmail;
+	private String memberName;
+	private String memberRole;
+	private String memberPoints;
+	private String memberStatus;
+	private LocalDate memberJoinDate;
+	private String memberReportCount;
 	
 	 /*
      * DTO -> Entitiy
      */
-	public static User toEntity(UserDto userDto) {
-	    return User.builder()
-	            .userNo(userDto.getUserNo())
-	            .userId(userDto.getUserId())
-	            .userPassword(userDto.getUserPassword())
-	            .userEmail(userDto.getUserEmail())
-	            .userName(userDto.getUserName())
-	            .userRole(userDto.getUserRole())
-	            .userPoints(userDto.getUserPoints())
-	            .userStatus(userDto.getUserStatus())
-	            .userJoinDate(userDto.getUserJoinDate())
-	            .userReportCount(userDto.getUserReportCount())
+	public static Member toEntity(MemberDto userDto) {
+	    return Member.builder()
+	            .memberNo(userDto.getMemberNo())
+	            .memberId(userDto.getMemberId())
+	            .memberPassword(userDto.getMemberPassword())
+	            .memberEmail(userDto.getMemberEmail())
+	            .memberName(userDto.getMemberName())
+	            .memberRole(userDto.getMemberRole())
+	            .memberPoints(userDto.getMemberPoints())
+	            .memberStatus(userDto.getMemberStatus())
+	            .memberJoinDate(userDto.getMemberJoinDate())
+	            .memberReportCount(userDto.getMemberReportCount())
 	            .build();
 	}
 	

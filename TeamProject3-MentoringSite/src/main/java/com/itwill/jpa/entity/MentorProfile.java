@@ -31,7 +31,7 @@ public class MentorProfile {
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_no")
-    private User user;
+    private Member user;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category_no")
@@ -46,7 +46,7 @@ public class MentorProfile {
                 .mentorImage(mentorProfileDto.getMentorImage())
                 .mentorActivityCount(mentorProfileDto.getMentorActivityCount())
                 .mentorFollowCount(mentorProfileDto.getMentorFollowCount())
-                .user(User.toEntity(mentorProfileDto.getUser()))
+                .user(Member.toEntity(mentorProfileDto.getUser()))
                 .category(Category.toEntity(mentorProfileDto.getCategory()))
                 .build();
     }

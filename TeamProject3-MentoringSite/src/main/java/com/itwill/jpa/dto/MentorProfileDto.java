@@ -19,7 +19,7 @@ public class MentorProfileDto {
     private String mentorImage;
     private Integer mentorActivityCount;
     private Integer mentorFollowCount;
-    private UserDto user;
+    private MemberDto user;
     private CategoryDto category;
 
     /*
@@ -34,7 +34,7 @@ public class MentorProfileDto {
                 .mentorImage(mentorProfileEntity.getMentorImage())
                 .mentorActivityCount(mentorProfileEntity.getMentorActivityCount())
                 .mentorFollowCount(mentorProfileEntity.getMentorFollowCount())
-                .user(UserDto.toDto(mentorProfileEntity.getUser()))
+                .user(MemberDto.toDto(mentorProfileEntity.getUser()))
                 .category(CategoryDto.toDto(mentorProfileEntity.getCategory()))
                 .build();
     }

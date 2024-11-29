@@ -24,7 +24,7 @@ public class Interest {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_no")
-    private User user;
+    private Member user;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category_no")
@@ -34,7 +34,7 @@ public class Interest {
     public static Interest toEntity(InterestDto interestDto) {
         return Interest.builder()
                 .interestNo(interestDto.getInterestNo())
-                .user(User.toEntity(interestDto.getUser()))
+                .user(Member.toEntity(interestDto.getUser()))
                 .category(Category.toEntity(interestDto.getCategory()))
                 .build();
     }
