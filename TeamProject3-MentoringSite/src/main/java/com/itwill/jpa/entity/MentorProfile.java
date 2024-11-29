@@ -39,13 +39,8 @@ public class MentorProfile {
     
     public static MentorProfile toEntity(MentorProfileDto mentorProfileDto) {
         return MentorProfile.builder()
-                .mentorProfileNo(mentorProfileDto.getMentorProfileNo())
                 .mentorIntroduce(mentorProfileDto.getMentorIntroduce())
-                .mentorRating(mentorProfileDto.getMentorRating())
-                .mentorMentoringCount(mentorProfileDto.getMentorMentoringCount())
                 .mentorImage(mentorProfileDto.getMentorImage())
-                .mentorActivityCount(mentorProfileDto.getMentorActivityCount())
-                .mentorFollowCount(mentorProfileDto.getMentorFollowCount())
                 .member(Member.toEntity(mentorProfileDto.getMember()))
                 .category(Category.toEntity(mentorProfileDto.getCategory()))
                 .build();
