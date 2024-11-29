@@ -32,7 +32,7 @@ import lombok.NoArgsConstructor;
 
 @Entity
 public class Member {
-	
+	.
 	@Id//PK설정
 	@SequenceGenerator(name = "member_seq", initialValue = 1, allocationSize = 1)
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "member_seq")
