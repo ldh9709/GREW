@@ -1,9 +1,5 @@
 package com.itwill.jpa.entity;
 
-<<<<<<< HEAD
-public class Report {
-
-=======
 import java.time.LocalDateTime;
 
 import jakarta.persistence.Entity;
@@ -45,5 +41,4 @@ public class Report {
 	private Member member;
 	
 	
->>>>>>> refs/heads/master
 }
