@@ -29,9 +29,8 @@ public class MemberDto {
 	private LocalDate memberJoinDate;
 	private String memberReportCount;
 	
-	/*
-	 * Entitiy -> DTO
-	 */
+	
+	 /* Entitiy -> DTO*/
 	public static MemberDto toDto(Member userEntity) {
 		return MemberDto.builder()
 	            .memberNo(userEntity.getMemberNo())
