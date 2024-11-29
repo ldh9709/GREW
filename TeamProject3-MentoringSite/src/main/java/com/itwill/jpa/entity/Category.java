@@ -36,7 +36,6 @@ public class Category {
     
     public static Category toEntity(CategoryDto categoryDto) {
         return Category.builder()
-                .categoryNo(categoryDto.getCategoryNo())
                 .categoryName(categoryDto.getCategoryName())
                 .categoryLevel(categoryDto.getCategoryLevel())
                 .build();
