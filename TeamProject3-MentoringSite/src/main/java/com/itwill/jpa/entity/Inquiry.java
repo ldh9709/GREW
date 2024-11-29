@@ -1,7 +1,6 @@
 package com.itwill.jpa.entity;
 
-import java.time.LocalDate;
-
+import java.time.LocalDate;import com.itwill.jpa.dto.CategoryDto;
 import com.itwill.jpa.dto.InquiryDto;
 
 import jakarta.persistence.Column;
@@ -24,7 +23,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "question")
+@Table(name = "inquiry")
 public class Inquiry {
 
     @Id
@@ -53,8 +52,8 @@ public class Inquiry {
     private Category category;  // FK 연관 관계 (Category 엔티티)
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_no")
-    private Member user;  // FK 연관 관계 (User 엔티티)
+    @JoinColumn(name = "member_no")
+    private Member member;  // FK 연관 관계 (User 엔티티)
 
     // getters and setters
     
@@ -69,6 +68,8 @@ public class Inquiry {
 	            .inquiryDate(inquiryDto.getInquiryDate())
 	            .inquiryStatus(inquiryDto.getInquiryStatus())
 	            .inquiryViews(inquiryDto.getInquiryViews())
+	            .category(Category.toEntity(inquiryDto.getCategory()))
+	            .member(Member.toEntity(inquiryDto.getMember()))
 	            .build();
 	}
     
