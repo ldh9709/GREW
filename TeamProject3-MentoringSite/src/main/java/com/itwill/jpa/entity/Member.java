@@ -53,16 +53,10 @@ public class Member {
      */
 	public static Member toEntity(MemberDto memberDto) {
 	    return Member.builder()
-	            .memberNo(memberDto.getMemberNo())
 	            .memberId(memberDto.getMemberId())
 	            .memberPassword(memberDto.getMemberPassword())
 	            .memberEmail(memberDto.getMemberEmail())
 	            .memberName(memberDto.getMemberName())
-	            .memberRole(memberDto.getMemberRole())
-	            .memberPoints(memberDto.getMemberPoints())
-	            .memberStatus(memberDto.getMemberStatus())
-	            .memberJoinDate(memberDto.getMemberJoinDate())
-	            .memberReportCount(memberDto.getMemberReportCount())
 	            .build();
 	}
 	
