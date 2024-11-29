@@ -51,18 +51,18 @@ public class Member {
 	 /*
      * DTO -> Entitiy
      */
-	public static Member toEntity(MemberDto userDto) {
+	public static Member toEntity(MemberDto memberDto) {
 	    return Member.builder()
-	            .memberNo(userDto.getMemberNo())
-	            .memberId(userDto.getMemberId())
-	            .memberPassword(userDto.getMemberPassword())
-	            .memberEmail(userDto.getMemberEmail())
-	            .memberName(userDto.getMemberName())
-	            .memberRole(userDto.getMemberRole())
-	            .memberPoints(userDto.getMemberPoints())
-	            .memberStatus(userDto.getMemberStatus())
-	            .memberJoinDate(userDto.getMemberJoinDate())
-	            .memberReportCount(userDto.getMemberReportCount())
+	            .memberNo(memberDto.getMemberNo())
+	            .memberId(memberDto.getMemberId())
+	            .memberPassword(memberDto.getMemberPassword())
+	            .memberEmail(memberDto.getMemberEmail())
+	            .memberName(memberDto.getMemberName())
+	            .memberRole(memberDto.getMemberRole())
+	            .memberPoints(memberDto.getMemberPoints())
+	            .memberStatus(memberDto.getMemberStatus())
+	            .memberJoinDate(memberDto.getMemberJoinDate())
+	            .memberReportCount(memberDto.getMemberReportCount())
 	            .build();
 	}
 	
