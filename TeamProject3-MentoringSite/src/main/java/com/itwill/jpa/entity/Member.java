@@ -46,19 +46,14 @@ public class Member {
 	private String memberName;
 	
 	
-	@ColumnDefault("USER")//초기값 USER로 설정
 	private String memberRole;//역할
 	
-	@ColumnDefault("0")//초기값 설정 0원
 	private Integer memberPoints;//멤버 연필 포인트
 	
-	@ColumnDefault("활동")//활동 상태
 	private String memberStatus;//멤버의 상태(활동, 정지 등)
 	
-	@ColumnDefault("sysdate")//기본값 : 생성되는 날짜
 	private LocalDate memberJoinDate;//멤버 가입 날짜
 	
-	@ColumnDefault("0")
 	private Integer memberReportCount;//신고 당한 횟수
 	
 	 /*
