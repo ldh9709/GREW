@@ -1,6 +1,8 @@
 package com.itwill.jpa.entity;
 
 
+import org.hibernate.annotations.ColumnDefault;
+
 import com.itwill.jpa.dto.MentorProfileDto;
 
 import jakarta.persistence.*;
@@ -22,11 +24,13 @@ public class MentorProfile {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "mentorprofile_seq")
     private Long mentorProfileNo;
 
-    private String mentorIntroduce;
+    private String mentorIntroduce; 
     private Integer mentorRating;
     private Integer mentorMentoringCount;
     private String mentorImage;
+    @ColumnDefault("0")
     private Integer mentorActivityCount;
+    @ColumnDefault("0")
     private Integer mentorFollowCount;
 
     @OneToOne(fetch = FetchType.LAZY)
