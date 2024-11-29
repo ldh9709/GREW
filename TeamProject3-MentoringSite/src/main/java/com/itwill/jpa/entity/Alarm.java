@@ -55,7 +55,7 @@ public class Alarm {
 	private LocalDate alarmDate;
 	@ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
 	@JoinColumn(name="member_no")
-	private Member user;
+	private Member member;
 	
 	public static Alarm toEntity(AlarmDto alarmDto) {
 		return Alarm.builder()

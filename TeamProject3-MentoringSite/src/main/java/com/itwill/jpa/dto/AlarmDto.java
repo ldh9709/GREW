@@ -32,7 +32,7 @@ public class AlarmDto {
 				.referenceType(alarmEntity.getReferenceType())
 				.isRead(alarmEntity.getIsRead())
 				.alarmDate(alarmEntity.getAlarmDate())
-				.memberNo(alarmEntity.getUser().getMemberNo())
+				.memberNo(alarmEntity.getMember().getMemberNo())
 				.build();
 	}
 }
