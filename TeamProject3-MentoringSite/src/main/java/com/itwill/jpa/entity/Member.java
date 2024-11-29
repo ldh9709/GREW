@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import org.aspectj.weaver.patterns.TypePatternQuestions.Question;
 
 import com.itwill.jpa.dto.MemberDto;
 
@@ -127,6 +126,7 @@ public class Member {
 	private List<ChatMessage> chatMessages = new ArrayList<>();
 	
 	/***** 한 명의 유저가 채팅방의 상태는 여러개 보유 가능?? *****/
+	
 	@OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
 	private List<ChatRoomStatus> chatRoomStatus = new ArrayList<>();
 	
