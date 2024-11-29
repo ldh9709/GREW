@@ -34,10 +34,11 @@ import lombok.NoArgsConstructor;
 @Entity
 public class Member {
 	
+
 	@Id//PK설정
 	@SequenceGenerator(name = "member_seq", initialValue = 1, allocationSize = 1)
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "member_seq")
-	private Long memberNo;
+	private Long memberNo;//멤버 번호 PK
 	
 	private String memberId;
 	private String memberPassword;
@@ -45,6 +46,7 @@ public class Member {
 	private String memberName;
 	
 	
+<<<<<<< HEAD
 	@ColumnDefault("USER")
 	private String memberRole;
 	
@@ -58,48 +60,41 @@ public class Member {
 	private LocalDate memberJoinDate;
 	
 	private String memberReportCount;
+=======
+	@ColumnDefault("USER")//초기값 USER로 설정
+	private String memberRole;//역할
+	
+	@ColumnDefault("0")//초기값 설정 0원
+	private Integer memberPoints;//멤버 연필 포인트
+	
+	@ColumnDefault("활동")//활동 상태
+	private String memberStatus;//멤버의 상태(활동, 정지 등)
+	
+	@ColumnDefault("sysdate")//기본값 : 생성되는 날짜
+	private LocalDate memberJoinDate;//멤버 가입 날짜
+	
+	@ColumnDefault("0")
+	private Integer memberReportCount;//신고 당한 횟수
+>>>>>>> refs/heads/master
 	
 	 /*
      * DTO -> Entitiy
      */
-	public static Member toEntity(MemberDto userDto) {
+	public static Member toEntity(MemberDto memberDto) {
 	    return Member.builder()
+<<<<<<< HEAD
 	            .memberId(userDto.getMemberId())
 	            .memberPassword(userDto.getMemberPassword())
 	            .memberEmail(userDto.getMemberEmail())
 	            .memberName(userDto.getMemberName())
+=======
+	            .memberId(memberDto.getMemberId())
+	            .memberPassword(memberDto.getMemberPassword())
+	            .memberEmail(memberDto.getMemberEmail())
+	            .memberName(memberDto.getMemberName())
+>>>>>>> refs/heads/master
 	            .build();
 	}
-	
-	
-	/*
-	 * N(PRODUCT):1(CATEGORY): 다대일 관계. 
-	 * 하나의 Category가 여러 Product에 연결될 수 있다.
-	 * 이 관계에서 Product가 연관 관계의 소유자(Owner)다. 즉, Product 테이블에 외래 키가 존재한다
-	 * 
-	 * @ManyToOne: 다대일 관계를 나타내며, Product에서 Category로의 참조가 있음을 의미
-	 * cascade = CascadeType.ALL: Product 엔티티에서의 모든 영속성 작업이 Category에도 전파된다. 
-	 * 예를 들어, Product가 저장되거나 삭제되면 해당하는 Category에도 같은 작업이 수행된다.
-	 * 
-	 * fetch = FetchType.LAZY: 지연 로딩을 의미하며, Product가 조회될 때 Category는 즉시 로딩되지 않는다.
-	 * Category가 실제로 접근될 때 데이터베이스에서 로드된다.
-	 * => fetch = FetchType.LAZY는 지연 로딩(Lazy Loading) 방식으로 엔티티를 로드하겠다는 설정
-	 * Product가 데이터베이스에서 조회될 때, 연관된 Category는 바로 조회하지 않고, 필요할 때까지 조회를 미룬다
-	 * 예시)Product product = productRepository.findById(1L).get(); 
-	 * 위 코드를 실행하면 Product 엔티티만 조회되고, Category는 조회되지 않는다. 
-	 * 하지만 product.getCategory()를 호출하는 순간에야 Category 엔티티가 실제로 데이터베이스에서 조회된다
-	 * 장점 : 메모리 절약에 유리.
-	 *	
-	 * mappedBy 속성은 JPA에서 연관 관계의 소유자가 아님을 의미하고, 
-	 * 외래 키가 다른 엔티티 테이블(ProductDetail 테이블)에 있음을 나타낸다.
-	 * mappedBy가 있으면 현재 엔티티(Product)는 외래 키를 가지지 않으므로, 
-	 * 연관 관계의 주도권은 반대쪽(ProductDetail)에 있다.
-	 * 
-	 * cascade = CascadeType.ALL: Product에 대한 모든 영속성 작업이 ProductDetail에도 전파된다. 
-	 * 
-	 */
-	
-	
 	
 	/*
 	 * fetch = FetchType.LAZY
@@ -107,6 +102,7 @@ public class Member {
 	 * 사용 여부 체크
 	 */
 	
+<<<<<<< HEAD
 //	/* 한 명의 유저가 멘토 프로필은 한개 보유 가능 */
 //	@OneToOne(mappedBy = "user", fetch = FetchType.LAZY)
 //	private MentorProfile mentorProfile;
@@ -155,6 +151,60 @@ public class Member {
 //	@OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
 //	private List<Answer> answers = new ArrayList<>();
 //	
+=======
+	/* 한 명의 유저가 멘토 프로필은 한개 보유 가능 */
+	@OneToOne(mappedBy = "member", fetch = FetchType.LAZY)
+	private MentorProfile mentorProfile;
+
+	/* 한 명의 유저가 관심사 여러개 보유 가능 */
+	@OneToMany(mappedBy = "member", fetch = FetchType.LAZY)
+	private List<Interest> interests = new ArrayList<>();
+	
+	/* 한 명의 유저가 멘트 게시글은 여러개 보유 가능 */
+	@OneToMany(mappedBy = "member", fetch = FetchType.LAZY)
+	private List<MentorBoard> mentorBoards = new ArrayList<>();
+	
+	/* (멘토)한 명의 유저가 팔로우는 여러개 보유 가능 */
+	@OneToMany(mappedBy = "followerMember", fetch = FetchType.LAZY)
+	private List<Follow> followers = new ArrayList<>();
+	
+	/* (멘티)한 명의 유저가 팔로우는 여러개 보유 가능 */
+	@OneToMany(mappedBy = "followedMember", fetch = FetchType.LAZY)
+	private List<Follow> followeds = new ArrayList<>();
+	
+	/* 한 명의 유저가 신고는 여러개 보유 가능 */
+	@OneToMany(mappedBy = "member", fetch = FetchType.LAZY)
+	private List<Report> reports = new ArrayList<>();
+	
+	/* 한 명의 유저가 채팅방은 여러개 보유 가능 */
+	@OneToMany(mappedBy = "member", fetch = FetchType.LAZY)
+	private List<ChatMessage> chatMessages = new ArrayList<>();
+	
+	/***** 한 명의 유저가 채팅방의 상태는 여러개 보유 가능?? *****/
+	@OneToMany(mappedBy = "member", fetch = FetchType.LAZY)
+	private List<ChatRoomStatus> chatRoomStatus = new ArrayList<>();
+	
+	/* 한 명의 유저가 채팅방 신청 여러개 보유 가능 */
+	@OneToMany(mappedBy = "member", fetch = FetchType.LAZY)
+	private List<MentoringRequest> mentoringRequests = new ArrayList<>();
+	
+	/* 한 명의 유저가 채팅방 좋아요/싫어요 여러개 보유 가능 */
+	@OneToMany(mappedBy = "member", fetch = FetchType.LAZY)
+	private List<Vote> votes = new ArrayList<>();
+	
+	/* 한 명의 유저가 알람 여러개 보유 가능 */
+	@OneToMany(mappedBy = "member", fetch = FetchType.LAZY)
+	private List<Alarm> alarms = new ArrayList<>();
+	
+	/* 한 명의 유저(멘티)가 질문글 여러개 보유 가능 */
+	@OneToMany(mappedBy = "member", fetch = FetchType.LAZY)
+	private List<Question> questions = new ArrayList<>();
+	
+	/* 한 명의 유저(멘토)가 답변글 여러개 보유 가능 */
+	@OneToMany(mappedBy = "member", fetch = FetchType.LAZY)
+	private List<Answer> answers = new ArrayList<>();
+	
+>>>>>>> refs/heads/master
 	
 	
 	

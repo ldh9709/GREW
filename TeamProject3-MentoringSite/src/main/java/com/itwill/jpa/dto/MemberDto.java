@@ -23,15 +23,21 @@ public class MemberDto {
 	private String memberEmail;
 	private String memberName;
 	
-	/*
-	 * Entitiy -> DTO
-	 */
-	public static MemberDto toDto(Member userEntity) {
+	
+	 /* Entitiy -> DTO*/
+	public static MemberDto toDto(Member memberEntity) {
 		return MemberDto.builder()
+<<<<<<< HEAD
 	            .memberId(userEntity.getMemberId())
 	            .memberPassword(userEntity.getMemberPassword())
 	            .memberEmail(userEntity.getMemberEmail())
 	            .memberName(userEntity.getMemberName())
+=======
+	            .memberId(memberEntity.getMemberId())
+	            .memberPassword(memberEntity.getMemberPassword())
+	            .memberEmail(memberEntity.getMemberEmail())
+	            .memberName(memberEntity.getMemberName())
+>>>>>>> refs/heads/master
 	            .build();
 	}
 	
