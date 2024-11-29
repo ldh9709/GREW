@@ -51,18 +51,18 @@ public class Member {
 	 /*
      * DTO -> Entitiy
      */
-	public static Member toEntity(MemberDto userDto) {
+	public static Member toEntity(MemberDto memberDto) {
 	    return Member.builder()
-	            .memberNo(userDto.getMemberNo())
-	            .memberId(userDto.getMemberId())
-	            .memberPassword(userDto.getMemberPassword())
-	            .memberEmail(userDto.getMemberEmail())
-	            .memberName(userDto.getMemberName())
-	            .memberRole(userDto.getMemberRole())
-	            .memberPoints(userDto.getMemberPoints())
-	            .memberStatus(userDto.getMemberStatus())
-	            .memberJoinDate(userDto.getMemberJoinDate())
-	            .memberReportCount(userDto.getMemberReportCount())
+	            .memberNo(memberDto.getMemberNo())
+	            .memberId(memberDto.getMemberId())
+	            .memberPassword(memberDto.getMemberPassword())
+	            .memberEmail(memberDto.getMemberEmail())
+	            .memberName(memberDto.getMemberName())
+	            .memberRole(memberDto.getMemberRole())
+	            .memberPoints(memberDto.getMemberPoints())
+	            .memberStatus(memberDto.getMemberStatus())
+	            .memberJoinDate(memberDto.getMemberJoinDate())
+	            .memberReportCount(memberDto.getMemberReportCount())
 	            .build();
 	}
 	
@@ -114,9 +114,13 @@ public class Member {
 	@OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
 	private List<MentorBoard> mentorBoards = new ArrayList<>();
 	
-	/* 한 명의 유저가 팔로우는 여러개 보유 가능 */
-	@OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
-	private List<Follow> follows = new ArrayList<>();
+	/* (멘토)한 명의 유저가 팔로우는 여러개 보유 가능 */
+	@OneToMany(mappedBy = "followerMember", fetch = FetchType.LAZY)
+	private List<Follow> followers = new ArrayList<>();
+	
+	/* (멘티)한 명의 유저가 팔로우는 여러개 보유 가능 */
+	@OneToMany(mappedBy = "followedMember", fetch = FetchType.LAZY)
+	private List<Follow> followeds = new ArrayList<>();
 	
 	/* 한 명의 유저가 신고는 여러개 보유 가능 */
 	@OneToMany(mappedBy = "user", fetch = FetchType.LAZY)

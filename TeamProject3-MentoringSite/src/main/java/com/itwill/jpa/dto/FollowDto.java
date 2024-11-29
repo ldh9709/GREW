@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class FollowDto {
     private Long followNo;
-    private MemberDto member;
+    private MemberDto followerMember;
     private MemberDto followedMember;
 
     /*
@@ -22,7 +22,7 @@ public class FollowDto {
     public static FollowDto toDto(Follow followEntity) {
         return FollowDto.builder()
                 .followNo(followEntity.getFollowNo())
-                .member(MemberDto.toDto(followEntity.getMember()))
+                .followerMember(MemberDto.toDto(followEntity.getFollowerMember()))
                 .followedMember(MemberDto.toDto(followEntity.getFollowedMember()))
                 .build();
     }
