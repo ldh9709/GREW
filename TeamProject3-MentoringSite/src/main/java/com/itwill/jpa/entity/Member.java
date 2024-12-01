@@ -99,26 +99,31 @@ public class Member {
 	private List<ChatMessage> chatMessages = new ArrayList<>();
 	
 	/***** 한 명의 유저가 채팅방의 상태는 여러개 보유 가능?? *****/
-/*	@OneToMany(mappedBy = "member", fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "member", fetch = FetchType.LAZY)
 	private List<ChatRoomStatus> chatRoomStatus = new ArrayList<>();
 	
-	*//* 한 명의 유저가 채팅방 신청 여러개 보유 가능 *//*
+	/* 한 명의 유저가 채팅방 신청 여러개 보유 가능 */
 	@OneToMany(mappedBy = "member", fetch = FetchType.LAZY)
 	private List<MentoringRequest> mentoringRequests = new ArrayList<>();
 	
-	*//* 한 명의 유저가 채팅방 좋아요/싫어요 여러개 보유 가능 *//*
+	/* 한 명의 유저가 채팅방 좋아요/싫어요 여러개 보유 가능 */
 	@OneToMany(mappedBy = "member", fetch = FetchType.LAZY)
-	private List<Vote> votes = new ArrayList<>();*/
+	private List<Vote> votes = new ArrayList<>();
 	
 	/* 한 명의 유저가 알람 여러개 보유 가능 */
 	@OneToMany(mappedBy = "member", fetch = FetchType.LAZY)
 	private List<Alarm> alarms = new ArrayList<>();
 	
 	/* 한 명의 유저(멘티)가 질문글 여러개 보유 가능 */
-/*	@OneToMany(mappedBy = "member", fetch = FetchType.LAZY)
-	private List<Question> questions = new ArrayList<>();*/
+	@OneToMany(mappedBy = "member", fetch = FetchType.LAZY)
+	private List<Question> questions = new ArrayList<>();
 	
 	/* 한 명의 유저(멘토)가 답변글 여러개 보유 가능 */
 	@OneToMany(mappedBy = "member", fetch = FetchType.LAZY)
 	private List<Answer> answers = new ArrayList<>();
+	
+	
+	
+	
+	
 }
