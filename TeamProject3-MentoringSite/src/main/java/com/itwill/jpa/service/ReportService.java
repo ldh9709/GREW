@@ -1,7 +1,7 @@
 package com.itwill.jpa.service;
 
-import com.itwill.jpa.dto.ReportDto;
-import com.itwill.jpa.entity.Report;
+import com.itwill.jpa.dto.report.ReportDto;
+import com.itwill.jpa.entity.report.Report;
 
 import java.util.List;
 

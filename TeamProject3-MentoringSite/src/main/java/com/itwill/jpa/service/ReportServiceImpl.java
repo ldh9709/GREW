@@ -3,8 +3,8 @@ package com.itwill.jpa.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.itwill.jpa.dto.ReportDto;
-import com.itwill.jpa.entity.Report;
+import com.itwill.jpa.dto.report.ReportDto;
+import com.itwill.jpa.entity.report.Report;
 import com.itwill.jpa.repository.ReportRepository;
 
 import java.time.LocalDateTime;
