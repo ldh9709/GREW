@@ -1,0 +1,2 @@
+INSERT INTO member(member_no,member_id,member_password,member_email,member_name,member_role,member_points,member_status,member_join_date,member_report_count)
+VALUES(member_seq.nextval,'aaa','aaa','email@naver.com','이름','ROLE_USER',5000,1,sysdate,0);

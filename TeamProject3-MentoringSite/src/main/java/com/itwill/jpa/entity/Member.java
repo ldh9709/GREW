@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.aspectj.weaver.patterns.TypePatternQuestions.Question;
 
 import com.itwill.jpa.dto.MemberDto;
 
@@ -115,7 +116,7 @@ public class Member {
 	
 	/* 한 명의 유저(멘티)가 질문글 여러개 보유 가능 */
 	@OneToMany(mappedBy = "member", fetch = FetchType.LAZY)
-	private List<Inquiry> inquirys = new ArrayList<>();
+	private List<Question> questions = new ArrayList<>();
 	
 	/* 한 명의 유저(멘토)가 답변글 여러개 보유 가능 */
 	@OneToMany(mappedBy = "member", fetch = FetchType.LAZY)
