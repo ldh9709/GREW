@@ -1,9 +1,8 @@
 package com.itwill.jpa.entity;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-import com.itwill.jpa.dto.ReportRequestDto;
+import com.itwill.jpa.dto.ReportDto;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -41,7 +40,7 @@ public class Report {
 	private LocalDateTime reportDate = LocalDateTime.now();
 	private LocalDateTime resolvedDate;
 	private Integer reportStatus = 1;
-	
+
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "member_no")
 	private Member member;
@@ -56,13 +55,16 @@ public class Report {
     }
 	
 	
-	public static ReportRequestDto toDto(Report entity) {
-		return ReportRequestDto.builder()
+	public static ReportDto toDto(Report entity) {
+		return ReportDto.builder()
 				.reportNo(entity.getReportNo())
 				.reportType(entity.getReportType())
 				.reportTarget(entity.getReportTarget())
 				.reportReason(entity.getReportReason())
 				.reportContent(entity.getReportContent())
+				.reportDate(entity.getReportDate())
+				.resolveDate(entity.getResolvedDate())
+				.reportStatus(entity.getReportStatus())
 				.memberNo(entity.member.getMemberNo())
 				.build();
 	}

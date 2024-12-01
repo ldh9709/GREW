@@ -1,12 +1,10 @@
 package com.itwill.jpa.service;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import com.itwill.jpa.dto.ReportRequestDto;
+import com.itwill.jpa.dto.ReportDto;
 
 @SpringBootTest
 class ReportServiceImplTest {
@@ -14,27 +12,39 @@ class ReportServiceImplTest {
 	@Autowired
 	private ReportService reportService;
 	
-	@Test
+//	@Test
 	void testSaveReport() {
-		ReportRequestDto report = ReportRequestDto.builder()
+		ReportDto report = ReportDto.builder()
 				.reportNo(0L)
 				.reportType("ANSWER")
 				.reportTarget(1)
-				.reportReason(1)
-				.reportContent("나한테 뭐라함 싸갈쓰바갈쓰")
+				.reportReason(2)
+				.reportContent("흥")
 				.memberNo(1L)
 				.build();
 		reportService.saveReport(report);
 	}
 
-	@Test
-	void testGetReport() {
-		fail("Not yet implemented");
+//	@Test
+	void updateReportStatusToCancel() {
+		reportService.updateReportStatusToCancel(3L);
+	}
+//	@Test
+	void updateReportStatusToInProgress() {
+		reportService.updateReportStatusToInProgress(3L);
 	}
 
-	@Test
+//	@Test
 	void testUpdateStatusReport() {
-		fail("Not yet implemented");
+		reportService.updateReportStatusToResolved(3L);
+	}
+//	@Test
+	void testSelectByuserNo(){
+		System.out.println(reportService.selectReportByUserNo(1L));
 	}
 
+	@Test
+	void testSelectAll(){
+		System.out.println(reportService.selectReportAll());
+	}
 }

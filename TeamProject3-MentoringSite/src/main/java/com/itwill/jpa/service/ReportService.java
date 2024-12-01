@@ -1,12 +1,16 @@
 package com.itwill.jpa.service;
 
-import org.springframework.stereotype.Service;
+import com.itwill.jpa.dto.ReportDto;
+import com.itwill.jpa.entity.Report;
 
-import com.itwill.jpa.dto.ReportRequestDto;
+import java.util.List;
 
 public interface ReportService {
 	
-	void saveReport(ReportRequestDto report); 
-	void getReport(Long reportNo); 
-	void updateStatusReport(ReportRequestDto report); 
+	void saveReport(ReportDto reportDto);
+	void updateReportStatusToCancel(Long reportNo);
+	void updateReportStatusToInProgress(Long reportNo);
+	void updateReportStatusToResolved(Long reportNo);
+	public List<ReportDto> selectReportByUserNo(Long userNo);
+	public List<ReportDto> selectReportAll();
 }
