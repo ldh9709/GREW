@@ -44,11 +44,12 @@ public class ChatRoomStatus {
     @JoinColumn(name = "member_no", nullable = false)
     private Member member;
     
-    public static ChatRoomStatus toEntity(ChatRoomStatusDto dto) {
+    public static ChatRoomStatus toEntity(ChatRoomStatusDto chatRoomStatusDto) {
         return ChatRoomStatus.builder()
-                .chatRoomStatusNo(dto.getChatRoomStatusNo())
-                .chatRoomName(dto.getChatRoomName())
-                .chatRoomStatus(dto.getChatRoomStatus())
+                .chatRoomStatusNo(chatRoomStatusDto.getChatRoomStatusNo())
+                .chatRoomName(chatRoomStatusDto.getChatRoomName())
+                .chatRoomStatus(chatRoomStatusDto.getChatRoomStatus())
+                .member(Member.toEntity(chatRoomStatusDto.getMember()))
                 .build();
     }
 }

@@ -3,6 +3,8 @@ package com.itwill.jpa.entity;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import org.hibernate.annotations.CreationTimestamp;
+
 import com.itwill.jpa.dto.ChatRoomDto;
 
 import jakarta.persistence.CascadeType;
@@ -36,6 +38,7 @@ public class ChatRoom {
     private String chatRoomNo;
 
     @Column(name = "chat_room_date", updatable = false)
+    @CreationTimestamp
     private LocalDateTime chatRoomDate = LocalDateTime.now();
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -45,10 +48,11 @@ public class ChatRoom {
     @OneToMany(mappedBy = "chatRoom", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
     private List<ChatMessage> chatMessages;
     
-    public static ChatRoom toEntity(ChatRoomDto dto) {
+    public static ChatRoom toEntity(ChatRoomDto chatRoomDto) {
         return ChatRoom.builder()
-                .chatRoomNo(dto.getChatRoomNo())
-                .chatRoomDate(dto.getChatRoomDate())
+                .chatRoomNo(chatRoomDto.getChatRoomNo())
+                .chatRoomDate(chatRoomDto.getChatRoomDate())
+                .mentoringRequest(MentoringRequest.toEntity(chatRoomDto.getMentoringRequest()))
                 .build();
     }
 }

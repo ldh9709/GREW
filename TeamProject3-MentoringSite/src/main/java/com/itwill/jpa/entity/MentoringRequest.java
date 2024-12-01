@@ -3,6 +3,8 @@ package com.itwill.jpa.entity;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import org.hibernate.annotations.CreationTimestamp;
+
 import com.itwill.jpa.dto.MentoringRequestDto;
 
 import jakarta.persistence.CascadeType;
@@ -39,24 +41,27 @@ public class MentoringRequest {
 	private String requestStatus;
 	
 	@Column(name = "request_date", updatable = false)
+	@CreationTimestamp
 	private LocalDateTime requestDate = LocalDateTime.now();
 	
 	@ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "mentee_no", nullable = false)
-    private Member menteeNo;
+    private Member mentee;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "mentor_no", nullable = false)
-    private Member mentorNo;
+    private Member mentor;
 	
     @OneToMany(mappedBy = "mentoringRequest", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
     private List<Review> reviews;
 	
-    public static MentoringRequest toEntity(MentoringRequestDto dto) {
+    public static MentoringRequest toEntity(MentoringRequestDto mentoringRequestDto) {
         return MentoringRequest.builder()
-                .requestNo(dto.getRequestNo())
-                .requestStatus(dto.getRequestStatus())
-                .requestDate(dto.getRequestDate())
+                .requestNo(mentoringRequestDto.getRequestNo())
+                .requestStatus(mentoringRequestDto.getRequestStatus())
+                .requestDate(mentoringRequestDto.getRequestDate())
+                .mentee(Member.toEntity(mentoringRequestDto.getMentee()))
+                .mentor(Member.toEntity(mentoringRequestDto.getMentor()))
                 .build();
     }
 }
