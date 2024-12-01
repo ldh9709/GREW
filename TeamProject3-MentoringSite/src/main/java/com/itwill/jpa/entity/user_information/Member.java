@@ -4,11 +4,10 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.aspectj.weaver.patterns.TypePatternQuestions.Question;
-
 import com.itwill.jpa.dto.user_information.MemberDto;
 import com.itwill.jpa.entity.alarm.Alarm;
 import com.itwill.jpa.entity.bullentin_board.Answer;
+import com.itwill.jpa.entity.bullentin_board.Inquiry;
 import com.itwill.jpa.entity.bullentin_board.Vote;
 import com.itwill.jpa.entity.chatting_review.ChatMessage;
 import com.itwill.jpa.entity.chatting_review.ChatRoomStatus;
@@ -110,8 +109,12 @@ public class Member {
 	private List<ChatRoomStatus> chatRoomStatus = new ArrayList<>();
 	
 	/* 한 명의 유저가 채팅방 신청 여러개 보유 가능 */
-	@OneToMany(mappedBy = "member", fetch = FetchType.LAZY)
-	private List<MentoringRequest> mentoringRequests = new ArrayList<>();
+	@OneToMany(mappedBy = "mentee", fetch = FetchType.LAZY)
+	private List<MentoringRequest> mentee = new ArrayList<>();
+	
+	/* 한 명의 유저가 채팅방 신청 여러개 보유 가능 */
+	@OneToMany(mappedBy = "mentor", fetch = FetchType.LAZY)
+	private List<MentoringRequest> mentor = new ArrayList<>();
 	
 	/* 한 명의 유저가 채팅방 좋아요/싫어요 여러개 보유 가능 */
 	@OneToMany(mappedBy = "member", fetch = FetchType.LAZY)
@@ -123,7 +126,7 @@ public class Member {
 	
 	/* 한 명의 유저(멘티)가 질문글 여러개 보유 가능 */
 	@OneToMany(mappedBy = "member", fetch = FetchType.LAZY)
-	private List<Question> questions = new ArrayList<>();
+	private List<Inquiry> Inquirys = new ArrayList<>();
 	
 	/* 한 명의 유저(멘토)가 답변글 여러개 보유 가능 */
 	@OneToMany(mappedBy = "member", fetch = FetchType.LAZY)

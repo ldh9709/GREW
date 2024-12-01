@@ -19,5 +19,5 @@ public class ReviewDto {
     private Integer reviewScore;
     private LocalDateTime reviewDate; // 엔티티에서 자동 생성된 reviewDate
 
-    private String memberId; // memberId만 필요한 경우 사용할 수 있음
+    //private String memberId; // memberId만 필요한 경우 사용할 수 있음
 }

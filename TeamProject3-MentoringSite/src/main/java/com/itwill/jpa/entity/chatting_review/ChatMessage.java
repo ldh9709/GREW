@@ -14,6 +14,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.SequenceGenerator;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -41,6 +42,9 @@ public class ChatMessage {
 
     @ManyToOne(fetch = FetchType.LAZY)
     private Member member;
+    
+    @ManyToOne(fetch = FetchType.LAZY)
+    private ChatRoom chatRoom;
 
     // 엔티티 -> DTO 변환
     public ChatMessageDto toDto() {
@@ -54,13 +58,14 @@ public class ChatMessage {
     }
 
     // DTO -> 엔티티 변환
-    public static ChatMessage fromDto(ChatMessageDto dto, Member member) {
+    public static ChatMessage fromDto(ChatMessageDto dto, Member member, ChatRoom chatRoom) {
         return new ChatMessage(
             dto.getChatMessageNo(),
             dto.getChatContent(),
             dto.getChatMessageDate(),
             dto.getChatMessageCheck(),
-            member
+            member,
+            chatRoom
         );
     }
 }

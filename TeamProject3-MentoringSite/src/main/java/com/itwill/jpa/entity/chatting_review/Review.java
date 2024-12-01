@@ -42,9 +42,11 @@ public class Review {
 
     @CreationTimestamp
     private LocalDate reviewDate;
-
+    
     @ManyToOne(fetch = FetchType.LAZY)
-    private Member member;
+    private MentoringRequest mentoringRequest;
+    //@ManyToOne(fetch = FetchType.LAZY)
+    //private Member member;
 
     // 엔티티 -> DTO 변환
     public ReviewDto toDto() {
@@ -54,19 +56,20 @@ public class Review {
                 .reviewContent(this.reviewContent)
                 .reviewScore(this.reviewScore)
                 .reviewDate(this.reviewDate != null ? this.reviewDate.atStartOfDay() : null) // LocalDateTime으로 변환
-                .memberId(this.member != null ? this.member.getMemberId() : null) // memberId만 담기
+                //.memberId(this.member != null ? this.member.getMemberId() : null) // memberId만 담기
                 .build();
     }
 
     // DTO -> 엔티티 변환
-    public static Review fromDto(ReviewDto dto, Member member) {
+    public static Review fromDto(ReviewDto dto, /*Member member*/ MentoringRequest mentoringRequest) {
         return new Review(
             dto.getReviewNo(),
             dto.getReviewTitle(),
             dto.getReviewContent(),
             dto.getReviewScore(),
             dto.getReviewDate() != null ? dto.getReviewDate().toLocalDate() : null, // LocalDate로 변환
-            member
+            //member
+            mentoringRequest
         );
     }
 }
