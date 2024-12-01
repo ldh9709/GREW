@@ -49,7 +49,7 @@ public class MentoringRequest {
     @JoinColumn(name = "mentor_no", nullable = false)
     private Member mentorNo;
 	
-    @OneToMany(mappedBy = "mentoringRequest", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "mentoringRequest", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
     private List<Review> reviews;
 	
     public static MentoringRequest toEntity(MentoringRequestDto dto) {

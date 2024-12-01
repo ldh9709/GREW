@@ -38,9 +38,6 @@ public class ChatRoom {
     @Column(name = "chat_room_date", updatable = false)
     private LocalDateTime chatRoomDate = LocalDateTime.now();
 
-    @Column(name = "chat_room_name")
-    private String chatRoomName;
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "request_no", nullable = false)
     private MentoringRequest mentoringRequest;
@@ -51,7 +48,6 @@ public class ChatRoom {
     public static ChatRoom toEntity(ChatRoomDto dto) {
         return ChatRoom.builder()
                 .chatRoomNo(dto.getChatRoomNo())
-                .chatRoomName(dto.getChatRoomName())
                 .chatRoomDate(dto.getChatRoomDate())
                 .build();
     }

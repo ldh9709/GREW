@@ -16,12 +16,10 @@ import lombok.NoArgsConstructor;
 public class ChatRoomDto {
 	private String chatRoomNo;
 	private LocalDateTime chatRoomDate;
-	private String chatRoomName;
 	
 	public static ChatRoomDto toDto(ChatRoom chatRoomEntity) {
         return ChatRoomDto.builder()
                 .chatRoomNo(chatRoomEntity.getChatRoomNo())
-                .chatRoomName(chatRoomEntity.getChatRoomName())
                 .chatRoomDate(chatRoomEntity.getChatRoomDate())
                 .build();
     }
