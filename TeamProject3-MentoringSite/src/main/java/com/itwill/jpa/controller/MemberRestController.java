@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -140,6 +141,29 @@ public class MemberRestController {
 		return responseEntity;
 	}
 	
-	
+	/* 회원 수정 */
+	@Operation(summary = "회원 정보 수정")
+	@PutMapping("/{memberNo}")
+	public ResponseEntity<Response> updateMember(@RequestBody MemberDto memberDto) {
+		
+		Member updateMember = memberService.updateMember(memberDto);
+		
+		Response response = new Response();
+		
+		if(updateMember != null) {
+			//응답객체에 코드, 메시지, 객체 설정
+			response.setStatus(ResponseStatusCode.UPDATE_MEMBER_SUCCESS);
+			response.setMessage(ResponseMessage.UPDATE_MEMBER_SUCCESS);
+			response.setData(updateMember);
+		}
+		
+		HttpHeaders httpHeaders=new HttpHeaders();
+		httpHeaders.setContentType(new MediaType(MediaType.APPLICATION_JSON,Charset.forName("UTF-8")));
+		
+		ResponseEntity<Response> responseEntity = 
+				new ResponseEntity<Response>(response, httpHeaders, HttpStatus.OK);
+		
+		return responseEntity;
+	}
 	
 }

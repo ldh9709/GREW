@@ -51,11 +51,14 @@ public class MemberServiceImpl implements MemberService {
 	/***** 회원 수정 ****/
 	@Override
 	public Member updateMember(MemberDto memberDto) {
+		Member member = memberRepository.findByMemberNo(memberDto.getMemberNo());
 		
-		//MemberDto Entity로 변경
-		Member updateMember = Member.toEntity(memberDto);
+		member.setMemberName(memberDto.getMemberName());
+		member.setMemberPassword(memberDto.getMemberPassword());
+		member.setMemberEmail(memberDto.getMemberEmail());
+		
 		//DB에 객체 업데이트(기존 객체 존재 시 업데이트됨)
-		return memberRepository.save(updateMember);
+		return memberRepository.save(member);
 	}
 	
 	/***** 회원 삭제 *****/

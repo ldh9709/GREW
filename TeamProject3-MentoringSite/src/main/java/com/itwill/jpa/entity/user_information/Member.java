@@ -5,6 +5,8 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.hibernate.annotations.DynamicUpdate;
+
 import com.itwill.jpa.dto.user_information.MemberDto;
 import com.itwill.jpa.entity.alarm.Alarm;
 import com.itwill.jpa.entity.bullentin_board.Answer;
@@ -36,6 +38,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@DynamicUpdate
 @Entity
 @Table(name = "member")
 public class Member {
@@ -77,7 +80,7 @@ public class Member {
 	/* 초기값 설정 */
 	@PrePersist
 	public void setDefaultValues() {
-		if (this.memberRole == null) this.memberRole = "MENTI";
+		if (this.memberRole == null) this.memberRole = "MENTEE";
 		if (this.memberPoints == null) this.memberPoints = 0;
 		if (this.memberStatus == null) this.memberStatus = 1;
 		if (this.memberJoinDate == null) this.memberJoinDate = LocalDateTime.now();
@@ -153,6 +156,7 @@ public class Member {
     */
 	public static Member toEntity(MemberDto memberDto) {
 	    return Member.builder()
+	    		.memberNo(memberDto.getMemberNo())
 	            .memberId(memberDto.getMemberId())
 	            .memberPassword(memberDto.getMemberPassword())
 	            .memberEmail(memberDto.getMemberEmail())
