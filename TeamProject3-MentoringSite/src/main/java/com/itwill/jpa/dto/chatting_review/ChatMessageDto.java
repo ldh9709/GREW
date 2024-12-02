@@ -23,8 +23,8 @@ public class ChatMessageDto {
     private LocalDateTime chatMessageDate; 
     private Integer chatMessageCheck;
 
-    private MemberDto memberNo; // memberId만 필요한 경우 사용할 수 있음
-    private ChatRoomDto chatRoomNo;
+    private MemberDto member; // memberId만 필요한 경우 사용할 수 있음
+    private ChatRoomDto chatRoom;
     
  // DTO -> 엔티티 변환
     public static ChatMessageDto toDto(ChatMessage chatMessageEntity) {
@@ -33,8 +33,8 @@ public class ChatMessageDto {
             .chatContent(chatMessageEntity.getChatContent())
             .chatMessageDate(chatMessageEntity.getChatMessageDate())
             .chatMessageCheck(chatMessageEntity.getChatMessageCheck())
-            .memberNo(MemberDto.toDto(chatMessageEntity.getMemberNo()))
-            .chatRoomNo(ChatRoomDto.toDto(chatMessageEntity.getChatRoomNo()))
+            .member(MemberDto.toDto(chatMessageEntity.getMember()))
+            .chatRoom(ChatRoomDto.toDto(chatMessageEntity.getChatRoom()))
             .build();
        
     }
