@@ -3,7 +3,8 @@ package com.itwill.jpa.repository;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.itwill.jpa.entity.Member;
+import com.itwill.jpa.entity.user_information.Member;
+
 
 @Repository
 public interface MemberRepository extends JpaRepository<Member, Long> {

@@ -3,8 +3,8 @@ package com.itwill.jpa.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.itwill.jpa.dto.MemberDto;
-import com.itwill.jpa.entity.Member;
+import com.itwill.jpa.dto.user_information.MemberDto;
+import com.itwill.jpa.entity.user_information.Member;
 import com.itwill.jpa.repository.MemberRepository;
 
 @Service

@@ -1,7 +1,7 @@
 package com.itwill.jpa.service;
 
-import com.itwill.jpa.dto.MemberDto;
-import com.itwill.jpa.entity.Member;
+import com.itwill.jpa.dto.user_information.MemberDto;
+import com.itwill.jpa.entity.user_information.Member;
 
 public interface MemberService {
 	
