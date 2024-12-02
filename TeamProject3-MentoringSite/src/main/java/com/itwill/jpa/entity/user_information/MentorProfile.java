@@ -25,25 +25,25 @@ public class MentorProfile {
     @SequenceGenerator(name = "mentorprofile_seq", initialValue = 1, allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "mentorprofile_SEQ")
     
-    @JoinColumn(name = "mentor_profile_No")
+    @Column(name = "mentor_profile_No")
     private Long mentorProfileNo;
 
-    @JoinColumn(name = "mentor_introduce")
+    @Column(name = "mentor_introduce")
     private String mentorIntroduce; 
     
-    @JoinColumn(name = "mentor_rating")
+    @Column(name = "mentor_rating")
     private Integer mentorRating;
     
-    @JoinColumn(name = "mentor_mentoring_count")
+    @Column(name = "mentor_mentoring_count")
     private Integer mentorMentoringCount;
     
-    @JoinColumn(name = "mentor_image")
+    @Column(name = "mentor_image")
     private String mentorImage;
    
-    @JoinColumn(name = "mentor_activity_count")
+    @Column(name = "mentor_activity_count")
     private Integer mentorActivityCount;
     
-    @JoinColumn(name = "mentor_follow_count")
+    @Column(name = "mentor_follow_count")
     private Integer mentorFollowCount;
 
     @OneToOne(fetch = FetchType.LAZY)

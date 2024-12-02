@@ -21,7 +21,7 @@ public class Interest {
     @SequenceGenerator(name = "interest_seq", initialValue = 1, allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "interest_SEQ")
    
-    @JoinColumn(name = "interest_no")
+    @Column(name = "interest_no")
     private Long interestNo;
 
     @ManyToOne(fetch = FetchType.LAZY)
