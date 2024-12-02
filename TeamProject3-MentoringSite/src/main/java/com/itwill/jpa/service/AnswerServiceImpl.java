@@ -32,7 +32,7 @@ public class AnswerServiceImpl implements AnswerService{
 	/*질문 하나에 달린 답변*/
 	@Override
 	public List<AnswerDto> selectAnswerByInquiryNo(Long inquiryNo) {
-		List<Answer> answerEntityList = answerRepository.findByInquiryNo(inquiryNo);
+		List<Answer> answerEntityList = answerRepository.findByInquiryInquiryNo(inquiryNo);
 		List<AnswerDto> answerDtoList = new ArrayList<>();
 		for(Answer answerEntity:answerEntityList) {
 			answerDtoList.add(AnswerDto.toDto(answerEntity));

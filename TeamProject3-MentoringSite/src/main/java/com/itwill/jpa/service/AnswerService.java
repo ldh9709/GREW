@@ -3,7 +3,6 @@ package com.itwill.jpa.service;
 import java.util.List;
 
 import com.itwill.jpa.dto.bulletin_board.AnswerDto;
-import com.itwill.jpa.entity.bullentin_board.Answer;
 
 public interface AnswerService {
 	//답변작성
