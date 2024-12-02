@@ -18,6 +18,7 @@ public class ResponseMessage {
 	public static final String READ_REPORT_SUCCESS = "신고 조회 성공";
 	public static final String READ_REPORT_LIST_SUCCESS = "신고 리스트 성공";
 	public static final String UPDATE_REPORT_SUCCESS = "신고 상태변경 성공";
+	public static final String REPORT_FAIL = "신고 실패";
 	
     
     public static final String LOGIN_FAIL_NOT_FOUND_MEMBER = "회원을 찾을 수 없습니다.";
