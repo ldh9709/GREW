@@ -22,11 +22,11 @@ public class Category {
     @Id
     @SequenceGenerator(name = "category_seq", initialValue = 1, allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "category_SEQ")
-    @JoinColumn(name = "category_no")
+    @Column(name = "category_no")
     private Long categoryNo;
-    @JoinColumn(name = "category_name")
+    @Column(name = "category_name" ,nullable = false)
     private String categoryName;
-    @JoinColumn(name = "category_level")
+    @Column(name = "category_level" ,nullable = false)
     private Integer categoryLevel;
     
     
