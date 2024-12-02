@@ -23,17 +23,17 @@ public class MentorBoard {
     @Column(name = "mentor_board_no")
     private Long mentorBoardNo;
 
-    @Column(name = "mentor_board_title")
+    @Column(name = "mentor_board_title" ,nullable = false)
     private String mentorBoardTitle;
     
-    @Column(name = "mentor_board_content")
+    @Column(name = "mentor_board_content" ,nullable = false)
     private String mentorBoardContent;
     
-    @Column(name = "mentor_board_image")
+    @Column(name = "mentor_board_image" ,nullable = false)
     private String mentorBoardImage;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "member_no")
+    @JoinColumn(name = "member_no" ,nullable = false)
     private Member member;
     
     

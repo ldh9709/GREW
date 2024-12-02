@@ -24,9 +24,9 @@ public class Category {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "category_SEQ")
     @Column(name = "category_no")
     private Long categoryNo;
-    @Column(name = "category_name")
+    @Column(name = "category_name" ,nullable = false)
     private String categoryName;
-    @Column(name = "category_level")
+    @Column(name = "category_level" ,nullable = false)
     private Integer categoryLevel;
     
     
