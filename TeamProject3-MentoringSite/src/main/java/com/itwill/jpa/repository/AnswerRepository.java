@@ -54,11 +54,11 @@ public interface AnswerRepository extends JpaRepository<Answer, Long>{
 	/*최근 3일동안 추천 많은 답변*/
 	/*@Query("SELECT a FROM Answer a " +
 		       "JOIN a.inquiry i " +
-		       "LEFT JOIN a.votes v " +
+		       "INNER JOIN a.votes v " +
 		       "WHERE v.voteDate >= SYSDATE - 3 " + 
 		       "AND a.answerStatus = 1 " +
 		       "GROUP BY a.answerNo " +
 		       "ORDER BY COUNT(v) DESC")
-		List<Answer> findByAnswerOrderByVoteDate();
-*/
+		List<Answer> findByAnswerOrderByVoteDate();*/
+
 }
