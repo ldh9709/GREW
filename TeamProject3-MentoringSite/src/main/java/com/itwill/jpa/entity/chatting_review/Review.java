@@ -1,19 +1,22 @@
 package com.itwill.jpa.entity.chatting_review;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import org.hibernate.annotations.CreationTimestamp;
 
 import com.itwill.jpa.dto.chatting_review.ReviewDto;
-import com.itwill.jpa.entity.user_information.Member;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.PrePersist;
 import jakarta.persistence.SequenceGenerator;
+import jakarta.persistence.Table;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import lombok.AllArgsConstructor;
@@ -26,50 +29,48 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@Table(name="review")
 public class Review {
 
     @Id
-    @SequenceGenerator(name = "review_seq", initialValue = 1, allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "review_seq")
+    @SequenceGenerator(name = "review_no_SEQ", initialValue = 1, allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "review_no_seq")
+    @Column(name="review_no")
     private Long reviewNo;
 
+    @Column(name="review_title", nullable=false)
     private String reviewTitle;
+    
+    @Column(name="review_content", nullable=false)
     private String reviewContent;
 
     @Min(1)
     @Max(5)
+    @Column(name="review_score", nullable=false)
     private Integer reviewScore;
 
-    @CreationTimestamp
-    private LocalDate reviewDate;
+    @Column(name="review_date", updatable = false)
+    private LocalDateTime reviewDate = LocalDateTime.now();
     
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="request_no", nullable=false)
     private MentoringRequest mentoringRequest;
-    //@ManyToOne(fetch = FetchType.LAZY)
-    //private Member member;
 
-    // 엔티티 -> DTO 변환
-    public ReviewDto toDto() {
-        return ReviewDto.builder()
-                .reviewNo(this.reviewNo)
-                .reviewTitle(this.reviewTitle)
-                .reviewContent(this.reviewContent)
-                .reviewScore(this.reviewScore)
-                .reviewDate(this.reviewDate != null ? this.reviewDate.atStartOfDay() : null) // LocalDateTime으로 변환
-                //.memberId(this.member != null ? this.member.getMemberId() : null) // memberId만 담기
+    @PrePersist
+    public void setDefaultValues() {
+        if (this.reviewDate == null) this.reviewDate = LocalDateTime.now();
+    }
+
+    public static Review toEntity(ReviewDto reviewDto) {
+        return Review.builder()
+                .reviewNo(reviewDto.getReviewNo())
+                .reviewTitle(reviewDto.getReviewTitle())
+                .reviewContent(reviewDto.getReviewContent())
+                .reviewScore(reviewDto.getReviewScore())
+                .reviewDate(reviewDto.getReviewDate())
+                .mentoringRequest(MentoringRequest.toEntity(reviewDto.getMentoringRequest())) // MentoringRequest 엔티티 포함
                 .build();
     }
 
-    // DTO -> 엔티티 변환
-    public static Review fromDto(ReviewDto dto, /*Member member*/ MentoringRequest mentoringRequest) {
-        return new Review(
-            dto.getReviewNo(),
-            dto.getReviewTitle(),
-            dto.getReviewContent(),
-            dto.getReviewScore(),
-            dto.getReviewDate() != null ? dto.getReviewDate().toLocalDate() : null, // LocalDate로 변환
-            //member
-            mentoringRequest
-        );
-    }
+    
 }
