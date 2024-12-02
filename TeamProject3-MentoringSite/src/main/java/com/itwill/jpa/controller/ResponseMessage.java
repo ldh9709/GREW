@@ -18,4 +18,6 @@ public class ResponseMessage {
     public static final String CREATE_FAIL_EXISTED_MEMBER = "회원 아이디 중복";
     public static final String UNAUTHORIZED_MEMBER = "인증받지않은 요청입니다.";
     
+    /*알림, 신고, 질문, 답변, 채팅*/
+    
 }

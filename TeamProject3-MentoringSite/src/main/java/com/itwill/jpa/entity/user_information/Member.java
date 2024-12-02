@@ -44,47 +44,35 @@ public class Member {
 	@Id//PK설정
 	@SequenceGenerator(name = "member_no_SEQ", initialValue = 1, allocationSize = 1)
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "member_no_SEQ")
-	@Column(name = "member_no")
+	@Column(name = "member_no", nullable = false)
 	private Long memberNo;//멤버 번호 PK
 	
-	@Column(name = "member_id")
+	@Column(name = "member_id", nullable = false)
 	private String memberId;//Id
 	
-	@Column(name = "member_password")
+	@Column(name = "member_password", nullable = false)
 	private String memberPassword;//비밀번호
 	
-	@Column(name = "member_email")
+	@Column(name = "member_email", nullable = false)
 	private String memberEmail;//이메일
 	
-	@Column(name = "member_name")
+	@Column(name = "member_name", nullable = false)
 	private String memberName;//이름
 	
-	@Column(name = "member_role")
+	@Column(name = "member_role", nullable = false)
 	private String memberRole;//역할
 	
-	@Column(name = "member_points")
+	@Column(name = "member_points", nullable = false)
 	private Integer memberPoints;//멤버 연필 포인트
 	
-	@Column(name = "member_status")
+	@Column(name = "member_status", nullable = false)
 	private Integer memberStatus;//멤버의 상태(활동, 정지 등)
 	
-	@Column(name = "member_join_date")
+	@Column(name = "member_join_date", nullable = false)
 	private LocalDateTime memberJoinDate;//멤버 가입 날짜
 	
-	@Column(name = "member_report_count")
+	@Column(name = "member_report_count", nullable = false)
 	private Integer memberReportCount;//신고 당한 횟수
-	
-	 /*
-     * DTO -> Entitiy
-     */
-	public static Member toEntity(MemberDto memberDto) {
-	    return Member.builder()
-	            .memberId(memberDto.getMemberId())
-	            .memberPassword(memberDto.getMemberPassword())
-	            .memberEmail(memberDto.getMemberEmail())
-	            .memberName(memberDto.getMemberName())
-	            .build();
-	}
 	
 	/* 초기값 설정 */
 	@PrePersist
@@ -159,7 +147,18 @@ public class Member {
 	@OneToMany(mappedBy = "member", fetch = FetchType.LAZY)
 	private List<Answer> answers = new ArrayList<>();
 	
-	
+
+	/*
+    * DTO -> Entitiy
+    */
+	public static Member toEntity(MemberDto memberDto) {
+	    return Member.builder()
+	            .memberId(memberDto.getMemberId())
+	            .memberPassword(memberDto.getMemberPassword())
+	            .memberEmail(memberDto.getMemberEmail())
+	            .memberName(memberDto.getMemberName())
+	            .build();
+	}
 	
 	
 	
