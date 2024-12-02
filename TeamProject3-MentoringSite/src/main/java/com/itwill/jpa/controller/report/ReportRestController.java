@@ -8,6 +8,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -18,6 +19,8 @@ import com.itwill.jpa.controller.ResponseStatusCode;
 import com.itwill.jpa.dto.report.ReportDto;
 import com.itwill.jpa.service.ReportService;
 
+import io.swagger.v3.oas.annotations.Operation;
+
 @RestController
 @RequestMapping("/report")
 public class ReportRestController {
@@ -26,6 +29,8 @@ public class ReportRestController {
 	private ReportService reportService;
 	
 	/* 신고등록 */
+	@Operation(summary = "신고 등록")
+	@PostMapping
 	public ResponseEntity<Response> insertReport(@RequestBody ReportDto reportDto){
 	    
 	    // 1. 서비스 호출: 신고 데이터를 저장

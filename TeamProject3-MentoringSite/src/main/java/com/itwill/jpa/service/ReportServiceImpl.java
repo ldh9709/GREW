@@ -21,6 +21,7 @@ public class ReportServiceImpl implements ReportService {
 	@Override
 	public void saveReport(ReportDto reportDto){
 		Report report = Report.toEntity(reportDto);
+		System.out.println(report);
 		reportRepository.save(report);
 	}
 

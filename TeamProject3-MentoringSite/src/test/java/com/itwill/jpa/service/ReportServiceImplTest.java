@@ -12,7 +12,7 @@ class ReportServiceImplTest {
 	@Autowired
 	private ReportService reportService;
 	
-//	@Test
+	@Test
 	void testSaveReport() {
 		ReportDto report = ReportDto.builder()
 				.reportNo(0L)
@@ -43,7 +43,7 @@ class ReportServiceImplTest {
 		System.out.println(reportService.selectReportByUserNo(1L));
 	}
 
-	@Test
+//	@Test
 	void testSelectAll(){
 		System.out.println(reportService.selectReportAll());
 	}
