@@ -26,20 +26,33 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "Report")
+@Table(name = "report")
 public class Report {
 	@Id
-	@SequenceGenerator(name = "report_seq", initialValue = 1, allocationSize = 1)
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "report_seq")
+	@SequenceGenerator(name = "report_no_seq", initialValue = 1, allocationSize = 1)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "report_no_seq")
+	@Column(name="report_no")
 	private Long reportNo;
 	
+	@Column(name="report_type")
 	private String reportType;
+	
+	@Column(name="report_target")
 	private Integer reportTarget;
+	
+	@Column(name="report_reason")
 	private Integer reportReason;
-	@Column(length = 300)
+	
+	@Column(name = "report_content", length = 300)
 	private String reportContent = "";
+	
+	@Column(name="report_date")
 	private LocalDateTime reportDate = LocalDateTime.now();
+	
+	@Column(name="resolved_date")
 	private LocalDateTime resolvedDate;
+	
+	@Column(name="report_status")
 	private Integer reportStatus = 1;
 
 	@ManyToOne(fetch = FetchType.LAZY)
