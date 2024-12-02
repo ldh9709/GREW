@@ -2,7 +2,9 @@ package com.itwill.jpa.dto.alarm;
 
 import java.time.LocalDate;
 
+import com.itwill.jpa.dto.user_information.MemberDto;
 import com.itwill.jpa.entity.alarm.Alarm;
+import com.itwill.jpa.entity.user_information.Member;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -21,7 +23,7 @@ public class AlarmDto {
 	private int isRead;
 	private LocalDate alarmDate;
 	
-	private Long memberNo;
+	private MemberDto memberNo;
 	
 	public static AlarmDto toDto(Alarm alarmEntity) {
 		return AlarmDto.builder()
@@ -32,7 +34,7 @@ public class AlarmDto {
 				.referenceType(alarmEntity.getReferenceType())
 				.isRead(alarmEntity.getIsRead())
 				.alarmDate(alarmEntity.getAlarmDate())
-				.memberNo(alarmEntity.getMember().getMemberNo())
+				.memberNo(MemberDto.toDto(alarmEntity.getMember()))
 				.build();
 	}
 }
