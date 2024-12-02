@@ -10,7 +10,7 @@ public interface AnswerService {
 	//답변수정
 	AnswerDto updateAnswer(AnswerDto answerDto) throws Exception;
 	//답변삭제
-	void deleteAnswer(Long answerNo) throws Exception;
+	AnswerDto deleteAnswer(AnswerDto answerDto) throws Exception;
 	//질문하나에달린답변
 	//추천순
 	List<AnswerDto> findByInquiryAnswerOrderByVotes(Long inquiryNo);

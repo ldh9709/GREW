@@ -26,8 +26,11 @@ public class AnswerServiceImpl implements AnswerService{
 	}
 	/*답변삭제*/
 	@Override
-	public void deleteAnswer(Long answerNo) throws Exception{
-		answerRepository.deleteById(answerNo);
+	public AnswerDto deleteAnswer(AnswerDto answerDto) throws Exception {
+		Answer answer = answerRepository.findById(answerDto.getAnswerNo())
+		        .orElseThrow(() -> new RuntimeException("Answer not found"));
+	    answer.setAnswerStatus(2);  
+	    return AnswerDto.toDto(answerRepository.save(answer));
 	}
 	/*질문 하나에 달린 답변*/
 	/*추천순*/
@@ -86,6 +89,7 @@ public class AnswerServiceImpl implements AnswerService{
 		}
 		return answerDtoList;
 	}
+	
 	
 	
 
