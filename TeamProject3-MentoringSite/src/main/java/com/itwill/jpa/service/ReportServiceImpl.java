@@ -76,6 +76,13 @@ public class ReportServiceImpl implements ReportService {
 			reportRepository.save(report);
 	}
 	
+	/* 신고 출력 (1개) */ 
+	public ReportDto selectReportByreportNo(Long reportNo) {
+		Report report = reportRepository.findById(reportNo).get();
+		ReportDto reportDto = ReportDto.toDto(report);
+		return reportDto;
+	}
+	
 	
 	/* 신고 출력(특정 회원) */
 	@Override
