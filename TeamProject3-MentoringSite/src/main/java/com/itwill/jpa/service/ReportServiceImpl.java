@@ -76,7 +76,7 @@ public class ReportServiceImpl implements ReportService {
 			reportRepository.save(report);
 	}
 	
-	/* 신고 출력 (1개) */ 
+	/* 신고 1개 출력 */ 
 	public ReportDto selectReportByreportNo(Long reportNo) {
 		Report report = reportRepository.findById(reportNo).get();
 		ReportDto reportDto = ReportDto.toDto(report);
@@ -86,8 +86,8 @@ public class ReportServiceImpl implements ReportService {
 	
 	/* 신고 출력(특정 회원) */
 	@Override
-	public List<ReportDto> selectReportByUserNo(Long userNo) {
-		List<Report> reports= reportRepository.findByMemberMemberNo(userNo);
+	public List<ReportDto> selectReportByUserNo(Long memberNo) {
+		List<Report> reports= reportRepository.findByMemberMemberNo(memberNo);
 		List<ReportDto> reportDtos = new ArrayList<ReportDto>();
 		for (Report report : reports) {
 			reportDtos.add(ReportDto.toDto(report));
