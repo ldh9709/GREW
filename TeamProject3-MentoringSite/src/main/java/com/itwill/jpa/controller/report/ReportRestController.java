@@ -57,14 +57,13 @@ public class ReportRestController {
 	
 	/* [어드민] 신고 상태변경(검토중) */
 	@Operation(summary = "신고 상태 변경(검토중)")
-	@PostMapping("/{report_no}/in-progress")
+	@PostMapping("{report_no}/in-progress")
 	public ResponseEntity<Response> updateReportStatusToInPorgress(@PathVariable (value="report_no") Long reportNo){
 		
 		reportService.updateReportStatusToInProgress(reportNo);
 		Response response = new Response();
 		response.setStatus(ResponseStatusCode.UPDATE_REPORT_SUCCESS);
 		response.setMessage(ResponseMessage.UPDATE_REPORT_SUCCESS);
-		response.setData(reportNo);
 		
 		HttpHeaders httpHeaders = new HttpHeaders();
 		httpHeaders.setContentType(new MediaType(MediaType.APPLICATION_JSON, Charset.forName("UTF-8")));
@@ -76,6 +75,42 @@ public class ReportRestController {
 	}
 	
 	/* [어드민] 신고 상태변경(처리완료) */
+	@Operation(summary = "신고 상태 변경(처리완료)")
+	@PostMapping("{report_no}/resolved")
+	public ResponseEntity<Response> updateReportStatusToResolved(@PathVariable (value="report_no") Long reportNo) {
+		reportService.updateReportStatusToResolved(reportNo);
+		
+		Response response = new Response();
+		response.setStatus(ResponseStatusCode.UPDATE_REPORT_SUCCESS);
+		response.setMessage(ResponseMessage.UPDATE_REPORT_SUCCESS);
+		
+		HttpHeaders httpHeaders = new HttpHeaders();
+		httpHeaders.setContentType(new MediaType(MediaType.APPLICATION_JSON, Charset.forName("UTF-8")));
+		
+		ResponseEntity<Response> responseEntity = 
+				new ResponseEntity<Response>(response, httpHeaders, HttpStatus.OK);
+		
+		return responseEntity;
+	}
+	
+	/* [어드민] 신고 상태변경(무고처리) */
+	@Operation(summary = "신고 상태 변경(처리완료)")
+	@PostMapping("{report_no}/false-report")
+	public ResponseEntity<Response> updateReportStatusToFalseReport(@PathVariable (value="report_no") Long reportNo) {
+		reportService.updateReportStatusToResolved(reportNo);
+		
+		Response response = new Response();
+		response.setStatus(ResponseStatusCode.UPDATE_REPORT_SUCCESS);
+		response.setMessage(ResponseMessage.UPDATE_REPORT_SUCCESS);
+		
+		HttpHeaders httpHeaders = new HttpHeaders();
+		httpHeaders.setContentType(new MediaType(MediaType.APPLICATION_JSON, Charset.forName("UTF-8")));
+		
+		ResponseEntity<Response> responseEntity = 
+				new ResponseEntity<Response>(response, httpHeaders, HttpStatus.OK);
+		
+		return responseEntity;
+	}
 	
 	/* 신고 출력(특정회원) */
 	

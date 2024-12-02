@@ -32,6 +32,7 @@ public class ReportServiceImpl implements ReportService {
 	}
 
 	/* [어드민] 신고 상태 변경 : 접수중 */
+	@Transactional
 	@Override
 	public void updateReportStatusToInProgress(Long reportNo) {
 		Report report = reportRepository.findById(reportNo).get();
@@ -57,7 +58,8 @@ public class ReportServiceImpl implements ReportService {
 		reportRepository.save(report);
 	}
 	
-	/* [어드민] 신고 상태 변경 : 처리완료(무고) */
+	/* [어드민] 신고 상태 변경 : 무고처리 */
+	@Transactional
 	@Override
 	public void updateReportStatusToFalseReport(Long reportNo) {
 		Report report = reportRepository.findById(reportNo).get();
@@ -73,6 +75,7 @@ public class ReportServiceImpl implements ReportService {
 			report.setReportStatus(5);
 			reportRepository.save(report);
 	}
+	
 	
 	/* 신고 출력(특정 회원) */
 	@Override
