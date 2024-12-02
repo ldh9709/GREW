@@ -56,7 +56,7 @@ public class Vote {
     public static Vote toEntity(VoteDto voteDto) {
         return Vote.builder()
                 .voteNo(voteDto.getVoteNo())
-                .voteTyspe(voteDto.getVoteType())
+                .voteType(voteDto.getVoteType())
                 .voteDate(voteDto.getVoteDate())
                 .member(Member.toEntity(voteDto.getMember()))
                 .answer(Answer.toEntity(voteDto.getAnswer()))
