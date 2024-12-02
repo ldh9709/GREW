@@ -37,13 +37,13 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "Member")
+@Table(name = "member")
 public class Member {
 	
 
 	@Id//PK설정
-	@SequenceGenerator(name = "member_no_seq", initialValue = 1, allocationSize = 1)
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "member_no_seq")
+	@SequenceGenerator(name = "member_no_SEQ", initialValue = 1, allocationSize = 1)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "member_no_SEQ")
 	@Column(name = "member_no")
 	private Long memberNo;//멤버 번호 PK
 	

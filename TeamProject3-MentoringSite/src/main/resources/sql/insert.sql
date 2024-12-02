@@ -14,3 +14,5 @@ INSERT INTO member(member_no,member_id,member_password,member_email,member_name,
 VALUES(member_seq.nextval,'ggg','ggg','ggg@naver.com','양한수','Mentee',6300,1,sysdate,0);
 INSERT INTO member(member_no,member_id,member_password,member_email,member_name,member_role,member_points,member_status,member_join_date,member_report_count)
 VALUES(member_seq.nextval,'hhh','hhh','hhh@naver.com','이도현','Mentee',4000,1,sysdate,0);
+
+commit;
