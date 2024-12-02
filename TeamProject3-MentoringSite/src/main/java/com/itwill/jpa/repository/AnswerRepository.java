@@ -4,9 +4,10 @@ import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.stereotype.Repository;
 
 import com.itwill.jpa.entity.bullentin_board.Answer;
-
+@Repository
 public interface AnswerRepository extends JpaRepository<Answer, Long>{
 	/*질문 하나에 달린 답변 리스트*/
 	/*추천순*/
@@ -51,7 +52,7 @@ public interface AnswerRepository extends JpaRepository<Answer, Long>{
 		List<Answer> findByCategoryAnswerOrderByDate(Long categoryNo);
 
 	/*최근 3일동안 추천 많은 답변*/
-	@Query("SELECT a FROM Answer a " +
+	/*@Query("SELECT a FROM Answer a " +
 		       "JOIN a.inquiry i " +
 		       "LEFT JOIN a.votes v " +
 		       "WHERE v.voteDate >= SYSDATE - 3 " + 
@@ -59,5 +60,5 @@ public interface AnswerRepository extends JpaRepository<Answer, Long>{
 		       "GROUP BY a.answerNo " +
 		       "ORDER BY COUNT(v) DESC")
 		List<Answer> findByAnswerOrderByVoteDate();
-
+*/
 }
