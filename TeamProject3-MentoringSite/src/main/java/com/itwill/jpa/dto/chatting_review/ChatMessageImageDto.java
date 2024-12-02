@@ -1,5 +1,8 @@
 package com.itwill.jpa.dto.chatting_review;
 
+import com.itwill.jpa.entity.chatting_review.ChatMessage;
+import com.itwill.jpa.entity.chatting_review.ChatMessageImage;
+
 import lombok.*;
 
 @Builder
@@ -10,8 +13,14 @@ public class ChatMessageImageDto {
 
     private Long imageNo;
     private String imageName;
-    private Long chatMessageNo; // chatMessage의 ID만 필요한 경우
+    private ChatMessageDto chatMessage; // chatMessage의 ID만 필요한 경우
 
-    // 엔티티 -> DTO 변환은 엔티티에서 처리
-    // DTO -> 엔티티 변환은 엔티티에서 처리
+    // DTO -> 엔티티 변환
+    public static ChatMessageImageDto toDto(ChatMessageImage chatMessageImagedto) {
+        return ChatMessageImageDto.builder()
+                .imageNo(chatMessageImagedto.getImageNo())
+                .imageName(chatMessageImagedto.getImageName())
+                .chatMessage(ChatMessageDto.toDto(chatMessageImagedto.getChatMessage())) // ChatMessage 객체를 직접 전달
+                .build();
+    }
 }

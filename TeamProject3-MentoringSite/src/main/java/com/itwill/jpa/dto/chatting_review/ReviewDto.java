@@ -2,6 +2,8 @@ package com.itwill.jpa.dto.chatting_review;
 
 import java.time.LocalDateTime;
 
+import com.itwill.jpa.entity.chatting_review.Review;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -19,5 +21,16 @@ public class ReviewDto {
     private Integer reviewScore;
     private LocalDateTime reviewDate; // 엔티티에서 자동 생성된 reviewDate
 
-    //private String memberId; // memberId만 필요한 경우 사용할 수 있음
+    private MentoringRequestDto mentoringRequest;
+    
+    public static ReviewDto toDto(Review reviewEntity) {
+        return ReviewDto.builder()
+                .reviewNo(reviewEntity.getReviewNo())
+                .reviewTitle(reviewEntity.getReviewTitle())
+                .reviewContent(reviewEntity.getReviewContent())
+                .reviewScore(reviewEntity.getReviewScore())
+                .reviewDate(reviewEntity.getReviewDate())
+                .mentoringRequest(MentoringRequestDto.toDto(reviewEntity.getMentoringRequest()))
+                .build();
+    }
 }

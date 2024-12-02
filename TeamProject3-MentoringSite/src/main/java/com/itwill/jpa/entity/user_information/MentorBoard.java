@@ -20,20 +20,20 @@ public class MentorBoard {
     @Id
     @SequenceGenerator(name = "mentorboard_seq", initialValue = 1, allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "mentorboard_SEQ")
-    @JoinColumn(name = "mentor_board_no")
+    @Column(name = "mentor_board_no")
     private Long mentorBoardNo;
 
-    @JoinColumn(name = "mentor_board_title")
+    @Column(name = "mentor_board_title" ,nullable = false)
     private String mentorBoardTitle;
     
-    @JoinColumn(name = "mentor_board_content")
+    @Column(name = "mentor_board_content" ,nullable = false)
     private String mentorBoardContent;
     
-    @JoinColumn(name = "mentor_board_image")
+    @Column(name = "mentor_board_image" ,nullable = false)
     private String mentorBoardImage;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "member_no")
+    @JoinColumn(name = "member_no" ,nullable = false)
     private Member member;
     
     

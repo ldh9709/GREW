@@ -50,20 +50,22 @@ public class MemberServiceImpl implements MemberService {
 	
 	/***** 회원 수정 ****/
 	@Override
-	public Member updateMember(Member member) {
+	public Member updateMember(MemberDto memberDto) {
 		
+		//MemberDto Entity로 변경
+		Member updateMember = Member.toEntity(memberDto);
 		//DB에 객체 업데이트(기존 객체 존재 시 업데이트됨)
-		return memberRepository.save(member);
+		return memberRepository.save(updateMember);
 	}
 	
 	/***** 회원 삭제 *****/
 	@Override
-	public Member deleteMember(String memberId) {
+	public Member deleteMember(Long memberNo) {
 		//ID로 멤버 찾기
-		Member findMember = memberRepository.findMemberByMemberId(memberId);
+		Member findMember = memberRepository.findByMemberNo(memberNo);
 		
 		//DB에서 멤버 객체 삭제
-		memberRepository.deleteMemberByMemberId(memberId);
+		memberRepository.deleteById(memberNo);;
 		
 		//삭제한 멤버 객체 반환
 		return findMember;
@@ -71,10 +73,10 @@ public class MemberServiceImpl implements MemberService {
 	
 	/***** 회원 상세 *****/
 	@Override
-	public Member getMember(String memberId) {
+	public Member getMember(Long memberNo) {
 		
 		//ID로 멤버 탐색
-		return memberRepository.findMemberByMemberId(memberId);
+		return memberRepository.findByMemberNo(memberNo);
 	}
 
 }
