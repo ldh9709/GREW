@@ -23,8 +23,8 @@ public class InquiryDto {
     private String inquiryTitle;
     private String inquiryContent;
     private LocalDate inquiryDate;
-    private String inquiryStatus;
-    private int inquiryViews;
+    private Integer inquiryStatus;
+    private Integer inquiryViews;
     
     private CategoryDto category;
     private MemberDto member;

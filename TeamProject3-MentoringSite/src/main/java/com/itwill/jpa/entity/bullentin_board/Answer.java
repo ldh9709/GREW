@@ -1,6 +1,7 @@
 package com.itwill.jpa.entity.bullentin_board;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import com.itwill.jpa.dto.bulletin_board.AnswerDto;
 import com.itwill.jpa.entity.user_information.Member;
@@ -13,6 +14,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -29,22 +31,22 @@ import lombok.NoArgsConstructor;
 public class Answer {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "answer_seq")
-    @SequenceGenerator(name = "answer_seq", allocationSize = 1, initialValue = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "answer_no_SEQ")
+    @SequenceGenerator(name = "answer_no_SEQ", allocationSize = 1, initialValue = 1)
     @Column(name = "answer_no")
     private Long answerNo;  // PK, 시퀀스로 자동 생성
 
-    @Column(name = "answer_content", nullable = false)
-    private String answerContent;  // 답변 내용
+    @Column(name = "answer_content", nullable = false, length = 500)
+    private String answerContent = "";  // 답변 내용
 
-    @Column(name = "answer_time", nullable = false)
-    private LocalDate answerTime;  // 답변 작성 시간 (LocalDate)
+    @Column(name = "answer_date", nullable = false)
+    private LocalDate answerDate = LocalDate.now();  // 답변 작성 시간 (LocalDate)
 
     @Column(name = "answer_accept", nullable = false)
-    private String answerAccept;  // 채택 여부 (예: "Y", "N")
+    private Integer answerAccept = 1;  // 채택 여부 (예: "Y", "N")
 
     @Column(name = "answer_status", nullable = false)
-    private String answerStatus;  // 답글 삭제 여부 (active 또는 inactive)
+    private Integer answerStatus = 1;  // 답글 삭제 여부 (1 또는2)
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_no")
@@ -54,6 +56,15 @@ public class Answer {
     @JoinColumn(name = "inquiry_no")
     private Inquiry inquiry;  // 문의 (Inquiry 엔티티와 관계)
 
+    
+    /* 초기값 설정 */
+    public void setDefaultValues() {
+    	if(this.answerContent==null) this.answerContent = "";
+    	if(this.answerDate==null) this.answerDate = LocalDate.now();
+    	if(this.answerAccept==null) this.answerAccept = 1;
+    	if(this.answerStatus==null) this.answerStatus = 1;
+    }
+    
     /*
      * DTO -> Entity 변환 메소드
      */
@@ -61,11 +72,16 @@ public class Answer {
         return Answer.builder()
                 .answerNo(answerDto.getAnswerNo())
                 .answerContent(answerDto.getAnswerContent())
-                .answerTime(answerDto.getAnswerTime())
+                .answerDate(answerDto.getAnswerDate())
                 .answerAccept(answerDto.getAnswerAccept())
                 .answerStatus(answerDto.getAnswerStatus())
                 .member(Member.toEntity(answerDto.getMember()))
                 .inquiry(Inquiry.toEntity(answerDto.getInquiry()))
                 .build();
     }
+    
+    /* 한 개의 답변당 여러개의 좋아요/싫어요 보유가능 */
+    @OneToMany(mappedBy = "answer", fetch = FetchType.LAZY)
+    private List<Vote> votes; 
+    
 }

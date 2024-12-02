@@ -18,9 +18,9 @@ public class AnswerDto {
 
     private Long answerNo;         // answer_no (PK)
     private String answerContent;  // answer_content
-    private LocalDate answerTime;  // answer_time
-    private String answerAccept;   // answer_accept (채택여부)
-    private String answerStatus;   // answer_status (답글삭제여부, 'active' or 'inactive')
+    private LocalDate answerDate;  // answer_time
+    private Integer answerAccept;   // answer_accept (채택여부)
+    private Integer answerStatus;   // answer_status (답글삭제여부, '1' or '2')
     private MemberDto member;           // user_no (FK)
     private InquiryDto inquiry;        // inquiry_no (FK)
 
@@ -32,7 +32,7 @@ public class AnswerDto {
         return AnswerDto.builder()
                 .answerNo(answerEntity.getAnswerNo())
                 .answerContent(answerEntity.getAnswerContent())
-                .answerTime(answerEntity.getAnswerTime())
+                .answerDate(answerEntity.getAnswerDate())
                 .answerAccept(answerEntity.getAnswerAccept())
                 .answerStatus(answerEntity.getAnswerStatus())
                 .member(MemberDto.toDto(answerEntity.getMember()))  
