@@ -31,8 +31,8 @@ import lombok.NoArgsConstructor;
 @Table(name="alarm")
 public class Alarm {
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "alarm_seq")	
-	@SequenceGenerator(name="alarm_seq",allocationSize = 1, initialValue = 1)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "alarm_no_SEQ")	
+	@SequenceGenerator(name="alarm_no_SEQ",allocationSize = 1, initialValue = 1)
 	@Column(name="alarm_no")
 	private Long alarmNo;
 	/*
@@ -65,7 +65,8 @@ public class Alarm {
 				.referenceNo(alarmDto.getReferenceNo())
 				.referenceType(alarmDto.getReferenceType())
 				.isRead(alarmDto.getIsRead())
-				.alarmDate(alarmDto.getAlarmDate())				
+				.alarmDate(alarmDto.getAlarmDate())	
+				.member(Member.toEntity(alarmDto.getMemberNo()))
 				.build();
 		
 	}
