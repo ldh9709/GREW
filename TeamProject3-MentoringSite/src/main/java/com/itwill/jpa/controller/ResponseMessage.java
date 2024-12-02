@@ -13,6 +13,13 @@ public class ResponseMessage {
     public static final String LOGIN_MEMBER_SUCCESS = "회원 로그인 성공";
     public static final String LOGOUT_MEMBER_SUCCESS = "회원 로그 아웃";
     
+	/******************* REPORT 메시지 ************************/
+	public static final String CREATED_REPORT_SUCCESS = "신고 등록 성공";
+	public static final String READ_REPORT_SUCCESS = "신고 조회 성공";
+	public static final String READ_REPORT_LIST_SUCCESS = "신고 리스트 성공";
+	public static final String UPDATE_REPORT_SUCCESS = "신고 상태변경 성공";
+	
+    
     public static final String LOGIN_FAIL_NOT_FOUND_MEMBER = "회원을 찾을 수 없습니다.";
     public static final String LOGIN_FAIL_PASSWORD_MISMATCH_MEMBER = "회원 패스워드 불일치";
     public static final String CREATE_FAIL_EXISTED_MEMBER = "회원 아이디 중복";
