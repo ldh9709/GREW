@@ -8,7 +8,9 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -25,8 +27,8 @@ import lombok.NoArgsConstructor;
 public class ChatMessageImage {
 
     @Id
-    @SequenceGenerator(name = "image_no_seq", initialValue = 1, allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "chat_message_image_seq")
+    @SequenceGenerator(name = "image_no_SEQ", initialValue = 1, allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "image_no_SEQ")
     @Column(name="image_no")
     private Long imageNo;
     
@@ -34,15 +36,15 @@ public class ChatMessageImage {
     private String imageName;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @Column(name="chat_message_no", nullable=false)
-    private ChatMessage chatMessageno; // 하나의 chatMessage에 여러 개의 ChatMessageImage가 속함
+    @JoinColumn(name="chat_message_no", nullable=false)
+    private ChatMessage chatMessage; // 하나의 chatMessage에 여러 개의 ChatMessageImage가 속함
 
     // 엔티티 -> DTO 변환
     public static ChatMessageImage toEntity(ChatMessageImageDto chatMessageImageDto) {
         return ChatMessageImage.builder()
                 .imageNo(chatMessageImageDto.getImageNo())
                 .imageName(chatMessageImageDto.getImageName())
-                .chatMessageno(ChatMessage.toEntity(chatMessageImageDto.getChatMessageNo())) // chatMessageNo만 담기
+                .chatMessage(ChatMessage.toEntity(chatMessageImageDto.getChatMessage())) // chatMessageNo만 담기
                 .build();
     }
 

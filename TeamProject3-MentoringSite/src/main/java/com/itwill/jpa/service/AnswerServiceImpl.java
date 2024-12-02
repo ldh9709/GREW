@@ -27,8 +27,7 @@ public class AnswerServiceImpl implements AnswerService{
 	/*답변삭제*/
 	@Override
 	public AnswerDto deleteAnswer(AnswerDto answerDto) throws Exception {
-		Answer answer = answerRepository.findById(answerDto.getAnswerNo())
-		        .orElseThrow(() -> new RuntimeException("Answer not found"));
+		Answer answer = answerRepository.findById(answerDto.getAnswerNo()).get();
 	    answer.setAnswerStatus(2);  
 	    return AnswerDto.toDto(answerRepository.save(answer));
 	}
@@ -81,13 +80,14 @@ public class AnswerServiceImpl implements AnswerService{
 	/*최근 3일간 추천 많은 답변*/
 	@Override
 	public List<AnswerDto> findByAnswerOrderByVoteDate() {
-		List<Answer> answerEntityList = 
+		/*List<Answer> answerEntityList = 
 				answerRepository.findByAnswerOrderByVoteDate();
 		List<AnswerDto> answerDtoList = new ArrayList<>();
 		for(Answer answerEntity:answerEntityList) {
 			answerDtoList.add(AnswerDto.toDto(answerEntity));
 		}
-		return answerDtoList;
+		return answerDtoList;*/
+		return null;
 	}
 	
 	

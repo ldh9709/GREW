@@ -13,11 +13,11 @@ import java.util.List;
 public interface InterestRepository extends JpaRepository<Interest, Long> {
 
     // 특정 사용자와 관련된 관심사를 조회
-    List<Interest> findByMember(Member member);
+    //List<Interest> findByMember(Member member);
 
     // 특정 카테고리와 관련된 관심사를 조회
-    List<Interest> findByCategory(Category category);
+    //List<Interest> findByCategory(Category category);
 
     // 특정 사용자와 카테고리를 기반으로 관심사 조회
-    List<Interest> findByMemberAndCategory(Member member, Category category);
+    //List<Interest> findByMemberAndCategory(Member member, Category category);
 }
