@@ -17,7 +17,7 @@ import lombok.NoArgsConstructor;
 @Builder
 public class MentoringRequestDto {
 	private Long requestNo;
-	private String requestStatus;
+	private int requestStatus;
 	private LocalDateTime requestDate;
 	
 	private MemberDto mentee;

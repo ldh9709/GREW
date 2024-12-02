@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 INSERT INTO member(member_no,member_id,member_password,member_email,member_name,member_role,member_points,member_status,member_join_date,member_report_count)
 VALUES(member_seq.nextval,'aaa','aaa','aaa@naver.com','김진영','Mentee',12000,1,sysdate,0);
 INSERT INTO member(member_no,member_id,member_password,member_email,member_name,member_role,member_points,member_status,member_join_date,member_report_count)
@@ -14,3 +15,23 @@ INSERT INTO member(member_no,member_id,member_password,member_email,member_name,
 VALUES(member_seq.nextval,'ggg','ggg','ggg@naver.com','양한수','Mentee',6300,1,sysdate,0);
 INSERT INTO member(member_no,member_id,member_password,member_email,member_name,member_role,member_points,member_status,member_join_date,member_report_count)
 VALUES(member_seq.nextval,'hhh','hhh','hhh@naver.com','이도현','Mentee',4000,1,sysdate,0);
+=======
+INSERT INTO member(member_no,member_id,member_password,member_email,member_name,member_role,member_points,member_status,member_join_date,member_report_count)
+VALUES(member_no_SEQ.nextval,'aaa','aaa','aaa@naver.com','김진영','Mentee',12000,1,sysdate,0);
+INSERT INTO member(member_no,member_id,member_password,member_email,member_name,member_role,member_points,member_status,member_join_date,member_report_count)
+VALUES(member_no_SEQ.nextval,'bbb','bbb','bbb@naver.com','김찬영','Mentee',500,1,sysdate,0);
+INSERT INTO member(member_no,member_id,member_password,member_email,member_name,member_role,member_points,member_status,member_join_date,member_report_count)
+VALUES(member_no_SEQ.nextval,'ccc','ccc','ccc@naver.com','나문정','Mentee',5000,1,sysdate,0);
+INSERT INTO member(member_no,member_id,member_password,member_email,member_name,member_role,member_points,member_status,member_join_date,member_report_count)
+VALUES(member_no_SEQ.nextval,'ddd','ddd','ddd@naver.com','문준형','Mentee',700,1,sysdate,0);
+INSERT INTO member(member_no,member_id,member_password,member_email,member_name,member_role,member_points,member_status,member_join_date,member_report_count)
+VALUES(member_no_SEQ.nextval,'eee','eee','eee@naver.com','박은미','Mentee',9000,1,sysdate,0);
+INSERT INTO member(member_no,member_id,member_password,member_email,member_name,member_role,member_points,member_status,member_join_date,member_report_count)
+VALUES(member_no_SEQ.nextval,'fff','fff','fff@naver.com','송대현','Mentee',5500,1,sysdate,0);
+INSERT INTO member(member_no,member_id,member_password,member_email,member_name,member_role,member_points,member_status,member_join_date,member_report_count)
+VALUES(member_no_SEQ.nextval,'ggg','ggg','ggg@naver.com','양한수','Mentee',6300,1,sysdate,0);
+INSERT INTO member(member_no,member_id,member_password,member_email,member_name,member_role,member_points,member_status,member_join_date,member_report_count)
+VALUES(member_no_SEQ.nextval,'hhh','hhh','hhh@naver.com','이도현','Mentee',4000,1,sysdate,0);
+
+commit;
+>>>>>>> refs/heads/master

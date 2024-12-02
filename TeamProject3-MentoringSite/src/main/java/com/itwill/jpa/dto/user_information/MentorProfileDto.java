@@ -12,8 +12,13 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class MentorProfileDto {
+	private Long mentorProfileNo;
     private String mentorIntroduce;
+    private Integer mentorRating;
+    private Integer mentorMentoringCount;
     private String mentorImage;
+    private Integer mentorActivityCount;
+    private Integer mentorFollowCount;
     private MemberDto member;
     private CategoryDto category;
 
@@ -22,8 +27,12 @@ public class MentorProfileDto {
      */
     public static MentorProfileDto toDto(MentorProfile mentorProfileEntity) {
         return MentorProfileDto.builder()
-                .mentorIntroduce(mentorProfileEntity.getMentorIntroduce())
-                .mentorImage(mentorProfileEntity.getMentorImage())
+        		.mentorProfileNo(mentorProfileEntity.getMentorProfileNo())
+        		.mentorIntroduce(mentorProfileEntity.getMentorIntroduce())
+        		.mentorMentoringCount(mentorProfileEntity.getMentorMentoringCount())
+        		.mentorImage(mentorProfileEntity.getMentorImage())
+        		.mentorActivityCount(mentorProfileEntity.getMentorActivityCount())
+                .mentorFollowCount(mentorProfileEntity.getMentorFollowCount())
                 .member(MemberDto.toDto(mentorProfileEntity.getMember()))
                 .category(CategoryDto.toDto(mentorProfileEntity.getCategory()))
                 .build();

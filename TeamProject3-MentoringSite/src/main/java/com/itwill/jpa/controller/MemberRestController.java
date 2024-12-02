@@ -18,8 +18,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.itwill.jpa.dto.user_information.MemberDto;
 import com.itwill.jpa.entity.user_information.Member;
 import com.itwill.jpa.response.Response;
-import com.itwill.jpa.response.ResponseMessage;
-import com.itwill.jpa.response.ResponseStatusCode;
 import com.itwill.jpa.service.MemberService;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -68,18 +66,18 @@ public class MemberRestController {
 	@PostMapping("/login")
 	public ResponseEntity<Response> loginMember(@RequestBody MemberDto memberDto, HttpSession session) {
 		
-		Member loginMmember = memberService.loginMember(memberDto.getMemberId(), memberDto.getMemberPassword());
+		Member loginMember = memberService.loginMember(memberDto.getMemberId(), memberDto.getMemberPassword());
 		
-		session.setAttribute("loginMember", loginMmember);
+		session.setAttribute("loginMember", loginMember);
 		
 		//응답 객체 생성
 		Response response = new Response();
 				
-		if(loginMmember != null) {
+		if(loginMember != null) {
 			//응답객체에 코드, 메시지, 객체 설정
 			response.setStatus(ResponseStatusCode.LOGIN_MEMBER_SUCCESS);
 			response.setMessage(ResponseMessage.LOGIN_MEMBER_SUCCESS);
-			response.setData(loginMmember);
+			response.setData(loginMember);
 		}
 		
 		//인코딩 타입 설정
@@ -119,7 +117,24 @@ public class MemberRestController {
 	@Operation(summary = "회원 정보 보기")
 	@GetMapping("/{memberNo}")
 	public ResponseEntity<Response> getMember(@PathVariable(name = "memberNo") Long memberNo, HttpSession session) {
-		return null;
+		Member loginMember = memberService.getMember(memberNo);
+		
+		Response response = new Response();
+		
+		if(loginMember != null) {
+			//응답객체에 코드, 메시지, 객체 설정
+			response.setStatus(ResponseStatusCode.LOGIN_MEMBER_SUCCESS);
+			response.setMessage(ResponseMessage.LOGIN_MEMBER_SUCCESS);
+			response.setData(loginMember);
+		}
+		
+		HttpHeaders httpHeaders=new HttpHeaders();
+		httpHeaders.setContentType(new MediaType(MediaType.APPLICATION_JSON,Charset.forName("UTF-8")));
+		
+		ResponseEntity<Response> responseEntity = 
+				new ResponseEntity<Response>(response, httpHeaders, HttpStatus.OK);
+		
+		return responseEntity;
 	}
 	
 	

@@ -12,12 +12,12 @@ public interface MemberService {
 	Member loginMember(String memberId, String memberPassword);
 	
 	//회원수정
-	Member updateMember(Member member);
+	Member updateMember(MemberDto memberDto);
 	
 	//회원삭제
-	Member deleteMember(String memberId);
+	Member deleteMember(Long memberNo);
 	
 	//회원상세
-	Member getMember(String memberId);
+	Member getMember(Long memberNo);
 	
 }

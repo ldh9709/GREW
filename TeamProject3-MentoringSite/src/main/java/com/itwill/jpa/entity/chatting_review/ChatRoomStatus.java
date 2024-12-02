@@ -26,15 +26,15 @@ import lombok.NoArgsConstructor;
 @Table(name = "ChatRoomStatus")
 public class ChatRoomStatus {
 	@Id
-	@SequenceGenerator(name = "ChatRoomStatus_chat_room_status_no_SEQ", sequenceName = "ChatRoomStatus_chat_room_status_no_SEQ", initialValue = 1, allocationSize = 1)
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ChatRoomStatus_chat_room_status_no_SEQ")
-    @Column(name = "chat_room_status_no")
+	@SequenceGenerator(name = "chat_room_status_no_SEQ", sequenceName = "chat_room_status_no_SEQ", initialValue = 1, allocationSize = 1)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "chat_room_status_no_SEQ")
+    @Column(name = "chat_room_status_no", nullable = false)
     private Long chatRoomStatusNo;
 
-    @Column(name = "chat_room_name")
+    @Column(name = "chat_room_name", nullable = false)
     private String chatRoomName;
 
-    @Column(name = "chat_room_status")
+    @Column(name = "chat_room_status", nullable = false)
     private Integer chatRoomStatus;
 
     @ManyToOne(fetch = FetchType.LAZY)

@@ -13,6 +13,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CategoryDto {
+	
+	private Long categoryNo;
     private String categoryName;
     private Integer categoryLevel;
 
@@ -21,6 +23,8 @@ public class CategoryDto {
      */
     public static CategoryDto toDto(Category categoryEntity) {
         return CategoryDto.builder()
+        		
+        		.categoryNo(categoryEntity.getCategoryNo())
                 .categoryName(categoryEntity.getCategoryName())
                 .categoryLevel(categoryEntity.getCategoryLevel())
                 .build();
