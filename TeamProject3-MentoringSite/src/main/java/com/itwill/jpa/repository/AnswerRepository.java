@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import com.itwill.jpa.entity.bullentin_board.Answer;
@@ -18,7 +19,7 @@ public interface AnswerRepository extends JpaRepository<Answer, Long>{
 		       "AND a.answerStatus = 1 " +
 		       "GROUP BY a.answerNo " +
 		       "ORDER BY COUNT(v) DESC")
-		List<Answer> findByInquiryAnswerOrderByVotes(Long inquiryNo);
+		List<Answer> findByInquiryAnswerOrderByVotes(@Param("inquiryNo") Long inquiryNo);
 
 	
 	/*최신순*/
@@ -27,7 +28,7 @@ public interface AnswerRepository extends JpaRepository<Answer, Long>{
 		       "WHERE i.inquiryNo = :inquiryNo " +
 		       "AND a.answerStatus = 1 " + 
 		       "ORDER BY a.answerDate DESC")
-		List<Answer> findByInquiryAnswerOrderByDate(Long inquiryNo);
+		List<Answer> findByInquiryAnswerOrderByDate(@Param("inquiryNo") Long inquiryNo);
 
 	
 	/*카테고리별 답변 리스트(검색)*/
@@ -40,7 +41,7 @@ public interface AnswerRepository extends JpaRepository<Answer, Long>{
 		       "AND a.answerStatus = 1 " + 
 		       "GROUP BY a.answerNo " +
 		       "ORDER BY COUNT(v) DESC")
-		List<Answer> findByCategoryAnswerOrderByVotes(Long categoryNo);
+		List<Answer> findByCategoryAnswerOrderByVotes(@Param("categoryNo") Long categoryNo);
 
 	/*최신순*/
 	@Query("SELECT a FROM Answer a " +
@@ -49,16 +50,16 @@ public interface AnswerRepository extends JpaRepository<Answer, Long>{
 		       "WHERE c.categoryNo = :categoryNo " +
 		       "AND a.answerStatus =1 "+
 		       "ORDER BY a.answerDate DESC")
-		List<Answer> findByCategoryAnswerOrderByDate(Long categoryNo);
+		List<Answer> findByCategoryAnswerOrderByDate(@Param("categoryNo") Long categoryNo);
 
 	/*최근 3일동안 추천 많은 답변*/
-	/*@Query("SELECT a FROM Answer a " +
-		       "JOIN a.inquiry i " +
-		       "LEFT JOIN a.votes v " +
-		       "WHERE v.voteDate >= SYSDATE - 3 " + 
-		       "AND a.answerStatus = 1 " +
-		       "GROUP BY a.answerNo " +
-		       "ORDER BY COUNT(v) DESC")
+	@Query(value = "SELECT a FROM Answer a " +
+               "JOIN a.inquiry i " +
+               "INNER JOIN a.votes v " +
+               "WHERE v.voteDate >= SYSDATE - 3 " + 
+               "AND a.answerStatus = 1 " +
+               "GROUP BY a.answerNo " +
+               "ORDER BY COUNT(v) DESC", nativeQuery = true)  //jpql엔 sysdate 사용불가하기 때문에 nativeQuery로 오라클의 sql사용
 		List<Answer> findByAnswerOrderByVoteDate();
-*/
+
 }
