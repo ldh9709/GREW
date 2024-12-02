@@ -40,7 +40,7 @@ public class MentoringRequest {
 	private Long requestNo;
 	
 	@Column(name = "request_status", nullable = false)
-	private String requestStatus;
+	private int requestStatus;
 	
 	@Column(name = "request_date", updatable = false)
 	@CreationTimestamp
