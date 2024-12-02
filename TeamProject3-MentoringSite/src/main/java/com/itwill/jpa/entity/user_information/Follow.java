@@ -25,12 +25,12 @@ public class Follow {
 
     // 팔로우를 한 사용자(멘티)
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "follower_member")
+    @JoinColumn(name = "follower_member", nullable = false)
     private Member followerMember;
 
  // 팔로우 대상 사용자(멘토)
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "followed_member") 
+    @JoinColumn(name = "followed_member", nullable = false) 
     private Member followedMember;
  
     /*

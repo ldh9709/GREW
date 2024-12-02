@@ -56,7 +56,7 @@ public class Report {
 	private Integer reportStatus;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "member_no")
+	@JoinColumn(name = "member_no", nullable = false)
 	private Member member;
 	
 	/* 초기값 설정 */
