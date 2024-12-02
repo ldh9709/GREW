@@ -1,6 +1,7 @@
 package com.itwill.jpa.entity.chatting_review;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.annotations.CreationTimestamp;
@@ -33,12 +34,12 @@ import lombok.NoArgsConstructor;
 @Table(name = "MentoringRequest")
 public class MentoringRequest {
 	@Id
-	@SequenceGenerator(name = "MentoringRequest_request_no_SEQ", sequenceName = "MentoringRequest_request_no_SEQ", initialValue = 1, allocationSize = 1)
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "MentoringRequest_request_no_SEQ")
-	@Column(name = "request_no")
+	@SequenceGenerator(name = "request_no_SEQ", sequenceName = "request_no_SEQ", initialValue = 1, allocationSize = 1)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "request_no_SEQ")
+	@Column(name = "request_no", nullable = false)
 	private Long requestNo;
 	
-	@Column(name = "request_status")
+	@Column(name = "request_status", nullable = false)
 	private String requestStatus;
 	
 	@Column(name = "request_date", updatable = false)
@@ -54,7 +55,10 @@ public class MentoringRequest {
     private Member mentor;
 	
     @OneToMany(mappedBy = "mentoringRequest", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
-    private List<Review> reviews;
+    private List<Review> reviews = new ArrayList<>();
+    
+    @OneToMany(mappedBy = "mentoringRequest", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
+    private List<ChatRoom> chatRooms = new ArrayList<>();
 	
     public static MentoringRequest toEntity(MentoringRequestDto mentoringRequestDto) {
         return MentoringRequest.builder()
