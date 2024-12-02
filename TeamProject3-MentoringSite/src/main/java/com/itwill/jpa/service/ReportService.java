@@ -8,9 +8,10 @@ import java.util.List;
 public interface ReportService {
 	
 	void saveReport(ReportDto reportDto);
-	void updateReportStatusToCancel(Long reportNo);
 	void updateReportStatusToInProgress(Long reportNo);
 	void updateReportStatusToResolved(Long reportNo);
+	void updateReportStatusToFalseReport(Long reportNo);
+	void updateReportStatusToCancel(Long reportNo);
 	public List<ReportDto> selectReportByUserNo(Long userNo);
 	public List<ReportDto> selectReportAll();
 }

@@ -17,7 +17,7 @@ import lombok.NoArgsConstructor;
 public class ReportDto {
 	private Long reportNo;
 	private String reportType;
-	private Integer reportTarget;
+	private Long reportTarget;
 	private Integer reportReason;
 	private String reportContent;
 	private LocalDateTime reportDate;

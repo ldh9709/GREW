@@ -1,21 +1,27 @@
 package com.itwill.jpa.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import com.itwill.jpa.dto.report.ReportDto;
-import com.itwill.jpa.entity.report.Report;
-import com.itwill.jpa.repository.ReportRepository;
-
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.itwill.jpa.dto.report.ReportDto;
+import com.itwill.jpa.entity.report.Report;
+import com.itwill.jpa.entity.user_information.Member;
+import com.itwill.jpa.repository.MemberRepository;
+import com.itwill.jpa.repository.ReportRepository;
 
 @Service
 public class ReportServiceImpl implements ReportService {
 
 	@Autowired
 	private ReportRepository reportRepository;
+	
+	@Autowired
+	private MemberRepository memberRepository;
 	
 	/*신고등록*/
 	@Override
@@ -34,19 +40,40 @@ public class ReportServiceImpl implements ReportService {
 	}
 	
 	/* [어드민] 신고 상태 변경 : 처리완료 */
+	@Transactional
 	@Override
 	public void updateReportStatusToResolved(Long reportNo) {
 		Report report = reportRepository.findById(reportNo).get();
 		report.setReportStatus(3);
+		
+		//멤버 신고 카운트 증가
+		if(report.getReportType().equals("USER")) {
+			memberRepository.incrementReportCount(report.getReportTarget());
+		}
+
+		/* report type, target 찾아서 상태 변경 내용 추가*/
+		
 		report.setResolvedDate(LocalDateTime.now());
 		reportRepository.save(report);
 	}
 	
 	/* [어드민] 신고 상태 변경 : 처리완료(무고) */
+	@Override
 	public void updateReportStatusToFalseReport(Long reportNo) {
-		
+		Report report = reportRepository.findById(reportNo).get();
+		report.setReportStatus(4);
+		report.setResolvedDate(LocalDateTime.now());
+		reportRepository.save(report);
 	}
-
+	
+	/*신고 취소*/
+	@Override
+	public void updateReportStatusToCancel(Long reportNo) {
+			Report report = reportRepository.findById(reportNo).get();
+			report.setReportStatus(5);
+			reportRepository.save(report);
+	}
+	
 	/* 신고 출력(특정 회원) */
 	@Override
 	public List<ReportDto> selectReportByUserNo(Long userNo) {
@@ -56,14 +83,6 @@ public class ReportServiceImpl implements ReportService {
 			reportDtos.add(ReportDto.toDto(report));
 		}
 		return reportDtos;
-	}
-	
-	/*신고 취소*/
-	@Override
-	public void updateReportStatusToCancel(Long reportNo) {
-			Report report = reportRepository.findById(reportNo).get();
-			report.setReportStatus(5);
-			reportRepository.save(report);
 	}
 
 	/* [어드민] 신고 전체 출력 */
