@@ -35,7 +35,7 @@ public class Vote {
     private Long voteNo;  // PK, 시퀀스로 자동 생성
 
     @Column(name = "vote_type", nullable = false)
-    private String voteType;  // 투표 타입 (예: "up", "down")
+    private Integer voteType;  // 투표 타입 (예: "up", "down")
 
     @Column(name = "vote_date", nullable = false)
     private LocalDate voteDate;  // 투표 일자 (LocalDate)
