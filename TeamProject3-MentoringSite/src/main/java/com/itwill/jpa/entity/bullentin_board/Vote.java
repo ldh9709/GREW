@@ -2,6 +2,8 @@ package com.itwill.jpa.entity.bullentin_board;
 
 import java.time.LocalDate;
 
+import org.hibernate.annotations.CreationTimestamp;
+
 import com.itwill.jpa.dto.bulletin_board.VoteDto;
 import com.itwill.jpa.entity.user_information.Member;
 
@@ -35,8 +37,8 @@ public class Vote {
     private Long voteNo;  // PK, 시퀀스로 자동 생성
 
     @Column(name = "vote_type", nullable = false)
-    private String voteType;  // 투표 타입 (예: "up", "down")
-
+    private Integer voteType;  // 투표 타입 (예: up=1, down=2)
+    @CreationTimestamp
     @Column(name = "vote_date", nullable = false)
     private LocalDate voteDate;  // 투표 일자 (LocalDate)
 
@@ -54,7 +56,7 @@ public class Vote {
     public static Vote toEntity(VoteDto voteDto) {
         return Vote.builder()
                 .voteNo(voteDto.getVoteNo())
-                .voteType(voteDto.getVoteType())
+                .voteTyspe(voteDto.getVoteType())
                 .voteDate(voteDto.getVoteDate())
                 .member(Member.toEntity(voteDto.getMember()))
                 .answer(Answer.toEntity(voteDto.getAnswer()))
