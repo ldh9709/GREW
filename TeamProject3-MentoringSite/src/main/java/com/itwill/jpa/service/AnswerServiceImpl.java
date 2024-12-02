@@ -30,25 +30,63 @@ public class AnswerServiceImpl implements AnswerService{
 		answerRepository.deleteById(answerNo);
 	}
 	/*질문 하나에 달린 답변*/
+	/*추천순*/
 	@Override
-	public List<AnswerDto> selectAnswerByInquiryNo(Long inquiryNo) {
-		List<Answer> answerEntityList = answerRepository.findByInquiryInquiryNo(inquiryNo);
+	public List<AnswerDto> findByInquiryAnswerOrderByVotes(Long inquiryNo) {
+		List<Answer> answerEntityList = 
+				answerRepository.findByInquiryAnswerOrderByVotes(inquiryNo);
 		List<AnswerDto> answerDtoList = new ArrayList<>();
 		for(Answer answerEntity:answerEntityList) {
 			answerDtoList.add(AnswerDto.toDto(answerEntity));
 		}
 		return answerDtoList;
 	}
-	/*전체답변*/
+	/*최신순*/
 	@Override
-	public List<AnswerDto> selectAnswerAll() {
-		List<Answer> answerEntityList = answerRepository.findAll();
+	public List<AnswerDto> findByInquiryAnswerOrderByDate(Long inquiryNo) {
+		List<Answer> answerEntityList =
+				answerRepository.findByInquiryAnswerOrderByDate(inquiryNo);
 		List<AnswerDto> answerDtoList = new ArrayList<>();
 		for(Answer answerEntity:answerEntityList) {
 			answerDtoList.add(AnswerDto.toDto(answerEntity));
 		}
 		return answerDtoList;
 	}
+	/*카테고리 별 답변*/
+	/*추천순*/
+	@Override
+	public List<AnswerDto> findByCategoryAnswerOrderByVotes(Long categoryNo) {
+		List<Answer> answerEntityList = 
+				answerRepository.findByCategoryAnswerOrderByVotes(categoryNo);
+		List<AnswerDto> answerDtoList = new ArrayList<>();
+		for(Answer answerEntity:answerEntityList) {
+			answerDtoList.add(AnswerDto.toDto(answerEntity));
+		}
+		return answerDtoList;
+	}
+	/*조회순*/
+	@Override
+	public List<AnswerDto> findByCategoryAnswerOrderByDate(Long categoryNo) {
+		List<Answer> answerEntityList = 
+				answerRepository.findByCategoryAnswerOrderByDate(categoryNo);
+		List<AnswerDto> answerDtoList = new ArrayList<>();
+		for(Answer answerEntity:answerEntityList) {
+			answerDtoList.add(AnswerDto.toDto(answerEntity));
+		}
+		return answerDtoList;
+	}
+	/*최근 3일간 추천 많은 답변*/
+	@Override
+	public List<AnswerDto> findByAnswerOrderByVoteDate() {
+		List<Answer> answerEntityList = 
+				answerRepository.findByAnswerOrderByVoteDate();
+		List<AnswerDto> answerDtoList = new ArrayList<>();
+		for(Answer answerEntity:answerEntityList) {
+			answerDtoList.add(AnswerDto.toDto(answerEntity));
+		}
+		return answerDtoList;
+	}
+	
 	
 
 	
