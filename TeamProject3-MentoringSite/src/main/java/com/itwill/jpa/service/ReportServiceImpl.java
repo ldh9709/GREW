@@ -41,6 +41,11 @@ public class ReportServiceImpl implements ReportService {
 		report.setResolvedDate(LocalDateTime.now());
 		reportRepository.save(report);
 	}
+	
+	/* [어드민] 신고 상태 변경 : 처리완료(무고) */
+	public void updateReportStatusToFalseReport(Long reportNo) {
+		
+	}
 
 	/* 신고 출력(특정 회원) */
 	@Override

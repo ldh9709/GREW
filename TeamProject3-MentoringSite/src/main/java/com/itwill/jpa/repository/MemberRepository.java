@@ -1,6 +1,8 @@
 package com.itwill.jpa.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import com.itwill.jpa.entity.user_information.Member;
@@ -21,5 +23,10 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
 	//PK로 멤버 조회
 	public Member findByMemberNo(Long memberNo);
 	
+	//신고 카운트 증가
+	@Modifying
+	@Query("UPDATE Member m SET m.memberReportCount =  m.memberReportCount + 1 "
+			+ "WHERE m.memberNo = :memberNo")
+	public void incrementReportCount(Long memberNo);
 	
 }
