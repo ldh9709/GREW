@@ -1,6 +1,7 @@
 package com.itwill.jpa.entity.user_information;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,6 +15,7 @@ import com.itwill.jpa.entity.chatting_review.ChatRoomStatus;
 import com.itwill.jpa.entity.chatting_review.MentoringRequest;
 import com.itwill.jpa.entity.report.Report;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -21,7 +23,9 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
+import jakarta.persistence.PrePersist;
 import jakarta.persistence.SequenceGenerator;
+import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -32,42 +36,53 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-
 @Entity
+@Table(name = "member")
 public class Member {
 	
 
 	@Id//PK설정
-	@SequenceGenerator(name = "member_seq", initialValue = 1, allocationSize = 1)
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "member_seq")
+	@SequenceGenerator(name = "member_no_SEQ", initialValue = 1, allocationSize = 1)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "member_no_SEQ")
+	@Column(name = "member_no", nullable = false)
 	private Long memberNo;//멤버 번호 PK
 	
-	private String memberId;
-	private String memberPassword;
-	private String memberEmail;
-	private String memberName;
+	@Column(name = "member_id", nullable = false)
+	private String memberId;//Id
 	
+	@Column(name = "member_password", nullable = false)
+	private String memberPassword;//비밀번호
 	
+	@Column(name = "member_email", nullable = false)
+	private String memberEmail;//이메일
+	
+	@Column(name = "member_name", nullable = false)
+	private String memberName;//이름
+	
+	@Column(name = "member_role", nullable = false)
 	private String memberRole;//역할
 	
+	@Column(name = "member_points", nullable = false)
 	private Integer memberPoints;//멤버 연필 포인트
 	
-	private String memberStatus;//멤버의 상태(활동, 정지 등)
+	@Column(name = "member_status", nullable = false)
+	private Integer memberStatus;//멤버의 상태(활동, 정지 등)
 	
-	private LocalDate memberJoinDate;//멤버 가입 날짜
+	@Column(name = "member_join_date", nullable = false)
+	private LocalDateTime memberJoinDate;//멤버 가입 날짜
 	
+	@Column(name = "member_report_count", nullable = false)
 	private Integer memberReportCount;//신고 당한 횟수
 	
-	 /*
-     * DTO -> Entitiy
-     */
-	public static Member toEntity(MemberDto memberDto) {
-	    return Member.builder()
-	            .memberId(memberDto.getMemberId())
-	            .memberPassword(memberDto.getMemberPassword())
-	            .memberEmail(memberDto.getMemberEmail())
-	            .memberName(memberDto.getMemberName())
-	            .build();
+	/* 초기값 설정 */
+	@PrePersist
+	public void setDefaultValues() {
+		if (this.memberRole == null) this.memberRole = "MENTI";
+		if (this.memberPoints == null) this.memberPoints = 0;
+		if (this.memberStatus == null) this.memberStatus = 1;
+		if (this.memberJoinDate == null) this.memberJoinDate = LocalDateTime.now();
+		if (this.memberReportCount == null) this.memberReportCount = 0;
+		
 	}
 	
 	/*
@@ -132,7 +147,18 @@ public class Member {
 	@OneToMany(mappedBy = "member", fetch = FetchType.LAZY)
 	private List<Answer> answers = new ArrayList<>();
 	
-	
+
+	/*
+    * DTO -> Entitiy
+    */
+	public static Member toEntity(MemberDto memberDto) {
+	    return Member.builder()
+	            .memberId(memberDto.getMemberId())
+	            .memberPassword(memberDto.getMemberPassword())
+	            .memberEmail(memberDto.getMemberEmail())
+	            .memberName(memberDto.getMemberName())
+	            .build();
+	}
 	
 	
 	

@@ -1,6 +1,7 @@
 package com.itwill.jpa.entity.chatting_review;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.annotations.CreationTimestamp;
@@ -32,9 +33,9 @@ import lombok.NoArgsConstructor;
 @Table(name = "ChatRoom")
 public class ChatRoom {
 	@Id
-	@SequenceGenerator(name = "ChatRoom_chat_room_no_SEQ", sequenceName = "ChatRoom_chat_room_no_SEQ", initialValue = 1, allocationSize = 1)
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ChatRoom_chat_room_no_SEQ")
-    @Column(name = "chat_room_no")
+	@SequenceGenerator(name = "chat_room_no_SEQ", sequenceName = "chat_room_no_SEQ", initialValue = 1, allocationSize = 1)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "chat_room_no_SEQ")
+    @Column(name = "chat_room_no", nullable = false)
     private String chatRoomNo;
 
     @Column(name = "chat_room_date", updatable = false)
@@ -46,7 +47,10 @@ public class ChatRoom {
     private MentoringRequest mentoringRequest;
     
     @OneToMany(mappedBy = "chatRoom", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
-    private List<ChatMessage> chatMessages;
+    private List<ChatMessage> chatMessages = new ArrayList<>();
+    
+    @OneToMany(mappedBy = "chatRoom", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
+    private List<ChatRoomStatus> chatRoomStatus = new ArrayList<>();
     
     public static ChatRoom toEntity(ChatRoomDto chatRoomDto) {
         return ChatRoom.builder()
