@@ -21,7 +21,7 @@ public class ReportServiceImpl implements ReportService {
 	@Override
 	public void saveReport(ReportDto reportDto){
 		try {
-			Report report = ReportDto.toEntity(reportDto);
+			Report report = Report.toEntity(reportDto);
 			reportRepository.save(report);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -61,7 +61,7 @@ public class ReportServiceImpl implements ReportService {
 		List<Report> reports= reportRepository.findByMemberMemberNo(userNo);
 		List<ReportDto> reportDtos = new ArrayList<ReportDto>();
 		for (Report report : reports) {
-			reportDtos.add(Report.toDto(report));
+			reportDtos.add(ReportDto.toDto(report));
 		}
 		return reportDtos;
 	}
@@ -72,7 +72,7 @@ public class ReportServiceImpl implements ReportService {
 		List<Report> reports = reportRepository.findAll();
 		List<ReportDto> reportDtos = new ArrayList<>();
 		for (Report report : reports) {
-			reportDtos.add(Report.toDto(report));
+			reportDtos.add(ReportDto.toDto(report));
 		}
 		return reportDtos;
 	}

@@ -34,25 +34,25 @@ public class Report {
 	@Column(name="report_no")
 	private Long reportNo;
 	
-	@Column(name="report_type")
+	@Column(name="report_type", nullable = false)
 	private String reportType;
 	
-	@Column(name="report_target")
+	@Column(name="report_target", nullable = false)
 	private Integer reportTarget;
 	
-	@Column(name="report_reason")
+	@Column(name="report_reason", nullable = false)
 	private Integer reportReason;
 	
-	@Column(name = "report_content", length = 300)
+	@Column(name = "report_content", length = 300, nullable = false)
 	private String reportContent;
 	
-	@Column(name="report_date")
+	@Column(name="report_date", nullable = false)
 	private LocalDateTime reportDate;
 	
-	@Column(name="resolved_date")
+	@Column(name="resolved_date", nullable = false)
 	private LocalDateTime resolvedDate;
 	
-	@Column(name="report_status")
+	@Column(name="report_status", nullable = false)
 	private Integer reportStatus;
 
 	@ManyToOne(fetch = FetchType.LAZY)
@@ -69,17 +69,21 @@ public class Report {
     }
 	
 	
-	public static ReportDto toDto(Report entity) {
-		return ReportDto.builder()
-				.reportNo(entity.getReportNo())
-				.reportType(entity.getReportType())
-				.reportTarget(entity.getReportTarget())
-				.reportReason(entity.getReportReason())
-				.reportContent(entity.getReportContent())
-				.reportDate(entity.getReportDate())
-				.resolveDate(entity.getResolvedDate())
-				.reportStatus(entity.getReportStatus())
-				.memberNo(entity.member.getMemberNo())
+	public static Report toEntity(ReportDto dto) {
+		Member member = Member.builder()
+				.memberNo(dto.getMemberNo())
+				.build();
+		
+		return Report.builder()
+				.reportNo(dto.getReportNo())
+				.reportType(dto.getReportType())
+				.reportTarget(dto.getReportTarget())
+				.reportReason(dto.getReportReason())
+				.reportContent(dto.getReportContent())
+				.reportDate(dto.getReportDate())
+				.resolvedDate(dto.getResolvedDate())
+				.reportStatus(dto.getReportStatus())
+				.member(member)
 				.build();
 	}
 }
