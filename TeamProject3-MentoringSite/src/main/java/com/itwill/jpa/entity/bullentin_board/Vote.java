@@ -43,7 +43,7 @@ public class Vote {
     private LocalDate voteDate;  // 투표 일자 (LocalDate)
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_no", nullable = false)  // "user_no"는 User 엔티티와 관계
+    @JoinColumn(name = "member_no", nullable = false)  // "user_no"는 User 엔티티와 관계
     private Member member;  // 사용자 (User 엔티티와 관계)
 
     @ManyToOne(fetch = FetchType.LAZY)
