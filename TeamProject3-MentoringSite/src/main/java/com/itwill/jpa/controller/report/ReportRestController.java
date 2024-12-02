@@ -8,6 +8,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -40,7 +41,7 @@ public class ReportRestController {
 		Response response = new Response();
 		response.setStatus(ResponseStatusCode.CREATED_REPORT_SUCCESS);
 		response.setMessage(ResponseMessage.CREATED_REPORT_SUCCESS);
-		response.setData(response);
+		response.setData(reportDto);
 		
 		 // 3. 응답 헤더 설정
 		HttpHeaders httpHeaders = new HttpHeaders();
@@ -53,7 +54,28 @@ public class ReportRestController {
 		
 		return responseEntity;
 	}
+	
 	/* [어드민] 신고 상태변경(검토중) */
+	@Operation(summary = "신고 상태 변경(검토중)")
+	@PostMapping("/{report_no}/in-progress")
+	public ResponseEntity<Response> updateReportStatusToInPorgress(@PathVariable (value="report_no") Long reportNo){
+		
+		reportService.updateReportStatusToInProgress(reportNo);
+		
+		Response response = new Response();
+		response.setStatus(ResponseStatusCode.UPDATE_REPORT_SUCCESS);
+		response.setMessage(ResponseMessage.UPDATE_REPORT_SUCCESS);
+		response.setData(reportNo);
+		
+		HttpHeaders httpHeaders = new HttpHeaders();
+		httpHeaders.setContentType(new MediaType(MediaType.APPLICATION_JSON, Charset.forName("UTF-8")));
+		
+		ResponseEntity<Response> responseEntity = 
+				new ResponseEntity<Response>(response, httpHeaders, HttpStatus.OK);
+		
+		return responseEntity;
+	}
+	
 	
 	/* [어드민] 신고 상태변경(처리완료) */
 	

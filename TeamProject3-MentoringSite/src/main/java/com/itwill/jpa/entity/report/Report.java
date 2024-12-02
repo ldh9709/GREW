@@ -65,7 +65,7 @@ public class Report {
     	if (this.reportContent == null) this.reportContent ="";
         if (this.reportDate == null) this.reportDate = LocalDateTime.now();
         if (this.resolvedDate == null) this.resolvedDate = LocalDateTime.now();
-        if (this.reportStatus == null) this.reportStatus = 1;
+        if (this.reportStatus == 0) this.reportStatus = 1;
     }
 	
 	

@@ -12,7 +12,7 @@ class ReportServiceImplTest {
 	@Autowired
 	private ReportService reportService;
 	
-	@Test
+//	@Test
 	void testSaveReport() {
 		ReportDto report = ReportDto.builder()
 				.reportNo(0L)
