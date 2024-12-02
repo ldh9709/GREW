@@ -5,8 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import com.itwill.TeamProject3MentoringSiteApplication;
-import com.itwill.jpa.dto.MemberDto;
-import com.itwill.jpa.entity.Member;
+import com.itwill.jpa.dto.user_information.MemberDto;
 import com.itwill.jpa.service.MemberServiceImpl;
 
 @SpringBootTest(classes = TeamProject3MentoringSiteApplication.class)
@@ -27,6 +26,7 @@ class TeamProject3MentoringSiteApplicationTests {
 				.memberName("mem")
 				.memberEmail("m@m")
 				.build();
+		
 		memberServiceImpl.saveMember(memberDto);
 	}
 	
