@@ -9,14 +9,15 @@ public class VoteServiceImpl implements VoteService{
 	//추천
 	@Override
 	public VoteDto UpVote(VoteDto voteDto) {
-		voteDto.setVoteType("up");
+		voteDto.setVoteType(1);
 		return VoteDto.toDto(voteRepository.save(Vote.toEntity(voteDto)));
 	}
 
 	//비추천
 	@Override
 	public VoteDto DownVote(VoteDto voteDto) {
-		return null;
+		voteDto.setVoteType(2);
+		return VoteDto.toDto(voteRepository.save(Vote.toEntity(voteDto)));
 	}
 	
 	
