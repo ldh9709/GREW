@@ -19,7 +19,9 @@ public class Interest {
 
     @Id
     @SequenceGenerator(name = "interest_seq", initialValue = 1, allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "interest_seq")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "interest_SEQ")
+   
+    @JoinColumn(name = "interest_no")
     private Long interestNo;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -33,6 +35,7 @@ public class Interest {
     
     public static Interest toEntity(InterestDto interestDto) {
         return Interest.builder()
+        		.interestNo(interestDto.getInterestNo())
                 .member(Member.toEntity(interestDto.getMember()))
                 .category(Category.toEntity(interestDto.getCategory()))
                 .build();
