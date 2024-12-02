@@ -18,6 +18,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.PrePersist;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -64,6 +65,7 @@ public class Inquiry {
 
    
     /* 초기값 설정 */
+    @PrePersist
     public void setDefaultValues() {
     	if(this.inquiryContent==null) this.inquiryContent = "";
     	if(this.inquiryDate==null) this.inquiryDate = LocalDate.now();

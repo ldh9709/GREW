@@ -15,6 +15,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.PrePersist;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -58,6 +59,7 @@ public class Answer {
 
     
     /* 초기값 설정 */
+    @PrePersist
     public void setDefaultValues() {
     	if(this.answerContent==null) this.answerContent = "";
     	if(this.answerDate==null) this.answerDate = LocalDate.now();
