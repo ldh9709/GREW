@@ -61,7 +61,6 @@ public class ReportRestController {
 	public ResponseEntity<Response> updateReportStatusToInPorgress(@PathVariable (value="report_no") Long reportNo){
 		
 		reportService.updateReportStatusToInProgress(reportNo);
-		
 		Response response = new Response();
 		response.setStatus(ResponseStatusCode.UPDATE_REPORT_SUCCESS);
 		response.setMessage(ResponseMessage.UPDATE_REPORT_SUCCESS);
@@ -75,7 +74,6 @@ public class ReportRestController {
 		
 		return responseEntity;
 	}
-	
 	
 	/* [어드민] 신고 상태변경(처리완료) */
 	

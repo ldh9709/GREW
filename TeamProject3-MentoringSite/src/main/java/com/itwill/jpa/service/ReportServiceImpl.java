@@ -25,7 +25,7 @@ public class ReportServiceImpl implements ReportService {
 		reportRepository.save(report);
 	}
 
-	/* [어드민] 신고 상태 변경 : 검토중 */
+	/* [어드민] 신고 상태 변경 : 접수중 */
 	@Override
 	public void updateReportStatusToInProgress(Long reportNo) {
 		Report report = reportRepository.findById(reportNo).get();
@@ -57,7 +57,7 @@ public class ReportServiceImpl implements ReportService {
 	@Override
 	public void updateReportStatusToCancel(Long reportNo) {
 			Report report = reportRepository.findById(reportNo).get();
-			report.setReportStatus(4);
+			report.setReportStatus(5);
 			reportRepository.save(report);
 	}
 
