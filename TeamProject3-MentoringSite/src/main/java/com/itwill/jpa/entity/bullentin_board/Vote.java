@@ -29,7 +29,7 @@ import lombok.NoArgsConstructor;
 public class Vote {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "vote_seq")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "vote_no_seq")
     @SequenceGenerator(name = "vote_no_SEQ", allocationSize = 1, initialValue = 1)
     @Column(name = "vote_no_SEQ")
     private Long voteNo;  // PK, 시퀀스로 자동 생성
