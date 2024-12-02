@@ -71,7 +71,7 @@ public class MemberRestController {
 		
 		//응답 객체 생성
 		Response response = new Response();
-				
+		
 		if(loginMember != null) {
 			//응답객체에 코드, 메시지, 객체 설정
 			response.setStatus(ResponseStatusCode.LOGIN_MEMBER_SUCCESS);
@@ -116,15 +116,19 @@ public class MemberRestController {
 	@Operation(summary = "회원 정보 보기")
 	@GetMapping("/{memberNo}")
 	public ResponseEntity<Response> getMember(@PathVariable(name = "memberNo") Long memberNo, HttpSession session) {
+		
 		Member loginMember = memberService.getMember(memberNo);
+		
+		MemberDto loginMemberDto = MemberDto.toDto(loginMember);
+		
 		
 		Response response = new Response();
 		
-		if(loginMember != null) {
+		if(loginMemberDto != null) {
 			//응답객체에 코드, 메시지, 객체 설정
-			response.setStatus(ResponseStatusCode.LOGIN_MEMBER_SUCCESS);
-			response.setMessage(ResponseMessage.LOGIN_MEMBER_SUCCESS);
-			response.setData(loginMember);
+			response.setStatus(ResponseStatusCode.READ_MEMBER_SUCCESS);
+			response.setMessage(ResponseMessage.READ_MEMBER_SUCCESS);
+			response.setData(loginMemberDto);
 		}
 		
 		HttpHeaders httpHeaders=new HttpHeaders();

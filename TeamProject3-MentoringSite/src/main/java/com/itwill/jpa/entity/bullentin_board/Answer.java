@@ -3,6 +3,8 @@ package com.itwill.jpa.entity.bullentin_board;
 import java.time.LocalDate;
 import java.util.List;
 
+import org.hibernate.annotations.CreationTimestamp;
+
 import com.itwill.jpa.dto.bulletin_board.AnswerDto;
 import com.itwill.jpa.entity.user_information.Member;
 
@@ -39,7 +41,7 @@ public class Answer {
 
     @Column(name = "answer_content", nullable = false, length = 500)
     private String answerContent;  // 답변 내용
-
+    @CreationTimestamp
     @Column(name = "answer_date", nullable = false)
     private LocalDate answerDate;  // 답변 작성 시간 (LocalDate)
 
