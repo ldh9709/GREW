@@ -11,6 +11,7 @@ public class ResponseStatusCode {
 	public static final int LOGIN_MEMBER_SUCCESS = 2500;
 	public static final int LOGOUT_MEMBER_SUCCESS = 2600;
 	
+	/*알림(3000), 신고(4000), 질문(5000), 답변(6000), 채팅(7000)*/
 	
 	public static final int LOGIN_FAIL_NOT_FOUND_MEMBER = 8000;
 	public static final int LOGIN_FAIL_PASSWORD_MISMATCH_MEMBER = 8100;
