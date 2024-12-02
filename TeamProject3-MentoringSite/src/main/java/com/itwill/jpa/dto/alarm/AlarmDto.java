@@ -4,7 +4,6 @@ import java.time.LocalDate;
 
 import com.itwill.jpa.dto.user_information.MemberDto;
 import com.itwill.jpa.entity.alarm.Alarm;
-import com.itwill.jpa.entity.user_information.Member;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
