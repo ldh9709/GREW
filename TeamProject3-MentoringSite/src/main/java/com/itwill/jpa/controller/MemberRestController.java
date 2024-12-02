@@ -59,5 +59,7 @@ public class MemberRestController {
 		//반환
 		return responseEntity;
 	}
+	
+	
 
 }
