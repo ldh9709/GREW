@@ -17,10 +17,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.itwill.jpa.controller.Response;
 import com.itwill.jpa.controller.ResponseMessage;
 import com.itwill.jpa.controller.ResponseStatusCode;
 import com.itwill.jpa.dto.bulletin_board.InquiryDto;
+import com.itwill.jpa.response.Response;
 import com.itwill.jpa.service.bullentin_board.InquiryService;
 
 import io.swagger.v3.oas.annotations.Operation;
