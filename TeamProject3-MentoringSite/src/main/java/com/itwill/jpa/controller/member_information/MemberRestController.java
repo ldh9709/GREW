@@ -202,7 +202,7 @@ public class MemberRestController {
 		
 		ResponseEntity<Response> responseEntity = 
 				new ResponseEntity<Response>(response, httpHeaders, HttpStatus.OK);
-		
+		 
 		return responseEntity;
 	}
 	
