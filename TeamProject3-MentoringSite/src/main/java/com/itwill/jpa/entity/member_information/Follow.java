@@ -18,8 +18,8 @@ import lombok.NoArgsConstructor;
 public class Follow {
 
     @Id
-    @SequenceGenerator(name = "follow_SEQ", initialValue = 1, allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "follow_SEQ")
+    @SequenceGenerator(name = "follow_no_SEQ", initialValue = 1, allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "follow_no_SEQ")
     @Column(name = "follow_no")
     private Long followNo;
 

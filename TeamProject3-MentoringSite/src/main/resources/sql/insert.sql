@@ -60,6 +60,22 @@ VALUES(member_no_SEQ.nextval,'ggg','ggg','ggg@naver.com','양한수','ROLE_MENTO
 INSERT INTO member(member_no,member_id,member_password,member_email,member_name,member_role,member_points,member_status,member_join_date,member_report_count)
 VALUES(member_no_SEQ.nextval,'hhh','hhh','hhh@naver.com','이도현','ROLE_MENTOR',4000,1,sysdate,0);
 
+
+/* 팔로우 등록 */
+INSERT INTO follow(follow_no,follower_member,followed_member)
+VALUES(follow_no_SEQ.nextval,1,6);
+INSERT INTO follow(follow_no,follower_member,followed_member)
+VALUES(follow_no_SEQ.nextval,2,6);
+INSERT INTO follow(follow_no,follower_member,followed_member)
+VALUES(follow_no_SEQ.nextval,3,6);
+INSERT INTO follow(follow_no,follower_member,followed_member)
+VALUES(follow_no_SEQ.nextval,4,7);
+INSERT INTO follow(follow_no,follower_member,followed_member)
+VALUES(follow_no_SEQ.nextval,5,7);
+INSERT INTO follow(follow_no,follower_member,followed_member)
+VALUES(follow_no_SEQ.nextval,1,8);
+
+
 /* 신고 등록 */
 INSERT INTO report(report_no,  report_type, report_target,report_reason, report_content, report_date, report_status, resolved_date, member_no) 
 VALUES (report_no_SEQ.nextval, 'ANSWER' , 1, 1,'욕함요', sysdate, 1, sysdate , 2);
@@ -68,14 +84,5 @@ VALUES (report_no_SEQ.nextval, 'USER' , 3, 3,'광고쟁이', sysdate, 1, sysdate
 INSERT INTO report(report_no,  report_type, report_target,report_reason, report_content, report_date, report_status, resolved_date, member_no) 
 VALUES (report_no_SEQ.nextval, 'INQUIRY', 1, 4,'욕쟁이', sysdate, 1, sysdate , 3);
 
-commit;
-
-/* 신고 등록 */
-INSERT INTO report(report_no,  report_type, report_target,report_reason, report_content, report_date, report_status, resolved_date, member_no) 
-VALUES (report_no_SEQ.nextval, 'ANSWER' , 1, 1,'욕함요', sysdate, 1, sysdate , 2);
-INSERT INTO report(report_no,  report_type, report_target,report_reason, report_content, report_date, report_status, resolved_date, member_no) 
-VALUES (report_no_SEQ.nextval, 'USER' , 3, 3,'광고쟁이', sysdate, 1, sysdate , 1);
-INSERT INTO report(report_no,  report_type, report_target,report_reason, report_content, report_date, report_status, resolved_date, member_no) 
-VALUES (report_no_SEQ.nextval, 'INQUIRY', 1, 4,'욕쟁이', sysdate, 1, sysdate , 3);
 
 commit;
