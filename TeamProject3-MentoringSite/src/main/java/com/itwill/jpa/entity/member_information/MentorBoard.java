@@ -18,7 +18,7 @@ import lombok.NoArgsConstructor;
 public class MentorBoard {
 
     @Id
-    @SequenceGenerator(name = "mentorboard_seq", initialValue = 1, allocationSize = 1)
+    @SequenceGenerator(name = "mentorboard_SEQ", initialValue = 1, allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "mentorboard_SEQ")
     @Column(name = "mentor_board_no")
     private Long mentorBoardNo;

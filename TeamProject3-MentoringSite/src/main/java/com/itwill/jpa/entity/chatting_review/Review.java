@@ -34,7 +34,7 @@ public class Review {
 
     @Id
     @SequenceGenerator(name = "review_no_SEQ", initialValue = 1, allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "review_no_seq")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "review_no_SEQ")
     @Column(name="review_no")
     private Long reviewNo;
 

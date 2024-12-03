@@ -22,7 +22,7 @@ import lombok.NoArgsConstructor;
 public class MentorProfile {
 
     @Id
-    @SequenceGenerator(name = "mentorprofile_seq", initialValue = 1, allocationSize = 1)
+    @SequenceGenerator(name = "mentorprofile_SEQ", initialValue = 1, allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "mentorprofile_SEQ")
     
     @Column(name = "mentor_profile_No" )

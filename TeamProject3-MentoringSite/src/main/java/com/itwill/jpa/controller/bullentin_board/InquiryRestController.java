@@ -1,6 +1,7 @@
 package com.itwill.jpa.controller.bullentin_board;
 
 import java.nio.charset.Charset;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -113,7 +114,7 @@ public class InquiryRestController {
 
 	// 조회수 증가
 	@Operation(summary = "조회수증가")
-	@PutMapping("Increase/{inquiryNo}")
+	@PutMapping("/increase/{inquiryNo}")
 	public ResponseEntity<Response> increaseViewInquiry(@RequestBody InquiryDto inquiryDto) throws Exception {
 		Response response = new Response();
 
@@ -129,5 +130,19 @@ public class InquiryRestController {
 				HttpStatus.CREATED);
 
 		return responseEntity;
+	}
+	@Operation(summary = "답변수 많은 순으로 카테고리별 질문 출력")
+	@GetMapping("/answerCount/{categoryNo}")
+	public ResponseEntity<Response> findByCategoryInquiryOrderByAnswer(@PathVariable(name = "categoryNo") Long categoryNo) {
+	    List<InquiryDto> inquiryDtos = inquiryService.findByCategoryInquiryOrderByAnswer(categoryNo);
+	    
+	    Response response = new Response();
+	    response.setStatus(ResponseStatusCode.READ_INQUIRY_LIST_SUCCESS);
+	    response.setMessage(ResponseMessage.READ_INQUIRY_LIST_SUCCESS);
+	    response.setData(inquiryDtos);
+
+	    return new ResponseEntity<>(response, HttpStatus.OK);
+	
+		
 	}
 }
