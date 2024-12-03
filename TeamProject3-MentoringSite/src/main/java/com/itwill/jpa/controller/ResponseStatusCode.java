@@ -30,6 +30,7 @@ public class ResponseStatusCode {
 	public static final int READ_INQUIRY_LIST_FAIL = 5700;
 	public static final int INCREASE_VIEW_INQUIRY_SUCCESS = 5800;
 	public static final int VIEW_INQUIRY_SUCCESS = 5900;
+	
 	/**********************ANSWER 메시지**************************/
 	public static final int CREATED_ANSWER_SUCCESS = 6000;
 	public static final int CREATED_ANSWER_FAIL = 6100;
