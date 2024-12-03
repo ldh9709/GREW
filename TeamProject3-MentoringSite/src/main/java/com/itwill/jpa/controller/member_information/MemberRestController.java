@@ -39,9 +39,6 @@ public class MemberRestController {
 	@PostMapping
 	public ResponseEntity<Response> saveMember(@RequestBody MemberDto memberDto) {
 		
-		//초기값 설정
-		memberDto.setMemberStatus(1);
-		
 		//저장메소드 실행
 		Member saveMember = memberService.saveMember(memberDto);
 		
