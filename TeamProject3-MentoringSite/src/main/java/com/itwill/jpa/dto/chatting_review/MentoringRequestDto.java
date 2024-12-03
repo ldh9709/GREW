@@ -20,16 +20,16 @@ public class MentoringRequestDto {
 	private int requestStatus;
 	private LocalDateTime requestDate;
 	
-	private MemberDto mentee;
-	private MemberDto mentor;
+	private Long menteeNo;
+	private Long mentorNo;
 	
 	public static MentoringRequestDto toDto(MentoringRequest mentoringRequestEntity) {
 		return MentoringRequestDto.builder()
 				.requestNo(mentoringRequestEntity.getRequestNo())
 				.requestStatus(mentoringRequestEntity.getRequestStatus())
 				.requestDate(mentoringRequestEntity.getRequestDate())
-				.mentee(MemberDto.toDto(mentoringRequestEntity.getMentee()))
-                .mentor(MemberDto.toDto(mentoringRequestEntity.getMentor()))
+				.menteeNo(mentoringRequestEntity.getMentee().getMemberNo())
+                .mentorNo(mentoringRequestEntity.getMentor().getMemberNo())
 				.build();
 	}
 }	
