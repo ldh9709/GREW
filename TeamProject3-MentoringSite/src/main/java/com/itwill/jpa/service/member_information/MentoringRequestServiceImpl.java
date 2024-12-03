@@ -23,7 +23,7 @@ public class MentoringRequestServiceImpl implements MentoringRequestService {
 	public MentoringRequest saveMentoringRequest(MentoringRequest mentoringRequest) {
 		return mentoringRequestRepository.save(mentoringRequest);
 	}
-	
+	/*활동 상태 변경*/
 	@Override
 	public MentoringRequest updateMentoringRequest(MentoringRequest mentoringRequest) throws Exception {
 		if (mentoringRequestRepository.findById(mentoringRequest.getRequestNo()).isPresent()) {
@@ -31,7 +31,7 @@ public class MentoringRequestServiceImpl implements MentoringRequestService {
 		}
 		return new MentoringRequest();
 	}
-	
+	/*내 활동 리스트 출력*/
 	@Override
 	public List<MentoringRequest> selectMentoringRequestAll() {
 		return mentoringRequestRepository.findAll();
