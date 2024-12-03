@@ -160,6 +160,7 @@ public class Member {
 	            .memberId(memberDto.getMemberId())
 	            .memberPassword(memberDto.getMemberPassword())
 	            .memberEmail(memberDto.getMemberEmail())
+	            .memberStatus(memberDto.getMemberStatus())
 	            .memberName(memberDto.getMemberName())
 	            .build();
 	}

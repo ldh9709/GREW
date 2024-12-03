@@ -18,6 +18,7 @@ public class MemberDto {
 	private String memberPassword;
 	private String memberEmail;
 	private String memberName;
+	private Integer memberStatus;
 	
 	
 	 /* Entitiy -> DTO*/
@@ -28,6 +29,7 @@ public class MemberDto {
 	            .memberPassword(memberEntity.getMemberPassword())
 	            .memberEmail(memberEntity.getMemberEmail())
 	            .memberName(memberEntity.getMemberName())
+	            .memberStatus(memberEntity.getMemberStatus())
 	            .build();
 	}
 	
