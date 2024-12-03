@@ -18,7 +18,8 @@ public interface AnswerRepository extends JpaRepository<Answer, Long>{
 		       "WHERE i.inquiryNo = :inquiryNo " +
 		       "AND a.answerStatus = 1 " +
 		       "GROUP BY a.answerNo " +
-		       "ORDER BY COUNT(v) DESC")
+		       "ORDER BY a.answerAccept DESC,"+
+		       "COUNT(v) DESC")
 		List<Answer> findByInquiryAnswerOrderByVotes(@Param("inquiryNo") Long inquiryNo);
 
 	
@@ -26,8 +27,9 @@ public interface AnswerRepository extends JpaRepository<Answer, Long>{
 	@Query("SELECT a FROM Answer a " +
 		       "JOIN a.inquiry i " +
 		       "WHERE i.inquiryNo = :inquiryNo " +
-		       "AND a.answerStatus = 1 " + 
-		       "ORDER BY a.answerDate DESC")
+		       "AND a.answerStatus = 1 " +
+		       "ORDER BY a.answerAccept DESC,"+
+		       "a.answerDate DESC")
 		List<Answer> findByInquiryAnswerOrderByDate(@Param("inquiryNo") Long inquiryNo);
 
 	
@@ -59,7 +61,10 @@ public interface AnswerRepository extends JpaRepository<Answer, Long>{
                "WHERE v.voteDate >= SYSDATE - 3 " + 
                "AND a.answerStatus = 1 " +
                "GROUP BY a.answerNo " +
-               "ORDER BY COUNT(v) DESC", nativeQuery = true)  //jpql엔 sysdate 사용불가하기 때문에 nativeQuery로 오라클의 sql사용
+               "ORDER BY " +
+               "COUNT(CASE WHEN v.voteType = 1 THEN 1 END) "
+               + "- COUNT(CASE WHEN v.voteType = 2 THEN 1 END) DESC",
+               nativeQuery = true)  //jpql엔 sysdate 사용불가하기 때문에 nativeQuery로 오라클의 sql사용
 		List<Answer> findByAnswerOrderByVoteDate();
 
 }
