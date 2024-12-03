@@ -61,6 +61,20 @@ public class MemberServiceImpl implements MemberService {
 		return memberRepository.save(member);
 	}
 	
+	/***** 회원 상태 수정 *****/
+	@Override
+	public Member updateMemberStatus(MemberDto memberDto) {
+		//아이디로 회원 찾기
+		Member member = memberRepository.findByMemberNo(memberDto.getMemberNo());
+		
+		//회원 상태 변경
+		member.setMemberStatus(2);
+		
+		//수정한 객체 반환
+		return memberRepository.save(member);
+	}
+	
+	
 	/***** 회원 삭제 *****/
 	@Override
 	public Member deleteMember(Long memberNo) {
@@ -81,5 +95,7 @@ public class MemberServiceImpl implements MemberService {
 		//ID로 멤버 탐색
 		return memberRepository.findByMemberNo(memberNo);
 	}
+
+	
 
 }
