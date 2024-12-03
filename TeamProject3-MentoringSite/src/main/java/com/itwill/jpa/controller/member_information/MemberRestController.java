@@ -69,8 +69,10 @@ public class MemberRestController {
 	@PostMapping("/login")
 	public ResponseEntity<Response> loginMember(@RequestBody MemberDto memberDto, HttpSession session) {
 		
+		//로그인 메소드 실행
 		Member loginMember = memberService.loginMember(memberDto.getMemberId(), memberDto.getMemberPassword());
 		
+		//(임시) 세션에 등록 => 추후 토큰으로 변경 예정
 		session.setAttribute("loginMember", loginMember);
 		
 		//응답 객체 생성
@@ -121,10 +123,11 @@ public class MemberRestController {
 	@GetMapping("/{memberNo}")
 	public ResponseEntity<Response> getMember(@PathVariable(name = "memberNo") Long memberNo, HttpSession session) {
 		
+		//번호로 멤버 객체 찾기
 		Member loginMember = memberService.getMember(memberNo);
 		
+		//DTO객체로 변환
 		MemberDto loginMemberDto = MemberDto.toDto(loginMember);
-		
 		
 		Response response = new Response();
 		
@@ -149,6 +152,7 @@ public class MemberRestController {
 	@PutMapping("/{memberNo}")
 	public ResponseEntity<Response> updateMember(@RequestBody MemberDto memberDto) {
 		
+		//업데이트 메소드 실행
 		Member updateMember = memberService.updateMember(memberDto);
 		
 		Response response = new Response();
