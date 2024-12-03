@@ -82,7 +82,7 @@ public class Member {
 	public void setDefaultValues() {
 		if (this.memberRole == null) this.memberRole = "MENTEE";
 		if (this.memberPoints == null) this.memberPoints = 0;
-		if (this.memberStatus == null) this.memberStatus = 1;
+		if (this.memberStatus == null || this.memberStatus == 0) this.memberStatus = 1;
 		if (this.memberJoinDate == null) this.memberJoinDate = LocalDateTime.now();
 		if (this.memberReportCount == null) this.memberReportCount = 0;
 		
