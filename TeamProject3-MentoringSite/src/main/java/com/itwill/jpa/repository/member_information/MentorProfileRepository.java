@@ -12,7 +12,7 @@ import com.itwill.jpa.entity.member_information.MentorProfile;
 @Repository
 public interface MentorProfileRepository extends JpaRepository<MentorProfile, Long> {
 
-    // 특정 사용자와 관련된 멘토 프로필을 조회
+     //특정 사용자와 관련된 멘토 프로필을 조회
     //MentorProfile findByMember(Member member);
 
     // 특정 카테고리와 관련된 멘토 프로필을 조회
