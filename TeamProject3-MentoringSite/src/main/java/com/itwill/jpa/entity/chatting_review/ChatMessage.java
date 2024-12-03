@@ -6,7 +6,7 @@ import java.time.LocalDateTime;
 import org.hibernate.annotations.CreationTimestamp;
 
 import com.itwill.jpa.dto.chatting_review.ChatMessageDto;
-import com.itwill.jpa.entity.user_information.Member;
+import com.itwill.jpa.entity.member_information.Member;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -48,11 +48,11 @@ public class ChatMessage {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_no", nullable=false)
-    private Member memberNo;
+    private Member member;
     
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="chat_room_no",nullable=false)
-    private ChatRoom chatRoomNo;
+    private ChatRoom chatRoom;
     
     @PrePersist
     public void setDefaultValues() {
@@ -67,8 +67,8 @@ public class ChatMessage {
                              .chatContent(chatMessageDto.getChatContent())
                              .chatMessageDate(chatMessageDto.getChatMessageDate())
                              .chatMessageCheck(chatMessageDto.getChatMessageCheck())
-                             .memberNo(Member.toEntity(chatMessageDto.getMemberNo()))
-                             .chatRoomNo(ChatRoom.toEntity(chatMessageDto.getChatRoomNo()))
+                             .member(Member.toEntity(chatMessageDto.getMember()))
+                             .chatRoom(ChatRoom.toEntity(chatMessageDto.getChatRoom()))
                              .build();
     }
 

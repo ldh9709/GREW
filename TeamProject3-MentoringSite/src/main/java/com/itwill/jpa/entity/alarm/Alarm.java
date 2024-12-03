@@ -5,7 +5,7 @@ import java.time.LocalDate;
 import org.hibernate.annotations.CreationTimestamp;
 
 import com.itwill.jpa.dto.alarm.AlarmDto;
-import com.itwill.jpa.entity.user_information.Member;
+import com.itwill.jpa.entity.member_information.Member;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;

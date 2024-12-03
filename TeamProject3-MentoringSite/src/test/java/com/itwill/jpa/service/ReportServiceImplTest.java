@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import com.itwill.jpa.dto.report.ReportDto;
+import com.itwill.jpa.service.report.ReportService;
 
 @SpringBootTest
 class ReportServiceImplTest {
@@ -17,7 +18,7 @@ class ReportServiceImplTest {
 		ReportDto report = ReportDto.builder()
 				.reportNo(0L)
 				.reportType("ANSWER")
-				.reportTarget(1)
+				.reportTarget(1L)
 				.reportReason(2)
 				.reportContent("흥")
 				.memberNo(1L)
@@ -29,21 +30,26 @@ class ReportServiceImplTest {
 	void updateReportStatusToCancel() {
 		reportService.updateReportStatusToCancel(3L);
 	}
+	
 //	@Test
 	void updateReportStatusToInProgress() {
-		reportService.updateReportStatusToInProgress(3L);
+		reportService.updateReportStatusToInProgress(2L);
+	}
+	@Test
+	void updateReportStatusToResolved() {
+		reportService.updateReportStatusToResolved(2L);
 	}
 
 //	@Test
 	void testUpdateStatusReport() {
-		reportService.updateReportStatusToResolved(3L);
+		reportService.updateReportStatusToFalseReport(3L);
 	}
 //	@Test
 	void testSelectByuserNo(){
 		System.out.println(reportService.selectReportByUserNo(1L));
 	}
 
-	@Test
+//	@Test
 	void testSelectAll(){
 		System.out.println(reportService.selectReportAll());
 	}

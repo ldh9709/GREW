@@ -2,7 +2,7 @@ package com.itwill.jpa.dto.alarm;
 
 import java.time.LocalDate;
 
-import com.itwill.jpa.dto.user_information.MemberDto;
+import com.itwill.jpa.dto.member_information.MemberDto;
 import com.itwill.jpa.entity.alarm.Alarm;
 
 import lombok.AllArgsConstructor;

@@ -2,7 +2,7 @@ package com.itwill.jpa.dto.bulletin_board;
 
 import java.time.LocalDate;
 
-import com.itwill.jpa.dto.user_information.MemberDto;
+import com.itwill.jpa.dto.member_information.MemberDto;
 import com.itwill.jpa.entity.bullentin_board.Vote;
 
 import lombok.AllArgsConstructor;
@@ -17,9 +17,9 @@ import lombok.NoArgsConstructor;
 public class VoteDto {
 
     private Long voteNo;         // vote_no (PK)
-    private String voteType;     // vote_type
+    private Integer voteType;     // vote_type
     private LocalDate voteDate;  // vote_date
-    private MemberDto member;    // user_no (FK)
+    private MemberDto member;    // member_no (FK)
     private AnswerDto answer;    // answer_no (FK)
 
     /*

@@ -6,8 +6,8 @@ import java.util.List;
 import org.hibernate.annotations.CreationTimestamp;
 
 import com.itwill.jpa.dto.bulletin_board.InquiryDto;
-import com.itwill.jpa.entity.user_information.Category;
-import com.itwill.jpa.entity.user_information.Member;
+import com.itwill.jpa.entity.member_information.Category;
+import com.itwill.jpa.entity.member_information.Member;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -44,16 +44,16 @@ public class Inquiry {
     private String inquiryTitle;
 
     @Column(name = "inquiry_content", nullable = false, length = 500)
-    private String inquiryContent = "";
+    private String inquiryContent;
     
     @Column(name = "inquiry_date", nullable = false)
-    private LocalDate inquiryDate = LocalDate.now();
+    private LocalDate inquiryDate;
 
     @Column(name = "inquiry_status", nullable = false)
-    private Integer inquiryStatus = 1;  // 1 or 2
+    private Integer inquiryStatus;  // 1 or 2
 
     @Column(name = "inquiry_views", nullable = false)
-    private Integer inquiryViews = 0;
+    private Integer inquiryViews;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category_no")

@@ -3,8 +3,10 @@ package com.itwill.jpa.entity.bullentin_board;
 import java.time.LocalDate;
 import java.util.List;
 
+import org.hibernate.annotations.CreationTimestamp;
+
 import com.itwill.jpa.dto.bulletin_board.AnswerDto;
-import com.itwill.jpa.entity.user_information.Member;
+import com.itwill.jpa.entity.member_information.Member;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -38,16 +40,16 @@ public class Answer {
     private Long answerNo;  // PK, 시퀀스로 자동 생성
 
     @Column(name = "answer_content", nullable = false, length = 500)
-    private String answerContent = "";  // 답변 내용
-
+    private String answerContent;  // 답변 내용
+    @CreationTimestamp
     @Column(name = "answer_date", nullable = false)
-    private LocalDate answerDate = LocalDate.now();  // 답변 작성 시간 (LocalDate)
+    private LocalDate answerDate;  // 답변 작성 시간 (LocalDate)
 
     @Column(name = "answer_accept", nullable = false)
-    private Integer answerAccept = 1;  // 채택 여부 (예: "Y", "N")
+    private Integer answerAccept;  // 채택 여부 (예: "Y", "N")
 
     @Column(name = "answer_status", nullable = false)
-    private Integer answerStatus = 1;  // 답글 삭제 여부 (1 또는2)
+    private Integer answerStatus;  // 답글 삭제 여부 (1 또는2)
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_no")

@@ -2,8 +2,8 @@ package com.itwill.jpa.dto.report;
 
 import java.time.LocalDateTime;
 
+import com.itwill.jpa.entity.member_information.Member;
 import com.itwill.jpa.entity.report.Report;
-import com.itwill.jpa.entity.user_information.Member;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -17,29 +17,26 @@ import lombok.NoArgsConstructor;
 public class ReportDto {
 	private Long reportNo;
 	private String reportType;
-	private Integer reportTarget;
+	private Long reportTarget;
 	private Integer reportReason;
 	private String reportContent;
 	private LocalDateTime reportDate;
-	private LocalDateTime resolveDate;
+	private LocalDateTime resolvedDate;
 	private Integer reportStatus;
 	private Long memberNo;
 	
-	public static Report toEntity(ReportDto dto) {
-		Member member = Member.builder()
-				.memberNo(dto.memberNo)
-				.build();
+	public static ReportDto toDto(Report entity) {
 		
-		return Report.builder()
-				.reportNo(dto.getReportNo())
-				.reportType(dto.getReportType())
-				.reportTarget(dto.getReportTarget())
-				.reportReason(dto.getReportReason())
-				.reportContent(dto.getReportContent())
-				.reportDate(dto.getReportDate())
-				.resolvedDate(dto.getResolveDate())
-				.reportStatus(dto.getReportStatus())
-				.member(member)
+		return ReportDto.builder()
+				.reportNo(entity.getReportNo())
+				.reportType(entity.getReportType())
+				.reportTarget(entity.getReportTarget())
+				.reportReason(entity.getReportReason())
+				.reportContent(entity.getReportContent())
+				.reportDate(entity.getReportDate())
+				.resolvedDate(entity.getResolvedDate())
+				.reportStatus(entity.getReportStatus())
+				.memberNo(entity.getMember().getMemberNo())
 				.build();
 	}
 }
