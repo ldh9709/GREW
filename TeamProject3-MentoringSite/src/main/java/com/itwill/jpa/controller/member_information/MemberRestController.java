@@ -67,22 +67,27 @@ public class MemberRestController {
 	/* 회원 로그인 */
 	@Operation(summary = "회원 로그인")
 	@PostMapping("/login")
-	public ResponseEntity<Response> loginMember(@RequestBody MemberDto memberDto, HttpSession session) {
+	public ResponseEntity<Response> loginMember(
+			@RequestBody MemberDto memberDto
+			, HttpSession session) {
 		
 		//로그인 메소드 실행
 		Member loginMember = memberService.loginMember(memberDto.getMemberId(), memberDto.getMemberPassword());
 		
+		//DTO로 변경
+		MemberDto loginMemberDto = MemberDto.toDto(loginMember);
+		
 		//(임시) 세션에 등록 => 추후 토큰으로 변경 예정
-		session.setAttribute("loginMember", loginMember);
+		session.setAttribute("loginMember", loginMemberDto);
 		
 		//응답 객체 생성
 		Response response = new Response();
 		
-		if(loginMember != null) {
+		if(loginMemberDto != null) {
 			//응답객체에 코드, 메시지, 객체 설정
 			response.setStatus(ResponseStatusCode.LOGIN_MEMBER_SUCCESS);
 			response.setMessage(ResponseMessage.LOGIN_MEMBER_SUCCESS);
-			response.setData(loginMember);
+			response.setData(loginMemberDto);
 		}
 		
 		//인코딩 타입 설정
@@ -162,6 +167,34 @@ public class MemberRestController {
 			response.setStatus(ResponseStatusCode.UPDATE_MEMBER_SUCCESS);
 			response.setMessage(ResponseMessage.UPDATE_MEMBER_SUCCESS);
 			response.setData(updateMember);
+		}
+		
+		HttpHeaders httpHeaders=new HttpHeaders();
+		httpHeaders.setContentType(new MediaType(MediaType.APPLICATION_JSON,Charset.forName("UTF-8")));
+		
+		ResponseEntity<Response> responseEntity = 
+				new ResponseEntity<Response>(response, httpHeaders, HttpStatus.OK);
+		
+		return responseEntity;
+	}
+	
+	/* 회원 수정 */
+	@Operation(summary = "회원 상태 수정")
+	@PutMapping("/{memberNo}/status")
+	public ResponseEntity<Response> updateMemberStatus(@RequestBody MemberDto memberDto) {
+		
+		//업데이트 메소드 실행
+		Member updateMember = memberService.updateMemberStatus(memberDto);
+		
+		MemberDto updateMemberDto = MemberDto.toDto(updateMember);
+		
+		Response response = new Response();
+		
+		if(updateMemberDto != null) {
+			//응답객체에 코드, 메시지, 객체 설정
+			response.setStatus(ResponseStatusCode.UPDATE_MEMBER_SUCCESS);
+			response.setMessage(ResponseMessage.UPDATE_MEMBER_SUCCESS);
+			response.setData(updateMemberDto);
 		}
 		
 		HttpHeaders httpHeaders=new HttpHeaders();
