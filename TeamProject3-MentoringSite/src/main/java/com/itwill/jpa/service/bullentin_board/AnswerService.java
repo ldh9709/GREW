@@ -11,15 +11,17 @@ public interface AnswerService {
 	AnswerDto updateAnswer(AnswerDto answerDto) throws Exception;
 	//답변삭제
 	AnswerDto deleteAnswer(AnswerDto answerDto) throws Exception;
+	//답변채택
+	AnswerDto acceptAnswer(AnswerDto answerDto) throws Exception;
 	/*질문하나에달린답변*/
 	//추천순
 	List<AnswerDto> findByInquiryAnswerOrderByVotes(Long inquiryNo);
-	//조회순
+	//최신순
 	List<AnswerDto> findByInquiryAnswerOrderByDate(Long inquiryNo);
 	/*카테고리별 답변*/
 	//추천순
 	List<AnswerDto> findByCategoryAnswerOrderByVotes(Long categoryNo);
-	//조회순
+	//최신순
 	List<AnswerDto> findByCategoryAnswerOrderByDate(Long categoryNo);
 	//최근3일간 상위추천 답변
 	List<AnswerDto> findByAnswerOrderByVoteDate();

@@ -3,14 +3,18 @@ package com.itwill.jpa.service.bullentin_board;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.itwill.jpa.dto.bulletin_board.AnswerDto;
 import com.itwill.jpa.entity.bullentin_board.Answer;
 import com.itwill.jpa.repository.bullentin_board.AnswerRepository;
+
+import jakarta.transaction.Transactional;
+@Transactional
 @Service
 public class AnswerServiceImpl implements AnswerService{
-	
+	@Autowired
 	private AnswerRepository answerRepository;
 	
 	/*답변등록*/
@@ -24,6 +28,13 @@ public class AnswerServiceImpl implements AnswerService{
 	public AnswerDto updateAnswer(AnswerDto answerDto) throws Exception{
 		return AnswerDto.toDto(answerRepository.save(Answer.toEntity(answerDto)));
 	}
+	/*답변채택*/
+		@Override
+		public AnswerDto acceptAnswer(AnswerDto answerDto) throws Exception {
+			Answer answer = answerRepository.findById(answerDto.getAnswerNo()).get();
+			answer.setAnswerAccept(2);
+			return AnswerDto.toDto(answerRepository.save(answer));
+		}
 	/*답변삭제*/
 	@Override
 	public AnswerDto deleteAnswer(AnswerDto answerDto) throws Exception {
@@ -66,7 +77,7 @@ public class AnswerServiceImpl implements AnswerService{
 		}
 		return answerDtoList;
 	}
-	/*조회순*/
+	/*최신순*/
 	@Override
 	public List<AnswerDto> findByCategoryAnswerOrderByDate(Long categoryNo) {
 		List<Answer> answerEntityList = 
@@ -88,6 +99,7 @@ public class AnswerServiceImpl implements AnswerService{
 		}
 		return answerDtoList;
 	}
+	
 	
 	
 	
