@@ -26,6 +26,15 @@ public class ResponseMessage {
     public static final String CREATE_FAIL_EXISTED_MEMBER = "회원 아이디 중복";
     public static final String UNAUTHORIZED_MEMBER = "인증받지않은 요청입니다.";
     
+    
+    /******************* ANSWER 메시지 ************************/
+    public static final String CREATED_ANSWER_SUCESS = "답변 등록 성공";
+	public static final String READ_ANSWER_SUCCESS = "답변 조회 성공";
+	public static final String READ_ANSWER_LIST_SUCCESS = "답변 리스트 조회 성공";
+	public static final String UPDATE_ANSWER_SUCCESS = "답변 수정 성공";
+	public static final String DELETE_ANSWER_SUCCESS = "답변 삭제 성공";
+    
+    
     /*알림, 신고, 질문, 답변, 채팅*/
     
 }

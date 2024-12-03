@@ -23,4 +23,15 @@ public class ResponseStatusCode {
 	public static final int LOGIN_FAIL_PASSWORD_MISMATCH_MEMBER = 8100;
 	public static final int CREATE_FAIL_EXISTED_MEMBER = 8200;
 	public static final int UNAUTHORIZED_MEMBER = 8300;
+	
+	
+	/******************* ANSWER 메시지 ************************/
+	public static final int CREATED_ANSWER_SUCESS = 6000;
+	public static final int READ_ANSWER_SUCCESS = 6100;
+	public static final int READ_ANSWER_LIST_SUCCESS = 6200;
+	public static final int UPDATE_ANSWER_SUCCESS = 6300;
+	public static final int DELETE_ANSWER_SUCCESS = 6400;
+	
+	
+	
 }
