@@ -2,8 +2,8 @@ package com.itwill.jpa.dto.report;
 
 import java.time.LocalDateTime;
 
+import com.itwill.jpa.entity.member_information.Member;
 import com.itwill.jpa.entity.report.Report;
-import com.itwill.jpa.entity.user_information.Member;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

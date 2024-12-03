@@ -1,7 +1,7 @@
 package com.itwill.jpa.entity.chatting_review;
 
 import com.itwill.jpa.dto.chatting_review.ChatRoomStatusDto;
-import com.itwill.jpa.entity.user_information.Member;
+import com.itwill.jpa.entity.member_information.Member;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

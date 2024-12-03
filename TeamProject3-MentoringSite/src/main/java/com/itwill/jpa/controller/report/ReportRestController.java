@@ -21,7 +21,7 @@ import com.itwill.jpa.controller.Response;
 import com.itwill.jpa.controller.ResponseMessage;
 import com.itwill.jpa.controller.ResponseStatusCode;
 import com.itwill.jpa.dto.report.ReportDto;
-import com.itwill.jpa.service.ReportService;
+import com.itwill.jpa.service.report.ReportService;
 
 import io.swagger.v3.oas.annotations.Operation;
 

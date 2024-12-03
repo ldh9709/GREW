@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import com.itwill.jpa.dto.report.ReportDto;
+import com.itwill.jpa.service.report.ReportService;
 
 @SpringBootTest
 class ReportServiceImplTest {

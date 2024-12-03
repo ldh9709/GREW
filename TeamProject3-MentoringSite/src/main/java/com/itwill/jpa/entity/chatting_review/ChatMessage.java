@@ -6,7 +6,7 @@ import java.time.LocalDateTime;
 import org.hibernate.annotations.CreationTimestamp;
 
 import com.itwill.jpa.dto.chatting_review.ChatMessageDto;
-import com.itwill.jpa.entity.user_information.Member;
+import com.itwill.jpa.entity.member_information.Member;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

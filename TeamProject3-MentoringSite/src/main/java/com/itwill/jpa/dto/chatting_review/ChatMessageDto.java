@@ -2,10 +2,10 @@ package com.itwill.jpa.dto.chatting_review;
 
 import java.time.LocalDateTime;
 
-import com.itwill.jpa.dto.user_information.MemberDto;
+import com.itwill.jpa.dto.member_information.MemberDto;
 import com.itwill.jpa.entity.chatting_review.ChatMessage;
 import com.itwill.jpa.entity.chatting_review.ChatRoom;
-import com.itwill.jpa.entity.user_information.Member;
+import com.itwill.jpa.entity.member_information.Member;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

@@ -3,7 +3,7 @@ package com.itwill.jpa.entity.report;
 import java.time.LocalDateTime;
 
 import com.itwill.jpa.dto.report.ReportDto;
-import com.itwill.jpa.entity.user_information.Member;
+import com.itwill.jpa.entity.member_information.Member;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

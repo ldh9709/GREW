@@ -7,7 +7,7 @@ import java.util.List;
 import org.hibernate.annotations.CreationTimestamp;
 
 import com.itwill.jpa.dto.chatting_review.MentoringRequestDto;
-import com.itwill.jpa.entity.user_information.Member;
+import com.itwill.jpa.entity.member_information.Member;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;

@@ -5,7 +5,7 @@ import java.time.LocalDate;
 import org.hibernate.annotations.CreationTimestamp;
 
 import com.itwill.jpa.dto.bulletin_board.VoteDto;
-import com.itwill.jpa.entity.user_information.Member;
+import com.itwill.jpa.entity.member_information.Member;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
