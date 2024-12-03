@@ -53,7 +53,13 @@ public class ReportServiceImpl implements ReportService {
 		}
 
 		/* report type, target 찾아서 상태 변경 내용 추가*/
+		if(report.getReportType().equals("ANSWER")) {
+			
+		}
 		
+		if(report.getReportType().equals("INQUIRY")) {
+			
+		}
 		report.setResolvedDate(LocalDateTime.now());
 		reportRepository.save(report);
 	}
@@ -76,7 +82,7 @@ public class ReportServiceImpl implements ReportService {
 			reportRepository.save(report);
 	}
 	
-	/* 신고 1개 출력 */ 
+	/* 신고 정보 상세 보기 */ 
 	public ReportDto selectReportByreportNo(Long reportNo) {
 		Report report = reportRepository.findById(reportNo).get();
 		ReportDto reportDto = ReportDto.toDto(report);

@@ -1,4 +1,4 @@
-package com.itwill.jpa.controller;
+package com.itwill.jpa.response;
 
 
 public class ResponseMessage {
