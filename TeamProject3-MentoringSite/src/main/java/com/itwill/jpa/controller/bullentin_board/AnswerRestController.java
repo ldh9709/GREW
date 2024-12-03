@@ -40,8 +40,8 @@ public class AnswerRestController {
 		// 2. 응답 데이터(Response 객체) 생성
 		// - 응답객체에 코드, 메시지, 객체 설정
 		Response response = new Response();
-		response.setStatus(ResponseStatusCode.CREATED_ANSWER_SUCESS);
-		response.setMessage(ResponseMessage.CREATED_ANSWER_SUCESS);
+		response.setStatus(ResponseStatusCode.CREATED_ANSWER_SUCCESS);
+		response.setMessage(ResponseMessage.CREATED_ANSWER_SUCCESS);
 		response.setData(answerDto);
 		
 		// 3. 응답 헤더 설정(인코딩 타입)

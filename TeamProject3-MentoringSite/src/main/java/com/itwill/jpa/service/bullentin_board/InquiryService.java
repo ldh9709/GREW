@@ -11,6 +11,8 @@ public interface InquiryService {
 	InquiryDto updateInquiry(InquiryDto inquiryDto) throws Exception;
 	//질문삭제
 	InquiryDto deleteInquiry(InquiryDto inquiryDto) throws Exception;
+	//질문보기
+	InquiryDto getInquiry(Long InquiryNo);
 	//조회수증가
 	InquiryDto increaseViewInquiry(InquiryDto inquiryDto) throws Exception;
 	
