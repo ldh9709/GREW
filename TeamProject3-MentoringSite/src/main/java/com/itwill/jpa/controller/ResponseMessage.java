@@ -26,6 +26,25 @@ public class ResponseMessage {
     public static final String CREATE_FAIL_EXISTED_MEMBER = "회원 아이디 중복";
     public static final String UNAUTHORIZED_MEMBER = "인증받지않은 요청입니다.";
     
+    /**********************INQUIRY 메시지**************************/
+    public static final String CREATED_INQUIRY_SUCCESS = "질문 등록 성공";
+    public static final String CREATED_INQUIRY_FAIL = "질문 등록 실패";
+    public static final String UPDATE_INQUIRY_SUCCESS = "질문 수정 성공";
+    public static final String UPDATE_INQUIRY_FAIL = "질문 수정 실패";
+    public static final String DELETE_INQUIRY_SUCCESS = "질문 삭제(수정) 성공";
+    public static final String DELETE_INQUIRY_FAIL = "질문 삭제(수정) 실패";
+    public static final String READ_INQUIRY_LIST_SUCCESS = "질문 리스트 불러오기 성공";
+    public static final String READ_INQUIRY_LIST_FAIL = "질문 리스트 불러오기 실패";
+    
+    /**********************ANSWER 메시지**************************/
+	public static final String CREATED_ANSWER_SUCCESS = "답변 등록 성공";
+	public static final String CREATED_ANSWER_FAIL = "답변 등록 실패";
+	public static final String UPDATE_ANSWER_SUCCESS = "답변 수정 성공";
+	public static final String UPDATE_ANSWER_FAIL = "답변 수정 실패";
+	public static final String DELETE_ANSWER_SUCCESS = "답변 삭제(수정) 성공";
+	public static final String DELETE_ANSWER_FAIL = "답변 삭제(수정) 실패";
+	public static final String READ_ANSWER_LIST_SUCCESS = "답변 리스트 불러오기 성공";
+	public static final String READ_ANSWER_LIST_FAIL = "답변 리스트 불러오기 실패";
     /*알림, 신고, 질문, 답변, 채팅*/
     
 }
