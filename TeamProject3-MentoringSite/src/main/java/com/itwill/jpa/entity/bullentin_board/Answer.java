@@ -41,12 +41,12 @@ public class Answer {
 
     @Column(name = "answer_content", nullable = false, length = 500)
     private String answerContent;  // 답변 내용
-    @CreationTimestamp
+
     @Column(name = "answer_date", nullable = false)
     private LocalDate answerDate;  // 답변 작성 시간 (LocalDate)
 
     @Column(name = "answer_accept", nullable = false)
-    private Integer answerAccept;  // 채택 여부 (예: "Y", "N")
+    private Integer answerAccept=1;  // 채택 여부 (예: "Y", "N")
 
     @Column(name = "answer_status", nullable = false)
     private Integer answerStatus=1;  // 답글 삭제 여부 (1 또는2)

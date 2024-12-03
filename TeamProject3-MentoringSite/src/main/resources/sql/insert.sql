@@ -37,11 +37,11 @@ VALUES (report_no_SEQ.nextval, 'INQUIRY', 1, 4,'욕쟁이', sysdate, 1, sysdate 
 
 /* 카테고리 등록 */
 insert into category(category_no,category_name,category_level)
-values(category_no_SEQ.nextval, '경제', '1');
+values(category_SEQ.nextval, '경제', '1');
 insert into category(category_no,category_name,category_level)
-values(category_no_SEQ.nextval, '자기개발', '2');
+values(category_SEQ.nextval, '자기개발', '2');
 insert into category(category_no,category_name,category_level)
-values(category_no_SEQ.nextval, '프로그래밍', '3');
+values(category_SEQ.nextval, '프로그래밍', '3');
 
 /* 질문 등록 */
 insert into inquiry(inquiry_no,inquiry_title, inquiry_content, inquiry_date, inquiry_status, inquiry_views, category_no, member_no)
@@ -55,7 +55,7 @@ values(inquiry_no_SEQ.nextval, '웹개발자 관련 질문', '웹개발자가 �
 insert into answer(answer_no, answer_content, answer_date, answer_accept, answer_status, member_no, inquiry_no)
 values(answer_no_SEQ.nextval, '비트코인투자를 시작하세요!!',sysdate, 1, 1, 7, 1);
 insert into answer(answer_no, answer_content, answer_date, answer_accept, answer_status, member_no, inquiry_no)
-values(answer_no_SEQ.nextval, '은행적금을 활용해보세요',sysdate, 2, 1, 8, 1);
+values(answer_no_SEQ.nextval, '은행적금을 활용해보세요',sysdate, 1, 1, 8, 1);
 insert into answer(answer_no, answer_content, answer_date, answer_accept, answer_status, member_no, inquiry_no)
 values(answer_no_SEQ.nextval, '독서와, 신문, 뉴스를 자주보세요',sysdate, 1, 1, 8, 2);
 insert into answer(answer_no, answer_content, answer_date, answer_accept, answer_status, member_no, inquiry_no)
