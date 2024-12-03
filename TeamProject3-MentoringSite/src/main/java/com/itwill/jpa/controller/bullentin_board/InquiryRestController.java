@@ -17,10 +17,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.itwill.jpa.controller.Response;
-import com.itwill.jpa.controller.ResponseMessage;
-import com.itwill.jpa.controller.ResponseStatusCode;
 import com.itwill.jpa.dto.bulletin_board.InquiryDto;
+import com.itwill.jpa.response.Response;
+import com.itwill.jpa.response.ResponseMessage;
+import com.itwill.jpa.response.ResponseStatusCode;
 import com.itwill.jpa.service.bullentin_board.InquiryService;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -142,7 +142,41 @@ public class InquiryRestController {
 	    response.setData(inquiryDtos);
 
 	    return new ResponseEntity<>(response, HttpStatus.OK);
-	
+	}
+	@Operation(summary = "조회수 많은 순으로 카테고리별 질문 출력")
+	@GetMapping("/viewCount/{categoryNo}")
+	public ResponseEntity<Response> findByCategoryInquiryOrderByView(@PathVariable(name = "categoryNo") Long categoryNo) {
+		List<InquiryDto> inquiryDtos = inquiryService.findByCategoryInquiryOrderByView(categoryNo);
 		
+		Response response = new Response();
+		response.setStatus(ResponseStatusCode.READ_INQUIRY_LIST_SUCCESS);
+		response.setMessage(ResponseMessage.READ_INQUIRY_LIST_SUCCESS);
+		response.setData(inquiryDtos);
+		
+		return new ResponseEntity<>(response, HttpStatus.OK);
+	}
+	@Operation(summary = "답변수 많은 순으로 전체 질문 출력")
+	@GetMapping("/answerCount")
+	public ResponseEntity<Response> findByAllInquiryOrderByAnswer() {
+		List<InquiryDto> inquiryDtos = inquiryService.findByAllInquiryOrderByAnswer();
+		
+		Response response = new Response();
+		response.setStatus(ResponseStatusCode.READ_INQUIRY_LIST_SUCCESS);
+		response.setMessage(ResponseMessage.READ_INQUIRY_LIST_SUCCESS);
+		response.setData(inquiryDtos);
+		
+		return new ResponseEntity<>(response, HttpStatus.OK);
+	}
+	@Operation(summary = "조회수 많은 순으로 전체 질문 출력")
+	@GetMapping("/viewCount")
+	public ResponseEntity<Response> findByAllInquiryOrderByView() {
+		List<InquiryDto> inquiryDtos = inquiryService.findByAllInquiryOrderByView();
+		
+		Response response = new Response();
+		response.setStatus(ResponseStatusCode.READ_INQUIRY_LIST_SUCCESS);
+		response.setMessage(ResponseMessage.READ_INQUIRY_LIST_SUCCESS);
+		response.setData(inquiryDtos);
+		
+		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
 }

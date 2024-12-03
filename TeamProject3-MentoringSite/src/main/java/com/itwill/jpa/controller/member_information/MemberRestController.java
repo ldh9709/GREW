@@ -42,6 +42,7 @@ public class MemberRestController {
 		//저장메소드 실행
 		Member saveMember = memberService.saveMember(memberDto);
 		
+		
 		//응답 객체 생성
 		Response response = new Response();
 		

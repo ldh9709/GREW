@@ -21,10 +21,27 @@ public class ResponseStatusCode {
 	public static final int READ_REPORT_LIST_SUCCESS = 4200;
 	public static final int UPDATE_REPORT_SUCCESS = 4300;
 	public static final int REPORT_FAIL = 4400;
-	/******************* INQUIRY  메시지 ************************/
+	/**********************INQUIRY 메시지**************************/
+	public static final int CREATED_INQUIRY_SUCCESS = 5000;
+	public static final int CREATED_INQUIRY_FAIL = 5100;
+	public static final int UPDATE_INQUIRY_SUCCESS = 5200;
+	public static final int UPDATE_INQUIRY_FAIL = 5300;
+	public static final int DELETE_INQUIRY_SUCCESS = 5400;
+	public static final int DELETE_INQUIRY_FAIL = 5500;
+	public static final int READ_INQUIRY_LIST_SUCCESS = 5600;
+	public static final int READ_INQUIRY_LIST_FAIL = 5700;
+	public static final int INCREASE_VIEW_INQUIRY_SUCCESS = 5800;
+	public static final int VIEW_INQUIRY_SUCCESS = 5900;
 	
-	/******************* ANSWER   메시지 ************************/
-	
+	/**********************ANSWER 메시지**************************/
+	public static final int CREATED_ANSWER_SUCCESS = 6000;
+	public static final int CREATED_ANSWER_FAIL = 6100;
+	public static final int UPDATE_ANSWER_SUCCESS = 6200;
+	public static final int UPDATE_ANSWER_FAIL = 6300;
+	public static final int DELETE_ANSWER_SUCCESS = 6400;
+	public static final int DELETE_ANSWER_FAIL = 6500;
+	public static final int READ_ANSWER_LIST_SUCCESS = 6600;
+	public static final int READ_ANSWER_LIST_FAIL = 6700;
 	/******************* CHATTING 메시지 ************************/
 	public static final int PENDING_CHATTING = 7000; // (멘토의 수락/거절 대기 상태)
 	public static final int ACTIVE_CHATTING = 7100; // (채팅방 활성화)
