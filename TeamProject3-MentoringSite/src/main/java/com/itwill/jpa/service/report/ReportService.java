@@ -13,6 +13,6 @@ public interface ReportService {
 	void updateReportStatusToFalseReport(Long reportNo);
 	void updateReportStatusToCancel(Long reportNo);
 	public ReportDto selectReportByreportNo(Long reportNo);
-	public List<ReportDto> selectReportByUserNo(Long userNo);
+	public List<ReportDto> selectReportByUserNo(Long memberNo);
 	public List<ReportDto> selectReportAll();
 }

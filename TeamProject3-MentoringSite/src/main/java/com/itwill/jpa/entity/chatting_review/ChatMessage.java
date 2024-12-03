@@ -16,7 +16,6 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
@@ -30,7 +29,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name="chatmessage")
+@Table(name="chat_message")
 public class ChatMessage {
 
     @Id
@@ -39,7 +38,7 @@ public class ChatMessage {
     @Column(name="chat_message_no")
     private Long chatMessageNo;
 
-    @Column(name="chat_content",nullable = false)
+    @Column(name="chat_message_content",nullable = false)
     private String chatContent;
 
     @Column(name="chat_message_date",nullable = false)

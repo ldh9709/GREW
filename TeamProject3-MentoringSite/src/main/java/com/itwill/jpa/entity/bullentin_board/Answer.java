@@ -46,7 +46,7 @@ public class Answer {
     private LocalDate answerDate;  // 답변 작성 시간 (LocalDate)
 
     @Column(name = "answer_accept", nullable = false)
-    private Integer answerAccept;  // 채택 여부 (예: "Y", "N")
+    private Integer answerAccept;  // 채택 시 2 기본 1
 
     @Column(name = "answer_status", nullable = false)
     private Integer answerStatus=1;  // 답글 삭제 여부 (1 또는2)
@@ -65,8 +65,8 @@ public class Answer {
     public void setDefaultValues() {
     	if(this.answerContent==null) this.answerContent = "";
     	if(this.answerDate==null) this.answerDate = LocalDate.now();
-    	if(this.answerAccept==null) this.answerAccept = 1;
-    	if(this.answerStatus==null) this.answerStatus = 1;
+    	if(this.answerAccept==null||this.answerAccept==0) this.answerAccept = 1;
+    	if(this.answerStatus==null||this.answerStatus==0) this.answerStatus = 1;
     }
     
     /*
