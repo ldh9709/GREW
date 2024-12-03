@@ -1,4 +1,4 @@
-package com.itwill.jpa.repository.alarm;
+package com.itwill.jpa.repository.bullentin_board;
 
 import java.util.List;
 

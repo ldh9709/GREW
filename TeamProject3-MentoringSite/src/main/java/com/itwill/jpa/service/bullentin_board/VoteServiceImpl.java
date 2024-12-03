@@ -1,9 +1,11 @@
 package com.itwill.jpa.service.bullentin_board;
 
+import org.springframework.stereotype.Service;
+
 import com.itwill.jpa.dto.bulletin_board.VoteDto;
 import com.itwill.jpa.entity.bullentin_board.Vote;
 import com.itwill.jpa.repository.bullentin_board.VoteRepository;
-
+@Service
 public class VoteServiceImpl implements VoteService{
 	private VoteRepository voteRepository;
 	//추천
