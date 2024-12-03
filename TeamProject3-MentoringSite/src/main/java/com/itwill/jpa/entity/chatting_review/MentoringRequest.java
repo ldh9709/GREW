@@ -19,6 +19,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.PrePersist;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -40,11 +41,11 @@ public class MentoringRequest {
 	private Long requestNo;
 	
 	@Column(name = "request_status", nullable = false)
-	private int requestStatus;
+	private Integer requestStatus;
 	
 	@Column(name = "request_date", updatable = false)
 	@CreationTimestamp
-	private LocalDateTime requestDate = LocalDateTime.now();
+	private LocalDateTime requestDate;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "mentee_no", nullable = false)
@@ -60,13 +61,20 @@ public class MentoringRequest {
     @OneToMany(mappedBy = "mentoringRequest", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
     private List<ChatRoom> chatRooms = new ArrayList<>();
 	
+    /* 초기값 설정 */
+    @PrePersist
+    public void setDefaultValues() {
+    	if (this.requestStatus == 0 || this.requestStatus == null) this.requestStatus = 1;
+    	if (this.requestDate == null) this.requestDate = LocalDateTime.now();
+    }
+    
     public static MentoringRequest toEntity(MentoringRequestDto mentoringRequestDto) {
         return MentoringRequest.builder()
                 .requestNo(mentoringRequestDto.getRequestNo())
                 .requestStatus(mentoringRequestDto.getRequestStatus())
                 .requestDate(mentoringRequestDto.getRequestDate())
-                .mentee(Member.toEntity(mentoringRequestDto.getMentee()))
-                .mentor(Member.toEntity(mentoringRequestDto.getMentor()))
+                .mentee(Member.builder().memberNo(mentoringRequestDto.getMenteeNo()).build())
+                .mentor(Member.builder().memberNo(mentoringRequestDto.getMentorNo()).build())
                 .build();
     }
 }
