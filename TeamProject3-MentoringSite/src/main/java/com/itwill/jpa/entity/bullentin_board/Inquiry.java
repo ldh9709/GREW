@@ -49,6 +49,7 @@ public class Inquiry {
     
     @Column(name = "inquiry_date", nullable = false)
     private LocalDate inquiryDate;
+    
     @Column(name = "inquiry_status", nullable = false, columnDefinition = "integer default 1")
     private Integer inquiryStatus = 1;  // 1 or 2
 
