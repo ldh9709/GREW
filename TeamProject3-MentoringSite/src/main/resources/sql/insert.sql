@@ -108,6 +108,10 @@ values(answer_no_SEQ.nextval, '독서와, 신문, 뉴스를 자주보세요',sys
 insert into answer(answer_no, answer_content, answer_date, answer_accept, answer_status, member_no, inquiry_no)
 values(answer_no_SEQ.nextval, 'JAVA를 배우세요 추천합니다!',sysdate, 1, 1, 3, 3);
 
+/* 활동 상태 등록 */
+insert into mentoring_request (request_no, request_status, request_date, mentee_no, mentor_no) 
+values(request_no_SEQ.nextval, 1, sysdate, 2, 3);
+
 /* 추천 등록 */
 insert into vote(vote_no, vote_type, vote_date, answer_no, member_no)
 values(vote_no_SEQ.nextval, 1, sysdate,1,1);
