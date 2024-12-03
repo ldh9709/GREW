@@ -1,10 +1,43 @@
 /* 카테고리 등록 */
 INSERT INTO category(category_no, category_name, category_level)
-VALUES(category_no_SEQ.nextval,'직무 상담',1)
+VALUES(category_no_SEQ.nextval,'직무 상담',1);
 INSERT INTO category(category_no, category_name, category_level)
-VALUES(category_no_SEQ.nextval,'인사/총무/노무',2)
+VALUES(category_no_SEQ.nextval,'인사/총무/노무',2);
 INSERT INTO category(category_no, category_name, category_level)
-VALUES(category_no_SEQ.nextval,'영업/영업관리',2)
+VALUES(category_no_SEQ.nextval,'영업/영업관리',2);
+INSERT INTO category(category_no, category_name, category_level)
+VALUES(category_no_SEQ.nextval,'IT개발/데이터',2);
+
+INSERT INTO category(category_no, category_name, category_level)
+VALUES(category_no_SEQ.nextval,'학습/교육',1);
+INSERT INTO category(category_no, category_name, category_level)
+VALUES(category_no_SEQ.nextval,'중학생',2);
+INSERT INTO category(category_no, category_name, category_level)
+VALUES(category_no_SEQ.nextval,'고등학생',2);
+INSERT INTO category(category_no, category_name, category_level)
+VALUES(category_no_SEQ.nextval,'대학입시상담',2);
+
+INSERT INTO category(category_no, category_name, category_level)
+VALUES(category_no_SEQ.nextval,'예술/창작',1);
+INSERT INTO category(category_no, category_name, category_level)
+VALUES(category_no_SEQ.nextval,'음악',2);
+INSERT INTO category(category_no, category_name, category_level)
+VALUES(category_no_SEQ.nextval,'글쓰기',2);
+INSERT INTO category(category_no, category_name, category_level)
+VALUES(category_no_SEQ.nextval,'미술',2);
+INSERT INTO category(category_no, category_name, category_level)
+VALUES(category_no_SEQ.nextval,'사진/영상 제작',2);
+INSERT INTO category(category_no, category_name, category_level)
+VALUES(category_no_SEQ.nextval,'연기/연극',2);
+
+INSERT INTO category(category_no, category_name, category_level)
+VALUES(category_no_SEQ.nextval,'창업/비즈니스',1);
+INSERT INTO category(category_no, category_name, category_level)
+VALUES(category_no_SEQ.nextval,'스타트업 아이디어',2);
+INSERT INTO category(category_no, category_name, category_level)
+VALUES(category_no_SEQ.nextval,'마케팅 전략',2);
+INSERT INTO category(category_no, category_name, category_level)
+VALUES(category_no_SEQ.nextval,'법률 특허 상담',2);
 
 
 /* 멘티 등록 */
