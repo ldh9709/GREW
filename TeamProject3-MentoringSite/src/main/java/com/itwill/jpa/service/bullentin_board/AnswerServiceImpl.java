@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.itwill.jpa.dto.bulletin_board.AnswerDto;
 import com.itwill.jpa.entity.bullentin_board.Answer;
-import com.itwill.jpa.repository.alarm.AnswerRepository;
+import com.itwill.jpa.repository.bullentin_board.AnswerRepository;
 @Service
 public class AnswerServiceImpl implements AnswerService{
 	
