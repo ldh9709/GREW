@@ -18,7 +18,7 @@ import lombok.NoArgsConstructor;
 public class Interest {
 
     @Id
-    @SequenceGenerator(name = "interest_seq", initialValue = 1, allocationSize = 1)
+    @SequenceGenerator(name = "interest_SEQ", initialValue = 1, allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "interest_SEQ")
    
     @Column(name = "interest_no" )
