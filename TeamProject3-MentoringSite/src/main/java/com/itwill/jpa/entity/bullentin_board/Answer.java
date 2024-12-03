@@ -1,6 +1,6 @@
 package com.itwill.jpa.entity.bullentin_board;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.hibernate.annotations.CreationTimestamp;
@@ -43,13 +43,13 @@ public class Answer {
     private String answerContent;  // 답변 내용
 
     @Column(name = "answer_date", nullable = false)
-    private LocalDate answerDate;  // 답변 작성 시간 (LocalDate)
+    private LocalDateTime answerDate;  // 답변 작성 시간 (LocalDate)
 
     @Column(name = "answer_accept", nullable = false)
     private Integer answerAccept;  // 채택 시 2 기본 1
 
     @Column(name = "answer_status", nullable = false)
-    private Integer answerStatus=1;  // 답글 삭제 여부 (1 또는2)
+    private Integer answerStatus;  // 답글 삭제 여부 (1 또는2)
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_no")
@@ -64,7 +64,7 @@ public class Answer {
     @PrePersist
     public void setDefaultValues() {
     	if(this.answerContent==null) this.answerContent = "";
-    	if(this.answerDate==null) this.answerDate = LocalDate.now();
+    	if(this.answerDate==null) this.answerDate = LocalDateTime.now();
     	if(this.answerAccept==null||this.answerAccept==0) this.answerAccept = 1;
     	if(this.answerStatus==null||this.answerStatus==0) this.answerStatus = 1;
     }

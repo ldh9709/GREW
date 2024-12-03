@@ -2,7 +2,7 @@ package com.itwill.jpa.dto.bulletin_board;
 
 
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import com.itwill.jpa.dto.member_information.CategoryDto;
 import com.itwill.jpa.dto.member_information.MemberDto;
@@ -22,7 +22,7 @@ public class InquiryDto {
     private Long inquiryNo;
     private String inquiryTitle;
     private String inquiryContent;
-    private LocalDate inquiryDate;
+    private LocalDateTime inquiryDate;
     private Integer inquiryStatus;
     private Integer inquiryViews;
     

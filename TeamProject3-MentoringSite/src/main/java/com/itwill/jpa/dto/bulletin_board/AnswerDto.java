@@ -1,6 +1,6 @@
 package com.itwill.jpa.dto.bulletin_board;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import com.itwill.jpa.dto.member_information.MemberDto;
 import com.itwill.jpa.entity.bullentin_board.Answer;
@@ -18,7 +18,7 @@ public class AnswerDto {
 
     private Long answerNo;         // answer_no (PK)
     private String answerContent;  // answer_content
-    private LocalDate answerDate;  // answer_time
+    private LocalDateTime answerDate;  // answer_time
     private Integer answerAccept;   // answer_accept (채택여부)
     private Integer answerStatus;   // answer_status (답글삭제여부, '1' or '2')
     private MemberDto member;           // user_no (FK)
