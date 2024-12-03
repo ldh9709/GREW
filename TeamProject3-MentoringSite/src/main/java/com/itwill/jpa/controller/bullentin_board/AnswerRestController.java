@@ -1,6 +1,7 @@
 package com.itwill.jpa.controller.bullentin_board;
 
 import java.nio.charset.Charset;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -8,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -89,6 +91,9 @@ public class AnswerRestController {
 		return responseEntity;
 	}
 	
+	/* 답변채택 */
+	/* 잠시보류 */
+	
 	
 	/* 답변 삭제(상태 업데이트) */
 	@Operation(summary = "답변 삭제(상태 수정)")
@@ -111,4 +116,32 @@ public class AnswerRestController {
 		
 		return responseEntity;
 	}
+	
+	
+	/* 답변리스트 조회 */
+	/* 추천순 */
+	@Operation(summary = "답변리스트 조회(최신순)")
+	@GetMapping("/viewAnswer/{inquiryNo}")
+	public ResponseEntity<Response> findByInquiryAnswerOrderByDate(@PathVariable(name = "inquiryNo") Long inquiryNo) {
+		
+		List<AnswerDto> answerDtos = answerService.findByInquiryAnswerOrderByDate(inquiryNo);
+		
+		Response response = new Response();
+	    response.setStatus(ResponseStatusCode.READ_ANSWER_LIST_SUCCESS);
+	    response.setMessage(ResponseMessage.READ_ANSWER_LIST_SUCCESS);
+	    response.setData(answerDtos);
+	    
+	    HttpHeaders httpHeaders = new HttpHeaders();
+		httpHeaders.setContentType(new MediaType(MediaType.APPLICATION_JSON,Charset.forName("UTF-8")));
+		
+	    ResponseEntity<Response> responseEntity = 
+				new ResponseEntity<Response>(response, httpHeaders, HttpStatus.OK);
+		
+		return responseEntity;
+	}
+	
+	
+	
+	
+	
 }

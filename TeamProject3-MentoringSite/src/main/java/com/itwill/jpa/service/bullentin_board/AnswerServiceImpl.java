@@ -21,20 +21,22 @@ public class AnswerServiceImpl implements AnswerService{
 	@Override
 	public AnswerDto saveAnswer(AnswerDto answerDto){
 		return AnswerDto.toDto(answerRepository.save(Answer.toEntity(answerDto)));
-	
 	}
+	
 	/*답변수정*/
 	@Override
 	public AnswerDto updateAnswer(AnswerDto answerDto) throws Exception{
 		return AnswerDto.toDto(answerRepository.save(Answer.toEntity(answerDto)));
 	}
+	
 	/*답변채택*/
-		@Override
-		public AnswerDto acceptAnswer(AnswerDto answerDto) throws Exception {
-			Answer answer = answerRepository.findById(answerDto.getAnswerNo()).get();
-			answer.setAnswerAccept(2);
-			return AnswerDto.toDto(answerRepository.save(answer));
-		}
+	@Override
+	public AnswerDto acceptAnswer(AnswerDto answerDto) throws Exception {
+		Answer answer = answerRepository.findById(answerDto.getAnswerNo()).get();
+		answer.setAnswerAccept(2);
+		return AnswerDto.toDto(answerRepository.save(answer));
+	}
+	
 	/*답변삭제*/
 	@Override
 	public AnswerDto deleteAnswer(AnswerDto answerDto) throws Exception {
@@ -42,6 +44,7 @@ public class AnswerServiceImpl implements AnswerService{
 	    answer.setAnswerStatus(2);  
 	    return AnswerDto.toDto(answerRepository.save(answer));
 	}
+	
 	/*질문 하나에 달린 답변*/
 	/*추천순*/
 	@Override
@@ -54,6 +57,7 @@ public class AnswerServiceImpl implements AnswerService{
 		}
 		return answerDtoList;
 	}
+	
 	/*최신순*/
 	@Override
 	public List<AnswerDto> findByInquiryAnswerOrderByDate(Long inquiryNo) {
@@ -65,6 +69,7 @@ public class AnswerServiceImpl implements AnswerService{
 		}
 		return answerDtoList;
 	}
+	
 	/*카테고리 별 답변*/
 	/*추천순*/
 	@Override
@@ -77,6 +82,7 @@ public class AnswerServiceImpl implements AnswerService{
 		}
 		return answerDtoList;
 	}
+	
 	/*최신순*/
 	@Override
 	public List<AnswerDto> findByCategoryAnswerOrderByDate(Long categoryNo) {
@@ -88,6 +94,7 @@ public class AnswerServiceImpl implements AnswerService{
 		}
 		return answerDtoList;
 	}
+	
 	/*최근 3일간 추천 많은 답변*/
 	@Override
 	public List<AnswerDto> findByAnswerOrderByVoteDate() {
