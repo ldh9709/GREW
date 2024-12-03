@@ -26,22 +26,24 @@ public class Category {
     private Long categoryNo;
     @Column(name = "category_name" ,nullable = false)
     private String categoryName;
-    @Column(name = "category_level" ,nullable = false)
-    private Integer categoryLevel;
+    @Column(name = "category_depth" ,nullable = false)
+    private Integer categoryDepth;
     
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "parent_category_no")
+    private Category parentCategory;
     
     @OneToMany(mappedBy = "category", fetch = FetchType.LAZY)
     private List<MentorProfile> mentorProfiles = new ArrayList<>();
     
     @OneToMany(mappedBy = "category", fetch = FetchType.LAZY)
-    private List<Interest> interest = new ArrayList<>();
+    private List<Interest> interests = new ArrayList<>();
     
     public static Category toEntity(CategoryDto categoryDto) {
         return Category.builder()
-        		
         		.categoryNo(categoryDto.getCategoryNo())
                 .categoryName(categoryDto.getCategoryName())
-                .categoryLevel(categoryDto.getCategoryLevel())
+                .categoryDepth(categoryDto.getCategoryLevel())
                 .build();
     }
 }

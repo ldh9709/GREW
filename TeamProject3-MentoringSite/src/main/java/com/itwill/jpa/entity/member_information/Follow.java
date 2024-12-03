@@ -36,11 +36,11 @@ public class Follow {
     /*
      * DTO -> Entity
      */
-    public static Follow toEntity(FollowDto followDto) {
+    public static Follow toEntity(FollowDto dto) {
         return Follow.builder()
-                .followNo(followDto.getFollowNo())
-                .followerMember(Member.toEntity(followDto.getFollowerMember()))
-                .followedMember(Member.toEntity(followDto.getFollowedMember()))
+                .followNo(dto.getFollowNo())
+                .followerMember(Member.builder().memberNo(dto.getFollowerMember()).build())
+                .followedMember(Member.builder().memberNo(dto.getFollowedMember()).build())
                 .build();
     }
 }
