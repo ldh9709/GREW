@@ -80,14 +80,13 @@ public class AnswerServiceImpl implements AnswerService{
 	/*최근 3일간 추천 많은 답변*/
 	@Override
 	public List<AnswerDto> findByAnswerOrderByVoteDate() {
-		/*List<Answer> answerEntityList = 
+		List<Answer> answerEntityList = 
 				answerRepository.findByAnswerOrderByVoteDate();
 		List<AnswerDto> answerDtoList = new ArrayList<>();
 		for(Answer answerEntity:answerEntityList) {
 			answerDtoList.add(AnswerDto.toDto(answerEntity));
 		}
-		return answerDtoList;*/
-		return null;
+		return answerDtoList;
 	}
 	
 	

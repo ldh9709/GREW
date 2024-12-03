@@ -2,6 +2,8 @@ package com.itwill.jpa.entity.bullentin_board;
 
 import java.time.LocalDate;
 
+import org.hibernate.annotations.CreationTimestamp;
+
 import com.itwill.jpa.dto.bulletin_board.VoteDto;
 import com.itwill.jpa.entity.user_information.Member;
 
@@ -29,19 +31,19 @@ import lombok.NoArgsConstructor;
 public class Vote {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "vote_seq")
-    @SequenceGenerator(name = "vote_seq", allocationSize = 1, initialValue = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "vote_no_seq")
+    @SequenceGenerator(name = "vote_no_SEQ", allocationSize = 1, initialValue = 1)
     @Column(name = "vote_no")
     private Long voteNo;  // PK, 시퀀스로 자동 생성
 
     @Column(name = "vote_type", nullable = false)
-    private String voteType;  // 투표 타입 (예: "up", "down")
-
+    private Integer voteType;  // 투표 타입 (예: up=1, down=2)
+    @CreationTimestamp
     @Column(name = "vote_date", nullable = false)
     private LocalDate voteDate;  // 투표 일자 (LocalDate)
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_no", nullable = false)  // "user_no"는 User 엔티티와 관계
+    @JoinColumn(name = "member_no", nullable = false)  // "user_no"는 User 엔티티와 관계
     private Member member;  // 사용자 (User 엔티티와 관계)
 
     @ManyToOne(fetch = FetchType.LAZY)
