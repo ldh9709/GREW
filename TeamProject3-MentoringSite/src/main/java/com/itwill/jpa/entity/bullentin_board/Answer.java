@@ -49,7 +49,7 @@ public class Answer {
     private Integer answerAccept;  // 채택 여부 (예: "Y", "N")
 
     @Column(name = "answer_status", nullable = false)
-    private Integer answerStatus;  // 답글 삭제 여부 (1 또는2)
+    private Integer answerStatus=1;  // 답글 삭제 여부 (1 또는2)
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_no")

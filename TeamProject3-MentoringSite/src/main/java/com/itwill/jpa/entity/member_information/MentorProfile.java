@@ -18,12 +18,13 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "MentorProfile")
+@Table(name = "mentorprofile")
 public class MentorProfile {
 
     @Id
-    @SequenceGenerator(name = "mentor_profile_no_SEQ", initialValue = 1, allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "mentor_profile_no_SEQ")
+    @SequenceGenerator(name = "mentorprofile_SEQ", initialValue = 1, allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "mentorprofile_SEQ")
+    
     @Column(name = "mentor_profile_no" )
     private Long mentorProfileNo;
 
@@ -47,7 +48,10 @@ public class MentorProfile {
     
     @Column(name = "mentor_follow_count" ,nullable = false)
     private Integer mentorFollowCount;
-
+    
+    @Column(name = "mentor_status" ,nullable = false)
+    private Integer mentorStatus;
+    
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_no" )
     private Member member;
