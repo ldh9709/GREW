@@ -22,14 +22,16 @@ import lombok.NoArgsConstructor;
 public class MentorProfile {
 
     @Id
-    @SequenceGenerator(name = "mentorprofile_seq", initialValue = 1, allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "mentorprofile_SEQ")
-    
-    @Column(name = "mentor_profile_No" )
+    @SequenceGenerator(name = "mentor_profile_no_SEQ", initialValue = 1, allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "mentor_profile_no_SEQ")
+    @Column(name = "mentor_profile_no" )
     private Long mentorProfileNo;
 
-    @Column(name = "mentor_introduce" ,nullable = false)
+    @Column(name = "mentor_introduce" ,nullable = false, length = 2000)
     private String mentorIntroduce; 
+    
+    @Column(name = "mentor_career" ,nullable = false, length = 1000)
+    private String mentorCareer; 
     
     @Column(name = "mentor_rating" ,nullable = false)
     private Integer mentorRating;

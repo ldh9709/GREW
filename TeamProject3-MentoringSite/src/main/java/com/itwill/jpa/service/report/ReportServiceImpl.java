@@ -11,6 +11,8 @@ import org.springframework.transaction.annotation.Transactional;
 import com.itwill.jpa.dto.report.ReportDto;
 import com.itwill.jpa.entity.member_information.Member;
 import com.itwill.jpa.entity.report.Report;
+import com.itwill.jpa.repository.bullentin_board.AnswerRepository;
+import com.itwill.jpa.repository.bullentin_board.InquiryRepository;
 import com.itwill.jpa.repository.member_information.MemberRepository;
 import com.itwill.jpa.repository.report.ReportRepository;
 
@@ -19,9 +21,12 @@ public class ReportServiceImpl implements ReportService {
 
 	@Autowired
 	private ReportRepository reportRepository;
-	
 	@Autowired
 	private MemberRepository memberRepository;
+	@Autowired
+	private InquiryRepository inquiryRepository;
+	@Autowired
+	private AnswerRepository answerRepository;
 	
 	/*신고등록*/
 	@Override
@@ -47,16 +52,17 @@ public class ReportServiceImpl implements ReportService {
 		Report report = reportRepository.findById(reportNo).get();
 		report.setReportStatus(3);
 		
-		//멤버 신고 카운트 증가
-		if(report.getReportType().equals("USER")) {
+		/* type:MEMBER인 경우 멤버 신고 카운트 증가 */
+		if(report.getReportType().equals("MEMBER")) {
 			memberRepository.incrementReportCount(report.getReportTarget());
 		}
 
-		/* report type, target 찾아서 상태 변경 내용 추가*/
+		/* type:ANSWER인 경우 해당 게시글 상태변경 */
 		if(report.getReportType().equals("ANSWER")) {
-			
+			//answerRepository.상태변경메소드(report.getReportTarget());
 		}
 		
+		/* type:INQUIRY인 경우 해당 게시글 상태변경 */
 		if(report.getReportType().equals("INQUIRY")) {
 			
 		}
