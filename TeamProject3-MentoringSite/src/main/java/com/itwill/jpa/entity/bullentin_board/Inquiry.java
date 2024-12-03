@@ -9,6 +9,7 @@ import com.itwill.jpa.dto.bulletin_board.InquiryDto;
 import com.itwill.jpa.entity.member_information.Category;
 import com.itwill.jpa.entity.member_information.Member;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -48,9 +49,8 @@ public class Inquiry {
     
     @Column(name = "inquiry_date", nullable = false)
     private LocalDate inquiryDate;
-
-    @Column(name = "inquiry_status", nullable = false)
-    private Integer inquiryStatus;  // 1 or 2
+    @Column(name = "inquiry_status", nullable = false, columnDefinition = "integer default 1")
+    private Integer inquiryStatus = 1;  // 1 or 2
 
     @Column(name = "inquiry_views", nullable = false)
     private Integer inquiryViews;
@@ -69,7 +69,7 @@ public class Inquiry {
     public void setDefaultValues() {
     	if(this.inquiryContent==null) this.inquiryContent = "";
     	if(this.inquiryDate==null) this.inquiryDate = LocalDate.now();
-    	if(this.inquiryStatus == null) this.inquiryStatus = 1;
+    	if(this.inquiryStatus == null||this.inquiryStatus == 0) this.inquiryStatus = 1;
     	if(this.inquiryViews == null) this.inquiryViews = 0;
     }
     

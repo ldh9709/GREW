@@ -33,6 +33,11 @@ public class InquiryServiceImpl implements InquiryService {
 		inquiry.setInquiryStatus(2);
 		return InquiryDto.toDto(inquiryRepository.save(inquiry));
 	}
+	//질문보기
+	@Override
+	public InquiryDto getInquiry(Long InquiryNo) {
+		return InquiryDto.toDto(inquiryRepository.findByInquiryNo(InquiryNo));
+	}
 	//조회수증가
 	@Override
 	public InquiryDto increaseViewInquiry(InquiryDto inquiryDto) throws Exception {
@@ -87,4 +92,5 @@ public class InquiryServiceImpl implements InquiryService {
 		}
 		return inquiryDtoList;
 	}
+	
 }

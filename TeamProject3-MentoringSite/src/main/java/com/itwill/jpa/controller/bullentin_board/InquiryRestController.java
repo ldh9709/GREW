@@ -1,0 +1,133 @@
+package com.itwill.jpa.controller.bullentin_board;
+
+import java.nio.charset.Charset;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.itwill.jpa.controller.Response;
+import com.itwill.jpa.controller.ResponseMessage;
+import com.itwill.jpa.controller.ResponseStatusCode;
+import com.itwill.jpa.dto.bulletin_board.InquiryDto;
+import com.itwill.jpa.service.bullentin_board.InquiryService;
+
+import io.swagger.v3.oas.annotations.Operation;
+
+@RestController
+@RequestMapping("/inquiry")
+public class InquiryRestController {
+	@Autowired
+	private InquiryService inquiryService;
+
+	// 질문등록
+	@Operation(summary = "질문 등록")
+	@PostMapping
+	public ResponseEntity<Response> insertInquiry(@RequestBody InquiryDto inquiryDto) {
+		Response response = new Response();
+
+		inquiryService.saveInquiry(inquiryDto);
+		response.setStatus(ResponseStatusCode.CREATED_INQUIRY_SUCCESS);
+		response.setMessage(ResponseMessage.CREATED_INQUIRY_SUCCESS);
+		response.setData(inquiryDto);
+
+		HttpHeaders httpHeaders = new HttpHeaders();
+		httpHeaders.setContentType(new MediaType(MediaType.APPLICATION_JSON, Charset.forName("UTF-8")));
+
+		ResponseEntity<Response> responseEntity = new ResponseEntity<Response>(response, httpHeaders,
+				HttpStatus.CREATED);
+
+		return responseEntity;
+	}
+
+	// 질문수정
+	@Operation(summary = "질문 수정")
+	@PutMapping("/update/{inquiryNo}")
+	public ResponseEntity<Response> updateInquiry(@RequestBody InquiryDto inquiryDto) throws Exception {
+		Response response = new Response();
+
+		inquiryService.updateInquiry(inquiryDto);
+		response.setStatus(ResponseStatusCode.UPDATE_INQUIRY_SUCCESS);
+		response.setMessage(ResponseMessage.UPDATE_INQUIRY_SUCCESS);
+		response.setData(inquiryDto);
+
+		HttpHeaders httpHeaders = new HttpHeaders();
+		httpHeaders.setContentType(new MediaType(MediaType.APPLICATION_JSON, Charset.forName("UTF-8")));
+
+		ResponseEntity<Response> responseEntity = new ResponseEntity<Response>(response, httpHeaders,
+				HttpStatus.CREATED);
+
+		return responseEntity;
+	}
+
+	// 질문삭제
+	@Operation(summary = "질문삭제")
+	@PutMapping("/delete/{inquiryNo}")
+	public ResponseEntity<Response> deleteInquiry(@RequestBody InquiryDto inquiryDto) throws Exception {
+		Response response = new Response();
+
+		inquiryService.deleteInquiry(inquiryDto);
+		response.setStatus(ResponseStatusCode.DELETE_INQUIRY_SUCCESS);
+		response.setMessage(ResponseMessage.DELETE_INQUIRY_SUCCESS);
+		response.setData(inquiryDto);
+
+		HttpHeaders httpHeaders = new HttpHeaders();
+		httpHeaders.setContentType(new MediaType(MediaType.APPLICATION_JSON, Charset.forName("UTF-8")));
+
+		ResponseEntity<Response> responseEntity = new ResponseEntity<Response>(response, httpHeaders,
+				HttpStatus.CREATED);
+
+		return responseEntity;
+	}
+
+	// 질문보기
+	@Operation(summary = "질문보기")
+	@GetMapping("/{inquiryNo}")
+	public ResponseEntity<Response> viewInquiry(@PathVariable(name = "inquiryNo") Long inquiryNo) {
+		Response response = new Response();
+
+		InquiryDto inquiryDto = inquiryService.getInquiry(inquiryNo);
+		response.setStatus(ResponseStatusCode.VIEW_INQUIRY_SUCCESS);
+		response.setMessage(ResponseMessage.VIEW_INQUIRY_SUCCESS);
+		response.setData(inquiryDto);
+
+		HttpHeaders httpHeaders = new HttpHeaders();
+		httpHeaders.setContentType(new MediaType(MediaType.APPLICATION_JSON, Charset.forName("UTF-8")));
+
+		ResponseEntity<Response> responseEntity = new ResponseEntity<Response>(response, httpHeaders,
+				HttpStatus.CREATED);
+
+		return responseEntity;
+
+	}
+
+	// 조회수 증가
+	@Operation(summary = "조회수증가")
+	@PutMapping("Increase/{inquiryNo}")
+	public ResponseEntity<Response> increaseViewInquiry(@RequestBody InquiryDto inquiryDto) throws Exception {
+		Response response = new Response();
+
+		inquiryService.increaseViewInquiry(inquiryDto);
+		response.setStatus(ResponseStatusCode.INCREASE_VIEW_INQUIRY_SUCCESS);
+		response.setMessage(ResponseMessage.INCREASE_VIEW_INQUIRY_SUCCESS);
+		response.setData(inquiryDto);
+
+		HttpHeaders httpHeaders = new HttpHeaders();
+		httpHeaders.setContentType(new MediaType(MediaType.APPLICATION_JSON, Charset.forName("UTF-8")));
+
+		ResponseEntity<Response> responseEntity = new ResponseEntity<Response>(response, httpHeaders,
+				HttpStatus.CREATED);
+
+		return responseEntity;
+	}
+}
