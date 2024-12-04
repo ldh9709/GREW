@@ -23,15 +23,15 @@ public class Follow {
     @Column(name = "follow_no")
     private Long followNo;
 
-    // 팔로우를 한 사용자(멘티)
+    // 팔로우를 한 사용자
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "follower_member", nullable = false)
-    private Member followerMember;
+    @JoinColumn(name = "mentee_member", nullable = false)
+    private Member menteeMember;
 
- // 팔로우 대상 사용자(멘토)
+    //팔로우 대상 사용자
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "followed_member", nullable = false) 
-    private Member followedMember;
+    @JoinColumn(name = "mentor_member", nullable = false) 
+    private Member mentorMember;
  
     /*
      * DTO -> Entity
@@ -39,8 +39,8 @@ public class Follow {
     public static Follow toEntity(FollowRequestDto dto) {
         return Follow.builder()
                 .followNo(dto.getFollowNo())
-                .followerMember(Member.builder().memberNo(dto.getFollowerMemberNo()).build())
-                .followedMember(Member.builder().memberNo(dto.getFollowedMembedNo()).build())
+                .menteeMember(Member.builder().memberNo(dto.getMenteeMemberNo()).build())
+                .mentorMember(Member.builder().memberNo(dto.getMentorMembedNo()).build())
                 .build();
     }
 }

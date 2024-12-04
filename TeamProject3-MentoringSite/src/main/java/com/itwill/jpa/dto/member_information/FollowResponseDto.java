@@ -13,18 +13,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 public class FollowResponseDto {
-	/*출력 데이터 : 멘토이름, 멘토카테고리 1 이름, 2 이름 */
+	/*출력 데이터 : 멘토이름, 대분류 카테고리이름, 소분류 카테고리이름 */
 	private String mentorName;
-	private CategoryResponseDto category;
-	
-	public static FollowResponseDto toDto(Follow entity) {
-		CategoryResponseDto categoryResponseDto = CategoryResponseDto.toDto(entity.getFollowedMember().getMentorProfile().getCategory());
-		
-		return FollowResponseDto.builder()
-				.mentorName(entity.getFollowedMember().getMemberName())
-				.category(categoryResponseDto)
-				.build();
-	}
-	
+	private String primaryCategory;
+	private String subCategory;
 	
 }

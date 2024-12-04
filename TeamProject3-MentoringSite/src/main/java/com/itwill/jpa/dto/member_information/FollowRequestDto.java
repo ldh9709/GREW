@@ -13,6 +13,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class FollowRequestDto {
     private Long followNo;
-    private Long followerMemberNo;
-    private Long followedMembedNo;
+    private Long menteeMemberNo;
+    private Long mentorMembedNo;
 }

@@ -14,9 +14,18 @@ class FollowServiceTest {
 	@Autowired
 	private FollowReporitory followReporitory;
 	
-	@Test
+//	@Test
 	void test() {
-		System.out.println(followReporitory.findByFollowerMemberWithDetails(1L));
+		System.out.println(followReporitory.findFollowMentors(1L));
+	}
+//	@Test
+//	void test2() {
+//		System.out.println(followReporitory.findFollowedMentorsWithGraph(1L));
+//	}
+	
+	@Test
+	void test3() {
+		System.out.println(followReporitory.countBymenteeMember_MemberNo(6L));
 	}
 
 }

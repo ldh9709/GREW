@@ -22,7 +22,7 @@ public class FollowServiceImpl implements FollowService{
 	private CategoryRepository categoryReporitory;
 	
 	/*팔로우 등록*/
-	public void saveFollow(FollowRequestDto followDto) {
+	public void createFollow(FollowRequestDto followDto) {
 		Follow follow = Follow.toEntity(followDto);
 		followReporitory.save(follow);
 	}
@@ -31,14 +31,14 @@ public class FollowServiceImpl implements FollowService{
 		followReporitory.deleteById(followNo);
 	}
 	/*팔로우 리스트 출력(멘토리스트)*/
-	public List<FollowResponseDto> selectMentorList(Long follwerMemberNo){
-		List<Follow> follows = followReporitory.findByFollowerMemberWithDetails(follwerMemberNo);
-		List<FollowResponseDto> FollowResponseDtos = new ArrayList<>(); 
-		for (Follow follow : follows) {
-			FollowResponseDtos.add(FollowResponseDto.toDto(follow));
-		}
-		return FollowResponseDtos;
+	public List<FollowResponseDto> getMentorList(Long menteeMemberNo){
+		return followReporitory.findFollowMentors(menteeMemberNo);
 	}
 	
-	/*팔로잉 수(멘티수)*/
+	/*팔로잉 수(멘티 수)*/
+	public Integer countByMentee(Long mentorMemberNo) {
+		return followReporitory.countBymenteeMember_MemberNo(mentorMemberNo);
+	}
+	
+	
 }
