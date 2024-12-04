@@ -86,8 +86,8 @@ public class Inquiry {
 	            .inquiryDate(inquiryDto.getInquiryDate())
 	            .inquiryStatus(inquiryDto.getInquiryStatus())
 	            .inquiryViews(inquiryDto.getInquiryViews())
-	            .category(Category.toEntity(inquiryDto.getCategory()))
-	            .member(Member.toEntity(inquiryDto.getMember()))
+	            .category(Category.builder().categoryNo(inquiryDto.getCategoryNo()).build())
+	            .member(Member.builder().memberNo(inquiryDto.getMemberNo()).build())
 	            .build();
 	}
     

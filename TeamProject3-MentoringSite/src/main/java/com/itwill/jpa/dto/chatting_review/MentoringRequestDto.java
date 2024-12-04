@@ -18,7 +18,8 @@ import lombok.NoArgsConstructor;
 public class MentoringRequestDto {
 	private Long requestNo;
 	private int requestStatus;
-	private LocalDateTime requestDate;
+	private LocalDateTime requestStratDate;
+	private LocalDateTime requestEndDate;
 	
 	private Long menteeNo;
 	private Long mentorNo;
@@ -27,7 +28,8 @@ public class MentoringRequestDto {
 		return MentoringRequestDto.builder()
 				.requestNo(mentoringRequestEntity.getRequestNo())
 				.requestStatus(mentoringRequestEntity.getRequestStatus())
-				.requestDate(mentoringRequestEntity.getRequestDate())
+				.requestStratDate(mentoringRequestEntity.getRequestStartDate())
+				.requestEndDate(mentoringRequestEntity.getRequestEndDate())
 				.menteeNo(mentoringRequestEntity.getMentee().getMemberNo())
                 .mentorNo(mentoringRequestEntity.getMentor().getMemberNo())
 				.build();

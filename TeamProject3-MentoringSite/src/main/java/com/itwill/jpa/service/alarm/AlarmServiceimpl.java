@@ -22,8 +22,8 @@ public class AlarmServiceimpl implements AlarmService{
 	}
 	//유저의 알림 전체삭제
 	@Override
-	public void deleteAlarmByMemberId(Long memberId) {
-		alarmRepository.deleteAlarmsByMemberId(memberId);
+	public void deleteAlarmByMemberNo(Long memberNo) {
+		alarmRepository.deleteAlarmsByMemberId(memberNo);
 	}
 	//알림 읽음표시
 	@Override
@@ -32,5 +32,6 @@ public class AlarmServiceimpl implements AlarmService{
 		alarm.setIsRead(2);
 		return AlarmDto.toDto(alarmRepository.save(alarm));
 	}
+	
 
 }
