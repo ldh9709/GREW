@@ -21,7 +21,7 @@ public class ReviewDto {
     private Integer reviewScore;
     private LocalDateTime reviewDate; // 엔티티에서 자동 생성된 reviewDate
 
-    private MentoringRequestDto mentoringRequest;
+    private ChatRoomDto mentoringRequest;
     
     public static ReviewDto toDto(Review reviewEntity) {
         return ReviewDto.builder()
@@ -30,7 +30,7 @@ public class ReviewDto {
                 .reviewContent(reviewEntity.getReviewContent())
                 .reviewScore(reviewEntity.getReviewScore())
                 .reviewDate(reviewEntity.getReviewDate())
-                .mentoringRequest(MentoringRequestDto.toDto(reviewEntity.getMentoringRequest()))
+                .mentoringRequest(ChatRoomDto.toDto(reviewEntity.getMentoringRequest()))
                 .build();
     }
 }
