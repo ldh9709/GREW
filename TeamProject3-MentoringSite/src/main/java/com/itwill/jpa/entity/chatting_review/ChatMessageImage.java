@@ -23,7 +23,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name="chatmessage_image")
+@Table(name="chat_message_image")
 public class ChatMessageImage {
 
     @Id

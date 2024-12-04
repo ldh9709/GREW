@@ -18,8 +18,8 @@ import lombok.NoArgsConstructor;
 public class Follow {
 
     @Id
-    @SequenceGenerator(name = "follow_SEQ", initialValue = 1, allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "follow_SEQ")
+    @SequenceGenerator(name = "follow_no_SEQ", initialValue = 1, allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "follow_no_SEQ")
     @Column(name = "follow_no")
     private Long followNo;
 
@@ -36,11 +36,11 @@ public class Follow {
     /*
      * DTO -> Entity
      */
-    public static Follow toEntity(FollowDto followDto) {
+    public static Follow toEntity(FollowDto dto) {
         return Follow.builder()
-                .followNo(followDto.getFollowNo())
-                .followerMember(Member.toEntity(followDto.getFollowerMember()))
-                .followedMember(Member.toEntity(followDto.getFollowedMember()))
+                .followNo(dto.getFollowNo())
+                .followerMember(Member.builder().memberNo(dto.getFollowerMember()).build())
+                .followedMember(Member.builder().memberNo(dto.getFollowedMember()).build())
                 .build();
     }
 }

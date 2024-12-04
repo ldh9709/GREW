@@ -30,7 +30,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Data
 @Builder
-@Table(name = "ChatRoom")
+@Table(name = "chat_room")
 public class ChatRoom {
 	@Id
 	@SequenceGenerator(name = "chat_room_no_SEQ", sequenceName = "chat_room_no_SEQ", initialValue = 1, allocationSize = 1)

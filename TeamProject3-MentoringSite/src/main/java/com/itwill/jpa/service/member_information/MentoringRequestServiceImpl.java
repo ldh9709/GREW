@@ -14,7 +14,7 @@ public class MentoringRequestServiceImpl implements MentoringRequestService {
 	@Autowired
 	private MentoringRequestRepository mentoringRequestRepository;
 	
-	/*활동 요청*/
+	/*활동 요청(기본 상태 요청 중)*/
 	@Override
 	public MentoringRequest saveMentoringRequest(MentoringRequestDto mentoringRequestDto) {
 		MentoringRequest mentoringRequest = MentoringRequest.toEntity(mentoringRequestDto);

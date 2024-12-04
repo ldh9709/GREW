@@ -17,22 +17,27 @@ public class MentoringRequestServiceImplTest {
 	@Test
 	void saveMentoringRequest() {
 		MentoringRequestDto mentoringRequestDto1 = MentoringRequestDto.builder()
-						.requestNo(1L)
+						.requestNo(3L)
 						.requestStatus(1)
 						.requestDate(null)
 						.menteeNo(3L)
 						.mentorNo(5L)
 						.build();
-		mentoringRequestService.saveMentoringRequest(mentoringRequestDto1);
-		System.out.println(mentoringRequestDto1);
+		MentoringRequest mentoringRequest1 = mentoringRequestService.saveMentoringRequest(mentoringRequestDto1);
+		System.out.println("mentoringRequest1 : ");
 		MentoringRequestDto mentoringRequestDto2 = MentoringRequestDto.builder()
-				.requestNo(2L)
+				.requestNo(4L)
 				.requestStatus(1)
 				.requestDate(null)
 				.menteeNo(3L)
 				.mentorNo(7L)
 				.build();
-		mentoringRequestService.saveMentoringRequest(mentoringRequestDto2);
-		System.out.println(mentoringRequestDto2);
+		MentoringRequest mentoringRequest2 = mentoringRequestService.saveMentoringRequest(mentoringRequestDto2);
+		System.out.println("mentoringRequest2 : ");
+	}
+	@Test
+	void getMentoringRequest() {
+		MentoringRequest mentoringRequest3 = mentoringRequestService.getMentoringRequest(1L);
+		System.out.println("select 1L : ");
 	}
 }

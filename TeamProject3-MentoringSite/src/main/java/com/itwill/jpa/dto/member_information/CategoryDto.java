@@ -26,7 +26,7 @@ public class CategoryDto {
         		
         		.categoryNo(categoryEntity.getCategoryNo())
                 .categoryName(categoryEntity.getCategoryName())
-                .categoryLevel(categoryEntity.getCategoryLevel())
+                .categoryLevel(categoryEntity.getCategoryDepth())
                 .build();
     }
 
