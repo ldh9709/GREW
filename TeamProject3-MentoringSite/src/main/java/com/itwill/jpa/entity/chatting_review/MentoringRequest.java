@@ -32,7 +32,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Data
 @Builder
-@Table(name = "MentoringRequest")
+@Table(name = "mentoring_request")
 public class MentoringRequest {
 	@Id
 	@SequenceGenerator(name = "request_no_SEQ", sequenceName = "request_no_SEQ", initialValue = 1, allocationSize = 1)
@@ -44,7 +44,6 @@ public class MentoringRequest {
 	private Integer requestStatus;
 	
 	@Column(name = "request_date", updatable = false)
-	@CreationTimestamp
 	private LocalDateTime requestDate;
 	
 	@ManyToOne(fetch = FetchType.LAZY)

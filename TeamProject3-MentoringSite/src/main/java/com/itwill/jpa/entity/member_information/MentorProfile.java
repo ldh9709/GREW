@@ -18,7 +18,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "Mentor_Profile")
+@Table(name = "mentor_profile")
 public class MentorProfile {
 
     @Id
