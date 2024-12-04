@@ -1,7 +1,7 @@
 package com.itwill.jpa.entity.member_information;
 
 
-import com.itwill.jpa.dto.member_information.FollowDto;
+import com.itwill.jpa.dto.member_information.FollowRequestDto;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -36,11 +36,11 @@ public class Follow {
     /*
      * DTO -> Entity
      */
-    public static Follow toEntity(FollowDto dto) {
+    public static Follow toEntity(FollowRequestDto dto) {
         return Follow.builder()
                 .followNo(dto.getFollowNo())
-                .followerMember(Member.builder().memberNo(dto.getFollowerMember()).build())
-                .followedMember(Member.builder().memberNo(dto.getFollowedMember()).build())
+                .followerMember(Member.builder().memberNo(dto.getFollowerMemberNo()).build())
+                .followedMember(Member.builder().memberNo(dto.getFollowedMembedNo()).build())
                 .build();
     }
 }
