@@ -32,7 +32,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Data
 @Builder
-@Table(name = "mentoring_request")
+@Table(name = "chat_room")
 public class ChatRoom {
 	@Id
 	@SequenceGenerator(name = "request_no_SEQ", sequenceName = "request_no_SEQ", initialValue = 1, allocationSize = 1)
