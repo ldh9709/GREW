@@ -118,10 +118,35 @@ public class AnswerRestController {
 	}
 	
 	
-	/* 답변리스트 조회 */
+	/* 질문 하나에 달린 답변 */
 	/* 추천순 */
-	@Operation(summary = "답변리스트 조회(최신순)")
-	@GetMapping("/viewAnswer/{inquiryNo}")
+	@Operation(summary = "질문에 작성된답변조회(추천순)")
+	@GetMapping("/answerList/{inquiryNo}/vote")
+	public ResponseEntity<Response> findByAnswerOrderByVoteDate(@PathVariable(name = "inquiryNo") Long inquiryNo) {
+		
+		List<AnswerDto> answerDtos = answerService.findByInquiryAnswerOrderByVotes(inquiryNo);
+		
+		Response response = new Response();
+	    response.setStatus(ResponseStatusCode.READ_ANSWER_LIST_SUCCESS);
+	    response.setMessage(ResponseMessage.READ_ANSWER_LIST_SUCCESS);
+	    response.setData(answerDtos);
+	    
+	    HttpHeaders httpHeaders = new HttpHeaders();
+		httpHeaders.setContentType(new MediaType(MediaType.APPLICATION_JSON,Charset.forName("UTF-8")));
+		
+	    ResponseEntity<Response> responseEntity = 
+				new ResponseEntity<Response>(response, httpHeaders, HttpStatus.OK);
+		
+		return responseEntity;
+		
+		
+	}
+	
+	
+	/* 질문 하나에 달린 답변 */
+	/* 최신순 */
+	@Operation(summary = "질문에 작성된답변조회(최신순)")
+	@GetMapping("/answerList/{inquiryNo}/date")
 	public ResponseEntity<Response> findByInquiryAnswerOrderByDate(@PathVariable(name = "inquiryNo") Long inquiryNo) {
 		
 		List<AnswerDto> answerDtos = answerService.findByInquiryAnswerOrderByDate(inquiryNo);
@@ -139,7 +164,6 @@ public class AnswerRestController {
 		
 		return responseEntity;
 	}
-	
 	
 	
 	

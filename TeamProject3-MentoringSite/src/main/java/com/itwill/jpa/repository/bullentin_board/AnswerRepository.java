@@ -12,16 +12,20 @@ import com.itwill.jpa.entity.bullentin_board.Answer;
 public interface AnswerRepository extends JpaRepository<Answer, Long>{
 	/*질문 하나에 달린 답변 리스트*/
 	/*추천순*/
-	@Query("SELECT a FROM Answer a " +
-		       "JOIN a.inquiry i " +
-		       "LEFT JOIN a.votes v " +
-		       "WHERE i.inquiryNo = :inquiryNo " +
-		       "AND a.answerStatus = 1 " +
-		       "GROUP BY a.answerNo " +
-		       "ORDER BY a.answerAccept DESC,"+
-		       "COUNT(v) DESC")
+	@Query("""
+            SELECT a
+            FROM Answer a
+            JOIN a.inquiry i
+            LEFT JOIN Vote v ON v.answer.answerNo = a.answerNo
+            WHERE i.inquiryNo = :inquiryNo
+            AND a.answerStatus = 1
+            GROUP BY a.answerNo, a.answerContent, a.answerDate, a.answerStatus, a.answerAccept
+            ORDER BY a.answerAccept DESC, 
+                     (COUNT(CASE WHEN v.voteType = 1 THEN 1 END) - 
+                      COUNT(CASE WHEN v.voteType = 2 THEN 1 END)) DESC
+    """)
 		List<Answer> findByInquiryAnswerOrderByVotes(@Param("inquiryNo") Long inquiryNo);
-
+	
 	
 	/*최신순*/
 	@Query("SELECT a FROM Answer a " +
