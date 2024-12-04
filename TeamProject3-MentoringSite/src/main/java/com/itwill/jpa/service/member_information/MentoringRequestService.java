@@ -6,12 +6,12 @@ import com.itwill.jpa.dto.chatting_review.MentoringRequestDto;
 import com.itwill.jpa.entity.chatting_review.MentoringRequest;
 
 public interface MentoringRequestService {
-	MentoringRequest getMentoringRequest(Long requestNo);
+	MentoringRequestDto getMentoringRequest(Long requestNo);
 	MentoringRequest saveMentoringRequest(MentoringRequestDto mentoringRequestDto);
-	MentoringRequest updateActive(MentoringRequest mentoringRequest) throws Exception;
-	MentoringRequest updateCompleted(MentoringRequest mentoringRequest) throws Exception;
-	MentoringRequest updateRejected(MentoringRequest mentoringRequest) throws Exception;
-	MentoringRequest updateCanceled(MentoringRequest mentoringRequest) throws Exception;
-	MentoringRequest updateForceClosed(MentoringRequest mentoringRequest) throws Exception;
-	List<MentoringRequest> selectMentoringRequestAll();
+	MentoringRequest updateActive(Long requestNo) throws Exception;
+	MentoringRequest updateCompleted(Long requestNo) throws Exception;
+	MentoringRequest updateRejected(Long requestNo) throws Exception;
+	MentoringRequest updateCanceled(Long requestNo) throws Exception;
+	MentoringRequest updateForceClosed(Long requestNo) throws Exception;
+	List<MentoringRequestDto> selectMentoringRequestAll();
 }

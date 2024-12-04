@@ -11,7 +11,7 @@ public interface MemtorBoardService {
     // 멘토 보드 수정
     MentorBoardDto updatememtorboard(MentorBoardDto mentorboardDto) throws Exception;
 
-    // 멘토 보드 삭제
+    // 멘토 보드 삭제(업데이트)
     MentorBoardDto deletememtorboard(MentorBoardDto mentorboardDto) throws Exception;
 
     // 멘토 보드 보기
