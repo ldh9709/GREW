@@ -35,8 +35,8 @@ import lombok.NoArgsConstructor;
 @Table(name = "chat_room")
 public class ChatRoom {
 	@Id
-	@SequenceGenerator(name = "request_no_SEQ", sequenceName = "request_no_SEQ", initialValue = 1, allocationSize = 1)
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "request_no_SEQ")
+	@SequenceGenerator(name = "chat_room_no_SEQ", sequenceName = "chat_room_no_SEQ", initialValue = 1, allocationSize = 1)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "chat_room_no_SEQ")
 	@Column(name = "chat_room_no", nullable = false)
 	private Long chatRoomNo;
 	
