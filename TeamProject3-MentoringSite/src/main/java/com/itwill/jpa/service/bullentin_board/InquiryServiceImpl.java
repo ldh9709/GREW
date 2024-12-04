@@ -4,6 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.itwill.jpa.dto.bulletin_board.InquiryDto;
@@ -49,9 +53,9 @@ public class InquiryServiceImpl implements InquiryService {
 	/**카테고리별**/
 	//답변갯수순
 	@Override
-	public List<InquiryDto> findByCategoryInquiryOrderByAnswer(Long CategoryNo) {
+	public List<InquiryDto> findByCategoryInquiryOrderByAnswer(Long categoryNo) {
 		List<Inquiry> inquiryEntityList =
-				inquiryRepository.findByCategoryInquiryOrderByAnswer(CategoryNo);
+				inquiryRepository.findByCategoryInquiryOrderByAnswer(categoryNo);
 		List<InquiryDto> inquiryDtoList = new ArrayList<>();
 		for(Inquiry inquiryEntity:inquiryEntityList) {
 			inquiryDtoList.add(InquiryDto.toDto(inquiryEntity));
@@ -60,9 +64,9 @@ public class InquiryServiceImpl implements InquiryService {
 	}
 	//조회순
 	@Override
-	public List<InquiryDto> findByCategoryInquiryOrderByView(Long CategoryNo) {
+	public List<InquiryDto> findByCategoryInquiryOrderByView(Long categoryNo) {
 		List<Inquiry> inquiryEntityList =
-				inquiryRepository.findByCategoryInquiryOrderByView(CategoryNo);
+				inquiryRepository.findByCategoryInquiryOrderByView(categoryNo);
 		List<InquiryDto> inquiryDtoList = new ArrayList<>();
 		for(Inquiry inquiryEntity:inquiryEntityList) {
 			inquiryDtoList.add(InquiryDto.toDto(inquiryEntity));
@@ -83,9 +87,23 @@ public class InquiryServiceImpl implements InquiryService {
 	}
 	//조회순
 	@Override
-	public List<InquiryDto> findByAllInquiryOrderByView() {
-		List<Inquiry> inquiryEntityList =
-				inquiryRepository.findAllInquiryOrderByView();
+	public Page<InquiryDto> findByAllInquiryOrderByView(int pageNumber, int pageSize) {
+		Pageable pageable = PageRequest.of(pageNumber, pageSize);
+		Page<Inquiry> inquiryEntityList =
+				inquiryRepository.findAllInquiryOrderByView(pageable);
+		List<InquiryDto> inquiryDtoList = new ArrayList<>();
+	    for (Inquiry inquiryEntity : inquiryEntityList) {
+	        inquiryDtoList.add(InquiryDto.toDto(inquiryEntity));
+	    }
+	    
+	    // PageImpl을 사용해 Page<InquiryDto> 반환
+	    return new PageImpl<>(inquiryDtoList, pageable, inquiryEntityList.getTotalElements());
+	}
+	//검색기능
+	@Override
+	public List<InquiryDto> findInquiryBySearch(String search) {
+		List<Inquiry> inquiryEntityList=
+				inquiryRepository.findInquiryBySearch(search);
 		List<InquiryDto> inquiryDtoList = new ArrayList<>();
 		for(Inquiry inquiryEntity:inquiryEntityList) {
 			inquiryDtoList.add(InquiryDto.toDto(inquiryEntity));
