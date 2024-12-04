@@ -59,12 +59,12 @@ public class ReportServiceImpl implements ReportService {
 
 		/* type:ANSWER인 경우 해당 게시글 상태변경 */
 		if(report.getReportType().equals("ANSWER")) {
-			//answerRepository.상태변경메소드(report.getReportTarget());
+			answerRepository.delete(null);
 		}
 		
 		/* type:INQUIRY인 경우 해당 게시글 상태변경 */
 		if(report.getReportType().equals("INQUIRY")) {
-			
+			inquiryRepository.delete(null);
 		}
 		report.setResolvedDate(LocalDateTime.now());
 		reportRepository.save(report);
