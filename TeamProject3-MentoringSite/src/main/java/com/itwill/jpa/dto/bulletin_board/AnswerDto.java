@@ -4,6 +4,8 @@ import java.time.LocalDateTime;
 
 import com.itwill.jpa.dto.member_information.MemberDto;
 import com.itwill.jpa.entity.bullentin_board.Answer;
+import com.itwill.jpa.entity.bullentin_board.Inquiry;
+import com.itwill.jpa.entity.member_information.Member;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -21,22 +23,22 @@ public class AnswerDto {
     private LocalDateTime answerDate;  // answer_time
     private Integer answerAccept;   // answer_accept (채택여부)
     private Integer answerStatus;   // answer_status (답글삭제여부, '1' or '2')
-    private MemberDto member;           // user_no (FK)
-    private InquiryDto inquiry;        // inquiry_no (FK)
+    private Long memberNo;           // user_no (FK)
+    private Long inquiryNo;        // inquiry_no (FK)
 
     /*
      * Entity -> DTO 변환 메소드
      */
     public static AnswerDto toDto(Answer answerEntity) {
 
-        return AnswerDto.builder()
+    	return AnswerDto.builder()
                 .answerNo(answerEntity.getAnswerNo())
                 .answerContent(answerEntity.getAnswerContent())
                 .answerDate(answerEntity.getAnswerDate())
                 .answerAccept(answerEntity.getAnswerAccept())
                 .answerStatus(answerEntity.getAnswerStatus())
-                .member(MemberDto.toDto(answerEntity.getMember()))  
-                .inquiry(InquiryDto.toDto(answerEntity.getInquiry()))  
+                .memberNo(answerEntity.getMember().getMemberNo())  
+                .inquiryNo(answerEntity.getInquiry().getInquiryNo())
                 .build();
     }
 }
