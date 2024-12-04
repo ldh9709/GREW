@@ -43,8 +43,11 @@ public class MentoringRequest {
 	@Column(name = "request_status", nullable = false)
 	private Integer requestStatus;
 	
-	@Column(name = "request_date", updatable = false)
-	private LocalDateTime requestDate;
+	@Column(name = "request_start_date", updatable = false)
+	private LocalDateTime requestStartDate;
+	
+	@Column(name = "request_end_date", updatable = false)
+	private LocalDateTime requestEndDate;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "mentee_no", nullable = false)
@@ -55,23 +58,25 @@ public class MentoringRequest {
     private Member mentor;
 	
     @OneToMany(mappedBy = "mentoringRequest", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
-    private List<Review> reviews = new ArrayList<>();
+    private List<Review> reviews = new ArrayList<Review>();
     
     @OneToMany(mappedBy = "mentoringRequest", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
-    private List<ChatRoom> chatRooms = new ArrayList<>();
+    private List<ChatRoom> chatRooms = new ArrayList<ChatRoom>();
 	
     /* 초기값 설정 */
     @PrePersist
     public void setDefaultValues() {
-    	if (this.requestStatus == 0 || this.requestStatus == null) this.requestStatus = 1;
-    	if (this.requestDate == null) this.requestDate = LocalDateTime.now();
+    	if (this.requestStatus == 0 || this.requestStatus == null) this.requestStatus = 7000;
+    	if (this.requestStartDate == null) this.requestStartDate = LocalDateTime.now();
+    	if (this.requestEndDate == null) this.requestEndDate = null;
     }
     
     public static MentoringRequest toEntity(MentoringRequestDto mentoringRequestDto) {
         return MentoringRequest.builder()
                 .requestNo(mentoringRequestDto.getRequestNo())
                 .requestStatus(mentoringRequestDto.getRequestStatus())
-                .requestDate(mentoringRequestDto.getRequestDate())
+                .requestStartDate(mentoringRequestDto.getRequestStratDate())
+                .requestEndDate(mentoringRequestDto.getRequestEndDate())
                 .mentee(Member.builder().memberNo(mentoringRequestDto.getMenteeNo()).build())
                 .mentor(Member.builder().memberNo(mentoringRequestDto.getMentorNo()).build())
                 .build();
