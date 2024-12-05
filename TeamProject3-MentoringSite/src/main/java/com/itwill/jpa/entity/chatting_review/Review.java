@@ -54,7 +54,7 @@ public class Review {
     
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="request_no", nullable=false)
-    private MentoringRequest mentoringRequest;
+    private ChatRoom mentoringRequest;
 
     @PrePersist
     public void setDefaultValues() {
@@ -68,7 +68,7 @@ public class Review {
                 .reviewContent(reviewDto.getReviewContent())
                 .reviewScore(reviewDto.getReviewScore())
                 .reviewDate(reviewDto.getReviewDate())
-                .mentoringRequest(MentoringRequest.toEntity(reviewDto.getMentoringRequest())) // MentoringRequest 엔티티 포함
+                .mentoringRequest(ChatRoom.toEntity(reviewDto.getMentoringRequest())) // MentoringRequest 엔티티 포함
                 .build();
     }
 

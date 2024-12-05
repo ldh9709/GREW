@@ -2,8 +2,9 @@ package com.itwill.jpa.dto.chatting_review;
 
 import java.time.LocalDateTime;
 
+import com.itwill.jpa.dto.member_information.MemberDto;
 import com.itwill.jpa.entity.chatting_review.ChatRoom;
-import com.itwill.jpa.entity.chatting_review.MentoringRequest;
+import com.itwill.jpa.entity.member_information.Member;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -15,16 +16,22 @@ import lombok.NoArgsConstructor;
 @Data
 @Builder
 public class ChatRoomDto {
-	private String chatRoomNo;
-	private LocalDateTime chatRoomDate;
+	private Long chatRoomNo;
+	private int chatRoomStatus;
+	private LocalDateTime chatRoomStratDate;
+	private LocalDateTime chatRoomEndDate;
 	
-	private MentoringRequestDto mentoringRequest;
+	private Long menteeNo;
+	private Long mentorNo;
 	
-	public static ChatRoomDto toDto(ChatRoom chatRoomEntity) {
-        return ChatRoomDto.builder()
-                .chatRoomNo(chatRoomEntity.getChatRoomNo())
-                .chatRoomDate(chatRoomEntity.getChatRoomDate())
-                .mentoringRequest(MentoringRequestDto.toDto(chatRoomEntity.getMentoringRequest()))
-                .build();
-    }
-}
+	public static ChatRoomDto toDto(ChatRoom mentoringRequestEntity) {
+		return ChatRoomDto.builder()
+				.chatRoomNo(mentoringRequestEntity.getChatRoomNo())
+				.chatRoomStatus(mentoringRequestEntity.getChatRoomStatus())
+				.chatRoomStratDate(mentoringRequestEntity.getChatRoomEndDate())
+				.chatRoomEndDate(mentoringRequestEntity.getChatRoomEndDate())
+				.menteeNo(mentoringRequestEntity.getMentee().getMemberNo())
+                .mentorNo(mentoringRequestEntity.getMentor().getMemberNo())
+				.build();
+	}
+}	
