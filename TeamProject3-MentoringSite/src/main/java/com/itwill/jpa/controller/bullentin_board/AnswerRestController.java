@@ -117,11 +117,31 @@ public class AnswerRestController {
 		return responseEntity;
 	}
 	
+	/* 답변 상세보기 */
+	@Operation(summary = "답변 상세보기")
+	@GetMapping("/{answerNo}/answerDetail")
+	public ResponseEntity<Response> findAnswerByAnswerNo(@PathVariable(name = "answerNo") Long answerNo) {
+		AnswerDto answerDto = answerService.getAnswer(answerNo);
+		
+		Response response = new Response();
+	    response.setStatus(ResponseStatusCode.READ_ANSWER_LIST_SUCCESS);
+	    response.setMessage(ResponseMessage.READ_ANSWER_LIST_SUCCESS);
+	    response.setData(answerDto);
+	    
+	    HttpHeaders httpHeaders = new HttpHeaders();
+		httpHeaders.setContentType(new MediaType(MediaType.APPLICATION_JSON,Charset.forName("UTF-8")));
+		
+	    ResponseEntity<Response> responseEntity = 
+				new ResponseEntity<Response>(response, httpHeaders, HttpStatus.OK);
+		
+		return responseEntity;
+		
+	}
 	
 	/* 질문 하나에 달린 답변 */
 	/* 추천순 */
 	@Operation(summary = "질문에 작성된답변조회(추천순)")
-	@GetMapping("/answerList/{inquiryNo}/vote")
+	@GetMapping("/answerList/{inquiryNo}/inquiryVote")
 	public ResponseEntity<Response> findByAnswerOrderByVoteDate(@PathVariable(name = "inquiryNo") Long inquiryNo) {
 		
 		List<AnswerDto> answerDtos = answerService.findByInquiryAnswerOrderByVotes(inquiryNo);
@@ -146,7 +166,7 @@ public class AnswerRestController {
 	/* 질문 하나에 달린 답변 */
 	/* 최신순 */
 	@Operation(summary = "질문에 작성된답변조회(최신순)")
-	@GetMapping("/answerList/{inquiryNo}/date")
+	@GetMapping("/answerList/{inquiryNo}/inquiryDate")
 	public ResponseEntity<Response> findByInquiryAnswerOrderByDate(@PathVariable(name = "inquiryNo") Long inquiryNo) {
 		
 		List<AnswerDto> answerDtos = answerService.findByInquiryAnswerOrderByDate(inquiryNo);
@@ -165,7 +185,72 @@ public class AnswerRestController {
 		return responseEntity;
 	}
 	
+	/* 카테고리별 답변 리스트 */
+	/* 추천순 */
+	@Operation(summary = "카테고리별 답변조회(추천순)")
+	@GetMapping("/answerList/{categoryNo}categoryVote")
+	public ResponseEntity<Response> findByCategoryAnswerOrderByVotes(@PathVariable(name = "categoryNo") Long categoryNo){
+		
+		List<AnswerDto> answerDtos = answerService.findByCategoryAnswerOrderByDate(categoryNo);
+		
+		Response response = new Response();
+	    response.setStatus(ResponseStatusCode.READ_ANSWER_LIST_SUCCESS);
+	    response.setMessage(ResponseMessage.READ_ANSWER_LIST_SUCCESS);
+	    response.setData(answerDtos);
+	    
+	    HttpHeaders httpHeaders = new HttpHeaders();
+		httpHeaders.setContentType(new MediaType(MediaType.APPLICATION_JSON,Charset.forName("UTF-8")));
+		
+	    ResponseEntity<Response> responseEntity = 
+				new ResponseEntity<Response>(response, httpHeaders, HttpStatus.OK);
+		
+		
+		return responseEntity;
+	}
 	
+	/* 카테고리별 답변 리스트 */
+	/* 최신순 */
+	@Operation(summary = "카테고리별 답변조회(최신순)")
+	@GetMapping("/answerList/{categoryNo}/categoryDate")
+	public ResponseEntity<Response> findByCategoryAnswerOrderByDate(@PathVariable(name = "categoryNo") Long categoryNo){
+		
+		List<AnswerDto> answerDtos = answerService.findByCategoryAnswerOrderByDate(categoryNo);
+		
+		Response response = new Response();
+	    response.setStatus(ResponseStatusCode.READ_ANSWER_LIST_SUCCESS);
+	    response.setMessage(ResponseMessage.READ_ANSWER_LIST_SUCCESS);
+	    response.setData(answerDtos);
+	    
+	    HttpHeaders httpHeaders = new HttpHeaders();
+		httpHeaders.setContentType(new MediaType(MediaType.APPLICATION_JSON,Charset.forName("UTF-8")));
+		
+	    ResponseEntity<Response> responseEntity = 
+				new ResponseEntity<Response>(response, httpHeaders, HttpStatus.OK);
+		
+		return responseEntity;
+	}
+	
+	
+	/* 최근 3일동안 추천 많이 받은 답변 리스트 */
+	@Operation(summary = "최근 3일간 추천 많이 받은 답변 리스트")
+	@GetMapping("/answerList/recently-vote")
+	public ResponseEntity<Response> findByAnswerOrderByVoteDate() {
+		
+		List<AnswerDto> answerDtos = answerService.findByAnswerOrderByVoteDate();
+		
+		Response response = new Response();
+	    response.setStatus(ResponseStatusCode.READ_ANSWER_LIST_SUCCESS);
+	    response.setMessage(ResponseMessage.READ_ANSWER_LIST_SUCCESS);
+	    response.setData(answerDtos);
+	    
+	    HttpHeaders httpHeaders = new HttpHeaders();
+		httpHeaders.setContentType(new MediaType(MediaType.APPLICATION_JSON,Charset.forName("UTF-8")));
+		
+	    ResponseEntity<Response> responseEntity = 
+				new ResponseEntity<Response>(response, httpHeaders, HttpStatus.OK);
+		
+		return responseEntity;
+	}
 	
 	
 }
