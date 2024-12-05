@@ -15,7 +15,6 @@ import com.itwill.jpa.repository.member_information.MemberRepository;
 
 @Service
 public class MemberServiceImpl implements MemberService {
-	/***** 24.11.29 유효성 체크 및 Exception 사용 전 *****/
 	
 	
 	//메소드 사용을 위한 리포지토리 의존성 주입
@@ -27,28 +26,17 @@ public class MemberServiceImpl implements MemberService {
 	public Member saveMember(MemberDto memberDto) {
 		
 		//MemberDto Entity로 변경
-		//Member saveMember = Member.toEntity(memberDto);
-		Member member = Member.builder()
-	            .memberId(memberDto.getMemberId())
-	            .memberPassword(memberDto.getMemberPassword())
-	            .memberEmail(memberDto.getMemberEmail())
-	            .memberName(memberDto.getMemberName())
-	            .build();
-		//Interest리스트 객체 선언
-		//List<Interest> interests = new ArrayList<>();
-		 List<Interest> interests = new ArrayList<>();
-		    for (InterestDto interestDto : memberDto.getInterests()) {
-		        Interest interest = Interest.builder()
-		                .category(Category.builder().categoryNo(interestDto.getCategoryNo()).build())
-		                .member(member) // Member와 연관 설정
-		                .build();
-		        interests.add(interest);
-		    }
-		    
-		member.setInterests(interests);
+		Member saveMember = Member.toEntity(memberDto);
+		
+		for (InterestDto interest : memberDto.getInterests()) {
+			
+			Interest interestEntity = Interest.toEntity(interest);
+			
+			saveMember.addInterests(interestEntity);
+		}
 		
 		//객체 저장
-		return memberRepository.save(member);
+		return memberRepository.save(saveMember);
 	}
 	
 	/***** 회원 로그인 *****/
@@ -77,24 +65,18 @@ public class MemberServiceImpl implements MemberService {
 	public Member updateMember(MemberDto memberDto) {
 		Member member = memberRepository.findByMemberNo(memberDto.getMemberNo());
 		
-		System.out.println("멤버의 흥미?>>>>>>" + member.getInterests());
-		
 		member.getInterests().clear();
 		
 		List<Interest> interests = new ArrayList<>(); 
 		
 		for (InterestDto interestDto : memberDto.getInterests()) {
 			Interest interest = Interest.toEntity(interestDto);
-			interest.setMember(member);
-			interests.add(interest);
+			member.addInterests(interest);
 		}
 		
 		member.setMemberName(memberDto.getMemberName());
 		member.setMemberPassword(memberDto.getMemberPassword());
 		member.setMemberEmail(memberDto.getMemberEmail());
-		
-		member.setInterests(interests);
-		
 		
 		//DB에 객체 업데이트(기존 객체 존재 시 업데이트됨)
 		return memberRepository.save(member);
