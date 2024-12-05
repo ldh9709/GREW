@@ -28,6 +28,7 @@ public class InquiryServiceImpl implements InquiryService {
 	//질문수정
 	@Override
 	public InquiryDto updateInquiry(InquiryDto inquiryDto) throws Exception {
+		
 		return InquiryDto.toDto(inquiryRepository.save(Inquiry.toEntity(inquiryDto)));
 	}
 	//질문삭제
