@@ -3,7 +3,6 @@ package com.itwill.jpa.entity.bullentin_board;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import org.hibernate.annotations.CreationTimestamp;
 
 import com.itwill.jpa.dto.bulletin_board.AnswerDto;
 import com.itwill.jpa.entity.member_information.Member;
@@ -80,7 +79,12 @@ public class Answer {
                 .answerAccept(answerDto.getAnswerAccept())
                 .answerStatus(answerDto.getAnswerStatus())
                 .member(Member.builder().memberNo(answerDto.getMemberNo()).build())
-                .inquiry(Inquiry.builder().inquiryNo(answerDto.getInquiryNo()).build())
+                .inquiry(Inquiry.builder()
+                		.inquiryNo(answerDto.getInquiryNo())
+                		.member(Member.builder()
+                				.memberNo(answerDto.getInquiryMemberNo())
+                				.build()) 
+                		.build())
                 .build();
     }
     

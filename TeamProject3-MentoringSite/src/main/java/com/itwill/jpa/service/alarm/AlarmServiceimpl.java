@@ -1,5 +1,6 @@
 package com.itwill.jpa.service.alarm;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.itwill.jpa.dto.alarm.AlarmDto;
@@ -7,12 +8,15 @@ import com.itwill.jpa.entity.alarm.Alarm;
 import com.itwill.jpa.repository.alarm.AlarmRepository;
 @Service
 public class AlarmServiceimpl implements AlarmService{
+	@Autowired
 	private AlarmRepository alarmRepository;
 	//알림등록
 	@Override
 	public AlarmDto saveAlarm(AlarmDto alarmDto) {
-		
-		return null;
+        alarmDto.setIsRead(1);
+
+        return AlarmDto.toDto(alarmRepository.save(Alarm.toEntity(alarmDto)));
+
 	}
 	//알림삭제
 	@Override

@@ -16,10 +16,9 @@ public interface AnswerRepository extends JpaRepository<Answer, Long>{
 		       "JOIN a.inquiry i " +
 		       "LEFT JOIN a.votes v " +
 		       "WHERE i.inquiryNo = :inquiryNo " +
-		       "AND a.answerStatus = 1 " +
-		       "GROUP BY a.answerNo " +
-		       "ORDER BY a.answerAccept DESC,"+
-		       "COUNT(v) DESC")
+		       "GROUP BY a.answerNo, a.answerAccept, a.answerContent, a.answerDate, a.answerStatus, a.inquiry, a.member " +
+		       "ORDER BY " +
+		       "(COUNT(CASE WHEN v.voteType = 1 THEN 1 END) - COUNT(CASE WHEN v.voteType = 2 THEN 1 END)) DESC")
 		List<Answer> findByInquiryAnswerOrderByVotes(@Param("inquiryNo") Long inquiryNo);
 
 	
