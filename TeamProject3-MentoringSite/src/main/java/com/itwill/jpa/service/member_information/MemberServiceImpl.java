@@ -82,12 +82,12 @@ public class MemberServiceImpl implements MemberService {
 	
 	/***** 회원 상태 수정 *****/
 	@Override
-	public Member updateMemberStatus(MemberDto memberDto) {
+	public Member updateMemberStatus(MemberDto memberDto, Integer statusNo) {
 		//아이디로 회원 찾기
 		Member member = memberRepository.findByMemberNo(memberDto.getMemberNo());
 		
 		//회원 상태 변경
-		member.setMemberStatus(2);
+		member.setMemberStatus(statusNo);
 		
 		//수정한 객체 반환
 		return memberRepository.save(member);

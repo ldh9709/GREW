@@ -25,6 +25,7 @@ import com.itwill.jpa.service.member_information.MemberService;
 
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.servlet.http.HttpSession;
+import jakarta.validation.Valid;
 
 @CrossOrigin(origins = "*")
 @RestController
@@ -184,11 +185,13 @@ public class MemberRestController {
 	
 	/* 회원 수정 */
 	@Operation(summary = "회원 상태 수정")
-	@PutMapping("/{memberNo}/status")
-	public ResponseEntity<Response> updateMemberStatus(@RequestBody MemberDto memberDto) {
+	@PutMapping("/{memberNo}/status/{statusNo}")
+	public ResponseEntity<Response> updateMemberStatus(
+			@RequestBody MemberDto memberDto, 
+			@PathVariable(name = "statusNo") Integer statusNo) {
 		
 		//업데이트 메소드 실행
-		Member updateMember = memberService.updateMemberStatus(memberDto);
+		Member updateMember = memberService.updateMemberStatus(memberDto, statusNo);
 		
 		MemberDto updateMemberDto = MemberDto.toDto(updateMember);
 		
