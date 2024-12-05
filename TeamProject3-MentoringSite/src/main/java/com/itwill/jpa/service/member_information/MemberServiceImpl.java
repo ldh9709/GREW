@@ -24,9 +24,12 @@ public class MemberServiceImpl implements MemberService {
 	/***** 회원 가입 *****/
 	@Override
 	public Member saveMember(MemberDto memberDto) {
-		
 		//MemberDto Entity로 변경
 		Member saveMember = Member.toEntity(memberDto);
+		for (InterestDto interest : memberDto.getInterests()) {
+			Interest interestEntity = Interest.toEntity(interest);
+			saveMember.addInterests(interestEntity);
+		}
 		
 		//객체 저장
 		return memberRepository.save(saveMember);
