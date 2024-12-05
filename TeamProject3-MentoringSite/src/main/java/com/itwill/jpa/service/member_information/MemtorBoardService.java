@@ -6,16 +6,16 @@ import java.util.List;
 public interface MemtorBoardService {
 
     // 멘토 보드 글쓰기
-    MentorBoardDto savememtorboard(MentorBoardDto mentorboardDto);
+    MentorBoardDto saveMemtorBoard(MentorBoardDto mentorboardDto);
 
     // 멘토 보드 수정
-    MentorBoardDto updatememtorboard(MentorBoardDto mentorboardDto) throws Exception;
+    MentorBoardDto updateMemtorBoard(MentorBoardDto mentorboardDto) throws Exception;
 
     // 멘토 보드 삭제(업데이트)
-    MentorBoardDto deletememtorboard(MentorBoardDto mentorboardDto) throws Exception;
+    MentorBoardDto deleteMemtorBoard(MentorBoardDto mentorboardDto) throws Exception;
 
-    // 멘토 보드 보기
-    MentorBoardDto getmemtorboard(Long MentorBoardNo);
+    // 멘토 보드 보기 상세보기 
+    MentorBoardDto getMemtorBoard(Long MentorBoardNo);
 
     // 특정 멘토의 보드 리스트 보기
     List<MentorBoardDto> getMentorBoardsByMemberNo(Long memberNo);

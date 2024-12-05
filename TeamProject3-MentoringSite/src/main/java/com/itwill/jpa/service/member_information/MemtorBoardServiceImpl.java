@@ -25,19 +25,19 @@ public class MemtorBoardServiceImpl implements MemtorBoardService {
 
     /* 멘토 보드 등록 */
     @Override
-    public MentorBoardDto savememtorboard(MentorBoardDto mentorBoardDto) {
+    public MentorBoardDto saveMemtorBoard(MentorBoardDto mentorBoardDto) {
         return MentorBoardDto.toDto(mentorBoardRepository.save(MentorBoard.toEntity(mentorBoardDto)));
     }
 
     /* 멘토 보드 수정 */
     @Override
-    public MentorBoardDto updatememtorboard(MentorBoardDto mentorBoardDto) throws Exception {
+    public MentorBoardDto updateMemtorBoard(MentorBoardDto mentorBoardDto) throws Exception {
         return MentorBoardDto.toDto(mentorBoardRepository.save(MentorBoard.toEntity(mentorBoardDto)));
     }
 
     /* 멘토 보드 삭제(상태 변경) */
     @Override
-    public MentorBoardDto deletememtorboard(MentorBoardDto mentorBoardDto) throws Exception {
+    public MentorBoardDto deleteMemtorBoard(MentorBoardDto mentorBoardDto) throws Exception {
         MentorBoard mentorBoard = mentorBoardRepository.findById(mentorBoardDto.getMentorBoardNo())
                 .orElseThrow(() -> new Exception("MentorBoard not found with ID: " + mentorBoardDto.getMentorBoardNo()));
         mentorBoard.setMentorBoardStatus(2); // 상태를 변경
@@ -46,7 +46,7 @@ public class MemtorBoardServiceImpl implements MemtorBoardService {
 
     /* 멘토 보드 상세 조회 */
     @Override
-    public MentorBoardDto getmemtorboard(Long mentorBoardNo) {
+    public MentorBoardDto getMemtorBoard(Long mentorBoardNo) {
         MentorBoard mentorBoard = mentorBoardRepository.findById(mentorBoardNo)
                 .orElseThrow(() -> new RuntimeException("MentorBoard not found with ID: " + mentorBoardNo));
         return MentorBoardDto.toDto(mentorBoard);

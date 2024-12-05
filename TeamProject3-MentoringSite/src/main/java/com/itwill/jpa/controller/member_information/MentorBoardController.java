@@ -30,7 +30,7 @@ public class MentorBoardController {
     @PostMapping
     public ResponseEntity<Response> saveMentorBoard(@RequestBody MentorBoardDto mentorBoardDto) {
         
-    	MentorBoardDto savedBoard = mentorBoardService.savememtorboard(mentorBoardDto);
+    	MentorBoardDto savedBoard = mentorBoardService.saveMemtorBoard(mentorBoardDto);
     	
         Response response = new Response();
         response.setStatus(ResponseStatusCode.CREATED_MEMBER_SUCCESS);
@@ -47,7 +47,7 @@ public class MentorBoardController {
     @Operation(summary = "멘토 보드 수정")
     @PutMapping
     public ResponseEntity<Response> updateMentorBoard(@RequestBody MentorBoardDto mentorBoardDto) throws Exception {
-        MentorBoardDto updatedBoard = mentorBoardService.updatememtorboard(mentorBoardDto);
+        MentorBoardDto updatedBoard = mentorBoardService.updateMemtorBoard(mentorBoardDto);
 
         Response response = new Response();
         response.setStatus(ResponseStatusCode.UPDATE_MEMBER_SUCCESS);
@@ -62,9 +62,9 @@ public class MentorBoardController {
 
     /* 멘토 보드 삭제(상태 변경, PUT 방식) */
     @Operation(summary = "멘토 보드 삭제(상태 변경, PUT 방식)")
-    @PutMapping("/{mentorBoardNo}/delete")
-    public ResponseEntity<Response> deleteMentorBoard(@PathVariable Long mentorBoardNo) throws Exception {
-        MentorBoardDto deletedBoard = mentorBoardService.deletememtorboard(
+    @PutMapping("/{mentorBoardNo}/status")
+    public ResponseEntity<Response> deleteMentorBoard(@PathVariable(name= "mentorBoardNo")Long mentorBoardNo) throws Exception {
+        MentorBoardDto deletedBoard = mentorBoardService.deleteMemtorBoard(
                 MentorBoardDto.builder().mentorBoardNo(mentorBoardNo).build()
         );
 
@@ -73,16 +73,20 @@ public class MentorBoardController {
         response.setMessage(ResponseMessage.DELETE_MEMBER_SUCCESS);
         response.setData(deletedBoard);
 
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(new MediaType(MediaType.APPLICATION_JSON, Charset.forName("UTF-8")));
-
-        return new ResponseEntity<>(response, headers, HttpStatus.OK);
+        HttpHeaders httpHeaders = new HttpHeaders();
+		httpHeaders.setContentType(new MediaType(MediaType.APPLICATION_JSON, Charset.forName("UTF-8")));
+		
+		ResponseEntity<Response> responseEntity = 
+				new ResponseEntity<Response>(response,httpHeaders, HttpStatus.OK);
+		
+		
+		return responseEntity;
     }
     /* 멘토 보드 상세 조회 */
     @Operation(summary = "멘토 보드 상세 조회")
     @GetMapping("/{mentorBoardNo}")
-    public ResponseEntity<Response> getMentorBoard(@PathVariable Long mentorBoardNo) {
-        MentorBoardDto mentorBoard = mentorBoardService.getmemtorboard(mentorBoardNo);
+    public ResponseEntity<Response> getMentorBoard(@PathVariable(name= "mentorBoardNo") Long mentorBoardNo) {
+        MentorBoardDto mentorBoard = mentorBoardService.getMemtorBoard(mentorBoardNo);
 
         Response response = new Response();
         response.setStatus(ResponseStatusCode.READ_MEMBER_SUCCESS);
@@ -92,13 +96,16 @@ public class MentorBoardController {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(new MediaType(MediaType.APPLICATION_JSON, Charset.forName("UTF-8")));
 
-        return new ResponseEntity<>(response, headers, HttpStatus.OK);
+        ResponseEntity<Response> responseEntity = 
+				new ResponseEntity<Response>(response, headers, HttpStatus.OK);
+        
+        return  responseEntity ;
     }
 
     /* 특정 멘토의 모든 멘토 보드 조회 */
     @Operation(summary = "특정 멘토의 모든 멘토 보드 조회")
-    @GetMapping("/member/{memberNo}")
-    public ResponseEntity<Response> getMentorBoardsByMember(@PathVariable Long memberNo) {
+    @GetMapping("/mentor/{memberNo}")
+    public ResponseEntity<Response> getMentorBoardsByMember(@PathVariable(name = "memberNo") Long memberNo) {
         List<MentorBoardDto> mentorBoards = mentorBoardService.getMentorBoardsByMemberNo(memberNo);
 
         Response response = new Response();
@@ -109,6 +116,9 @@ public class MentorBoardController {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(new MediaType(MediaType.APPLICATION_JSON, Charset.forName("UTF-8")));
 
-        return new ResponseEntity<>(response, headers, HttpStatus.OK);
+        ResponseEntity<Response> responseEntity = 
+				new ResponseEntity<Response>(response, headers, HttpStatus.OK);
+        
+        return  responseEntity ;
     }
 }
