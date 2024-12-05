@@ -62,6 +62,7 @@ public class Alarm {
 		return Alarm.builder()
 				.alarmNo(alarmDto.getAlarmNo())
 				.alarmContent(alarmDto.getAlarmContent())
+				.alarmType(alarmDto.getAlarmType())
 				.referenceNo(alarmDto.getReferenceNo())
 				.referenceType(alarmDto.getReferenceType())
 				.isRead(alarmDto.getIsRead())
