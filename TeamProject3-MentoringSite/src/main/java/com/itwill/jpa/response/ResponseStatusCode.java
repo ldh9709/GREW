@@ -12,6 +12,19 @@ public class ResponseStatusCode {
 	public static final int LOGIN_MEMBER_SUCCESS = 2500;
 	public static final int LOGOUT_MEMBER_SUCCESS = 2600;
 	
+	/******************* MENTOR BOARD 메시지 ************************/
+	public static final int CREATED_MENTOR_BOARD_SUCCESS = 2300;
+	public static final int READ_MENTOR_BOARD_SUCCESS = 2310;
+	public static final int READ_MENTOR_BOARD_LIST_SUCCESS = 2320;
+	public static final int UPDATE_MENTOR_BOARD_SUCCESS = 2330;
+	public static final int DELETE_MENTOR_BOARD_SUCCESS = 2340;
+	public static final int MENTOR_BOARD_NOT_FOUND = 2350;
+	
+	
+	
+	
+	
+	
 	/*알림(3000), 신고(4000), 질문(5000), 답변(6000), 채팅(7000)*/
 	/******************* Alarm    메세지 ************************/
 	
