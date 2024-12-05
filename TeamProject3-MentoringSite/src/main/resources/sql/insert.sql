@@ -124,4 +124,14 @@ values(vote_no_SEQ.nextval, 1, sysdate,1,4);
 insert into vote(vote_no, vote_type, vote_date, answer_no, member_no)
 values(vote_no_SEQ.nextval, 2, sysdate,1,5);
 
+
+
+/* 관심사 등록 */
+insert into interest (interest_no, member_no, category_no) 
+values(interest_no_SEQ.nextval, 1, 2);
+insert into interest (interest_no, member_no, category_no) 
+values(interest_no_SEQ.nextval, 1, 3);
+insert into interest (interest_no, member_no, category_no) 
+values(interest_no_SEQ.nextval, 1, 4);
+
 commit;
