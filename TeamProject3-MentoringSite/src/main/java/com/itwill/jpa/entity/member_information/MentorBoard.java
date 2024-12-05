@@ -34,6 +34,14 @@ public class MentorBoard {
     @Column(name = "mentor_board_image" ,nullable = false)
     private String mentorBoardImage;   // 보드 이미지 
 
+    @Column(name = "mentor_board_date" ,nullable = false)
+    private LocalDateTime mentorBoardDate;   // 날짜 
+    
+    @Column(name = "mentor_board_views" ,nullable = false)
+    private Integer mentorBoardViews;   // 조회수 
+    
+    
+    
     @Column(name = "mentor_board_status" ,nullable = false)
     private Integer mentorBoardStatus;   //답글 삭제 여부 (1또는 2)
     
@@ -46,7 +54,9 @@ public class MentorBoard {
     @PrePersist
     public void setDefaultValues() {
     	if(this.mentorBoardImage==null) this.mentorBoardImage = "default.jpg";
+    	if(this.mentorBoardDate==null) this.mentorBoardDate = LocalDateTime.now();
     	if(this.mentorBoardStatus==null||this.mentorBoardStatus==0) this.mentorBoardStatus = 1;
+    	if(this.mentorBoardViews == null) this.mentorBoardViews = 0;
     }
     
     public static MentorBoard toEntity(MentorBoardDto mentorBoardDto) {
@@ -60,6 +70,8 @@ public class MentorBoard {
                 .mentorBoardTitle(mentorBoardDto.getMentorBoardTitle())
                 .mentorBoardContent(mentorBoardDto.getMentorBoardContent())
                 .mentorBoardImage(mentorBoardDto.getMentorBoardImage())
+                .mentorBoardStatus(mentorBoardDto.getMentorBoardStatus())
+                .mentorBoardViews(mentorBoardDto.getMentorBoardViews())
                 .mentorBoardStatus(mentorBoardDto.getMentorBoardStatus())
                 .member(member)
                 .build();
