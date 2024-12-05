@@ -1,5 +1,7 @@
 package com.itwill.jpa.dto.member_information;
 
+import java.time.LocalDateTime;
+
 import com.itwill.jpa.entity.member_information.Member;
 import com.itwill.jpa.entity.member_information.MentorBoard;
 
@@ -17,6 +19,8 @@ public class MentorBoardDto {
     private String mentorBoardTitle;
     private String mentorBoardContent;
     private String mentorBoardImage;
+    private LocalDateTime mentorBoardDate;
+    private Integer mentorBoardViews;
     private Integer mentorBoardStatus;
     //private MemberDto member;
     private Long memberNo;
@@ -30,6 +34,8 @@ public class MentorBoardDto {
                 .mentorBoardTitle(mentorBoardEntity.getMentorBoardTitle())
                 .mentorBoardContent(mentorBoardEntity.getMentorBoardContent())
                 .mentorBoardImage(mentorBoardEntity.getMentorBoardImage())
+                .mentorBoardDate(mentorBoardEntity.getMentorBoardDate())
+                .mentorBoardViews(mentorBoardEntity.getMentorBoardViews())
                 .mentorBoardStatus(mentorBoardEntity.getMentorBoardStatus())
                 //.member(MemberDto.toDto(mentorBoardEntity.getMember()))
                 .memberNo(mentorBoardEntity.getMember().getMemberNo())

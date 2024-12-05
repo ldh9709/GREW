@@ -49,7 +49,7 @@ public class Report {
 	@Column(name="report_date", nullable = false)
 	private LocalDateTime reportDate;
 	
-	@Column(name="resolved_date", nullable = false)
+	@Column(name="resolved_date")
 	private LocalDateTime resolvedDate;
 	
 	@Column(name="report_status", nullable = false)
@@ -64,7 +64,6 @@ public class Report {
     public void setDefaultValues() {
     	if (this.reportContent == null) this.reportContent ="";
         if (this.reportDate == null) this.reportDate = LocalDateTime.now();
-        if (this.resolvedDate == null) this.resolvedDate = LocalDateTime.now();
         if (this.reportStatus == 0 || this.reportStatus == null) this.reportStatus = 1;
     }
 	

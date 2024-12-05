@@ -43,7 +43,8 @@ public class Category {
         return Category.builder()
         		.categoryNo(categoryDto.getCategoryNo())
                 .categoryName(categoryDto.getCategoryName())
-                .categoryDepth(categoryDto.getCategoryLevel())
+                .categoryDepth(categoryDto.getCategoryDepth())
+                .parentCategory(categoryDto.getCategory())
                 .build();
     }
 }

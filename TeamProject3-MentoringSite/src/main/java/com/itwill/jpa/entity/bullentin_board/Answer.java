@@ -41,7 +41,8 @@ public class Answer {
 
     @Column(name = "answer_content", nullable = false, length = 500)
     private String answerContent;  // 답변 내용
-
+    
+    @CreationTimestamp
     @Column(name = "answer_date", nullable = false)
     private LocalDateTime answerDate;  // 답변 작성 시간 (LocalDate)
 
@@ -80,7 +81,12 @@ public class Answer {
                 .answerAccept(answerDto.getAnswerAccept())
                 .answerStatus(answerDto.getAnswerStatus())
                 .member(Member.builder().memberNo(answerDto.getMemberNo()).build())
-                .inquiry(Inquiry.builder().inquiryNo(answerDto.getInquiryNo()).build())
+                .inquiry(Inquiry.builder()
+                		.inquiryNo(answerDto.getInquiryNo())
+                		.member(Member.builder()
+                				.memberNo(answerDto.getInquiryMemberNo())
+                				.build()) 
+                		.build())
                 .build();
     }
     

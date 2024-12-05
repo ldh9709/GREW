@@ -2,13 +2,16 @@ package com.itwill.jpa.service.bullentin_board;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.itwill.jpa.dto.bulletin_board.AnswerDto;
 import com.itwill.jpa.entity.bullentin_board.Answer;
+import com.itwill.jpa.entity.bullentin_board.Inquiry;
 import com.itwill.jpa.repository.bullentin_board.AnswerRepository;
+import com.itwill.jpa.repository.bullentin_board.InquiryRepository;
 
 import jakarta.transaction.Transactional;
 @Transactional
@@ -16,7 +19,8 @@ import jakarta.transaction.Transactional;
 public class AnswerServiceImpl implements AnswerService{
 	@Autowired
 	private AnswerRepository answerRepository;
-	
+	@Autowired
+	private InquiryRepository inquiryRepository;
 	/*답변등록*/
 	@Override
 	public AnswerDto saveAnswer(AnswerDto answerDto){
@@ -26,6 +30,8 @@ public class AnswerServiceImpl implements AnswerService{
 	/*답변수정*/
 	@Override
 	public AnswerDto updateAnswer(AnswerDto answerDto) throws Exception{
+		Answer answer = answerRepository.findById(answerDto.getAnswerNo()).get();
+		answer.setAnswerContent(answerDto.getAnswerContent());
 		return AnswerDto.toDto(answerRepository.save(Answer.toEntity(answerDto)));
 	}
 	
@@ -43,6 +49,13 @@ public class AnswerServiceImpl implements AnswerService{
 		Answer answer = answerRepository.findById(answerDto.getAnswerNo()).get();
 	    answer.setAnswerStatus(2);  
 	    return AnswerDto.toDto(answerRepository.save(answer));
+	}
+	
+	
+	/* 답변상세보기 */
+	@Override
+	public AnswerDto getAnswer(Long answerNo) {
+		return AnswerDto.toDto(answerRepository.findByAnswerNo(answerNo));
 	}
 	
 	/*질문 하나에 달린 답변*/
@@ -106,6 +119,8 @@ public class AnswerServiceImpl implements AnswerService{
 		}
 		return answerDtoList;
 	}
+
+	
 	
 	
 	
