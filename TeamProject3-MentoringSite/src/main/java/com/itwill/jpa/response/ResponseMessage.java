@@ -50,6 +50,8 @@ public class ResponseMessage {
 	public static final String REJECTED_CHATTING = "요청 거절"; // (멘토가 요청을 수락하지 않음)
 	public static final String CANCELED_CHATTING_FAIL = "요청 취소"; // (멘티가 요청을 철회함)
 	public static final String FORCE_CLOSED_CHATTING = "강제 종료"; // (관리자가 비정상적인 요청을 종료함)
+	public static final String STAY_CHATTING = "채팅방에 머무릅니다."; // (채팅방을 나가지않음)
+	public static final String LEAVE_CHATTING = "채팅방을 나갔습니다."; // (채팅방을 나감)
 	
     public static final String LOGIN_FAIL_NOT_FOUND_MEMBER = "회원을 찾을 수 없습니다.";
     public static final String LOGIN_FAIL_PASSWORD_MISMATCH_MEMBER = "회원 패스워드 불일치";

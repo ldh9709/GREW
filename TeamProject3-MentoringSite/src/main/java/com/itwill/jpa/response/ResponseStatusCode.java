@@ -49,6 +49,8 @@ public class ResponseStatusCode {
 	public static final int REJECTED_CHATTING = 7300; // (멘토가 요청을 수락하지 않음)
 	public static final int CANCELED_CHATTING_FAIL = 7400; // (멘티가 요청을 철회함)
 	public static final int FORCE_CLOSED_CHATTING = 7500; // (관리자가 비정상적인 요청을 종료함)
+	public static final int STAY_CHATTING = 7600; // (채팅방을 나가지않음)
+	public static final int LEAVE_CHATTING = 7700; // (채팅방을 나감)
 	
 	public static final int LOGIN_FAIL_NOT_FOUND_MEMBER = 8000;
 	public static final int LOGIN_FAIL_PASSWORD_MISMATCH_MEMBER = 8100;

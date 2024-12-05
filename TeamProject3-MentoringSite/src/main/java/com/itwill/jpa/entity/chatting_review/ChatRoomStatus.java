@@ -11,6 +11,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.PrePersist;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -44,6 +45,12 @@ public class ChatRoomStatus {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_no", nullable = false)
     private Member member;
+    
+    @PrePersist
+    public void setDefaultValues() {
+    	if (this.chatRoomName.equals("") || this.chatRoomName == null) this.chatRoomName = chatRoom.getMentor().getMemberName()+"님과 "+chatRoom.getMentee().getMemberName()+"님의 채팅방";
+    	if (this.chatRoomStatus == 0 || this.chatRoomStatus == null) this.chatRoomStatus = 7600;
+    }
     
     public static ChatRoomStatus toEntity(ChatRoomStatusDto chatRoomStatusDto) {
         return ChatRoomStatus.builder()
