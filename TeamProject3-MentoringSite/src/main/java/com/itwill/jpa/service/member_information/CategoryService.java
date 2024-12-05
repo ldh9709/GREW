@@ -6,8 +6,9 @@ import com.itwill.jpa.dto.member_information.CategoryDto;
 
 public interface CategoryService {
 	
-	public void createCategory(CategoryDto categoryDto);
-	public void updateCategory(CategoryDto categoryDto);
-	public void deleteCategory(Long categoryNo);
-	public List<CategoryDto> getCategory(Long categoryNo);
+	CategoryDto createCategory(CategoryDto categoryDto);
+	CategoryDto updateCategory(CategoryDto categoryDto);
+	CategoryDto deleteCategory(Long categoryNo);
+	CategoryDto getCategory(Long categoryNo);
+	List<CategoryDto> getCategories(Long categoryNo);
 }
