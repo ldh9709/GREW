@@ -77,6 +77,8 @@ public class Member {
 	@Column(name = "member_report_count", nullable = false)
 	private Integer memberReportCount;//신고 당한 횟수
 	
+	
+	
 	/* 초기값 설정 */
 	@PrePersist
 	public void setDefaultValues() {
