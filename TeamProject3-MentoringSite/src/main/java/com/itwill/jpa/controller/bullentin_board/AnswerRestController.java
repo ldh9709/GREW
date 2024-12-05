@@ -15,13 +15,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.itwill.jpa.dto.alarm.AlarmDto;
 import com.itwill.jpa.dto.bulletin_board.AnswerDto;
-import com.itwill.jpa.dto.bulletin_board.InquiryDto;
 import com.itwill.jpa.response.Response;
 import com.itwill.jpa.response.ResponseMessage;
 import com.itwill.jpa.response.ResponseStatusCode;
-import com.itwill.jpa.service.alarm.AlarmService;
 import com.itwill.jpa.service.bullentin_board.AnswerService;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -36,8 +33,7 @@ public class AnswerRestController {
 	
 	@Autowired
 	private AnswerService answerService;
-	@Autowired
-	private AlarmService alarmService; 
+	
 	/* 답변 등록 */
 	@Operation(summary = "답변 등록")
 	@PostMapping
@@ -45,14 +41,7 @@ public class AnswerRestController {
 		
 		// 1. 서비스 호출 : 답변 데이터 저장
 		AnswerDto insertAnswerDto = answerService.saveAnswer(answerDto);
-		/******알림 등록*****/
-		AlarmDto alarmDto = new AlarmDto();
-		alarmDto.setAlarmType("질문");
-		alarmDto.setReferenceNo(answerDto.getAnswerNo());
-		alarmDto.setAlarmContent("회원님의 질문에 답변이 달렸습니다");
-		alarmDto.setReferenceType("답변");
-		alarmDto.setMemberNo(answerDto.getInquiryMemberNo());
-		alarmService.saveAlarm(alarmDto);
+		
 		// 2. 응답 데이터(Response 객체) 생성
 		// - 응답객체에 코드, 메시지, 객체 설정
 		Response response = new Response();
@@ -128,11 +117,56 @@ public class AnswerRestController {
 		return responseEntity;
 	}
 	
+	/* 답변 상세보기 */
+	@Operation(summary = "답변 상세보기")
+	@GetMapping("/{answerNo}/answerDetail")
+	public ResponseEntity<Response> findAnswerByAnswerNo(@PathVariable(name = "answerNo") Long answerNo) {
+		AnswerDto answerDto = answerService.getAnswer(answerNo);
+		
+		Response response = new Response();
+	    response.setStatus(ResponseStatusCode.READ_ANSWER_SUCCESS);
+	    response.setMessage(ResponseMessage.READ_ANSWER_SUCCESS);
+	    response.setData(answerDto);
+	    
+	    HttpHeaders httpHeaders = new HttpHeaders();
+		httpHeaders.setContentType(new MediaType(MediaType.APPLICATION_JSON,Charset.forName("UTF-8")));
+		
+	    ResponseEntity<Response> responseEntity = 
+				new ResponseEntity<Response>(response, httpHeaders, HttpStatus.OK);
+		
+		return responseEntity;
+		
+	}
 	
-	/* 답변리스트 조회 */
+	/* 질문 하나에 달린 답변 */
+	/* 추천순 */
+	@Operation(summary = "질문에 작성된답변조회(추천순)")
+	@GetMapping("/answerList/{inquiryNo}/inquiryVote")
+	public ResponseEntity<Response> findByAnswerOrderByVoteDate(@PathVariable(name = "inquiryNo") Long inquiryNo) {
+		
+		List<AnswerDto> answerDtos = answerService.findByInquiryAnswerOrderByVotes(inquiryNo);
+		
+		Response response = new Response();
+	    response.setStatus(ResponseStatusCode.READ_ANSWER_LIST_SUCCESS);
+	    response.setMessage(ResponseMessage.READ_ANSWER_LIST_SUCCESS);
+	    response.setData(answerDtos);
+	    
+	    HttpHeaders httpHeaders = new HttpHeaders();
+		httpHeaders.setContentType(new MediaType(MediaType.APPLICATION_JSON,Charset.forName("UTF-8")));
+		
+	    ResponseEntity<Response> responseEntity = 
+				new ResponseEntity<Response>(response, httpHeaders, HttpStatus.OK);
+		
+		return responseEntity;
+		
+		
+	}
+	
+	
+	/* 질문 하나에 달린 답변 */
 	/* 최신순 */
-	@Operation(summary = "한 질문의 답변리스트 조회(최신순)")
-	@GetMapping("/viewAnswerDate/{inquiryNo}")
+	@Operation(summary = "질문에 작성된답변조회(최신순)")
+	@GetMapping("/answerList/{inquiryNo}/inquiryDate")
 	public ResponseEntity<Response> findByInquiryAnswerOrderByDate(@PathVariable(name = "inquiryNo") Long inquiryNo) {
 		
 		List<AnswerDto> answerDtos = answerService.findByInquiryAnswerOrderByDate(inquiryNo);
@@ -150,29 +184,73 @@ public class AnswerRestController {
 		
 		return responseEntity;
 	}
+	
+	/* 카테고리별 답변 리스트 */
 	/* 추천순 */
-	@Operation(summary = "한 질문의 답변리스트 조회(추천순)")
-	@GetMapping("/viewAnswerVotes/{inquiryNo}")
-	public ResponseEntity<Response> findByInquiryAnswerOrderByVotes(@PathVariable(name = "inquiryNo") Long inquiryNo) {
+	@Operation(summary = "카테고리별 답변조회(추천순)")
+	@GetMapping("/answerList/{categoryNo}categoryVote")
+	public ResponseEntity<Response> findByCategoryAnswerOrderByVotes(@PathVariable(name = "categoryNo") Long categoryNo){
 		
-		List<AnswerDto> answerDtos = answerService.findByInquiryAnswerOrderByVotes(inquiryNo);
+		List<AnswerDto> answerDtos = answerService.findByCategoryAnswerOrderByDate(categoryNo);
 		
 		Response response = new Response();
-		response.setStatus(ResponseStatusCode.READ_ANSWER_LIST_SUCCESS);
-		response.setMessage(ResponseMessage.READ_ANSWER_LIST_SUCCESS);
-		response.setData(answerDtos);
-		
-		HttpHeaders httpHeaders = new HttpHeaders();
+	    response.setStatus(ResponseStatusCode.READ_ANSWER_LIST_SUCCESS);
+	    response.setMessage(ResponseMessage.READ_ANSWER_LIST_SUCCESS);
+	    response.setData(answerDtos);
+	    
+	    HttpHeaders httpHeaders = new HttpHeaders();
 		httpHeaders.setContentType(new MediaType(MediaType.APPLICATION_JSON,Charset.forName("UTF-8")));
 		
-		ResponseEntity<Response> responseEntity = 
+	    ResponseEntity<Response> responseEntity = 
+				new ResponseEntity<Response>(response, httpHeaders, HttpStatus.OK);
+		
+		
+		return responseEntity;
+	}
+	
+	/* 카테고리별 답변 리스트 */
+	/* 최신순 */
+	@Operation(summary = "카테고리별 답변조회(최신순)")
+	@GetMapping("/answerList/{categoryNo}/categoryDate")
+	public ResponseEntity<Response> findByCategoryAnswerOrderByDate(@PathVariable(name = "categoryNo") Long categoryNo){
+		
+		List<AnswerDto> answerDtos = answerService.findByCategoryAnswerOrderByDate(categoryNo);
+		
+		Response response = new Response();
+	    response.setStatus(ResponseStatusCode.READ_ANSWER_LIST_SUCCESS);
+	    response.setMessage(ResponseMessage.READ_ANSWER_LIST_SUCCESS);
+	    response.setData(answerDtos);
+	    
+	    HttpHeaders httpHeaders = new HttpHeaders();
+		httpHeaders.setContentType(new MediaType(MediaType.APPLICATION_JSON,Charset.forName("UTF-8")));
+		
+	    ResponseEntity<Response> responseEntity = 
 				new ResponseEntity<Response>(response, httpHeaders, HttpStatus.OK);
 		
 		return responseEntity;
 	}
 	
 	
-	
+	/* 최근 3일동안 추천 많이 받은 답변 리스트 */
+	@Operation(summary = "최근 3일간 추천 많이 받은 답변 리스트")
+	@GetMapping("/answerList/recently-vote")
+	public ResponseEntity<Response> findByAnswerOrderByVoteDate() {
+		
+		List<AnswerDto> answerDtos = answerService.findByAnswerOrderByVoteDate();
+		
+		Response response = new Response();
+	    response.setStatus(ResponseStatusCode.READ_ANSWER_LIST_SUCCESS);
+	    response.setMessage(ResponseMessage.READ_ANSWER_LIST_SUCCESS);
+	    response.setData(answerDtos);
+	    
+	    HttpHeaders httpHeaders = new HttpHeaders();
+		httpHeaders.setContentType(new MediaType(MediaType.APPLICATION_JSON,Charset.forName("UTF-8")));
+		
+	    ResponseEntity<Response> responseEntity = 
+				new ResponseEntity<Response>(response, httpHeaders, HttpStatus.OK);
+		
+		return responseEntity;
+	}
 	
 	
 }

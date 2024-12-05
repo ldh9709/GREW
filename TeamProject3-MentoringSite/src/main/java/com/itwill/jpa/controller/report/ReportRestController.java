@@ -35,10 +35,10 @@ public class ReportRestController {
 	/* 신고등록 */
 	@Operation(summary = "신고 등록")
 	@PostMapping
-	public ResponseEntity<Response> insertReport(@RequestBody ReportDto reportDto){
+	public ResponseEntity<Response> createReport(@RequestBody ReportDto reportDto){
 	    
 	    // 1. 서비스 호출: 신고 데이터를 저장
-		reportService.saveReport(reportDto);
+		reportService.createReport(reportDto);
 		
 		// 2. 응답 데이터(Response 객체) 생성
 		Response response = new Response();
@@ -118,8 +118,8 @@ public class ReportRestController {
 	/* 신고 출력(1개) */
 	@Operation(summary = "특정 신고 상세정보 조회")
 	@GetMapping("/{report_no}")
-	public ResponseEntity<Response> selectReportByReportNo(@PathVariable(value = "report_no") Long reportNo){
-		ReportDto report = reportService.selectReportByreportNo(reportNo);
+	public ResponseEntity<Response> getReportByReportNo(@PathVariable(value = "report_no") Long reportNo){
+		ReportDto report = reportService.getReportByreportNo(reportNo);
 		
 		Response response = new Response();
 		response.setStatus(ResponseStatusCode.READ_REPORT_SUCCESS);
@@ -137,8 +137,8 @@ public class ReportRestController {
 	/* 신고 출력(특정회원) */
 	@Operation(summary = "특정 회원 신고 목록 출력")
 	@GetMapping("/member/{member_no}")
-	public ResponseEntity<Response> selectReportByUserNo(@PathVariable(value = "member_no") Long memberNo){
-		List<ReportDto> reports = reportService.selectReportByUserNo(memberNo);
+	public ResponseEntity<Response> getReportByUserNo(@PathVariable(value = "member_no") Long memberNo){
+		List<ReportDto> reports = reportService.getReportByUserNo(memberNo);
 		
 		Response response = new Response();
 		response.setStatus(ResponseStatusCode.READ_REPORT_SUCCESS);
@@ -157,12 +157,12 @@ public class ReportRestController {
 	/* [어드민] 신고 출력(전체회원) */
 	@Operation(summary = "[어드민] 전체 신고 목록 조회")
 	@GetMapping()
-	public ResponseEntity<Response> selectReportAll(){
-		List<ReportDto> reports = reportService.selectReportAll();
+	public ResponseEntity<Response> getReportAll(){
+		List<ReportDto> reports = reportService.getReportAll();
 		
 		Response response = new Response();
 		response.setStatus(ResponseStatusCode.READ_REPORT_LIST_SUCCESS);
-		response.setMessage(ResponseMessage.READ_MEMBER_LIST_SUCCESS);
+		response.setMessage(ResponseMessage.READ_REPORT_LIST_SUCCESS);
 		response.setData(reports);
 		
 		HttpHeaders httpHeaders = new HttpHeaders();

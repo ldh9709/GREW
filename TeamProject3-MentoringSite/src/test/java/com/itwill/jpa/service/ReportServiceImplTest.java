@@ -23,7 +23,7 @@ class ReportServiceImplTest {
 				.reportContent("흥")
 				.memberNo(1L)
 				.build();
-		reportService.saveReport(report);
+		reportService.createReport(report);
 	}
 
 //	@Test
@@ -46,11 +46,11 @@ class ReportServiceImplTest {
 	}
 //	@Test
 	void testSelectByuserNo(){
-		System.out.println(reportService.selectReportByUserNo(1L));
+		System.out.println(reportService.getReportByUserNo(1L));
 	}
 
 //	@Test
 	void testSelectAll(){
-		System.out.println(reportService.selectReportAll());
+		System.out.println(reportService.getReportAll());
 	}
 }

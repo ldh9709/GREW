@@ -29,11 +29,10 @@ public class InquiryServiceImpl implements InquiryService {
 	@Override
 	public InquiryDto updateInquiry(InquiryDto inquiryDto) throws Exception {
 		Inquiry inquiry = inquiryRepository.findByInquiryNo(inquiryDto.getInquiryNo());
-		
 		inquiry.setInquiryTitle(inquiryDto.getInquiryTitle());
 		inquiry.setInquiryContent(inquiryDto.getInquiryContent());
-		
 		return InquiryDto.toDto(inquiryRepository.save(inquiry));
+		
 	}
 	//질문삭제
 	@Override

@@ -1,7 +1,7 @@
 package com.itwill.jpa.entity.member_information;
 
 
-import com.itwill.jpa.dto.member_information.FollowDto;
+import com.itwill.jpa.dto.member_information.FollowRequestDto;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -23,24 +23,24 @@ public class Follow {
     @Column(name = "follow_no")
     private Long followNo;
 
-    // 팔로우를 한 사용자(멘티)
+    // 팔로우를 한 사용자
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "follower_member", nullable = false)
-    private Member followerMember;
+    @JoinColumn(name = "mentee_member_no", nullable = false)
+    private Member menteeMember;
 
- // 팔로우 대상 사용자(멘토)
+    //팔로우 대상 사용자
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "followed_member", nullable = false) 
-    private Member followedMember;
+    @JoinColumn(name = "mentor_member_no", nullable = false) 
+    private Member mentorMember;
  
     /*
      * DTO -> Entity
      */
-    public static Follow toEntity(FollowDto dto) {
+    public static Follow toEntity(FollowRequestDto dto) {
         return Follow.builder()
                 .followNo(dto.getFollowNo())
-                .followerMember(Member.builder().memberNo(dto.getFollowerMember()).build())
-                .followedMember(Member.builder().memberNo(dto.getFollowedMember()).build())
+                .menteeMember(Member.builder().memberNo(dto.getMenteeMemberNo()).build())
+                .mentorMember(Member.builder().memberNo(dto.getMentorMembedNo()).build())
                 .build();
     }
 }

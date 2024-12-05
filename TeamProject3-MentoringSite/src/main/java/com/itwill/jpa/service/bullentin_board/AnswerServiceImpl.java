@@ -51,6 +51,13 @@ public class AnswerServiceImpl implements AnswerService{
 	    return AnswerDto.toDto(answerRepository.save(answer));
 	}
 	
+	
+	/* 답변상세보기 */
+	@Override
+	public AnswerDto getAnswer(Long answerNo) {
+		return AnswerDto.toDto(answerRepository.findByAnswerNo(answerNo));
+	}
+	
 	/*질문 하나에 달린 답변*/
 	/*추천순*/
 	@Override
@@ -112,6 +119,8 @@ public class AnswerServiceImpl implements AnswerService{
 		}
 		return answerDtoList;
 	}
+
+	
 	
 	
 	
