@@ -36,7 +36,7 @@ public class MemberRestController {
 	
 	
 	/* 회원 저장 */
-	@Operation(summary = "회원가입")
+	@Operation(summary = "회원가입/관심사 입력")
 	@PostMapping
 	public ResponseEntity<Response> saveMember(@RequestBody MemberDto memberDto) {
 		
