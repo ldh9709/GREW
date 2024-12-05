@@ -124,8 +124,8 @@ public class AnswerRestController {
 		AnswerDto answerDto = answerService.getAnswer(answerNo);
 		
 		Response response = new Response();
-	    response.setStatus(ResponseStatusCode.READ_ANSWER_LIST_SUCCESS);
-	    response.setMessage(ResponseMessage.READ_ANSWER_LIST_SUCCESS);
+	    response.setStatus(ResponseStatusCode.READ_ANSWER_SUCCESS);
+	    response.setMessage(ResponseMessage.READ_ANSWER_SUCCESS);
 	    response.setData(answerDto);
 	    
 	    HttpHeaders httpHeaders = new HttpHeaders();
