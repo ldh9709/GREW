@@ -1,5 +1,8 @@
 package com.itwill.jpa.dto.member_information;
 
+import java.util.List;
+
+import com.itwill.jpa.entity.member_information.Interest;
 import com.itwill.jpa.entity.member_information.Member;
 
 import lombok.AllArgsConstructor;
@@ -20,6 +23,8 @@ public class MemberDto {
 	private String memberName;
 	private Integer memberStatus;
 	
+	private List<InterestDto> interests;
+	
 	
 	 /* Entitiy -> DTO*/
 	public static MemberDto toDto(Member memberEntity) {
@@ -32,6 +37,8 @@ public class MemberDto {
 	            .memberStatus(memberEntity.getMemberStatus())
 	            .build();
 	}
+	
+	
 	
 	
 }
