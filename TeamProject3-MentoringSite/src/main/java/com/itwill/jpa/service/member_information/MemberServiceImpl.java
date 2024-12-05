@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.itwill.jpa.dto.member_information.InterestDto;
 import com.itwill.jpa.dto.member_information.MemberDto;
+import com.itwill.jpa.entity.member_information.Category;
 import com.itwill.jpa.entity.member_information.Interest;
 import com.itwill.jpa.entity.member_information.Member;
 import com.itwill.jpa.repository.member_information.MemberRepository;
@@ -26,10 +27,28 @@ public class MemberServiceImpl implements MemberService {
 	public Member saveMember(MemberDto memberDto) {
 		
 		//MemberDto Entity로 변경
-		Member saveMember = Member.toEntity(memberDto);
+		//Member saveMember = Member.toEntity(memberDto);
+		Member member = Member.builder()
+	            .memberId(memberDto.getMemberId())
+	            .memberPassword(memberDto.getMemberPassword())
+	            .memberEmail(memberDto.getMemberEmail())
+	            .memberName(memberDto.getMemberName())
+	            .build();
+		//Interest리스트 객체 선언
+		//List<Interest> interests = new ArrayList<>();
+		 List<Interest> interests = new ArrayList<>();
+		    for (InterestDto interestDto : memberDto.getInterests()) {
+		        Interest interest = Interest.builder()
+		                .category(Category.builder().categoryNo(interestDto.getCategoryNo()).build())
+		                .member(member) // Member와 연관 설정
+		                .build();
+		        interests.add(interest);
+		    }
+		    
+		member.setInterests(interests);
 		
 		//객체 저장
-		return memberRepository.save(saveMember);
+		return memberRepository.save(member);
 	}
 	
 	/***** 회원 로그인 *****/

@@ -17,6 +17,7 @@ import com.itwill.jpa.entity.chatting_review.ChatRoomStatus;
 import com.itwill.jpa.entity.chatting_review.MentoringRequest;
 import com.itwill.jpa.entity.report.Report;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -99,7 +100,7 @@ public class Member {
 	private MentorProfile mentorProfile;
 
 	/* 한 명의 유저가 관심사 여러개 보유 가능 */
-	@OneToMany(mappedBy = "member", fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "member", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<Interest> interests = new ArrayList<>();
 	
 	/* 한 명의 유저가 멘트 게시글은 여러개 보유 가능 */

@@ -42,15 +42,16 @@ public class MemberRestController {
 		//저장메소드 실행
 		Member saveMember = memberService.saveMember(memberDto);
 		
+		MemberDto saveMemberDto = MemberDto.toDto(saveMember);
 		
 		//응답 객체 생성
 		Response response = new Response();
 		
-		if(saveMember != null) {
+		if(saveMemberDto != null) {
 			//응답객체에 코드, 메시지, 객체 설정
 			response.setStatus(ResponseStatusCode.CREATED_MEMBER_SUCCESS);
 			response.setMessage(ResponseMessage.CREATED_MEMBER_SUCCESS);
-			response.setData(saveMember);
+			response.setData(saveMemberDto);
 		}
 		
 		//인코딩 타입 설정
