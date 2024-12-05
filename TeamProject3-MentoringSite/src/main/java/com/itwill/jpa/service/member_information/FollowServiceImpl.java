@@ -22,13 +22,15 @@ public class FollowServiceImpl implements FollowService{
 	private CategoryRepository categoryReporitory;
 	
 	/*팔로우 등록*/
-	public void createFollow(FollowRequestDto followDto) {
+	public FollowRequestDto createFollow(FollowRequestDto followDto) {
 		Follow follow = Follow.toEntity(followDto);
 		followReporitory.save(follow);
+		return followDto;
 	}
 	/*팔로우 취소*/
-	public void deleteFollow(Long followNo) {
+	public FollowRequestDto deleteFollow(Long followNo) {
 		followReporitory.deleteById(followNo);
+		return FollowRequestDto.toDto(followReporitory.findById(followNo).get()); 
 	}
 	/*팔로잉 리스트 출력(멘토리스트)*/
 	public List<FollowResponseDto> getMentorList(Long menteeMemberNo){

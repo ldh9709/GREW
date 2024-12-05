@@ -15,4 +15,12 @@ public class FollowRequestDto {
     private Long followNo;
     private Long menteeMemberNo;
     private Long mentorMembedNo;
+    
+    public static FollowRequestDto toDto(Follow entity) {
+    	return FollowRequestDto.builder()
+    			.followNo(entity.getFollowNo())
+    			.menteeMemberNo(entity.getMenteeMember().getMemberNo())
+    			.mentorMembedNo(entity.getMentorMember().getMemberNo())
+    			.build();
+    }
 }
