@@ -35,6 +35,9 @@ public class MemberDto {
 	            .memberEmail(memberEntity.getMemberEmail())
 	            .memberName(memberEntity.getMemberName())
 	            .memberStatus(memberEntity.getMemberStatus())
+	            .interests(memberEntity.getInterests().stream()
+	            		.map(InterestDto::toDto)
+	            		.toList())
 	            .build();
 	}
 	
