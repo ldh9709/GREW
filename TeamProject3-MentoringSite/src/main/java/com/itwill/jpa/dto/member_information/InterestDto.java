@@ -29,6 +29,7 @@ public class InterestDto {
                 .categoryNo(interestEntity.getCategory().getCategoryNo())
                 .build();
     }
-
+    
+    
     
 }

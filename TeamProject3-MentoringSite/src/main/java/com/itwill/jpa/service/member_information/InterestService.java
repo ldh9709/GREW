@@ -10,9 +10,6 @@ public interface InterestService {
 	
 	public Interest saveInterest(InterestDto interestDto);
 	
-	public Interest updateInterest(InterestDto interestDto);
-	
-	
 	public Interest deleteInterest(Long interestNo);
 	
 	//관심사 조회

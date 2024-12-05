@@ -29,24 +29,6 @@ public class InterestServiceImpl implements InterestService {
 		return interestRepository.save(interest);
 	}
 	
-	/* 관심사DTO 객체로 관심사 수정 */
-	@Override
-	public Interest updateInterest(InterestDto interestDto) {
-		//관심사 번호로 관심사 객체 찾기
-		List<Interest> interestList = 
-				interestRepository.findByMemberMemberNo(interestDto.getMemberNo());
-				
-		if(interestList != null) {
-			interestList.clear();
-		}
-		
-		for(InterestDto interestDtos : interestDto.get)
-		
-		
-		
-		return null;
-	}
-	
 	/* 관심사 번호로 관심사 삭제 */
 	@Override
 	public Interest deleteInterest(Long interestNo) {

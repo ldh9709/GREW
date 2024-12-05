@@ -1,9 +1,14 @@
 package com.itwill.jpa.service.member_information;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.itwill.jpa.dto.member_information.InterestDto;
 import com.itwill.jpa.dto.member_information.MemberDto;
+import com.itwill.jpa.entity.member_information.Interest;
 import com.itwill.jpa.entity.member_information.Member;
 import com.itwill.jpa.repository.member_information.MemberRepository;
 
@@ -53,9 +58,23 @@ public class MemberServiceImpl implements MemberService {
 	public Member updateMember(MemberDto memberDto) {
 		Member member = memberRepository.findByMemberNo(memberDto.getMemberNo());
 		
+		System.out.println("멤버의 흥미?>>>>>>" + member.getInterests());
+		member.getInterests().clear();
+		
+		List<Interest> interests = new ArrayList<>(); 
+		
+		for (InterestDto interestDto : memberDto.getInterests()) {
+			Interest interest = Interest.toEntity(interestDto);
+			interest.setMember(member);
+			interests.add(interest);
+		}
+		
 		member.setMemberName(memberDto.getMemberName());
 		member.setMemberPassword(memberDto.getMemberPassword());
 		member.setMemberEmail(memberDto.getMemberEmail());
+		
+//		member.setInterests(interests);
+		
 		
 		//DB에 객체 업데이트(기존 객체 존재 시 업데이트됨)
 		return memberRepository.save(member);
@@ -73,6 +92,7 @@ public class MemberServiceImpl implements MemberService {
 		//수정한 객체 반환
 		return memberRepository.save(member);
 	}
+	
 	
 	
 	/***** 회원 삭제 *****/
@@ -96,6 +116,7 @@ public class MemberServiceImpl implements MemberService {
 		return memberRepository.findByMemberNo(memberNo);
 	}
 
+	/********************************* Interest CRUD **************************************/
 	
 
 }

@@ -161,13 +161,15 @@ public class MemberRestController {
 		//업데이트 메소드 실행
 		Member updateMember = memberService.updateMember(memberDto);
 		
+		MemberDto updateMemberDto = MemberDto.toDto(updateMember);
+		
 		Response response = new Response();
 		
-		if(updateMember != null) {
+		if(updateMemberDto != null) {
 			//응답객체에 코드, 메시지, 객체 설정
 			response.setStatus(ResponseStatusCode.UPDATE_MEMBER_SUCCESS);
 			response.setMessage(ResponseMessage.UPDATE_MEMBER_SUCCESS);
-			response.setData(updateMember);
+			response.setData(updateMemberDto);
 		}
 		
 		HttpHeaders httpHeaders=new HttpHeaders();
