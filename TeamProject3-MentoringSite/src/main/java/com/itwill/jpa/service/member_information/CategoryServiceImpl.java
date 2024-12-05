@@ -20,6 +20,9 @@ public class CategoryServiceImpl implements CategoryService{
 	@Override
 	public CategoryDto createCategory(CategoryDto categoryDto) {
 		Category category = Category.toEntity(categoryDto);
+		if(categoryDto.getParentCategoryNo() == null ) {
+			category.setParentCategory(null);
+		}
 		categoryRepository.save(category);
 		return categoryDto;
 	}
@@ -47,7 +50,7 @@ public class CategoryServiceImpl implements CategoryService{
 	
 	/* 카테고리 리스트 출력 */
 	@Override
-	public List<CategoryDto> getCategories(Long categoryNo) {
+	public List<CategoryDto> getCategories() {
 		List<Category> categories = categoryRepository.findAll();
 		List<CategoryDto> categoriesDto = new ArrayList<>();
 		
@@ -63,3 +66,4 @@ public class CategoryServiceImpl implements CategoryService{
 	
 	
 }
+

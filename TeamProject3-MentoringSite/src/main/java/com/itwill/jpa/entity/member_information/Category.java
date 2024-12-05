@@ -44,7 +44,9 @@ public class Category {
         		.categoryNo(categoryDto.getCategoryNo())
                 .categoryName(categoryDto.getCategoryName())
                 .categoryDepth(categoryDto.getCategoryDepth())
-                .parentCategory(categoryDto.getCategory())
+                .parentCategory(Category.builder()
+                		.categoryNo(categoryDto.getParentCategoryNo())
+                		.build())
                 .build();
     }
     
