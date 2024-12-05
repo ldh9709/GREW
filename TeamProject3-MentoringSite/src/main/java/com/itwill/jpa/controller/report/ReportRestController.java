@@ -162,7 +162,7 @@ public class ReportRestController {
 		
 		Response response = new Response();
 		response.setStatus(ResponseStatusCode.READ_REPORT_LIST_SUCCESS);
-		response.setMessage(ResponseMessage.READ_MEMBER_LIST_SUCCESS);
+		response.setMessage(ResponseMessage.READ_REPORT_LIST_SUCCESS);
 		response.setData(reports);
 		
 		HttpHeaders httpHeaders = new HttpHeaders();

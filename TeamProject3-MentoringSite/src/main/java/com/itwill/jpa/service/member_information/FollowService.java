@@ -9,5 +9,5 @@ public interface FollowService {
 	public void createFollow(FollowRequestDto followDto);
 	public void deleteFollow(Long followNo);
 	public List<FollowResponseDto> getMentorList(Long menteeMemberNo);
-	public Integer countByMentee(Long mentorMemberNo);
+	public Integer countFollower(Long mentorMemberNo);
 }

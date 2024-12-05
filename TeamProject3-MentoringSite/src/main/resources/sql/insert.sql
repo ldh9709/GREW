@@ -69,17 +69,17 @@ INSERT INTO mentor_profile(mentor_profile_no, mentor_introduce, mentor_career, m
 VALUES (mentor_profile_no_SEQ.NEXTVAL, '안녕하세요, 이도현 멘토입니다.', '경력자입니다', 5, 10, 'profile1.jpg', 100, 50, 1, 12, member_no_SEQ.CURRVAL);
 
 /* 팔로우 등록 */
-INSERT INTO follow(follow_no,mentee_member,mentor_member)
+INSERT INTO follow(follow_no,mentee_member_no,mentor_member_no)
 VALUES(follow_no_SEQ.nextval,1,6);
-INSERT INTO follow(follow_no,mentee_member,mentor_member)
+INSERT INTO follow(follow_no,mentee_member_no,mentor_member_no)
 VALUES(follow_no_SEQ.nextval,2,6);
-INSERT INTO follow(follow_no,mentee_member,mentor_member)
+INSERT INTO follow(follow_no,mentee_member_no,mentor_member_no)
 VALUES(follow_no_SEQ.nextval,3,6);
-INSERT INTO follow(follow_no,mentee_member,mentor_member)
+INSERT INTO follow(follow_no,mentee_member_no,mentor_member_no)
 VALUES(follow_no_SEQ.nextval,4,7);
-INSERT INTO follow(follow_no,mentee_member,mentor_member)
+INSERT INTO follow(follow_no,mentee_member_no,mentor_member_no)
 VALUES(follow_no_SEQ.nextval,5,7);
-INSERT INTO follow(follow_no,mentee_member,mentor_member)
+INSERT INTO follow(follow_no,mentee_member_no,mentor_member_no)
 VALUES(follow_no_SEQ.nextval,1,8);
 
 /* 신고 등록 */

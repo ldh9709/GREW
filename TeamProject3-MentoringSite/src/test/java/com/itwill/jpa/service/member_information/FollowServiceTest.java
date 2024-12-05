@@ -23,9 +23,9 @@ class FollowServiceTest {
 //		System.out.println(followReporitory.findFollowedMentorsWithGraph(1L));
 //	}
 	
-	@Test
+//	@Test
 	void test3() {
-		System.out.println(followReporitory.countBymenteeMember_MemberNo(6L));
+		System.out.println(followReporitory.countBymentorMember_MemberNo(6L));
 	}
-
+	
 }

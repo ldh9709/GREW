@@ -13,7 +13,7 @@ import com.itwill.jpa.entity.member_information.Follow;
 
 @Repository
 public interface FollowReporitory extends JpaRepository<Follow, Long>{
-	
+	/* FollowResponseDto 활용하여 원하는 데이터만 출력 */
 	@Query("SELECT new com.itwill.jpa.dto.member_information.FollowResponseDto("
 			+ "m.memberName"
 			+ ",c1.categoryName"
@@ -25,11 +25,7 @@ public interface FollowReporitory extends JpaRepository<Follow, Long>{
 			+ "JOIN c1.parentCategory c2 "
 			+ "WHERE f.menteeMember.memberNo = :menteeMemberNo"
 			)
-	public List<FollowResponseDto> findFollowMentors(@Param("menteeMemberNo") Long menteeMemberNo); 
+	public List<FollowResponseDto> findFollowMentors(@Param("menteeMemberNo") Long menteeMemberNo);
 	
-//	@EntityGraph(attributePaths = {"followedMember.mentorProfile.category"})
-//	@Query("SELECT f FROM Follow f WHERE f.followerMember.memberNo = :menteeMemberNo")
-//	List<Follow> findFollowedMentorsWithGraph(@Param("menteeMemberNo") Long menteeMemberNo);
-	
-	public Integer countBymenteeMember_MemberNo(Long mentorMemberNo);
+	public Integer countBymentorMember_MemberNo(Long mentorMemberNo);
 }

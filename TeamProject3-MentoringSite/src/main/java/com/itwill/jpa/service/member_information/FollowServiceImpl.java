@@ -30,14 +30,14 @@ public class FollowServiceImpl implements FollowService{
 	public void deleteFollow(Long followNo) {
 		followReporitory.deleteById(followNo);
 	}
-	/*팔로우 리스트 출력(멘토리스트)*/
+	/*팔로잉 리스트 출력(멘토리스트)*/
 	public List<FollowResponseDto> getMentorList(Long menteeMemberNo){
 		return followReporitory.findFollowMentors(menteeMemberNo);
 	}
 	
-	/*팔로잉 수(멘티 수)*/
-	public Integer countByMentee(Long mentorMemberNo) {
-		return followReporitory.countBymenteeMember_MemberNo(mentorMemberNo);
+	/*팔로워 수(멘티 수)*/
+	public Integer countFollower(Long mentorMemberNo) {
+		return followReporitory.countBymentorMember_MemberNo(mentorMemberNo);
 	}
 	
 	

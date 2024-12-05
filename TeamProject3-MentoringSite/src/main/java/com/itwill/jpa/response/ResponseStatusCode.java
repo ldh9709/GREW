@@ -4,28 +4,12 @@ public class ResponseStatusCode {
 	
 	/******************* MEMBER 메시지 ************************/
 	
-	public static final int CREATED_MEMBER_SUCCESS = 2000;
-	public static final int READ_MEMBER_SUCCESS = 2100;
-	public static final int READ_MEMBER_LIST_SUCCESS = 2200;
-	public static final int UPDATE_MEMBER_SUCCESS = 2300;
-	public static final int DELETE_MEMBER_SUCCESS = 2400;
-	public static final int LOGIN_MEMBER_SUCCESS = 2500;
-	public static final int LOGOUT_MEMBER_SUCCESS = 2600;
-	
-	/******************* INTEREST 메시지 ************************/
-	
-	/******************* MENTORPROFILE 메시지 ************************/
-//	public static final int CREATED_MEMBER_SUCCESS = 2000;
-//	public static final int READ_MEMBER_SUCCESS = 2100;
-//	public static final int READ_MEMBER_LIST_SUCCESS = 2200;
-//	public static final int UPDATE_MEMBER_SUCCESS = 2300;
-//	public static final int DELETE_MEMBER_SUCCESS = 2400;
 	
 	/******************* FOLLOW 메시지 ************************/
-	public static final int CREATE_FOLLOW_SUCCESS = 2800;
-	public static final int READ_MENTORLIST_SUCCESS = 2900;
-	public static final int READ_MENTEE_COUNT_SUCCESS = 2910;
-	public static final int DELETE_FOLLOW_SUCCESS = 2920;
+	public static final int CREATE_FOLLOW_SUCCESS = 2400;
+	public static final int READ_MENTORLIST_SUCCESS = 2410;
+	public static final int READ_MENTEE_COUNT_SUCCESS = 2420;
+	public static final int DELETE_FOLLOW_SUCCESS = 2430;
 	
 	/*알림(3000), 신고(4000), 질문(5000), 답변(6000), 채팅(7000)*/
 	/******************* Alarm    메세지 ************************/
