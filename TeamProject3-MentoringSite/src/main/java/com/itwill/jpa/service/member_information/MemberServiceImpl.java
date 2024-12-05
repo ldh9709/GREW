@@ -59,6 +59,7 @@ public class MemberServiceImpl implements MemberService {
 		Member member = memberRepository.findByMemberNo(memberDto.getMemberNo());
 		
 		System.out.println("멤버의 흥미?>>>>>>" + member.getInterests());
+		
 		member.getInterests().clear();
 		
 		List<Interest> interests = new ArrayList<>(); 
@@ -73,7 +74,7 @@ public class MemberServiceImpl implements MemberService {
 		member.setMemberPassword(memberDto.getMemberPassword());
 		member.setMemberEmail(memberDto.getMemberEmail());
 		
-//		member.setInterests(interests);
+		member.setInterests(interests);
 		
 		
 		//DB에 객체 업데이트(기존 객체 존재 시 업데이트됨)
