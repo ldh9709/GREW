@@ -30,7 +30,7 @@ public class ReportServiceImpl implements ReportService {
 	
 	/*신고등록*/
 	@Override
-	public void saveReport(ReportDto reportDto){
+	public void createReport(ReportDto reportDto){
 		Report report = Report.toEntity(reportDto);
 		System.out.println(report);
 		reportRepository.save(report);
@@ -59,12 +59,12 @@ public class ReportServiceImpl implements ReportService {
 
 		/* type:ANSWER인 경우 해당 게시글 상태변경 */
 		if(report.getReportType().equals("ANSWER")) {
-			//answerRepository.상태변경메소드(report.getReportTarget());
+			answerRepository.delete(null);
 		}
 		
 		/* type:INQUIRY인 경우 해당 게시글 상태변경 */
 		if(report.getReportType().equals("INQUIRY")) {
-			
+			inquiryRepository.delete(null);
 		}
 		report.setResolvedDate(LocalDateTime.now());
 		reportRepository.save(report);
@@ -89,7 +89,7 @@ public class ReportServiceImpl implements ReportService {
 	}
 	
 	/* 신고 정보 상세 보기 */ 
-	public ReportDto selectReportByreportNo(Long reportNo) {
+	public ReportDto getReportByreportNo(Long reportNo) {
 		Report report = reportRepository.findById(reportNo).get();
 		ReportDto reportDto = ReportDto.toDto(report);
 		return reportDto;
@@ -98,7 +98,7 @@ public class ReportServiceImpl implements ReportService {
 	
 	/* 신고 출력(특정 회원) */
 	@Override
-	public List<ReportDto> selectReportByUserNo(Long memberNo) {
+	public List<ReportDto> getReportByUserNo(Long memberNo) {
 		List<Report> reports= reportRepository.findByMemberMemberNo(memberNo);
 		List<ReportDto> reportDtos = new ArrayList<ReportDto>();
 		for (Report report : reports) {
@@ -109,7 +109,7 @@ public class ReportServiceImpl implements ReportService {
 
 	/* [어드민] 신고 전체 출력 */
 	@Override
-	public List<ReportDto> selectReportAll() {
+	public List<ReportDto> getReportAll() {
 		List<Report> reports = reportRepository.findAll();
 		List<ReportDto> reportDtos = new ArrayList<>();
 		for (Report report : reports) {

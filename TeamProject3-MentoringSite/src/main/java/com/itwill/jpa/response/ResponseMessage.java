@@ -3,7 +3,6 @@ package com.itwill.jpa.response;
 public class ResponseMessage {
 	
 	/******************* MEMBER 메시지 ************************/
-
 	public static final String CREATED_MEMBER_SUCCESS = "회원 가입 성공";
 	public static final String READ_MEMBER_SUCCESS = "회원 정보 조회 성공";
 	public static final String READ_MEMBER_LIST_SUCCESS = "회원 리스트 정보 조회 성공";
@@ -12,10 +11,6 @@ public class ResponseMessage {
     public static final String LOGIN_MEMBER_SUCCESS = "회원 로그인 성공";
     public static final String LOGOUT_MEMBER_SUCCESS = "회원 로그 아웃";
     
-    
-    
-    /*알림(3000), 신고(4000), 질문(5000), 답변(6000), 채팅(7000)*/
-    
     /******************* MENTOR BOARD 메시지 ************************/
     public static final String CREATED_MENTOR_BOARD_SUCCESS = "멘토 보드 등록 성공";
     public static final String READ_MENTOR_BOARD_SUCCESS = "멘토 보드 상세 조회 성공";
@@ -23,6 +18,15 @@ public class ResponseMessage {
     public static final String UPDATE_MENTOR_BOARD_SUCCESS = "멘토 보드 수정 성공";
     public static final String DELETE_MENTOR_BOARD_SUCCESS = "멘토 보드 삭제 성공";
     public static final String MENTOR_BOARD_NOT_FOUND = "해당 멘토 보드를 찾을 수 없습니다.";
+    
+	/******************* FOLLOW 메시지 ************************/
+	public static final String CREATE_FOLLOW_SUCCESS = "팔로우 등록 성공";
+	public static final String READ_MENTORLIST_SUCCESS = "팔로잉 멘토 리스트 출력 성공";
+	public static final String READ_MENTEE_COUNT_SUCCESS = "팔로우 멘티 카운트 성공";
+	public static final String DELETE_FOLLOW_SUCCESS = "팔로우 취소 성공";
+	
+    /*알림(3000), 신고(4000), 질문(5000), 답변(6000), 채팅(7000)*/
+    
     
     
     

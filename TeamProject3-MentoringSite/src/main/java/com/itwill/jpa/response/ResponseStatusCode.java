@@ -3,7 +3,6 @@ package com.itwill.jpa.response;
 public class ResponseStatusCode {
 	
 	/******************* MEMBER 메시지 ************************/
-	
 	public static final int CREATED_MEMBER_SUCCESS = 2000;
 	public static final int READ_MEMBER_SUCCESS = 2100;
 	public static final int READ_MEMBER_LIST_SUCCESS = 2200;
@@ -20,10 +19,11 @@ public class ResponseStatusCode {
 	public static final int DELETE_MENTOR_BOARD_SUCCESS = 2340;
 	public static final int MENTOR_BOARD_NOT_FOUND = 2350;
 	
-	
-	
-	
-	
+	/******************* FOLLOW 메시지 ************************/
+	public static final int CREATE_FOLLOW_SUCCESS = 2400;
+	public static final int READ_MENTORLIST_SUCCESS = 2410;
+	public static final int READ_MENTEE_COUNT_SUCCESS = 2420;
+	public static final int DELETE_FOLLOW_SUCCESS = 2430;
 	
 	/*알림(3000), 신고(4000), 질문(5000), 답변(6000), 채팅(7000)*/
 	/******************* Alarm    메세지 ************************/
