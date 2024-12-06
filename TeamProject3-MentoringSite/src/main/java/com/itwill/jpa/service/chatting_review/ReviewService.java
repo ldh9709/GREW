@@ -8,10 +8,11 @@ import com.itwill.jpa.entity.chatting_review.Review;
 public interface ReviewService {
 	//리뷰 생성
 	public Review saveReview(ReviewDto reviewDto);
-	//리뷰 업데이트
+	//리뷰 수정
 	public Review updateReview(ReviewDto reviewDto);
 	//리뷰 삭제
 	public Review deleteReview(Long reviewNo);
+	
 	//리뷰 선택(특정리뷰 수정?삭제?할때 필요할듯)
 	public Review selectReviewByReviewNo(Long reviewNo);
 	//요청번호에 따른 리뷰 리스트

@@ -12,7 +12,7 @@ public interface ReviewRepository extends JpaRepository<Review, Long>{
     List<Review> findByMentoringRequestRequestNo(Long requestNo);
     
     // 멤버 번호에 해당하는 리뷰 리스트 조회
-    List<Review> findByMentoringRequestMemberMemberNo(Long memberNo);
+    List<Review> findByMentoringRequestMember_Member_MemberNo(Long memberNo);
 	
     Review findByReviewNo(Long reviewNo);
     

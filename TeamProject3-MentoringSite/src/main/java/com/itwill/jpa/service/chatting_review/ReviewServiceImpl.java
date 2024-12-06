@@ -90,7 +90,7 @@ public class ReviewServiceImpl implements ReviewService {
     /* 특정 멤버 번호에 따른 리뷰 리스트 조회 */
     @Override
     public List<ReviewDto> selectReviewByMemberNo(Long memberNo) {
-        List<Review> reviews = reviewRepository.findByMentoringRequestMemberMemberNo(memberNo);
+        List<Review> reviews = reviewRepository.findByMentoringRequestMember_Member_MemberNo(memberNo);
         List<ReviewDto> reviewDtoList = new ArrayList<>();
         for (Review review : reviews) {
             reviewDtoList.add(ReviewDto.toDto(review));

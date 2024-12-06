@@ -50,6 +50,19 @@ public class ResponseStatusCode {
 	public static final int CANCELED_CHATTING_FAIL = 7400; // (멘티가 요청을 철회함)
 	public static final int FORCE_CLOSED_CHATTING = 7500; // (관리자가 비정상적인 요청을 종료함)
 	
+	/******************* REVIEW 메시지 **********************/
+	public static final int CREATED_REVIEW_SUCCESS = 9000;
+	public static final int CREATED_REVIEW_FAIL = 9100;
+	public static final int UPDATE_REVIEW_SUCCESS = 9200;
+	public static final int UPDATE_REVIEW_FAIL = 9300;
+	public static final int DELETE_REVIEW_SUCCESS = 9400;
+	public static final int DELETE_REVIEW_FAIL = 9500;
+	public static final int VIEW_REVIEW_SUCCESS = 9600;
+	public static final int VIEW_REVIEW_FAIL = 9700;
+	public static final int READ_REVIEW_LIST_SUCCESS = 9800;
+	public static final int READ_REVIEW_LIST_FAIL = 9900;
+	
+	
 	public static final int LOGIN_FAIL_NOT_FOUND_MEMBER = 8000;
 	public static final int LOGIN_FAIL_PASSWORD_MISMATCH_MEMBER = 8100;
 	public static final int CREATE_FAIL_EXISTED_MEMBER = 8200;

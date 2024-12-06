@@ -51,6 +51,18 @@ public class ResponseMessage {
 	public static final String CANCELED_CHATTING_FAIL = "요청 취소"; // (멘티가 요청을 철회함)
 	public static final String FORCE_CLOSED_CHATTING = "강제 종료"; // (관리자가 비정상적인 요청을 종료함)
 	
+	/******************* REVIEW 메시지 **********************/
+	public static final String CREATED_REVIEW_SUCCESS = "리뷰 등록 성공.";
+	public static final String CREATED_REVIEW_FAIL = "리뷰 등록 실패.";
+	public static final String UPDATE_REVIEW_SUCCESS = "리뷰 수정 성공.";
+	public static final String UPDATE_REVIEW_FAIL = "리뷰 수정 실패.";
+	public static final String DELETE_REVIEW_SUCCESS = "리뷰 삭제 성공.";
+	public static final String DELETE_REVIEW_FAIL = "리뷰 삭제 실패";
+	public static final String VIEW_REVIEW_SUCCESS = "리뷰 상세보기 성공.";
+	public static final String VIEW_REVIEW_FAIL = "리뷰 상세보기 실패.";
+	public static final String READ_REVIEW_LIST_SUCCESS = "리뷰 불러오기 성공.";
+	public static final String READ_REVIEW_LIST_FAIL = "리뷰 불러오기 실패.";
+	
     public static final String LOGIN_FAIL_NOT_FOUND_MEMBER = "회원을 찾을 수 없습니다.";
     public static final String LOGIN_FAIL_PASSWORD_MISMATCH_MEMBER = "회원 패스워드 불일치";
     public static final String CREATE_FAIL_EXISTED_MEMBER = "회원 아이디 중복";

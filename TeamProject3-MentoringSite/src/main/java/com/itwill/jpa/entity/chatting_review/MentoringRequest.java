@@ -61,6 +61,10 @@ public class MentoringRequest {
     @OneToMany(mappedBy = "mentoringRequest", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
     private List<ChatRoom> chatRooms = new ArrayList<>();
 	
+    @ManyToOne
+    @JoinColumn(name = "member_no")  // 외래키로 Member와 연결
+    private Member member;
+    
     /* 초기값 설정 */
     @PrePersist
     public void setDefaultValues() {
