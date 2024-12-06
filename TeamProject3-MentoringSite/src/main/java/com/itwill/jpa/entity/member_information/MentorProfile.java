@@ -5,7 +5,6 @@ import java.time.LocalDateTime;
 
 import org.hibernate.annotations.ColumnDefault;
 
-import com.itwill.jpa.dto.member_information.MentorProfileDto;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -69,16 +68,4 @@ public class MentorProfile {
         if (this.mentorFollowCount == null) this.mentorFollowCount = 0;
     }
     
-    public static MentorProfile toEntity(MentorProfileDto mentorProfileDto) {
-        return MentorProfile.builder()
-        		.mentorProfileNo(mentorProfileDto.getMentorProfileNo())
-        		.mentorIntroduce(mentorProfileDto.getMentorIntroduce())
-        		.mentorMentoringCount(mentorProfileDto.getMentorMentoringCount())
-        		.mentorImage(mentorProfileDto.getMentorImage())
-                .mentorActivityCount(mentorProfileDto.getMentorActivityCount())
-                .mentorFollowCount(mentorProfileDto.getMentorFollowCount())
-                .member(Member.toEntity(mentorProfileDto.getMember()))
-                .category(Category.toEntity(mentorProfileDto.getCategory()))
-                .build();
-    }
 }
