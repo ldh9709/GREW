@@ -27,7 +27,7 @@ public class FollowServiceImpl implements FollowService{
 	public FollowRequestDto createFollow(FollowRequestDto followDto) {
 		
 		/* 팔로우 멘토 follow_count 증가*/
-		Member mentorMember = memberRepository.findById(followDto.getMentorMembedNo()).get();
+		Member mentorMember = memberRepository.findById(followDto.getMentorMemberNo()).get();
 		mentorMember.getMentorProfile().setMentorFollowCount(mentorMember.getMentorProfile().getMentorFollowCount()+1); 
 		memberRepository.save(mentorMember);
 		
