@@ -1,10 +1,7 @@
 package com.itwill.jpa.dto.bulletin_board;
 
-
-
 import java.time.LocalDateTime;
 
-import com.itwill.jpa.dto.member_information.CategoryDto;
 import com.itwill.jpa.dto.member_information.MemberDto;
 import com.itwill.jpa.entity.bullentin_board.Inquiry;
 
