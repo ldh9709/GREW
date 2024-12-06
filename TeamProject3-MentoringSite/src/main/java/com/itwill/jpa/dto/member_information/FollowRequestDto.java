@@ -14,5 +14,5 @@ import lombok.NoArgsConstructor;
 public class FollowRequestDto {
     private Long followNo;
     private Long menteeMemberNo;
-    private Long mentorMembedNo;
+    private Long mentorMemberNo;
 }
