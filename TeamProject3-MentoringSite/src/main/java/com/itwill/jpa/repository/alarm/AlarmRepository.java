@@ -12,6 +12,8 @@ import jakarta.transaction.Transactional;
 
 @Repository
 public interface AlarmRepository extends JpaRepository<Alarm, Long>{ 
+	
+	
 	@Modifying
     @Transactional
     @Query("DELETE FROM Alarm a WHERE a.member.id = :memberId")

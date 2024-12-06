@@ -1,6 +1,6 @@
 package com.itwill.jpa.entity.bullentin_board;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.hibernate.annotations.CreationTimestamp;
@@ -48,7 +48,8 @@ public class Inquiry {
     private String inquiryContent;
     
     @Column(name = "inquiry_date", nullable = false)
-    private LocalDate inquiryDate;
+    private LocalDateTime inquiryDate;
+    
     @Column(name = "inquiry_status", nullable = false, columnDefinition = "integer default 1")
     private Integer inquiryStatus = 1;  // 1 or 2
 
@@ -68,7 +69,7 @@ public class Inquiry {
     @PrePersist
     public void setDefaultValues() {
     	if(this.inquiryContent==null) this.inquiryContent = "";
-    	if(this.inquiryDate==null) this.inquiryDate = LocalDate.now();
+    	if(this.inquiryDate==null) this.inquiryDate = LocalDateTime.now();
     	if(this.inquiryStatus == null||this.inquiryStatus == 0) this.inquiryStatus = 1;
     	if(this.inquiryViews == null) this.inquiryViews = 0;
     }
@@ -85,8 +86,8 @@ public class Inquiry {
 	            .inquiryDate(inquiryDto.getInquiryDate())
 	            .inquiryStatus(inquiryDto.getInquiryStatus())
 	            .inquiryViews(inquiryDto.getInquiryViews())
-	            .category(Category.toEntity(inquiryDto.getCategory()))
-	            .member(Member.toEntity(inquiryDto.getMember()))
+	            .category(Category.builder().categoryNo(inquiryDto.getCategoryNo()).build())
+	            .member(Member.builder().memberNo(inquiryDto.getMemberNo()).build())
 	            .build();
 	}
     

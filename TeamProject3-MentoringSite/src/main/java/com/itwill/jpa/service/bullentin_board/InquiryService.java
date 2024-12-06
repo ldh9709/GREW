@@ -2,6 +2,8 @@ package com.itwill.jpa.service.bullentin_board;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+
 import com.itwill.jpa.dto.bulletin_board.InquiryDto;
 
 public interface InquiryService {
@@ -18,12 +20,15 @@ public interface InquiryService {
 	
 	/*카테고리별 질문*/
 	//답변갯수순
-	List<InquiryDto> findByCategoryInquiryOrderByAnswer(Long CategoryNo);
+	List<InquiryDto> findByCategoryInquiryOrderByAnswer(Long categoryNo);
 	//조회순
-	List<InquiryDto> findByCategoryInquiryOrderByView(Long CategoryNo);
+	List<InquiryDto> findByCategoryInquiryOrderByView(Long categoryNo);
 	/*전체질문*/
 	//답변갯수순
 	List<InquiryDto> findByAllInquiryOrderByAnswer();
 	//조회순
-	List<InquiryDto> findByAllInquiryOrderByView();
+	Page<InquiryDto> findByAllInquiryOrderByView(int pageNumber, int pageSize);
+	
+	//검색
+	List<InquiryDto> findInquiryBySearch(String search);
 }

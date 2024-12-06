@@ -1,5 +1,7 @@
 package com.itwill.jpa.dto.member_information;
 
+import com.itwill.jpa.entity.member_information.Category;
+import com.itwill.jpa.entity.member_information.Member;
 import com.itwill.jpa.entity.member_information.MentorProfile;
 
 import lombok.AllArgsConstructor;
@@ -13,14 +15,25 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class MentorProfileDto {
 	private Long mentorProfileNo;
+	
     private String mentorIntroduce;
+    
+    private String mentorCareer; 
+    
     private Integer mentorRating;
+    
     private Integer mentorMentoringCount;
+    
     private String mentorImage;
+    
     private Integer mentorActivityCount;
+    
     private Integer mentorFollowCount;
-    private MemberDto member;
-    private CategoryDto category;
+    private Integer mentorStatus;
+    
+    private Long memberNo;
+    
+    private Long categoryNo;
 
     /*
      * Entity -> DTO
@@ -29,12 +42,15 @@ public class MentorProfileDto {
         return MentorProfileDto.builder()
         		.mentorProfileNo(mentorProfileEntity.getMentorProfileNo())
         		.mentorIntroduce(mentorProfileEntity.getMentorIntroduce())
+        		.mentorCareer(mentorProfileEntity.getMentorCareer())
+        		.mentorRating(mentorProfileEntity.getMentorRating())
         		.mentorMentoringCount(mentorProfileEntity.getMentorMentoringCount())
         		.mentorImage(mentorProfileEntity.getMentorImage())
         		.mentorActivityCount(mentorProfileEntity.getMentorActivityCount())
-                .mentorFollowCount(mentorProfileEntity.getMentorFollowCount())
-                .member(MemberDto.toDto(mentorProfileEntity.getMember()))
-                .category(CategoryDto.toDto(mentorProfileEntity.getCategory()))
+        		.mentorFollowCount(mentorProfileEntity.getMentorFollowCount())
+        		.mentorStatus(mentorProfileEntity.getMentorStatus())
+                .memberNo(mentorProfileEntity.getMember().getMemberNo())
+                .categoryNo(mentorProfileEntity.getCategory().getCategoryNo())
                 .build();
     }
 

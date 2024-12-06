@@ -10,5 +10,6 @@ public interface AlarmService{
 	//알림한개삭제
 	void deleteAlarm(Long AlarmNo);
 	//사용자의 모든 알림 삭제
-	void deleteAlarmByMemberId(Long memberId);
+	void deleteAlarmByMemberNo(Long memberNo);
+	
 }

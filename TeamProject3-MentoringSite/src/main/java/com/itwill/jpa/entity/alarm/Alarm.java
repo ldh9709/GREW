@@ -54,7 +54,7 @@ public class Alarm {
 	@Column(name="alarm_date")
 	@CreationTimestamp
 	private LocalDate alarmDate;
-	@ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="member_no")
 	private Member member;
 	
@@ -62,11 +62,12 @@ public class Alarm {
 		return Alarm.builder()
 				.alarmNo(alarmDto.getAlarmNo())
 				.alarmContent(alarmDto.getAlarmContent())
+				.alarmType(alarmDto.getAlarmType())
 				.referenceNo(alarmDto.getReferenceNo())
 				.referenceType(alarmDto.getReferenceType())
 				.isRead(alarmDto.getIsRead())
 				.alarmDate(alarmDto.getAlarmDate())	
-				.member(Member.toEntity(alarmDto.getMemberNo()))
+				.member(Member.builder().memberNo(alarmDto.getMemberNo()).build())
 				.build();
 		
 	}
