@@ -34,9 +34,15 @@ public class ReviewRestController {
 	
 	@Operation(summary = "리뷰 등록")
 	@PostMapping
-	public ResponseEntity<Response> insertReview(ReviewDto reviewDto){
+	public ResponseEntity<Response> insertReview(@RequestBody ReviewDto reviewDto){
+		
 		
 		Response response = new Response();
+		if (reviewDto.getChatRoomNo() == null) {
+            response.setStatus(ResponseStatusCode.CREATED_REVIEW_FAIL);
+            response.setMessage(ResponseMessage.CREATED_REVIEW_FAIL);
+            return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);	
+        }
 		reviewService.saveReview(reviewDto);
 		response.setStatus(ResponseStatusCode.CREATED_REVIEW_SUCCESS);
 		response.setMessage(ResponseMessage.CREATED_REVIEW_SUCCESS);
@@ -45,15 +51,15 @@ public class ReviewRestController {
 		HttpHeaders httpHeaders = new HttpHeaders();
 		httpHeaders.setContentType(new MediaType(MediaType.APPLICATION_JSON, Charset.forName("UTF-8")));
 		
-		ResponseEntity<Response> responseEntity = new ResponseEntity<Response>(response, httpHeaders,
-				HttpStatus.CREATED);
+//		ResponseEntity<Response> responseEntity = new ResponseEntity<Response>(response, httpHeaders,
+//				HttpStatus.CREATED);
 		
-		return responseEntity;
+		return new ResponseEntity<>(response, HttpStatus.CREATED);
 		
 	}
 	
 	@Operation(summary = "리뷰 수정")
-	@PutMapping("/update/{ReviewNo}")
+	@PutMapping("/update/{reviewNo}")
 	public ResponseEntity<Response> updateReview(@RequestBody ReviewDto reviewDto){
 		
 		Response response = new Response();
@@ -71,7 +77,7 @@ public class ReviewRestController {
 		return responseEntity;
 	}
 	@Operation(summary = "리뷰 삭제")
-	@PutMapping("/delete/{ReviewNo}")
+	@PutMapping("/delete/{reviewNo}")
 	public ResponseEntity<Response> deleteReview(@RequestBody ReviewDto reviewDto){
 		
 		Response response = new Response();
@@ -89,29 +95,35 @@ public class ReviewRestController {
 		return responseEntity;
 	}
 	@Operation(summary = "리뷰 상세보기")
-	@GetMapping("/{ReviewNo}")
+	@GetMapping("/{reviewNo}")
 	public ResponseEntity<Response> selectReviewByReviewNo(@PathVariable(name="reviewNo") Long reviewNo){
 		
 		Response response = new Response();
 		Review review = reviewService.selectReviewByReviewNo(reviewNo);
+		// 리뷰가 없는 경우
+	    if (review == null) {
+	        response.setStatus(ResponseStatusCode.VIEW_REVIEW_FAIL);  // 예를 들어, REVIEW_NOT_FOUND 상태 코드
+	        response.setMessage(ResponseMessage.VIEW_REVIEW_FAIL);  // REVIEW_NOT_FOUND 메시지
+	        return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
+	    }
 		response.setStatus(ResponseStatusCode.VIEW_REVIEW_SUCCESS);
 		response.setMessage(ResponseMessage.VIEW_REVIEW_SUCCESS);
 		response.setData(review);
 		
-		HttpHeaders httpHeaders = new HttpHeaders();
-		httpHeaders.setContentType(new MediaType(MediaType.APPLICATION_JSON, Charset.forName("UTF-8")));
+//		HttpHeaders httpHeaders = new HttpHeaders();
+//		httpHeaders.setContentType(new MediaType(MediaType.APPLICATION_JSON, Charset.forName("UTF-8")));
+//		
+//		ResponseEntity<Response> responseEntity = new ResponseEntity<Response>(response, httpHeaders,
+//				HttpStatus.OK);
 		
-		ResponseEntity<Response> responseEntity = new ResponseEntity<Response>(response, httpHeaders,
-				HttpStatus.OK);
-		
-		return responseEntity;
+		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
 	@Operation(summary = "특정 요청 리뷰 목록 출력")
-	@GetMapping("/MentoringRequest/{requestNo}")
-	public ResponseEntity<Response> selectReviewByRequestNo(@PathVariable(name="requestNo") Long requestNo){
+	@GetMapping("/ChatRoom/{chatRoomNo}")
+	public ResponseEntity<Response> selectReviewByChatRoomNo(@PathVariable(name="chatRoomNo") Long chatRoomNo){
 		
 		Response response = new Response();
-		List<ReviewDto> reviews = reviewService.selectReviewByRequestNo(requestNo);
+		List<ReviewDto> reviews = reviewService.selectReviewByChatRoomNo(chatRoomNo);
 		response.setStatus(ResponseStatusCode.READ_REVIEW_LIST_SUCCESS);
 		response.setMessage(ResponseMessage.READ_REVIEW_LIST_SUCCESS);
 		response.setData(reviews);

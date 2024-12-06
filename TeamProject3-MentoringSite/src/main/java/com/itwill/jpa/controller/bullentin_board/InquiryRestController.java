@@ -4,6 +4,7 @@ import java.nio.charset.Charset;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.itwill.jpa.dto.bulletin_board.InquiryDto;
@@ -169,8 +171,22 @@ public class InquiryRestController {
 	}
 	@Operation(summary = "조회수 많은 순으로 전체 질문 출력")
 	@GetMapping("/viewCount")
-	public ResponseEntity<Response> findByAllInquiryOrderByView() {
-		List<InquiryDto> inquiryDtos = inquiryService.findByAllInquiryOrderByView();
+	public ResponseEntity<Response> findByAllInquiryOrderByView(
+			@RequestParam(name = "page",defaultValue = "0") int page,  // 기본값은 0 페이지
+            @RequestParam(name = "size",defaultValue = "10") int size) {
+		Page<InquiryDto> inquiryDtos = inquiryService.findByAllInquiryOrderByView(page,size);
+		
+		Response response = new Response();
+		response.setStatus(ResponseStatusCode.READ_INQUIRY_LIST_SUCCESS);
+		response.setMessage(ResponseMessage.READ_INQUIRY_LIST_SUCCESS);
+		response.setData(inquiryDtos);
+		
+		return new ResponseEntity<>(response, HttpStatus.OK);
+	}
+	@Operation(summary = "질문검색기능")
+	@GetMapping("/search/{search}")
+	public ResponseEntity<Response> findInquiryBySearch(@PathVariable(name = "search")String search) {
+		List<InquiryDto> inquiryDtos = inquiryService.findInquiryBySearch(search);
 		
 		Response response = new Response();
 		response.setStatus(ResponseStatusCode.READ_INQUIRY_LIST_SUCCESS);

@@ -2,13 +2,16 @@ package com.itwill.jpa.service.bullentin_board;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.itwill.jpa.dto.bulletin_board.AnswerDto;
 import com.itwill.jpa.entity.bullentin_board.Answer;
+import com.itwill.jpa.entity.bullentin_board.Inquiry;
 import com.itwill.jpa.repository.bullentin_board.AnswerRepository;
+import com.itwill.jpa.repository.bullentin_board.InquiryRepository;
 
 import jakarta.transaction.Transactional;
 @Transactional
@@ -16,25 +19,30 @@ import jakarta.transaction.Transactional;
 public class AnswerServiceImpl implements AnswerService{
 	@Autowired
 	private AnswerRepository answerRepository;
-	
+	@Autowired
+	private InquiryRepository inquiryRepository;
 	/*답변등록*/
 	@Override
 	public AnswerDto saveAnswer(AnswerDto answerDto){
 		return AnswerDto.toDto(answerRepository.save(Answer.toEntity(answerDto)));
-	
 	}
+	
 	/*답변수정*/
 	@Override
 	public AnswerDto updateAnswer(AnswerDto answerDto) throws Exception{
+		Answer answer = answerRepository.findById(answerDto.getAnswerNo()).get();
+		answer.setAnswerContent(answerDto.getAnswerContent());
 		return AnswerDto.toDto(answerRepository.save(Answer.toEntity(answerDto)));
 	}
+	
 	/*답변채택*/
-		@Override
-		public AnswerDto acceptAnswer(AnswerDto answerDto) throws Exception {
-			Answer answer = answerRepository.findById(answerDto.getAnswerNo()).get();
-			answer.setAnswerAccept(2);
-			return AnswerDto.toDto(answerRepository.save(answer));
-		}
+	@Override
+	public AnswerDto acceptAnswer(AnswerDto answerDto) throws Exception {
+		Answer answer = answerRepository.findById(answerDto.getAnswerNo()).get();
+		answer.setAnswerAccept(2);
+		return AnswerDto.toDto(answerRepository.save(answer));
+	}
+	
 	/*답변삭제*/
 	@Override
 	public AnswerDto deleteAnswer(AnswerDto answerDto) throws Exception {
@@ -42,6 +50,14 @@ public class AnswerServiceImpl implements AnswerService{
 	    answer.setAnswerStatus(2);  
 	    return AnswerDto.toDto(answerRepository.save(answer));
 	}
+	
+	
+	/* 답변상세보기 */
+	@Override
+	public AnswerDto getAnswer(Long answerNo) {
+		return AnswerDto.toDto(answerRepository.findByAnswerNo(answerNo));
+	}
+	
 	/*질문 하나에 달린 답변*/
 	/*추천순*/
 	@Override
@@ -54,6 +70,7 @@ public class AnswerServiceImpl implements AnswerService{
 		}
 		return answerDtoList;
 	}
+	
 	/*최신순*/
 	@Override
 	public List<AnswerDto> findByInquiryAnswerOrderByDate(Long inquiryNo) {
@@ -65,6 +82,7 @@ public class AnswerServiceImpl implements AnswerService{
 		}
 		return answerDtoList;
 	}
+	
 	/*카테고리 별 답변*/
 	/*추천순*/
 	@Override
@@ -77,6 +95,7 @@ public class AnswerServiceImpl implements AnswerService{
 		}
 		return answerDtoList;
 	}
+	
 	/*최신순*/
 	@Override
 	public List<AnswerDto> findByCategoryAnswerOrderByDate(Long categoryNo) {
@@ -88,6 +107,7 @@ public class AnswerServiceImpl implements AnswerService{
 		}
 		return answerDtoList;
 	}
+	
 	/*최근 3일간 추천 많은 답변*/
 	@Override
 	public List<AnswerDto> findByAnswerOrderByVoteDate() {
@@ -99,6 +119,8 @@ public class AnswerServiceImpl implements AnswerService{
 		}
 		return answerDtoList;
 	}
+
+	
 	
 	
 	

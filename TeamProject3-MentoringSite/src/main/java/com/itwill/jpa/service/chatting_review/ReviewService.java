@@ -16,7 +16,7 @@ public interface ReviewService {
 	//리뷰 선택(특정리뷰 수정?삭제?할때 필요할듯)
 	public Review selectReviewByReviewNo(Long reviewNo);
 	//요청번호에 따른 리뷰 리스트
-	public List<ReviewDto> selectReviewByRequestNo(Long RequestNo);
+	public List<ReviewDto> selectReviewByChatRoomNo(Long chatRoomNo);
 	//멤버 번호의 리뷰 리스트
 	public List<ReviewDto> selectReviewByMemberNo(Long memberNo);
 	//모든 리뷰리스트

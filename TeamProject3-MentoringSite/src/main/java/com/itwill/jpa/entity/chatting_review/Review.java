@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 
 import org.hibernate.annotations.CreationTimestamp;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.itwill.jpa.dto.chatting_review.ReviewDto;
 
 import jakarta.persistence.Column;
@@ -53,8 +54,9 @@ public class Review {
     private LocalDateTime reviewDate = LocalDateTime.now();
     
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="request_no", nullable=false)
-    private MentoringRequest mentoringRequest;
+    @JoinColumn(name="chat_room_no")
+    @JsonBackReference
+    private ChatRoom chatRoom;
 
     @PrePersist
     public void setDefaultValues() {
@@ -68,7 +70,7 @@ public class Review {
                 .reviewContent(reviewDto.getReviewContent())
                 .reviewScore(reviewDto.getReviewScore())
                 .reviewDate(reviewDto.getReviewDate())
-                .mentoringRequest(MentoringRequest.toEntity(reviewDto.getMentoringRequest())) // MentoringRequest 엔티티 포함
+                .chatRoom(ChatRoom.builder().chatRoomNo(reviewDto.getChatRoomNo()).build()) //  엔티티 포함
                 .build();
     }
 

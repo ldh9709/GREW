@@ -16,7 +16,8 @@ public class CategoryDto {
 	
 	private Long categoryNo;
     private String categoryName;
-    private Integer categoryLevel;
+    private Integer categoryDepth;
+    private Category category;
 
     /*
      * Entity -> DTO
@@ -26,7 +27,8 @@ public class CategoryDto {
         		
         		.categoryNo(categoryEntity.getCategoryNo())
                 .categoryName(categoryEntity.getCategoryName())
-                .categoryLevel(categoryEntity.getCategoryLevel())
+                .categoryDepth(categoryEntity.getCategoryDepth())
+                .category(categoryEntity.getParentCategory())
                 .build();
     }
 

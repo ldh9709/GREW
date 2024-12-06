@@ -2,7 +2,7 @@ package com.itwill.jpa.service.chatting_review;
 
 import com.itwill.jpa.dto.chatting_review.ReviewDto;
 import com.itwill.jpa.entity.chatting_review.Review;
-import com.itwill.jpa.repository.member_information.MentoringRequestRepository;
+import com.itwill.jpa.repository.chatting_review.ChatRoomRepository;
 import com.itwill.jpa.repository.chatting_review.ReviewRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,19 +10,21 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 public class ReviewServiceImpl implements ReviewService {
 
     private final ReviewRepository reviewRepository;
-    private final MentoringRequestRepository mentoringRequestRepository;
+    private final ChatRoomRepository chatRoomRepository;
 
     @Autowired
-    public ReviewServiceImpl(ReviewRepository reviewRepository, MentoringRequestRepository mentoringRequestRepository) {
+    public ReviewServiceImpl(ReviewRepository reviewRepository, ChatRoomRepository chatRoomRepository) {
         this.reviewRepository = reviewRepository;
-        this.mentoringRequestRepository = mentoringRequestRepository;
+        this.chatRoomRepository = chatRoomRepository;
     }
 
     /* 리뷰 생성 */
@@ -78,8 +80,8 @@ public class ReviewServiceImpl implements ReviewService {
 
     /* 특정 요청 번호에 따른 리뷰 리스트 조회 */
     @Override
-    public List<ReviewDto> selectReviewByRequestNo(Long requestNo) {
-        List<Review> reviews = reviewRepository.findByMentoringRequestRequestNo(requestNo);
+    public List<ReviewDto> selectReviewByChatRoomNo(Long chatRoomNo) {
+        List<Review> reviews = reviewRepository.findReviewByChatRoom_ChatRoomNo(chatRoomNo);
         List<ReviewDto> reviewDtolist = new ArrayList<>();
         for (Review review : reviews) {
             reviewDtolist.add(ReviewDto.toDto(review));
@@ -90,13 +92,23 @@ public class ReviewServiceImpl implements ReviewService {
     /* 특정 멤버 번호에 따른 리뷰 리스트 조회 */
     @Override
     public List<ReviewDto> selectReviewByMemberNo(Long memberNo) {
-        List<Review> reviews = reviewRepository.findByMentoringRequestMember_Member_MemberNo(memberNo);
+        Set<Review> reviews = new HashSet<>();
+
+        // 멘티 번호로 리뷰 조회
+        reviews.addAll(reviewRepository.findReviewByChatRoom_Mentee_MemberNo(memberNo));
+
+        // 멘토 번호로 리뷰 조회
+        reviews.addAll(reviewRepository.findReviewByChatRoom_Mentor_MemberNo(memberNo));
+
+        // 리뷰를 DTO로 변환
         List<ReviewDto> reviewDtoList = new ArrayList<>();
         for (Review review : reviews) {
             reviewDtoList.add(ReviewDto.toDto(review));
         }
+
         return reviewDtoList;
     }
+
 
     /* 모든 리뷰 리스트 조회 */
     @Override
