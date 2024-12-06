@@ -38,6 +38,7 @@ public class ResponseMessage {
 	public static final String READ_REPORT_LIST_SUCCESS = "신고 리스트 성공";
 	public static final String UPDATE_REPORT_SUCCESS = "신고 상태변경 성공";
 	public static final String REPORT_FAIL = "신고 실패";
+	
 	/**********************INQUIRY 메시지**************************/
     public static final String CREATED_INQUIRY_SUCCESS = "질문 등록 성공";
     public static final String CREATED_INQUIRY_FAIL = "질문 등록 실패";
@@ -57,6 +58,8 @@ public class ResponseMessage {
 	public static final String UPDATE_ANSWER_FAIL = "답변 수정 실패";
 	public static final String DELETE_ANSWER_SUCCESS = "답변 삭제(수정) 성공";
 	public static final String DELETE_ANSWER_FAIL = "답변 삭제(수정) 실패";
+	public static final String ACCEPT_ANSWER_SUCCESS = "답변 채택 성공";
+	public static final String ACCEPT_ANSWER_FAIL = "답변 채택 실패";
 	public static final String READ_ANSWER_LIST_SUCCESS = "답변 리스트 불러오기 성공";
 	public static final String READ_ANSWER_LIST_FAIL = "답변 리스트 불러오기 실패";
 	public static final String READ_ANSWER_SUCCESS = "선택 답변 불러오기 성공";

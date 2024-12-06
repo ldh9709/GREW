@@ -14,6 +14,10 @@ public interface AnswerRepository extends JpaRepository<Answer, Long>{
 	/* 답변 상세보기 */
 	Answer findByAnswerNo(Long answerNo);
 	
+	// 해당 질문에 채택된 답변을 조회
+	@Query("SELECT a FROM Answer a WHERE a.inquiry.inquiryNo = :inquiryNo AND a.answerAccept = 2")
+	Answer findAcceptedAnswerByInquiry(@Param("inquiryNo") Long inquiryNo);
+	
 	/*질문 하나에 달린 답변 리스트*/
 	/*추천순*/
 	@Query("""
@@ -77,5 +81,7 @@ public interface AnswerRepository extends JpaRepository<Answer, Long>{
             "a.answer_no DESC", 
             nativeQuery = true)//jpql엔 sysdate 사용불가하기 때문에 nativeQuery로 오라클의 sql사용
 		List<Answer> findByAnswerOrderByVoteDate();
+	
+
 
 }
