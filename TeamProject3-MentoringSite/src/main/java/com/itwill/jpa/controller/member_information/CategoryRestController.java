@@ -19,7 +19,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.itwill.jpa.dto.member_information.CategoryDto;
+import com.itwill.jpa.dto.member_information.CategoryRequestDto;
+import com.itwill.jpa.dto.member_information.CategoryResponseDto;
 import com.itwill.jpa.entity.member_information.Category;
 import com.itwill.jpa.response.Response;
 import com.itwill.jpa.response.ResponseMessage;
@@ -37,7 +38,7 @@ public class CategoryRestController {
 	
 	@Operation(summary = "카테고리 등록 성공")
 	@PostMapping
-	public ResponseEntity<Response> createCategory(@RequestBody CategoryDto categoryDto){
+	public ResponseEntity<Response> createCategory(@RequestBody CategoryRequestDto categoryDto){
 		categoryService.createCategory(categoryDto);
 		
 		Response response = new Response();
@@ -53,7 +54,7 @@ public class CategoryRestController {
 	
 	@Operation(summary = "카테고리 수정성공")
 	@PutMapping
-	public ResponseEntity<Response> updateCategory(@RequestBody CategoryDto categoryDto){
+	public ResponseEntity<Response> updateCategory(@RequestBody CategoryRequestDto categoryDto){
 		categoryService.updateCategory(categoryDto);
 		
 		Response response = new Response();
@@ -82,26 +83,11 @@ public class CategoryRestController {
 		return new ResponseEntity<Response>(response, headers, HttpStatus.OK);
 	}
 	
-	@Operation(summary = "카테고리 상세보기 출력")
-	@GetMapping("/{categoryNo}")
-	public ResponseEntity<Response> getCategory(@PathVariable(name="categoryNo") Long CategoryNo){
-		CategoryDto category = categoryService.getCategory(CategoryNo);
-		
-		Response response = new Response();
-		response.setStatus(ResponseStatusCode.READ_CATEGORY_SUCCESS);
-		response.setMessage(ResponseMessage.READ_CATEGORY_SUCCESS);
-		response.setData(category);
-		
-		HttpHeaders headers = new HttpHeaders();
-		headers.setContentType(new MediaType(MediaType.APPLICATION_JSON, Charset.forName("UTF-8")));
-		
-		return new ResponseEntity<Response>(response, headers, HttpStatus.OK);
-	}
 	
 	@Operation(summary = "카테고리 리스트 출력")
 	@GetMapping()
 	public ResponseEntity<Response> getCategories(){
-		List<CategoryDto> categories = categoryService.getCategories();
+		List<CategoryResponseDto> categories = categoryService.getCategories();
 		
 		Response response = new Response();
 		response.setStatus(ResponseStatusCode.READ_CATEGORYLIST_SUCCESS);

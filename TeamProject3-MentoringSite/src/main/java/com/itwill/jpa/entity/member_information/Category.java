@@ -3,7 +3,11 @@ package com.itwill.jpa.entity.member_information;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.itwill.jpa.dto.member_information.CategoryDto;
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
+import com.itwill.jpa.dto.member_information.CategoryRequestDto;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -29,7 +33,7 @@ public class Category {
     @Column(name = "category_depth" ,nullable = false)
     private Integer categoryDepth;
     
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "parent_category_no")
     private Category parentCategory;
     
@@ -42,15 +46,19 @@ public class Category {
     @OneToMany(mappedBy = "parentCategory", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
     private List<Category> childCategories = new ArrayList<>();
     
-    public static Category toEntity(CategoryDto categoryDto) {
+    public static Category toEntity(CategoryRequestDto categoryDto) {
         return Category.builder()
         		.categoryNo(categoryDto.getCategoryNo())
                 .categoryName(categoryDto.getCategoryName())
                 .categoryDepth(categoryDto.getCategoryDepth())
                 .parentCategory(Category.builder()
-                		.categoryNo(categoryDto.getParentCategoryNo())
+                		.categoryNo(categoryDto.getCategoryNo())
                 		.build())
                 .build();
+    }
+    
+    public void addParentCategory(Category category) {
+    	
     }
     
 }

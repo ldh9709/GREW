@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class CategoryDto {
+public class CategoryRequestDto {
 	
 	private Long categoryNo;
     private String categoryName;
@@ -22,8 +22,8 @@ public class CategoryDto {
     /*
      * Entity -> DTO
      */
-    public static CategoryDto toDto(Category categoryEntity) {
-        return CategoryDto.builder()
+    public static CategoryRequestDto toDto(Category categoryEntity) {
+        return CategoryRequestDto.builder()
         		.categoryNo(categoryEntity.getCategoryNo())
                 .categoryName(categoryEntity.getCategoryName())
                 .categoryDepth(categoryEntity.getCategoryDepth())
