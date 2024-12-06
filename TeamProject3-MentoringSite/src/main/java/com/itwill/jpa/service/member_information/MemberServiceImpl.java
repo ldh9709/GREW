@@ -1,15 +1,20 @@
 package com.itwill.jpa.service.member_information;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.itwill.jpa.dto.member_information.InterestDto;
 import com.itwill.jpa.dto.member_information.MemberDto;
+import com.itwill.jpa.entity.member_information.Category;
+import com.itwill.jpa.entity.member_information.Interest;
 import com.itwill.jpa.entity.member_information.Member;
 import com.itwill.jpa.repository.member_information.MemberRepository;
 
 @Service
 public class MemberServiceImpl implements MemberService {
-	/***** 24.11.29 유효성 체크 및 Exception 사용 전 *****/
 	
 	
 	//메소드 사용을 위한 리포지토리 의존성 주입
@@ -22,6 +27,13 @@ public class MemberServiceImpl implements MemberService {
 		
 		//MemberDto Entity로 변경
 		Member saveMember = Member.toEntity(memberDto);
+		
+		for (InterestDto interest : memberDto.getInterests()) {
+			
+			Interest interestEntity = Interest.toEntity(interest);
+			
+			saveMember.addInterests(interestEntity);
+		}
 		
 		//객체 저장
 		return memberRepository.save(saveMember);
@@ -53,6 +65,13 @@ public class MemberServiceImpl implements MemberService {
 	public Member updateMember(MemberDto memberDto) {
 		Member member = memberRepository.findByMemberNo(memberDto.getMemberNo());
 		
+		List<Interest> interests = new ArrayList<>(); 
+		
+		for (InterestDto interestDto : memberDto.getInterests()) {
+			Interest interest = Interest.toEntity(interestDto);
+			member.addInterests(interest);
+		}
+		
 		member.setMemberName(memberDto.getMemberName());
 		member.setMemberPassword(memberDto.getMemberPassword());
 		member.setMemberEmail(memberDto.getMemberEmail());
@@ -63,16 +82,17 @@ public class MemberServiceImpl implements MemberService {
 	
 	/***** 회원 상태 수정 *****/
 	@Override
-	public Member updateMemberStatus(MemberDto memberDto) {
+	public Member updateMemberStatus(MemberDto memberDto, Integer statusNo) {
 		//아이디로 회원 찾기
 		Member member = memberRepository.findByMemberNo(memberDto.getMemberNo());
 		
 		//회원 상태 변경
-		member.setMemberStatus(2);
+		member.setMemberStatus(statusNo);
 		
 		//수정한 객체 반환
 		return memberRepository.save(member);
 	}
+	
 	
 	
 	/***** 회원 삭제 *****/
@@ -96,6 +116,7 @@ public class MemberServiceImpl implements MemberService {
 		return memberRepository.findByMemberNo(memberNo);
 	}
 
+	/********************************* Interest CRUD **************************************/
 	
 
 }
