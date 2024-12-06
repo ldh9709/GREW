@@ -2,6 +2,8 @@ package com.itwill.jpa.entity.member_information;
 
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.itwill.jpa.dto.member_information.MentorBoardDto;
 

@@ -1,6 +1,7 @@
 package com.itwill.jpa.dto.alarm;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import com.itwill.jpa.dto.member_information.MemberDto;
 import com.itwill.jpa.entity.alarm.Alarm;
@@ -21,7 +22,7 @@ public class AlarmDto {
 	private Long referenceNo;
 	private String referenceType;
 	private int isRead;
-	private LocalDate alarmDate;
+	private LocalDateTime alarmDate;
 	
 	private Long memberNo;
 	

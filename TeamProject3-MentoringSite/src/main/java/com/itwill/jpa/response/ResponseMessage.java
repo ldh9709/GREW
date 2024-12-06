@@ -31,7 +31,10 @@ public class ResponseMessage {
     
     
     /******************* Alarm    메세지 ************************/
-	
+	public static final String CREATED_ALARM_SUCCESS= "알림 생성 성공";
+	public static final String READ_ALARM_SUCCESS= "알림 읽어오기 성공";
+	public static final String DELETE_ALARM_SUCCESS= "알림 삭제 성공";
+	public static final String IS_READ_ALARM_SUCCESS= "알림 읽음상태변경 성공";
 	/******************* REPORT   메시지 ************************/
 	public static final String CREATED_REPORT_SUCCESS = "신고 등록 성공";
 	public static final String READ_REPORT_SUCCESS = "신고 조회 성공";

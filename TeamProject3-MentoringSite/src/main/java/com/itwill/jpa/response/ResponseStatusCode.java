@@ -27,7 +27,10 @@ public class ResponseStatusCode {
 	
 	/*알림(3000), 신고(4000), 질문(5000), 답변(6000), 채팅(7000)*/
 	/******************* Alarm    메세지 ************************/
-	
+	public static final int CREATED_ALARM_SUCCESS= 3000;
+	public static final int READ_ALARM_SUCCESS= 3200;
+	public static final int DELETE_ALARM_SUCCESS= 3300;
+	public static final int IS_READ_ALARM_SUCCESS= 3400;
 	/******************* REPORT   메시지 ************************/
 	public static final int CREATED_REPORT_SUCCESS = 4000;
 	public static final int READ_REPORT_SUCCESS = 4100;

@@ -25,7 +25,6 @@ public class AnswerDto {
     private Integer answerStatus;   // answer_status (답글삭제여부, '1' or '2')
     private Long memberNo;           // user_no (FK)
     private Long inquiryNo;        // inquiry_no (FK)
-    private Long inquiryMemberNo;
     /*
      * Entity -> DTO 변환 메소드
      */
@@ -39,7 +38,6 @@ public class AnswerDto {
                 .answerStatus(answerEntity.getAnswerStatus())
                 .memberNo(answerEntity.getMember().getMemberNo())  
                 .inquiryNo(answerEntity.getInquiry().getInquiryNo())
-                .inquiryMemberNo(answerEntity.getInquiry().getMember().getMemberNo())
                 .build();
     }
 }
