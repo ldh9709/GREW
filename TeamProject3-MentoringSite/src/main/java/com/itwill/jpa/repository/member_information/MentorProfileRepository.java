@@ -59,6 +59,11 @@ public interface MentorProfileRepository extends JpaRepository<MentorProfile, Lo
      * @return MentorProfile 엔티티
      */
     MentorProfile findByMember_MemberNo(Long memberNo);
+    
+    /**
+     * 특정 멤버의 멘토 프로필을 조회
+     */
+    MentorProfile findByMember(Member member);
 }
 
 	

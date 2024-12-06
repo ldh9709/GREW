@@ -31,4 +31,11 @@ public interface MentorProfileService {
      * 멘토 프로필의 평균 점수를 업데이트
      */
     void updateMentorRating(Long mentorNo);
+    
+    /**
+     * 특정 멘토의 평균 점수를 반환
+     */
+    Double getAverageMentorRating(Long memberNo);
+    //멘토 생성 
+    void createMentorProfile(Long memberNo, MentorProfile mentorProfile);
 }
