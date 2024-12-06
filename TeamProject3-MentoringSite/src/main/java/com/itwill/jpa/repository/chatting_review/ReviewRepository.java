@@ -3,6 +3,8 @@ package com.itwill.jpa.repository.chatting_review;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import com.itwill.jpa.entity.chatting_review.Review;
 
@@ -18,5 +20,8 @@ public interface ReviewRepository extends JpaRepository<Review, Long>{
     List<Review> findReviewByChatRoom_Mentor_MemberNo(Long memberNo);
 	
     Review findByReviewNo(Long reviewNo);
+   
+    @Query("SELECT AVG(r.reviewScore) FROM Review r WHERE r.chatRoom.mentor.memberNo = :mentorNo")
+    Double findAverageScoreByMentor(@Param("mentorNo") Long mentorNo);
     
 }

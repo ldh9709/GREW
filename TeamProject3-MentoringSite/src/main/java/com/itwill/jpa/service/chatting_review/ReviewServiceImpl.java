@@ -120,4 +120,11 @@ public class ReviewServiceImpl implements ReviewService {
         }
         return reviewDtoList;
     }
+    
+    
+    
+    @Override
+    public Double getAverageReviewScoreByMentor(Long mentorNo) {
+        return reviewRepository.findAverageScoreByMentor(mentorNo);
+    }
 }

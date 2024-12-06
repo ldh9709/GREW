@@ -2,6 +2,9 @@ package com.itwill.jpa.service.chatting_review;
 
 import java.util.List;
 
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
+
 import com.itwill.jpa.dto.chatting_review.ReviewDto;
 import com.itwill.jpa.entity.chatting_review.Review;
 
@@ -21,5 +24,13 @@ public interface ReviewService {
 	public List<ReviewDto> selectReviewByMemberNo(Long memberNo);
 	//모든 리뷰리스트
 	public List<ReviewDto> selectReviewAll();
-
+	
+	/**
+     * 특정 멘토의 평균 리뷰 점수를 반환
+     * 
+     * @param mentorNo 멘토 번호
+     * @return 평균 리뷰 점수
+     */
+    Double getAverageReviewScoreByMentor(Long mentorNo);
+	
 }

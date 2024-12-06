@@ -27,5 +27,8 @@ public interface MentorProfileService {
 
     // 특정 카테고리와 관련된 멘토 프로필 조회
     List<MentorProfile> getMentorProfilesByCategory(Category category);
-   
+    /**
+     * 멘토 프로필의 평균 점수를 업데이트
+     */
+    void updateMentorRating(Long mentorNo);
 }

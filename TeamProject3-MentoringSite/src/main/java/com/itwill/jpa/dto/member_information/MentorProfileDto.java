@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
 
 @Builder
 @Data
+
 @NoArgsConstructor
 @AllArgsConstructor
 public class MentorProfileDto {
@@ -20,7 +21,7 @@ public class MentorProfileDto {
     
     private String mentorCareer; 
     
-    private Integer mentorRating;
+    private Double mentorRating;
     
     private Integer mentorMentoringCount;
     

@@ -2,7 +2,9 @@ package com.itwill.jpa.service.member_information;
 
 import com.itwill.jpa.entity.member_information.Category;
 import com.itwill.jpa.entity.member_information.MentorProfile;
+import com.itwill.jpa.repository.chatting_review.ReviewRepository;
 import com.itwill.jpa.repository.member_information.MentorProfileRepository;
+import com.itwill.jpa.service.chatting_review.ReviewService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,7 +18,8 @@ public class MentorProfileServiceImpl implements MentorProfileService {
 
     @Autowired
     private MentorProfileRepository mentorProfileRepository;
-
+    @Autowired
+    private ReviewService reviewService;
     /**
      * 멘토 생성 상태로 설정 (mentorStatus = 1)
      */
@@ -73,4 +76,21 @@ public class MentorProfileServiceImpl implements MentorProfileService {
         return mentorProfileRepository.findByCategory(category);
     }
     
+    @Override
+    public void updateMentorRating(Long mentorNo) {
+        // ReviewService를 통해 평균 점수 가져오기
+        Double averageScore = reviewService.getAverageReviewScoreByMentor(mentorNo);
+
+        if (averageScore != null) {
+            // 멘토 프로필 가져오기
+            MentorProfile mentorProfile = mentorProfileRepository.findByMember_MemberNo(mentorNo);
+            if (mentorProfile != null) {
+                // 평균 점수 업데이트
+                mentorProfile.setMentorRating(averageScore);
+                mentorProfileRepository.save(mentorProfile);
+            }
+        }
+    }
+  
+ 
 }
