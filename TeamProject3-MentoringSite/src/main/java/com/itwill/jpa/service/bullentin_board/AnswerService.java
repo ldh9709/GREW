@@ -14,6 +14,8 @@ public interface AnswerService {
 	//답변채택
 	AnswerDto acceptAnswer(AnswerDto answerDto) throws Exception;
 	/*질문하나에달린답변*/
+	//답변상세보기
+	AnswerDto getAnswer(Long answerNo);
 	//추천순
 	List<AnswerDto> findByInquiryAnswerOrderByVotes(Long inquiryNo);
 	//최신순

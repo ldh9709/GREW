@@ -42,7 +42,8 @@ public class Answer {
 
     @Column(name = "answer_content", nullable = false, length = 500)
     private String answerContent;  // 답변 내용
-
+    
+    @CreationTimestamp
     @Column(name = "answer_date", nullable = false)
     private LocalDateTime answerDate;  // 답변 작성 시간 (LocalDate)
 

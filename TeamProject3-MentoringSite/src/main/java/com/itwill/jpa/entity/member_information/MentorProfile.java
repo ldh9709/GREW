@@ -5,6 +5,8 @@ import java.time.LocalDateTime;
 
 import org.hibernate.annotations.ColumnDefault;
 
+import com.itwill.jpa.dto.member_information.MentorBoardDto;
+import com.itwill.jpa.dto.member_information.MentorProfileDto;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -64,8 +66,33 @@ public class MentorProfile {
     public void setValues() {
     	if (this.mentorRating == null) this.mentorRating =0;
         if (this.mentorMentoringCount == null) this.mentorMentoringCount = 0;
+        if (this.mentorImage==null) this.mentorImage = "default.jpg";
         if (this.mentorActivityCount == null) this.mentorActivityCount = 0;
         if (this.mentorFollowCount == null) this.mentorFollowCount = 0;
+        if (this.mentorStatus==null||this.mentorStatus==0) this.mentorStatus = 1;
     }
     
+ public static MentorProfile toEntity(MentorProfileDto mentorProfileDto) {
+    	
+    	Member member = Member.builder()
+				.memberNo(mentorProfileDto.getMemberNo())
+				.build();
+    	Category category =Category.builder()
+    			.categoryNo(mentorProfileDto.getCategoryNo())
+    			.build();
+    
+        return MentorProfile.builder()
+        		.mentorProfileNo(mentorProfileDto.getMentorProfileNo())
+        		.mentorIntroduce(mentorProfileDto.getMentorIntroduce())
+        		.mentorCareer(mentorProfileDto.getMentorCareer())
+        		.mentorRating(mentorProfileDto.getMentorRating())
+        		.mentorMentoringCount(mentorProfileDto.getMentorMentoringCount())
+        		.mentorImage(mentorProfileDto.getMentorImage())
+        		.mentorActivityCount(mentorProfileDto.getMentorActivityCount())
+        		.mentorFollowCount(mentorProfileDto.getMentorFollowCount())
+        		.mentorStatus(mentorProfileDto.getMentorStatus())
+                .member(member)
+                .category(category)
+                .build();
+    }
 }

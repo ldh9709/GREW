@@ -10,18 +10,30 @@ import org.springframework.stereotype.Repository;
 import com.itwill.jpa.entity.bullentin_board.Answer;
 @Repository
 public interface AnswerRepository extends JpaRepository<Answer, Long>{
+	
+	/* 답변 상세보기 */
+	Answer findByAnswerNo(Long answerNo);
+	
+	// 해당 질문에 채택된 답변을 조회
+	@Query("SELECT a FROM Answer a WHERE a.inquiry.inquiryNo = :inquiryNo AND a.answerAccept = 2")
+	Answer findAcceptedAnswerByInquiry(@Param("inquiryNo") Long inquiryNo);
+	
 	/*질문 하나에 달린 답변 리스트*/
 	/*추천순*/
-	@Query("SELECT a FROM Answer a " +
-		       "JOIN a.inquiry i " +
-		       "LEFT JOIN a.votes v " +
-		       "WHERE i.inquiryNo = :inquiryNo " +
-		       "AND a.answerStatus = 1 " +
-		       "GROUP BY a.answerNo " +
-		       "ORDER BY a.answerAccept DESC,"+
-		       "COUNT(v) DESC")
+	@Query("""
+            SELECT a
+            FROM Answer a
+            JOIN a.inquiry i
+            LEFT JOIN a.votes v 
+            WHERE i.inquiryNo = :inquiryNo
+            AND a.answerStatus = 1
+            GROUP BY a.answerNo, a.answerContent, a.answerDate, a.answerStatus, a.answerAccept, a.member, a.inquiry
+            ORDER BY a.answerAccept DESC, 
+                     (COUNT(CASE WHEN v.voteType = 1 THEN 1 END) - 
+                      COUNT(CASE WHEN v.voteType = 2 THEN 1 END)) DESC
+    """)
 		List<Answer> findByInquiryAnswerOrderByVotes(@Param("inquiryNo") Long inquiryNo);
-
+	
 	
 	/*최신순*/
 	@Query("SELECT a FROM Answer a " +
@@ -41,8 +53,10 @@ public interface AnswerRepository extends JpaRepository<Answer, Long>{
 		       "LEFT JOIN a.votes v " +
 		       "WHERE c.categoryNo = :categoryNo " +
 		       "AND a.answerStatus = 1 " + 
-		       "GROUP BY a.answerNo " +
-		       "ORDER BY COUNT(v) DESC")
+		       "GROUP BY a.answerNo, a.answerContent, a.answerDate, a.answerStatus, a.answerAccept, a.member, a.inquiry " +
+		       "ORDER BY a.answerAccept DESC, " +
+		       "(COUNT(CASE WHEN v.voteType = 1 THEN 1 END) - " +
+		       "COUNT(CASE WHEN v.voteType = 2 THEN 1 END)) DESC")
 		List<Answer> findByCategoryAnswerOrderByVotes(@Param("categoryNo") Long categoryNo);
 
 	/*최신순*/
@@ -55,16 +69,23 @@ public interface AnswerRepository extends JpaRepository<Answer, Long>{
 		List<Answer> findByCategoryAnswerOrderByDate(@Param("categoryNo") Long categoryNo);
 
 	/*최근 3일동안 추천 많은 답변*/
-	@Query(value = "SELECT a FROM Answer a " +
-               "JOIN a.inquiry i " +
-               "INNER JOIN a.votes v " +
-               "WHERE v.voteDate >= SYSDATE - 3 " + 
-               "AND a.answerStatus = 1 " +
-               "GROUP BY a.answerNo " +
-               "ORDER BY " +
-               "COUNT(CASE WHEN v.voteType = 1 THEN 1 END) "
-               + "- COUNT(CASE WHEN v.voteType = 2 THEN 1 END) DESC",
-               nativeQuery = true)  //jpql엔 sysdate 사용불가하기 때문에 nativeQuery로 오라클의 sql사용
+	@Query(value = "SELECT a.* " +
+            "FROM answer a " +
+            "LEFT JOIN vote v " +
+            "ON a.answer_no = v.answer_no " +
+            "WHERE (v.vote_date >= SYSDATE - 3 OR v.vote_date IS NULL) " +
+            "AND a.answer_status = 1 " +
+            "GROUP BY a.answer_no, a.answer_content, a.answer_date, a.answer_status, a.answer_accept, a.inquiry_no, a.member_no " +
+            "ORDER BY COUNT(CASE WHEN v.vote_type = 1 THEN 1 END) - " +
+            "COUNT(CASE WHEN v.vote_type = 2 THEN 1 END) DESC," +
+            "a.answer_no DESC", 
+            nativeQuery = true)//jpql엔 sysdate 사용불가하기 때문에 nativeQuery로 오라클의 sql사용
 		List<Answer> findByAnswerOrderByVoteDate();
+
+	@Query("SELECT i.member.memberNo "
+		       + "FROM Answer a "
+		       + "JOIN a.inquiry i "
+		       + "WHERE a.answerNo = :answerNo")
+		Long findByMemberNoByInquiryByAnswer(@Param("answerNo")Long answerNo);
 
 }
