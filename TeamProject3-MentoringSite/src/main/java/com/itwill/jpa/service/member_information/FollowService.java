@@ -7,7 +7,7 @@ import com.itwill.jpa.dto.member_information.FollowResponseDto;
 
 public interface FollowService {
 	FollowRequestDto createFollow(FollowRequestDto followDto);
-	FollowRequestDto deleteFollow(Long followNo);
+	Long deleteFollow(Long followNo);
 	List<FollowResponseDto> getMentorList(Long menteeMemberNo);
 	Integer countFollower(Long mentorMemberNo);
 }

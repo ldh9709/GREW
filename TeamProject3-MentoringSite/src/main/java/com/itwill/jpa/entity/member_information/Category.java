@@ -29,7 +29,7 @@ public class Category {
     @Column(name = "category_depth" ,nullable = false)
     private Integer categoryDepth;
     
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "parent_category_no")
     private Category parentCategory;
     
@@ -38,6 +38,9 @@ public class Category {
     
     @OneToMany(mappedBy = "category", fetch = FetchType.LAZY)
     private List<Interest> interests = new ArrayList<>();
+    
+    @OneToMany(mappedBy = "parentCategory", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
+    private List<Category> childCategories = new ArrayList<>();
     
     public static Category toEntity(CategoryDto categoryDto) {
         return Category.builder()

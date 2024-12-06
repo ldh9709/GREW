@@ -32,12 +32,19 @@ public class CategoryServiceImpl implements CategoryService{
 	public CategoryDto updateCategory(CategoryDto categoryDto) {
 		Category category = categoryRepository.findById(categoryDto.getCategoryNo()).get();
 		category.setCategoryName(categoryDto.getCategoryName());
+		categoryRepository.save(category);	
 		return categoryDto;
 	}
 
 	/* 카테고리 삭제 */
 	@Override
 	public CategoryDto deleteCategory(Long categoryNo) {
+		/* 메인카테고리삭제 -> 서브카테고리까지 전체 삭제*/
+		Category category = categoryRepository.findById(categoryNo).get();
+		
+		if(category.getParentCategory() == null) {
+		}
+		
 		categoryRepository.deleteById(categoryNo);
 		return CategoryDto.toDto(categoryRepository.findById(categoryNo).get());
 	}

@@ -7,6 +7,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import com.itwill.jpa.dto.bulletin_board.VoteDto;
 import com.itwill.jpa.entity.member_information.Member;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -46,7 +47,7 @@ public class Vote {
     @JoinColumn(name = "member_no", nullable = false)  // "user_no"는 User 엔티티와 관계
     private Member member;  // 사용자 (User 엔티티와 관계)
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "answer_no", nullable = false)  // "answer_no"는 Answer 엔티티와 관계
     private Answer answer;  // 답변 (Answer 엔티티와 관계)
 
