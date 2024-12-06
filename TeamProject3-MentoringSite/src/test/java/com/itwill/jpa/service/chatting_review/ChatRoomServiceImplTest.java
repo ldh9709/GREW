@@ -1,4 +1,4 @@
-package com.itwill.jpa.service;
+package com.itwill.jpa.service.chatting_review;
 
 import java.time.LocalDateTime;
 import java.util.List;
