@@ -58,6 +58,7 @@ public class ChatRoom {
     @JoinColumn(name = "mentor_no", nullable = false)
     private Member mentor;
 	
+	
     @OneToMany(mappedBy = "chatRoom", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
     private List<ChatRoomStatus> chatRoomStatusList = new ArrayList<ChatRoomStatus>();
     
