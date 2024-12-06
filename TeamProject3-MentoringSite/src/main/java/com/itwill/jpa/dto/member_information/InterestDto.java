@@ -15,7 +15,7 @@ public class InterestDto {
 	
 	private Long interestNo;
     private MemberDto member;
-    private CategoryDto category;
+    private CategoryRequestDto category;
 
     /*
      * Entity -> DTO
@@ -24,7 +24,7 @@ public class InterestDto {
         return InterestDto.builder()
         		.interestNo(interestEntity.getInterestNo())
                 .member(MemberDto.toDto(interestEntity.getMember()))
-                .category(CategoryDto.toDto(interestEntity.getCategory()))
+                .category(CategoryRequestDto.toDto(interestEntity.getCategory()))
                 .build();
     }
 
