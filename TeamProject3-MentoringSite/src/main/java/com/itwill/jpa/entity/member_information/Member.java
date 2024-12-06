@@ -131,14 +131,6 @@ public class Member {
 	@OneToMany(mappedBy = "member", fetch = FetchType.LAZY)
 	private List<ChatRoomStatus> chatRoomStatus = new ArrayList<>();
 	
-	/* 한 명의 유저가 채팅방 신청 여러개 보유 가능 */
-	@OneToMany(mappedBy = "mentee", fetch = FetchType.LAZY)
-	private List<MentoringRequest> mentee = new ArrayList<>();
-	
-	/* 한 명의 유저가 채팅방 신청 여러개 보유 가능 */
-	@OneToMany(mappedBy = "mentor", fetch = FetchType.LAZY)
-	private List<MentoringRequest> mentor = new ArrayList<>();
-	
 	/* 한 명의 유저가 채팅방 좋아요/싫어요 여러개 보유 가능 */
 	@OneToMany(mappedBy = "member", fetch = FetchType.LAZY)
 	private List<Vote> votes = new ArrayList<>();
