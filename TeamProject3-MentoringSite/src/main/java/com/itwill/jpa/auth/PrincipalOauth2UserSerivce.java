@@ -1,5 +1,7 @@
 package com.itwill.jpa.auth;
 
-public class PrincipalOauth2UserSerivce {
+import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
+
+public class PrincipalOauth2UserSerivce extends DefaultOAuth2UserService {
 
 }
