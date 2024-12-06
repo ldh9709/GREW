@@ -2,7 +2,6 @@ package com.itwill.jpa.service.member_information;
 
 import java.util.List;
 
-import com.itwill.jpa.dto.member_information.FollowDto;
 import com.itwill.jpa.dto.member_information.InterestDto;
 import com.itwill.jpa.entity.member_information.Interest;
 
