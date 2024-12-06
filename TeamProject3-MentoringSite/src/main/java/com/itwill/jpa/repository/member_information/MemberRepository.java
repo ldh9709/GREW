@@ -1,5 +1,7 @@
 package com.itwill.jpa.repository.member_information;
 
+import java.util.Optional;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -23,6 +25,9 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
 	
 	//PK로 멤버 조회
 	public Member findByMemberNo(Long memberNo);
+	
+	//이메일로 멤버 조회
+	Optional<Member> findByEmail(String email);
 	
 	//신고 카운트 증가
 	@Modifying
