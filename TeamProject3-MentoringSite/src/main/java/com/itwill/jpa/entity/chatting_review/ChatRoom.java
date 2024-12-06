@@ -24,6 +24,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @Entity
 @NoArgsConstructor
@@ -47,13 +48,16 @@ public class ChatRoom {
 	@Column(name = "chat_room_end_date")
 	private LocalDateTime chatRoomEndDate;
 	
+	@ToString.Exclude
 	@ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "mentee_no", nullable = false)
     private Member mentee;
-
+	
+	@ToString.Exclude
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "mentor_no", nullable = false)
     private Member mentor;
+	
 	
     @OneToMany(mappedBy = "chatRoom", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
     private List<ChatRoomStatus> chatRoomStatusList = new ArrayList<ChatRoomStatus>();

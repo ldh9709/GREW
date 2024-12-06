@@ -1,9 +1,13 @@
 package com.itwill.jpa.controller.member_information;
 
+import com.itwill.jpa.dto.alarm.AlarmDto;
 import com.itwill.jpa.dto.member_information.MentorBoardDto;
+import com.itwill.jpa.entity.member_information.Follow;
+import com.itwill.jpa.entity.member_information.MentorBoard;
 import com.itwill.jpa.response.Response;
 import com.itwill.jpa.response.ResponseMessage;
 import com.itwill.jpa.response.ResponseStatusCode;
+import com.itwill.jpa.service.alarm.AlarmService;
 import com.itwill.jpa.service.member_information.MemtorBoardService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,19 +28,19 @@ public class MentorBoardController {
 
     @Autowired
     private MemtorBoardService mentorBoardService;
-
+    @Autowired
+    private AlarmService alarmService;
     /* 멘토 보드 등록 */
     @Operation(summary = "멘토 보드 등록")
     @PostMapping
     public ResponseEntity<Response> saveMentorBoard(@RequestBody MentorBoardDto mentorBoardDto) {
-        
     	MentorBoardDto savedBoard = mentorBoardService.saveMemtorBoard(mentorBoardDto);
-    	
+    	List<AlarmDto> saveAlarms = alarmService.saveAlarmsByMentorBoard(savedBoard);
         Response response = new Response();
         response.setStatus(ResponseStatusCode.CREATED_MEMBER_SUCCESS);
         response.setMessage(ResponseMessage.CREATED_MEMBER_SUCCESS);
         response.setData(savedBoard);
-
+        response.setAddData(saveAlarms);
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(new MediaType(MediaType.APPLICATION_JSON, Charset.forName("UTF-8")));
 

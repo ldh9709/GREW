@@ -1,7 +1,9 @@
 package com.itwill.jpa.dto.member_information;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
+import com.itwill.jpa.entity.member_information.Follow;
 import com.itwill.jpa.entity.member_information.Member;
 import com.itwill.jpa.entity.member_information.MentorBoard;
 
@@ -24,7 +26,6 @@ public class MentorBoardDto {
     private Integer mentorBoardStatus;
     //private MemberDto member;
     private Long memberNo;
-
     /*
      * Entity -> DTO
      */
