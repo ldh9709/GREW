@@ -40,7 +40,7 @@ public class Follow {
         return Follow.builder()
                 .followNo(dto.getFollowNo())
                 .menteeMember(Member.builder().memberNo(dto.getMenteeMemberNo()).build())
-                .mentorMember(Member.builder().memberNo(dto.getMentorMembedNo()).build())
+                .mentorMember(Member.builder().memberNo(dto.getMentorMemberNo()).build())
                 .build();
     }
 }

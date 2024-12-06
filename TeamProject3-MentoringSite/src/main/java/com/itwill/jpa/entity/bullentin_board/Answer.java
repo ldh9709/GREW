@@ -81,12 +81,7 @@ public class Answer {
                 .answerAccept(answerDto.getAnswerAccept())
                 .answerStatus(answerDto.getAnswerStatus())
                 .member(Member.builder().memberNo(answerDto.getMemberNo()).build())
-                .inquiry(Inquiry.builder()
-                		.inquiryNo(answerDto.getInquiryNo())
-                		.member(Member.builder()
-                				.memberNo(answerDto.getInquiryMemberNo())
-                				.build()) 
-                		.build())
+                .inquiry(Inquiry.builder().inquiryNo(answerDto.getInquiryNo()).build())
                 .build();
     }
     

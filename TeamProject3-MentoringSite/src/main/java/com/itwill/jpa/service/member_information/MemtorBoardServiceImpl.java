@@ -1,9 +1,11 @@
 package com.itwill.jpa.service.member_information;
 
+import com.itwill.jpa.dto.alarm.AlarmDto;
 import com.itwill.jpa.dto.member_information.MentorBoardDto;
 import com.itwill.jpa.entity.member_information.MentorBoard;
 import com.itwill.jpa.entity.member_information.Member;
 import com.itwill.jpa.repository.member_information.MentorBoardRepository;
+import com.itwill.jpa.service.alarm.AlarmService;
 import com.itwill.jpa.repository.member_information.MemberRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +26,7 @@ public class MemtorBoardServiceImpl implements MemtorBoardService {
 
 	    @Autowired
 	    private MemberRepository memberRepository;
+	    
 
 	    /* 멘토 보드 등록 */
 	    @Override
