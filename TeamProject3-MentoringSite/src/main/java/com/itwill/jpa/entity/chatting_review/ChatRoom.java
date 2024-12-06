@@ -4,8 +4,6 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.hibernate.annotations.CreationTimestamp;
-
 import com.itwill.jpa.dto.chatting_review.ChatRoomDto;
 import com.itwill.jpa.entity.member_information.Member;
 
@@ -26,6 +24,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @Entity
 @NoArgsConstructor
@@ -49,16 +48,24 @@ public class ChatRoom {
 	@Column(name = "chat_room_end_date")
 	private LocalDateTime chatRoomEndDate;
 	
+	@ToString.Exclude
 	@ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "mentee_no", nullable = false)
     private Member mentee;
-
+	
+	@ToString.Exclude
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "mentor_no", nullable = false)
     private Member mentor;
 	
-    @OneToMany(mappedBy = "mentoringRequest", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
+    @OneToMany(mappedBy = "chatRoom", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
+    private List<ChatRoomStatus> chatRoomStatusList = new ArrayList<ChatRoomStatus>();
+    
+    @OneToMany(mappedBy = "chatRoom", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
     private List<Review> reviews = new ArrayList<Review>();
+    
+    @OneToMany(mappedBy = "chatRoom", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
+    private List<ChatMessage> chatMessages= new ArrayList<ChatMessage>();
 	
     /* 초기값 설정 */
     @PrePersist

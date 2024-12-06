@@ -15,10 +15,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.itwill.jpa.dto.alarm.AlarmDto;
 import com.itwill.jpa.dto.bulletin_board.AnswerDto;
 import com.itwill.jpa.response.Response;
 import com.itwill.jpa.response.ResponseMessage;
 import com.itwill.jpa.response.ResponseStatusCode;
+import com.itwill.jpa.service.alarm.AlarmService;
 import com.itwill.jpa.service.bullentin_board.AnswerService;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -33,15 +35,22 @@ public class AnswerRestController {
 	
 	@Autowired
 	private AnswerService answerService;
-	
+	@Autowired
+	private AlarmService alarmService;
 	/* 답변 등록 */
 	@Operation(summary = "답변 등록")
 	@PostMapping
 	public ResponseEntity<Response> insertAnswer(@RequestBody AnswerDto answerDto){
-		
 		// 1. 서비스 호출 : 답변 데이터 저장
 		AnswerDto insertAnswerDto = answerService.saveAnswer(answerDto);
 		
+		AlarmDto alarmDto = new AlarmDto();
+		alarmDto.setReferenceNo(insertAnswerDto.getAnswerNo());
+		alarmDto.setAlarmContent("회원님의 질문에 답변이 달렸습니다");
+		alarmDto.setAlarmType("질문");
+		alarmDto.setReferenceType("답변");
+		alarmDto.setMemberNo(insertAnswerDto.getInquiryMemberNo());
+		alarmService.saveAlarm(alarmDto);
 		// 2. 응답 데이터(Response 객체) 생성
 		// - 응답객체에 코드, 메시지, 객체 설정
 		Response response = new Response();

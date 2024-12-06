@@ -7,7 +7,6 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import com.itwill.jpa.dto.bulletin_board.AnswerDto;
 import com.itwill.jpa.entity.bullentin_board.Answer;
 @Repository
 public interface AnswerRepository extends JpaRepository<Answer, Long>{
