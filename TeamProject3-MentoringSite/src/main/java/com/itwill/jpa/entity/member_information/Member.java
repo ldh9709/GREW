@@ -14,7 +14,6 @@ import com.itwill.jpa.entity.bullentin_board.Inquiry;
 import com.itwill.jpa.entity.bullentin_board.Vote;
 import com.itwill.jpa.entity.chatting_review.ChatMessage;
 import com.itwill.jpa.entity.chatting_review.ChatRoomStatus;
-import com.itwill.jpa.entity.chatting_review.MentoringRequest;
 import com.itwill.jpa.entity.report.Report;
 
 import jakarta.persistence.CascadeType;
