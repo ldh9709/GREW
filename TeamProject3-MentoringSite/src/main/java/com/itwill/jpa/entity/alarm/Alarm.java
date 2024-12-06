@@ -1,6 +1,7 @@
 package com.itwill.jpa.entity.alarm;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -16,6 +17,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.PrePersist;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -52,21 +54,25 @@ public class Alarm {
 	@Column(name="is_read")
 	private int isRead;
 	@Column(name="alarm_date")
-	@CreationTimestamp
-	private LocalDate alarmDate;
-	@ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+	private LocalDateTime alarmDate;
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="member_no")
 	private Member member;
-	
+	@PrePersist
+    public void setDefaultValues() {
+    	if(this.alarmDate==null) this.alarmDate = LocalDateTime.now();
+    	if(this.isRead==0) this.isRead = 1;
+    }
 	public static Alarm toEntity(AlarmDto alarmDto) {
 		return Alarm.builder()
 				.alarmNo(alarmDto.getAlarmNo())
 				.alarmContent(alarmDto.getAlarmContent())
+				.alarmType(alarmDto.getAlarmType())
 				.referenceNo(alarmDto.getReferenceNo())
 				.referenceType(alarmDto.getReferenceType())
 				.isRead(alarmDto.getIsRead())
 				.alarmDate(alarmDto.getAlarmDate())	
-				.member(Member.toEntity(alarmDto.getMemberNo()))
+				.member(Member.builder().memberNo(alarmDto.getMemberNo()).build())
 				.build();
 		
 	}

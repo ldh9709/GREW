@@ -10,6 +10,7 @@ import com.itwill.jpa.entity.member_information.Category;
 import com.itwill.jpa.entity.member_information.Member;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -56,7 +57,7 @@ public class Inquiry {
     @Column(name = "inquiry_views", nullable = false)
     private Integer inquiryViews;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     @JoinColumn(name = "category_no")
     private Category category;  // FK 연관 관계 (Category 엔티티)
 
@@ -86,8 +87,8 @@ public class Inquiry {
 	            .inquiryDate(inquiryDto.getInquiryDate())
 	            .inquiryStatus(inquiryDto.getInquiryStatus())
 	            .inquiryViews(inquiryDto.getInquiryViews())
-	            .category(Category.builder().categoryNo(inquiryDto.getCategory()).build())
-	            .member(Member.builder().memberNo(inquiryDto.getMember()).build())
+	            .category(Category.builder().categoryNo(inquiryDto.getCategoryNo()).build())
+	            .member(Member.builder().memberNo(inquiryDto.getMemberNo()).build())
 	            .build();
 	}
     

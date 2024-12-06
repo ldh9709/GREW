@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import com.itwill.jpa.dto.bulletin_board.AnswerDto;
 import com.itwill.jpa.entity.bullentin_board.Answer;
@@ -26,12 +28,22 @@ public class AnswerServiceImpl implements AnswerService{
 	/*답변수정*/
 	@Override
 	public AnswerDto updateAnswer(AnswerDto answerDto) throws Exception{
+		Answer answer = answerRepository.findById(answerDto.getAnswerNo()).get();
+		answer.setAnswerContent(answerDto.getAnswerContent());
 		return AnswerDto.toDto(answerRepository.save(Answer.toEntity(answerDto)));
 	}
 	
 	/*답변채택*/
 	@Override
 	public AnswerDto acceptAnswer(AnswerDto answerDto) throws Exception {
+		
+		//이미 채택된 답변이 있는지 확인
+	    Answer acceptedAnswer = answerRepository.findAcceptedAnswerByInquiry(answerDto.getInquiryNo());
+	    if (acceptedAnswer != null) {
+	    	// 예외를 던질 때 ResponseStatusException을 사용
+	        throw new ResponseStatusException(HttpStatus.CONFLICT, "이미 채택된 답변이 존재합니다.");
+	    }
+		
 		Answer answer = answerRepository.findById(answerDto.getAnswerNo()).get();
 		answer.setAnswerAccept(2);
 		return AnswerDto.toDto(answerRepository.save(answer));
@@ -43,6 +55,13 @@ public class AnswerServiceImpl implements AnswerService{
 		Answer answer = answerRepository.findById(answerDto.getAnswerNo()).get();
 	    answer.setAnswerStatus(2);  
 	    return AnswerDto.toDto(answerRepository.save(answer));
+	}
+	
+	
+	/* 답변상세보기 */
+	@Override
+	public AnswerDto getAnswer(Long answerNo) {
+		return AnswerDto.toDto(answerRepository.findByAnswerNo(answerNo));
 	}
 	
 	/*질문 하나에 달린 답변*/
@@ -106,6 +125,8 @@ public class AnswerServiceImpl implements AnswerService{
 		}
 		return answerDtoList;
 	}
+
+	
 	
 	
 	

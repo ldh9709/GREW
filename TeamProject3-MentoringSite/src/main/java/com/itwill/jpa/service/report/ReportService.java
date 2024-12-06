@@ -7,12 +7,12 @@ import java.util.List;
 
 public interface ReportService {
 	
-	void saveReport(ReportDto reportDto);
-	void updateReportStatusToInProgress(Long reportNo);
-	void updateReportStatusToResolved(Long reportNo);
-	void updateReportStatusToFalseReport(Long reportNo);
-	void updateReportStatusToCancel(Long reportNo);
-	public ReportDto selectReportByreportNo(Long reportNo);
-	public List<ReportDto> selectReportByUserNo(Long memberNo);
-	public List<ReportDto> selectReportAll();
+	ReportDto createReport(ReportDto reportDto);
+	ReportDto updateReportStatusToInProgress(Long reportNo);
+	ReportDto updateReportStatusToResolved(Long reportNo);
+	ReportDto updateReportStatusToFalseReport(Long reportNo);
+	ReportDto updateReportStatusToCancel(Long reportNo);
+	ReportDto getReportByreportNo(Long reportNo);
+	List<ReportDto> getReportByUserNo(Long memberNo);
+	List<ReportDto> getReportAll();
 }
