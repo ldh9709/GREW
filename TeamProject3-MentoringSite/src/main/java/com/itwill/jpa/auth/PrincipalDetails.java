@@ -1,16 +1,51 @@
 package com.itwill.jpa.auth;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-public class PrincipalDetails implements UserDetails {
+import com.itwill.jpa.auth.userinfo.Oauth2UserInfo;
+import com.itwill.jpa.entity.member_information.Member;
 
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.ToString;
+
+@Getter
+@ToString
+@EqualsAndHashCode
+public class PrincipalDetails implements UserDetails {
+	
+	private Member member;//일반 사용자 정보
+	private Oauth2UserInfo oauth2UserInfo;//SNS 사용자 정보
+	
+	
+	
+	//일반 로그인 시 사용
+	public PrincipalDetails(Member member) {
+		this.member = member;
+	}
+	//SNS 로그인 시 사용
+	public PrincipalDetails(Member member, Oauth2UserInfo oauth2UserInfo) {
+		this.member = member;
+		this.oauth2UserInfo = oauth2UserInfo;
+	}
+	
+	//해당 유저의 권한 목록 반환
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
-		// TODO Auto-generated method stub
-		return null;
+		
+		Collection<GrantedAuthority> collect = new ArrayList<>();
+		collect.add(new GrantedAuthority() {
+			
+			@Override
+			public String getAuthority() {
+				return member.getMemberRole().toString();
+			}
+		});
+		return collect;
 	}
 
 	@Override

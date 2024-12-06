@@ -10,6 +10,7 @@ import com.itwill.jpa.repository.member_information.MemberRepository;
 
 import lombok.RequiredArgsConstructor;
 
+/**** 일반 로그인 시 *****/
 @Service
 @RequiredArgsConstructor//final로 선언한 것들이 주입된다(Autowired 사용X)
 public class PrincipalDetailsService implements UserDetailsService {
