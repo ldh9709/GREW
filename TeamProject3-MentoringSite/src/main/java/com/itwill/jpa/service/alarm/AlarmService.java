@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.itwill.jpa.dto.alarm.AlarmDto;
 import com.itwill.jpa.dto.bulletin_board.AnswerDto;
+import com.itwill.jpa.dto.chatting_review.ReviewDto;
 import com.itwill.jpa.dto.member_information.MentorBoardDto;
 
 public interface AlarmService{
@@ -19,4 +20,6 @@ public interface AlarmService{
 	AlarmDto saveAlarmByAnswerToInquiry(AnswerDto answerDto);
 	//멘토보드 알림 추가
 	List<AlarmDto> saveAlarmsByMentorBoard(MentorBoardDto mentorBoardDto);
+	//리뷰달렸을때 멘토에게 알림
+	AlarmDto saveAlarmsByReview(ReviewDto reviewDto);
 }
