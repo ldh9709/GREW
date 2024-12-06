@@ -81,7 +81,11 @@ public interface AnswerRepository extends JpaRepository<Answer, Long>{
             "a.answer_no DESC", 
             nativeQuery = true)//jpql엔 sysdate 사용불가하기 때문에 nativeQuery로 오라클의 sql사용
 		List<Answer> findByAnswerOrderByVoteDate();
-	
 
+	@Query("SELECT i.member.memberNo "
+		       + "FROM Answer a "
+		       + "JOIN a.inquiry i "
+		       + "WHERE a.answerNo = :answerNo")
+		Long findByMemberNoByInquiryByAnswer(@Param("answerNo")Long answerNo);
 
 }

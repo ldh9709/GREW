@@ -45,20 +45,14 @@ public class AnswerRestController {
 		// 1. 서비스 호출 : 답변 데이터 저장
 		AnswerDto insertAnswerDto = answerService.saveAnswer(answerDto);
 		
-		AlarmDto alarmDto = new AlarmDto();
-		alarmDto.setReferenceNo(insertAnswerDto.getAnswerNo());
-		alarmDto.setAlarmContent("회원님의 질문에 답변이 달렸습니다");
-		alarmDto.setAlarmType("질문");
-		alarmDto.setReferenceType("답변");
-		alarmDto.setMemberNo(insertAnswerDto.getInquiryMemberNo());
-		alarmService.saveAlarm(alarmDto);
+		AlarmDto alarmDto = alarmService.saveAlarmByAnswerToInquiry(insertAnswerDto);
 		// 2. 응답 데이터(Response 객체) 생성
 		// - 응답객체에 코드, 메시지, 객체 설정
 		Response response = new Response();
 		response.setStatus(ResponseStatusCode.CREATED_ANSWER_SUCCESS);
 		response.setMessage(ResponseMessage.CREATED_ANSWER_SUCCESS);
 		response.setData(insertAnswerDto);
-		
+		response.setAddData(alarmDto);
 		// 3. 응답 헤더 설정(인코딩 타입)
 		HttpHeaders httpHeaders = new HttpHeaders();
 		httpHeaders.setContentType(new MediaType(MediaType.APPLICATION_JSON, Charset.forName("UTF-8")));
