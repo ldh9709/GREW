@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
 
 import com.itwill.jpa.dto.alarm.AlarmDto;
 import com.itwill.jpa.dto.bulletin_board.AnswerDto;
@@ -95,7 +96,42 @@ public class AnswerRestController {
 	}
 	
 	/* 답변채택 */
-	/* 잠시보류 */
+	@Operation(summary = "답변 채택")
+	@PutMapping("/accept")
+	public ResponseEntity<Response> acceptAnswer(@RequestBody AnswerDto answerDto) throws Exception {
+		try {
+			AnswerDto acceptedAnswerDto = answerService.acceptAnswer(answerDto);
+			
+			Response response = new Response();
+			response.setStatus(ResponseStatusCode.ACCEPT_ANSWER_SUCCESS);
+			response.setMessage(ResponseMessage.ACCEPT_ANSWER_SUCCESS);
+			response.setData(acceptedAnswerDto);
+			
+			HttpHeaders httpHeaders = new HttpHeaders();
+		    httpHeaders.setContentType(new MediaType(MediaType.APPLICATION_JSON, Charset.forName("UTF-8")));
+		        
+	        // 5. 응답 Entity 생성(ResponseEntity)
+	        ResponseEntity<Response> responseEntity = 
+	                new ResponseEntity<Response>(response, httpHeaders, HttpStatus.OK);
+			
+			return responseEntity;
+		} catch (ResponseStatusException ex) {
+	        // 예외 발생 시 적절한 상태 코드와 메시지를 Response 객체에 담아 반환
+	        Response response = new Response();
+	        response.setStatus(ResponseStatusCode.ACCEPT_ANSWER_FAIL);
+	        response.setMessage(ResponseMessage.ACCEPT_ANSWER_FAIL);
+	        response.setData(null);
+	        
+	        HttpHeaders httpHeaders = new HttpHeaders();
+		    httpHeaders.setContentType(new MediaType(MediaType.APPLICATION_JSON, Charset.forName("UTF-8")));
+		        
+	        // 5. 응답 Entity 생성(ResponseEntity)
+	        ResponseEntity<Response> responseEntity = 
+	                new ResponseEntity<Response>(response, httpHeaders, HttpStatus.OK);
+	        
+	        return responseEntity;
+		}
+	}
 	
 	
 	/* 답변 삭제(상태 업데이트) */

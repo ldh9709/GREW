@@ -22,4 +22,6 @@ public interface AlarmService{
 	List<AlarmDto> saveAlarmsByMentorBoard(MentorBoardDto mentorBoardDto);
 	//리뷰달렸을때 멘토에게 알림
 	AlarmDto saveAlarmsByReview(ReviewDto reviewDto);
+	//알림 클릭시 URl전송
+	String alarmRedirectURL(AlarmDto alarmDto);
 }

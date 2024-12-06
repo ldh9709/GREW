@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 
 import org.hibernate.annotations.CreationTimestamp;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.itwill.jpa.dto.chatting_review.ChatMessageDto;
 import com.itwill.jpa.entity.member_information.Member;
 
@@ -49,15 +50,17 @@ public class ChatMessage {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_no", nullable=false)
+    @JsonBackReference
     private Member member;
     
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="chat_room_no",nullable=false)
+    @JsonBackReference
     private ChatRoom chatRoom;
     
     @PrePersist
     public void setDefaultValues() {
-    	if (this.chatMessageCheck == null) this.chatMessageCheck = 1;
+    	if (this.chatMessageCheck==0) this.chatMessageCheck = 1;
         if (this.chatMessageDate == null) this.chatMessageDate = LocalDateTime.now();
     }
 
@@ -68,8 +71,8 @@ public class ChatMessage {
                              .chatContent(chatMessageDto.getChatContent())
                              .chatMessageDate(chatMessageDto.getChatMessageDate())
                              .chatMessageCheck(chatMessageDto.getChatMessageCheck())
-                             .member(Member.toEntity(chatMessageDto.getMember()))
-                             .chatRoom(ChatRoom.toEntity(chatMessageDto.getChatRoom()))
+                             .member(Member.builder().memberNo(chatMessageDto.getMemberNo()).build())
+                             .chatRoom(ChatRoom.builder().chatRoomNo(chatMessageDto.getChatRoomNo()).build())
                              .build();
     }
 
