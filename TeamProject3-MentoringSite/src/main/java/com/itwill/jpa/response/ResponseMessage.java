@@ -76,6 +76,8 @@ public class ResponseMessage {
 	public static final String FORCE_CLOSED_CHATTING = "강제 종료"; // (관리자가 비정상적인 요청을 종료함)
 	public static final String STAY_CHATTING = "채팅방에 머무릅니다."; // (채팅방을 나가지않음)
 	public static final String LEAVE_CHATTING = "채팅방을 나갔습니다."; // (채팅방을 나감)
+	public static final String SEND_CHATTING_SUCCESS= "채팅 전송 완료";
+	public static final String SEND_CHATTING_FAIL= "채팅 전송 실패";
 	
 	/******************* REVIEW 메시지 **********************/
 	public static final String CREATED_REVIEW_SUCCESS = "리뷰 등록 성공.";
