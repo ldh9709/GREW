@@ -43,10 +43,10 @@ public class ReviewRestController {
             response.setMessage(ResponseMessage.CREATED_REVIEW_FAIL);
             return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);	
         }
-		reviewService.saveReview(reviewDto);
+		Review review = reviewService.saveReview(reviewDto);
 		response.setStatus(ResponseStatusCode.CREATED_REVIEW_SUCCESS);
 		response.setMessage(ResponseMessage.CREATED_REVIEW_SUCCESS);
-		response.setData(reviewDto);
+		response.setData(review);
 		
 		HttpHeaders httpHeaders = new HttpHeaders();
 		httpHeaders.setContentType(new MediaType(MediaType.APPLICATION_JSON, Charset.forName("UTF-8")));
@@ -63,10 +63,10 @@ public class ReviewRestController {
 	public ResponseEntity<Response> updateReview(@RequestBody ReviewDto reviewDto){
 		
 		Response response = new Response();
-		reviewService.updateReview(reviewDto);
+		Review review = reviewService.updateReview(reviewDto);
 		response.setStatus(ResponseStatusCode.UPDATE_REVIEW_SUCCESS);
 		response.setMessage(ResponseMessage.UPDATE_REVIEW_SUCCESS);
-		response.setData(reviewDto);
+		response.setData(review);
 		
 		HttpHeaders httpHeaders = new HttpHeaders();
 		httpHeaders.setContentType(new MediaType(MediaType.APPLICATION_JSON, Charset.forName("UTF-8")));
@@ -81,10 +81,10 @@ public class ReviewRestController {
 	public ResponseEntity<Response> deleteReview(@RequestBody ReviewDto reviewDto){
 		
 		Response response = new Response();
-		reviewService.deleteReview(reviewDto.getReviewNo());
+		Review review = reviewService.deleteReview(reviewDto.getReviewNo());
 		response.setStatus(ResponseStatusCode.DELETE_REVIEW_SUCCESS);
 		response.setMessage(ResponseMessage.DELETE_REVIEW_SUCCESS);
-		response.setData(reviewDto);
+		response.setData(review);
 		
 		HttpHeaders httpHeaders = new HttpHeaders();
 		httpHeaders.setContentType(new MediaType(MediaType.APPLICATION_JSON, Charset.forName("UTF-8")));
