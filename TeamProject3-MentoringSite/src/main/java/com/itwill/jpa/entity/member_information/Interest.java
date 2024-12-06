@@ -28,7 +28,7 @@ public class Interest {
     @JoinColumn(name = "member_no" ,nullable = false)
     private Member member;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "category_no" ,nullable = false)
     private Category category;
     

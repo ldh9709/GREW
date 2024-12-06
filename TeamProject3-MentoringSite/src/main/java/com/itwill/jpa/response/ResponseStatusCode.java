@@ -25,37 +25,51 @@ public class ResponseStatusCode {
 	public static final int READ_MENTEE_COUNT_SUCCESS = 2420;
 	public static final int DELETE_FOLLOW_SUCCESS = 2430;
 	
+	/******************* CATEGORY 메시지 ************************/
+	public static final int CREATE_CATEGORY_SUCCESS = 2400;
+	public static final int READ_CATEGORY_SUCCESS = 2410;
+	public static final int READ_CATEGORYLIST_SUCCESS = 2420;
+	public static final int UPDATE_CATEGORY_SUCCESS = 2430;
+	public static final int DELETE_CATEGORY_SUCCESS = 2440;
+	
 	/*알림(3000), 신고(4000), 질문(5000), 답변(6000), 채팅(7000)*/
 	/******************* Alarm    메세지 ************************/
-	
+	public static final int CREATED_ALARM_SUCCESS= 3000;
+	public static final int READ_ALARM_SUCCESS= 3200;
+	public static final int DELETE_ALARM_SUCCESS= 3300;
+	public static final int IS_READ_ALARM_SUCCESS= 3400;
 	/******************* REPORT   메시지 ************************/
 	public static final int CREATED_REPORT_SUCCESS = 4000;
 	public static final int READ_REPORT_SUCCESS = 4100;
 	public static final int READ_REPORT_LIST_SUCCESS = 4200;
 	public static final int UPDATE_REPORT_SUCCESS = 4300;
 	public static final int REPORT_FAIL = 4400;
+	
 	/**********************INQUIRY 메시지**************************/
 	public static final int CREATED_INQUIRY_SUCCESS = 5000;
-	public static final int CREATED_INQUIRY_FAIL = 5100;
-	public static final int UPDATE_INQUIRY_SUCCESS = 5200;
-	public static final int UPDATE_INQUIRY_FAIL = 5300;
-	public static final int DELETE_INQUIRY_SUCCESS = 5400;
-	public static final int DELETE_INQUIRY_FAIL = 5500;
-	public static final int READ_INQUIRY_LIST_SUCCESS = 5600;
-	public static final int READ_INQUIRY_LIST_FAIL = 5700;
-	public static final int INCREASE_VIEW_INQUIRY_SUCCESS = 5800;
-	public static final int VIEW_INQUIRY_SUCCESS = 5900;
+	public static final int CREATED_INQUIRY_FAIL = 5001;
+	public static final int UPDATE_INQUIRY_SUCCESS = 5100;
+	public static final int UPDATE_INQUIRY_FAIL = 5101;
+	public static final int DELETE_INQUIRY_SUCCESS = 5200;
+	public static final int DELETE_INQUIRY_FAIL = 5201;
+	public static final int READ_INQUIRY_LIST_SUCCESS = 5300;
+	public static final int READ_INQUIRY_LIST_FAIL = 5301;
+	public static final int INCREASE_VIEW_INQUIRY_SUCCESS = 5400;
+	public static final int VIEW_INQUIRY_SUCCESS = 5500;
 	
 	/**********************ANSWER 메시지**************************/
 	public static final int CREATED_ANSWER_SUCCESS = 6000;
-	public static final int CREATED_ANSWER_FAIL = 6100;
+	public static final int CREATED_ANSWER_FAIL = 6001;
 	public static final int UPDATE_ANSWER_SUCCESS = 6200;
-	public static final int UPDATE_ANSWER_FAIL = 6300;
-	public static final int DELETE_ANSWER_SUCCESS = 6400;
-	public static final int DELETE_ANSWER_FAIL = 6500;
-	public static final int READ_ANSWER_LIST_SUCCESS = 6600;
-	public static final int READ_ANSWER_LIST_FAIL = 6700;
-	public static final int READ_ANSWER_SUCCESS = 6800;
+	public static final int UPDATE_ANSWER_FAIL = 6201;
+	public static final int DELETE_ANSWER_SUCCESS = 6300;
+	public static final int DELETE_ANSWER_FAIL = 6301;
+	public static final int ACCEPT_ANSWER_SUCCESS = 6400;
+	public static final int ACCEPT_ANSWER_FAIL = 6401;
+	public static final int READ_ANSWER_LIST_SUCCESS = 6500;
+	public static final int READ_ANSWER_LIST_FAIL = 6600;
+	public static final int READ_ANSWER_SUCCESS = 6700;
+	
 	
 	/******************* CHATTING 메시지 ************************/
 	public static final int PENDING_CHATTING = 7000; // (멘토의 수락/거절 대기 상태)
@@ -66,6 +80,22 @@ public class ResponseStatusCode {
 	public static final int FORCE_CLOSED_CHATTING = 7500; // (관리자가 비정상적인 요청을 종료함)
 	public static final int STAY_CHATTING = 7600; // (채팅방을 나가지않음)
 	public static final int LEAVE_CHATTING = 7700; // (채팅방을 나감)
+	public static final int SEND_CHATTING_SUCCESS=7800;
+	public static final int SEND_CHATTING_FAIL=7900;
+	
+	
+	/******************* REVIEW 메시지 **********************/
+	public static final int CREATED_REVIEW_SUCCESS = 9000;
+	public static final int CREATED_REVIEW_FAIL = 9100;
+	public static final int UPDATE_REVIEW_SUCCESS = 9200;
+	public static final int UPDATE_REVIEW_FAIL = 9300;
+	public static final int DELETE_REVIEW_SUCCESS = 9400;
+	public static final int DELETE_REVIEW_FAIL = 9500;
+	public static final int VIEW_REVIEW_SUCCESS = 9600;
+	public static final int VIEW_REVIEW_FAIL = 9700;
+	public static final int READ_REVIEW_LIST_SUCCESS = 9800;
+	public static final int READ_REVIEW_LIST_FAIL = 9900;
+	
 	
 	public static final int LOGIN_FAIL_NOT_FOUND_MEMBER = 8000;
 	public static final int LOGIN_FAIL_PASSWORD_MISMATCH_MEMBER = 8100;

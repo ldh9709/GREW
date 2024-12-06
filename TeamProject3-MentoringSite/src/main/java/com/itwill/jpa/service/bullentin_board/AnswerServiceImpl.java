@@ -2,16 +2,15 @@ package com.itwill.jpa.service.bullentin_board;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import com.itwill.jpa.dto.bulletin_board.AnswerDto;
 import com.itwill.jpa.entity.bullentin_board.Answer;
-import com.itwill.jpa.entity.bullentin_board.Inquiry;
 import com.itwill.jpa.repository.bullentin_board.AnswerRepository;
-import com.itwill.jpa.repository.bullentin_board.InquiryRepository;
 
 import jakarta.transaction.Transactional;
 @Transactional
@@ -19,8 +18,7 @@ import jakarta.transaction.Transactional;
 public class AnswerServiceImpl implements AnswerService{
 	@Autowired
 	private AnswerRepository answerRepository;
-	@Autowired
-	private InquiryRepository inquiryRepository;
+	
 	/*답변등록*/
 	@Override
 	public AnswerDto saveAnswer(AnswerDto answerDto){
@@ -38,6 +36,14 @@ public class AnswerServiceImpl implements AnswerService{
 	/*답변채택*/
 	@Override
 	public AnswerDto acceptAnswer(AnswerDto answerDto) throws Exception {
+		
+		//이미 채택된 답변이 있는지 확인
+	    Answer acceptedAnswer = answerRepository.findAcceptedAnswerByInquiry(answerDto.getInquiryNo());
+	    if (acceptedAnswer != null) {
+	    	// 예외를 던질 때 ResponseStatusException을 사용
+	        throw new ResponseStatusException(HttpStatus.CONFLICT, "이미 채택된 답변이 존재합니다.");
+	    }
+		
 		Answer answer = answerRepository.findById(answerDto.getAnswerNo()).get();
 		answer.setAnswerAccept(2);
 		return AnswerDto.toDto(answerRepository.save(answer));

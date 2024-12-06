@@ -28,4 +28,11 @@ public interface FollowReporitory extends JpaRepository<Follow, Long>{
 	public List<FollowResponseDto> findFollowMentors(@Param("menteeMemberNo") Long menteeMemberNo);
 	
 	public Integer countBymentorMember_MemberNo(Long mentorMemberNo);
+	
+	//멘토보드생성알림을 위한 팔로워찾기
+		@Query("SELECT f.menteeMember.memberNo "
+				+ "FROM Follow f "
+				+ "WHERE f.mentorMember.memberNo = :mentorNo")
+		List<Long> findMenteeByMentor(@Param("mentorNo") Long mentorNo);
+	
 }

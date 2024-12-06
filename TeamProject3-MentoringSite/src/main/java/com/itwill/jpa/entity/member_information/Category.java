@@ -3,7 +3,11 @@ package com.itwill.jpa.entity.member_information;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.itwill.jpa.dto.member_information.CategoryDto;
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
+import com.itwill.jpa.dto.member_information.CategoryRequestDto;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -39,12 +43,22 @@ public class Category {
     @OneToMany(mappedBy = "category", fetch = FetchType.LAZY)
     private List<Interest> interests = new ArrayList<>();
     
-    public static Category toEntity(CategoryDto categoryDto) {
+    @OneToMany(mappedBy = "parentCategory", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
+    private List<Category> childCategories = new ArrayList<>();
+    
+    public static Category toEntity(CategoryRequestDto categoryDto) {
         return Category.builder()
         		.categoryNo(categoryDto.getCategoryNo())
                 .categoryName(categoryDto.getCategoryName())
                 .categoryDepth(categoryDto.getCategoryDepth())
-                .parentCategory(categoryDto.getCategory())
+                .parentCategory(Category.builder()
+                		.categoryNo(categoryDto.getCategoryNo())
+                		.build())
                 .build();
     }
+    
+    public void addParentCategory(Category category) {
+    	
+    }
+    
 }
