@@ -18,8 +18,8 @@ import lombok.NoArgsConstructor;
 public class Interest {
 
     @Id
-    @SequenceGenerator(name = "interest_SEQ", initialValue = 1, allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "interest_SEQ")
+    @SequenceGenerator(name = "interest_no_SEQ", initialValue = 1, allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "interest_no_SEQ")
    
     @Column(name = "interest_no" )
     private Long interestNo;
@@ -28,16 +28,24 @@ public class Interest {
     @JoinColumn(name = "member_no" ,nullable = false)
     private Member member;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category_no" ,nullable = false)
     private Category category;
     
-    
     public static Interest toEntity(InterestDto interestDto) {
-        return Interest.builder()
+        
+    	Member member = Member.builder()
+						      .memberNo(interestDto.getMemberNo())
+						      .build();
+        
+        Category category = Category.builder()
+					        		.categoryNo(interestDto.getCategoryNo())
+					        		.build();
+					        		
+    	return Interest.builder()
         		.interestNo(interestDto.getInterestNo())
-                .member(Member.toEntity(interestDto.getMember()))
-                .category(Category.toEntity(interestDto.getCategory()))
+                .member(member)
+                .category(category)
                 .build();
     }
 }

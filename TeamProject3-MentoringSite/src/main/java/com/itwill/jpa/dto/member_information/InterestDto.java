@@ -14,8 +14,10 @@ import lombok.NoArgsConstructor;
 public class InterestDto {
 	
 	private Long interestNo;
-    private MemberDto member;
-    private CategoryRequestDto category;
+	
+    private Long memberNo;
+    
+    private Long categoryNo;
 
     /*
      * Entity -> DTO
@@ -23,10 +25,11 @@ public class InterestDto {
     public static InterestDto toDto(Interest interestEntity) {
         return InterestDto.builder()
         		.interestNo(interestEntity.getInterestNo())
-                .member(MemberDto.toDto(interestEntity.getMember()))
-                .category(CategoryRequestDto.toDto(interestEntity.getCategory()))
+                .memberNo(interestEntity.getMember().getMemberNo())
+                .categoryNo(interestEntity.getCategory().getCategoryNo())
                 .build();
     }
-
+    
+    
     
 }

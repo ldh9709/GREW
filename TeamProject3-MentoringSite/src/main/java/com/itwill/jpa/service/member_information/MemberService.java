@@ -21,6 +21,6 @@ public interface MemberService {
 	Member getMember(Long memberNo);
 	
 	//회원 상태 수정
-	Member updateMemberStatus(MemberDto memberDto);
+	Member updateMemberStatus(MemberDto memberDto, Integer statusNo);
 	
 }

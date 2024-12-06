@@ -5,6 +5,7 @@ import java.util.List;
 import com.itwill.jpa.entity.member_information.Interest;
 import com.itwill.jpa.entity.member_information.Member;
 
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -35,6 +36,9 @@ public class MemberDto {
 	            .memberEmail(memberEntity.getMemberEmail())
 	            .memberName(memberEntity.getMemberName())
 	            .memberStatus(memberEntity.getMemberStatus())
+	            .interests(memberEntity.getInterests().stream()
+	            		.map(InterestDto::toDto)
+	            		.toList())
 	            .build();
 	}
 	

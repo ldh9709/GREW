@@ -14,9 +14,10 @@ import com.itwill.jpa.entity.bullentin_board.Inquiry;
 import com.itwill.jpa.entity.bullentin_board.Vote;
 import com.itwill.jpa.entity.chatting_review.ChatMessage;
 import com.itwill.jpa.entity.chatting_review.ChatRoomStatus;
-import com.itwill.jpa.entity.chatting_review.ChatRoom;
+import com.itwill.jpa.entity.chatting_review.MentoringRequest;
 import com.itwill.jpa.entity.report.Report;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -32,6 +33,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 
 @Builder
@@ -101,7 +103,8 @@ public class Member {
 	private MentorProfile mentorProfile;
 
 	/* 한 명의 유저가 관심사 여러개 보유 가능 */
-	@OneToMany(mappedBy = "member", fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "member", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@Builder.Default
 	private List<Interest> interests = new ArrayList<>();
 	
 	/* 한 명의 유저가 멘트 게시글은 여러개 보유 가능 */
@@ -109,12 +112,12 @@ public class Member {
 	private List<MentorBoard> mentorBoards = new ArrayList<>();
 	
 	/* (멘토)한 명의 유저가 팔로우는 여러개 보유 가능 */
-	@OneToMany(mappedBy = "menteeMember", fetch = FetchType.LAZY)
-	private List<Follow> followMentees = new ArrayList<>();
+	@OneToMany(mappedBy = "followerMember", fetch = FetchType.LAZY)
+	private List<Follow> followers = new ArrayList<>();
 	
 	/* (멘티)한 명의 유저가 팔로우는 여러개 보유 가능 */
-	@OneToMany(mappedBy = "mentorMember", fetch = FetchType.LAZY)
-	private List<Follow> followMentors = new ArrayList<>();
+	@OneToMany(mappedBy = "followedMember", fetch = FetchType.LAZY)
+	private List<Follow> followeds = new ArrayList<>();
 	
 	/* 한 명의 유저가 신고는 여러개 보유 가능 */
 	@OneToMany(mappedBy = "member", fetch = FetchType.LAZY)
@@ -130,11 +133,11 @@ public class Member {
 	
 	/* 한 명의 유저가 채팅방 신청 여러개 보유 가능 */
 	@OneToMany(mappedBy = "mentee", fetch = FetchType.LAZY)
-	private List<ChatRoom> mentee = new ArrayList<ChatRoom>();
+	private List<MentoringRequest> mentee = new ArrayList<>();
 	
 	/* 한 명의 유저가 채팅방 신청 여러개 보유 가능 */
 	@OneToMany(mappedBy = "mentor", fetch = FetchType.LAZY)
-	private List<ChatRoom> mentor = new ArrayList<ChatRoom>();
+	private List<MentoringRequest> mentor = new ArrayList<>();
 	
 	/* 한 명의 유저가 채팅방 좋아요/싫어요 여러개 보유 가능 */
 	@OneToMany(mappedBy = "member", fetch = FetchType.LAZY)
@@ -167,6 +170,10 @@ public class Member {
 	            .build();
 	}
 	
+	public void addInterests(Interest interest) {
+		interests.add(interest);
+		interest.setMember(this);
+	}
 	
 	
 }

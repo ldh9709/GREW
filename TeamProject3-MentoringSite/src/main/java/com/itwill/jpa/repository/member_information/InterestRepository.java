@@ -20,4 +20,12 @@ public interface InterestRepository extends JpaRepository<Interest, Long> {
 
     // 특정 사용자와 카테고리를 기반으로 관심사 조회
     //List<Interest> findByMemberAndCategory(Member member, Category category);
+	
+	//관심사 번호로 관심사 객체 조회
+	Interest findByInterestNo(Long InterestNo);
+	
+	//사용자 번호로 관심사 리스트 조회
+	List<Interest> findByMemberMemberNo(Long memberNo);
+	
+	
 }
