@@ -82,7 +82,7 @@ public class Member {
 	private Role memberRole;//역할
 	
 	@Column(name = "member_provider")
-	private String memberProvider;//인증 제공자(일반 로그인Null, 아니면 Google 등)
+	private String memberProvider;//인증 제공자(일반 로그인이면 Null, 아니면 Google 등)
 	
 	@Column(name = "member_provider_id")
 	private String memberProviderId;//SNS 고유 Id

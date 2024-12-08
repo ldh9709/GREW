@@ -10,7 +10,7 @@ import com.itwill.jpa.repository.member_information.MemberRepository;
 
 import lombok.RequiredArgsConstructor;
 
-/**** 일반 로그인 시 *****/
+/**** 일반 로그인 시 요청한 username을 기반으로 데이터를 가져와 인증 객체 반환 *****/
 @Service
 @RequiredArgsConstructor//final로 선언한 것들이 주입된다(Autowired 사용X)
 public class PrincipalDetailsService implements UserDetailsService {
