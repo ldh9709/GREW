@@ -15,6 +15,7 @@ import com.itwill.jpa.entity.bullentin_board.Vote;
 import com.itwill.jpa.entity.chatting_review.ChatMessage;
 import com.itwill.jpa.entity.chatting_review.ChatRoomStatus;
 import com.itwill.jpa.entity.report.Report;
+import com.itwill.jpa.entity.role.Role;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -63,9 +64,6 @@ public class Member {
 	@Column(name = "member_name", nullable = false)
 	private String memberName;//이름
 	
-	@Column(name = "member_role", nullable = false)
-	private String memberRole;//역할
-	
 	@Column(name = "member_points", nullable = false)
 	private Integer memberPoints;//멤버 연필 포인트
 	
@@ -78,12 +76,26 @@ public class Member {
 	@Column(name = "member_report_count", nullable = false)
 	private Integer memberReportCount;//신고 당한 횟수
 	
+	/***********************시큐리티를 위한 멤버 필드*****************************/
+	
+	@Column(name = "member_role", nullable = false)
+	private Role memberRole;//역할
+	
+	@Column(name = "member_provider")
+	private String memberProvider;//인증 제공자(일반 로그인Null, 아니면 Google 등)
+	
+	@Column(name = "member_provider_id")
+	private String memberProviderId;//SNS 고유 Id
+	
+	
+	
+	
 	
 	
 	/* 초기값 설정 */
 	@PrePersist
 	public void setDefaultValues() {
-		if (this.memberRole == null) this.memberRole = "MENTEE";
+		if (this.memberRole == null) this.memberRole = Role.ROLE_MENTEE;
 		if (this.memberPoints == null) this.memberPoints = 0;
 		if (this.memberStatus == null || this.memberStatus == 0) this.memberStatus = 1;
 		if (this.memberJoinDate == null) this.memberJoinDate = LocalDateTime.now();
