@@ -80,8 +80,11 @@ public class ResponseStatusCode {
 	public static final int FORCE_CLOSED_CHATTING = 7500; // (관리자가 비정상적인 요청을 종료함)
 	public static final int STAY_CHATTING = 7600; // (채팅방을 나가지않음)
 	public static final int LEAVE_CHATTING = 7700; // (채팅방을 나감)
-	public static final int SEND_CHATTING_SUCCESS=7800;
-	public static final int SEND_CHATTING_FAIL=7900;
+	public static final int SEND_CHATTING_SUCCESS = 7800;
+	public static final int SEND_CHATTING_FAIL = 7900;
+	public static final int CHATTING_LIST_SUCCESS = 7010;
+	public static final int CHATTING_NAME_CHANGE = 7020;
+	public static final int CHATTING_MESSAGE = 7030;
 	
 	
 	/******************* REVIEW 메시지 **********************/

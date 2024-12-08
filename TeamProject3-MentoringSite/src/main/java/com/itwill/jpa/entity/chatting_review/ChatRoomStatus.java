@@ -39,12 +39,10 @@ public class ChatRoomStatus {
     @Column(name = "chat_room_status", nullable = false)
     private Integer chatRoomStatus;
 
-    @ToString.Exclude
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "chat_room_no", nullable = false)
     private ChatRoom chatRoom;
 
-    @ToString.Exclude
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_no", nullable = false)
     private Member member;
@@ -60,7 +58,7 @@ public class ChatRoomStatus {
                 .chatRoomStatusNo(chatRoomStatusDto.getChatRoomStatusNo())
                 .chatRoomName(chatRoomStatusDto.getChatRoomName())
                 .chatRoomStatus(chatRoomStatusDto.getChatRoomStatus())
-                .member(Member.toEntity(chatRoomStatusDto.getMember()))
+                .member(Member.builder().memberNo(chatRoomStatusDto.getMemberNo()).build())
                 .build();
     }
 }

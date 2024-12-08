@@ -48,12 +48,10 @@ public class ChatRoom {
 	@Column(name = "chat_room_end_date")
 	private LocalDateTime chatRoomEndDate;
 	
-	@ToString.Exclude
 	@ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "mentee_no", nullable = false)
     private Member mentee;
 	
-	@ToString.Exclude
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "mentor_no", nullable = false)
     private Member mentor;

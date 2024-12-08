@@ -140,6 +140,27 @@ values(chat_room_no_SEQ.nextval, 7400, sysdate, null, 1, 7);
 insert into chat_room (chat_room_no, chat_room_status, chat_room_start_date, chat_room_end_date, mentee_no, mentor_no)
 values(chat_room_no_SEQ.nextval, 7500, sysdate, null, 2, 5);
 
+/* 채팅방 내용 등록 */
+insert into chat_message (chat_message_no, chat_message_check, chat_message_date, chat_room_no, member_no, chat_message_content) 
+values (chat_message_SEQ.nextval, 1, sysdate, 1, 1, '안녕하세요');
+insert into chat_message (chat_message_no, chat_message_check, chat_message_date, chat_room_no, member_no, chat_message_content) 
+values (chat_message_SEQ.nextval, 1, sysdate, 1, 5, '반가워요');
+insert into chat_message (chat_message_no, chat_message_check, chat_message_date, chat_room_no, member_no, chat_message_content) 
+values (chat_message_SEQ.nextval, 1, sysdate, 1, 5, '코딩에 관심이 많으세요?');
+insert into chat_message (chat_message_no, chat_message_check, chat_message_date, chat_room_no, member_no, chat_message_content) 
+values (chat_message_SEQ.nextval, 1, sysdate, 1, 1, '네');
+insert into chat_message (chat_message_no, chat_message_check, chat_message_date, chat_room_no, member_no, chat_message_content) 
+values (chat_message_SEQ.nextval, 1, sysdate, 1, 1, '최근에 배우다가 어려운 부분이 있어서 조언을 구하고자 신청했어요!');
+insert into chat_message (chat_message_no, chat_message_check, chat_message_date, chat_room_no, member_no, chat_message_content) 
+values (chat_message_SEQ.nextval, 1, sysdate, 1, 5, '그렇군요 잘되었네요');
+insert into chat_message (chat_message_no, chat_message_check, chat_message_date, chat_room_no, member_no, chat_message_content) 
+values (chat_message_SEQ.nextval, 1, sysdate, 1, 5, '제가 이 분야 탑이에요  ㅎㅎ');
+insert into chat_message (chat_message_no, chat_message_check, chat_message_date, chat_room_no, member_no, chat_message_content) 
+values (chat_message_SEQ.nextval, 1, sysdate, 1, 1, '아 진짜요? 든든하네요');
+insert into chat_message (chat_message_no, chat_message_check, chat_message_date, chat_room_no, member_no, chat_message_content) 
+values (chat_message_SEQ.nextval, 1, sysdate, 1, 5, '좋아요 그럼 먼저 뭐 때문에 신청하셨나요?');
+insert into chat_message (chat_message_no, chat_message_check, chat_message_date, chat_room_no, member_no, chat_message_content) 
+values (chat_message_SEQ.nextval, 1, sysdate, 1, 1, 'java에서 객체지향이 어려워서 질문하려고요');
 /* 채팅방 나갔는지 여부 확인 */
 
 
