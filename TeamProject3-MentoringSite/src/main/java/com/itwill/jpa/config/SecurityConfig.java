@@ -1,19 +1,30 @@
 package com.itwill.jpa.config;
 
+import java.util.Arrays;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.config.oauth2.client.CommonOAuth2Provider;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.client.web.OAuth2AuthorizationRequestRedirectFilter;
 import org.springframework.security.oauth2.client.web.OAuth2AuthorizationRequestResolver;
 import org.springframework.security.oauth2.client.web.OAuth2LoginAuthenticationFilter;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import com.itwill.jpa.auth.FormLoginFailureHandler;
 import com.itwill.jpa.auth.PrincipalDetailsService;
 import com.itwill.jpa.auth.PrincipalOauth2UserSerivce;
+import com.itwill.jpa.config.handler.APILoginFailHandler;
+import com.itwill.jpa.config.handler.APILoginSuccessHandler;
 
 @Configuration//이 클래스를 읽고 빈으로 등록한다
 @EnableWebSecurity(debug = true)//Spring Security의 설정을 활성화
@@ -50,29 +61,31 @@ public class SecurityConfig {
 	 */
 	OAuth2LoginAuthenticationFilter authenticationFilter;
 	
-	@Autowired
 	//OAuth2 로그인 시(SNS) 사용자 정보를 처리하는 서비스
+	@Autowired
 	private PrincipalOauth2UserSerivce principalOauth2UserSerivce;
 	
-	@Autowired
 	//폼 로그인 시 사용자 인증 정보를 처리하는 서비스
+	@Autowired
 	private PrincipalDetailsService principalDetailsService;
 	
-	@Autowired
 	//로그인 실패 시 동작을 정의하는 핸들러.
+	@Autowired
 	private FormLoginFailureHandler formLoginFailureHandler;
 	
 	//인증 없이 접근 가능한 경로 정의
 	private final String[] whitelist = { };
 	
+	
+	/* Spring Security에서 HTTP 요청에 대한 보안 설정을 구성 */
 	@Bean
-	//Spring Security에서 HTTP 요청에 대한 보안 설정을 구성
 	public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
 		
 		//개발 단계에서 CSRF 보호를 비활성화
-		httpSecurity.csrf((t) -> {
-			t.disable();
-		});
+		httpSecurity.csrf((config) -> {config.disable();});
+		
+		// 세션 관리 설정: Stateless 설정, 서버는 세션을 생성하지 않음
+		httpSecurity.sessionManagement(sessionConfig -> sessionConfig.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 		
 		//whitelist에 정의된 경로는 인증 없이 접근 가능
 		httpSecurity.authorizeHttpRequests((t) -> {
@@ -81,14 +94,16 @@ public class SecurityConfig {
 			t.anyRequest().authenticated();
 		});
 		
+		 //CORS 설정: 외부에서 이 API를 호출할 수 있도록 CORS 설정을 정의
+		 httpSecurity.cors(httpSecurityCorsConfigurer -> {
+		      httpSecurityCorsConfigurer.configurationSource(corsConfigurationSource());  // CORS 설정을 적용
+		    });
+		
 		//폼 기반 로그인 구성
-		httpSecurity.formLogin((t) -> {
-			t.loginPage("/login")//로그인 페이지 경로
-			 .usernameParameter("eamil")//로그인 폼에서 사용자 이메일 필드를 username으로 매핑
-			 .passwordParameter("password")//로그인 폼에서 사용자 비밀번호 필드 매핑
-			 .loginProcessingUrl("loginProcessing")//로그인 인증 요청 경로
-			 .defaultSuccessUrl("/dashboard/myInfo");//로그인 성공 후 리다이렉트 경로
-			 //.failureForwardUrl();//로그인 실패 시 동작처리
+		httpSecurity.formLogin((config) -> {
+			config.loginPage("/login");
+			config.successHandler(new APILoginSuccessHandler());
+			config.failureHandler(new APILoginFailHandler());
 		});
 		
 		/*
@@ -122,7 +137,33 @@ public class SecurityConfig {
 			 .logoutSuccessUrl("/login");//성공 후 리다이렉트
 		});
 		
+
 		return httpSecurity.build();
+		
+		
+	}
+	
+	/* CORS 객체 설정 */
+	 @Bean
+	  public CorsConfigurationSource corsConfigurationSource() {
+	    CorsConfiguration configuration = new CorsConfiguration();  // CORS 설정 객체 생성
+
+	    // CORS 설정
+	    configuration.setAllowedOriginPatterns(Arrays.asList("*"));  // 모든 출처에서 요청을 허용
+	    configuration.setAllowedMethods(Arrays.asList("HEAD", "GET", "POST", "PUT", "DELETE"));  // 허용할 HTTP 메소드 설정
+	    configuration.setAllowedHeaders(Arrays.asList("Authorization", "Cache-Control", "Content-Type"));  // 허용할 HTTP 헤더 설정
+	    configuration.setAllowCredentials(true);  // 쿠키를 허용
+
+	    UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();  // CORS 설정을 경로 기반으로 적용
+	    source.registerCorsConfiguration("/**", configuration);  // 모든 경로에 대해 CORS 설정 적용
+
+	    return source;  // CORS 설정을 반환
+	  }
+	
+	/* 비밀번호 암호화 */
+	@Bean
+	public PasswordEncoder passwordEncoder() {
+		return new BCryptPasswordEncoder();
 	}
 	
 	
