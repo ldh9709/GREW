@@ -29,10 +29,15 @@ public @interface Email {
 	
 	/*
 	 * Bean Validation에서 그룹 기반 검증을 지원하기 위한 속성
-	 * 
+	 * 특정 그룹에만 검증 규칙을 적용할 때 사용
 	 */
 	Class<?>[] groups() default {};
 	
+	/*
+	 * 확장성을 제공하기 위해 사용
+	 * 유효성 검증 결과에 메타데이터를 추가하거나 특정한 의미를 부여하는 데 활용
+	 * 예: 검증 실패 시 추가적인 정보 전달
+	 */
 	Class<? extends Payload>[] payload() default {};
 	
 	
