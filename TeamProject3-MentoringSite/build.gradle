@@ -49,6 +49,12 @@ dependencies {
 	/* 사용자 입력 데이터의 유효성을 검증할 때 필요. */
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
 	
+	/* 이메일 전송 기능을 간단하게 구현할 수 있도록 지원하는 의존성 */
+	implementation 'org.springframework.boot:spring-boot-starter-mail'
+	
+	/* 어노테이션 */
+	implementation 'jakarta.annotation:jakarta.annotation-api:2.1.1'
+	
 	/* 토큰 */
 	implementation 'io.jsonwebtoken:jjwt-api:0.11.5'
 	runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.11.5'
