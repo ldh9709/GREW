@@ -213,4 +213,6 @@ public class MemberRestController {
 		return responseEntity;
 	}
 	
+	/***** 이메일 발송 (테스트) *****/
+	
 }
