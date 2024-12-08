@@ -17,7 +17,10 @@ public class GoogleUserInfo implements Oauth2UserInfo {
 	public GoogleUserInfo(Map<String, Object> attributes) {
 		this.attributes = attributes;
 	}
-	// OAuth2 서버에서 제공한 전체 사용자 데이터를 반환
+	
+	/*
+	 * OAuth2 서버에서 제공한 전체 사용자 데이터를 반환
+	 */
 	@Override
 	public Map<String, Object> getAttributes() {
 		return attributes;
@@ -31,22 +34,29 @@ public class GoogleUserInfo implements Oauth2UserInfo {
 	public String getProviderId() {
 		return attributes.get("sub").toString();
 	}
-
+	
+	/*
+	 * 인증 제공자 이름을 반환
+	 */
 	@Override
 	public String getProvider() {
-		return null;
+		return "GooGle";
 	}
-
+	
+	/*
+	 * Google에서 인증된 사용자의 이메일 주소 반환
+	 */
 	@Override
 	public String getEmail() {
-		// TODO Auto-generated method stub
-		return null;
+		return attributes.get("email").toString();
 	}
-
+	
+	/*
+	 * 구글에서 인증된 사용자의 이름 반환
+	 */
 	@Override
 	public String getName() {
-		// TODO Auto-generated method stub
-		return null;
+		return attributes.get("name").toString();
 	}
 
 }
