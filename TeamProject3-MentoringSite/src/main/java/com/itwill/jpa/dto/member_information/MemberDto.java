@@ -49,7 +49,7 @@ public class MemberDto {
 	}
 	
 	
-	
+	/* JWT 토큰을 생성하는데 필요한 사용자 정보 */
 	public Map<String, Object> getClaims(){
 		Map<String, Object> dataMap = new HashMap<>();
 		

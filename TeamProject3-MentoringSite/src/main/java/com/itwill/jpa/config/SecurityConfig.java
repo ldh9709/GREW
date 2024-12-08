@@ -23,8 +23,8 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import com.itwill.jpa.auth.FormLoginFailureHandler;
 import com.itwill.jpa.auth.PrincipalDetailsService;
 import com.itwill.jpa.auth.PrincipalOauth2UserSerivce;
-import com.itwill.jpa.config.handler.APILoginFailHandler;
-import com.itwill.jpa.config.handler.APILoginSuccessHandler;
+import com.itwill.jpa.security.handler.APILoginFailHandler;
+import com.itwill.jpa.security.handler.APILoginSuccessHandler;
 
 @Configuration//이 클래스를 읽고 빈으로 등록한다
 @EnableWebSecurity(debug = true)//Spring Security의 설정을 활성화
