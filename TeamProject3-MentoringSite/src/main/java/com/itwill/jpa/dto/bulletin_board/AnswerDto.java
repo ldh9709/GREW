@@ -37,8 +37,8 @@ public class AnswerDto {
                 .answerDate(answerEntity.getAnswerDate())
                 .answerAccept(answerEntity.getAnswerAccept())
                 .answerStatus(answerEntity.getAnswerStatus())
-                .memberNo(answerEntity.getMember().getMemberNo())  
                 .inquiryNo(answerEntity.getInquiry().getInquiryNo())
+                .memberNo(answerEntity.getMember().getMemberNo())  
                 .memberName(answerEntity.getMember().getMemberName())
                 .build();
     }

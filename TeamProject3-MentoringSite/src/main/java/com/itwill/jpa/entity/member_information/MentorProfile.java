@@ -29,28 +29,28 @@ public class MentorProfile {
     @Column(name = "mentor_profile_no" )
     private Long mentorProfileNo;
 
-    @Column(name = "mentor_introduce" ,nullable = false, length = 2000)
+    @Column(name = "mentor_introduce",length = 2000)
     private String mentorIntroduce; 
     
-    @Column(name = "mentor_career" ,nullable = false, length = 1000)
+    @Column(name = "mentor_career" , length = 1000)
     private String mentorCareer; 
     
-    @Column(name = "mentor_rating" ,nullable = false)
+    @Column(name = "mentor_rating")
     private Integer mentorRating;
     
-    @Column(name = "mentor_mentoring_count" ,nullable = false)
+    @Column(name = "mentor_mentoring_count")
     private Integer mentorMentoringCount;
     
-    @Column(name = "mentor_image" ,nullable = false)
+    @Column(name = "mentor_image")
     private String mentorImage;
    
-    @Column(name = "mentor_activity_count" ,nullable = false)
+    @Column(name = "mentor_activity_count")
     private Integer mentorActivityCount;
     
-    @Column(name = "mentor_follow_count" ,nullable = false)
+    @Column(name = "mentor_follow_count")
     private Integer mentorFollowCount;
     
-    @Column(name = "mentor_status" ,nullable = false)
+    @Column(name = "mentor_status")
     private Integer mentorStatus;
     
     @OneToOne(fetch = FetchType.LAZY)

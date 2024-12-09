@@ -9,6 +9,7 @@ import com.itwill.jpa.dto.bulletin_board.InquiryDto;
 import com.itwill.jpa.dto.member_information.CategoryRequestDto;
 import com.itwill.jpa.entity.member_information.Category;
 import com.itwill.jpa.entity.member_information.Member;
+import com.itwill.jpa.repository.member_information.CategoryRepository;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.CascadeType;
@@ -26,6 +27,7 @@ import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Builder.Default;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -36,26 +38,30 @@ import lombok.NoArgsConstructor;
 @Entity
 @Table(name = "inquiry")
 public class Inquiry {
-
+	
+	static CategoryRepository categoryRepository;
+	
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "inquiry_no_SEQ")
     @SequenceGenerator(name = "inquiry_no_SEQ", allocationSize = 1, initialValue = 1)
     @Column(name = "inquiry_no")
     private Long inquiryNo;
 
-    @Column(name = "inquiry_title", nullable = false)
+    
+    @Column(name = "inquiry_title")
     private String inquiryTitle;
-
-    @Column(name = "inquiry_content", nullable = false, length = 500)
+    
+    
+    @Column(name = "inquiry_content", length = 500)
     private String inquiryContent;
     
-    @Column(name = "inquiry_date", nullable = false)
+    @Column(name = "inquiry_date")
     private LocalDateTime inquiryDate;
     
-    @Column(name = "inquiry_status", nullable = false, columnDefinition = "integer default 1")
-    private Integer inquiryStatus = 1;  // 1 or 2
+    @Column(name = "inquiry_status")
+    private Integer inquiryStatus;  // 1 or 2
 
-    @Column(name = "inquiry_views", nullable = false)
+    @Column(name = "inquiry_views")
     private Integer inquiryViews;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -67,21 +73,12 @@ public class Inquiry {
     private Member member;  // FK 연관 관계 (User 엔티티)
 
     /* 한 개의 질문당 여러개의 답변 보유 가능 */
-    @OneToMany(mappedBy = "inquiry", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "inquiry", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Answer> answers; 
-    
-    /* 초기값 설정 */
-    @PrePersist
-    public void setDefaultValues() {
-    	if(this.inquiryContent==null) this.inquiryContent = "";
-    	if(this.inquiryDate==null) this.inquiryDate = LocalDateTime.now();
-    	if(this.inquiryStatus == null||this.inquiryStatus == 0) this.inquiryStatus = 1;
-    	if(this.inquiryViews == null) this.inquiryViews = 0;
-    }
     
     
     /*
-     * DTO -> Entitiy
+     * DTO -> Entity
      */
     public static Inquiry toEntity(InquiryDto inquiryDto) {
     	
@@ -93,13 +90,20 @@ public class Inquiry {
 	            .inquiryStatus(inquiryDto.getInquiryStatus())
 	            .inquiryViews(inquiryDto.getInquiryViews())
 	            .category(Category.builder()
-	            		.categoryNo(inquiryDto.getCategory().getCategoryNo())
-	            		.categoryName(inquiryDto.getCategory().getCategoryName())
-	            		.categoryDepth(inquiryDto.getCategory().getCategoryDepth())
+	            		.categoryNo(inquiryDto.getCategoryNo())
 	            		.build())
 	            .member(Member.builder().memberNo(inquiryDto.getMemberNo()).build())
 	            .build();
 	}
+    /* 초기값 설정 */
+    @PrePersist
+    public void setDefaultValues() {
+    	if(this.inquiryContent==null) this.inquiryContent = "";
+    	if(this.inquiryDate==null) this.inquiryDate = LocalDateTime.now();
+    	if(this.inquiryStatus == null||this.inquiryStatus == 0) this.inquiryStatus = 1;
+    	if(this.inquiryViews == null) this.inquiryViews = 0;
+    }
+    
     
     
    
