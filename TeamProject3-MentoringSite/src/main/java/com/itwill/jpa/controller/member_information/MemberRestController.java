@@ -25,6 +25,7 @@ import com.itwill.jpa.service.member_information.MemberService;
 
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.servlet.http.HttpSession;
+import jakarta.validation.Valid;
 
 @CrossOrigin(origins = "*")
 @RestController
@@ -35,22 +36,23 @@ public class MemberRestController {
 	
 	
 	/* 회원 저장 */
-	@Operation(summary = "회원가입")
+	@Operation(summary = "회원가입/관심사 입력")
 	@PostMapping
 	public ResponseEntity<Response> saveMember(@RequestBody MemberDto memberDto) {
 		
 		//저장메소드 실행
 		Member saveMember = memberService.saveMember(memberDto);
 		
+		MemberDto saveMemberDto = MemberDto.toDto(saveMember);
 		
 		//응답 객체 생성
 		Response response = new Response();
 		
-		if(saveMember != null) {
+		if(saveMemberDto != null) {
 			//응답객체에 코드, 메시지, 객체 설정
 			response.setStatus(ResponseStatusCode.CREATED_MEMBER_SUCCESS);
 			response.setMessage(ResponseMessage.CREATED_MEMBER_SUCCESS);
-			response.setData(saveMember);
+			response.setData(saveMemberDto);
 		}
 		
 		//인코딩 타입 설정
@@ -161,13 +163,15 @@ public class MemberRestController {
 		//업데이트 메소드 실행
 		Member updateMember = memberService.updateMember(memberDto);
 		
+		MemberDto updateMemberDto = MemberDto.toDto(updateMember);
+		
 		Response response = new Response();
 		
-		if(updateMember != null) {
+		if(updateMemberDto != null) {
 			//응답객체에 코드, 메시지, 객체 설정
 			response.setStatus(ResponseStatusCode.UPDATE_MEMBER_SUCCESS);
 			response.setMessage(ResponseMessage.UPDATE_MEMBER_SUCCESS);
-			response.setData(updateMember);
+			response.setData(updateMemberDto);
 		}
 		
 		HttpHeaders httpHeaders=new HttpHeaders();
@@ -181,11 +185,13 @@ public class MemberRestController {
 	
 	/* 회원 수정 */
 	@Operation(summary = "회원 상태 수정")
-	@PutMapping("/{memberNo}/status")
-	public ResponseEntity<Response> updateMemberStatus(@RequestBody MemberDto memberDto) {
+	@PutMapping("/{memberNo}/status/{statusNo}")
+	public ResponseEntity<Response> updateMemberStatus(
+			@RequestBody MemberDto memberDto, 
+			@PathVariable(name = "statusNo") Integer statusNo) {
 		
 		//업데이트 메소드 실행
-		Member updateMember = memberService.updateMemberStatus(memberDto);
+		Member updateMember = memberService.updateMemberStatus(memberDto, statusNo);
 		
 		MemberDto updateMemberDto = MemberDto.toDto(updateMember);
 		

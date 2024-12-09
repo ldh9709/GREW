@@ -8,6 +8,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import com.itwill.jpa.dto.bulletin_board.AnswerDto;
 import com.itwill.jpa.entity.member_information.Member;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -56,7 +57,7 @@ public class Answer {
     @JoinColumn(name = "member_no")
     private Member member;  // 사용자 (User 엔티티와 관계)
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "inquiry_no")
     private Inquiry inquiry;  // 문의 (Inquiry 엔티티와 관계)
 

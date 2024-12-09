@@ -8,10 +8,12 @@ import org.springframework.stereotype.Service;
 
 import com.itwill.jpa.dto.alarm.AlarmDto;
 import com.itwill.jpa.dto.bulletin_board.AnswerDto;
+import com.itwill.jpa.dto.chatting_review.ReviewDto;
 import com.itwill.jpa.dto.member_information.MentorBoardDto;
 import com.itwill.jpa.entity.alarm.Alarm;
 import com.itwill.jpa.repository.alarm.AlarmRepository;
 import com.itwill.jpa.repository.bullentin_board.AnswerRepository;
+import com.itwill.jpa.repository.chatting_review.ReviewRepository;
 import com.itwill.jpa.repository.member_information.FollowReporitory;
 @Service
 public class AlarmServiceimpl implements AlarmService{
@@ -21,6 +23,8 @@ public class AlarmServiceimpl implements AlarmService{
 	private FollowReporitory followReporitory;
 	@Autowired
 	private AnswerRepository answerRepository;
+	@Autowired
+	private ReviewRepository reviewRepository;
 	//알림등록
 	@Override
 	public AlarmDto saveAlarm(AlarmDto alarmDto) {
@@ -45,14 +49,14 @@ public class AlarmServiceimpl implements AlarmService{
 		alarm.setIsRead(2);
 		return AlarmDto.toDto(alarmRepository.save(alarm));
 	}
-	
+	//질문에 답변이 달렸을 때 질문자에게 알림 생성
 	@Override
 	public AlarmDto saveAlarmByAnswerToInquiry(AnswerDto answerDto) {
 		AlarmDto alarmDto = new AlarmDto();
-		alarmDto.setReferenceNo(answerDto.getAnswerNo());
+		alarmDto.setReferenceNo(answerDto.getInquiryNo());
 		alarmDto.setAlarmContent("회원님의 질문에 답변이 달렸습니다");
-		alarmDto.setAlarmType("질문");
-		alarmDto.setReferenceType("답변");
+		alarmDto.setAlarmType("answer");
+		alarmDto.setReferenceType("question");
 		alarmDto.setMemberNo(answerRepository.findByMemberNoByInquiryByAnswer(answerDto.getAnswerNo()));
 		return AlarmDto.toDto(alarmRepository.save(Alarm.toEntity(alarmDto)));
 	}
@@ -74,6 +78,32 @@ public class AlarmServiceimpl implements AlarmService{
 	    }
 	    return alarmDtos;
 	}
+	//리뷰달렸을때 멘토에게 알림
+	@Override
+	public AlarmDto saveAlarmsByReview(ReviewDto reviewDto) {
+		AlarmDto alarmDto = new AlarmDto();
+		alarmDto.setReferenceNo(reviewDto.getReviewNo());
+		alarmDto.setAlarmContent("멘티님이 리뷰를 달았습니다.");
+		alarmDto.setAlarmType("mentee");
+		alarmDto.setReferenceType("review");
+		alarmDto.setMemberNo(reviewRepository.findMentorNoByReviewNo(reviewDto.getReviewNo()));
+		return AlarmDto.toDto(alarmRepository.save(Alarm.toEntity(alarmDto)));
+	}
+	//알림 클릭시 URl전송
+	@Override
+	public String alarmRedirectURL(AlarmDto alarmDto) {
+		//프론트엔드 제작 시 경로 수정 必
+        switch (alarmDto.getReferenceType()) {
+            case "question":
+                return "/question/" + alarmDto.getReferenceNo(); 
+            case "mentorBoard":
+                return "/mentorBoard/" + alarmDto.getReferenceNo();
+            case "review":
+            	return "/review/" + alarmDto.getReferenceNo();
+            default:
+                throw new IllegalArgumentException("Unknown reference type");
+        	}
+        }
 	
 
 }

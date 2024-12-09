@@ -8,9 +8,12 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.itwill.jpa.dto.chatting_review.ChatMessageDto;
 import com.itwill.jpa.dto.chatting_review.ChatRoomDto;
+import com.itwill.jpa.entity.chatting_review.ChatMessage;
 import com.itwill.jpa.entity.chatting_review.ChatRoom;
 import com.itwill.jpa.entity.chatting_review.ChatRoomStatus;
+import com.itwill.jpa.entity.member_information.Member;
 import com.itwill.jpa.repository.chatting_review.ChatRoomRepository;
 import com.itwill.jpa.repository.chatting_review.ChatRoomStatusRepository;
 
@@ -30,81 +33,106 @@ public class ChatRoomServiceImpl implements ChatRoomService {
 	}
 	/*활동 요청(기본 상태 요청 중)*/
 	@Override
-	public void saveChatRoom(ChatRoomDto mentoringRequestDto) {
-		ChatRoom mentoringRequest = ChatRoom.toEntity(mentoringRequestDto);
+	public void saveChatRoom(ChatRoomDto ChatRoomDto) {
+		ChatRoom mentoringRequest = ChatRoom.toEntity(ChatRoomDto);
 		chatRoomRepository.save(mentoringRequest);
 	}
 	/*활동 진행중*/
 	@Override
-	public ChatRoom updateActive(Long chatRoomNo) throws Exception {
+	public ChatRoomDto updateActive(Long chatRoomNo) throws Exception {
 		if (chatRoomRepository.findById(chatRoomNo).isPresent()) {
-			ChatRoom mentoringRequest = chatRoomRepository.findById(chatRoomNo).get();
-			mentoringRequest.setChatRoomStatus(7100);
-			return chatRoomRepository.save(mentoringRequest);
+			ChatRoom chatRoom = chatRoomRepository.findById(chatRoomNo).get();
+			chatRoom.setChatRoomStatus(7100);
+			Member mentor = chatRoom.getMentor();
+			Member mentee = chatRoom.getMentee();
+			ChatRoomStatus mentorChatRoomStatus = ChatRoomStatus.builder()
+					.chatRoomName("")
+					.chatRoomStatus(0)
+				    .chatRoom(chatRoom)
+				    .member(mentor)
+				    .build();
+			ChatRoomStatus menteeChatRoomStatus = ChatRoomStatus.builder()
+					.chatRoomName("")
+					.chatRoomStatus(0)
+					.chatRoom(chatRoom)
+				    .member(mentee)
+				    .build();
+			chatRoomStatusService.saveFirstChatRoomStatus(mentorChatRoomStatus, menteeChatRoomStatus);
+			ChatRoom ChatRoom = chatRoomRepository.save(chatRoom);
+			return ChatRoomDto.toDto(ChatRoom);
 		}
-		return new ChatRoom();
+		return new ChatRoomDto();
 	}
 	/*활동 완료*/
 	@Override
-	public ChatRoom updateCompleted(Long chatRoomNo) throws Exception {
+	public ChatRoomDto updateCompleted(Long chatRoomNo) throws Exception {
 		if (chatRoomRepository.findById(chatRoomNo).isPresent()) {
 			ChatRoom chatRoom = chatRoomRepository.findById(chatRoomNo).get();
 			chatRoom.setChatRoomStatus(7200);
 			chatRoom.setChatRoomEndDate(LocalDateTime.now());
-			ChatRoomStatus mentorChatRoomStatus = ChatRoomStatus.builder()
-															    .chatRoom(chatRoom)
-															    .member(chatRoom.getMentor())
-															    .build();
-			ChatRoomStatus menteeChatRoomStatus = ChatRoomStatus.builder()
-																.chatRoom(chatRoom)
-															    .member(chatRoom.getMentor())
-															    .build();
-			chatRoomStatusService.saveChatRoomStatus(mentorChatRoomStatus, menteeChatRoomStatus);
-			return chatRoomRepository.save(chatRoom);
+			ChatRoom ChatRoom = chatRoomRepository.save(chatRoom);
+			return ChatRoomDto.toDto(ChatRoom);
 		}
-		return new ChatRoom();
+		return new ChatRoomDto();
 	}
 	/*요청 거절*/
 	@Override
-	public ChatRoom updateRejected(Long chatRoomNo) throws Exception {
+	public ChatRoomDto updateRejected(Long chatRoomNo) throws Exception {
 		if (chatRoomRepository.findById(chatRoomNo).isPresent()) {
 			ChatRoom mentoringRequest = chatRoomRepository.findById(chatRoomNo).get();
 			mentoringRequest.setChatRoomStatus(7300);
 			mentoringRequest.setChatRoomEndDate(LocalDateTime.now());
-			return chatRoomRepository.save(mentoringRequest);
+			ChatRoom ChatRoom = chatRoomRepository.save(mentoringRequest);
+			return ChatRoomDto.toDto(ChatRoom);
 		}
-		return new ChatRoom();
+		return new ChatRoomDto();
 	}
 	/*요청 취소*/
 	@Override
-	public ChatRoom updateCanceled(Long chatRoomNo) throws Exception {
+	public ChatRoomDto updateCanceled(Long chatRoomNo) throws Exception {
 		if (chatRoomRepository.findById(chatRoomNo).isPresent()) {
 			ChatRoom mentoringRequest = chatRoomRepository.findById(chatRoomNo).get();
 			mentoringRequest.setChatRoomStatus(7400);
 			mentoringRequest.setChatRoomEndDate(LocalDateTime.now());
-			return chatRoomRepository.save(mentoringRequest);
+			ChatRoom ChatRoom = chatRoomRepository.save(mentoringRequest);
+			return ChatRoomDto.toDto(ChatRoom);
 		}
-		return new ChatRoom();
+		return new ChatRoomDto();
 	}
 	/*강제 종료*/
 	@Override
-	public ChatRoom updateForceClosed(Long chatRoomNo) throws Exception {
+	public ChatRoomDto updateForceClosed(Long chatRoomNo) throws Exception {
 		if (chatRoomRepository.findById(chatRoomNo).isPresent()) {
 			ChatRoom mentoringRequest = chatRoomRepository.findById(chatRoomNo).get();
 			mentoringRequest.setChatRoomStatus(7500);
 			mentoringRequest.setChatRoomEndDate(LocalDateTime.now());
-			return chatRoomRepository.save(mentoringRequest);
+			ChatRoom ChatRoom = chatRoomRepository.save(mentoringRequest);
+			return ChatRoomDto.toDto(ChatRoom);
 		}
-		return new ChatRoom();
+		return new ChatRoomDto();
 	}
 	/*본인 활동 리스트 출력*/
 	@Override
-	public List<ChatRoomDto> selectChatRoomAll() {
-		List<ChatRoom> mentoringRequests = chatRoomRepository.findAll();
-		List<ChatRoomDto> mentoringRequestDtos = new ArrayList<ChatRoomDto>();
-		for (int i = 0; i <mentoringRequests.size(); i++) {
-			mentoringRequestDtos.add(ChatRoomDto.toDto(mentoringRequests.get(i)));
+	public List<ChatRoomDto> selectChatRoomAll(Long MemberNo) {
+		List<ChatRoom> chatRooms = chatRoomRepository.findAll();
+		List<ChatRoomDto> chatRoomDtos = new ArrayList<ChatRoomDto>();
+		for (int i = 0; i <chatRooms.size(); i++) {
+			if (chatRooms.get(i).getMentee().getMemberNo() == MemberNo || chatRooms.get(i).getMentor().getMemberNo() == MemberNo) {
+				chatRoomDtos.add(ChatRoomDto.toDto(chatRooms.get(i)));	
+			}
 		}
-		return mentoringRequestDtos;
+		return chatRoomDtos;
 	}
+	
+	@Override
+	public List<ChatMessageDto> selectChatMessages(Long chatRoomNo) {
+		ChatRoom chatRoom = chatRoomRepository.findById(chatRoomNo).get();
+		List<ChatMessage> chatMessages = chatRoom.getChatMessages();
+		List<ChatMessageDto> chatMessageDtos = new ArrayList<>();
+		for (int i = 0; i < chatMessages.size(); i++) {
+			chatMessageDtos.add(ChatMessageDto.toDto(chatMessages.get(i)));
+		}
+		return chatMessageDtos;
+	}
+	
 }

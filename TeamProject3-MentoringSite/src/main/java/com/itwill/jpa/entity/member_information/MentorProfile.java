@@ -57,7 +57,7 @@ public class MentorProfile {
     @JoinColumn(name = "member_no" )
     private Member member;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "category_no")
     private Category category;
     

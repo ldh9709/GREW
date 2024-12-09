@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import com.itwill.jpa.repository.member_information.CategoryRepository;
 import com.itwill.jpa.repository.member_information.FollowReporitory;
 
 @SpringBootTest
@@ -13,6 +14,9 @@ class FollowServiceTest {
 	
 	@Autowired
 	private FollowReporitory followReporitory;
+	
+	@Autowired
+	private CategoryRepository categoryRepository;
 	
 //	@Test
 	void test() {
@@ -23,9 +27,9 @@ class FollowServiceTest {
 //		System.out.println(followReporitory.findFollowedMentorsWithGraph(1L));
 //	}
 	
-//	@Test
+	@Test
 	void test3() {
-		System.out.println(followReporitory.countBymentorMember_MemberNo(6L));
+		categoryRepository.deleteById(1L);
 	}
 	
 }

@@ -16,11 +16,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.itwill.jpa.dto.alarm.AlarmDto;
 import com.itwill.jpa.dto.chatting_review.ReviewDto;
 import com.itwill.jpa.entity.chatting_review.Review;
 import com.itwill.jpa.response.Response;
 import com.itwill.jpa.response.ResponseMessage;
 import com.itwill.jpa.response.ResponseStatusCode;
+import com.itwill.jpa.service.alarm.AlarmService;
 import com.itwill.jpa.service.chatting_review.ReviewService;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -31,11 +33,14 @@ public class ReviewRestController {
 	
 	@Autowired
 	private ReviewService reviewService;
-	
+	@Autowired
+	private AlarmService alarmService;
 	@Operation(summary = "리뷰 등록")
 	@PostMapping
 	public ResponseEntity<Response> insertReview(@RequestBody ReviewDto reviewDto){
 		
+		ReviewDto saveReview = ReviewDto.toDto(reviewService.saveReview(reviewDto));
+		AlarmDto alarmDto = alarmService.saveAlarmsByReview(saveReview);
 		
 		Response response = new Response();
 		if (reviewDto.getChatRoomNo() == null) {
@@ -43,11 +48,10 @@ public class ReviewRestController {
             response.setMessage(ResponseMessage.CREATED_REVIEW_FAIL);
             return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);	
         }
-		Review review = reviewService.saveReview(reviewDto);
 		response.setStatus(ResponseStatusCode.CREATED_REVIEW_SUCCESS);
 		response.setMessage(ResponseMessage.CREATED_REVIEW_SUCCESS);
-		response.setData(review);
-		
+		response.setData(reviewDto);
+		response.setAddData(alarmDto);
 		HttpHeaders httpHeaders = new HttpHeaders();
 		httpHeaders.setContentType(new MediaType(MediaType.APPLICATION_JSON, Charset.forName("UTF-8")));
 		

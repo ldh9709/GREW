@@ -25,6 +25,13 @@ public class ResponseStatusCode {
 	public static final int READ_MENTEE_COUNT_SUCCESS = 2420;
 	public static final int DELETE_FOLLOW_SUCCESS = 2430;
 	
+	/******************* CATEGORY 메시지 ************************/
+	public static final int CREATE_CATEGORY_SUCCESS = 2400;
+	public static final int READ_CATEGORY_SUCCESS = 2410;
+	public static final int READ_CATEGORYLIST_SUCCESS = 2420;
+	public static final int UPDATE_CATEGORY_SUCCESS = 2430;
+	public static final int DELETE_CATEGORY_SUCCESS = 2440;
+	
 	/*알림(3000), 신고(4000), 질문(5000), 답변(6000), 채팅(7000)*/
 	/******************* Alarm    메세지 ************************/
 	public static final int CREATED_ALARM_SUCCESS= 3000;
@@ -73,8 +80,11 @@ public class ResponseStatusCode {
 	public static final int FORCE_CLOSED_CHATTING = 7500; // (관리자가 비정상적인 요청을 종료함)
 	public static final int STAY_CHATTING = 7600; // (채팅방을 나가지않음)
 	public static final int LEAVE_CHATTING = 7700; // (채팅방을 나감)
-	public static final int SEND_CHATTING_SUCCESS=7800;
-	public static final int SEND_CHATTING_FAIL=7900;
+	public static final int SEND_CHATTING_SUCCESS = 7800;
+	public static final int SEND_CHATTING_FAIL = 7900;
+	public static final int CHATTING_LIST_SUCCESS = 7010;
+	public static final int CHATTING_NAME_CHANGE = 7020;
+	public static final int CHATTING_MESSAGE = 7030;
 	
 	
 	/******************* REVIEW 메시지 **********************/

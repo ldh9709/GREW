@@ -18,14 +18,14 @@ public class ChatRoomStatusDto {
 	private String chatRoomName;
 	private Integer chatRoomStatus;
 	
-	private MemberDto member;
+	private Long memberNo;
 	
 	public static ChatRoomStatusDto toDto(ChatRoomStatus chatRoomStatusEntity) {
         return ChatRoomStatusDto.builder()
                 .chatRoomStatusNo(chatRoomStatusEntity.getChatRoomStatusNo())
                 .chatRoomName(chatRoomStatusEntity.getChatRoomName())
                 .chatRoomStatus(chatRoomStatusEntity.getChatRoomStatus())
-                .member(MemberDto.toDto(chatRoomStatusEntity.getMember()))
+                .memberNo(chatRoomStatusEntity.getMember().getMemberNo())
                 .build();
     }
 }

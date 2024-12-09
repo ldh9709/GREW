@@ -21,9 +21,16 @@ public class ResponseMessage {
     
 	/******************* FOLLOW 메시지 ************************/
 	public static final String CREATE_FOLLOW_SUCCESS = "팔로우 등록 성공";
-	public static final String READ_MENTORLIST_SUCCESS = "팔로잉 멘토 리스트 출력 성공";
+	public static final String READ_MENTORLIST_SUCCESS = "팔로잉 멘토 리스트 조 성공";
 	public static final String READ_MENTEE_COUNT_SUCCESS = "팔로우 멘티 카운트 성공";
 	public static final String DELETE_FOLLOW_SUCCESS = "팔로우 취소 성공";
+	
+	/******************* CATEGORY 메시지 ************************/
+	public static final String CREATE_CATEGORY_SUCCESS = "카테고리 등록 성공";
+	public static final String READ_CATEGORY_SUCCESS = "카테고리 조회 성공";
+	public static final String READ_CATEGORYLIST_SUCCESS = "카테고리 리스트조회 성공";
+	public static final String UPDATE_CATEGORY_SUCCESS = "카테고리 수정 성공";
+	public static final String DELETE_CATEGORY_SUCCESS = "카테고리 삭제 성공";
 	
     /*알림(3000), 신고(4000), 질문(5000), 답변(6000), 채팅(7000)*/
     
@@ -76,8 +83,11 @@ public class ResponseMessage {
 	public static final String FORCE_CLOSED_CHATTING = "강제 종료"; // (관리자가 비정상적인 요청을 종료함)
 	public static final String STAY_CHATTING = "채팅방에 머무릅니다."; // (채팅방을 나가지않음)
 	public static final String LEAVE_CHATTING = "채팅방을 나갔습니다."; // (채팅방을 나감)
-	public static final String SEND_CHATTING_SUCCESS= "채팅 전송 완료";
-	public static final String SEND_CHATTING_FAIL= "채팅 전송 실패";
+	public static final String SEND_CHATTING_SUCCESS = "채팅방 요청 전송 완료";
+	public static final String SEND_CHATTING_FAIL = "채팅방 요청 전송 실패";
+	public static final String CHATTING_LIST_SUCCESS = "채팅방 리스트 출력";
+	public static final String CHATTING_NAME_CHANGE = "채팅방 제목 변경 성공";
+	public static final String CHATTING_MESSAGE = "채팅방 대화 목록 출력";
 	
 	/******************* REVIEW 메시지 **********************/
 	public static final String CREATED_REVIEW_SUCCESS = "리뷰 등록 성공.";
