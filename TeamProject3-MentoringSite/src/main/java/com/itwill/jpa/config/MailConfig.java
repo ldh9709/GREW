@@ -21,10 +21,10 @@ public class MailConfig {
         javaMailSender.setHost("smtp.gmail.com");
         
         //SMTP에 로그인하기 위한 계정 설정
-        javaMailSender.setUsername("wnsgud77773@gmail.com");
+        javaMailSender.setUsername("zszz9709@gmail.com");
         
         //SMTP 서버 비밀번호 설정
-        javaMailSender.setPassword("123456789)QWER");
+        javaMailSender.setPassword("cwsnuiflhlprfoab");
         
         //SMTP 서버의 포트를 설정. 네이버, 구글은 SSL을 사용하는 포트 465를 사용
         javaMailSender.setPort(465);
@@ -48,8 +48,11 @@ public class MailConfig {
         properties.setProperty("mail.smtp.starttls.enable", "true");
         //메일 전송과 관련된 디버깅 로그를 출력
         properties.setProperty("mail.debug", "true");
+        
+        properties.setProperty("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
+        
         //SSL(보안 소켓 계층)을 사용할 때 신뢰할 SMTP 서버를 설정
-        properties.setProperty("mail.smtp.ssl.trust","smtp.naver.com");
+        //properties.setProperty("mail.smtp.ssl.trust","smtp.naver.com");
         //SSL을 활성화하여 SMTP 서버와의 연결을 암호화.
         properties.setProperty("mail.smtp.ssl.enable","true");
         

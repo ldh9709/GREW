@@ -47,7 +47,14 @@ public class CustomMailSender {
 			 * 발신자의 이메일 주소를 설정
 			 * form 변수는 @Value로 주입 받은 발신자 이메일 주소
 			 */
-			message.setFrom(new InternetAddress(form));
+			//message.setFrom(new InternetAddress(form));
+			
+			message.setFrom(mailDto.getAddress());
+			
+			System.out.println(">>>>>>>>마임 메일 센드 검증 : " + mailDto.getAddress());
+			
+			message.addRecipient(MimeMessage.RecipientType.TO, new InternetAddress(mailDto.getAddress()));
+			
 			
 			message.setSubject(mailDto.getTitle());
 			
@@ -68,6 +75,7 @@ public class CustomMailSender {
 		Mail mail = new Mail();
 		
 		mail.setAddress(memberDto.getEmail());
+		System.out.println(">>>>>>>>이메일 검증 : " + memberDto.getEmail());
 		mail.setTitle("[used book] 임시 비밀번호 안내 메일입니다.");
 		mail.setMessage(htmlMessage);
 		

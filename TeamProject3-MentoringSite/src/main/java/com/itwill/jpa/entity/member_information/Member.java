@@ -49,36 +49,36 @@ public class Member {
 	@Id//PK설정
 	@SequenceGenerator(name = "member_no_SEQ", initialValue = 1, allocationSize = 1)
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "member_no_SEQ")
-	@Column(name = "member_no", nullable = false)
+	@Column(name = "member_no")
 	private Long memberNo;//멤버 번호 PK
 	
-	@Column(name = "member_id", nullable = false)
+	@Column(name = "member_id")
 	private String memberId;//Id
 	
-	@Column(name = "member_password", nullable = false)
+	@Column(name = "member_password")
 	private String memberPassword;//비밀번호
 	
-	@Column(name = "member_email", nullable = false)
+	@Column(name = "member_email")
 	private String memberEmail;//이메일
 	
-	@Column(name = "member_name", nullable = false)
+	@Column(name = "member_name")
 	private String memberName;//이름
 	
-	@Column(name = "member_points", nullable = false)
+	@Column(name = "member_points")
 	private Integer memberPoints;//멤버 연필 포인트
 	
-	@Column(name = "member_status", nullable = false)
+	@Column(name = "member_status")
 	private Integer memberStatus;//멤버의 상태(활동, 정지 등)
 	
-	@Column(name = "member_join_date", nullable = false)
+	@Column(name = "member_join_date")
 	private LocalDateTime memberJoinDate;//멤버 가입 날짜
 	
-	@Column(name = "member_report_count", nullable = false)
+	@Column(name = "member_report_count")
 	private Integer memberReportCount;//신고 당한 횟수
 	
 	/***********************시큐리티를 위한 멤버 필드*****************************/
 	@Enumerated(EnumType.STRING)
-	@Column(name = "member_role", nullable = false)
+	@Column(name = "member_role")
 	private Role memberRole;//역할
 	
 	@Column(name = "member_provider")
