@@ -24,8 +24,10 @@ import com.itwill.jpa.response.Response;
 import com.itwill.jpa.response.ResponseMessage;
 import com.itwill.jpa.response.ResponseStatusCode;
 import com.itwill.jpa.service.bullentin_board.InquiryService;
+import com.itwill.jpa.util.ClientIp;
 
 import io.swagger.v3.oas.annotations.Operation;
+import jakarta.servlet.http.HttpServletRequest;
 
 @RestController
 @RequestMapping("/inquiry")
@@ -38,7 +40,7 @@ public class InquiryRestController {
 	@PostMapping
 	public ResponseEntity<Response> insertInquiry(@RequestBody InquiryDto inquiryDto) {
 		Response response = new Response();
-
+		
 		inquiryService.saveInquiry(inquiryDto);
 		response.setStatus(ResponseStatusCode.CREATED_INQUIRY_SUCCESS);
 		response.setMessage(ResponseMessage.CREATED_INQUIRY_SUCCESS);
@@ -117,14 +119,14 @@ public class InquiryRestController {
 	// 조회수 증가
 	@Operation(summary = "조회수증가")
 	@PutMapping("/increase/{inquiryNo}")
-	public ResponseEntity<Response> increaseViewInquiry(@RequestBody InquiryDto inquiryDto) throws Exception {
+	public ResponseEntity<Response> increaseViewInquiry(@RequestBody InquiryDto inquiryDto,HttpServletRequest httpServletRequest) throws Exception {
 		Response response = new Response();
-
-		inquiryService.increaseViewInquiry(inquiryDto);
+		String clientIp = new ClientIp().getClientIp(httpServletRequest);
+		inquiryService.increaseViewInquiry(inquiryDto,clientIp);
 		response.setStatus(ResponseStatusCode.INCREASE_VIEW_INQUIRY_SUCCESS);
 		response.setMessage(ResponseMessage.INCREASE_VIEW_INQUIRY_SUCCESS);
 		response.setData(inquiryDto);
-
+		response.setAddData(clientIp);
 		HttpHeaders httpHeaders = new HttpHeaders();
 		httpHeaders.setContentType(new MediaType(MediaType.APPLICATION_JSON, Charset.forName("UTF-8")));
 
@@ -135,8 +137,10 @@ public class InquiryRestController {
 	}
 	@Operation(summary = "답변수 많은 순으로 카테고리별 질문 출력")
 	@GetMapping("/answerCount/{categoryNo}")
-	public ResponseEntity<Response> findByCategoryInquiryOrderByAnswer(@PathVariable(name = "categoryNo") Long categoryNo) {
-	    List<InquiryDto> inquiryDtos = inquiryService.findByCategoryInquiryOrderByAnswer(categoryNo);
+	public ResponseEntity<Response> findByCategoryInquiryOrderByAnswer(@PathVariable(name = "categoryNo") Long categoryNo,
+			@RequestParam(name = "page",defaultValue = "0") int page,  // 기본값은 0 페이지
+            @RequestParam(name = "size",defaultValue = "10") int size) {
+	    Page<InquiryDto> inquiryDtos = inquiryService.findByCategoryInquiryOrderByAnswer(categoryNo,page,size);
 	    
 	    Response response = new Response();
 	    response.setStatus(ResponseStatusCode.READ_INQUIRY_LIST_SUCCESS);
@@ -147,8 +151,10 @@ public class InquiryRestController {
 	}
 	@Operation(summary = "조회수 많은 순으로 카테고리별 질문 출력")
 	@GetMapping("/viewCount/{categoryNo}")
-	public ResponseEntity<Response> findByCategoryInquiryOrderByView(@PathVariable(name = "categoryNo") Long categoryNo) {
-		List<InquiryDto> inquiryDtos = inquiryService.findByCategoryInquiryOrderByView(categoryNo);
+	public ResponseEntity<Response> findByCategoryInquiryOrderByView(@PathVariable(name = "categoryNo") Long categoryNo,
+			@RequestParam(name = "page",defaultValue = "0") int page,  // 기본값은 0 페이지
+            @RequestParam(name = "size",defaultValue = "10") int size) {
+		Page<InquiryDto> inquiryDtos = inquiryService.findByCategoryInquiryOrderByView(categoryNo,page,size);
 		
 		Response response = new Response();
 		response.setStatus(ResponseStatusCode.READ_INQUIRY_LIST_SUCCESS);
@@ -159,8 +165,10 @@ public class InquiryRestController {
 	}
 	@Operation(summary = "답변수 많은 순으로 전체 질문 출력")
 	@GetMapping("/answerCount")
-	public ResponseEntity<Response> findByAllInquiryOrderByAnswer() {
-		List<InquiryDto> inquiryDtos = inquiryService.findByAllInquiryOrderByAnswer();
+	public ResponseEntity<Response> findByAllInquiryOrderByAnswer(
+			@RequestParam(name = "page",defaultValue = "0") int page,  // 기본값은 0 페이지
+            @RequestParam(name = "size",defaultValue = "10") int size) {
+		Page<InquiryDto> inquiryDtos = inquiryService.findByAllInquiryOrderByAnswer(page,size);
 		
 		Response response = new Response();
 		response.setStatus(ResponseStatusCode.READ_INQUIRY_LIST_SUCCESS);
@@ -185,8 +193,10 @@ public class InquiryRestController {
 	}
 	@Operation(summary = "질문검색기능")
 	@GetMapping("/search/{search}")
-	public ResponseEntity<Response> findInquiryBySearch(@PathVariable(name = "search")String search) {
-		List<InquiryDto> inquiryDtos = inquiryService.findInquiryBySearch(search);
+	public ResponseEntity<Response> findInquiryBySearch(@PathVariable(name = "search")String search
+			,@RequestParam(name = "page",defaultValue = "0") int page,  // 기본값은 0 페이지
+            @RequestParam(name = "size",defaultValue = "10") int size) {
+		Page<InquiryDto> inquiryDtos = inquiryService.findInquiryBySearch(search,page,size);
 		
 		Response response = new Response();
 		response.setStatus(ResponseStatusCode.READ_INQUIRY_LIST_SUCCESS);
