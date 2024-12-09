@@ -71,10 +71,23 @@ public class SecurityConfig {
 	private PrincipalDetailsService principalDetailsService;
 	
 	//로그인 실패 시 동작을 정의하는 핸들러.
-	@Autowired
-	private FormLoginFailureHandler formLoginFailureHandler;
+	//@Autowired
+	//private FormLoginFailureHandler formLoginFailureHandler;
 	
-	
+	public static final String productImagePattern = "/api/products/view/**";
+	public static final String contextPattern = "/api/member/context";
+	public static final String apiMemberPattern = "/api/member/**";
+	  
+  public static final String[] SwaggerPatterns = {
+      "/swagger-resources/**",
+      "/swagger-ui/**",
+      "/v3/api-docs/**",
+      "/v3/api-docs",
+      "/swagger-ui.html",
+      productImagePattern,
+      contextPattern,
+      apiMemberPattern
+  };
 	
 	
 	//인증 없이 접근 가능한 경로 정의
@@ -85,18 +98,14 @@ public class SecurityConfig {
 	@Bean
 	public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
 		
+		
 		//개발 단계에서 CSRF 보호를 비활성화
 		httpSecurity.csrf((config) -> {config.disable();});
 		
 		// 세션 관리 설정: Stateless 설정, 서버는 세션을 생성하지 않음
 		httpSecurity.sessionManagement(sessionConfig -> sessionConfig.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 		
-		//whitelist에 정의된 경로는 인증 없이 접근 가능
-		httpSecurity.authorizeHttpRequests((t) -> {
-			//허용주소
-			t.requestMatchers(whitelist).permitAll();
-			t.anyRequest().authenticated();
-		});
+		
 		
 		 //CORS 설정: 외부에서 이 API를 호출할 수 있도록 CORS 설정을 정의
 		 httpSecurity.cors(httpSecurityCorsConfigurer -> {
@@ -140,6 +149,13 @@ public class SecurityConfig {
 			t.logoutUrl("/logout")//로그아웃
 			 .logoutSuccessUrl("/login");//성공 후 리다이렉트
 		});
+				
+		httpSecurity.authorizeHttpRequests((authorizeHttpRequestsConfig) -> {
+		      // swagger설정
+		      authorizeHttpRequestsConfig.requestMatchers(SwaggerPatterns).permitAll().anyRequest().authenticated();
+		    });
+		
+		
 		
 
 		return httpSecurity.build();
@@ -169,23 +185,6 @@ public class SecurityConfig {
 //	public PasswordEncoder passwordEncoder() {
 //		return new BCryptPasswordEncoder();
 //	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	
 }

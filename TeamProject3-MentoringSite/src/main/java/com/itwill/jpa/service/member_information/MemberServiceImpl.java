@@ -29,9 +29,9 @@ public class MemberServiceImpl implements MemberService {
 	//메일 발송을 위한 메소드 의존성 주입
 	CustomMailSender customMailSender;
 	
-	@Autowired
+	//@Autowired
 	//비밀번호 암호화를 위한 메소드 의존성 주입
-	BCryptPasswordEncoder bCryptPasswordEncoder;
+	//BCryptPasswordEncoder bCryptPasswordEncoder;
 	
 	
 	/***** 회원 가입 *****/
@@ -142,7 +142,7 @@ public class MemberServiceImpl implements MemberService {
 		String tempPassword = uid.toString().substring(0, 10) + "p2$";
 		customMailSender.sendFindPasswordMail(memberDto, tempPassword);
 		
-		tempPassword = bCryptPasswordEncoder.encode(tempPassword);
+		//tempPassword = bCryptPasswordEncoder.encode(tempPassword);
 		
 		member.changePassword(tempPassword);
 		
