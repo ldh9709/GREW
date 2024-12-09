@@ -88,7 +88,6 @@ public class Inquiry {
      */
     public static Inquiry toEntity(InquiryDto inquiryDto) {
     	
-    	Category category = categoryRepository.getById(inquiryDto.getCategory().getCategoryNo());
 	    return Inquiry.builder()
 	            .inquiryNo(inquiryDto.getInquiryNo())
 	            .inquiryTitle(inquiryDto.getInquiryTitle())
@@ -96,7 +95,7 @@ public class Inquiry {
 	            .inquiryDate(inquiryDto.getInquiryDate())
 	            .inquiryStatus(inquiryDto.getInquiryStatus())
 	            .inquiryViews(inquiryDto.getInquiryViews())
-	            .category(category)
+	            .category(Category.builder().categoryNo(inquiryDto.getCategoryNo()).build())
 	            .member(Member.builder().memberNo(inquiryDto.getMemberNo()).build())
 	            .build();
 	}

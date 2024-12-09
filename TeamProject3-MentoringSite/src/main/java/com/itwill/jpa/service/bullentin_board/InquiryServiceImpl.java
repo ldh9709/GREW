@@ -35,15 +35,12 @@ public class InquiryServiceImpl implements InquiryService {
 	private InquiryRepository inquiryRepository;
 	@Autowired
 	private InquiryIpViewRepository inquiryIpViewRepository; // Repository를 통해 조회 기록을 관리
-	@Autowired
-	private CategoryRepository categoryRepository;
 
 	private final ClientIp clientIpUtil = new ClientIp();// ip
 	// 질문등록
 
 	@Override
 	public InquiryDto saveInquiry(InquiryDto inquiryDto) {
-		inquiryDto.setCategory(inquiryDto.getCategory());
 		
 		return InquiryDto.toDto(inquiryRepository.save(Inquiry.toEntity(inquiryDto)));
 	}

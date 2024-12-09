@@ -26,7 +26,7 @@ public class InquiryDto {
     private Integer inquiryStatus;
     private Integer inquiryViews;
     
-    private CategoryResponseDto category;
+    private Long categoryNo;
     private Long memberNo;
     private String memberName;
     /*
@@ -41,7 +41,7 @@ public class InquiryDto {
                 .inquiryDate(inquiryEntity.getInquiryDate())
                 .inquiryStatus(inquiryEntity.getInquiryStatus())
                 .inquiryViews(inquiryEntity.getInquiryViews())
-                .category(CategoryResponseDto.toDto(inquiryEntity.getCategory()))
+                .categoryNo(inquiryEntity.getCategory().getCategoryNo())
                 .memberNo(inquiryEntity.getMember().getMemberNo())
                 .memberName(inquiryEntity.getMember().getMemberName())
                 .build();
