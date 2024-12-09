@@ -12,10 +12,14 @@ import com.itwill.jpa.entity.chatting_review.ChatRoom;
 import com.itwill.jpa.entity.member_information.Member;
 import com.itwill.jpa.service.chatting_review.ChatRoomService;
 
+import jakarta.transaction.Transactional;
+
 @SpringBootTest
 public class ChatRoomServiceImplTest {
 	@Autowired
-	private ChatRoomService mentoringRequestService;
+	private ChatRoomService chatRoomService;
+	@Autowired
+	private ChatRoomStatusService chatRoomStatusService;
 	
 	//@Test
 	void saveMentoringRequest() {
@@ -27,7 +31,7 @@ public class ChatRoomServiceImplTest {
 						.menteeNo(3L)
 						.mentorNo(5L)
 						.build();
-		mentoringRequestService.saveChatRoom(chatRoomDto1);
+		chatRoomService.saveChatRoom(chatRoomDto1);
 		
 		ChatRoomDto chatRoomDto2 = ChatRoomDto.builder()
 				.chatRoomNo(8L)
@@ -37,41 +41,50 @@ public class ChatRoomServiceImplTest {
 				.menteeNo(3L)
 				.mentorNo(7L)
 				.build();
-		mentoringRequestService.saveChatRoom(chatRoomDto2);
+		chatRoomService.saveChatRoom(chatRoomDto2);
 	}
 	//@Test
 	void getMentoringRequest() {
-		ChatRoomDto mentoringRequestDto = mentoringRequestService.getChatRoom(1L);
-		System.out.println("select 1L : "+mentoringRequestDto);
+		System.out.println("select 1L : "+chatRoomService.getChatRoom(1L));
 	}
+	//@Transactional
+	//@Test
+	void updateChattingName() {
+		chatRoomStatusService.updateChatRoomName(1L, 5L, "코딩 수업 채팅방");
+	}
+	//@Transactional
 	//@Test
 	void updateActive() throws Exception{
-		mentoringRequestService.updateActive(1L);
-		System.out.println("멘토링 진행 중 1L : "+mentoringRequestService.getChatRoom(1L));
+		chatRoomService.updateActive(1L);
+		System.out.println("멘토링 진행 중 1L : "+chatRoomService.getChatRoom(1L));
 	}
-	@Test
+	//@Test
 	void updateCompleted() throws Exception{
-		mentoringRequestService.updateCompleted(1L);
-		System.out.println("멘토링 완료 1L : "+mentoringRequestService.getChatRoom(1L));
+		System.out.println("멘토링 완료 1L : "+chatRoomService.updateCompleted(1L));
 	}
 	//@Test
 	void updateRejected() throws Exception{
-		mentoringRequestService.updateRejected(1L);
-		System.out.println("요청 거절 1L : "+mentoringRequestService.getChatRoom(1L));
+		System.out.println("요청 거절 1L : "+chatRoomService.updateRejected(1L));
 	}
 	//@Test
 	void updateCanceled() throws Exception{
-		mentoringRequestService.updateCanceled(1L);
-		System.out.println("요청 취소 1L : "+mentoringRequestService.getChatRoom(1L));
+		System.out.println("요청 취소 1L : "+chatRoomService.updateCanceled(1L));
 	}
 	//@Test
 	void updateForceClosed() throws Exception{
-		mentoringRequestService.updateForceClosed(1L);
-		System.out.println("강제 종료 1L : "+mentoringRequestService.getChatRoom(1L));
+		System.out.println("강제 종료 1L : "+chatRoomService.updateForceClosed(1L));
 	}
 	//@Test
 	void selectMentoringRequestAll(){
-		List<ChatRoomDto> mentoringRequestDtos = mentoringRequestService.selectChatRoomAll();
-		System.out.println("전체 출력"+mentoringRequestDtos);
+		System.out.println("유저 번호 1번 채팅방 전체 출력"+chatRoomService.selectChatRoomAll(1L));
+	}
+	//@Test
+	void updateChattingStatus() {
+		chatRoomStatusService.updateChatRoomStatus(1L, 5L);
+	}
+	@Transactional
+	@Test
+	void selectChatMessage() {
+		System.out.println("1번방 채팅내역"+chatRoomService.selectChatMessages(1L));
 	}
 }

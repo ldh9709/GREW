@@ -20,13 +20,13 @@ public interface InquiryRepository extends JpaRepository<Inquiry, Long> {
 	@Query("SELECT i FROM Inquiry i " + 
 			"WHERE i.category.categoryNo = :categoryNo " + 
 			"ORDER BY i.inquiryViews DESC")
-	List<Inquiry> findByCategoryInquiryOrderByView(@Param("categoryNo") Long categoryNo);
+	Page<Inquiry> findByCategoryInquiryOrderByView(@Param("categoryNo") Long categoryNo,Pageable pageable);
 
 	// 답변갯수순
 	@Query("SELECT i FROM Inquiry i " + 
 			"WHERE i.category.categoryNo = :categoryNo "
 			+ "ORDER BY (SELECT COUNT(a) FROM Answer a WHERE a.inquiry = i) DESC")
-	List<Inquiry> findByCategoryInquiryOrderByAnswer(@Param("categoryNo") Long categoryNo);
+	Page<Inquiry> findByCategoryInquiryOrderByAnswer(@Param("categoryNo") Long categoryNo,Pageable pageable);
 
 	/** 전체질문 **/
 	// 조회수순
@@ -36,7 +36,7 @@ public interface InquiryRepository extends JpaRepository<Inquiry, Long> {
 	// 답변갯수순
 	@Query("SELECT i FROM Inquiry i " + 
 			"ORDER BY (SELECT COUNT(a) FROM Answer a WHERE a.inquiry = i) DESC")
-	List<Inquiry> findAllInquiriOrderByAnswer();
+	Page<Inquiry> findAllInquiriOrderByAnswer(Pageable pageable);
 	
 	//검색기능
 	@Query("SELECT i FROM Inquiry i "
@@ -45,6 +45,6 @@ public interface InquiryRepository extends JpaRepository<Inquiry, Long> {
 		     + "OR i.inquiryContent LIKE %:search% "
 		     + "OR m.memberName LIKE %:search%) "
 		     + "AND i.inquiryStatus = 1")
-		List<Inquiry> findInquiryBySearch(@Param("search") String search);
+		Page<Inquiry> findInquiryBySearch(@Param("search") String search,Pageable pageable);
 
 }

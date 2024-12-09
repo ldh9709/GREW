@@ -1,10 +1,13 @@
 package com.itwill.jpa.service.bullentin_board;
 
-import java.util.List;
 
 import org.springframework.data.domain.Page;
 
 import com.itwill.jpa.dto.bulletin_board.InquiryDto;
+import com.itwill.jpa.util.ClientIp;
+
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
 
 public interface InquiryService {
 	//질문작성
@@ -17,18 +20,20 @@ public interface InquiryService {
 	InquiryDto getInquiry(Long InquiryNo);
 	//조회수증가
 	InquiryDto increaseViewInquiry(InquiryDto inquiryDto) throws Exception;
-	
+	InquiryDto increaseViewInquiry(InquiryDto inquiryDto, String ipAddress) throws Exception;
+	//IP체크
+	String ipcheck(HttpServletRequest httpServletRequest);
 	/*카테고리별 질문*/
 	//답변갯수순
-	List<InquiryDto> findByCategoryInquiryOrderByAnswer(Long categoryNo);
+	Page<InquiryDto> findByCategoryInquiryOrderByAnswer(Long categoryNo,int pageNumber, int pageSize);
 	//조회순
-	List<InquiryDto> findByCategoryInquiryOrderByView(Long categoryNo);
+	Page<InquiryDto> findByCategoryInquiryOrderByView(Long categoryNo,int pageNumber, int pageSize);
 	/*전체질문*/
 	//답변갯수순
-	List<InquiryDto> findByAllInquiryOrderByAnswer();
+	Page<InquiryDto> findByAllInquiryOrderByAnswer(int pageNumber, int pageSize);
 	//조회순
 	Page<InquiryDto> findByAllInquiryOrderByView(int pageNumber, int pageSize);
 	
 	//검색
-	List<InquiryDto> findInquiryBySearch(String search);
+	Page<InquiryDto> findInquiryBySearch(String search,int pageNumber, int pageSize);
 }

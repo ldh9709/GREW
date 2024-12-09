@@ -6,6 +6,7 @@ import com.itwill.jpa.entity.chatting_review.ChatRoomStatus;
 
 public interface ChatRoomStatusService {
 	ChatRoomStatusDto getChatRoomStatus(Long chatRoomStatusNo);
-	void saveChatRoomStatus(ChatRoomStatus mentorChatRoomStatus, ChatRoomStatus menteeChatRoomStatus);
-	ChatRoomStatus updateChatRoomStatus(Long chatRoomStatusNo);
+	void saveFirstChatRoomStatus(ChatRoomStatus mentorChatRoomStatus, ChatRoomStatus menteeChatRoomStatus);
+	ChatRoomStatusDto updateChatRoomStatus(Long chatRoomNo, Long memberNo);
+	ChatRoomStatusDto updateChatRoomName(Long chatRoomNo, Long memberNo, String chatRoomName);
 }
