@@ -61,6 +61,7 @@ public class SecurityConfig {
 	 */
 	OAuth2LoginAuthenticationFilter authenticationFilter;
 	
+	
 	//OAuth2 로그인 시(SNS) 사용자 정보를 처리하는 서비스
 	@Autowired
 	private PrincipalOauth2UserSerivce principalOauth2UserSerivce;
@@ -72,6 +73,9 @@ public class SecurityConfig {
 	//로그인 실패 시 동작을 정의하는 핸들러.
 	@Autowired
 	private FormLoginFailureHandler formLoginFailureHandler;
+	
+	
+	
 	
 	//인증 없이 접근 가능한 경로 정의
 	private final String[] whitelist = { };
@@ -160,11 +164,11 @@ public class SecurityConfig {
 	    return source;  // CORS 설정을 반환
 	  }
 	
-	/* 비밀번호 암호화 */
-	@Bean
-	public PasswordEncoder passwordEncoder() {
-		return new BCryptPasswordEncoder();
-	}
+//	/* 비밀번호 암호화 */
+//	@Bean
+//	public PasswordEncoder passwordEncoder() {
+//		return new BCryptPasswordEncoder();
+//	}
 	
 	
 	

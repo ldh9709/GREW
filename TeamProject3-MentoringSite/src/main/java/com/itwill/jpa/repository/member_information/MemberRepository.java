@@ -29,8 +29,6 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
 	//이메일로 멤버 조회
 	Member findByMemberEmail(String email);
 	
-	//userName으로 멤버 조회
-	Optional<Member> findByUsername(String username);
 	
 	//신고 카운트 증가
 	@Modifying

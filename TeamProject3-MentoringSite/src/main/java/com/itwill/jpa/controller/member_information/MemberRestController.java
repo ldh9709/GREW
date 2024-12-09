@@ -7,6 +7,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -218,15 +219,11 @@ public class MemberRestController {
 	}
 	
 	/***** 이메일 발송 (테스트) *****/
-	@Operation(summary = "이메일 발송")
-	@PostMapping("/send-email")
-	public String sendEmail(@RequestParam String address, @RequestParam String title, @RequestParam String message) {
-		
-		emailService.sendMail(address, title, message);
-		
-		return "이메일 발송 : " + address;
-		
+	@Operation(summary = "비밀번호 찾기")
+	@PostMapping("/findPassword")
+	public ResponseEntity findPassword(@RequestBody MemberDto.findPassword memberDto) {
+		memberService.findPassword(memberDto);
+		return ResponseEntity.status(HttpStatus.OK).body("ok");
 	}
-	
 	
 }
