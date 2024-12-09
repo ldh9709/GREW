@@ -61,7 +61,7 @@ public class Inquiry {
     @Column(name = "inquiry_views", nullable = false)
     private Integer inquiryViews;
 
-    @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category_no")
     private Category category;  // FK 연관 관계 (Category 엔티티)
 
