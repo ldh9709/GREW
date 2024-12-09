@@ -38,7 +38,7 @@ public class InquiryRestController {
 	@PostMapping
 	public ResponseEntity<Response> insertInquiry(@RequestBody InquiryDto inquiryDto) {
 		Response response = new Response();
-
+		
 		inquiryService.saveInquiry(inquiryDto);
 		response.setStatus(ResponseStatusCode.CREATED_INQUIRY_SUCCESS);
 		response.setMessage(ResponseMessage.CREATED_INQUIRY_SUCCESS);
