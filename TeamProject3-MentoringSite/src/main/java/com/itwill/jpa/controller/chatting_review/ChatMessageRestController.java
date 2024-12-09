@@ -7,7 +7,9 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -32,7 +34,7 @@ public class ChatMessageRestController {
 	@PostMapping
 	public ResponseEntity<Response> saveMessage(@RequestBody ChatMessageDto chatMessageDto){
 		Response response = new Response();
-		ChatMessage chatMessage =  chatMessageService.saveChatMessage(chatMessageDto);
+		ChatMessage chatMessage =  chatMessageService.createChatMessage(chatMessageDto);
 		response.setStatus(ResponseStatusCode.SEND_CHATTING_SUCCESS);
 		response.setMessage(ResponseMessage.SEND_CHATTING_SUCCESS);
 		response.setData(chatMessage);
@@ -44,6 +46,43 @@ public class ChatMessageRestController {
 				HttpStatus.CREATED);
 		
 		return responseEntity;
+	}
+	
+	@Operation(summary="읽음 상태 변경")
+	@PutMapping("/update/{chatmessageNo}")
+	public ResponseEntity<Response> updateChatMessageCheck(@RequestBody ChatMessageDto chatMessageDto){
+		Response response = new Response();
+		ChatMessage chatMessage =  chatMessageService.updateChatMessageCheck(chatMessageDto.getChatMessageNo());
+		response.setStatus(ResponseStatusCode.READ_MESSAGE);
+		response.setMessage(ResponseMessage.READ_MESSAGE);
+		response.setData(chatMessage);
+		
+		HttpHeaders httpHeaders = new HttpHeaders();
+		httpHeaders.setContentType(new MediaType(MediaType.APPLICATION_JSON, Charset.forName("UTF-8")));
+		
+		ResponseEntity<Response> responseEntity = new ResponseEntity<Response>(response, httpHeaders,
+				HttpStatus.CREATED);
+		
+		return responseEntity;
+	}
+	
+	@Operation(summary="특정 메시지 선택")
+	@PutMapping("/{chatmessageNo}")
+	public ResponseEntity<Response> getChatMessageByChatMessageNo(@PathVariable(name="chatmessageNo") long chatmessageNo){
+		Response response = new Response();
+		ChatMessage chatMessage =  chatMessageService.getChatMessageByNo(chatmessageNo);
+		response.setStatus(ResponseStatusCode.CHATTING_LIST_SUCCESS);
+		response.setMessage(ResponseMessage.CHATTING_LIST_SUCCESS);
+		
+		response.setData(chatMessage);
+		HttpHeaders httpHeaders = new HttpHeaders();
+		httpHeaders.setContentType(new MediaType(MediaType.APPLICATION_JSON, Charset.forName("UTF-8")));
+		
+		ResponseEntity<Response> responseEntity = new ResponseEntity<Response>(response, httpHeaders,
+				HttpStatus.CREATED);
+		
+		return responseEntity;
+		
 	}
 	
 }

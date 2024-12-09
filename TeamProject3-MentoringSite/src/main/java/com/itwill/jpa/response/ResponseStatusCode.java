@@ -85,6 +85,7 @@ public class ResponseStatusCode {
 	public static final int CHATTING_LIST_SUCCESS = 7010;
 	public static final int CHATTING_NAME_CHANGE = 7020;
 	public static final int CHATTING_MESSAGE = 7030;
+	public static final int READ_MESSAGE = 7040;
 	
 	
 	/******************* REVIEW 메시지 **********************/

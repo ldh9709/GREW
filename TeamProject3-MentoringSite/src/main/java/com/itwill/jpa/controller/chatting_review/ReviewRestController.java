@@ -39,7 +39,7 @@ public class ReviewRestController {
 	@PostMapping
 	public ResponseEntity<Response> insertReview(@RequestBody ReviewDto reviewDto){
 		
-		ReviewDto saveReview = ReviewDto.toDto(reviewService.saveReview(reviewDto));
+		ReviewDto saveReview = ReviewDto.toDto(reviewService.createReview(reviewDto));
 		AlarmDto alarmDto = alarmService.saveAlarmsByReview(saveReview);
 		
 		Response response = new Response();
@@ -103,7 +103,7 @@ public class ReviewRestController {
 	public ResponseEntity<Response> selectReviewByReviewNo(@PathVariable(name="reviewNo") Long reviewNo){
 		
 		Response response = new Response();
-		Review review = reviewService.selectReviewByReviewNo(reviewNo);
+		ReviewDto review = reviewService.getReviewByReviewNo(reviewNo);
 		// 리뷰가 없는 경우
 	    if (review == null) {
 	        response.setStatus(ResponseStatusCode.VIEW_REVIEW_FAIL);  // 예를 들어, REVIEW_NOT_FOUND 상태 코드
@@ -127,7 +127,7 @@ public class ReviewRestController {
 	public ResponseEntity<Response> selectReviewByChatRoomNo(@PathVariable(name="chatRoomNo") Long chatRoomNo){
 		
 		Response response = new Response();
-		List<ReviewDto> reviews = reviewService.selectReviewByChatRoomNo(chatRoomNo);
+		List<ReviewDto> reviews = reviewService.getReviewByChatRoomNo(chatRoomNo);
 		response.setStatus(ResponseStatusCode.READ_REVIEW_LIST_SUCCESS);
 		response.setMessage(ResponseMessage.READ_REVIEW_LIST_SUCCESS);
 		response.setData(reviews);
@@ -145,7 +145,7 @@ public class ReviewRestController {
 	public ResponseEntity<Response> selectReviewByMemberNo(@PathVariable(name="member_no") Long memberNo){
 		
 		Response response = new Response();
-		List<ReviewDto> reviews = reviewService.selectReviewByMemberNo(memberNo);
+		List<ReviewDto> reviews = reviewService.getReviewByMemberNo(memberNo);
 		response.setStatus(ResponseStatusCode.READ_REVIEW_LIST_SUCCESS);
 		response.setMessage(ResponseMessage.READ_REVIEW_LIST_SUCCESS);
 		response.setData(reviews);
