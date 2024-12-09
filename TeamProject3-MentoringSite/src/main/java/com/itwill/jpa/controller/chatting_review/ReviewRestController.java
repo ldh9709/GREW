@@ -18,12 +18,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.itwill.jpa.dto.alarm.AlarmDto;
 import com.itwill.jpa.dto.chatting_review.ReviewDto;
+import com.itwill.jpa.dto.member_information.MentorProfileDto;
 import com.itwill.jpa.entity.chatting_review.Review;
 import com.itwill.jpa.response.Response;
 import com.itwill.jpa.response.ResponseMessage;
 import com.itwill.jpa.response.ResponseStatusCode;
 import com.itwill.jpa.service.alarm.AlarmService;
 import com.itwill.jpa.service.chatting_review.ReviewService;
+import com.itwill.jpa.service.member_information.MentorProfileService;
 
 import io.swagger.v3.oas.annotations.Operation;
 
@@ -35,16 +37,24 @@ public class ReviewRestController {
 	private ReviewService reviewService;
 	@Autowired
 	private AlarmService alarmService;
+	@Autowired
+	private MentorProfileService mentorProfileService;
+	
 	@Operation(summary = "리뷰 등록")
 	@PostMapping
 	public ResponseEntity<Response> insertReview(@RequestBody ReviewDto reviewDto){
 		
 		ReviewDto saveReview = ReviewDto.toDto(reviewService.saveReview(reviewDto));
 		AlarmDto alarmDto = alarmService.saveAlarmsByReview(saveReview);
+		MentorProfileDto MentorProfileDto =mentorProfileService.saveMentorProfileByReview(saveReview);
+		mentorProfileService.updateMentorRating(saveReview.getMemberNo());
 		
-		Response response = new Response();
-		if (reviewDto.getChatRoomNo() == null) {
-            response.setStatus(ResponseStatusCode.CREATED_REVIEW_FAIL);
+			Response response = new Response();
+			response.setStatus(ResponseStatusCode.CREATED_REVIEW_SUCCESS);
+		    response.setMessage("리뷰 등록 성공");
+		    response.setData(saveReview);
+	    if (reviewDto.getChatRoomNo() == null) {
+		    response.setStatus(ResponseStatusCode.CREATED_REVIEW_FAIL);
             response.setMessage(ResponseMessage.CREATED_REVIEW_FAIL);
             return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);	
         }
@@ -52,6 +62,7 @@ public class ReviewRestController {
 		response.setMessage(ResponseMessage.CREATED_REVIEW_SUCCESS);
 		response.setData(reviewDto);
 		response.setAddData(alarmDto);
+		
 		HttpHeaders httpHeaders = new HttpHeaders();
 		httpHeaders.setContentType(new MediaType(MediaType.APPLICATION_JSON, Charset.forName("UTF-8")));
 		

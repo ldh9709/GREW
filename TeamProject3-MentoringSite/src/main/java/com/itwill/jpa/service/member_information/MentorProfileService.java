@@ -1,5 +1,7 @@
 package com.itwill.jpa.service.member_information;
 
+import com.itwill.jpa.dto.chatting_review.ReviewDto;
+import com.itwill.jpa.dto.member_information.MentorProfileDto;
 import com.itwill.jpa.entity.member_information.Category;
 import com.itwill.jpa.entity.member_information.MentorProfile;
 
@@ -27,15 +29,17 @@ public interface MentorProfileService {
 
     // 특정 카테고리와 관련된 멘토 프로필 조회
     List<MentorProfile> getMentorProfilesByCategory(Category category);
-    /**
-     * 멘토 프로필의 평균 점수를 업데이트
-     */
-    void updateMentorRating(Long mentorNo);
-    
-    /**
-     * 특정 멘토의 평균 점수를 반환
-     */
-    Double getAverageMentorRating(Long memberNo);
+ 
     //멘토 생성 
-    void createMentorProfile(Long memberNo, MentorProfile mentorProfile);
+    void createMentorProfile(Long memberNo, MentorProfileDto mentorProfileDto);
+
+    
+    // 특정 멘토의 평균 점수를 반환
+    Double getAverageMentorRating(Long memberNo);
+    
+    // 특정 멘토의 평점을 업데이트
+    void updateMentorRating(Long memberNo);
+    
+    // 리뷰 정보를 바탕으로 멘토 프로필 정보 업데이트
+    MentorProfileDto saveMentorProfileByReview(ReviewDto reviewDto);
 }

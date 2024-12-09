@@ -3,6 +3,7 @@ package com.itwill.jpa.repository.chatting_review;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
@@ -33,5 +34,11 @@ public interface ReviewRepository extends JpaRepository<Review, Long>{
     	       + "JOIN Review r ON r.chatRoom.chatRoomNo = c.chatRoomNo "
     	       + "WHERE r.reviewNo = :reviewNo")
     	Long findMentorNoByReviewNo(@Param("reviewNo") Long reviewNo);
+    
+    @Modifying  //점수 평균 가져오기
+    @Query("UPDATE MentorProfile mp " +
+           "SET mp.mentorRating = (SELECT AVG(r.reviewScore) FROM Review r WHERE r.chatRoom.mentor.memberNo = :memberNo) " +
+           "WHERE mp.member.memberNo = :memberNo")
+    void updateMentorRatingByMemberNo(@Param("memberNo") Long memberNo);
     
 }

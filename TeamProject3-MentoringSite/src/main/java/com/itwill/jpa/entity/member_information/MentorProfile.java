@@ -35,7 +35,8 @@ public class MentorProfile {
     @Column(name = "mentor_career" ,nullable = false, length = 1000)
     private String mentorCareer; 
     
-    @Column(name = "mentor_rating" ,nullable = false)
+    @Column(name = "mentor_rating", nullable = false)
+    @ColumnDefault("0.0")
     private Double mentorRating;
     
     @Column(name = "mentor_mentoring_count" ,nullable = false)
@@ -81,18 +82,19 @@ public class MentorProfile {
     			.categoryNo(mentorProfileDto.getCategoryNo())
     			.build();
     
-        return MentorProfile.builder()
-        		.mentorProfileNo(mentorProfileDto.getMentorProfileNo())
-        		.mentorIntroduce(mentorProfileDto.getMentorIntroduce())
-        		.mentorCareer(mentorProfileDto.getMentorCareer())
-        		.mentorRating(mentorProfileDto.getMentorRating())
-        		.mentorMentoringCount(mentorProfileDto.getMentorMentoringCount())
-        		.mentorImage(mentorProfileDto.getMentorImage())
-        		.mentorActivityCount(mentorProfileDto.getMentorActivityCount())
-        		.mentorFollowCount(mentorProfileDto.getMentorFollowCount())
-        		.mentorStatus(mentorProfileDto.getMentorStatus())
-                .member(member)
-                .category(category)
-                .build();
+    	 return MentorProfile.builder()
+    	            .mentorProfileNo(mentorProfileDto.getMentorProfileNo())
+    	            .mentorIntroduce(mentorProfileDto.getMentorIntroduce())
+    	            .mentorCareer(mentorProfileDto.getMentorCareer())
+    	            .mentorRating(mentorProfileDto.getMentorRating())
+    	            .mentorMentoringCount(mentorProfileDto.getMentorMentoringCount())
+    	            .mentorImage(mentorProfileDto.getMentorImage())
+    	            .mentorActivityCount(mentorProfileDto.getMentorActivityCount())
+    	            .mentorFollowCount(mentorProfileDto.getMentorFollowCount())
+    	            .mentorStatus(mentorProfileDto.getMentorStatus())
+    	            .member(member) // 🔥 멤버 정보 매핑
+    	            .category(category) // 🔥 카테고리 정보 매핑
+    	            .build();
+    	
     }
 }

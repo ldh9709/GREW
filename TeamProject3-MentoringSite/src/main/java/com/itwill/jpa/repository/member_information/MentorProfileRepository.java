@@ -53,37 +53,55 @@ public interface MentorProfileRepository extends JpaRepository<MentorProfile, Lo
     Double findAverageScoreByMentor(@Param("mentorNo") Long mentorNo);
     
     /**
-     * 멘토 프로필을 멤버 번호로 조회
-     *
+     * 멘토의 멘토 평점(mentor_rating)을 업데이트합니다.
+     * @param memberNo 멘토의 멤버 번호
+     */
+    @Modifying
+    @Query("UPDATE MentorProfile mp " +
+           "SET mp.mentorRating = COALESCE((SELECT AVG(r.reviewScore) FROM Review r " +
+           "JOIN r.chatRoom cr " +
+           "WHERE cr.mentor.memberNo = :memberNo), 0.0) " +
+           "WHERE mp.member.memberNo = :memberNo")
+    void updateMentorRatingByMemberNo(@Param("memberNo") Long memberNo);
+    /**
+     * 멤버 번호로 멘토 프로필을 조회합니다.
      * @param memberNo 멤버 번호
      * @return MentorProfile 엔티티
      */
-    MentorProfile findByMember_MemberNo(Long memberNo);
-    
-    /**
-     * 특정 멤버의 멘토 프로필을 조회
-     */
-    MentorProfile findByMember(Member member);
+    @Query("SELECT mp FROM MentorProfile mp WHERE mp.member.memberNo = :memberNo")
+    MentorProfile findByMemberNo(@Param("memberNo") Long memberNo);
+
+/**
+ * 멘토 프로필을 멤버 번호로 조회
+ *
+ * @param memberNo 멤버 번호
+ * @return MentorProfile 엔티티
+ */
+MentorProfile findByMember_MemberNo(Long memberNo);
+
+/**
+ * 특정 멤버의 멘토 프로필을 조회
+ */
+MentorProfile findByMember(Member member);
+
 }
+//mentorStatus= (1=디폴트(심사전), 2=심사중 ,3=심사완료(멘토상태) 4=멘토탈퇴)
+//MemberNo로 멘토 프로필 insert  상태는 status로 멘토 프로필 전환 상태로 바꾸는 메서드
 
-	
-	//mentorStatus= (1=디폴트(심사전), 2=심사중 ,3=심사완료(멘토상태) 4=멘토탈퇴)
-	//MemberNo로 멘토 프로필 insert  상태는 status로 멘토 프로필 전환 상태로 바꾸는 메서드
-	
-	//멘토프로필 탈퇴 mentorStatus=4로 업데이트 하기  mentorStatus=4는 탈퇴상태
-	
-	
-	
-	//멘토프로필 상세보기 조회 멘토 상태이기 때문에 mentorStatus넘버는=3 
-	
-	//검색 (이름 소개글 경력)
-	
+//멘토프로필 탈퇴 mentorStatus=4로 업데이트 하기  mentorStatus=4는 탈퇴상태
 
-    // 특정 카테고리와 관련된 멘토 프로필을 조회
-    //List<MentorProfile> findByCategory(Category category);
 
-	
-	
+
+//멘토프로필 상세보기 조회 멘토 상태이기 때문에 mentorStatus넘버는=3 
+
+//검색 (이름 소개글 경력)
+
+
+// 특정 카테고리와 관련된 멘토 프로필을 조회
+//List<MentorProfile> findByCategory(Category category);
+
+
+
 
 
 

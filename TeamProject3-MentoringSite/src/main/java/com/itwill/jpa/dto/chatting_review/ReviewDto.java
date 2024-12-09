@@ -25,6 +25,16 @@ public class ReviewDto {
     private Long memberNo;
     
     
+    public ReviewDto(Long memberNo, Double reviewScore) {
+        this.memberNo = memberNo;
+        this.reviewScore = (int) Math.round(reviewScore); // 🔥 Double -> Integer 변환
+    }
+    public ReviewDto(Long memberNo, Integer reviewScore) {
+        this.memberNo = memberNo;
+        this.reviewScore = reviewScore;
+    }
+
+    
     public static ReviewDto toDto(Review reviewEntity) {
         return ReviewDto.builder()
                 .reviewNo(reviewEntity.getReviewNo())
