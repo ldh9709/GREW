@@ -13,6 +13,10 @@ import com.itwill.jpa.entity.member_information.Follow;
 
 @Repository
 public interface FollowReporitory extends JpaRepository<Follow, Long>{
+	
+	/* 멘티, 멘토 번호가 존재하는지 확인 */ 
+	boolean existsByMenteeMember_MemberNoAndMentorMember_MemberNo(Long menteeMemberNo, Long mentorMemberNo);
+	 
 	/* FollowResponseDto 활용하여 원하는 데이터만 출력 */
 	@Query("SELECT new com.itwill.jpa.dto.member_information.FollowResponseDto("
 			+ "m.memberName"
@@ -27,12 +31,14 @@ public interface FollowReporitory extends JpaRepository<Follow, Long>{
 			)
 	public List<FollowResponseDto> findFollowMentors(@Param("menteeMemberNo") Long menteeMemberNo);
 	
+	/* 팔로워 멘티 수 찾기 */
 	public Integer countBymentorMember_MemberNo(Long mentorMemberNo);
+
 	
-	//멘토보드생성알림을 위한 팔로워찾기
-		@Query("SELECT f.menteeMember.memberNo "
-				+ "FROM Follow f "
-				+ "WHERE f.mentorMember.memberNo = :mentorNo")
-		List<Long> findMenteeByMentor(@Param("mentorNo") Long mentorNo);
+	/* 멘토보드생성알림을 위한 팔로워찾기 */
+	@Query("SELECT f.menteeMember.memberNo "
+			+ "FROM Follow f "
+			+ "WHERE f.mentorMember.memberNo = :mentorNo")
+	List<Long> findMenteeByMentor(@Param("mentorNo") Long mentorNo);
 	
 }
