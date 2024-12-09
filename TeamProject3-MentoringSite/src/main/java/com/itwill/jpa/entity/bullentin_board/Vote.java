@@ -37,18 +37,18 @@ public class Vote {
     @Column(name = "vote_no")
     private Long voteNo;  // PK, 시퀀스로 자동 생성
 
-    @Column(name = "vote_type", nullable = false)
+    @Column(name = "vote_type")
     private Integer voteType;  // 투표 타입 (예: up=1, down=2)
     @CreationTimestamp
-    @Column(name = "vote_date", nullable = false)
+    @Column(name = "vote_date")
     private LocalDate voteDate;  // 투표 일자 (LocalDate)
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "member_no", nullable = false)  // "user_no"는 User 엔티티와 관계
+    @JoinColumn(name = "member_no")  // "user_no"는 User 엔티티와 관계
     private Member member;  // 사용자 (User 엔티티와 관계)
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "answer_no", nullable = false)  // "answer_no"는 Answer 엔티티와 관계
+    @JoinColumn(name = "answer_no")  // "answer_no"는 Answer 엔티티와 관계
     private Answer answer;  // 답변 (Answer 엔티티와 관계)
 
     /*

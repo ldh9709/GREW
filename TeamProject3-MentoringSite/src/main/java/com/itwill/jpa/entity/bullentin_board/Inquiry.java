@@ -27,6 +27,7 @@ import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Builder.Default;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -46,19 +47,21 @@ public class Inquiry {
     @Column(name = "inquiry_no")
     private Long inquiryNo;
 
-    @Column(name = "inquiry_title", nullable = false)
+    
+    @Column(name = "inquiry_title")
     private String inquiryTitle;
-
-    @Column(name = "inquiry_content", nullable = false, length = 500)
+    
+    
+    @Column(name = "inquiry_content", length = 500)
     private String inquiryContent;
     
-    @Column(name = "inquiry_date", nullable = false)
+    @Column(name = "inquiry_date")
     private LocalDateTime inquiryDate;
     
-    @Column(name = "inquiry_status", nullable = false, columnDefinition = "integer default 1")
-    private Integer inquiryStatus = 1;  // 1 or 2
+    @Column(name = "inquiry_status")
+    private Integer inquiryStatus;  // 1 or 2
 
-    @Column(name = "inquiry_views", nullable = false)
+    @Column(name = "inquiry_views")
     private Integer inquiryViews;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -73,18 +76,9 @@ public class Inquiry {
     @OneToMany(mappedBy = "inquiry", fetch = FetchType.LAZY)
     private List<Answer> answers; 
     
-    /* 초기값 설정 */
-    @PrePersist
-    public void setDefaultValues() {
-    	if(this.inquiryContent==null) this.inquiryContent = "";
-    	if(this.inquiryDate==null) this.inquiryDate = LocalDateTime.now();
-    	if(this.inquiryStatus == null||this.inquiryStatus == 0) this.inquiryStatus = 1;
-    	if(this.inquiryViews == null) this.inquiryViews = 0;
-    }
-    
     
     /*
-     * DTO -> Entitiy
+     * DTO -> Entity
      */
     public static Inquiry toEntity(InquiryDto inquiryDto) {
     	
@@ -95,10 +89,21 @@ public class Inquiry {
 	            .inquiryDate(inquiryDto.getInquiryDate())
 	            .inquiryStatus(inquiryDto.getInquiryStatus())
 	            .inquiryViews(inquiryDto.getInquiryViews())
-	            .category(Category.builder().categoryNo(inquiryDto.getCategoryNo()).build())
+	            .category(Category.builder()
+	            		.categoryNo(inquiryDto.getCategoryNo())
+	            		.build())
 	            .member(Member.builder().memberNo(inquiryDto.getMemberNo()).build())
 	            .build();
 	}
+    /* 초기값 설정 */
+    @PrePersist
+    public void setDefaultValues() {
+    	if(this.inquiryContent==null) this.inquiryContent = "";
+    	if(this.inquiryDate==null) this.inquiryDate = LocalDateTime.now();
+    	if(this.inquiryStatus == null||this.inquiryStatus == 0) this.inquiryStatus = 1;
+    	if(this.inquiryViews == null) this.inquiryViews = 0;
+    }
+    
     
     
    
