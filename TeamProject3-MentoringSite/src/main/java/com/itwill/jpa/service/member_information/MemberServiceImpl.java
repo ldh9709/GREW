@@ -7,6 +7,7 @@ import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.itwill.jpa.dto.member_information.InterestDto;
@@ -29,9 +30,8 @@ public class MemberServiceImpl implements MemberService {
 	//메일 발송을 위한 메소드 의존성 주입
 	CustomMailSender customMailSender;
 	
-	//@Autowired
-	//비밀번호 암호화를 위한 메소드 의존성 주입
-	//BCryptPasswordEncoder bCryptPasswordEncoder;
+	@Autowired
+	private PasswordEncoder passwordEncoder;
 	
 	
 	/***** 회원 가입 *****/
@@ -47,6 +47,7 @@ public class MemberServiceImpl implements MemberService {
 			
 			saveMember.addInterests(interestEntity);
 		}
+		saveMember.setMemberPassword(passwordEncoder.encode(memberDto.getMemberPassword()));
 		
 		//객체 저장
 		return memberRepository.save(saveMember);
