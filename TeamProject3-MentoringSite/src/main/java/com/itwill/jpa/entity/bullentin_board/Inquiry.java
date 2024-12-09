@@ -6,6 +6,7 @@ import java.util.List;
 import org.hibernate.annotations.CreationTimestamp;
 
 import com.itwill.jpa.dto.bulletin_board.InquiryDto;
+import com.itwill.jpa.dto.member_information.CategoryRequestDto;
 import com.itwill.jpa.entity.member_information.Category;
 import com.itwill.jpa.entity.member_information.Member;
 
@@ -65,7 +66,10 @@ public class Inquiry {
     @JoinColumn(name = "member_no")
     private Member member;  // FK 연관 관계 (User 엔티티)
 
-   
+    /* 한 개의 질문당 여러개의 답변 보유 가능 */
+    @OneToMany(mappedBy = "inquiry", fetch = FetchType.LAZY)
+    private List<Answer> answers; 
+    
     /* 초기값 설정 */
     @PrePersist
     public void setDefaultValues() {
@@ -80,6 +84,7 @@ public class Inquiry {
      * DTO -> Entitiy
      */
     public static Inquiry toEntity(InquiryDto inquiryDto) {
+    	
 	    return Inquiry.builder()
 	            .inquiryNo(inquiryDto.getInquiryNo())
 	            .inquiryTitle(inquiryDto.getInquiryTitle())
@@ -87,15 +92,17 @@ public class Inquiry {
 	            .inquiryDate(inquiryDto.getInquiryDate())
 	            .inquiryStatus(inquiryDto.getInquiryStatus())
 	            .inquiryViews(inquiryDto.getInquiryViews())
-	            .category(Category.builder().categoryNo(inquiryDto.getCategoryNo()).build())
+	            .category(Category.builder()
+	            		.categoryNo(inquiryDto.getCategory().getCategoryNo())
+	            		.categoryName(inquiryDto.getCategory().getCategoryName())
+	            		.categoryDepth(inquiryDto.getCategory().getCategoryDepth())
+	            		.build())
 	            .member(Member.builder().memberNo(inquiryDto.getMemberNo()).build())
 	            .build();
 	}
     
     
-    /* 한 개의 질문당 여러개의 답변 보유 가능 */
-    @OneToMany(mappedBy = "inquiry", fetch = FetchType.LAZY)
-    private List<Answer> answers; 
+   
     
     
     
