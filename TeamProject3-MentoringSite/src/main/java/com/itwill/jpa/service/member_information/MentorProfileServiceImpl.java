@@ -12,8 +12,11 @@ import com.itwill.jpa.repository.member_information.MentorProfileRepository;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
+import jakarta.persistence.QueryTimeoutException;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.orm.ObjectOptimisticLockingFailureException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,9 +26,14 @@ import java.util.List;
 @Transactional
 public class MentorProfileServiceImpl implements MentorProfileService {
 	 @PersistenceContext
-	   private EntityManager entityManager;
-    @Autowired
-    private MentorProfileRepository mentorProfileRepository;
+	  private EntityManager entityManager;
+	 private final MentorProfileRepository mentorProfileRepository;
+
+	    @Autowired
+	    public MentorProfileServiceImpl(MentorProfileRepository mentorProfileRepository) {
+	        this.mentorProfileRepository = mentorProfileRepository;
+	    }
+
     @Autowired
     private ReviewRepository reviewRepository;
     @Autowired
@@ -92,24 +100,24 @@ public class MentorProfileServiceImpl implements MentorProfileService {
     
     @Override
     public void createMentorProfile(Long memberNo, MentorProfileDto mentorProfileDto) {
-        // 1️⃣ 회원(Member) 정보 조회
+        // 1️ 회원(Member) 정보 조회
         Member member = memberRepository.findById(memberNo)
                 .orElseThrow(() -> new IllegalArgumentException("회원 정보를 찾을 수 없습니다. memberNo: " + memberNo));
 
-        // 2️⃣ 카테고리 정보 조회
+        // 2️ 카테고리 정보 조회
         Category category = categoryRepository.findById(mentorProfileDto.getCategoryNo())
                 .orElseThrow(() -> new IllegalArgumentException("카테고리 정보를 찾을 수 없습니다. categoryNo: " + mentorProfileDto.getCategoryNo()));
 
-        // 3️⃣ 이미 멘토 프로필이 존재하는지 확인
+        // 3️ 이미 멘토 프로필이 존재하는지 확인
         if (mentorProfileRepository.findByMember(member) != null) {
             throw new IllegalStateException("해당 회원은 이미 멘토 프로필을 가지고 있습니다. memberNo: " + memberNo);
         }
 
-        // 4️⃣ MentorProfileDto → MentorProfile 엔티티로 변환
+        // 4️ MentorProfileDto → MentorProfile 엔티티로 변환
         MentorProfile mentorProfile = MentorProfileDto.toEntity(mentorProfileDto, member, category);
         mentorProfile.setMentorStatus(1); // 멘토의 초기 상태를 "생성 대기"로 설정
 
-        // 5️⃣ 멘토 프로필 저장
+        // 5️ 멘토 프로필 저장
         mentorProfileRepository.save(mentorProfile);
     }
 
@@ -125,14 +133,10 @@ public class MentorProfileServiceImpl implements MentorProfileService {
         return reviewScores.stream().mapToInt(Integer::intValue).average().orElse(0.0);
     }
 
-    /**
-     * 특정 멘토의 평점을 업데이트합니다.
-     */
-    @Transactional // 트랜잭션 보장
-    @Override
+    // 멘토의 mentor_rating 업데이트
+    @Transactional
     public void updateMentorRating(Long memberNo) {
         mentorProfileRepository.updateMentorRatingByMemberNo(memberNo);
-       
     }
 
     /**

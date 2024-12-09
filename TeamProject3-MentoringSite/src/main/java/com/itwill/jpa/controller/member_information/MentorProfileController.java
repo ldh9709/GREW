@@ -22,8 +22,12 @@ import java.util.List;
 @RequestMapping("/mentor-profile")
 public class MentorProfileController {
 
-    @Autowired
-    private MentorProfileService mentorProfileService;
+	 private final MentorProfileService mentorProfileService;
+
+	    @Autowired
+	    public MentorProfileController(MentorProfileService mentorProfileService) {
+	        this.mentorProfileService = mentorProfileService;
+	    }
 
     /**
      * 특정 멘토의 평균 점수를 조회합니다.
@@ -43,13 +47,10 @@ public class MentorProfileController {
      * 멘토의 평점을 업데이트합니다.
      */
     @Operation(summary = "멘토 평점 업데이트")
-    @PutMapping("/{memberNo}/update-rating")
-    public ResponseEntity<Response> updateMentorRating(@PathVariable Long memberNo) {
+    @GetMapping("/mentor-profile/update-rating/{memberNo}")
+    public ResponseEntity<?> updateRating(@PathVariable("memberNo") Long memberNo) {
         mentorProfileService.updateMentorRating(memberNo);
-        Response response = new Response();
-        response.setStatus(ResponseStatusCode.UPDATE_MEMBER_SUCCESS);
-        response.setMessage("멘토 평점이 업데이트되었습니다.");
-        return ResponseEntity.ok(response);
+        return ResponseEntity.ok("Mentor rating updated successfully for memberNo: " + memberNo);
     }
 
     /**

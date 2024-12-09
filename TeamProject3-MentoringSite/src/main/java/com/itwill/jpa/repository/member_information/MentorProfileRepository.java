@@ -57,13 +57,25 @@ public interface MentorProfileRepository extends JpaRepository<MentorProfile, Lo
      * @param memberNo 멘토의 멤버 번호
      */
     @Modifying
-    @Query("UPDATE MentorProfile mp " +
-           "SET mp.mentorRating = COALESCE((SELECT AVG(r.reviewScore) FROM Review r " +
-           "JOIN r.chatRoom cr " +
-           "WHERE cr.mentor.memberNo = :memberNo), 0.0) " +
-           "WHERE mp.member.memberNo = :memberNo")
+    @Query(
+        "UPDATE MentorProfile mp " +
+        "SET mp.mentorRating = COALESCE( " +
+        "    (SELECT AVG(r.reviewScore) " +
+        "     FROM Review r " +
+        "     JOIN r.chatRoom cr " +
+        "     WHERE cr.mentor.memberNo = mp.member.memberNo), 0.0) " +
+        "WHERE mp.member.memberNo = :memberNo"
+    )
     void updateMentorRatingByMemberNo(@Param("memberNo") Long memberNo);
     /**
+     * 
+     * 
+     * 
+     * 
+     * 
+     * 
+     * 
+     * 
      * 멤버 번호로 멘토 프로필을 조회합니다.
      * @param memberNo 멤버 번호
      * @return MentorProfile 엔티티
