@@ -129,7 +129,7 @@ public class SecurityConfig {
 		//SNS로그인
 		httpSecurity.oauth2Login((t) -> {
 			t.loginPage("/login")//로그인 페이지 경로
-			 .defaultSuccessUrl("/dashboard/myInfo")//로그인 성공 후 리다이렉트 경로
+			 .defaultSuccessUrl("/home")//로그인 성공 후 리다이렉트 경로
 			 .userInfoEndpoint((userInfoEndpointConfig) -> {
 			 /***
 			  * Spring Security의 OAuth2 사용자 정보 처리는 userInfoEndpoint를 통해 수행된다.
@@ -149,10 +149,14 @@ public class SecurityConfig {
 			t.logoutUrl("/logout")//로그아웃
 			 .logoutSuccessUrl("/login");//성공 후 리다이렉트
 		});
-				
+
+		//페이지 접근 경로
 		httpSecurity.authorizeHttpRequests((authorizeHttpRequestsConfig) -> {
 		      // swagger설정
-		      authorizeHttpRequestsConfig.requestMatchers(SwaggerPatterns).permitAll().anyRequest().authenticated();
+		      authorizeHttpRequestsConfig
+			      .requestMatchers(SwaggerPatterns).permitAll()
+			      .requestMatchers("/login").permitAll()
+			      .anyRequest().authenticated();
 		    });
 		
 		
