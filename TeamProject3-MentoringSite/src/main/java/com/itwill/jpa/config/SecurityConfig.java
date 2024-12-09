@@ -164,28 +164,15 @@ public class SecurityConfig {
 	    return source;  // CORS 설정을 반환
 	  }
 	
-//	/* 비밀번호 암호화 */
+	/* 비밀번호 암호화 */
 //	@Bean
 //	public PasswordEncoder passwordEncoder() {
 //		return new BCryptPasswordEncoder();
 //	}
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	@Bean
+	public BCryptPasswordEncoder bCryptPasswordEncoder() {
+	    return new BCryptPasswordEncoder();
+	}
 	
 }
