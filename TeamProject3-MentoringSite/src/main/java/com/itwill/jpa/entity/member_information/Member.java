@@ -79,7 +79,8 @@ public class Member {
 	/***********************시큐리티를 위한 멤버 필드*****************************/
 	
 	@Column(name = "member_role", nullable = false)
-	private Role memberRole;//역할
+	private String memberRole;
+	//private Role memberRole;//역할
 	
 	@Column(name = "member_provider")
 	private String memberProvider;//인증 제공자(일반 로그인이면 Null, 아니면 Google 등)
@@ -95,7 +96,8 @@ public class Member {
 	/* 초기값 설정 */
 	@PrePersist
 	public void setDefaultValues() {
-		if (this.memberRole == null) this.memberRole = Role.ROLE_MENTEE;
+//		if (this.memberRole == null) this.memberRole = Role.ROLE_MENTEE;
+		if (this.memberRole == null) this.memberRole = "Role_Mentee";
 		if (this.memberPoints == null) this.memberPoints = 0;
 		if (this.memberStatus == null || this.memberStatus == 0) this.memberStatus = 1;
 		if (this.memberJoinDate == null) this.memberJoinDate = LocalDateTime.now();
