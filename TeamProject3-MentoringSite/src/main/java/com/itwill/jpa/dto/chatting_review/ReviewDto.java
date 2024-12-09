@@ -23,7 +23,7 @@ public class ReviewDto {
 
     private Long chatRoomNo;
     private Long memberNo;
-    
+    private Long mentorMemberNo;
     
     public ReviewDto(Long memberNo, Double reviewScore) {
         this.memberNo = memberNo;
@@ -44,6 +44,7 @@ public class ReviewDto {
                 .reviewDate(reviewEntity.getReviewDate())
                 .chatRoomNo(reviewEntity.getChatRoom().getChatRoomNo())
                 .memberNo(reviewEntity.getChatRoom().getMentee().getMemberNo())
+                .mentorMemberNo(reviewEntity.getChatRoom().getMentor().getMemberNo())
                 .build();
     }
 }

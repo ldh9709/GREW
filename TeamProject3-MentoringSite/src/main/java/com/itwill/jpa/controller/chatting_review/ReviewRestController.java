@@ -46,21 +46,18 @@ public class ReviewRestController {
 		
 		ReviewDto saveReview = ReviewDto.toDto(reviewService.saveReview(reviewDto));
 		AlarmDto alarmDto = alarmService.saveAlarmsByReview(saveReview);
-		MentorProfileDto MentorProfileDto =mentorProfileService.saveMentorProfileByReview(saveReview);
-		mentorProfileService.updateMentorRating(saveReview.getMemberNo());
+		mentorProfileService.updateMentorRating(saveReview.getMentorMemberNo());
 		
-			Response response = new Response();
-			response.setStatus(ResponseStatusCode.CREATED_REVIEW_SUCCESS);
-		    response.setMessage("리뷰 등록 성공");
-		    response.setData(saveReview);
-	    if (reviewDto.getChatRoomNo() == null) {
-		    response.setStatus(ResponseStatusCode.CREATED_REVIEW_FAIL);
-            response.setMessage(ResponseMessage.CREATED_REVIEW_FAIL);
-            return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);	
-        }
+		Response response = new Response();
+		if (reviewDto.getChatRoomNo() == null) {
+			response.setStatus(ResponseStatusCode.CREATED_REVIEW_FAIL);
+			response.setMessage(ResponseMessage.CREATED_REVIEW_FAIL);
+			return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);	
+		}
 		response.setStatus(ResponseStatusCode.CREATED_REVIEW_SUCCESS);
 		response.setMessage(ResponseMessage.CREATED_REVIEW_SUCCESS);
 		response.setData(reviewDto);
+		response.setData(saveReview);
 		response.setAddData(alarmDto);
 		
 		HttpHeaders httpHeaders = new HttpHeaders();
