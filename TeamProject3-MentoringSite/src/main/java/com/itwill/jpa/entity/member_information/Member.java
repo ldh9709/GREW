@@ -1,6 +1,5 @@
 package com.itwill.jpa.entity.member_information;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,6 +19,8 @@ import com.itwill.jpa.entity.role.Role;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -33,7 +34,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
 
 
 @Builder
@@ -77,16 +77,12 @@ public class Member {
 	private Integer memberReportCount;//신고 당한 횟수
 	
 	/***********************시큐리티를 위한 멤버 필드*****************************/
-	
+	@Enumerated(EnumType.STRING)
 	@Column(name = "member_role", nullable = false)
 	private Role memberRole;//역할
 	
 	@Column(name = "member_provider")
 	private String memberProvider;//인증 제공자(일반 로그인이면 Null, 아니면 Google 등)
-	
-	@Column(name = "member_provider_id")
-	private String memberProviderId;//SNS 고유 Id
-	
 	
 	
 	

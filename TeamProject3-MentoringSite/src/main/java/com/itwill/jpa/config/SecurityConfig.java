@@ -84,6 +84,7 @@ public class SecurityConfig {
       "/v3/api-docs/**",
       "/v3/api-docs",
       "/swagger-ui.html",
+      "/login",
       productImagePattern,
       contextPattern,
       apiMemberPattern
@@ -114,7 +115,8 @@ public class SecurityConfig {
 		
 		//폼 기반 로그인 구성
 		httpSecurity.formLogin((config) -> {
-			config.loginPage("/login");
+//			config.loginPage("/login")
+			config.defaultSuccessUrl("/home", true);
 			config.successHandler(new APILoginSuccessHandler());
 			config.failureHandler(new APILoginFailHandler());
 		});
@@ -154,8 +156,8 @@ public class SecurityConfig {
 		httpSecurity.authorizeHttpRequests((authorizeHttpRequestsConfig) -> {
 		      // swagger설정
 		      authorizeHttpRequestsConfig
-			      .requestMatchers(SwaggerPatterns).permitAll()
-			      .requestMatchers("/login").permitAll()
+//			      .requestMatchers(SwaggerPatterns).permitAll()
+			      .requestMatchers("/**").permitAll()
 			      .anyRequest().authenticated();
 		    });
 		
