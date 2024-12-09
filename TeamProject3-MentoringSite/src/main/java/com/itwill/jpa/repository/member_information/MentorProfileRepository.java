@@ -60,7 +60,7 @@ public interface MentorProfileRepository extends JpaRepository<MentorProfile, Lo
     @Query(
         "UPDATE MentorProfile mp " +
         "SET mp.mentorRating = COALESCE( " +
-        "    (SELECT AVG(r.reviewScore) " +
+        "    (SELECT ROUND(AVG(r.reviewScore), 1) " +
         "     FROM Review r " +
         "     JOIN r.chatRoom cr " +
         "     WHERE cr.mentor.memberNo = mp.member.memberNo), 0.0) " +
