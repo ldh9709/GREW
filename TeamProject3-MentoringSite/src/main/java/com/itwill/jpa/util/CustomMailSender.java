@@ -55,7 +55,6 @@ public class CustomMailSender {
 			
 			message.addRecipient(MimeMessage.RecipientType.TO, new InternetAddress(mailDto.getAddress()));
 			
-			
 			message.setSubject(mailDto.getTitle());
 			
 			message.setText(mailDto.getMessage());
