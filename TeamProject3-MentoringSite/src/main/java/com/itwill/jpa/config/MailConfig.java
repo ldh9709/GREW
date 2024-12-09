@@ -18,13 +18,13 @@ public class MailConfig {
         JavaMailSenderImpl javaMailSender = new JavaMailSenderImpl();
         
         //이메일을 전송할 SMTP주소 설정
-        javaMailSender.setHost("smtp.naver.com");
+        javaMailSender.setHost("smtp.gmail.com");
         
         //SMTP에 로그인하기 위한 계정 설정
-        javaMailSender.setUsername("guard883");
+        javaMailSender.setUsername("wnsgud77773@gmail.com");
         
         //SMTP 서버 비밀번호 설정
-        javaMailSender.setPassword("@wlsekffo302@");
+        javaMailSender.setPassword("123456789)QWER");
         
         //SMTP 서버의 포트를 설정. 네이버, 구글은 SSL을 사용하는 포트 465를 사용
         javaMailSender.setPort(465);
