@@ -9,6 +9,7 @@ import com.itwill.jpa.dto.bulletin_board.InquiryDto;
 import com.itwill.jpa.dto.member_information.CategoryRequestDto;
 import com.itwill.jpa.entity.member_information.Category;
 import com.itwill.jpa.entity.member_information.Member;
+import com.itwill.jpa.repository.member_information.CategoryRepository;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.CascadeType;
@@ -36,7 +37,9 @@ import lombok.NoArgsConstructor;
 @Entity
 @Table(name = "inquiry")
 public class Inquiry {
-
+	
+	static CategoryRepository categoryRepository;
+	
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "inquiry_no_SEQ")
     @SequenceGenerator(name = "inquiry_no_SEQ", allocationSize = 1, initialValue = 1)
@@ -85,6 +88,7 @@ public class Inquiry {
      */
     public static Inquiry toEntity(InquiryDto inquiryDto) {
     	
+    	Category category = categoryRepository.getById(inquiryDto.getCategory().getCategoryNo());
 	    return Inquiry.builder()
 	            .inquiryNo(inquiryDto.getInquiryNo())
 	            .inquiryTitle(inquiryDto.getInquiryTitle())
@@ -92,11 +96,7 @@ public class Inquiry {
 	            .inquiryDate(inquiryDto.getInquiryDate())
 	            .inquiryStatus(inquiryDto.getInquiryStatus())
 	            .inquiryViews(inquiryDto.getInquiryViews())
-	            .category(Category.builder()
-	            		.categoryNo(inquiryDto.getCategory().getCategoryNo())
-	            		.categoryName(inquiryDto.getCategory().getCategoryName())
-	            		.categoryDepth(inquiryDto.getCategory().getCategoryDepth())
-	            		.build())
+	            .category(category)
 	            .member(Member.builder().memberNo(inquiryDto.getMemberNo()).build())
 	            .build();
 	}
