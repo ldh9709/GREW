@@ -200,6 +200,9 @@ public class Member {
 		this.memberProvider = provider;
 	}
 	
-	
+	//비밀번호 변경
+	public void changePassword(String newPassword) {
+		this.memberPassword = newPassword;
+	}
 	
 }

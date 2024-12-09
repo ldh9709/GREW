@@ -23,4 +23,5 @@ public interface MemberService {
 	//회원 상태 수정
 	Member updateMemberStatus(MemberDto memberDto, Integer statusNo);
 	
+	void findPassword(MemberDto.findPassword memberDto);
 }

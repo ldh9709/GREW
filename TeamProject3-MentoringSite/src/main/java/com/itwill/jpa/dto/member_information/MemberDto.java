@@ -7,12 +7,15 @@ import java.util.Map;
 import com.itwill.jpa.entity.member_information.Interest;
 import com.itwill.jpa.entity.member_information.Member;
 import com.itwill.jpa.entity.role.Role;
+import com.itwill.jpa.validation.annotation.Email;
 
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Builder
 @Data
@@ -65,5 +68,17 @@ public class MemberDto {
 		
 	}
 	
+	@Getter
+	@Setter
+	@AllArgsConstructor
+	@NoArgsConstructor
+	@Builder
+	//임시 비밀번호 발급 시 사용
+	public static class findPassword {
+		@Email
+		private String email;
+		
+		private String MemberId;
+	}
 	
 }

@@ -2,8 +2,11 @@ package com.itwill.jpa.service.member_information;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.itwill.jpa.dto.member_information.InterestDto;
@@ -12,6 +15,7 @@ import com.itwill.jpa.entity.member_information.Category;
 import com.itwill.jpa.entity.member_information.Interest;
 import com.itwill.jpa.entity.member_information.Member;
 import com.itwill.jpa.repository.member_information.MemberRepository;
+import com.itwill.jpa.util.CustomMailSender;
 
 @Service
 public class MemberServiceImpl implements MemberService {
@@ -20,6 +24,15 @@ public class MemberServiceImpl implements MemberService {
 	//메소드 사용을 위한 리포지토리 의존성 주입
 	@Autowired
 	MemberRepository memberRepository;
+	
+	@Autowired
+	//메일 발송을 위한 메소드 의존성 주입
+	CustomMailSender customMailSender;
+	
+	@Autowired
+	//비밀번호 암호화를 위한 메소드 의존성 주입
+	BCryptPasswordEncoder bCryptPasswordEncoder;
+	
 	
 	/***** 회원 가입 *****/
 	@Override
@@ -116,7 +129,25 @@ public class MemberServiceImpl implements MemberService {
 		return memberRepository.findByMemberNo(memberNo);
 	}
 
+
 	/********************************* Interest CRUD **************************************/
 	
 
+	/********************************* 이메일 발송 **************************************/
+	@Override
+	public void findPassword(MemberDto.findPassword memberDto) {
+		Member member = memberRepository.findByMemberEmail(memberDto.getEmail());
+		
+		UUID uid = UUID.randomUUID();
+		String tempPassword = uid.toString().substring(0, 10) + "p2$";
+		customMailSender.sendFindPasswordMail(memberDto, tempPassword);
+		
+		tempPassword = bCryptPasswordEncoder.encode(tempPassword);
+		
+		member.changePassword(tempPassword);
+		
+	}
+	
+	
+	
 }

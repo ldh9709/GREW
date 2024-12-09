@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.itwill.jpa.dto.member_information.MemberDto;
@@ -21,6 +22,7 @@ import com.itwill.jpa.entity.member_information.Member;
 import com.itwill.jpa.response.Response;
 import com.itwill.jpa.response.ResponseMessage;
 import com.itwill.jpa.response.ResponseStatusCode;
+import com.itwill.jpa.service.member_information.EmailService;
 import com.itwill.jpa.service.member_information.MemberService;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -34,6 +36,8 @@ public class MemberRestController {
 	@Autowired
 	private MemberService memberService;
 	
+	@Autowired
+	private EmailService emailService;
 	
 	/* 회원 저장 */
 	@Operation(summary = "회원가입/관심사 입력")
@@ -214,5 +218,15 @@ public class MemberRestController {
 	}
 	
 	/***** 이메일 발송 (테스트) *****/
+	@Operation(summary = "이메일 발송")
+	@PostMapping("/send-email")
+	public String sendEmail(@RequestParam String address, @RequestParam String title, @RequestParam String message) {
+		
+		emailService.sendMail(address, title, message);
+		
+		return "이메일 발송 : " + address;
+		
+	}
+	
 	
 }

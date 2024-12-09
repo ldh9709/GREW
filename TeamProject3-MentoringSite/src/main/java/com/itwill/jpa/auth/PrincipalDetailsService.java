@@ -22,7 +22,7 @@ public class PrincipalDetailsService implements UserDetailsService {
 	//로그인 요청 받을 시 호출
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		//이메일로 멤버 찾기
-		Member findMember = memberRepository.findByMemberEmail(username).orElse(null);
+		Member findMember = memberRepository.findByMemberEmail(username);
 		
 		//멤버가 존재하면 찾은 멤버 반환
 		if(findMember != null) {
