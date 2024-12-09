@@ -30,6 +30,7 @@ public class MentorBoardController {
     private MemtorBoardService mentorBoardService;
     @Autowired
     private AlarmService alarmService;
+    
     /* 멘토 보드 등록 */
     @Operation(summary = "멘토 보드 등록")
     @PostMapping
@@ -51,6 +52,9 @@ public class MentorBoardController {
     @Operation(summary = "멘토 보드 수정")
     @PutMapping
     public ResponseEntity<Response> updateMentorBoard(@RequestBody MentorBoardDto mentorBoardDto) throws Exception {
+    	/*
+    	 * 기존 
+    	 * */
         MentorBoardDto updatedBoard = mentorBoardService.updateMemtorBoard(mentorBoardDto);
 
         Response response = new Response();

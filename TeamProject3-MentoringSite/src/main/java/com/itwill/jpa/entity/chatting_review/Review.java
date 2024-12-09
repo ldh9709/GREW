@@ -61,6 +61,9 @@ public class Review {
     @PrePersist
     public void setDefaultValues() {
         if (this.reviewDate == null) this.reviewDate = LocalDateTime.now();
+        
+        
+        
     }
 
     public static Review toEntity(ReviewDto reviewDto) {

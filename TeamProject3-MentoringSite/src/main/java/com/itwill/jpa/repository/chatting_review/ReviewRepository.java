@@ -20,6 +20,12 @@ public interface ReviewRepository extends JpaRepository<Review, Long>{
     List<Review> findReviewByChatRoom_Mentor_MemberNo(Long memberNo);
 	
     Review findByReviewNo(Long reviewNo);
+   
+    @Query("SELECT AVG(r.reviewScore) FROM Review r WHERE r.chatRoom.mentor.memberNo = :mentorNo")
+    Double findAverageScoreByMentor(@Param("mentorNo") Long mentorNo);
+    
+    @Query("SELECT r.reviewScore FROM Review r WHERE r.chatRoom.mentor.memberNo = :memberNo")
+    List<Integer> findReviewScoresByMentor(@Param("memberNo") Long memberNo);
     
     //리뷰 대상 멘토찾기(알림용)
     @Query("SELECT c.mentor.memberNo "

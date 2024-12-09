@@ -36,7 +36,7 @@ public class MentorProfile {
     private String mentorCareer; 
     
     @Column(name = "mentor_rating" ,nullable = false)
-    private Integer mentorRating;
+    private Double mentorRating;
     
     @Column(name = "mentor_mentoring_count" ,nullable = false)
     private Integer mentorMentoringCount;
@@ -64,7 +64,7 @@ public class MentorProfile {
     
     @PrePersist
     public void setValues() {
-    	if (this.mentorRating == null) this.mentorRating =0;
+    	if (this.mentorRating == null) this.mentorRating =0.0;
         if (this.mentorMentoringCount == null) this.mentorMentoringCount = 0;
         if (this.mentorImage==null) this.mentorImage = "default.jpg";
         if (this.mentorActivityCount == null) this.mentorActivityCount = 0;
