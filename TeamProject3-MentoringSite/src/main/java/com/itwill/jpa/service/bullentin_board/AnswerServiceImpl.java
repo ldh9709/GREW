@@ -34,7 +34,7 @@ public class AnswerServiceImpl implements AnswerService{
 	public AnswerDto updateAnswer(AnswerDto answerDto) throws Exception{
 		Answer answer = answerRepository.findById(answerDto.getAnswerNo()).get();
 		answer.setAnswerContent(answerDto.getAnswerContent());
-		return AnswerDto.toDto(answerRepository.save(Answer.toEntity(answerDto)));
+		return AnswerDto.toDto(answerRepository.save(answer));
 	}
 	
 	/*답변채택*/

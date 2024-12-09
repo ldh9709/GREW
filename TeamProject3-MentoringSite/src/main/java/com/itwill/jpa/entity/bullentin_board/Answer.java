@@ -2,6 +2,7 @@ package com.itwill.jpa.entity.bullentin_board;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -57,7 +58,7 @@ public class Answer {
     @JoinColumn(name = "member_no")
     private Member member;  // 사용자 (User 엔티티와 관계)
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "inquiry_no")
     private Inquiry inquiry;  // 문의 (Inquiry 엔티티와 관계)
 
@@ -75,7 +76,8 @@ public class Answer {
      * DTO -> Entity 변환 메소드
      */
     public static Answer toEntity(AnswerDto answerDto) {
-        return Answer.builder()
+        
+    	return Answer.builder()
                 .answerNo(answerDto.getAnswerNo())
                 .answerContent(answerDto.getAnswerContent())
                 .answerDate(answerDto.getAnswerDate())

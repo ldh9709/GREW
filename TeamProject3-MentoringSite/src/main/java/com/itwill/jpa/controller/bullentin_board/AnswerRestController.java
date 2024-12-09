@@ -2,6 +2,7 @@ package com.itwill.jpa.controller.bullentin_board;
 
 import java.nio.charset.Charset;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -18,12 +19,15 @@ import org.springframework.web.server.ResponseStatusException;
 
 import com.itwill.jpa.dto.alarm.AlarmDto;
 import com.itwill.jpa.dto.bulletin_board.AnswerDto;
+import com.itwill.jpa.entity.bullentin_board.Answer;
+import com.itwill.jpa.entity.bullentin_board.Inquiry;
 import com.itwill.jpa.repository.bullentin_board.InquiryRepository;
 import com.itwill.jpa.response.Response;
 import com.itwill.jpa.response.ResponseMessage;
 import com.itwill.jpa.response.ResponseStatusCode;
 import com.itwill.jpa.service.alarm.AlarmService;
 import com.itwill.jpa.service.bullentin_board.AnswerService;
+import com.itwill.jpa.service.bullentin_board.InquiryService;
 
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.transaction.Transactional;
@@ -44,13 +48,10 @@ public class AnswerRestController {
 	/* 답변 등록 */
 	@Operation(summary = "답변 등록")
 	@PostMapping
-	@Transactional
+	//@Transactional
 	public ResponseEntity<Response> createAnswer(@RequestBody AnswerDto answerDto){
 		// 1. 서비스 호출 : 답변 데이터 저장
-		
 		AnswerDto createAnswerDto = answerService.saveAnswer(answerDto);
-		
-		
 		AlarmDto alarmDto = alarmService.saveAlarmByAnswerToInquiry(createAnswerDto);
 		// 2. 응답 데이터(Response 객체) 생성
 		// - 응답객체에 코드, 메시지, 객체 설정
@@ -78,9 +79,10 @@ public class AnswerRestController {
 	/* 답변 수정 */
 	@Operation(summary = "답변 수정")
 	@PutMapping("/{answerNo}")
-	public ResponseEntity<Response> updateAnswer(@RequestBody AnswerDto answerDto) throws Exception {
+	public ResponseEntity<Response> updateAnswer(@PathVariable(name = "answerNo") Long answerNo, @RequestBody AnswerDto answerDto) throws Exception {
 		
 		// 1. 서비스 호출 : 답변 업데이트 메소드 실행
+		answerDto.setAnswerNo(answerNo);
 		AnswerDto saveAnswerDto = answerService.updateAnswer(answerDto);
 		
 		// 2. 응답 데이터(Response 객체) 생성

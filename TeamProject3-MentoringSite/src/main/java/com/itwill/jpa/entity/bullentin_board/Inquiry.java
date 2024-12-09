@@ -73,7 +73,7 @@ public class Inquiry {
     private Member member;  // FK 연관 관계 (User 엔티티)
 
     /* 한 개의 질문당 여러개의 답변 보유 가능 */
-    @OneToMany(mappedBy = "inquiry", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "inquiry", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Answer> answers; 
     
     
