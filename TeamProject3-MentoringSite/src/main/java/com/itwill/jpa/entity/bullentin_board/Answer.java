@@ -40,17 +40,17 @@ public class Answer {
     @Column(name = "answer_no")
     private Long answerNo;  // PK, 시퀀스로 자동 생성
 
-    @Column(name = "answer_content", nullable = false, length = 500)
+    @Column(name = "answer_content", length = 500)
     private String answerContent;  // 답변 내용
     
     @CreationTimestamp
-    @Column(name = "answer_date", nullable = false)
+    @Column(name = "answer_date")
     private LocalDateTime answerDate;  // 답변 작성 시간 (LocalDate)
 
-    @Column(name = "answer_accept", nullable = false)
+    @Column(name = "answer_accept")
     private Integer answerAccept;  // 채택 시 2 기본 1
 
-    @Column(name = "answer_status", nullable = false)
+    @Column(name = "answer_status")
     private Integer answerStatus;  // 답글 삭제 여부 (1 또는2)
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -82,7 +82,9 @@ public class Answer {
                 .answerAccept(answerDto.getAnswerAccept())
                 .answerStatus(answerDto.getAnswerStatus())
                 .member(Member.builder().memberNo(answerDto.getMemberNo()).build())
-                .inquiry(Inquiry.builder().inquiryNo(answerDto.getInquiryNo()).build())
+                .inquiry(Inquiry.builder()
+                		.inquiryNo(answerDto.getInquiryNo())
+                		.build())
                 .build();
     }
     

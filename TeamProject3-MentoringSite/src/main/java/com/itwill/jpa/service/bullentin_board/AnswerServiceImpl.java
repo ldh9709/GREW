@@ -3,6 +3,7 @@ package com.itwill.jpa.service.bullentin_board;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.catalina.startup.ClassLoaderFactory.Repository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -11,6 +12,7 @@ import org.springframework.web.server.ResponseStatusException;
 import com.itwill.jpa.dto.bulletin_board.AnswerDto;
 import com.itwill.jpa.entity.bullentin_board.Answer;
 import com.itwill.jpa.repository.bullentin_board.AnswerRepository;
+import com.itwill.jpa.repository.bullentin_board.InquiryRepository;
 
 import jakarta.transaction.Transactional;
 @Transactional
@@ -18,10 +20,12 @@ import jakarta.transaction.Transactional;
 public class AnswerServiceImpl implements AnswerService{
 	@Autowired
 	private AnswerRepository answerRepository;
-	
+	@Autowired
+	private InquiryRepository inquiryRepository;
 	/*답변등록*/
 	@Override
 	public AnswerDto saveAnswer(AnswerDto answerDto){
+		
 		return AnswerDto.toDto(answerRepository.save(Answer.toEntity(answerDto)));
 	}
 	
