@@ -22,7 +22,7 @@ import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor//final 선언된 멤버필드에 의존성 주입
-public class PrincipalOauth2UserSerivce extends DefaultOAuth2UserService {
+public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
 	
 	//멤버 리포지토리
 	private final MemberRepository memberRepository;

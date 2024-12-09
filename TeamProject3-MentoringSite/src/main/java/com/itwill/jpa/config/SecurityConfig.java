@@ -22,7 +22,7 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import com.itwill.jpa.auth.FormLoginFailureHandler;
 import com.itwill.jpa.auth.PrincipalDetailsService;
-import com.itwill.jpa.auth.PrincipalOauth2UserSerivce;
+import com.itwill.jpa.auth.PrincipalOauth2UserService;
 import com.itwill.jpa.security.handler.APILoginFailHandler;
 import com.itwill.jpa.security.handler.APILoginSuccessHandler;
 
@@ -64,7 +64,7 @@ public class SecurityConfig {
 	
 	//OAuth2 로그인 시(SNS) 사용자 정보를 처리하는 서비스
 	@Autowired
-	private PrincipalOauth2UserSerivce principalOauth2UserSerivce;
+	private PrincipalOauth2UserService principalOauth2UserSerivce;
 	
 	//폼 로그인 시 사용자 인증 정보를 처리하는 서비스
 	@Autowired
@@ -164,15 +164,28 @@ public class SecurityConfig {
 	    return source;  // CORS 설정을 반환
 	  }
 	
-	/* 비밀번호 암호화 */
+//	/* 비밀번호 암호화 */
 //	@Bean
 //	public PasswordEncoder passwordEncoder() {
 //		return new BCryptPasswordEncoder();
 //	}
 	
-	@Bean
-	public BCryptPasswordEncoder bCryptPasswordEncoder() {
-	    return new BCryptPasswordEncoder();
-	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 }
