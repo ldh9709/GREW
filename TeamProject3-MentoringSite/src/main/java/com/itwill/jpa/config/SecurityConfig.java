@@ -78,17 +78,8 @@ public class SecurityConfig {
 	public static final String contextPattern = "/api/member/context";
 	public static final String apiMemberPattern = "/api/member/**";
 	  
-  public static final String[] SwaggerPatterns = {
-      "/swagger-resources/**",
-      "/swagger-ui/**",
-      "/v3/api-docs/**",
-      "/v3/api-docs",
-      "/swagger-ui.html",
-      "/login",
-      productImagePattern,
-      contextPattern,
-      apiMemberPattern
-  };
+	public static final String[] 
+			SwaggerPatterns = {"/swagger-resources/**", "/swagger-ui/**", "/v3/api-docs/**","/v3/api-docs", "/swagger-ui.html", "/login", productImagePattern, contextPattern, apiMemberPattern };
 	
 	
 	//인증 없이 접근 가능한 경로 정의
@@ -115,7 +106,7 @@ public class SecurityConfig {
 		
 		//폼 기반 로그인 구성
 		httpSecurity.formLogin((config) -> {
-//			config.loginPage("/login")
+			config.loginPage("/login");
 			config.defaultSuccessUrl("/home", true);
 			config.successHandler(new APILoginSuccessHandler());
 			config.failureHandler(new APILoginFailHandler());
@@ -156,13 +147,10 @@ public class SecurityConfig {
 		httpSecurity.authorizeHttpRequests((authorizeHttpRequestsConfig) -> {
 		      // swagger설정
 		      authorizeHttpRequestsConfig
-//			      .requestMatchers(SwaggerPatterns).permitAll()
+			      .requestMatchers(SwaggerPatterns).permitAll()
 			      .requestMatchers("/**").permitAll()
 			      .anyRequest().authenticated();
 		    });
-		
-		
-		
 
 		return httpSecurity.build();
 		
