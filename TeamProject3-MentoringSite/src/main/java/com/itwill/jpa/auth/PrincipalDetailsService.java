@@ -27,7 +27,7 @@ public class PrincipalDetailsService implements UserDetailsService {
 		
 		//아이디로 멤버 찾기
 		MemberSecurityDto findMember = MemberSecurityDto.toDto(memberRepository.findMemberByMemberId(username));
-		
+		System.out.println("findMember >>>>>" + findMember);
 		//멤버가 존재하면 찾은 멤버 반환
 		if(findMember != null) {
 			return new PrincipalDetails(findMember);

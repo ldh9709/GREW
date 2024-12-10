@@ -16,6 +16,7 @@ import org.springframework.security.oauth2.client.web.OAuth2AuthorizationRequest
 import org.springframework.security.oauth2.client.web.OAuth2LoginAuthenticationFilter;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
@@ -23,6 +24,7 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import com.itwill.jpa.auth.FormLoginFailureHandler;
 import com.itwill.jpa.auth.PrincipalDetailsService;
 import com.itwill.jpa.auth.PrincipalOauth2UserService;
+import com.itwill.jpa.security.filter.JWTCheckFilter;
 import com.itwill.jpa.security.handler.APILoginFailHandler;
 import com.itwill.jpa.security.handler.APILoginSuccessHandler;
 
@@ -99,9 +101,9 @@ public class SecurityConfig {
 		
 		
 		 //CORS 설정: 외부에서 이 API를 호출할 수 있도록 CORS 설정을 정의
-//		 httpSecurity.cors(httpSecurityCorsConfigurer -> {
-//		      httpSecurityCorsConfigurer.configurationSource(corsConfigurationSource());  // CORS 설정을 적용
-//		    });
+		 httpSecurity.cors(httpSecurityCorsConfigurer -> {
+		      httpSecurityCorsConfigurer.configurationSource(corsConfigurationSource());  // CORS 설정을 적용
+		    });
 		
 		//폼 기반 로그인 구성
 		httpSecurity.formLogin((config) -> {
@@ -109,6 +111,7 @@ public class SecurityConfig {
 			config.successHandler(new APILoginSuccessHandler());
 			config.failureHandler(new APILoginFailHandler());
 		});
+		httpSecurity.addFilterBefore(new JWTCheckFilter(), UsernamePasswordAuthenticationFilter.class);
 		
 		/*
 		 * Spring Security에 UserDetailsService 구현체를 등록하는 역할

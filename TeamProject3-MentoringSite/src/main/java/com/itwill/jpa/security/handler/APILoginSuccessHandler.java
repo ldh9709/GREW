@@ -36,19 +36,26 @@ public class APILoginSuccessHandler implements AuthenticationSuccessHandler {
         String accessToken = JWTUtil.generateToken(claims, 10);  // access token은 10분 동안 유효
         String refreshToken = JWTUtil.generateToken(claims, 60 * 24);  // refresh token은 1일(60*24분) 동안 유효
         
-        // 4. 클레임을 JSON 문자열로 변환합니다.
-        // 생성된 클레임 정보를 JSON 형식으로 변환합니다. 이는 클라이언트에게 반환될 응답 내용입니다.
-        Gson gson = new Gson();
-        String jsonStr = gson.toJson(claims);
-
-        // 5. HTTP 응답 헤더와 본문 설정
-        // 클라이언트가 JSON 형식으로 응답을 받을 수 있도록 응답 타입을 설정합니다.
-        response.setContentType("application/json; charset=UTF-8");
+//        // 4. 클레임을 JSON 문자열로 변환합니다.
+//        // 생성된 클레임 정보를 JSON 형식으로 변환합니다. 이는 클라이언트에게 반환될 응답 내용입니다.
+//        Gson gson = new Gson();
+//        String jsonStr = gson.toJson(claims);
+//
+//        // 5. HTTP 응답 헤더와 본문 설정
+//        // 클라이언트가 JSON 형식으로 응답을 받을 수 있도록 응답 타입을 설정합니다.
+//        response.setContentType("application/json; charset=UTF-8");
+//        
+//        // 6. 응답 본문에 JSON 문자열을 출력합니다.
+//        PrintWriter printWriter = response.getWriter();
+//        printWriter.println(jsonStr);  // 클라이언트에게 JSON 형식의 클레임을 반환
+//        System.out.println("대성공");
+//        printWriter.close();
         
-        // 6. 응답 본문에 JSON 문자열을 출력합니다.
-        PrintWriter printWriter = response.getWriter();
-        printWriter.println(jsonStr);  // 클라이언트에게 JSON 형식의 클레임을 반환
-        printWriter.close();
+        // 토큰을 응답 헤더나 쿠키에 담아 클라이언트로 전송할 수 있음
+        response.setHeader("Authorization", "Bearer " + accessToken);
+
+        // 토큰 전송 후 원하는 페이지로 리다이렉트
+        response.sendRedirect("/home");
 	}
 
 }

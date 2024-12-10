@@ -41,49 +41,49 @@ public class MemberRestController {
 	private EmailService emailService;
 	
 	
-	@Operation(summary = "인증번호 발송")
-	@PostMapping("/sendJoinCode")
-	public ResponseEntity<Response> sendJoinCode(@RequestBody MemberDto.JoinFormDto joinFormDto) {
-		
-		memberService.sendJoinCode(joinFormDto);
-		
-		Response response = new Response();
-		
-		response.setStatus(ResponseStatusCode.CREATED_MEMBER_SUCCESS);
-		response.setMessage(ResponseMessage.CREATED_MEMBER_SUCCESS);
-		
-		//인코딩 타입 설정
-		HttpHeaders httpHeaders = new HttpHeaders();
-		httpHeaders.setContentType(new MediaType(MediaType.APPLICATION_JSON, Charset.forName("UTF-8")));
-		
-		//반환할 응답Entity 생성
-		ResponseEntity<Response> responseEntity =
-				 new ResponseEntity<Response>(response, httpHeaders, HttpStatus.OK);
-		
-		return responseEntity;
-	}
-	
+//	@Operation(summary = "인증번호 발송")
+//	@PostMapping("/sendJoinCode")
+//	public ResponseEntity<Response> sendJoinCode(@RequestBody MemberDto.JoinFormDto joinFormDto) {
+//		
+//		memberService.sendJoinCode(joinFormDto);
+//		
+//		Response response = new Response();
+//		
+//		response.setStatus(ResponseStatusCode.CREATED_MEMBER_SUCCESS);
+//		response.setMessage(ResponseMessage.CREATED_MEMBER_SUCCESS);
+//		
+//		//인코딩 타입 설정
+//		HttpHeaders httpHeaders = new HttpHeaders();
+//		httpHeaders.setContentType(new MediaType(MediaType.APPLICATION_JSON, Charset.forName("UTF-8")));
+//		
+//		//반환할 응답Entity 생성
+//		ResponseEntity<Response> responseEntity =
+//				 new ResponseEntity<Response>(response, httpHeaders, HttpStatus.OK);
+//		
+//		return responseEntity;
+//	}
+//	
 	
 	/* 회원 저장 */
 	@Operation(summary = "회원가입/관심사 입력")
 	@PostMapping("/createMember")
-	public ResponseEntity<Response> createMember(@RequestBody MemberDto memberDto, @RequestParam(name = "tempCode") Integer tempCode) {
+	public ResponseEntity<Response> createMember(@RequestBody MemberDto memberDto) {
 		Response response = new Response();
 		
 		//인증번호가 맞는지 확인
-		boolean isChecked = memberService.certificationCode(memberDto.getMemberEmail(), tempCode);
-		
-		if(!isChecked) {
-			response.setMessage("인증번호가 일치하지 않습니다.");
-			
-			//인코딩 타입 설정
-			HttpHeaders httpHeaders = new HttpHeaders();
-			httpHeaders.setContentType(new MediaType(MediaType.APPLICATION_JSON, Charset.forName("UTF-8")));
-			
-			//반환할 응답Entity 생성
-			ResponseEntity<Response> responseEntity =
-					 new ResponseEntity<Response>(response, httpHeaders, HttpStatus.OK);
-		}
+//		boolean isChecked = memberService.certificationCode(memberDto.getMemberEmail(), tempCode);
+//		
+//		if(!isChecked) {
+//			response.setMessage("인증번호가 일치하지 않습니다.");
+//			
+//			//인코딩 타입 설정
+//			HttpHeaders httpHeaders = new HttpHeaders();
+//			httpHeaders.setContentType(new MediaType(MediaType.APPLICATION_JSON, Charset.forName("UTF-8")));
+//			
+//			//반환할 응답Entity 생성
+//			ResponseEntity<Response> responseEntity =
+//					 new ResponseEntity<Response>(response, httpHeaders, HttpStatus.OK);
+//		}
 		
 		//저장메소드 실행
 		Member saveMember = memberService.saveMember(memberDto);

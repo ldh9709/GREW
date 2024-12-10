@@ -26,6 +26,7 @@ public class APILoginFailHandler implements AuthenticationFailureHandler {
 	    response.setContentType("application/json");
 	    PrintWriter printWriter = response.getWriter();
 	    printWriter.println(jsonStr);
+	    System.out.println("대실패");
 	    printWriter.close();   
 	}
 
