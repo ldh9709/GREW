@@ -66,15 +66,15 @@ public class MemberServiceImpl implements MemberService {
 		//아이디와 비밀번호로 멤버 객체 찾기
 		Member member = memberRepository.findMemberByMemberIdAndMemberPassword(memberId, memberPassword);
 		
-		//member가 존재하지 않을 시
-		if(member == null) {
-			String msg = "존재하지 않는 아이디입니다.";
-		}
-		
-		//member의 비밀번호가 일치하지 않을 시
-		if(!member.getMemberPassword().equals(memberPassword)) {
-			String msg = "비밀번호가 일치하지 않습니다.";
-		}
+//		//member가 존재하지 않을 시
+//		if(member == null) {
+//			String msg = "존재하지 않는 아이디입니다.";
+//		}
+//		
+//		//member의 비밀번호가 일치하지 않을 시
+//		if(!member.getMemberPassword().equals(memberPassword)) {
+//			String msg = "비밀번호가 일치하지 않습니다.";
+//		}
 		
 		//다 통과하면 member반환
 		return member;
