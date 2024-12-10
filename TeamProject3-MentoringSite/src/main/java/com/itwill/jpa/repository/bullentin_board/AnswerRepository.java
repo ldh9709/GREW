@@ -2,6 +2,8 @@ package com.itwill.jpa.repository.bullentin_board;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -32,7 +34,7 @@ public interface AnswerRepository extends JpaRepository<Answer, Long>{
                      (COUNT(CASE WHEN v.voteType = 1 THEN 1 END) - 
                       COUNT(CASE WHEN v.voteType = 2 THEN 1 END)) DESC
     """)
-		List<Answer> findByInquiryAnswerOrderByVotes(@Param("inquiryNo") Long inquiryNo);
+		Page<Answer> findByInquiryAnswerOrderByVotes(@Param("inquiryNo") Long inquiryNo,Pageable pageable);
 	
 	
 	/*최신순*/
@@ -42,7 +44,7 @@ public interface AnswerRepository extends JpaRepository<Answer, Long>{
 		       "AND a.answerStatus = 1 " +
 		       "ORDER BY a.answerAccept DESC,"+
 		       "a.answerDate DESC")
-		List<Answer> findByInquiryAnswerOrderByDate(@Param("inquiryNo") Long inquiryNo);
+		Page<Answer> findByInquiryAnswerOrderByDate(@Param("inquiryNo") Long inquiryNo,Pageable pageable);
 
 	
 	/*카테고리별 답변 리스트(검색)*/
@@ -57,7 +59,7 @@ public interface AnswerRepository extends JpaRepository<Answer, Long>{
 		       "ORDER BY a.answerAccept DESC, " +
 		       "(COUNT(CASE WHEN v.voteType = 1 THEN 1 END) - " +
 		       "COUNT(CASE WHEN v.voteType = 2 THEN 1 END)) DESC")
-		List<Answer> findByCategoryAnswerOrderByVotes(@Param("categoryNo") Long categoryNo);
+		Page<Answer> findByCategoryAnswerOrderByVotes(@Param("categoryNo") Long categoryNo,Pageable pageable);
 
 	/*최신순*/
 	@Query("SELECT a FROM Answer a " +
@@ -66,7 +68,7 @@ public interface AnswerRepository extends JpaRepository<Answer, Long>{
 		       "WHERE c.categoryNo = :categoryNo " +
 		       "AND a.answerStatus =1 "+
 		       "ORDER BY a.answerDate DESC")
-		List<Answer> findByCategoryAnswerOrderByDate(@Param("categoryNo") Long categoryNo);
+		Page<Answer> findByCategoryAnswerOrderByDate(@Param("categoryNo") Long categoryNo,Pageable pageable);
 
 	/*최근 3일동안 추천 많은 답변*/
 	@Query(value = "SELECT a.* " +
@@ -80,7 +82,7 @@ public interface AnswerRepository extends JpaRepository<Answer, Long>{
             "COUNT(CASE WHEN v.vote_type = 2 THEN 1 END) DESC," +
             "a.answer_no DESC", 
             nativeQuery = true)//jpql엔 sysdate 사용불가하기 때문에 nativeQuery로 오라클의 sql사용
-		List<Answer> findByAnswerOrderByVoteDate();
+		Page<Answer> findByAnswerOrderByVoteDate(Pageable pageable);
 
 	@Query("SELECT i.member.memberNo "
 		       + "FROM Answer a "

@@ -5,6 +5,10 @@ import java.util.List;
 
 import org.apache.catalina.startup.ClassLoaderFactory.Repository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -24,7 +28,7 @@ public class AnswerServiceImpl implements AnswerService{
 	private InquiryRepository inquiryRepository;
 	/*답변등록*/
 	@Override
-	public AnswerDto saveAnswer(AnswerDto answerDto){
+	public AnswerDto createAnswer(AnswerDto answerDto){
 		
 		return AnswerDto.toDto(answerRepository.save(Answer.toEntity(answerDto)));
 	}
@@ -71,63 +75,68 @@ public class AnswerServiceImpl implements AnswerService{
 	/*질문 하나에 달린 답변*/
 	/*추천순*/
 	@Override
-	public List<AnswerDto> findByInquiryAnswerOrderByVotes(Long inquiryNo) {
-		List<Answer> answerEntityList = 
-				answerRepository.findByInquiryAnswerOrderByVotes(inquiryNo);
+	public Page<AnswerDto> getByInquiryAnswerOrderByVotes(Long inquiryNo,int pageNumber, int pageSize) {
+		Pageable pageable = PageRequest.of(pageNumber, pageSize);
+		Page<Answer> answerEntityList = 
+				answerRepository.findByInquiryAnswerOrderByVotes(inquiryNo,pageable);
 		List<AnswerDto> answerDtoList = new ArrayList<>();
 		for(Answer answerEntity:answerEntityList) {
 			answerDtoList.add(AnswerDto.toDto(answerEntity));
 		}
-		return answerDtoList;
+		return new PageImpl<>(answerDtoList, pageable, answerEntityList.getTotalElements());
 	}
 	
 	/*최신순*/
 	@Override
-	public List<AnswerDto> findByInquiryAnswerOrderByDate(Long inquiryNo) {
-		List<Answer> answerEntityList =
-				answerRepository.findByInquiryAnswerOrderByDate(inquiryNo);
+	public Page<AnswerDto> getByInquiryAnswerOrderByDate(Long inquiryNo,int pageNumber, int pageSize) {
+		Pageable pageable = PageRequest.of(pageNumber, pageSize);
+		Page<Answer> answerEntityList =
+				answerRepository.findByInquiryAnswerOrderByDate(inquiryNo,pageable);
 		List<AnswerDto> answerDtoList = new ArrayList<>();
 		for(Answer answerEntity:answerEntityList) {
 			answerDtoList.add(AnswerDto.toDto(answerEntity));
 		}
-		return answerDtoList;
+		return new PageImpl<>(answerDtoList, pageable, answerEntityList.getTotalElements());
 	}
 	
 	/*카테고리 별 답변*/
 	/*추천순*/
 	@Override
-	public List<AnswerDto> findByCategoryAnswerOrderByVotes(Long categoryNo) {
-		List<Answer> answerEntityList = 
-				answerRepository.findByCategoryAnswerOrderByVotes(categoryNo);
+	public Page<AnswerDto> getByCategoryAnswerOrderByVotes(Long categoryNo,int pageNumber, int pageSize) {
+		Pageable pageable = PageRequest.of(pageNumber, pageSize);
+		Page<Answer> answerEntityList = 
+				answerRepository.findByCategoryAnswerOrderByVotes(categoryNo,pageable);
 		List<AnswerDto> answerDtoList = new ArrayList<>();
 		for(Answer answerEntity:answerEntityList) {
 			answerDtoList.add(AnswerDto.toDto(answerEntity));
 		}
-		return answerDtoList;
+		return new PageImpl<>(answerDtoList, pageable, answerEntityList.getTotalElements());
 	}
 	
 	/*최신순*/
 	@Override
-	public List<AnswerDto> findByCategoryAnswerOrderByDate(Long categoryNo) {
-		List<Answer> answerEntityList = 
-				answerRepository.findByCategoryAnswerOrderByDate(categoryNo);
+	public Page<AnswerDto> getByCategoryAnswerOrderByDate(Long categoryNo,int pageNumber, int pageSize) {
+		Pageable pageable = PageRequest.of(pageNumber, pageSize);
+		Page<Answer> answerEntityList = 
+				answerRepository.findByCategoryAnswerOrderByDate(categoryNo,pageable);
 		List<AnswerDto> answerDtoList = new ArrayList<>();
 		for(Answer answerEntity:answerEntityList) {
 			answerDtoList.add(AnswerDto.toDto(answerEntity));
 		}
-		return answerDtoList;
+		return new PageImpl<>(answerDtoList, pageable, answerEntityList.getTotalElements());
 	}
 	
 	/*최근 3일간 추천 많은 답변*/
 	@Override
-	public List<AnswerDto> findByAnswerOrderByVoteDate() {
-		List<Answer> answerEntityList = 
-				answerRepository.findByAnswerOrderByVoteDate();
+	public Page<AnswerDto> getByAnswerOrderByVoteDate(int pageNumber, int pageSize) {
+		Pageable pageable = PageRequest.of(pageNumber, pageSize);
+		Page<Answer> answerEntityList = 
+				answerRepository.findByAnswerOrderByVoteDate(pageable);
 		List<AnswerDto> answerDtoList = new ArrayList<>();
 		for(Answer answerEntity:answerEntityList) {
 			answerDtoList.add(AnswerDto.toDto(answerEntity));
 		}
-		return answerDtoList;
+		return new PageImpl<>(answerDtoList, pageable, answerEntityList.getTotalElements());
 	}
 
 	

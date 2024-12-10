@@ -40,7 +40,7 @@ public class InquiryServiceImpl implements InquiryService {
 	// 질문등록
 
 	@Override
-	public InquiryDto saveInquiry(InquiryDto inquiryDto) {
+	public InquiryDto createInquiry(InquiryDto inquiryDto) {
 		
 		return InquiryDto.toDto(inquiryRepository.save(Inquiry.toEntity(inquiryDto)));
 	}
@@ -105,7 +105,7 @@ public class InquiryServiceImpl implements InquiryService {
 	/** 카테고리별 **/
 	// 답변갯수순
 	@Override
-	public Page<InquiryDto> findByCategoryInquiryOrderByAnswer(Long categoryNo, int pageNumber, int pageSize) {
+	public Page<InquiryDto> getByCategoryInquiryOrderByAnswer(Long categoryNo, int pageNumber, int pageSize) {
 		Pageable pageable = PageRequest.of(pageNumber, pageSize);
 		Page<Inquiry> inquiryEntityList = inquiryRepository.findByCategoryInquiryOrderByAnswer(categoryNo, pageable);
 		List<InquiryDto> inquiryDtoList = new ArrayList<>();
@@ -117,7 +117,7 @@ public class InquiryServiceImpl implements InquiryService {
 
 	// 조회순
 	@Override
-	public Page<InquiryDto> findByCategoryInquiryOrderByView(Long categoryNo, int pageNumber, int pageSize) {
+	public Page<InquiryDto> getByCategoryInquiryOrderByView(Long categoryNo, int pageNumber, int pageSize) {
 		Pageable pageable = PageRequest.of(pageNumber, pageSize);
 		Page<Inquiry> inquiryEntityList = inquiryRepository.findByCategoryInquiryOrderByView(categoryNo, pageable);
 		List<InquiryDto> inquiryDtoList = new ArrayList<>();
@@ -130,7 +130,7 @@ public class InquiryServiceImpl implements InquiryService {
 	/** 전체질문 **/
 	// 답변갯수순
 	@Override
-	public Page<InquiryDto> findByAllInquiryOrderByAnswer(int pageNumber, int pageSize) {
+	public Page<InquiryDto> getByAllInquiryOrderByAnswer(int pageNumber, int pageSize) {
 		Pageable pageable = PageRequest.of(pageNumber, pageSize);
 		Page<Inquiry> inquiryEntityList = inquiryRepository.findAllInquiriOrderByAnswer(pageable);
 		List<InquiryDto> inquiryDtoList = new ArrayList<>();
@@ -142,7 +142,7 @@ public class InquiryServiceImpl implements InquiryService {
 
 	// 조회순
 	@Override
-	public Page<InquiryDto> findByAllInquiryOrderByView(int pageNumber, int pageSize) {
+	public Page<InquiryDto> getByAllInquiryOrderByView(int pageNumber, int pageSize) {
 		Pageable pageable = PageRequest.of(pageNumber, pageSize);
 		Page<Inquiry> inquiryEntityList = inquiryRepository.findAllInquiryOrderByView(pageable);
 		List<InquiryDto> inquiryDtoList = new ArrayList<>();
@@ -156,7 +156,7 @@ public class InquiryServiceImpl implements InquiryService {
 
 	// 검색기능
 	@Override
-	public Page<InquiryDto> findInquiryBySearch(String search, int pageNumber, int pageSize) {
+	public Page<InquiryDto> getInquiryBySearch(String search, int pageNumber, int pageSize) {
 		Pageable pageable = PageRequest.of(pageNumber, pageSize);
 		Page<Inquiry> inquiryEntityList = inquiryRepository.findInquiryBySearch(search, pageable);
 		List<InquiryDto> inquiryDtoList = new ArrayList<>();
