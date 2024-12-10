@@ -1,5 +1,7 @@
 package com.itwill.jpa.dto.member_information;
 
+import org.springframework.data.jpa.repository.EntityGraph.EntityGraphType;
+
 import com.itwill.jpa.entity.member_information.Member;
 import com.itwill.jpa.entity.role.Role;
 
@@ -22,7 +24,6 @@ public class MemberSecurityDto {
 	private Integer memberStatus;	
 	private Role memberRole;
 	private String memberProvider;
-	private String memberProviderId;
 	
 	
 	public static MemberSecurityDto toDto(Member entity) {
@@ -33,6 +34,8 @@ public class MemberSecurityDto {
 	            .memberEmail(entity.getMemberEmail())
 	            .memberName(entity.getMemberName())
 	            .memberStatus(entity.getMemberStatus())
+	            .memberRole(entity.getMemberRole())
+	            .memberProvider(entity.getMemberProvider())
 	            .build();
 	}
 	

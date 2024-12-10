@@ -7,6 +7,7 @@ import java.util.Map;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
+import com.itwill.jpa.auth.PrincipalDetails;
 import com.itwill.jpa.dto.member_information.MemberDto;
 import com.itwill.jpa.util.JWTUtil;
 import com.nimbusds.jose.shaded.gson.Gson;
@@ -24,11 +25,11 @@ public class APILoginSuccessHandler implements AuthenticationSuccessHandler {
         
         // 1. 인증된 사용자의 정보를 가져옵니다.
         // 인증이 성공하면, Spring Security는 Authentication 객체를 통해 로그인한 사용자 정보를 제공합니다.
-        MemberDto memberDto = (MemberDto) authentication.getPrincipal();
-        
+    	 PrincipalDetails principal = (PrincipalDetails) authentication.getPrincipal();
+    	 
         // 2. 사용자의 클레임 정보를 가져옵니다.
         // getClaims() 메서드를 통해 사용자의 이메일, 역할, 그리고 SNS 로그인 여부 등의 정보를 가져옵니다. -> JWT토큰 생성
-        Map<String, Object> claims = memberDto.getClaims();
+        Map<String, Object> claims = principal.getClaims();
         
         // 3. JWT 토큰을 생성합니다.
         // JWTUtil.generateToken() 메서드를 사용해 액세스 토큰(accessToken)과 리프레시 토큰(refreshToken)을 생성합니다.

@@ -11,6 +11,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import com.itwill.jpa.dto.member_information.InterestDto;
 import com.itwill.jpa.dto.member_information.MemberDto;
+import com.itwill.jpa.dto.member_information.MemberSecurityDto;
 import com.itwill.jpa.entity.member_information.Member;
 import com.itwill.jpa.repository.member_information.MemberRepository;
 import com.itwill.jpa.service.member_information.MemberServiceImpl;
@@ -53,11 +54,15 @@ class MemberServiceTest {
         System.out.println("새로운 비밀번호가 이메일로 발송되었습니다.");
     }
     
+//    @Test
+    void findMemberByMemberId() {
+    	System.out.println(MemberSecurityDto.toDto(memberRepository.findMemberByMemberId("aaa")));
+    }
     @Test
     void testSendJoinCode() {
     	
     	 MemberDto.JoinFormDto joinFormDto = MemberDto.JoinFormDto.builder()
-                 .email("zszz5434@gmail.com") // 실제 이메일 주소
+                 .email("do16_@naver.com") // 실제 이메일 주소
                  .build();
     	 
     	 memberService.sendJoinCode(joinFormDto);
@@ -80,7 +85,7 @@ class MemberServiceTest {
 	    MemberDto memberDto = MemberDto.builder()
 	            .memberId("testuser")
 	            .memberPassword("password123!")
-	            .memberEmail("zszz5434@gmail.com")
+	            .memberEmail("do16_@naver.com")
 	            .memberName("Test User")
 	            .interests(interestList) // 관심사 추가
                 .build();
@@ -89,7 +94,7 @@ class MemberServiceTest {
     	
     	 // 결과 검증
          assertEquals("testuser", savedMember.getMemberId());
-         assertEquals("zszz5434@gmail.com", savedMember.getMemberEmail());
+         assertEquals("do16_@naver.com", savedMember.getMemberEmail());
          System.out.println("회원가입 성공: " + savedMember);
     	 
     }

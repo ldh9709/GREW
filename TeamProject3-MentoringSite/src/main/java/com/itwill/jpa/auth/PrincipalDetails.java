@@ -3,6 +3,7 @@ package com.itwill.jpa.auth;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.security.core.GrantedAuthority;
@@ -11,7 +12,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 
 import com.itwill.jpa.auth.userinfo.Oauth2UserInfo;
-import com.itwill.jpa.dto.member_information.MemberDto;
 import com.itwill.jpa.dto.member_information.MemberSecurityDto;
 import com.itwill.jpa.entity.member_information.Member;
 
@@ -55,8 +55,14 @@ public class PrincipalDetails implements UserDetails, OAuth2User {
 		return member.getMemberId();
 	}
 	
+	
 	public Long getmemberNo() {
 		return member.getMemberNo();
+	}
+	
+	@Override
+	public String getName() {
+		return member.getMemberName();
 	}
 	
 	/*
@@ -110,15 +116,21 @@ public class PrincipalDetails implements UserDetails, OAuth2User {
 		return oauth2UserInfo.getAttributes();
 	}
 	
-	/*
-	 * OAuth2 사용자 고유 식별자(Provider ID)를 반환
-	 * OAuth2 인증 서버에서 사용자 고유 식별자로 지정한 값(예: sub 필드)을 가져온다
-	 */
-	@Override
-	public String getName() {
-		return oauth2UserInfo.getProviderId();
+	/* JWT 토큰을 생성하는데 필요한 사용자 정보 */
+	public Map<String, Object> getClaims(){
+		Map<String, Object> dataMap = new HashMap<>();
+		
+		dataMap.put("id", member.getMemberId());
+		dataMap.put("email", member.getMemberEmail());
+		dataMap.put("password", member.getMemberPassword());
+		dataMap.put("name", member.getMemberName());
+		dataMap.put("role", member.getMemberRole());
+		dataMap.put("status", member.getMemberStatus());
+		dataMap.put("provider", member.getMemberProvider());
+		
+		return dataMap;
+		
 	}
-	
 	
 	
 }
