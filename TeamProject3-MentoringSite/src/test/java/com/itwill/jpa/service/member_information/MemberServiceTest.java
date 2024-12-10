@@ -1,4 +1,5 @@
 package com.itwill.jpa.service.member_information;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.Test;
@@ -37,10 +38,10 @@ class MemberServiceTest {
                 .email("zszz5434@gmail.com")
                 .MemberId("qqq")
                 .build();
-
+        
         // 서비스 호출 (이메일 발송 포함)
         memberService.findPassword(findPasswordDto);
-
+        
         // 결과 검증 (DB의 비밀번호가 변경되었는지 확인)
         Member updatedMember = memberRepository.findByMemberEmail("zszz5434@gmail.com");
         assertEquals("zszz5434@gmail.com", updatedMember.getMemberEmail());

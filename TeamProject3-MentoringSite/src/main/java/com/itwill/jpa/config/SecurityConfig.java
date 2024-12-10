@@ -84,6 +84,7 @@ public class SecurityConfig {
       "/v3/api-docs/**",
       "/v3/api-docs",
       "/swagger-ui.html",
+      "/login",
       productImagePattern,
       contextPattern,
       apiMemberPattern
@@ -114,7 +115,8 @@ public class SecurityConfig {
 		
 		//폼 기반 로그인 구성
 		httpSecurity.formLogin((config) -> {
-			config.loginPage("/login");
+//			config.loginPage("/login")
+			config.defaultSuccessUrl("/home", true);
 			config.successHandler(new APILoginSuccessHandler());
 			config.failureHandler(new APILoginFailHandler());
 		});
@@ -129,7 +131,7 @@ public class SecurityConfig {
 		//SNS로그인
 		httpSecurity.oauth2Login((t) -> {
 			t.loginPage("/login")//로그인 페이지 경로
-			 .defaultSuccessUrl("/dashboard/myInfo")//로그인 성공 후 리다이렉트 경로
+			 .defaultSuccessUrl("/dashboard/myinfo")//로그인 성공 후 리다이렉트 경로
 			 .userInfoEndpoint((userInfoEndpointConfig) -> {
 			 /***
 			  * Spring Security의 OAuth2 사용자 정보 처리는 userInfoEndpoint를 통해 수행된다.
@@ -149,10 +151,14 @@ public class SecurityConfig {
 			t.logoutUrl("/logout")//로그아웃
 			 .logoutSuccessUrl("/login");//성공 후 리다이렉트
 		});
-				
+
+		//페이지 접근 경로
 		httpSecurity.authorizeHttpRequests((authorizeHttpRequestsConfig) -> {
 		      // swagger설정
-		      authorizeHttpRequestsConfig.requestMatchers(SwaggerPatterns).permitAll().anyRequest().authenticated();
+		      authorizeHttpRequestsConfig
+//			      .requestMatchers(SwaggerPatterns).permitAll()
+			      .requestMatchers("/**").permitAll()
+			      .anyRequest().authenticated();
 		    });
 		
 		
@@ -180,11 +186,9 @@ public class SecurityConfig {
 //	    return source;  // CORS 설정을 반환
 //	  }
 	
-//	/* 비밀번호 암호화 */
-//	@Bean
-//	public PasswordEncoder passwordEncoder() {
-//		return new BCryptPasswordEncoder();
-//	}
-	
+	  @Bean
+	  public PasswordEncoder passwordEncoder() {
+	    return new BCryptPasswordEncoder();
+	  }
 	
 }

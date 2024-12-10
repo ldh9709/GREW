@@ -68,11 +68,10 @@ public class MemberDto {
 		
 	}
 	
-	@Getter
-	@Setter
-	@AllArgsConstructor
-	@NoArgsConstructor
 	@Builder
+	@Data
+	@NoArgsConstructor
+	@AllArgsConstructor
 	//임시 비밀번호 발급 시 사용
 	public static class findPassword {
 		@Email
