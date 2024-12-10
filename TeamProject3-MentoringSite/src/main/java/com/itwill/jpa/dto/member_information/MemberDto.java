@@ -31,7 +31,6 @@ public class MemberDto {
 	private Integer memberStatus;	
 	private Role memberRole;
 	private String memberProvider;
-	private String memberProviderId;
 	
 	private List<InterestDto> interests;
 	
@@ -62,7 +61,6 @@ public class MemberDto {
 		dataMap.put("name", memberName);
 		dataMap.put("role", memberRole);
 		dataMap.put("provider", memberProvider);
-		dataMap.put("providerId", memberProviderId);
 		
 		return dataMap;
 		
