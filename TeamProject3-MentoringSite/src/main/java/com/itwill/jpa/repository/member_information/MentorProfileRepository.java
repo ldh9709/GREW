@@ -46,7 +46,7 @@ public interface MentorProfileRepository extends JpaRepository<MentorProfile, Lo
      * 특정 상태의 모든 멘토 프로필 조회
      */
     @Query("SELECT mp FROM MentorProfile mp WHERE mp.mentorStatus = :status")
-    List<MentorProfile> findAllByMentorStatus(@Param("status") int status);
+    List<MentorProfile> findByMentorStatus(@Param("status") int status);
    
     //평점 
     @Query("SELECT AVG(r.reviewScore) FROM Review r WHERE r.chatRoom.mentor.memberNo = :mentorNo")

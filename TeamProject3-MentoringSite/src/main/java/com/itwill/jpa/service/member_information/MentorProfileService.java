@@ -9,7 +9,10 @@ import java.util.List;
 
 public interface MentorProfileService {
 
-    // 멘토 생성 상태로 변경 (mentorStatus = 1)
+	//멘토 생성 
+	void createMentorProfile(Long memberNo, MentorProfileDto mentorProfileDto);
+
+	// 멘토 생성 상태로 변경 (mentorStatus = 1)
     void setMentorStatusToCreated(Long memberNo);
 
     // 멘토 심사중 상태로 변경 (mentorStatus = 2)
@@ -21,6 +24,9 @@ public interface MentorProfileService {
     // 멘토 탈퇴 상태로 변경 (mentorStatus = 4)
     void setMentorStatusToRetired(Long memberNo);
 
+    // 특정 멘토의 평점을 업데이트
+    void updateMentorRating(Long memberNo);
+
     // 특정 상태의 모든 멘토 프로필 조회
     List<MentorProfile> getMentorsByStatus(int status);
 
@@ -30,16 +36,10 @@ public interface MentorProfileService {
     // 특정 카테고리와 관련된 멘토 프로필 조회
     List<MentorProfile> getMentorProfilesByCategory(Category category);
  
-    //멘토 생성 
-    void createMentorProfile(Long memberNo, MentorProfileDto mentorProfileDto);
-
-    
     // 특정 멘토의 평균 점수를 반환
     Double getAverageMentorRating(Long memberNo);
     
-    // 특정 멘토의 평점을 업데이트
-    void updateMentorRating(Long memberNo);
     
-    // 리뷰 정보를 바탕으로 멘토 프로필 정보 업데이트
-    MentorProfileDto saveMentorProfileByReview(ReviewDto reviewDto);
+    
+ 
 }

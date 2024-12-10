@@ -58,7 +58,7 @@ public class MentorProfileServiceImpl implements MentorProfileService {
     }
 
     /**
-     * 멘토 상태를 "심사완료"로 변경합니다. (mentorStatus = 3)
+     * 멘토 상태를 "심사완료"로 변경합니다. (mentorStatus = 3)멘토 가입 완료한 사람 멘티에서-->멘토로 변경
      */
     @Override
     public void setMentorStatusToApproved(Long memberNo) {
@@ -78,8 +78,9 @@ public class MentorProfileServiceImpl implements MentorProfileService {
      */
     @Override
     public List<MentorProfile> getMentorsByStatus(int status) {
-        return mentorProfileRepository.findAllByMentorStatus(status);
+        return mentorProfileRepository.findByMentorStatus(status);
     }
+
 
     /**
      * 특정 키워드(이름, 소개글, 경력)으로 멘토를 검색합니다.
@@ -97,7 +98,7 @@ public class MentorProfileServiceImpl implements MentorProfileService {
         return mentorProfileRepository.findByCategory(category);
     }
 
-    
+    //멘토 프로필 생성 
     @Override
     public void createMentorProfile(Long memberNo, MentorProfileDto mentorProfileDto) {
         // 1️ 회원(Member) 정보 조회
@@ -115,7 +116,7 @@ public class MentorProfileServiceImpl implements MentorProfileService {
 
         // 4️ MentorProfileDto → MentorProfile 엔티티로 변환
         MentorProfile mentorProfile = MentorProfileDto.toEntity(mentorProfileDto, member, category);
-        mentorProfile.setMentorStatus(1); // 멘토의 초기 상태를 "생성 대기"로 설정
+        mentorProfile.setMentorStatus(2); // 멘토의 초기 상태를 "생성 대기"로 설정
 
         // 5️ 멘토 프로필 저장
         mentorProfileRepository.save(mentorProfile);
@@ -126,11 +127,11 @@ public class MentorProfileServiceImpl implements MentorProfileService {
      */
     @Override
     public Double getAverageMentorRating(Long memberNo) {
-        List<Integer> reviewScores = reviewRepository.findReviewScoresByMentor(memberNo);
-        if (reviewScores.isEmpty()) {
-            return 0.0;
-        }
-        return reviewScores.stream().mapToInt(Integer::intValue).average().orElse(0.0);
+    	MentorProfile mentorProfile = mentorProfileRepository.findByMemberNo(memberNo);
+    	if (mentorProfile == null) {
+    	    throw new IllegalStateException("해당 멘토 프로필을 찾을 수 없습니다.");
+    	}
+        return mentorProfile.getMentorRating();
     }
 
     // 멘토의 mentor_rating 업데이트
@@ -139,34 +140,6 @@ public class MentorProfileServiceImpl implements MentorProfileService {
         mentorProfileRepository.updateMentorRatingByMemberNo(memberNo);
     }
 
-    /**
-     * 리뷰 정보를 바탕으로 멘토 프로필을 저장하거나 업데이트합니다.
-     */
-    @Override
-    public MentorProfileDto saveMentorProfileByReview(ReviewDto reviewDto) {
-        Long memberNo = reviewDto.getMemberNo();
-
-        // 1️⃣ 멘토 평점 업데이트
-        updateMentorRating(memberNo); 
-
-        // 2️⃣ 멘토 프로필 조회 (Optional을 사용해 null 체크)
-        MentorProfile mentorProfile = mentorProfileRepository.findByMemberNo(memberNo);
-
-        // 3️⃣ 멘토 프로필이 없을 때 예외 발생 또는 새로 생성
-        if (mentorProfile == null) {
-            // 3-1. 예외 발생 방식
-            throw new IllegalStateException("해당 멤버의 멘토 프로필이 존재하지 않습니다. memberNo: " + memberNo);
-            
-            // 3-2. 새로운 멘토 프로필 생성 방식 (필요한 경우)
-            // mentorProfile = new MentorProfile();
-            // mentorProfile.setMember(Member.builder().memberNo(memberNo).build()); // 기본 Member 객체 설정
-            // mentorProfile.setMentorRating(0.0); // 초기 평점 설정
-            // mentorProfile.setMentorStatus(1); // 초기 멘토 상태
-            // mentorProfileRepository.save(mentorProfile); // 저장
-        }
-
-        // 4️⃣ MentorProfile 엔티티를 MentorProfileDto로 변환 (null-safe)
-        return MentorProfileDto.toDto(mentorProfile);
-    }
+   
 
 }

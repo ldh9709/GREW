@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 
 import org.hibernate.annotations.ColumnDefault;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.itwill.jpa.dto.member_information.MentorBoardDto;
 import com.itwill.jpa.dto.member_information.MentorProfileDto;
 
@@ -54,12 +55,14 @@ public class MentorProfile {
     @Column(name = "mentor_status" ,nullable = false)
     private Integer mentorStatus;
     
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "member_no" )
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "member_no")
+    @JsonIgnore // 🔥 추가된 부분 (순환 참조 방지)
     private Member member;
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "category_no")
+    @JsonIgnore // 🔥 추가된 부분 (순환 참조 방지)
     private Category category;
     
     
