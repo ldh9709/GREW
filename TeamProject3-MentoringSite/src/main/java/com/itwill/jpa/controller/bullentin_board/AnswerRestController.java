@@ -144,8 +144,8 @@ public class AnswerRestController {
 	/* 답변 삭제(상태 업데이트) */
 	@Operation(summary = "답변 삭제(상태 수정)")
 	@PutMapping("/{answerNo}/status")
-	public ResponseEntity<Response> updateAnswerStatus(@RequestBody AnswerDto answerDto) throws Exception {
-		
+	public ResponseEntity<Response> updateAnswerStatus(@PathVariable(name = "answerNo")Long answerNo, @RequestBody AnswerDto answerDto) throws Exception {
+		answerDto.setAnswerNo(answerNo);
 		AnswerDto deleteAnswerDto = answerService.deleteAnswer(answerDto);
 		
 		Response response = new Response();
