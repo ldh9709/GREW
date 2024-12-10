@@ -100,7 +100,6 @@ public class MentorProfileServiceImpl implements MentorProfileService {
     }
     
     
-    //멘토 프로필 생성 
     @Override
     public void createMentorProfile(Long memberNo, MentorProfileDto mentorProfileDto) {
         // 1️ 회원(Member) 정보 조회
@@ -116,13 +115,14 @@ public class MentorProfileServiceImpl implements MentorProfileService {
             throw new IllegalStateException("해당 회원은 이미 멘토 프로필을 가지고 있습니다. memberNo: " + memberNo);
         }
 
-        // 4️ MentorProfileDto → MentorProfile 엔티티로 변환
-        MentorProfile mentorProfile = MentorProfileDto.toEntity(mentorProfileDto, member, category);
+        // 4️ MentorProfileDto → MentorProfile 엔티티로 변환 (MentorProfile 엔티티의 toEntity 메서드 사용)
+        MentorProfile mentorProfile = MentorProfile.toEntity(mentorProfileDto, member, category);
         mentorProfile.setMentorStatus(2); // 멘토의 초기 상태를 "생성 대기"로 설정
 
         // 5️ 멘토 프로필 저장
         mentorProfileRepository.save(mentorProfile);
     }
+
 
     /**
      * 특정 멘토의 평균 점수를 반환합니다.

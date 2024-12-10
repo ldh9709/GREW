@@ -21,12 +21,14 @@ public interface MentorProfileRepository extends JpaRepository<MentorProfile, Lo
     /**
      * 멘토 프로필 검색: 이름, 소개글, 경력에서 키워드를 검색
      */
-    @Query("SELECT mp FROM MentorProfile mp " +
-           "WHERE mp.mentorStatus = 3 AND " + // 심사 완료 상태만 검색
-           "(mp.member.memberName LIKE %:keyword% " +
-           "OR mp.mentorIntroduce LIKE %:keyword% " +
-           "OR mp.mentorCareer LIKE %:keyword%)")
-    List<MentorProfile> searchMentorProfiles(@Param("keyword") String keyword);
+	@Query("SELECT mp FROM MentorProfile mp " +
+		       "JOIN FETCH mp.member " + 
+		       "JOIN FETCH mp.category " + 
+		       "WHERE mp.mentorStatus = 3 AND " + 
+		       "(LOWER(mp.mentorIntroduce) LIKE LOWER(CONCAT('%', :keyword, '%')) " +
+		       "OR LOWER(mp.mentorCareer) LIKE LOWER(CONCAT('%', :keyword, '%')) " +
+		       "OR LOWER(mp.member.memberName) LIKE LOWER(CONCAT('%', :keyword, '%')))")
+		List<MentorProfile> searchMentorProfiles(@Param("keyword") String keyword);
 
     /**
      * 카테고리 번호로 멘토 프로필 조회

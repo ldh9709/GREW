@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 import com.itwill.jpa.entity.bullentin_board.Inquiry;
 import com.itwill.jpa.entity.member_information.Member;
 import com.itwill.jpa.entity.member_information.MentorBoard;
+import com.itwill.jpa.entity.member_information.MentorProfile;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -33,5 +34,4 @@ public interface MentorBoardRepository extends JpaRepository<MentorBoard, Long> 
   		     + "OR m.memberName LIKE %:search%) "
   		     + "AND i.mentorBoardStatus = 1")
   		List<MentorBoard> findMentorBoardBySearch(@Param("search") String search);
-
 }

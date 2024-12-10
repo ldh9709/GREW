@@ -158,13 +158,12 @@ public class MentorProfileController {
     /**
      * 특정 키워드로 멘토를 검색합니다.
      */
-    @Operation(summary = "멘토 검색")
     @GetMapping("/search/{keyword}")
     public ResponseEntity<Response> searchMentorProfiles(@PathVariable(name = "keyword") String keyword) {
         List<MentorProfile> mentorProfiles = mentorProfileService.searchMentorProfiles(keyword);
         Response response = new Response();
-        response.setStatus(ResponseStatusCode.READ_MENTOR_PROFILE_LIST_SUCCESS_CODE);
-        response.setMessage(ResponseMessage.READ_MENTOR_PROFILE_LIST_SUCCESS);
+        response.setStatus(200);
+        response.setMessage("멘토 검색 성공");
         response.setData(mentorProfiles);
         return ResponseEntity.ok(response);
     }

@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 
 import org.hibernate.annotations.ColumnDefault;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.itwill.jpa.dto.member_information.MentorBoardDto;
 import com.itwill.jpa.dto.member_information.MentorProfileDto;
@@ -22,82 +23,68 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Table(name = "mentor_profile")
 public class MentorProfile {
-
-    @Id
-    @SequenceGenerator(name = "mentor_profile_no_SEQ", initialValue = 1, allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "mentor_profile_no_SEQ")
     
-    @Column(name = "mentor_profile_no" )
+	@Id
+	@SequenceGenerator(name = "mentor_profile_no_SEQ", initialValue = 1, allocationSize = 1)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "mentor_profile_no_SEQ")
+    @Column(name="mentor_profile_no")
     private Long mentorProfileNo;
 
-    @Column(name = "mentor_introduce" ,nullable = false, length = 2000)
-    private String mentorIntroduce; 
-    
-    @Column(name = "mentor_career" ,nullable = false, length = 1000)
-    private String mentorCareer; 
-    
-    @Column(name = "mentor_rating", nullable = false)
-    @ColumnDefault("0.0")
-    private Double mentorRating;
-    
-    @Column(name = "mentor_mentoring_count" ,nullable = false)
-    private Integer mentorMentoringCount;
-    
-    @Column(name = "mentor_image" ,nullable = false)
-    private String mentorImage;
-   
-    @Column(name = "mentor_activity_count" ,nullable = false)
-    private Integer mentorActivityCount;
-    
-    @Column(name = "mentor_follow_count" ,nullable = false)
-    private Integer mentorFollowCount;
-    
-    @Column(name = "mentor_status" ,nullable = false)
-    private Integer mentorStatus;
-    
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "member_no")
-    @JsonIgnore // 🔥 추가된 부분 (순환 참조 방지)
+    @JsonBackReference
+    @JoinColumn(name = "member_no", nullable = false)
     private Member member;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "category_no")
-    @JsonIgnore // 🔥 추가된 부분 (순환 참조 방지)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JsonBackReference
+    @JoinColumn(name = "category_no", nullable = false)
     private Category category;
-    
-    
-    @PrePersist
-    public void setValues() {
-    	if (this.mentorRating == null) this.mentorRating =0.0;
-        if (this.mentorMentoringCount == null) this.mentorMentoringCount = 0;
-        if (this.mentorImage==null) this.mentorImage = "default.jpg";
-        if (this.mentorActivityCount == null) this.mentorActivityCount = 0;
-        if (this.mentorFollowCount == null) this.mentorFollowCount = 0;
-        if (this.mentorStatus==null||this.mentorStatus==0) this.mentorStatus = 1;
-    }
-    
- public static MentorProfile toEntity(MentorProfileDto mentorProfileDto) {
-    	
-    	Member member = Member.builder()
-				.memberNo(mentorProfileDto.getMemberNo())
-				.build();
-    	Category category =Category.builder()
-    			.categoryNo(mentorProfileDto.getCategoryNo())
-    			.build();
-    
-    	 return MentorProfile.builder()
-    	            .mentorProfileNo(mentorProfileDto.getMentorProfileNo())
-    	            .mentorIntroduce(mentorProfileDto.getMentorIntroduce())
-    	            .mentorCareer(mentorProfileDto.getMentorCareer())
-    	            .mentorRating(mentorProfileDto.getMentorRating())
-    	            .mentorMentoringCount(mentorProfileDto.getMentorMentoringCount())
-    	            .mentorImage(mentorProfileDto.getMentorImage())
-    	            .mentorActivityCount(mentorProfileDto.getMentorActivityCount())
-    	            .mentorFollowCount(mentorProfileDto.getMentorFollowCount())
-    	            .mentorStatus(mentorProfileDto.getMentorStatus())
-    	            .member(member) // 🔥 멤버 정보 매핑
-    	            .category(category) // 🔥 카테고리 정보 매핑
-    	            .build();
-    	
+
+    @Column(name="mentor_career", nullable = false)
+    private String mentorCareer;
+
+    @Column(name="mentor_introduce", nullable = false)
+    private String mentorIntroduce;
+
+    @Column(name="mentor_image")
+    private String mentorImage;
+
+    @Column(name="mentor_status", nullable = false)
+    private Integer mentorStatus;
+
+    @Column(name="mentor_rating", precision = 2)
+    private Double mentorRating;
+
+    @Column(name="mentor_mentoring_count")
+    private Integer mentorMentoringCount;
+
+    @Column(name="mentor_follow_count")
+    private Integer mentorFollowCount;
+
+    @Column(name="mentor_activity_count")
+    private Integer mentorActivityCount;
+
+    /**
+     * DTO를 엔티티로 변환하는 메서드
+     * 
+     * @param dto MentorProfileDto
+     * @param member Member 엔티티
+     * @param category Category 엔티티
+     * @return MentorProfile 엔티티
+     */
+    public static MentorProfile toEntity(MentorProfileDto mentorProfileDto, Member member, Category category) {
+        return MentorProfile.builder()
+                .mentorProfileNo(mentorProfileDto.getMentorProfileNo())
+                .member(member) // 멤버 정보 설정
+                .category(category) // 카테고리 정보 설정
+                .mentorCareer(mentorProfileDto.getMentorCareer())
+                .mentorIntroduce(mentorProfileDto.getMentorIntroduce())
+                .mentorImage(mentorProfileDto.getMentorImage())
+                .mentorStatus(mentorProfileDto.getMentorStatus() != null ? mentorProfileDto.getMentorStatus() : 1) // 초기 상태가 없으면 1로 설정
+                .mentorRating(mentorProfileDto.getMentorRating() != null ? mentorProfileDto.getMentorRating() : 0.0) // 초기 평점이 없으면 0.0으로 설정
+                .mentorMentoringCount(mentorProfileDto.getMentorMentoringCount() != null ? mentorProfileDto.getMentorMentoringCount() : 0)
+                .mentorFollowCount(mentorProfileDto.getMentorFollowCount() != null ? mentorProfileDto.getMentorFollowCount() : 0)
+                .mentorActivityCount(mentorProfileDto.getMentorActivityCount() != null ? mentorProfileDto.getMentorActivityCount() : 0)
+                .build();
     }
 }
