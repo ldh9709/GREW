@@ -8,6 +8,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -40,7 +41,7 @@ public class ReviewRestController {
 	public ResponseEntity<Response> insertReview(@RequestBody ReviewDto reviewDto){
 		
 		ReviewDto saveReview = ReviewDto.toDto(reviewService.saveReview(reviewDto));
-		AlarmDto alarmDto = alarmService.createAlarmByReview(saveReview);
+		AlarmDto alarmDto = alarmService.createAlarmByReview(saveReview.getReviewNo());
 		
 		Response response = new Response();
 		if (reviewDto.getChatRoomNo() == null) {
@@ -82,10 +83,10 @@ public class ReviewRestController {
 	}
 	@Operation(summary = "리뷰 삭제")
 	@PutMapping("/delete/{reviewNo}")
-	public ResponseEntity<Response> deleteReview(@RequestBody ReviewDto reviewDto){
+	public ResponseEntity<Response> deleteReview(@PathVariable(name = "reviewNo")Long reviewNo){
 		
 		Response response = new Response();
-		Review review = reviewService.deleteReview(reviewDto.getReviewNo());
+		Review review = reviewService.deleteReview(reviewNo);
 		response.setStatus(ResponseStatusCode.DELETE_REVIEW_SUCCESS);
 		response.setMessage(ResponseMessage.DELETE_REVIEW_SUCCESS);
 		response.setData(review);
@@ -94,7 +95,7 @@ public class ReviewRestController {
 		httpHeaders.setContentType(new MediaType(MediaType.APPLICATION_JSON, Charset.forName("UTF-8")));
 		
 		ResponseEntity<Response> responseEntity = new ResponseEntity<Response>(response, httpHeaders,
-				HttpStatus.CREATED);
+				HttpStatus.OK);
 		
 		return responseEntity;
 	}

@@ -11,13 +11,13 @@ import com.itwill.jpa.entity.chatting_review.Review;
 public interface ReviewRepository extends JpaRepository<Review, Long>{
 
 	// 특정 요청 번호에 해당하는 리뷰 리스트 조회
-    List<Review> findReviewByChatRoom_ChatRoomNo(Long chatRoomNo);
+    List<Review> findReviewByChatRoom_ChatRoomNoAndReviewStatus(Long chatRoomNo,Integer reviewStatus);
     
  // 멘티 번호에 해당하는 리뷰 리스트 조회
-    List<Review> findReviewByChatRoom_Mentee_MemberNo(Long memberNo);
+    List<Review> findReviewByChatRoom_Mentee_MemberNoAndReviewStatus(Long memberNo,Integer reviewStatus);
 
     // 멘토 번호에 해당하는 리뷰 리스트 조회
-    List<Review> findReviewByChatRoom_Mentor_MemberNo(Long memberNo);
+    List<Review> findReviewByChatRoom_Mentor_MemberNoAndReviewStatus(Long memberNo,Integer reviewStatus);
 	
     Review findByReviewNo(Long reviewNo);
     

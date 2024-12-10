@@ -23,7 +23,7 @@ public interface AlarmService{
 	//멘토보드 알림 추가
 	List<AlarmDto> createAlarmsByMentorBoard(MentorBoardDto mentorBoardDto);
 	//리뷰달렸을때 멘토에게 알림
-	AlarmDto createAlarmByReview(ReviewDto reviewDto);
+	AlarmDto createAlarmByReview(Long reviewNo);
 	//신고 제재 시 신고자에게 알림
 	AlarmDto createAlarmByReport(Long reportNo);
 	//팔로우시 멘토에게 팔로워 증가 알림

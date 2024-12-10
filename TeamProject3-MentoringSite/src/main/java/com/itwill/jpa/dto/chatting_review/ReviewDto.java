@@ -18,9 +18,9 @@ public class ReviewDto {
     private Long reviewNo;
     private String reviewTitle;
     private String reviewContent;
+    private Integer reviewStatus;//기본값 1 삭제시 2
     private Integer reviewScore;
     private LocalDateTime reviewDate; // 엔티티에서 자동 생성된 reviewDate
-
     private Long chatRoomNo;
     private Long memberNo;
     
@@ -30,6 +30,7 @@ public class ReviewDto {
                 .reviewNo(reviewEntity.getReviewNo())
                 .reviewTitle(reviewEntity.getReviewTitle())
                 .reviewContent(reviewEntity.getReviewContent())
+                .reviewStatus(reviewEntity.getReviewStatus())
                 .reviewScore(reviewEntity.getReviewScore())
                 .reviewDate(reviewEntity.getReviewDate())
                 .chatRoomNo(reviewEntity.getChatRoom().getChatRoomNo())

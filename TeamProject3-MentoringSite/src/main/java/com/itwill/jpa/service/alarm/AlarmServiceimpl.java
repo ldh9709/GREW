@@ -90,13 +90,13 @@ public class AlarmServiceimpl implements AlarmService {
 
 	// 리뷰달렸을때 멘토에게 알림
 	@Override
-	public AlarmDto createAlarmByReview(ReviewDto reviewDto) {
+	public AlarmDto createAlarmByReview(Long reviewNo) {
 		AlarmDto alarmDto = new AlarmDto();
-		alarmDto.setReferenceNo(reviewDto.getReviewNo());
+		alarmDto.setReferenceNo(reviewNo);
 		alarmDto.setAlarmContent("멘티님이 리뷰를 달았습니다.");
 		alarmDto.setAlarmType("mentee");
 		alarmDto.setReferenceType("review");
-		alarmDto.setMemberNo(reviewRepository.findMentorNoByReviewNo(reviewDto.getReviewNo()));
+		alarmDto.setMemberNo(reviewRepository.findMentorNoByReviewNo(reviewNo));
 		return AlarmDto.toDto(alarmRepository.save(Alarm.toEntity(alarmDto)));
 	}
 
