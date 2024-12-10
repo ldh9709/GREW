@@ -2020,8 +2020,8 @@
             <constraint>
               <height>-1</height>
               <width>-1</width>
-              <x>1496</x>
-              <y>388</y>
+              <x>1501</x>
+              <y>438</y>
             </constraint>
             <sourceConnections>
               <net.java.amateras.db.visual.model.ForeignKeyModel reference="../../.."/>
