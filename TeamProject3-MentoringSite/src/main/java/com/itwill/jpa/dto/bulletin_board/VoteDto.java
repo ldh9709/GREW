@@ -19,8 +19,8 @@ public class VoteDto {
     private Long voteNo;         // vote_no (PK)
     private Integer voteType;     // vote_type
     private LocalDate voteDate;  // vote_date
-    private MemberDto member;    // member_no (FK)
-    private AnswerDto answer;    // answer_no (FK)
+    private Long memberNo;    // member_no (FK)
+    private Long answerNo;    // answer_no (FK)
 
     /*
      * Entity -> DTO 변환 메소드
@@ -31,8 +31,8 @@ public class VoteDto {
                 .voteNo(voteEntity.getVoteNo())
                 .voteType(voteEntity.getVoteType())
                 .voteDate(voteEntity.getVoteDate())
-                .member(MemberDto.toDto(voteEntity.getMember()))  
-                .answer(AnswerDto.toDto(voteEntity.getAnswer()))  
+                .memberNo(MemberDto.toDto(voteEntity.getMember()).getMemberNo())  
+                .answerNo(AnswerDto.toDto(voteEntity.getAnswer()).getAnswerNo())  
                 .build();
     }
 }

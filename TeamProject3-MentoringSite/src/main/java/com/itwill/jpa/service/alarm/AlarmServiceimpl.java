@@ -2,6 +2,7 @@ package com.itwill.jpa.service.alarm;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,6 +13,7 @@ import com.itwill.jpa.dto.chatting_review.ReviewDto;
 import com.itwill.jpa.dto.member_information.MentorBoardDto;
 import com.itwill.jpa.dto.report.ReportDto;
 import com.itwill.jpa.entity.alarm.Alarm;
+import com.itwill.jpa.entity.bullentin_board.Answer;
 import com.itwill.jpa.repository.alarm.AlarmRepository;
 import com.itwill.jpa.repository.bullentin_board.AnswerRepository;
 import com.itwill.jpa.repository.chatting_review.ReviewRepository;
@@ -116,7 +118,18 @@ public class AlarmServiceimpl implements AlarmService {
 		alarmDto.setMemberNo(MentorMemberNo);
 		return AlarmDto.toDto(alarmRepository.save(Alarm.toEntity(alarmDto)));
 	}
-
+	//추천시 답변 작성자에게 추천 증가 알림
+	@Override
+	public AlarmDto createAlarmByVoteByMentor(Long answerNo) {
+		AlarmDto alarmDto = new AlarmDto();
+		Answer answer = answerRepository.findById(answerNo).get();
+			alarmDto.setAlarmContent("회원님의 답변에 추천이 달렸습니다");
+			alarmDto.setAlarmType("vote");
+			alarmDto.setMemberNo(answer.getMember().getMemberNo());
+			alarmDto.setReferenceNo(answer.getInquiry().getInquiryNo());
+			alarmDto.setReferenceType("question");
+			return AlarmDto.toDto(alarmRepository.save(Alarm.toEntity(alarmDto)));
+	}
 	// 알림 클릭시 URl전송
 	@Override
 	public String alarmRedirectURL(AlarmDto alarmDto) {
@@ -132,5 +145,7 @@ public class AlarmServiceimpl implements AlarmService {
 			throw new IllegalArgumentException("Unknown reference type");
 		}
 	}
+
+	
 
 }

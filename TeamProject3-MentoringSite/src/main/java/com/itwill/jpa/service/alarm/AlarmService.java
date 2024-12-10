@@ -28,6 +28,8 @@ public interface AlarmService{
 	AlarmDto createAlarmByReport(Long reportNo);
 	//팔로우시 멘토에게 팔로워 증가 알림
 	AlarmDto createAlarmByFollowByMentor(Long MentorMemberNo);
+	//추천시 답글 작성자에게 추천 증가 알림
+	AlarmDto createAlarmByVoteByMentor(Long answerNo);
 	//알림 클릭시 URl전송
 	String alarmRedirectURL(AlarmDto alarmDto);
 }
