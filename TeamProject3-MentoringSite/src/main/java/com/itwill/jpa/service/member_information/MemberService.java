@@ -23,5 +23,12 @@ public interface MemberService {
 	//회원 상태 수정
 	Member updateMemberStatus(MemberDto memberDto, Integer statusNo);
 	
+	//회원가입 시 인증번호 메일 발송
+	void sendJoinCode(MemberDto.JoinFormDto joinFormDto);
+	
+	//인증번호가 일치하는지 확인
+	boolean certificationCode(String email, Integer inputCode);
+	
+	//비밀번호 찾기 시 임시 비밀번호 메일 발송
 	void findPassword(MemberDto.findPassword memberDto);
 }

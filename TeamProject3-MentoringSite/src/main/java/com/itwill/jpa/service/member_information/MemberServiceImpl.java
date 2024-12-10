@@ -2,8 +2,11 @@ package com.itwill.jpa.service.member_information;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.Random;
 import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -12,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import com.itwill.jpa.dto.member_information.InterestDto;
 import com.itwill.jpa.dto.member_information.MemberDto;
+import com.itwill.jpa.dto.member_information.MemberDto.JoinFormDto;
 import com.itwill.jpa.entity.member_information.Category;
 import com.itwill.jpa.entity.member_information.Interest;
 import com.itwill.jpa.entity.member_information.Member;
@@ -33,6 +37,8 @@ public class MemberServiceImpl implements MemberService {
 	@Autowired
 	private PasswordEncoder passwordEncoder;
 	
+	//이메일별 인증번호 저장
+	private final Map<String, Integer> tempCode = new ConcurrentHashMap<>();
 	
 	/***** 회원 가입 *****/
 	@Override
@@ -135,7 +141,41 @@ public class MemberServiceImpl implements MemberService {
 	
 
 	/********************************* 이메일 발송 **************************************/
+	//회원가입 시 인증번호 메일 전송
 	@Override
+	public void sendJoinCode(MemberDto.JoinFormDto joinForm) {
+		//랜덤 숫자 객체 생성
+		Random random = new Random();
+		
+		//6자리 숫자 임시번호 발급
+		Integer tempNo = random.nextInt(900000) + 100000;
+		
+		//메일 발송
+		customMailSender.sendJoinMaill(joinForm, tempNo);
+		
+		//인증번호 저장
+		tempCode.put(joinForm.getEmail(), tempNo);
+	}
+	
+	//인증번호 확인
+	@Override
+	public boolean certificationCode(String email, Integer inputCode) {
+		//입력받은 이메일로 저장된 인증번호 반환
+		Integer storedCode = tempCode.get(email);
+		
+		//유효성 검사 후 안맞으면 false 반환
+		if(storedCode == null || storedCode.equals(inputCode)) {
+			return false;
+		}
+		
+		//맞으면 데이터 삭제 후 true 반환
+		tempCode.remove(email);
+		return true;
+		
+	}
+	
+	@Override
+	//비밀번호 찾기 이메일 전송
 	public void findPassword(MemberDto.findPassword memberDto) {
 		Member member = memberRepository.findByMemberEmail(memberDto.getEmail());
 		
@@ -145,7 +185,7 @@ public class MemberServiceImpl implements MemberService {
 		
 		//tempPassword = bCryptPasswordEncoder.encode(tempPassword);
 		
-		member.changePassword(tempPassword);
+		//member.changePassword(tempPassword);
 		
 	}
 	

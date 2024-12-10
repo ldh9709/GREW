@@ -176,30 +176,9 @@ public class Member {
 		interest.setMember(this);
 	}
 	
-	/*
-	 * 일반 회원 가입에 사용
-	 * builderClassName = "JoinForm"으로 설정하면 JoinForm이라는 이름의 빌더 클래스가 생성된다.
-	 * builderMethodName = "JoinForm"으로 설정하면 JoinForm() 메서드를 통해 빌더 객체를 생성할 수 있다.
-	 */
-	@Builder(builderClassName = "JoinForm", builderMethodName = "JoinForm")
-	public Member(String email, String password) {
-		this.memberEmail = email;
-		this.memberPassword = password;
-	}
-	
-	/*
-	 * SNS 회원가입에 사용
-	 */
-	@Builder(builderClassName = "JoinOAuth2", builderMethodName = "JoinOAuth2")
-	public Member(String email, String password, String provider) {
-		this.memberEmail = email;
-		this.memberPassword = password;
-		this.memberProvider = provider;
-	}
-	
 	//비밀번호 변경
-	public void changePassword(String newPassword) {
-		this.memberPassword = newPassword;
-	}
-	
+		public void changePassword(String newPassword) {
+			this.memberPassword = newPassword;
+		}
+		
 }
