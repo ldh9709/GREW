@@ -5,6 +5,7 @@ import java.util.List;
 import com.itwill.jpa.dto.alarm.AlarmDto;
 import com.itwill.jpa.dto.bulletin_board.AnswerDto;
 import com.itwill.jpa.dto.chatting_review.ReviewDto;
+import com.itwill.jpa.dto.member_information.FollowRequestDto;
 import com.itwill.jpa.dto.member_information.MentorBoardDto;
 import com.itwill.jpa.dto.report.ReportDto;
 
@@ -25,6 +26,8 @@ public interface AlarmService{
 	AlarmDto createAlarmByReview(ReviewDto reviewDto);
 	//신고 제재 시 신고자에게 알림
 	AlarmDto createAlarmByReport(Long reportNo);
+	//팔로우시 멘토에게 팔로워 증가 알림
+	AlarmDto createAlarmByFollowByMentor(Long MentorMemberNo);
 	//알림 클릭시 URl전송
 	String alarmRedirectURL(AlarmDto alarmDto);
 }
