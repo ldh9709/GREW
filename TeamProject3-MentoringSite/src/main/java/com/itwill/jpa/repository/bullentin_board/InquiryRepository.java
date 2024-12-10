@@ -45,6 +45,9 @@ public interface InquiryRepository extends JpaRepository<Inquiry, Long> {
 		     + "OR i.inquiryContent LIKE %:search% "
 		     + "OR m.memberName LIKE %:search%) "
 		     + "AND i.inquiryStatus = 1")
-		Page<Inquiry> findInquiryBySearch(@Param("search") String search,Pageable pageable);
+	Page<Inquiry> findInquiryBySearch(@Param("search") String search,Pageable pageable);
 
+	// 내가 쓴 질문 리스트 출력
+	Page<Inquiry> findByMemberMemberNoOrderByInquiryDateDesc(Long memberNo, Pageable pageable);
+	
 }

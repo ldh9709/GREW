@@ -178,5 +178,18 @@ public class InquiryServiceImpl implements InquiryService {
 		// TODO Auto-generated method stub
 		return null;
 	}
+	
+	//내가 쓴 질문리스트 출력
+	@Override
+	public Page<InquiryDto> getInquiryByMember(Long MemberNo, int pageNumber, int pageSize) {
+		Pageable pageable = PageRequest.of(pageNumber, pageSize);
+		Page<Inquiry> inquiryEntityList = inquiryRepository.findByMemberMemberNoOrderByInquiryDateDesc(MemberNo, pageable);
+		List<InquiryDto> inquiryDtoList = new ArrayList<>();
+		for (Inquiry inquiryEntity : inquiryEntityList) {
+			inquiryDtoList.add(InquiryDto.toDto(inquiryEntity));
+		}
+		
+		return new PageImpl<>(inquiryDtoList, pageable, inquiryEntityList.getTotalElements());
+	}
 
 }

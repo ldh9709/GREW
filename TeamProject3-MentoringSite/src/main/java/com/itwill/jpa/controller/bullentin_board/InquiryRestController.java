@@ -233,4 +233,25 @@ public class InquiryRestController {
 		
 		return responseEntity;
 	}
+	
+	@Operation(summary = "내가 작성한 질문내역")
+	@GetMapping("/InquiryList/{memberNo}")
+	public ResponseEntity<Response> getInquiryByMember(@PathVariable(name = "memberNo") Long memberNo
+			,@RequestParam(name = "page",defaultValue = "0") int page,  // 기본값은 0 페이지
+            @RequestParam(name = "size",defaultValue = "10") int size) {
+		Page<InquiryDto> inquiryDtos = inquiryService.getInquiryByMember(memberNo, page, size);
+		
+		Response response = new Response();
+		response.setStatus(ResponseStatusCode.READ_INQUIRY_LIST_SUCCESS);
+		response.setMessage(ResponseMessage.READ_INQUIRY_LIST_SUCCESS);
+		response.setData(inquiryDtos);
+		
+		HttpHeaders httpHeaders = new HttpHeaders();
+		httpHeaders.setContentType(new MediaType(MediaType.APPLICATION_JSON,Charset.forName("UTF-8")));
+		
+	    ResponseEntity<Response> responseEntity = 
+				new ResponseEntity<Response>(response, httpHeaders, HttpStatus.OK);
+		
+		return responseEntity;
+	}
 }
