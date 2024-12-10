@@ -51,8 +51,6 @@ public class CustomMailSender {
 			
 			message.setFrom(mailDto.getAddress());
 			
-			System.out.println(">>>>>>>>마임 메일 센드 검증 : " + mailDto.getAddress());
-			
 			message.addRecipient(MimeMessage.RecipientType.TO, new InternetAddress(mailDto.getAddress()));
 			
 			message.setSubject(mailDto.getTitle());
@@ -66,6 +64,22 @@ public class CustomMailSender {
 		}
 	}
 	
+	//가입 시 인증번호 발송
+	public void sendJoinMaill(MemberDto.JoinFormDto joinFormDto, Integer tempNo) {
+		/***** 임시 인증번호를 포함한 HTML 형식의 메시지를 생성 *****/
+		String htmlMessage = "인증 번호 : " + tempNo;
+		
+		Mail mail = new Mail();
+		
+		mail.setAddress(joinFormDto.getEmail());
+		mail.setTitle("[MentorMentee] 인증 번호 안내 메일입니다");
+		mail.setMessage(htmlMessage);
+		
+		this.mimeMailSend(mail);
+		
+	}
+		
+		
 	//임시비밀번호 메일 발송
 	public void sendFindPasswordMail(MemberDto.findPassword memberDto, String tempPassword) {
 		/***** 사용자의 닉네임과 임시 비밀번호를 포함한 HTML 형식의 메시지를 생성 *****/
@@ -81,6 +95,7 @@ public class CustomMailSender {
 		//메일 발송
 		this.mimeMailSend(mail);
 	}
+	
 	
 	
 }

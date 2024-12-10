@@ -49,10 +49,12 @@ public class MailConfig {
         //메일 전송과 관련된 디버깅 로그를 출력
         properties.setProperty("mail.debug", "true");
         
+        
         properties.setProperty("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
         
-        //SSL(보안 소켓 계층)을 사용할 때 신뢰할 SMTP 서버를 설정
+        //SSL(보안 소켓 계층)을 사용할 때 신뢰할 SMTP 서버를 설정(구글 사용하므로 제외)
         //properties.setProperty("mail.smtp.ssl.trust","smtp.naver.com");
+        
         //SSL을 활성화하여 SMTP 서버와의 연결을 암호화.
         properties.setProperty("mail.smtp.ssl.enable","true");
         

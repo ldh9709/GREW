@@ -31,7 +31,6 @@ public class MemberDto {
 	private Integer memberStatus;	
 	private Role memberRole;
 	private String memberProvider;
-	private String memberProviderId;
 	
 	private List<InterestDto> interests;
 	
@@ -74,7 +73,6 @@ public class MemberDto {
 		dataMap.put("name", memberName);
 		dataMap.put("role", memberRole);
 		dataMap.put("provider", memberProvider);
-		dataMap.put("providerId", memberProviderId);
 		
 		return dataMap;
 		
@@ -91,5 +89,32 @@ public class MemberDto {
 		
 		private String MemberId;
 	}
+	
+	/*
+	 * 일반 회원 가입에 사용
+	 * builderClassName = "JoinForm"으로 설정하면 JoinForm이라는 이름의 빌더 클래스가 생성된다.
+	 * builderMethodName = "JoinForm"으로 설정하면 JoinForm() 메서드를 통해 빌더 객체를 생성할 수 있다.
+	 */
+	@Data
+	@NoArgsConstructor
+	@AllArgsConstructor
+	@Builder
+    public static class JoinFormDto {
+		
+        private String email;
+        
+    }
+	
+	/*
+	 * SNS 회원가입에 사용
+	 */
+	@Builder(builderClassName = "JoinOAuth2", builderMethodName = "JoinOAuth2")
+    public static class JoinOAuth2Dtox {
+        private String email;
+        private String password;
+        private String provider;
+    }
+	
+	
 	
 }
