@@ -110,7 +110,7 @@ public class Member {
 	
 	/* (멘토)한 명의 유저가 팔로우는 여러개 보유 가능 */
 	@OneToMany(mappedBy = "menteeMember", fetch = FetchType.LAZY)
-	private List<Follow> followMestees = new ArrayList<>();
+	private List<Follow> followMentees = new ArrayList<>();
 	
 	/* (멘티)한 명의 유저가 팔로우는 여러개 보유 가능 */
 	@OneToMany(mappedBy = "mentorMember", fetch = FetchType.LAZY)
