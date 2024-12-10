@@ -44,7 +44,10 @@ public class Review {
     
     @Column(name="review_content", nullable=false)
     private String reviewContent;
-
+    
+    @Column(name="review_status")
+    private Integer reviewStatus;
+    
     @Min(1)
     @Max(5)
     @Column(name="review_score", nullable=false)
@@ -61,6 +64,7 @@ public class Review {
     @PrePersist
     public void setDefaultValues() {
         if (this.reviewDate == null) this.reviewDate = LocalDateTime.now();
+        if(this.reviewStatus==0||this.reviewStatus==null)this.reviewStatus=1;
     }
 
     public static Review toEntity(ReviewDto reviewDto) {
@@ -68,6 +72,7 @@ public class Review {
                 .reviewNo(reviewDto.getReviewNo())
                 .reviewTitle(reviewDto.getReviewTitle())
                 .reviewContent(reviewDto.getReviewContent())
+                .reviewStatus(reviewDto.getReviewStatus())
                 .reviewScore(reviewDto.getReviewScore())
                 .reviewDate(reviewDto.getReviewDate())
                 .chatRoom(ChatRoom.builder().chatRoomNo(reviewDto.getChatRoomNo()).build()) //  엔티티 포함

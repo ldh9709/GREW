@@ -59,8 +59,8 @@ public class AnswerServiceImpl implements AnswerService{
 	
 	/*답변삭제*/
 	@Override
-	public AnswerDto deleteAnswer(AnswerDto answerDto) throws Exception {
-		Answer answer = answerRepository.findById(answerDto.getAnswerNo()).get();
+	public AnswerDto deleteAnswer(Long answerNo) throws Exception {
+		Answer answer = answerRepository.findById(answerNo).get();
 	    answer.setAnswerStatus(2);  
 	    return AnswerDto.toDto(answerRepository.save(answer));
 	}
