@@ -51,8 +51,6 @@ public class CustomMailSender {
 			
 			message.setFrom(mailDto.getAddress());
 			
-			System.out.println(">>>>>>>>마임 메일 센드 검증 : " + mailDto.getAddress());
-			
 			message.addRecipient(MimeMessage.RecipientType.TO, new InternetAddress(mailDto.getAddress()));
 			
 			message.setSubject(mailDto.getTitle());
@@ -82,5 +80,6 @@ public class CustomMailSender {
 		this.mimeMailSend(mail);
 	}
 	
+	//public void sendJoinMaill(MemberDto.)
 	
 }
