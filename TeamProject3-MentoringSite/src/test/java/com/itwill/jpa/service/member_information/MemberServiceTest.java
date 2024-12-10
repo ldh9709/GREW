@@ -27,7 +27,7 @@ class MemberServiceTest {
                 .memberNo(1L)
                 .memberId("qqq")
                 .memberPassword("oldPassword")
-                .memberEmail("zszz5434@gmail.com") // 실제 이메일 주소 입력
+                .memberEmail("do16_@naver.com") // 실제 이메일 주소 입력
                 .memberName("QQQ")
                 .build();
 
@@ -35,7 +35,7 @@ class MemberServiceTest {
 
         // 테스트용 DTO 생성
         MemberDto.findPassword findPasswordDto = MemberDto.findPassword.builder()
-                .email("zszz5434@gmail.com")
+                .email("do16_@naver.com")
                 .MemberId("qqq")
                 .build();
         
@@ -43,7 +43,7 @@ class MemberServiceTest {
         memberService.findPassword(findPasswordDto);
         
         // 결과 검증 (DB의 비밀번호가 변경되었는지 확인)
-        Member updatedMember = memberRepository.findByMemberEmail("zszz5434@gmail.com");
+        Member updatedMember = memberRepository.findByMemberEmail("do16_@naver.com");
         assertEquals("zszz5434@gmail.com", updatedMember.getMemberEmail());
         System.out.println("새로운 비밀번호가 이메일로 발송되었습니다.");
     }

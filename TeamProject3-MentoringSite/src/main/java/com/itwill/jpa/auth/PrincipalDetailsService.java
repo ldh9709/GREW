@@ -1,11 +1,13 @@
 package com.itwill.jpa.auth;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import com.itwill.jpa.entity.member_information.Member;
+import com.itwill.jpa.dto.member_information.MemberDto;
+import com.itwill.jpa.dto.member_information.MemberSecurityDto;
 import com.itwill.jpa.repository.member_information.MemberRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -16,19 +18,23 @@ import lombok.RequiredArgsConstructor;
 public class PrincipalDetailsService implements UserDetailsService {
 	
 	//멤버리포지토리 의존성 주입
+	@Autowired
 	private final MemberRepository memberRepository;
 	
 	@Override
 	//로그인 요청 받을 시 호출
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		//이메일로 멤버 찾기
-		Member findMember = memberRepository.findByMemberEmail(username);
+		
+		System.out.println("username>>>>>>" + username);
+		//아이디로 멤버 찾기
+		MemberSecurityDto findMember = MemberSecurityDto.toDto(memberRepository.findMemberByMemberId(username));
+		
+		System.out.println("findMember>>>>>>" + findMember);
 		
 		//멤버가 존재하면 찾은 멤버 반환
 		if(findMember != null) {
 			return new PrincipalDetails(findMember);
 		}
-		
 		return null;
 	}
 

@@ -2,13 +2,17 @@ package com.itwill.jpa.auth;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Map;
 
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 
 import com.itwill.jpa.auth.userinfo.Oauth2UserInfo;
+import com.itwill.jpa.dto.member_information.MemberDto;
+import com.itwill.jpa.dto.member_information.MemberSecurityDto;
 import com.itwill.jpa.entity.member_information.Member;
 
 import lombok.EqualsAndHashCode;
@@ -20,16 +24,16 @@ import lombok.ToString;
 @EqualsAndHashCode
 public class PrincipalDetails implements UserDetails, OAuth2User {
 	
-	private Member member;//일반 사용자 정보
+	private final MemberSecurityDto member;//일반 사용자 정보
 	private Oauth2UserInfo oauth2UserInfo;//SNS 사용자 정보
 	
 	
 	//일반 로그인 시 사용
-	public PrincipalDetails(Member member) {
+	public PrincipalDetails(MemberSecurityDto member) {
 		this.member = member;
 	}
 	//SNS 로그인 시 사용
-	public PrincipalDetails(Member member, Oauth2UserInfo oauth2UserInfo) {
+	public PrincipalDetails(MemberSecurityDto member, Oauth2UserInfo oauth2UserInfo) {
 		this.member = member;
 		this.oauth2UserInfo = oauth2UserInfo;
 	}
@@ -37,16 +41,7 @@ public class PrincipalDetails implements UserDetails, OAuth2User {
 	//해당 유저의 권한 목록 반환
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
-		
-		Collection<GrantedAuthority> collect = new ArrayList<>();
-		collect.add(new GrantedAuthority() {
-			
-			@Override
-			public String getAuthority() {
-				return member.getMemberRole().toString();
-			}
-		});
-		return collect;
+		return Collections.singletonList(new SimpleGrantedAuthority(member.getMemberRole().name()));
 	}
 	
 	//비밀번호 리턴
@@ -55,10 +50,13 @@ public class PrincipalDetails implements UserDetails, OAuth2User {
 		return member.getMemberPassword();
 	}
 	
-	//PK값 반환
 	@Override
 	public String getUsername() {
-		return member.getMemberEmail();
+		return member.getMemberId();
+	}
+	
+	public Long getmemberNo() {
+		return member.getMemberNo();
 	}
 	
 	/*
@@ -99,8 +97,9 @@ public class PrincipalDetails implements UserDetails, OAuth2User {
 	 */
 	@Override
 	public boolean isEnabled() {
-		return true;
+		return member.getMemberStatus() == 1; // 1이면 활성화된 계정으로 간주
 	}
+
 	
 	/*
 	 * OAuth2 로그인 시, 인증 서버(예: Google, Kakao, Naver 등)로부터 
