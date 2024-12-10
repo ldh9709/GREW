@@ -29,6 +29,7 @@ public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
 	
 	//패스워드 암호화
 	//private final BCryptPasswordEncoder bCryptPasswordEncoder;
+	private PasswordEncoder passwordEncoder;
 	
 	//사용자의 기본적인 속성과 권한을 포함한 OAuth2 사용자 클래스
 	DefaultOAuth2User defaultOAuth2User;
@@ -65,7 +66,8 @@ public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
 		
 		//SNS 로그인 사용자는 비밀번호를 설정하지 않음으로 임의로 암호화된 값 저장
 		//String password = bCryptPasswordEncoder.encode("password" + UUID.randomUUID().toString().substring(0, 6));
-		String password ="password" + UUID.randomUUID().toString().substring(0, 6);
+		String password = passwordEncoder.encode("password" + UUID.randomUUID().toString().substring(0, 6));
+		//String password ="password" + UUID.randomUUID().toString().substring(0, 6);
 		
 		Member findMember = memberRepository.findByMemberEmail(email);
 		
