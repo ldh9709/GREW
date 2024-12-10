@@ -146,8 +146,13 @@ public class InquiryRestController {
 	    response.setStatus(ResponseStatusCode.READ_INQUIRY_LIST_SUCCESS);
 	    response.setMessage(ResponseMessage.READ_INQUIRY_LIST_SUCCESS);
 	    response.setData(inquiryDtos);
-
-	    return new ResponseEntity<>(response, HttpStatus.OK);
+	    HttpHeaders httpHeaders = new HttpHeaders();
+		httpHeaders.setContentType(new MediaType(MediaType.APPLICATION_JSON,Charset.forName("UTF-8")));
+		
+	    ResponseEntity<Response> responseEntity = 
+				new ResponseEntity<Response>(response, httpHeaders, HttpStatus.OK);
+		
+		return responseEntity;
 	}
 	@Operation(summary = "조회수 많은 순으로 카테고리별 질문 출력")
 	@GetMapping("/viewCount/{categoryNo}")
@@ -160,8 +165,13 @@ public class InquiryRestController {
 		response.setStatus(ResponseStatusCode.READ_INQUIRY_LIST_SUCCESS);
 		response.setMessage(ResponseMessage.READ_INQUIRY_LIST_SUCCESS);
 		response.setData(inquiryDtos);
+		HttpHeaders httpHeaders = new HttpHeaders();
+		httpHeaders.setContentType(new MediaType(MediaType.APPLICATION_JSON,Charset.forName("UTF-8")));
 		
-		return new ResponseEntity<>(response, HttpStatus.OK);
+	    ResponseEntity<Response> responseEntity = 
+				new ResponseEntity<Response>(response, httpHeaders, HttpStatus.OK);
+		
+		return responseEntity;
 	}
 	@Operation(summary = "답변수 많은 순으로 전체 질문 출력")
 	@GetMapping("/answerCount")
@@ -175,7 +185,13 @@ public class InquiryRestController {
 		response.setMessage(ResponseMessage.READ_INQUIRY_LIST_SUCCESS);
 		response.setData(inquiryDtos);
 		
-		return new ResponseEntity<>(response, HttpStatus.OK);
+		HttpHeaders httpHeaders = new HttpHeaders();
+		httpHeaders.setContentType(new MediaType(MediaType.APPLICATION_JSON,Charset.forName("UTF-8")));
+		
+	    ResponseEntity<Response> responseEntity = 
+				new ResponseEntity<Response>(response, httpHeaders, HttpStatus.OK);
+		
+		return responseEntity;
 	}
 	@Operation(summary = "조회수 많은 순으로 전체 질문 출력")
 	@GetMapping("/viewCount")
@@ -189,7 +205,13 @@ public class InquiryRestController {
 		response.setMessage(ResponseMessage.READ_INQUIRY_LIST_SUCCESS);
 		response.setData(inquiryDtos);
 		
-		return new ResponseEntity<>(response, HttpStatus.OK);
+		HttpHeaders httpHeaders = new HttpHeaders();
+		httpHeaders.setContentType(new MediaType(MediaType.APPLICATION_JSON,Charset.forName("UTF-8")));
+		
+	    ResponseEntity<Response> responseEntity = 
+				new ResponseEntity<Response>(response, httpHeaders, HttpStatus.OK);
+		
+		return responseEntity;
 	}
 	@Operation(summary = "질문검색기능")
 	@GetMapping("/search/{search}")
@@ -203,6 +225,12 @@ public class InquiryRestController {
 		response.setMessage(ResponseMessage.READ_INQUIRY_LIST_SUCCESS);
 		response.setData(inquiryDtos);
 		
-		return new ResponseEntity<>(response, HttpStatus.OK);
+		HttpHeaders httpHeaders = new HttpHeaders();
+		httpHeaders.setContentType(new MediaType(MediaType.APPLICATION_JSON,Charset.forName("UTF-8")));
+		
+	    ResponseEntity<Response> responseEntity = 
+				new ResponseEntity<Response>(response, httpHeaders, HttpStatus.OK);
+		
+		return responseEntity;
 	}
 }

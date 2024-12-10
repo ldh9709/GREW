@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -190,9 +192,11 @@ public class AnswerRestController {
 	/* 추천순 */
 	@Operation(summary = "질문에 작성된답변조회(추천순)")
 	@GetMapping("/answerList/{inquiryNo}/inquiryVote")
-	public ResponseEntity<Response> findByAnswerOrderByVoteDate(@PathVariable(name = "inquiryNo") Long inquiryNo) {
+	public ResponseEntity<Response> findByAnswerOrderByVoteDate(@PathVariable(name = "inquiryNo") Long inquiryNo,
+			@RequestParam(name = "page",defaultValue = "0") int page,  // 기본값은 0 페이지
+            @RequestParam(name = "size",defaultValue = "10") int size) {
 		
-		List<AnswerDto> answerDtos = answerService.findByInquiryAnswerOrderByVotes(inquiryNo);
+		Page<AnswerDto> answerDtos = answerService.findByInquiryAnswerOrderByVotes(inquiryNo,page,size);
 		
 		Response response = new Response();
 	    response.setStatus(ResponseStatusCode.READ_ANSWER_LIST_SUCCESS);
@@ -205,7 +209,7 @@ public class AnswerRestController {
 	    ResponseEntity<Response> responseEntity = 
 				new ResponseEntity<Response>(response, httpHeaders, HttpStatus.OK);
 		
-		return responseEntity;
+	    return responseEntity;
 		
 		
 	}
@@ -215,9 +219,11 @@ public class AnswerRestController {
 	/* 최신순 */
 	@Operation(summary = "질문에 작성된답변조회(최신순)")
 	@GetMapping("/answerList/{inquiryNo}/inquiryDate")
-	public ResponseEntity<Response> findByInquiryAnswerOrderByDate(@PathVariable(name = "inquiryNo") Long inquiryNo) {
+	public ResponseEntity<Response> findByInquiryAnswerOrderByDate(@PathVariable(name = "inquiryNo") Long inquiryNo,
+			@RequestParam(name = "page",defaultValue = "0") int page,  // 기본값은 0 페이지
+            @RequestParam(name = "size",defaultValue = "10") int size) {
 		
-		List<AnswerDto> answerDtos = answerService.findByInquiryAnswerOrderByDate(inquiryNo);
+		Page<AnswerDto> answerDtos = answerService.findByInquiryAnswerOrderByDate(inquiryNo,page,size);
 		
 		Response response = new Response();
 	    response.setStatus(ResponseStatusCode.READ_ANSWER_LIST_SUCCESS);
@@ -230,16 +236,18 @@ public class AnswerRestController {
 	    ResponseEntity<Response> responseEntity = 
 				new ResponseEntity<Response>(response, httpHeaders, HttpStatus.OK);
 		
-		return responseEntity;
+	    return responseEntity;
 	}
 	
 	/* 카테고리별 답변 리스트 */
 	/* 추천순 */
 	@Operation(summary = "카테고리별 답변조회(추천순)")
 	@GetMapping("/answerList/{categoryNo}categoryVote")
-	public ResponseEntity<Response> findByCategoryAnswerOrderByVotes(@PathVariable(name = "categoryNo") Long categoryNo){
+	public ResponseEntity<Response> findByCategoryAnswerOrderByVotes(@PathVariable(name = "categoryNo") Long categoryNo,
+			@RequestParam(name = "page",defaultValue = "0") int page,  // 기본값은 0 페이지
+            @RequestParam(name = "size",defaultValue = "10") int size){
 		
-		List<AnswerDto> answerDtos = answerService.findByCategoryAnswerOrderByDate(categoryNo);
+		Page<AnswerDto> answerDtos = answerService.findByCategoryAnswerOrderByDate(categoryNo,page,size);
 		
 		Response response = new Response();
 	    response.setStatus(ResponseStatusCode.READ_ANSWER_LIST_SUCCESS);
@@ -260,9 +268,11 @@ public class AnswerRestController {
 	/* 최신순 */
 	@Operation(summary = "카테고리별 답변조회(최신순)")
 	@GetMapping("/answerList/{categoryNo}/categoryDate")
-	public ResponseEntity<Response> findByCategoryAnswerOrderByDate(@PathVariable(name = "categoryNo") Long categoryNo){
+	public ResponseEntity<Response> findByCategoryAnswerOrderByDate(@PathVariable(name = "categoryNo") Long categoryNo,
+			@RequestParam(name = "page",defaultValue = "0") int page,  // 기본값은 0 페이지
+            @RequestParam(name = "size",defaultValue = "10") int size){
 		
-		List<AnswerDto> answerDtos = answerService.findByCategoryAnswerOrderByDate(categoryNo);
+		Page<AnswerDto> answerDtos = answerService.findByCategoryAnswerOrderByDate(categoryNo,page,size);
 		
 		Response response = new Response();
 	    response.setStatus(ResponseStatusCode.READ_ANSWER_LIST_SUCCESS);
@@ -282,9 +292,11 @@ public class AnswerRestController {
 	/* 최근 3일동안 추천 많이 받은 답변 리스트 */
 	@Operation(summary = "최근 3일간 추천 많이 받은 답변 리스트")
 	@GetMapping("/answerList/recently-vote")
-	public ResponseEntity<Response> findByAnswerOrderByVoteDate() {
+	public ResponseEntity<Response> findByAnswerOrderByVoteDate(
+			@RequestParam(name = "page",defaultValue = "0") int page,  // 기본값은 0 페이지
+            @RequestParam(name = "size",defaultValue = "10") int size) {
 		
-		List<AnswerDto> answerDtos = answerService.findByAnswerOrderByVoteDate();
+		Page<AnswerDto> answerDtos = answerService.findByAnswerOrderByVoteDate(page,size);
 		
 		Response response = new Response();
 	    response.setStatus(ResponseStatusCode.READ_ANSWER_LIST_SUCCESS);
