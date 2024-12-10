@@ -39,6 +39,7 @@ public class MemberEmailValidator implements ConstraintValidator<Email, String> 
     
 	@Override
 	/*
+	 * 이메일 형식 검증
 	 * 사용자가 입력한 값(Value)을 검증하는 핵심 메소드
 	 * value = URLDecoder.decode(value, "UTF-8") :
 	 * 입력값이 URL 인코딩 된 경우에도 검증이 정상적으로 수행되도록 처리
