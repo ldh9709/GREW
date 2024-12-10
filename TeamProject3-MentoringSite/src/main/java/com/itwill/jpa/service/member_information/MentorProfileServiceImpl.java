@@ -90,14 +90,14 @@ public class MentorProfileServiceImpl implements MentorProfileService {
         return mentorProfileRepository.searchMentorProfiles(keyword);
     }
 
+   
     /**
      * 특정 카테고리와 관련된 멘토 프로필을 조회합니다.
      */
     @Override
-    public List<MentorProfile> getMentorProfilesByCategory(Category category) {
-        return mentorProfileRepository.findByCategory(category);
+    public List<MentorProfile> getMentorProfilesByCategory(Long categoryNo) {
+        return mentorProfileRepository.findByCategory_CategoryNo(categoryNo);
     }
-
     //멘토 프로필 생성 
     @Override
     public void createMentorProfile(Long memberNo, MentorProfileDto mentorProfileDto) {

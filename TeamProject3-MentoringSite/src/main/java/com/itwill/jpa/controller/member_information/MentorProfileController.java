@@ -59,16 +59,6 @@ public class MentorProfileController {
 
 
     /**
-     * 멘토의 평점을 업데이트합니다.
-     */
-    @Operation(summary = "멘토 평점 업데이트")
-    @GetMapping("/mentor-profile/update-rating/{memberNo}")
-    public ResponseEntity<?> updateRating(@PathVariable(name = "memberNo") Long memberNo) {
-        mentorProfileService.updateMentorRating(memberNo);
-        return ResponseEntity.ok("Mentor rating updated successfully for memberNo: " + memberNo);
-    }
-
-    /**
      * 멘토 프로필을 생성합니다.
      */
     @Operation(summary = "멘토 프로필 생성")
@@ -187,7 +177,14 @@ public class MentorProfileController {
     public ResponseEntity<Response> getMentorProfilesByCategory(@PathVariable(name = "categoryNo") Long categoryNo) {
         Response response = new Response();
         try {
-            List<MentorProfile> mentorProfiles = mentorProfileService.getMentorProfilesByCategory(new Category());
+            List<MentorProfile> mentorProfiles = mentorProfileService.getMentorProfilesByCategory(categoryNo);
+            
+            if (mentorProfiles.isEmpty()) {
+                response.setStatus(ResponseStatusCode.MENTOR_PROFILE_NOT_FOUND_CODE);
+                response.setMessage(ResponseMessage.MENTOR_PROFILE_NOT_FOUND + " - 해당 카테고리에 멘토가 없습니다.");
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+            }
+
             response.setStatus(ResponseStatusCode.READ_MENTOR_PROFILE_LIST_SUCCESS_CODE);
             response.setMessage(ResponseMessage.READ_MENTOR_PROFILE_LIST_SUCCESS);
             response.setData(mentorProfiles);
@@ -198,6 +195,7 @@ public class MentorProfileController {
         }
         return ResponseEntity.ok(response);
     }
+
 
   
 }

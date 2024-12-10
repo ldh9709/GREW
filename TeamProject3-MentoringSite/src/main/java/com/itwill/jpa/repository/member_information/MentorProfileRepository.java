@@ -31,7 +31,7 @@ public interface MentorProfileRepository extends JpaRepository<MentorProfile, Lo
     /**
      * 특정 카테고리와 관련된 멘토 프로필을 조회
      */
-    List<MentorProfile> findByCategory(Category category);
+    List<MentorProfile> findByCategory_CategoryNo(Long categoryNo);
 
 
 
