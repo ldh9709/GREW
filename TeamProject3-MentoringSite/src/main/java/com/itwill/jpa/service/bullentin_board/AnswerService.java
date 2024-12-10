@@ -29,4 +29,9 @@ public interface AnswerService {
 	Page<AnswerDto> getByCategoryAnswerOrderByDate(Long categoryNo,int pageNumber, int pageSize);
 	//최근3일간 상위추천 답변
 	Page<AnswerDto> getByAnswerOrderByVoteDate(int pageNumber, int pageSize);
+	
+	//내가 작성한 답변내역
+	Page<AnswerDto> getAnswerByMember(Long MemberNo, int pageNumber, int pageSize);
+	
+	
 }

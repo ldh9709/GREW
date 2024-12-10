@@ -242,7 +242,7 @@ public class AnswerRestController {
 	/* 카테고리별 답변 리스트 */
 	/* 추천순 */
 	@Operation(summary = "카테고리별 답변조회(추천순)")
-	@GetMapping("/answerList/{categoryNo}categoryVote")
+	@GetMapping("/answerList/{categoryNo}/categoryVote")
 	public ResponseEntity<Response> getByCategoryAnswerOrderByVotes(@PathVariable(name = "categoryNo") Long categoryNo,
 			@RequestParam(name = "page",defaultValue = "0") int page,  // 기본값은 0 페이지
             @RequestParam(name = "size",defaultValue = "10") int size){
@@ -310,6 +310,30 @@ public class AnswerRestController {
 				new ResponseEntity<Response>(response, httpHeaders, HttpStatus.OK);
 		
 		return responseEntity;
+	}
+	
+	/* 내가 작성한 답변내역 */
+	@Operation(summary = "내가 작성한 답변내역")
+	@GetMapping("answerList/{memberNo}")
+	public ResponseEntity<Response> getAnswerByMember(@PathVariable(name = "memberNo") Long memberNo,
+			@RequestParam(name = "page",defaultValue = "0") int page,  // 기본값은 0 페이지
+            @RequestParam(name = "size",defaultValue = "10") int size) {
+		
+		Page<AnswerDto> answerDtos = answerService.getAnswerByMember(memberNo,page,size);
+		
+		Response response = new Response();
+	    response.setStatus(ResponseStatusCode.READ_ANSWER_LIST_SUCCESS);
+	    response.setMessage(ResponseMessage.READ_ANSWER_LIST_SUCCESS);
+	    response.setData(answerDtos);
+	    
+	    HttpHeaders httpHeaders = new HttpHeaders();
+		httpHeaders.setContentType(new MediaType(MediaType.APPLICATION_JSON,Charset.forName("UTF-8")));
+		
+	    ResponseEntity<Response> responseEntity = 
+				new ResponseEntity<Response>(response, httpHeaders, HttpStatus.OK);
+		
+		return responseEntity;
+		
 	}
 	
 	

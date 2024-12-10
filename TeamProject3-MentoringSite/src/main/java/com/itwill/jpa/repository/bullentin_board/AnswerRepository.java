@@ -90,4 +90,7 @@ public interface AnswerRepository extends JpaRepository<Answer, Long>{
 		       + "WHERE a.answerNo = :answerNo")
 		Long findByMemberNoByInquiryByAnswer(@Param("answerNo")Long answerNo);
 
+	//내가 작성한 답변내역
+	Page<Answer> findByMemberMemberNoOrderByAnswerDateDesc(Long memberNo, Pageable pageable);
+
 }

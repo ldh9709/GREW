@@ -38,6 +38,6 @@ public interface InquiryService {
 	Page<InquiryDto> getInquiryBySearch(String search,int pageNumber, int pageSize);
 	
 	//내가 작성한 질문내역
-	Page<InquiryDto> getInquiryByMember(Long MemberNo, int pageNumber, int pageSize);
+	Page<InquiryDto> getInquiryByMember(Long memberNo, int pageNumber, int pageSize);
 	
 }

@@ -139,8 +139,19 @@ public class AnswerServiceImpl implements AnswerService{
 		return new PageImpl<>(answerDtoList, pageable, answerEntityList.getTotalElements());
 	}
 
-	
-	
+	//내가 작성한 답변내역
+	@Override
+	public Page<AnswerDto> getAnswerByMember(Long memberNo, int pageNumber, int pageSize) {
+		Pageable pageable = PageRequest.of(pageNumber, pageSize);
+		Page<Answer> answerEntityList = 
+				answerRepository.findByMemberMemberNoOrderByAnswerDateDesc(memberNo, pageable);
+		List<AnswerDto> answerDtoList = new ArrayList<>();
+		for(Answer answerEntity:answerEntityList) {
+			answerDtoList.add(AnswerDto.toDto(answerEntity));
+		}
+		
+		return new PageImpl<>(answerDtoList, pageable, answerEntityList.getTotalElements());
+	}
 	
 	
 	
