@@ -10,11 +10,13 @@ import com.itwill.jpa.dto.alarm.AlarmDto;
 import com.itwill.jpa.dto.bulletin_board.AnswerDto;
 import com.itwill.jpa.dto.chatting_review.ReviewDto;
 import com.itwill.jpa.dto.member_information.MentorBoardDto;
+import com.itwill.jpa.dto.report.ReportDto;
 import com.itwill.jpa.entity.alarm.Alarm;
 import com.itwill.jpa.repository.alarm.AlarmRepository;
 import com.itwill.jpa.repository.bullentin_board.AnswerRepository;
 import com.itwill.jpa.repository.chatting_review.ReviewRepository;
 import com.itwill.jpa.repository.member_information.FollowReporitory;
+import com.itwill.jpa.repository.report.ReportRepository;
 @Service
 public class AlarmServiceimpl implements AlarmService{
 	@Autowired
@@ -25,9 +27,11 @@ public class AlarmServiceimpl implements AlarmService{
 	private AnswerRepository answerRepository;
 	@Autowired
 	private ReviewRepository reviewRepository;
+	@Autowired
+	private ReportRepository reportRepository;
 	//알림등록
 	@Override
-	public AlarmDto saveAlarm(AlarmDto alarmDto) {
+	public AlarmDto createAlarm(AlarmDto alarmDto) {
         return AlarmDto.toDto(alarmRepository.save(Alarm.toEntity(alarmDto)));
 
 	}
@@ -44,14 +48,14 @@ public class AlarmServiceimpl implements AlarmService{
 	}
 	//알림 읽음표시
 	@Override
-	public AlarmDto readAlarm(AlarmDto alarmDto) {
+	public AlarmDto isReadAlarm(AlarmDto alarmDto) {
 		Alarm alarm = alarmRepository.findById(alarmDto.getAlarmNo()).get();
 		alarm.setIsRead(2);
 		return AlarmDto.toDto(alarmRepository.save(alarm));
 	}
 	//질문에 답변이 달렸을 때 질문자에게 알림 생성
 	@Override
-	public AlarmDto saveAlarmByAnswerToInquiry(AnswerDto answerDto) {
+	public AlarmDto createAlarmByAnswerToInquiry(AnswerDto answerDto) {
 		AlarmDto alarmDto = new AlarmDto();
 		alarmDto.setReferenceNo(answerDto.getInquiryNo());
 		alarmDto.setAlarmContent("회원님의 질문에 답변이 달렸습니다");
@@ -62,7 +66,7 @@ public class AlarmServiceimpl implements AlarmService{
 	}
 	//멘토보드등록시 알림추가
 	@Override
-	public List<AlarmDto> saveAlarmsByMentorBoard(MentorBoardDto mentorBoardDto) {
+	public List<AlarmDto> createAlarmsByMentorBoard(MentorBoardDto mentorBoardDto) {
 		List<AlarmDto> alarmDtos = new ArrayList<>();
 	    List<Long> menteeList = followReporitory.findMenteeByMentor(mentorBoardDto.getMemberNo());
 	    for (Long menteeMemberNo : menteeList) {
@@ -80,7 +84,7 @@ public class AlarmServiceimpl implements AlarmService{
 	}
 	//리뷰달렸을때 멘토에게 알림
 	@Override
-	public AlarmDto saveAlarmsByReview(ReviewDto reviewDto) {
+	public AlarmDto createAlarmByReview(ReviewDto reviewDto) {
 		AlarmDto alarmDto = new AlarmDto();
 		alarmDto.setReferenceNo(reviewDto.getReviewNo());
 		alarmDto.setAlarmContent("멘티님이 리뷰를 달았습니다.");
@@ -89,6 +93,15 @@ public class AlarmServiceimpl implements AlarmService{
 		alarmDto.setMemberNo(reviewRepository.findMentorNoByReviewNo(reviewDto.getReviewNo()));
 		return AlarmDto.toDto(alarmRepository.save(Alarm.toEntity(alarmDto)));
 	}
+	//신고 제재 시 신고자에게 알림
+		@Override
+		public AlarmDto createAlarmByReport(Long reportNo) {
+			AlarmDto alarmDto = new AlarmDto();
+			alarmDto.setAlarmContent("회원님의 신고가 정상적으로 제재 처리 되었습니다.");
+			alarmDto.setAlarmType("report");
+			alarmDto.setMemberNo(reportRepository.findByReportNo(reportNo).getMember().getMemberNo());
+			return AlarmDto.toDto(alarmRepository.save(Alarm.toEntity(alarmDto)));
+		}
 	//알림 클릭시 URl전송
 	@Override
 	public String alarmRedirectURL(AlarmDto alarmDto) {
@@ -104,6 +117,7 @@ public class AlarmServiceimpl implements AlarmService{
                 throw new IllegalArgumentException("Unknown reference type");
         	}
         }
+	
 	
 
 }

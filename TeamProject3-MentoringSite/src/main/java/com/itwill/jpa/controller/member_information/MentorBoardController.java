@@ -35,7 +35,7 @@ public class MentorBoardController {
     @PostMapping
     public ResponseEntity<Response> saveMentorBoard(@RequestBody MentorBoardDto mentorBoardDto) {
     	MentorBoardDto savedBoard = mentorBoardService.saveMemtorBoard(mentorBoardDto);
-    	List<AlarmDto> saveAlarms = alarmService.saveAlarmsByMentorBoard(savedBoard);
+    	List<AlarmDto> saveAlarms = alarmService.createAlarmsByMentorBoard(savedBoard);
         Response response = new Response();
         response.setStatus(ResponseStatusCode.CREATED_MEMBER_SUCCESS);
         response.setMessage(ResponseMessage.CREATED_MEMBER_SUCCESS);

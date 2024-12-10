@@ -40,7 +40,7 @@ public class ReviewRestController {
 	public ResponseEntity<Response> insertReview(@RequestBody ReviewDto reviewDto){
 		
 		ReviewDto saveReview = ReviewDto.toDto(reviewService.saveReview(reviewDto));
-		AlarmDto alarmDto = alarmService.saveAlarmsByReview(saveReview);
+		AlarmDto alarmDto = alarmService.createAlarmByReview(saveReview);
 		
 		Response response = new Response();
 		if (reviewDto.getChatRoomNo() == null) {

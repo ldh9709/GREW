@@ -9,4 +9,6 @@ import java.util.List;
 public interface ReportRepository extends JpaRepository<Report, Long>{
 	//member 번호로 신고 리스트 출력
     List<Report> findByMemberMemberNo(Long memberNo);
+    //reportNo로 신고자 출력
+    Report findByReportNo(Long reportNo);
 }
