@@ -3,6 +3,7 @@ package com.itwill.jpa.auth;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.security.core.GrantedAuthority;
@@ -115,7 +116,21 @@ public class PrincipalDetails implements UserDetails, OAuth2User {
 		return oauth2UserInfo.getAttributes();
 	}
 	
-
+	/* JWT 토큰을 생성하는데 필요한 사용자 정보 */
+	public Map<String, Object> getClaims(){
+		Map<String, Object> dataMap = new HashMap<>();
+		
+		dataMap.put("id", member.getMemberId());
+		dataMap.put("email", member.getMemberEmail());
+		dataMap.put("password", member.getMemberPassword());
+		dataMap.put("name", member.getMemberName());
+		dataMap.put("role", member.getMemberRole());
+		dataMap.put("status", member.getMemberStatus());
+		dataMap.put("provider", member.getMemberProvider());
+		
+		return dataMap;
+		
+	}
 	
 	
 }

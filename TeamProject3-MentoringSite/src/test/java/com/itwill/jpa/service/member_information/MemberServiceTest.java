@@ -62,7 +62,7 @@ class MemberServiceTest {
     void testSendJoinCode() {
     	
     	 MemberDto.JoinFormDto joinFormDto = MemberDto.JoinFormDto.builder()
-                 .email("zszz5434@gmail.com") // 실제 이메일 주소
+                 .email("do16_@naver.com") // 실제 이메일 주소
                  .build();
     	 
     	 memberService.sendJoinCode(joinFormDto);
@@ -85,7 +85,7 @@ class MemberServiceTest {
 	    MemberDto memberDto = MemberDto.builder()
 	            .memberId("testuser")
 	            .memberPassword("password123!")
-	            .memberEmail("zszz5434@gmail.com")
+	            .memberEmail("do16_@naver.com")
 	            .memberName("Test User")
 	            .interests(interestList) // 관심사 추가
                 .build();
@@ -94,7 +94,7 @@ class MemberServiceTest {
     	
     	 // 결과 검증
          assertEquals("testuser", savedMember.getMemberId());
-         assertEquals("zszz5434@gmail.com", savedMember.getMemberEmail());
+         assertEquals("do16_@naver.com", savedMember.getMemberEmail());
          System.out.println("회원가입 성공: " + savedMember);
     	 
     }
