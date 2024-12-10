@@ -130,6 +130,8 @@ public class MemberRestController {
 		//응답 객체 생성
 		Response response = new Response();
 		
+		System.out.println("로그인 시도 : " + response);
+		
 		if(loginMemberDto != null) {
 			//응답객체에 코드, 메시지, 객체 설정
 			response.setStatus(ResponseStatusCode.LOGIN_MEMBER_SUCCESS);
