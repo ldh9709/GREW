@@ -52,6 +52,18 @@ public class MemberDto {
 	}
 	
 	
+	public static MemberDto toSecurityDto(Member memberEntity) {
+		return MemberDto.builder()
+				.memberNo(memberEntity.getMemberNo())
+	            .memberId(memberEntity.getMemberId())
+	            .memberPassword(memberEntity.getMemberPassword())
+	            .memberEmail(memberEntity.getMemberEmail())
+	            .memberName(memberEntity.getMemberName())
+	            .memberStatus(memberEntity.getMemberStatus())
+	            .build();
+	}
+	
+	
 	/* JWT 토큰을 생성하는데 필요한 사용자 정보 */
 	public Map<String, Object> getClaims(){
 		Map<String, Object> dataMap = new HashMap<>();

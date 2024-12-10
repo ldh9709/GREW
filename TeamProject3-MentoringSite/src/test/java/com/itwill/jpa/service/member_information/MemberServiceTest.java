@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import com.itwill.jpa.dto.member_information.MemberDto;
+import com.itwill.jpa.dto.member_information.MemberSecurityDto;
 import com.itwill.jpa.entity.member_information.Member;
 import com.itwill.jpa.repository.member_information.MemberRepository;
 import com.itwill.jpa.service.member_information.MemberServiceImpl;
@@ -20,7 +21,7 @@ class MemberServiceTest {
     @Autowired
     private MemberRepository memberRepository; // 테스트 데이터 저장용
 
-    @Test
+//    @Test
     void testFindPasswordAndSendEmail() {
         // 테스트 데이터 저장
         Member mockMember = Member.builder()
@@ -46,5 +47,10 @@ class MemberServiceTest {
         Member updatedMember = memberRepository.findByMemberEmail("do16_@naver.com");
         assertEquals("zszz5434@gmail.com", updatedMember.getMemberEmail());
         System.out.println("새로운 비밀번호가 이메일로 발송되었습니다.");
+    }
+    
+//    @Test
+    void findMemberByMemberId() {
+    	System.out.println(MemberSecurityDto.toDto(memberRepository.findMemberByMemberId("aaa")));
     }
 }

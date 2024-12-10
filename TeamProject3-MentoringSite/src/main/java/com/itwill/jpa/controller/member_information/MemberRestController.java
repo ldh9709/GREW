@@ -72,7 +72,7 @@ public class MemberRestController {
 		return responseEntity;
 	}
 	
-	/* 회원 로그인 
+	/* 회원 로그인 */
 	@Operation(summary = "회원 로그인")
 	@PostMapping("/login")
 	public ResponseEntity<Response> loginMember(
@@ -108,7 +108,7 @@ public class MemberRestController {
 		
 		//반환
 		return responseEntity;
-	}*/
+	}
 	
 	/* 회원 로그아웃 */
 	@Operation(summary = "회원 로그아웃")
