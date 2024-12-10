@@ -155,6 +155,8 @@ public class MemberServiceImpl implements MemberService {
 		
 		//인증번호 저장
 		tempCode.put(joinForm.getEmail(), tempNo);
+		
+		System.out.println("저장된 인증번호: " + tempNo + ", 이메일: " + joinForm.getEmail());
 	}
 	
 	//인증번호 확인
@@ -164,7 +166,7 @@ public class MemberServiceImpl implements MemberService {
 		Integer storedCode = tempCode.get(email);
 		
 		//유효성 검사 후 안맞으면 false 반환
-		if(storedCode == null || storedCode.equals(inputCode)) {
+		if(storedCode == null || !storedCode.equals(inputCode)) {
 			return false;
 		}
 		
@@ -172,6 +174,12 @@ public class MemberServiceImpl implements MemberService {
 		tempCode.remove(email);
 		return true;
 		
+	}
+	
+	@Override
+	public Integer getTempCode(String email) {
+		//이메일에 해당하는 인증번호 가져오기
+		return tempCode.get(email);
 	}
 	
 	@Override

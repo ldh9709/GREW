@@ -86,11 +86,11 @@ public class MemberDto {
 	@Data
 	@NoArgsConstructor
 	@AllArgsConstructor
-	@Builder(builderClassName = "JoinForm", builderMethodName = "JoinForm")
+	@Builder
     public static class JoinFormDto {
+		
         private String email;
         
-        private Integer tempNo;
     }
 	
 	/*
