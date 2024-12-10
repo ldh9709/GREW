@@ -78,7 +78,7 @@ public class AnswerRestController {
 	
 	/* 답변 수정 */
 	@Operation(summary = "답변 수정")
-	@PutMapping("/{answerNo}")
+	@PutMapping("update/{answerNo}")
 	public ResponseEntity<Response> updateAnswer(@PathVariable(name = "answerNo") Long answerNo, @RequestBody AnswerDto answerDto) throws Exception {
 		
 		// 1. 서비스 호출 : 답변 업데이트 메소드 실행
@@ -145,7 +145,7 @@ public class AnswerRestController {
 	
 	/* 답변 삭제(상태 업데이트) */
 	@Operation(summary = "답변 삭제(상태 수정)")
-	@PutMapping("/{answerNo}/status")
+	@PutMapping("/delete/{answerNo}")
 	public ResponseEntity<Response> updateAnswerStatus(@PathVariable(name = "answerNo")Long answerNo, @RequestBody AnswerDto answerDto) throws Exception {
 		answerDto.setAnswerNo(answerNo);
 		AnswerDto deleteAnswerDto = answerService.deleteAnswer(answerDto);

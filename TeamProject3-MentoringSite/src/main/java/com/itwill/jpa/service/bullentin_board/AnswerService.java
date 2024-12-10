@@ -2,6 +2,8 @@ package com.itwill.jpa.service.bullentin_board;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+
 import com.itwill.jpa.dto.bulletin_board.AnswerDto;
 
 public interface AnswerService {
@@ -17,14 +19,14 @@ public interface AnswerService {
 	//답변상세보기
 	AnswerDto getAnswer(Long answerNo);
 	//추천순
-	List<AnswerDto> findByInquiryAnswerOrderByVotes(Long inquiryNo);
+	Page<AnswerDto> findByInquiryAnswerOrderByVotes(Long inquiryNo,int pageNumber, int pageSize);
 	//최신순
-	List<AnswerDto> findByInquiryAnswerOrderByDate(Long inquiryNo);
+	Page<AnswerDto> findByInquiryAnswerOrderByDate(Long inquiryNo,int pageNumber, int pageSize);
 	/*카테고리별 답변*/
 	//추천순
-	List<AnswerDto> findByCategoryAnswerOrderByVotes(Long categoryNo);
+	Page<AnswerDto> findByCategoryAnswerOrderByVotes(Long categoryNo,int pageNumber, int pageSize);
 	//최신순
-	List<AnswerDto> findByCategoryAnswerOrderByDate(Long categoryNo);
+	Page<AnswerDto> findByCategoryAnswerOrderByDate(Long categoryNo,int pageNumber, int pageSize);
 	//최근3일간 상위추천 답변
-	List<AnswerDto> findByAnswerOrderByVoteDate();
+	Page<AnswerDto> findByAnswerOrderByVoteDate(int pageNumber, int pageSize);
 }
