@@ -54,7 +54,7 @@ public class AnswerRestController {
 	public ResponseEntity<Response> createAnswer(@RequestBody AnswerDto answerDto){
 		// 1. 서비스 호출 : 답변 데이터 저장
 		AnswerDto createAnswerDto = answerService.createAnswer(answerDto);
-		AlarmDto alarmDto = alarmService.saveAlarmByAnswerToInquiry(createAnswerDto);
+		AlarmDto alarmDto = alarmService.createAlarmByAnswerToInquiry(createAnswerDto);
 		// 2. 응답 데이터(Response 객체) 생성
 		// - 응답객체에 코드, 메시지, 객체 설정
 		Response response = new Response();
@@ -148,7 +148,8 @@ public class AnswerRestController {
 	/* 답변 삭제(상태 업데이트) */
 	@Operation(summary = "답변 삭제(상태 수정)")
 	@PutMapping("/delete/{answerNo}")
-	public ResponseEntity<Response> deleteAnswer(@PathVariable(name = "answerNo")Long answerNo) throws Exception {
+	public ResponseEntity<Response> deleteAnswer(@PathVariable(name = "answerNo") Long answerNo) throws Exception {
+		
 		AnswerDto deleteAnswerDto = answerService.deleteAnswer(answerNo);
 		
 		Response response = new Response();

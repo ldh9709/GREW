@@ -39,6 +39,7 @@ public class InquiryRestController {
 	@Operation(summary = "질문 등록")
 	@PostMapping
 	public ResponseEntity<Response> createInquiry(@RequestBody InquiryDto inquiryDto) {
+		
 		Response response = new Response();
 		
 		InquiryDto createInguiryDto = inquiryService.createInquiry(inquiryDto);
