@@ -78,17 +78,8 @@ public class SecurityConfig {
 	public static final String contextPattern = "/api/member/context";
 	public static final String apiMemberPattern = "/api/member/**";
 	  
-  public static final String[] SwaggerPatterns = {
-      "/swagger-resources/**",
-      "/swagger-ui/**",
-      "/v3/api-docs/**",
-      "/v3/api-docs",
-      "/swagger-ui.html",
-      "/login",
-      productImagePattern,
-      contextPattern,
-      apiMemberPattern
-  };
+	public static final String[] 
+			SwaggerPatterns = {"/swagger-resources/**", "/swagger-ui/**", "/v3/api-docs/**","/v3/api-docs", "/swagger-ui.html", "/login", productImagePattern, contextPattern, apiMemberPattern };
 	
 	
 	//인증 없이 접근 가능한 경로 정의
@@ -109,13 +100,13 @@ public class SecurityConfig {
 		
 		
 		 //CORS 설정: 외부에서 이 API를 호출할 수 있도록 CORS 설정을 정의
-		 httpSecurity.cors(httpSecurityCorsConfigurer -> {
-		      httpSecurityCorsConfigurer.configurationSource(corsConfigurationSource());  // CORS 설정을 적용
-		    });
+//		 httpSecurity.cors(httpSecurityCorsConfigurer -> {
+//		      httpSecurityCorsConfigurer.configurationSource(corsConfigurationSource());  // CORS 설정을 적용
+//		    });
 		
 		//폼 기반 로그인 구성
 		httpSecurity.formLogin((config) -> {
-//			config.loginPage("/login")
+			config.loginPage("/login");
 			config.defaultSuccessUrl("/home", true);
 			config.successHandler(new APILoginSuccessHandler());
 			config.failureHandler(new APILoginFailHandler());
@@ -156,13 +147,10 @@ public class SecurityConfig {
 		httpSecurity.authorizeHttpRequests((authorizeHttpRequestsConfig) -> {
 		      // swagger설정
 		      authorizeHttpRequestsConfig
-//			      .requestMatchers(SwaggerPatterns).permitAll()
+			      .requestMatchers(SwaggerPatterns).permitAll()
 			      .requestMatchers("/**").permitAll()
 			      .anyRequest().authenticated();
 		    });
-		
-		
-		
 
 		return httpSecurity.build();
 		
@@ -170,21 +158,21 @@ public class SecurityConfig {
 	}
 	
 	/* CORS 객체 설정 */
-	 @Bean
-	  public CorsConfigurationSource corsConfigurationSource() {
-	    CorsConfiguration configuration = new CorsConfiguration();  // CORS 설정 객체 생성
-
-	    // CORS 설정
-	    configuration.setAllowedOriginPatterns(Arrays.asList("*"));  // 모든 출처에서 요청을 허용
-	    configuration.setAllowedMethods(Arrays.asList("HEAD", "GET", "POST", "PUT", "DELETE"));  // 허용할 HTTP 메소드 설정
-	    configuration.setAllowedHeaders(Arrays.asList("Authorization", "Cache-Control", "Content-Type"));  // 허용할 HTTP 헤더 설정
-	    configuration.setAllowCredentials(true);  // 쿠키를 허용
-
-	    UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();  // CORS 설정을 경로 기반으로 적용
-	    source.registerCorsConfiguration("/**", configuration);  // 모든 경로에 대해 CORS 설정 적용
-
-	    return source;  // CORS 설정을 반환
-	  }
+//	 @Bean
+//	  public CorsConfigurationSource corsConfigurationSource() {
+//	    CorsConfiguration configuration = new CorsConfiguration();  // CORS 설정 객체 생성
+//
+//	    // CORS 설정
+//	    configuration.setAllowedOriginPatterns(Arrays.asList("*"));  // 모든 출처에서 요청을 허용
+//	    configuration.setAllowedMethods(Arrays.asList("HEAD", "GET", "POST", "PUT", "DELETE"));  // 허용할 HTTP 메소드 설정
+//	    configuration.setAllowedHeaders(Arrays.asList("Authorization", "Cache-Control", "Content-Type"));  // 허용할 HTTP 헤더 설정
+//	    configuration.setAllowCredentials(true);  // 쿠키를 허용
+//
+//	    UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();  // CORS 설정을 경로 기반으로 적용
+//	    source.registerCorsConfiguration("/**", configuration);  // 모든 경로에 대해 CORS 설정 적용
+//
+//	    return source;  // CORS 설정을 반환
+//	  }
 	
 	  @Bean
 	  public PasswordEncoder passwordEncoder() {
