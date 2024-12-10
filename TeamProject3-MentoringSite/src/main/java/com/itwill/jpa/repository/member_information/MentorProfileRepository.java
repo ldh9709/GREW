@@ -29,10 +29,10 @@ public interface MentorProfileRepository extends JpaRepository<MentorProfile, Lo
     List<MentorProfile> searchMentorProfiles(@Param("keyword") String keyword);
 
     /**
-     * 특정 카테고리와 관련된 멘토 프로필을 조회
+     * 카테고리 번호로 멘토 프로필 조회
      */
-    List<MentorProfile> findByCategory_CategoryNo(Long categoryNo);
-
+    @Query("SELECT mp FROM MentorProfile mp WHERE mp.category.categoryNo = :categoryNo")
+    List<MentorProfile> findByCategoryNo(@Param("categoryNo") Long categoryNo);
 
 
     /**

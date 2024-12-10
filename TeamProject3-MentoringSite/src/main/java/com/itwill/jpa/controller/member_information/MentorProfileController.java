@@ -168,32 +168,16 @@ public class MentorProfileController {
         response.setData(mentorProfiles);
         return ResponseEntity.ok(response);
     }
-
-    /**
-     * 특정 카테고리의 멘토 목록을 조회합니다.
-     */
-    @Operation(summary = "특정 카테고리의 멘토 목록 조회")
+/**
+ *  카테고리 번호로 멘토 프로필 목록 조회
+ * @param categoryNo
+ * @return
+ */
+    @Operation(summary = "카테고리 멘토리스트")
     @GetMapping("/category/{categoryNo}")
-    public ResponseEntity<Response> getMentorProfilesByCategory(@PathVariable(name = "categoryNo") Long categoryNo) {
-        Response response = new Response();
-        try {
-            List<MentorProfile> mentorProfiles = mentorProfileService.getMentorProfilesByCategory(categoryNo);
-            
-            if (mentorProfiles.isEmpty()) {
-                response.setStatus(ResponseStatusCode.MENTOR_PROFILE_NOT_FOUND_CODE);
-                response.setMessage(ResponseMessage.MENTOR_PROFILE_NOT_FOUND + " - 해당 카테고리에 멘토가 없습니다.");
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
-            }
-
-            response.setStatus(ResponseStatusCode.READ_MENTOR_PROFILE_LIST_SUCCESS_CODE);
-            response.setMessage(ResponseMessage.READ_MENTOR_PROFILE_LIST_SUCCESS);
-            response.setData(mentorProfiles);
-        } catch (Exception e) {
-            response.setStatus(ResponseStatusCode.MENTOR_PROFILE_NOT_FOUND_CODE);
-            response.setMessage(ResponseMessage.MENTOR_PROFILE_NOT_FOUND + " - " + e.getMessage());
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
-        }
-        return ResponseEntity.ok(response);
+    public ResponseEntity<List<MentorProfile>> getMentorProfilesByCategoryNo(@PathVariable(name="categoryNo") Long categoryNo) {
+        List<MentorProfile> mentorProfiles = mentorProfileService.getMentorProfilesByCategoryNo(categoryNo);
+        return ResponseEntity.ok(mentorProfiles);
     }
 
 

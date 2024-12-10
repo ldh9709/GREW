@@ -31,7 +31,7 @@ public interface MentorProfileService {
     List<MentorProfile> searchMentorProfiles(String keyword);
 
     // 특정 카테고리와 관련된 멘토 프로필 조회
-    List<MentorProfile> getMentorProfilesByCategory(Long categoryNo);
+    List<MentorProfile> getMentorProfilesByCategoryNo(Long categoryNo);
  
     // 특정 멘토의 평균 점수를 반환
     Double getAverageMentorRating(Long memberNo);

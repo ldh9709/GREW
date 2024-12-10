@@ -21,6 +21,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -89,15 +90,16 @@ public class MentorProfileServiceImpl implements MentorProfileService {
     public List<MentorProfile> searchMentorProfiles(String keyword) {
         return mentorProfileRepository.searchMentorProfiles(keyword);
     }
-
-   
     /**
-     * 특정 카테고리와 관련된 멘토 프로필을 조회합니다.
-     */
+     * 카테고리 번호로 멘토 프로필 목록 조회
+    
+   */
     @Override
-    public List<MentorProfile> getMentorProfilesByCategory(Long categoryNo) {
-        return mentorProfileRepository.findByCategory_CategoryNo(categoryNo);
+    public List<MentorProfile> getMentorProfilesByCategoryNo(Long categoryNo) {
+        return mentorProfileRepository.findByCategoryNo(categoryNo);
     }
+    
+    
     //멘토 프로필 생성 
     @Override
     public void createMentorProfile(Long memberNo, MentorProfileDto mentorProfileDto) {

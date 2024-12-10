@@ -26,7 +26,9 @@ public class ResponseMessage {
     public static final String DELETE_MENTOR_PROFILE_SUCCESS = "멘토 프로필 삭제 성공";
     public static final String MENTOR_PROFILE_NOT_FOUND = "해당 멘토 프로필을 찾을 수 없습니다.";
     public static final String READ_MENTOR_PROFILE_LIST_FAIL = "멘토 프로필 목록 조회 실패";
-    
+    public static final String MENTOR_PROFILE_STATUS_UPDATE_SUCCESS = "멘토 프로필 상태 업데이트 성공";
+    public static final String MENTOR_PROFILE_STATUS_UPDATE_FAIL = "멘토 프로필 상태 업데이트 실패";
+
     /******************* MENTOR PROFILE TYPE 변경 메시지 ************************/
     public static final String MENTOR_PROFILE_TYPE_CHANGE_SUCCESS = "멘토 프로필 타입 변경 성공";
     public static final String MENTOR_PROFILE_TYPE_CHANGE_FAIL = "멘토 프로필 타입 변경 실패";
