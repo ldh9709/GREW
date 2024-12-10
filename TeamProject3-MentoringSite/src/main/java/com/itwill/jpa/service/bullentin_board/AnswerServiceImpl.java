@@ -28,7 +28,7 @@ public class AnswerServiceImpl implements AnswerService{
 	private InquiryRepository inquiryRepository;
 	/*답변등록*/
 	@Override
-	public AnswerDto saveAnswer(AnswerDto answerDto){
+	public AnswerDto createAnswer(AnswerDto answerDto){
 		
 		return AnswerDto.toDto(answerRepository.save(Answer.toEntity(answerDto)));
 	}
@@ -75,7 +75,7 @@ public class AnswerServiceImpl implements AnswerService{
 	/*질문 하나에 달린 답변*/
 	/*추천순*/
 	@Override
-	public Page<AnswerDto> findByInquiryAnswerOrderByVotes(Long inquiryNo,int pageNumber, int pageSize) {
+	public Page<AnswerDto> getByInquiryAnswerOrderByVotes(Long inquiryNo,int pageNumber, int pageSize) {
 		Pageable pageable = PageRequest.of(pageNumber, pageSize);
 		Page<Answer> answerEntityList = 
 				answerRepository.findByInquiryAnswerOrderByVotes(inquiryNo,pageable);
@@ -88,7 +88,7 @@ public class AnswerServiceImpl implements AnswerService{
 	
 	/*최신순*/
 	@Override
-	public Page<AnswerDto> findByInquiryAnswerOrderByDate(Long inquiryNo,int pageNumber, int pageSize) {
+	public Page<AnswerDto> getByInquiryAnswerOrderByDate(Long inquiryNo,int pageNumber, int pageSize) {
 		Pageable pageable = PageRequest.of(pageNumber, pageSize);
 		Page<Answer> answerEntityList =
 				answerRepository.findByInquiryAnswerOrderByDate(inquiryNo,pageable);
@@ -102,7 +102,7 @@ public class AnswerServiceImpl implements AnswerService{
 	/*카테고리 별 답변*/
 	/*추천순*/
 	@Override
-	public Page<AnswerDto> findByCategoryAnswerOrderByVotes(Long categoryNo,int pageNumber, int pageSize) {
+	public Page<AnswerDto> getByCategoryAnswerOrderByVotes(Long categoryNo,int pageNumber, int pageSize) {
 		Pageable pageable = PageRequest.of(pageNumber, pageSize);
 		Page<Answer> answerEntityList = 
 				answerRepository.findByCategoryAnswerOrderByVotes(categoryNo,pageable);
@@ -115,7 +115,7 @@ public class AnswerServiceImpl implements AnswerService{
 	
 	/*최신순*/
 	@Override
-	public Page<AnswerDto> findByCategoryAnswerOrderByDate(Long categoryNo,int pageNumber, int pageSize) {
+	public Page<AnswerDto> getByCategoryAnswerOrderByDate(Long categoryNo,int pageNumber, int pageSize) {
 		Pageable pageable = PageRequest.of(pageNumber, pageSize);
 		Page<Answer> answerEntityList = 
 				answerRepository.findByCategoryAnswerOrderByDate(categoryNo,pageable);
@@ -128,7 +128,7 @@ public class AnswerServiceImpl implements AnswerService{
 	
 	/*최근 3일간 추천 많은 답변*/
 	@Override
-	public Page<AnswerDto> findByAnswerOrderByVoteDate(int pageNumber, int pageSize) {
+	public Page<AnswerDto> getByAnswerOrderByVoteDate(int pageNumber, int pageSize) {
 		Pageable pageable = PageRequest.of(pageNumber, pageSize);
 		Page<Answer> answerEntityList = 
 				answerRepository.findByAnswerOrderByVoteDate(pageable);
