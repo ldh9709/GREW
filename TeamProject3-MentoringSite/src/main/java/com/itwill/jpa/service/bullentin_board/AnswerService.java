@@ -12,9 +12,9 @@ public interface AnswerService {
 	//답변수정
 	AnswerDto updateAnswer(AnswerDto answerDto) throws Exception;
 	//답변삭제
-	AnswerDto deleteAnswer(AnswerDto answerDto) throws Exception;
+	AnswerDto deleteAnswer(Long answerNo) throws Exception;
 	//답변채택
-	AnswerDto acceptAnswer(AnswerDto answerDto) throws Exception;
+	AnswerDto acceptAnswer(Long answerNo) throws Exception;
 	/*질문하나에달린답변*/
 	//답변상세보기
 	AnswerDto getAnswer(Long answerNo);

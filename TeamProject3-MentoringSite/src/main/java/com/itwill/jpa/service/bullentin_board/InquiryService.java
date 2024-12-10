@@ -15,12 +15,11 @@ public interface InquiryService {
 	//질문수정
 	InquiryDto updateInquiry(InquiryDto inquiryDto) throws Exception;
 	//질문삭제
-	InquiryDto deleteInquiry(InquiryDto inquiryDto) throws Exception;
+	InquiryDto deleteInquiry(Long inquiryNo) throws Exception;
 	//질문보기
 	InquiryDto getInquiry(Long InquiryNo);
 	//조회수증가
-	InquiryDto increaseViewInquiry(InquiryDto inquiryDto) throws Exception;
-	InquiryDto increaseViewInquiry(InquiryDto inquiryDto, String ipAddress) throws Exception;
+	InquiryDto increaseViewInquiry(Long inquiryNo, String ipAddress) throws Exception;
 	//IP체크
 	String ipcheck(HttpServletRequest httpServletRequest);
 	/*카테고리별 질문*/

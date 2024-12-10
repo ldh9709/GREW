@@ -48,17 +48,18 @@ public class InquiryServiceImpl implements InquiryService {
 	// 질문수정
 	@Override
 	public InquiryDto updateInquiry(InquiryDto inquiryDto) throws Exception {
-		Inquiry inquiry = inquiryRepository.findByInquiryNo(inquiryDto.getInquiryNo());
+		Inquiry inquiry = inquiryRepository.findById(inquiryDto.getInquiryNo()).get();
 		inquiry.setInquiryTitle(inquiryDto.getInquiryTitle());
 		inquiry.setInquiryContent(inquiryDto.getInquiryContent());
+		inquiry.setInquiryDate(LocalDateTime.now());
 		return InquiryDto.toDto(inquiryRepository.save(inquiry));
 
 	}
 
 	// 질문삭제
 	@Override
-	public InquiryDto deleteInquiry(InquiryDto inquiryDto) throws Exception {
-		Inquiry inquiry = inquiryRepository.findById(inquiryDto.getInquiryNo()).get();
+	public InquiryDto deleteInquiry(Long inquiryNo) throws Exception {
+		Inquiry inquiry = inquiryRepository.findById(inquiryNo).get();
 		inquiry.setInquiryStatus(2);
 		return InquiryDto.toDto(inquiryRepository.save(inquiry));
 	}
@@ -66,18 +67,17 @@ public class InquiryServiceImpl implements InquiryService {
 	// 질문보기
 	@Override
 	public InquiryDto getInquiry(Long InquiryNo) {
-		return InquiryDto.toDto(inquiryRepository.findByInquiryNo(InquiryNo));
+		return InquiryDto.toDto(inquiryRepository.findById(InquiryNo).get());
 	}
 
 	// 조회수 증가 제한: IP별로 일정 시간 내에 조회수 증가 제한
 	@Override
-	public InquiryDto increaseViewInquiry(InquiryDto inquiryDto, String ipAddress) throws Exception {
+	public InquiryDto increaseViewInquiry(Long inquiryNo, String ipAddress) throws Exception {
 		// Inquiry 조회
-		Inquiry inquiry = inquiryRepository.findById(inquiryDto.getInquiryNo()).orElse(null);
+		Inquiry inquiry = inquiryRepository.findById(inquiryNo).get();
 
 		// IP 조회 기록을 DB에서 확인
-		InquiryIpView lastView = inquiryIpViewRepository.findByIpAddressAndInquiry_InquiryNo(ipAddress,
-				inquiryDto.getInquiryNo());
+		InquiryIpView lastView = inquiryIpViewRepository.findByIpAddressAndInquiry_InquiryNo(ipAddress,inquiryNo);
 
 		long currentTime = System.currentTimeMillis();
 		long lastViewTime = lastView != null
@@ -93,7 +93,7 @@ public class InquiryServiceImpl implements InquiryService {
 			inquiryRepository.save(inquiry);
 
 			// IP 조회 기록 업데이트
-			InquiryIpViewDto updatedIpView = new InquiryIpViewDto(null, ipAddress, inquiry.getInquiryNo(),
+			InquiryIpViewDto updatedIpView = new InquiryIpViewDto(null, ipAddress, inquiryNo,
 					LocalDateTime.now());
 			inquiryIpViewRepository.save(InquiryIpView.toEntity(updatedIpView));
 		}
@@ -173,11 +173,6 @@ public class InquiryServiceImpl implements InquiryService {
 		return clientIp;
 	}
 
-	@Override
-	public InquiryDto increaseViewInquiry(InquiryDto inquiryDto) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
-	}
 	
 	//내가 쓴 질문리스트 출력
 	@Override

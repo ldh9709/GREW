@@ -13,8 +13,7 @@ import com.itwill.jpa.entity.bullentin_board.Inquiry;
 
 @Repository
 public interface InquiryRepository extends JpaRepository<Inquiry, Long> {
-	//PK로 질문 조회
-	Inquiry findByInquiryNo(Long inquiryNo);
+
 	/** 카테고리별 질문 **/
 	// 조회수순
 	@Query("SELECT i FROM Inquiry i " + 

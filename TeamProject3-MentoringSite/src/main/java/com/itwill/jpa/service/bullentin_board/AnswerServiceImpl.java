@@ -1,5 +1,6 @@
 package com.itwill.jpa.service.bullentin_board;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,29 +39,30 @@ public class AnswerServiceImpl implements AnswerService{
 	public AnswerDto updateAnswer(AnswerDto answerDto) throws Exception{
 		Answer answer = answerRepository.findById(answerDto.getAnswerNo()).get();
 		answer.setAnswerContent(answerDto.getAnswerContent());
+		answer.setAnswerDate(LocalDateTime.now());
 		return AnswerDto.toDto(answerRepository.save(answer));
 	}
 	
 	/*답변채택*/
 	@Override
-	public AnswerDto acceptAnswer(AnswerDto answerDto) throws Exception {
+	public AnswerDto acceptAnswer(Long answerNo) throws Exception {
 		
 		//이미 채택된 답변이 있는지 확인
-	    Answer acceptedAnswer = answerRepository.findAcceptedAnswerByInquiry(answerDto.getInquiryNo());
+	    Answer acceptedAnswer = answerRepository.findAcceptedAnswerByInquiry(answerNo);
 	    if (acceptedAnswer != null) {
 	    	// 예외를 던질 때 ResponseStatusException을 사용
 	        throw new ResponseStatusException(HttpStatus.CONFLICT, "이미 채택된 답변이 존재합니다.");
 	    }
 		
-		Answer answer = answerRepository.findById(answerDto.getAnswerNo()).get();
+		Answer answer = answerRepository.findById(answerNo).get();
 		answer.setAnswerAccept(2);
 		return AnswerDto.toDto(answerRepository.save(answer));
 	}
 	
 	/*답변삭제*/
 	@Override
-	public AnswerDto deleteAnswer(AnswerDto answerDto) throws Exception {
-		Answer answer = answerRepository.findById(answerDto.getAnswerNo()).get();
+	public AnswerDto deleteAnswer(Long answerNo) throws Exception {
+		Answer answer = answerRepository.findById(answerNo).get();
 	    answer.setAnswerStatus(2);  
 	    return AnswerDto.toDto(answerRepository.save(answer));
 	}
@@ -69,7 +71,7 @@ public class AnswerServiceImpl implements AnswerService{
 	/* 답변상세보기 */
 	@Override
 	public AnswerDto getAnswer(Long answerNo) {
-		return AnswerDto.toDto(answerRepository.findByAnswerNo(answerNo));
+		return AnswerDto.toDto(answerRepository.findById(answerNo).get());
 	}
 	
 	/*질문 하나에 달린 답변*/

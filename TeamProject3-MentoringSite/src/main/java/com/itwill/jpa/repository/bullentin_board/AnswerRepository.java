@@ -1,7 +1,5 @@
 package com.itwill.jpa.repository.bullentin_board;
 
-import java.util.List;
-
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -13,8 +11,6 @@ import com.itwill.jpa.entity.bullentin_board.Answer;
 @Repository
 public interface AnswerRepository extends JpaRepository<Answer, Long>{
 	
-	/* 답변 상세보기 */
-	Answer findByAnswerNo(Long answerNo);
 	
 	// 해당 질문에 채택된 답변을 조회
 	@Query("SELECT a FROM Answer a WHERE a.inquiry.inquiryNo = :inquiryNo AND a.answerAccept = 2")

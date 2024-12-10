@@ -41,10 +41,10 @@ public class InquiryRestController {
 	public ResponseEntity<Response> createInquiry(@RequestBody InquiryDto inquiryDto) {
 		Response response = new Response();
 		
-		inquiryService.createInquiry(inquiryDto);
+		InquiryDto createInguiryDto = inquiryService.createInquiry(inquiryDto);
 		response.setStatus(ResponseStatusCode.CREATED_INQUIRY_SUCCESS);
 		response.setMessage(ResponseMessage.CREATED_INQUIRY_SUCCESS);
-		response.setData(inquiryDto);
+		response.setData(createInguiryDto);
 
 		HttpHeaders httpHeaders = new HttpHeaders();
 		httpHeaders.setContentType(new MediaType(MediaType.APPLICATION_JSON, Charset.forName("UTF-8")));
@@ -60,17 +60,17 @@ public class InquiryRestController {
 	@PutMapping("/update/{inquiryNo}")
 	public ResponseEntity<Response> updateInquiry(@PathVariable(name = "inquiryNo") Long inquiryNo,@RequestBody InquiryDto inquiryDto) throws Exception {
 		inquiryDto.setInquiryNo(inquiryNo);
-		inquiryService.updateInquiry(inquiryDto);
+		InquiryDto updateInquiryDto = inquiryService.updateInquiry(inquiryDto);
 		Response response = new Response();
 		response.setStatus(ResponseStatusCode.UPDATE_INQUIRY_SUCCESS);
 		response.setMessage(ResponseMessage.UPDATE_INQUIRY_SUCCESS);
-		response.setData(inquiryDto);
+		response.setData(updateInquiryDto);
 
 		HttpHeaders httpHeaders = new HttpHeaders();
 		httpHeaders.setContentType(new MediaType(MediaType.APPLICATION_JSON, Charset.forName("UTF-8")));
 
 		ResponseEntity<Response> responseEntity = new ResponseEntity<Response>(response, httpHeaders,
-				HttpStatus.CREATED);
+				HttpStatus.OK);
 
 		return responseEntity;
 	}
@@ -78,10 +78,11 @@ public class InquiryRestController {
 	// 질문삭제
 	@Operation(summary = "질문삭제")
 	@PutMapping("/delete/{inquiryNo}")
-	public ResponseEntity<Response> deleteInquiry(@RequestBody InquiryDto inquiryDto) throws Exception {
-		Response response = new Response();
+	public ResponseEntity<Response> deleteInquiry(@PathVariable(name = "inquiryNo") Long inquiryNo) throws Exception {
+		;
+		InquiryDto inquiryDto = inquiryService.deleteInquiry(inquiryNo);
 
-		inquiryService.deleteInquiry(inquiryDto);
+		Response response = new Response();
 		response.setStatus(ResponseStatusCode.DELETE_INQUIRY_SUCCESS);
 		response.setMessage(ResponseMessage.DELETE_INQUIRY_SUCCESS);
 		response.setData(inquiryDto);
@@ -90,7 +91,7 @@ public class InquiryRestController {
 		httpHeaders.setContentType(new MediaType(MediaType.APPLICATION_JSON, Charset.forName("UTF-8")));
 
 		ResponseEntity<Response> responseEntity = new ResponseEntity<Response>(response, httpHeaders,
-				HttpStatus.CREATED);
+				HttpStatus.OK);
 
 		return responseEntity;
 	}
@@ -110,7 +111,7 @@ public class InquiryRestController {
 		httpHeaders.setContentType(new MediaType(MediaType.APPLICATION_JSON, Charset.forName("UTF-8")));
 
 		ResponseEntity<Response> responseEntity = new ResponseEntity<Response>(response, httpHeaders,
-				HttpStatus.CREATED);
+				HttpStatus.OK);
 
 		return responseEntity;
 
@@ -119,10 +120,10 @@ public class InquiryRestController {
 	// 조회수 증가
 	@Operation(summary = "조회수증가")
 	@PutMapping("/increase/{inquiryNo}")
-	public ResponseEntity<Response> increaseViewInquiry(@RequestBody InquiryDto inquiryDto,HttpServletRequest httpServletRequest) throws Exception {
+	public ResponseEntity<Response> increaseViewInquiry(@PathVariable(name = "inquiryNo") Long inquiryNo,HttpServletRequest httpServletRequest) throws Exception {
 		Response response = new Response();
 		String clientIp = new ClientIp().getClientIp(httpServletRequest);
-		inquiryService.increaseViewInquiry(inquiryDto,clientIp);
+		InquiryDto inquiryDto = inquiryService.increaseViewInquiry(inquiryNo,clientIp);
 		response.setStatus(ResponseStatusCode.INCREASE_VIEW_INQUIRY_SUCCESS);
 		response.setMessage(ResponseMessage.INCREASE_VIEW_INQUIRY_SUCCESS);
 		response.setData(inquiryDto);
@@ -131,7 +132,7 @@ public class InquiryRestController {
 		httpHeaders.setContentType(new MediaType(MediaType.APPLICATION_JSON, Charset.forName("UTF-8")));
 
 		ResponseEntity<Response> responseEntity = new ResponseEntity<Response>(response, httpHeaders,
-				HttpStatus.CREATED);
+				HttpStatus.OK);
 
 		return responseEntity;
 	}
