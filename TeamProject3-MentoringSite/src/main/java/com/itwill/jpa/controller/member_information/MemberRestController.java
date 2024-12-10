@@ -68,7 +68,7 @@ public class MemberRestController {
 	/* 회원 저장 */
 	@Operation(summary = "회원가입/관심사 입력")
 	@PostMapping("/createMember")
-	public ResponseEntity<Response> createMember(@RequestBody MemberDto memberDto, @RequestParam Integer tempCode) {
+	public ResponseEntity<Response> createMember(@RequestBody MemberDto memberDto, @RequestParam(name = "tempCode") Integer tempCode) {
 		Response response = new Response();
 		
 		//인증번호가 맞는지 확인
