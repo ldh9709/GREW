@@ -41,7 +41,7 @@ public class InquiryRestController {
 	public ResponseEntity<Response> createInquiry(@RequestBody InquiryDto inquiryDto) {
 		Response response = new Response();
 		
-		inquiryService.saveInquiry(inquiryDto);
+		inquiryService.createInquiry(inquiryDto);
 		response.setStatus(ResponseStatusCode.CREATED_INQUIRY_SUCCESS);
 		response.setMessage(ResponseMessage.CREATED_INQUIRY_SUCCESS);
 		response.setData(inquiryDto);
