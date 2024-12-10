@@ -27,29 +27,29 @@ public class MentorBoard {
     @Column(name = "mentor_board_no")
     private Long mentorBoardNo; //PK 시퀀스로 자동생성 
 
-    @Column(name = "mentor_board_title" ,nullable = false)
+    @Column(name = "mentor_board_title")
     private String mentorBoardTitle; // 글
     
-    @Column(name = "mentor_board_content" ,nullable = false)
+    @Column(name = "mentor_board_content")
     private String mentorBoardContent; // 글
     
-    @Column(name = "mentor_board_image" ,nullable = false)
+    @Column(name = "mentor_board_image")
     private String mentorBoardImage;   // 보드 이미지 
 
-    @Column(name = "mentor_board_date" ,nullable = false)
+    @Column(name = "mentor_board_date")
     private LocalDateTime mentorBoardDate;   // 날짜 
     
-    @Column(name = "mentor_board_views" ,nullable = false)
+    @Column(name = "mentor_board_views")
     private Integer mentorBoardViews;   // 조회수 
     
     
     
-    @Column(name = "mentor_board_status" ,nullable = false)
+    @Column(name = "mentor_board_status")
     private Integer mentorBoardStatus;   //답글 삭제 여부 (1또는 2)
     
    
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "member_no" ,nullable = false)
+    @JoinColumn(name = "member_no")
     private Member member;
     
     /* 초기값 설정 */

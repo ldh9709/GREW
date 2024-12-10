@@ -28,9 +28,9 @@ public class Category {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "category_no_SEQ")
     @Column(name = "category_no")
     private Long categoryNo;
-    @Column(name = "category_name" ,nullable = false)
+    @Column(name = "category_name")
     private String categoryName;
-    @Column(name = "category_depth" ,nullable = false)
+    @Column(name = "category_depth")
     private Integer categoryDepth;
     
     @ManyToOne(fetch = FetchType.LAZY)

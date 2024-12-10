@@ -36,7 +36,7 @@ public class CategoryRestController {
 	@Autowired
 	private CategoryService categoryService;
 	
-	@Operation(summary = "카테고리 등록 성공")
+	@Operation(summary = "카테고리 등록")
 	@PostMapping
 	public ResponseEntity<Response> createCategory(@RequestBody CategoryRequestDto categoryDto){
 		categoryService.createCategory(categoryDto);
@@ -52,7 +52,7 @@ public class CategoryRestController {
 		return new ResponseEntity<Response>(response, headers, HttpStatus.CREATED);
 	}
 	
-	@Operation(summary = "카테고리 수정성공")
+	@Operation(summary = "카테고리 수정")
 	@PutMapping
 	public ResponseEntity<Response> updateCategory(@RequestBody CategoryRequestDto categoryDto){
 		categoryService.updateCategory(categoryDto);
@@ -61,21 +61,6 @@ public class CategoryRestController {
 		response.setStatus(ResponseStatusCode.UPDATE_CATEGORY_SUCCESS);
 		response.setMessage(ResponseMessage.UPDATE_CATEGORY_SUCCESS);
 		response.setData(categoryDto);
-		
-		HttpHeaders headers = new HttpHeaders();
-		headers.setContentType(new MediaType(MediaType.APPLICATION_JSON, Charset.forName("UTF-8")));
-		
-		return new ResponseEntity<Response>(response, headers, HttpStatus.OK);
-	}
-	
-	@Operation(summary = "카테고리 삭제")
-	@DeleteMapping("/{categoryNo}")
-	public ResponseEntity<Response> deleteCategory(@PathVariable(name="categoryNo") Long categoryNo){
-		categoryService.deleteCategory(categoryNo);
-		
-		Response response = new Response();
-		response.setStatus(ResponseStatusCode.DELETE_CATEGORY_SUCCESS);
-		response.setMessage(ResponseMessage.DELETE_CATEGORY_SUCCESS);
 		
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(new MediaType(MediaType.APPLICATION_JSON, Charset.forName("UTF-8")));
