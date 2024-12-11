@@ -10,12 +10,16 @@ import com.itwill.jpa.response.ResponseStatusCode;
 import com.itwill.jpa.service.member_information.MentorProfileService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import io.swagger.v3.oas.annotations.Operation;
 
+import java.nio.charset.Charset;
 import java.util.List;
 
 @RestController
@@ -127,59 +131,131 @@ public class MentorProfileController {
         return ResponseEntity.ok(response);
     }
 
-    @Operation(summary = "특정 상태의 멘토 목록 조회")
+
+    @Operation(summary = "특정 상태의 멘토 목록 조회 페이징")
     @GetMapping("/status/{status}")
-    public ResponseEntity<Response> getMentorsByStatus(@PathVariable(name = "status") int status) {
-        try {
-            List<MentorProfile> mentorProfiles = mentorProfileService.getMentorsByStatus(status);
-            
-            if (mentorProfiles.isEmpty()) {
-                Response response = new Response();
-                response.setStatus(ResponseStatusCode.READ_MENTOR_PROFILE_LIST_FAIL_CODE);
-                response.setMessage(ResponseMessage.READ_MENTOR_PROFILE_LIST_FAIL + " - 해당 상태의 멘토가 존재하지 않습니다.");
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
-            }
-            
-            Response response = new Response();
-            response.setStatus(ResponseStatusCode.READ_MENTOR_PROFILE_LIST_SUCCESS_CODE);
-            response.setMessage(ResponseMessage.READ_MENTOR_PROFILE_LIST_SUCCESS);
-            response.setData(mentorProfiles);
-            
-            return ResponseEntity.ok(response);
-        } catch (Exception e) {
-            Response response = new Response();
-            response.setStatus(ResponseStatusCode.READ_MENTOR_PROFILE_LIST_FAIL_CODE);
-            response.setMessage(ResponseMessage.READ_MENTOR_PROFILE_LIST_FAIL + " - " + e.getMessage());
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
-        }
-    }
+    public ResponseEntity<Response> getMentorsByStatus(
+            @PathVariable(name = "status") int status,
+            @RequestParam(name = "page", defaultValue = "0") int page,
+            @RequestParam(name = "size", defaultValue = "10") int size
+    ) {
+        Page<MentorProfileDto> mentors = mentorProfileService.getMentorsByStatus(status, page, size);
 
-
-    /**
-     * 특정 키워드로 멘토를 검색합니다.
-     */
-    @Operation(summary = "검색 기능")
-    @GetMapping("/search/{keyword}")
-    public ResponseEntity<Response> searchMentorProfiles(@PathVariable(name = "keyword") String keyword) {
-        List<MentorProfile> mentorProfiles = mentorProfileService.searchMentorProfiles(keyword);
         Response response = new Response();
-        response.setStatus(200);
-        response.setMessage("멘토 검색 성공");
-        response.setData(mentorProfiles);
-        return ResponseEntity.ok(response);
-    }
-/**
- *  카테고리 번호로 멘토 프로필 목록 조회
- * @param categoryNo
- * @return
- */
-    @Operation(summary = "카테고리 멘토리스트")
-    @GetMapping("/category/{categoryNo}")
-    public ResponseEntity<List<MentorProfile>> getMentorProfilesByCategoryNo(@PathVariable(name="categoryNo") Long categoryNo) {
-        List<MentorProfile> mentorProfiles = mentorProfileService.getMentorProfilesByCategoryNo(categoryNo);
-        return ResponseEntity.ok(mentorProfiles);
+        response.setStatus(ResponseStatusCode.READ_MENTOR_PROFILE_LIST_SUCCESS_CODE);
+        response.setMessage(ResponseMessage.READ_MENTOR_PROFILE_LIST_SUCCESS);
+        response.setData(mentors);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(new MediaType(MediaType.APPLICATION_JSON, Charset.forName("UTF-8")));
+
+        return new ResponseEntity<>(response, headers, HttpStatus.OK);
     }
 
+    @Operation(summary = "검색 기능 페이징")
+    @GetMapping("/search")
+    public ResponseEntity<Response> searchMentorProfiles(
+            @RequestParam(name = "keyword") String keyword,
+            @RequestParam(name = "page", defaultValue = "0") int page,
+            @RequestParam(name = "size", defaultValue = "10") int size
+    ) {
+        Page<MentorProfileDto> mentors = mentorProfileService.searchMentorProfiles(keyword, page, size);
+
+        Response response = new Response();
+        response.setStatus(ResponseStatusCode.READ_MENTOR_PROFILE_LIST_SUCCESS_CODE);
+        response.setMessage("멘토 검색 성공");
+        response.setData(mentors);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(new MediaType(MediaType.APPLICATION_JSON, Charset.forName("UTF-8")));
+
+        return new ResponseEntity<>(response, headers, HttpStatus.OK);
+    }
+
+    @Operation(summary = "카테고리 멘토리스트 페이징")
+    @GetMapping("/category/{categoryNo}")
+    public ResponseEntity<Response> getMentorProfilesByCategoryNo(
+            @PathVariable(name = "categoryNo") Long categoryNo,
+            @RequestParam(name = "page", defaultValue = "0") int page,
+            @RequestParam(name = "size", defaultValue = "10") int size
+    ) {
+        Page<MentorProfileDto> mentors = mentorProfileService.getMentorProfilesByCategoryNo(categoryNo, page, size);
+
+        Response response = new Response();
+        response.setStatus(ResponseStatusCode.READ_MENTOR_PROFILE_LIST_SUCCESS_CODE);
+        response.setMessage("카테고리 멘토 조회 성공");
+        response.setData(mentors);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(new MediaType(MediaType.APPLICATION_JSON, Charset.forName("UTF-8")));
+
+        return new ResponseEntity<>(response, headers, HttpStatus.OK);
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 
   
 }
+
+//    @Operation(summary = "특정 상태의 멘토 목록 조회")
+//    @GetMapping("/status/{status}")
+//    public ResponseEntity<Response> getMentorsByStatus(@PathVariable(name = "status") int status) {
+//        try {
+//            List<MentorProfile> mentorProfiles = mentorProfileService.getMentorsByStatus(status);
+//            
+//            if (mentorProfiles.isEmpty()) {
+//                Response response = new Response();
+//                response.setStatus(ResponseStatusCode.READ_MENTOR_PROFILE_LIST_FAIL_CODE);
+//                response.setMessage(ResponseMessage.READ_MENTOR_PROFILE_LIST_FAIL + " - 해당 상태의 멘토가 존재하지 않습니다.");
+//                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+//            }
+//            
+//            Response response = new Response();
+//            response.setStatus(ResponseStatusCode.READ_MENTOR_PROFILE_LIST_SUCCESS_CODE);
+//            response.setMessage(ResponseMessage.READ_MENTOR_PROFILE_LIST_SUCCESS);
+//            response.setData(mentorProfiles);
+//            
+//            return ResponseEntity.ok(response);
+//        } catch (Exception e) {
+//            Response response = new Response();
+//            response.setStatus(ResponseStatusCode.READ_MENTOR_PROFILE_LIST_FAIL_CODE);
+//            response.setMessage(ResponseMessage.READ_MENTOR_PROFILE_LIST_FAIL + " - " + e.getMessage());
+//            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+//        }
+//    }
+
+
+//    /**
+//     * 특정 키워드로 멘토를 검색합니다.
+//     */
+//    @Operation(summary = "검색 기능")
+//    @GetMapping("/search/{keyword}")
+//    public ResponseEntity<Response> searchMentorProfiles(@PathVariable(name = "keyword") String keyword) {
+//        List<MentorProfile> mentorProfiles = mentorProfileService.searchMentorProfiles(keyword);
+//        Response response = new Response();
+//        response.setStatus(200);
+//        response.setMessage("멘토 검색 성공");
+//        response.setData(mentorProfiles);
+//        return ResponseEntity.ok(response);
+//    }
+///**
+// *  카테고리 번호로 멘토 프로필 목록 조회
+// * @param categoryNo
+// * @return
+// */
+//    @Operation(summary = "카테고리 멘토리스트")
+//    @GetMapping("/category/{categoryNo}")
+//    public ResponseEntity<List<MentorProfile>> getMentorProfilesByCategoryNo(@PathVariable(name="categoryNo") Long categoryNo) {
+//        List<MentorProfile> mentorProfiles = mentorProfileService.getMentorProfilesByCategoryNo(categoryNo);
+//        return ResponseEntity.ok(mentorProfiles);
+//    }
