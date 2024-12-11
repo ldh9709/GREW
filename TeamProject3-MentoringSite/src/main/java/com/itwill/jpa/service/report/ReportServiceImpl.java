@@ -16,6 +16,7 @@ import com.itwill.jpa.repository.bullentin_board.InquiryRepository;
 import com.itwill.jpa.repository.member_information.MemberRepository;
 import com.itwill.jpa.repository.report.ReportRepository;
 import com.itwill.jpa.service.bullentin_board.AnswerService;
+import com.itwill.jpa.service.bullentin_board.InquiryService;
 
 @Service
 public class ReportServiceImpl implements ReportService {
@@ -25,7 +26,7 @@ public class ReportServiceImpl implements ReportService {
 	@Autowired
 	private MemberRepository memberRepository;
 	@Autowired
-	private InquiryRepository inquiryRepository;
+	private InquiryService inquiryService;
 	@Autowired
 	private AnswerService answerService;
 	
@@ -52,6 +53,11 @@ public class ReportServiceImpl implements ReportService {
 	@Override
 	public ReportDto updateReportStatusToResolved(Long reportNo) {
 		Report report = reportRepository.findById(reportNo).get();
+		
+		if(report == null) {
+			throw new IllegalArgumentException("report 생성 오류");
+		}
+		
 		report.setReportStatus(3);
 		
 		/* type:MEMBER인 경우 멤버 신고 카운트 증가 */
@@ -61,11 +67,20 @@ public class ReportServiceImpl implements ReportService {
 
 		/* type:ANSWER인 경우 해당 게시글 상태변경 */
 		if(report.getReportType().equals("ANSWER")) {
+			try {
+				answerService.deleteAnswer(report.getReportTarget());
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 		
 		/* type:INQUIRY인 경우 해당 게시글 상태변경 */
 		if(report.getReportType().equals("INQUIRY")) {
-			inquiryRepository.delete(null);
+			try {
+				inquiryService.deleteInquiry(report.getReportTarget());
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 		report.setResolvedDate(LocalDateTime.now());
 		return ReportDto.toDto(reportRepository.findById(reportNo).get());
