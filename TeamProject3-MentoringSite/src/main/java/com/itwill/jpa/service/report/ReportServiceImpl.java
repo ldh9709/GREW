@@ -15,6 +15,7 @@ import com.itwill.jpa.repository.bullentin_board.AnswerRepository;
 import com.itwill.jpa.repository.bullentin_board.InquiryRepository;
 import com.itwill.jpa.repository.member_information.MemberRepository;
 import com.itwill.jpa.repository.report.ReportRepository;
+import com.itwill.jpa.service.bullentin_board.AnswerService;
 
 @Service
 public class ReportServiceImpl implements ReportService {
@@ -26,7 +27,7 @@ public class ReportServiceImpl implements ReportService {
 	@Autowired
 	private InquiryRepository inquiryRepository;
 	@Autowired
-	private AnswerRepository answerRepository;
+	private AnswerService answerService;
 	
 	/*신고등록*/
 	@Override
@@ -60,7 +61,6 @@ public class ReportServiceImpl implements ReportService {
 
 		/* type:ANSWER인 경우 해당 게시글 상태변경 */
 		if(report.getReportType().equals("ANSWER")) {
-			answerRepository.delete(null);
 		}
 		
 		/* type:INQUIRY인 경우 해당 게시글 상태변경 */
@@ -81,13 +81,6 @@ public class ReportServiceImpl implements ReportService {
 		return ReportDto.toDto(reportRepository.findById(reportNo).get());
 	}
 	
-	/*신고 취소*/
-	@Override
-	public ReportDto updateReportStatusToCancel(Long reportNo) {
-		Report report = reportRepository.findById(reportNo).get();
-		report.setReportStatus(5);
-		return ReportDto.toDto(reportRepository.findById(reportNo).get());
-	}
 	
 	/* 신고 정보 상세 보기 */ 
 	public ReportDto getReportByreportNo(Long reportNo) {
@@ -108,9 +101,12 @@ public class ReportServiceImpl implements ReportService {
 		return reportDtos;
 	}
 
-	/* [어드민] 신고 전체 출력 */
+	/* [어드민] 신고 전체 출력 
+	 * 필터링: 상태별
+	 * 1 : 전체 , 2: 
+	 * */
 	@Override
-	public List<ReportDto> getReportAll() {
+	public List<ReportDto> getReportAll(Integer status) {
 		List<Report> reports = reportRepository.findAll();
 		List<ReportDto> reportDtos = new ArrayList<>();
 		for (Report report : reports) {
