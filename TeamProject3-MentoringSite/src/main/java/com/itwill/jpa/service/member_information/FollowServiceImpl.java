@@ -28,7 +28,7 @@ public class FollowServiceImpl implements FollowService{
 	public FollowRequestDto createFollow(FollowRequestDto followDto) {
 		
 		/* 팔로우가 이미 되어있는지 확인 */
-		Boolean followExist = followReporitory.existsByMenteeMember_MemberNoAndMentorMember_MemberNo(followDto.getMenteeMemberNo(), followDto.getMenteeMemberNo());
+		Boolean followExist = followReporitory.existsByMenteeMember_MemberNoAndMentorMember_MemberNo(followDto.getMenteeMemberNo(), followDto.getMentorMemberNo());
 		
 		if(followExist == true) {
 			throw new AlreadyFollowedException("해당 멘토는 이미 팔로우 되어있습니다.");
