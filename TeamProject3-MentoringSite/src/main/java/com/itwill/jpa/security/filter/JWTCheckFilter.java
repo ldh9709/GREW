@@ -65,7 +65,10 @@ public class JWTCheckFilter extends OncePerRequestFilter {
   protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
       throws ServletException, IOException {
 	  	// 요청 헤더에서 Authorization 추출
+	  	System.out.println(request);
         String authHeaderStr = request.getHeader("Authorization");
+        System.out.println(authHeaderStr);
+        
         try {
           // Authorization 헤더에서 'Bearer ' 부분을 제외한 토큰만 추출
           String accessToken = authHeaderStr.substring(7);
