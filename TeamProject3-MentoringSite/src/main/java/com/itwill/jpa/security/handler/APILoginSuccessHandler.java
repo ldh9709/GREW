@@ -17,8 +17,18 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 public class APILoginSuccessHandler implements AuthenticationSuccessHandler {
+<<<<<<< HEAD
 	
 	// 로그인 성공 후 호출되는 메서드
+=======
+
+	/* 로그인 성공 후 호출되는 메서드
+	 * 
+	 * Authentication: 인증된 사용자 정보
+	 * 
+	 * */
+	
+>>>>>>> branch 'dohyun-security' of https://github.com/2024-07-JAVA-DEVELOPER-155/final-project-team2.git
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
                                          Authentication authentication) throws IOException, ServletException {
@@ -28,7 +38,7 @@ public class APILoginSuccessHandler implements AuthenticationSuccessHandler {
     	 PrincipalDetails principal = (PrincipalDetails) authentication.getPrincipal();
     	 
         // 2. 사용자의 클레임 정보를 가져옵니다.
-        // getClaims() 메서드를 통해 사용자의 이메일, 역할, 그리고 SNS 로그인 여부 등의 정보를 가져옵니다. -> JWT토큰 생성
+        // getClaims() 메서드를 통해 사용자의 이메일, 역할, 그리고 SNS 로그인 여부 등의 정보를 가져옵니다. -> JWT필요한 데이터 정보를 가져옴
         Map<String, Object> claims = principal.getClaims();
         
         // 3. JWT 토큰을 생성합니다.
@@ -38,6 +48,7 @@ public class APILoginSuccessHandler implements AuthenticationSuccessHandler {
         
         // 4. 클레임을 JSON 문자열로 변환합니다.
         // 생성된 클레임 정보를 JSON 형식으로 변환합니다. 이는 클라이언트에게 반환될 응답 내용입니다.
+<<<<<<< HEAD
         claims.put("accessToken", accessToken);
         claims.put("refreshToken", refreshToken);
         
@@ -53,7 +64,24 @@ public class APILoginSuccessHandler implements AuthenticationSuccessHandler {
         printWriter.println(jsonStr);  // 클라이언트에게 JSON 형식의 클레임을 반환
         System.out.println("대성공");
         printWriter.close();
+=======
+//        claims.put("accessToken", accessToken);
+//        claims.put("refreshToken", refreshToken);
+//        Gson gson = new Gson();
+//        String jsonStr = gson.toJson(claims);
+//        
+//        // 5. HTTP 응답 헤더와 본문 설정
+//        // 클라이언트가 JSON 형식으로 응답을 받을 수 있도록 응답 타입을 설정합니다.
+//        response.setContentType("application/json; charset=UTF-8");
+//        
+//        // 6. 응답 본문에 JSON 문자열을 출력합니다.
+//        PrintWriter printWriter = response.getWriter();
+//        printWriter.println(jsonStr);  // 클라이언트에게 JSON 형식의 클레임을 반환
+//        System.out.println("대성공");
+//        printWriter.close();
+>>>>>>> branch 'dohyun-security' of https://github.com/2024-07-JAVA-DEVELOPER-155/final-project-team2.git
         
+        // 인증 성공 후 클라이언트에 응답을 보낸다
         // 토큰을 응답 헤더나 쿠키에 담아 클라이언트로 전송할 수 있음
         response.setHeader("Authorization", "Bearer " + accessToken);
 

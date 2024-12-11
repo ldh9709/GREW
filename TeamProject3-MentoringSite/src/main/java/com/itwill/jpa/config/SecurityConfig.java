@@ -107,6 +107,9 @@ public class SecurityConfig {
 		
 		//폼 기반 로그인 구성
 		httpSecurity.formLogin((config) -> {
+//			config.loginPage("/login");
+			config.usernameParameter("memberId")
+				  .passwordParameter("memberPassword");
 			config.defaultSuccessUrl("/home", true);
 			config.successHandler(new APILoginSuccessHandler());
 			config.failureHandler(new APILoginFailHandler());
