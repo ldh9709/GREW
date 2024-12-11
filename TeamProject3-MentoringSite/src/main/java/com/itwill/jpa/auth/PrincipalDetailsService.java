@@ -24,7 +24,7 @@ public class PrincipalDetailsService implements UserDetailsService {
 	@Override
 	//로그인 요청 받을 시 호출
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		
+		System.out.println(">>>>>username : " + username);
 		//아이디로 멤버 찾기
 		MemberSecurityDto findMember = MemberSecurityDto.toDto(memberRepository.findMemberByMemberId(username));
 		System.out.println("findMember >>>>>" + findMember);
