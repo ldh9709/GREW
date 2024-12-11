@@ -18,7 +18,7 @@ import lombok.NoArgsConstructor;
 public class ChatRoomDto {
 	private Long chatRoomNo;
 	private int chatRoomStatus;
-	private LocalDateTime chatRoomStratDate;
+	private LocalDateTime chatRoomStartDate;
 	private LocalDateTime chatRoomEndDate;
 	
 	private Long menteeNo;
@@ -28,7 +28,7 @@ public class ChatRoomDto {
 		return ChatRoomDto.builder()
 				.chatRoomNo(mentoringRequestEntity.getChatRoomNo())
 				.chatRoomStatus(mentoringRequestEntity.getChatRoomStatus())
-				.chatRoomStratDate(mentoringRequestEntity.getChatRoomEndDate())
+				.chatRoomStartDate(mentoringRequestEntity.getChatRoomEndDate())
 				.chatRoomEndDate(mentoringRequestEntity.getChatRoomEndDate())
 				.menteeNo(mentoringRequestEntity.getMentee().getMemberNo())
                 .mentorNo(mentoringRequestEntity.getMentor().getMemberNo())
