@@ -120,7 +120,7 @@ public class SecurityConfig {
 		 * principalDetailsService : userDetailService인터페이스를 구현한 구현체
 		 */
 		httpSecurity.userDetailsService(principalDetailsService);
-		
+		 
 		//SNS로그인
 		httpSecurity.oauth2Login((t) -> {
 			t.loginPage("/login")//로그인 페이지 경로
