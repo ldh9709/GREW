@@ -164,18 +164,18 @@ values (chat_message_SEQ.nextval, 1, sysdate, 1, 1, 'java에서 객체지향이 
 /* 채팅방 나갔는지 여부 확인 */
 
 /* 리뷰 등록 */
-insert into review (review_no, review_title, review_content,review_score,review_date,chat_room_no) 
-values (review_no_SEQ.nextval, '제목1', '그냥그래요', 3, sysdate, 1);
-insert into review (review_no, review_title, review_content,review_score,review_date,chat_room_no) 
-values (review_no_SEQ.nextval, '제목2', '적절해요', 4, sysdate, 1);
-insert into review (review_no, review_title, review_content,review_score,review_date,chat_room_no) 
-values (review_no_SEQ.nextval, '제목3', '최고에요', 5, sysdate, 1);
-insert into review (review_no, review_title, review_content,review_score,review_date,chat_room_no) 
-values (review_no_SEQ.nextval, '제목4', '별로에요', 1, sysdate, 2);
-insert into review (review_no, review_title, review_content,review_score,review_date,chat_room_no) 
-values (review_no_SEQ.nextval, '제목5', '최고에요', 5, sysdate, 2);
-insert into review (review_no, review_title, review_content,review_score,review_date,chat_room_no) 
-values (review_no_SEQ.nextval, '제목6', '그냥그래요', 3, sysdate, 2);
+insert into review (review_no, review_title,review_status,review_content,review_score,review_date,chat_room_no) 
+values (review_no_SEQ.nextval, '제목1',1, '그냥그래요', 3, sysdate, 1);
+insert into review (review_no, review_title,review_status, review_content,review_score,review_date,chat_room_no) 
+values (review_no_SEQ.nextval, '제목2',1, '적절해요', 4, sysdate, 1);
+insert into review (review_no, review_title,review_status, review_content,review_score,review_date,chat_room_no) 
+values (review_no_SEQ.nextval, '제목3',1, '최고에요', 5, sysdate, 1);
+insert into review (review_no, review_title,review_status, review_content,review_score,review_date,chat_room_no) 
+values (review_no_SEQ.nextval, '제목4',1, '별로에요', 1, sysdate, 2);
+insert into review (review_no, review_title,review_status, review_content,review_score,review_date,chat_room_no) 
+values (review_no_SEQ.nextval, '제목5',1, '최고에요', 5, sysdate, 2);
+insert into review (review_no, review_title,review_status, review_content,review_score,review_date,chat_room_no) 
+values (review_no_SEQ.nextval, '제목6',1, '그냥그래요', 3, sysdate, 2);
 
 /* 추천 등록 */
 insert into vote(vote_no, vote_type, vote_date, answer_no, member_no)

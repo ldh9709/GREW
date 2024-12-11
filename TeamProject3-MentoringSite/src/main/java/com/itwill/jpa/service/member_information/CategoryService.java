@@ -9,6 +9,5 @@ public interface CategoryService {
 	
 	CategoryRequestDto createCategory(CategoryRequestDto categoryDto);
 	CategoryRequestDto updateCategory(CategoryRequestDto categoryDto);
-	CategoryRequestDto deleteCategory(Long categoryNo);
 	List<CategoryResponseDto> getCategories();
 }

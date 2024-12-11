@@ -17,12 +17,12 @@ public class VoteServiceImpl implements VoteService{
 	private VoteRepository voteRepository;
 	//추천
 	@Override
-	public VoteDto UpVote(VoteDto voteDto) {
+	public VoteDto upVote(VoteDto voteDto) {
 		// 유저가 이미 비추천을 한 경우
 	    Optional<Vote> existingDownVote = 
 	    		voteRepository.findByMemberMemberNoAndAnswerAnswerNoAndVoteType(
-	    				voteDto.getMember().getMemberNo(), 
-	    				voteDto.getAnswer().getAnswerNo(), 
+	    				voteDto.getMemberNo(), 
+	    				voteDto.getAnswerNo(), 
 	    				2);
 	    if (existingDownVote.isPresent()) {
 	        throw new IllegalArgumentException("비추천을 이미 하셨으므로 추천은 할 수 없습니다.");
@@ -31,8 +31,8 @@ public class VoteServiceImpl implements VoteService{
 	    // 유저가 이미 추천을 한 경우
 	    Optional<Vote> existingUpVote = 
 	    		voteRepository.findByMemberMemberNoAndAnswerAnswerNoAndVoteType(
-	    				voteDto.getMember().getMemberNo(), 
-	    				voteDto.getAnswer().getAnswerNo(), 
+	    				voteDto.getMemberNo(), 
+	    				voteDto.getAnswerNo(), 
 	    				1);
 	    if (existingUpVote.isPresent()) {
 	        throw new IllegalArgumentException("이미 추천을 하셨습니다.");
@@ -45,12 +45,12 @@ public class VoteServiceImpl implements VoteService{
 
 	//비추천
 	@Override
-	public VoteDto DownVote(VoteDto voteDto) {
+	public VoteDto downVote(VoteDto voteDto) {
 		// 유저가 이미 추천을 한 경우
 	    Optional<Vote> existingUpVote = 
 	    		voteRepository.findByMemberMemberNoAndAnswerAnswerNoAndVoteType(
-	    				voteDto.getMember().getMemberNo(),
-	    				voteDto.getAnswer().getAnswerNo(), 
+	    				voteDto.getMemberNo(),
+	    				voteDto.getAnswerNo(), 
 	    				1);
 	    if (existingUpVote.isPresent()) {
 	        throw new IllegalArgumentException("추천을 이미 하셨으므로 비추천은 할 수 없습니다.");
@@ -59,8 +59,8 @@ public class VoteServiceImpl implements VoteService{
 	    // 유저가 이미 비추천을 한 경우
 	    Optional<Vote> existingDownVote = 
 	    		voteRepository.findByMemberMemberNoAndAnswerAnswerNoAndVoteType(
-	    				voteDto.getMember().getMemberNo(), 
-	    				voteDto.getAnswer().getAnswerNo(), 
+	    				voteDto.getMemberNo(), 
+	    				voteDto.getAnswerNo(), 
 	    				2);
 	    if (existingDownVote.isPresent()) {
 	        throw new IllegalArgumentException("이미 비추천을 하셨습니다.");

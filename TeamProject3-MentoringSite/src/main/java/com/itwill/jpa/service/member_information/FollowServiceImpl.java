@@ -9,6 +9,7 @@ import com.itwill.jpa.dto.member_information.FollowRequestDto;
 import com.itwill.jpa.dto.member_information.FollowResponseDto;
 import com.itwill.jpa.entity.member_information.Follow;
 import com.itwill.jpa.entity.member_information.Member;
+import com.itwill.jpa.exception.AlreadyFollowedException;
 import com.itwill.jpa.repository.member_information.CategoryRepository;
 import com.itwill.jpa.repository.member_information.FollowReporitory;
 import com.itwill.jpa.repository.member_information.MemberRepository;
@@ -25,6 +26,13 @@ public class FollowServiceImpl implements FollowService{
 	
 	/*팔로우 등록*/
 	public FollowRequestDto createFollow(FollowRequestDto followDto) {
+		
+		/* 팔로우가 이미 되어있는지 확인 */
+		Boolean followExist = followReporitory.existsByMenteeMember_MemberNoAndMentorMember_MemberNo(followDto.getMenteeMemberNo(), followDto.getMentorMemberNo());
+		
+		if(followExist == true) {
+			throw new AlreadyFollowedException("해당 멘토는 이미 팔로우 되어있습니다.");
+		}
 		
 		/* 팔로우 멘토 follow_count 증가*/
 		Member mentorMember = memberRepository.findById(followDto.getMentorMemberNo()).get();

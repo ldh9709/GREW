@@ -27,9 +27,14 @@ class FollowServiceTest {
 //		System.out.println(followReporitory.findFollowedMentorsWithGraph(1L));
 //	}
 	
-	@Test
+//	@Test
 	void test3() {
 		categoryRepository.deleteById(1L);
+	}
+	
+	@Test
+	void test4() {
+		System.out.println(followReporitory.existsByMenteeMember_MemberNoAndMentorMember_MemberNo(1L, 6L));
 	}
 	
 }

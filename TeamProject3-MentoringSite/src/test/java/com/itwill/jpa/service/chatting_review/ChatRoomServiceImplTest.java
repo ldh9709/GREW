@@ -52,7 +52,8 @@ public class ChatRoomServiceImplTest {
 	void updateChattingName() {
 		chatRoomStatusService.updateChatRoomName(1L, 5L, "코딩 수업 채팅방");
 	}
-//@Transactional
+
+	//@Transactional
 	//@Test
 	void updateActive() throws Exception{
 		chatRoomService.updateActive(1L);

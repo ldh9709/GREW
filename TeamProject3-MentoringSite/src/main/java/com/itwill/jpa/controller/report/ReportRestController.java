@@ -17,10 +17,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.itwill.jpa.dto.alarm.AlarmDto;
 import com.itwill.jpa.dto.report.ReportDto;
 import com.itwill.jpa.response.Response;
 import com.itwill.jpa.response.ResponseMessage;
 import com.itwill.jpa.response.ResponseStatusCode;
+import com.itwill.jpa.service.alarm.AlarmService;
 import com.itwill.jpa.service.report.ReportService;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -31,7 +33,8 @@ public class ReportRestController {
 	
 	@Autowired
 	private ReportService reportService;
-	
+	@Autowired
+	private AlarmService alarmService;
 	/* 신고등록 */
 	@Operation(summary = "신고 등록")
 	@PostMapping
@@ -82,11 +85,11 @@ public class ReportRestController {
 	@PutMapping("{report_no}/resolved")
 	public ResponseEntity<Response> updateReportStatusToResolved(@PathVariable (value="report_no") Long reportNo) {
 		reportService.updateReportStatusToResolved(reportNo);
-		
+		AlarmDto alarmDto = alarmService.createAlarmByReport(reportNo);
 		Response response = new Response();
 		response.setStatus(ResponseStatusCode.UPDATE_REPORT_SUCCESS);
 		response.setMessage(ResponseMessage.UPDATE_REPORT_SUCCESS);
-		
+		response.setAddData(alarmDto);
 		HttpHeaders httpHeaders = new HttpHeaders();
 		httpHeaders.setContentType(new MediaType(MediaType.APPLICATION_JSON, Charset.forName("UTF-8")));
 		
