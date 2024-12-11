@@ -10,6 +10,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.itwill.jpa.dto.bulletin_board.AnswerDto;
+import com.itwill.jpa.dto.bulletin_board.InquiryDto;
 import com.itwill.jpa.dto.report.ReportDto;
 import com.itwill.jpa.entity.member_information.Member;
 import com.itwill.jpa.entity.report.Report;
@@ -19,6 +21,7 @@ import com.itwill.jpa.repository.member_information.MemberRepository;
 import com.itwill.jpa.repository.report.ReportRepository;
 import com.itwill.jpa.service.bullentin_board.AnswerService;
 import com.itwill.jpa.service.bullentin_board.InquiryService;
+import com.itwill.jpa.service.member_information.MemberService;
 
 @Service
 public class ReportServiceImpl implements ReportService {
@@ -26,7 +29,9 @@ public class ReportServiceImpl implements ReportService {
 	@Autowired
 	private ReportRepository reportRepository;
 	@Autowired
-	private MemberRepository memberRepository;
+	private InquiryRepository inquiryRepository;
+	@Autowired
+	private MemberService memberService;
 	@Autowired
 	private InquiryService inquiryService;
 	@Autowired
@@ -62,23 +67,36 @@ public class ReportServiceImpl implements ReportService {
 		
 		report.setReportStatus(3);
 		
-		/* type:MEMBER인 경우 멤버 신고 카운트 증가 */
+		/* type:MEMBER인 경우 
+		 * - 해당 멤버 신고 카운트 증가 
+		 * */
 		if(report.getReportType().equals("MEMBER")) {
-			memberRepository.incrementReportCount(report.getReportTarget());
+			memberService.incrementReportCount(report.getReportTarget());
 		}
 
-		/* type:ANSWER인 경우 해당 게시글 상태변경 */
+		/* 
+		 * type:ANSWER인 경우
+		 * - 해당 게시글 상태변경
+		 * - 해당 게시글 작성자 신고 카운트 증가
+		 * */
 		if(report.getReportType().equals("ANSWER")) {
 			try {
-				answerService.deleteAnswer(report.getReportTarget());
+				AnswerDto answer = answerService.deleteAnswer(report.getReportTarget());
+				Long writeNo = answer.getMemberNo();
+				memberService.incrementReportCount(writeNo);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		}
-		/* type:INQUIRY인 경우 해당 게시글 상태변경 */
+		/* type:INQUIRY인 경우 
+		 * - 해당 게시글 상태변경
+		 * - 해당 게시글 작성자 카운트 증가 
+		 * */
 		if(report.getReportType().equals("INQUIRY")) {
 			try {
-				inquiryService.deleteInquiry(report.getReportTarget());
+				InquiryDto inquiry = inquiryService.deleteInquiry(report.getReportTarget());
+				Long writerNo = inquiry.getMemberNo();
+				memberService.incrementReportCount(writerNo);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
