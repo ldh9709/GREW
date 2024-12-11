@@ -158,6 +158,7 @@ public class MentorProfileController {
     /**
      * 특정 키워드로 멘토를 검색합니다.
      */
+    @Operation(summary = "검색 기능")
     @GetMapping("/search/{keyword}")
     public ResponseEntity<Response> searchMentorProfiles(@PathVariable(name = "keyword") String keyword) {
         List<MentorProfile> mentorProfiles = mentorProfileService.searchMentorProfiles(keyword);
