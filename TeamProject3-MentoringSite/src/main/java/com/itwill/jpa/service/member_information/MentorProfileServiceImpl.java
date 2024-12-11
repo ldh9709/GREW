@@ -16,6 +16,9 @@ import jakarta.persistence.QueryTimeoutException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.orm.ObjectOptimisticLockingFailureException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -74,31 +77,6 @@ public class MentorProfileServiceImpl implements MentorProfileService {
         mentorProfileRepository.updateMentorStatus(memberNo, 4);
     }
 
-    /**
-     * 특정 상태의 모든 멘토 프로필을 조회합니다.
-     */
-    @Override
-    public List<MentorProfile> getMentorsByStatus(int status) {
-        return mentorProfileRepository.findByMentorStatus(status);
-    }
-
-
-    /**
-     * 특정 키워드(이름, 소개글, 경력)으로 멘토를 검색합니다.
-     */
-    @Override
-    public List<MentorProfile> searchMentorProfiles(String keyword) {
-        return mentorProfileRepository.searchMentorProfiles(keyword);
-    }
-    /**
-     * 카테고리 번호로 멘토 프로필 목록 조회
-    
-   */
-    @Override
-    public List<MentorProfile> getMentorProfilesByCategoryNo(Long categoryNo) {
-        return mentorProfileRepository.findByCategoryNo(categoryNo);
-    }
-    
     
     @Override
     public void createMentorProfile(Long memberNo, MentorProfileDto mentorProfileDto) {
@@ -121,6 +99,8 @@ public class MentorProfileServiceImpl implements MentorProfileService {
 
         // 5️ 멘토 프로필 저장
         mentorProfileRepository.save(mentorProfile);
+        
+        
     }
 
 
@@ -142,6 +122,51 @@ public class MentorProfileServiceImpl implements MentorProfileService {
         mentorProfileRepository.updateMentorRatingByMemberNo(memberNo);
     }
 
-   
+    @Override
+    public Page<MentorProfileDto> getMentorsByStatus(int status, int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        Page<MentorProfile> mentorProfiles = mentorProfileRepository.findByMentorStatus(status, pageable);
+        return mentorProfiles.map(MentorProfileDto::toDto);
+    }
+
+    @Override
+    public Page<MentorProfileDto> searchMentorProfiles(String keyword, int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        Page<MentorProfile> mentorProfiles = mentorProfileRepository.searchMentorProfiles(keyword, pageable);
+        return mentorProfiles.map(MentorProfileDto::toDto);
+    }
+
+    @Override
+    public Page<MentorProfileDto> getMentorProfilesByCategoryNo(Long categoryNo, int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        Page<MentorProfile> mentorProfiles = mentorProfileRepository.findByCategoryNo(categoryNo, pageable);
+        return mentorProfiles.map(MentorProfileDto::toDto);
+    }
 
 }
+
+//    /**
+//     * 특정 상태의 모든 멘토 프로필을 조회합니다.
+//     */
+//    @Override
+//    public List<MentorProfile> getMentorsByStatus(int status) {
+//        return mentorProfileRepository.findByMentorStatus(status);
+//    }
+//
+//
+//    /**
+//     * 특정 키워드(이름, 소개글, 경력)으로 멘토를 검색합니다.
+//     */
+//    @Override
+//    public List<MentorProfile> searchMentorProfiles(String keyword) {
+//        return mentorProfileRepository.searchMentorProfiles(keyword);
+//    }
+//    /**
+//     * 카테고리 번호로 멘토 프로필 목록 조회
+//    
+//   */
+//    @Override
+//    public List<MentorProfile> getMentorProfilesByCategoryNo(Long categoryNo) {
+//        return mentorProfileRepository.findByCategoryNo(categoryNo);
+//    }
+//    

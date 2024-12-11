@@ -2,6 +2,8 @@ package com.itwill.jpa.service.member_information;
 
 import com.itwill.jpa.dto.bulletin_board.InquiryDto;
 import com.itwill.jpa.dto.member_information.MentorBoardDto;
+import com.itwill.jpa.entity.member_information.MentorBoard;
+
 import java.util.List;
 
 import org.springframework.data.domain.Page;
@@ -22,13 +24,23 @@ public interface MemtorBoardService {
 
   //조회수증가
     MentorBoardDto increaseViewMentorBoard(MentorBoardDto mentorBoardDto) throws Exception;
+
+    Page<MentorBoardDto> findByMentorBoardOrderByView(int page, int size);
     
-    // 특정 멘토의 보드 리스트 보기
-    List<MentorBoardDto> getMentorBoardsByMemberNo(Long memBerNo);
+    Page<MentorBoardDto> findMentorBoardBySearch(String search, int page, int size);
     
-  //조회순
-  	List<MentorBoardDto> findByMentorBoardNoOrderByView(Long mentorBoardNo);
-  	
-  //검색
-  	List<MentorBoardDto> findMentorBoardBySearch(String search);
-  	}
+    Page<MentorBoardDto> getMentorBoardsSortedByDate(int page, int size);
+    
+    Page<MentorBoardDto> findByMember(Long memberNo, int page, int size);
+//    // 특정 멘토의 보드 리스트 보기
+//    List<MentorBoardDto> getMentorBoardsByMemberNo(Long memBerNo);
+//    
+//  //조회순
+//  	List<MentorBoardDto> findByMentorBoardNoOrderByView(Long mentorBoardNo);
+//  	
+//  //검색
+//  	List<MentorBoardDto> findMentorBoardBySearch(String search);
+//  
+//  	//시간으로 조회
+//    List<MentorBoard> getMentorBoardsSortedByDate();
+}

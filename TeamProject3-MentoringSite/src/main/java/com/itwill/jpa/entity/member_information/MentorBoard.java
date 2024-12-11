@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.itwill.jpa.dto.member_information.MentorBoardDto;
 
 import jakarta.persistence.*;
@@ -22,8 +23,8 @@ import lombok.NoArgsConstructor;
 public class MentorBoard {
 
     @Id
-    @SequenceGenerator(name = "mentorboard_SEQ", initialValue = 1, allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "mentorboard_SEQ")
+    @SequenceGenerator(name = "mentor_board_no_SEQ",initialValue = 1, allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "mentor_board_no_SEQ")
     @Column(name = "mentor_board_no")
     private Long mentorBoardNo; //PK 시퀀스로 자동생성 
 
@@ -48,6 +49,7 @@ public class MentorBoard {
    
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_no")
+    @JsonBackReference
     private Member member;
     
     /* 초기값 설정 */
