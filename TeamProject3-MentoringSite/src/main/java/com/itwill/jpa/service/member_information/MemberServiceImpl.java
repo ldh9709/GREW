@@ -19,6 +19,7 @@ import com.itwill.jpa.dto.member_information.MemberDto.JoinFormDto;
 import com.itwill.jpa.entity.member_information.Category;
 import com.itwill.jpa.entity.member_information.Interest;
 import com.itwill.jpa.entity.member_information.Member;
+import com.itwill.jpa.repository.member_information.InterestRepository;
 import com.itwill.jpa.repository.member_information.MemberRepository;
 import com.itwill.jpa.util.CustomMailSender;
 
@@ -30,6 +31,8 @@ public class MemberServiceImpl implements MemberService {
 	@Autowired
 	MemberRepository memberRepository;
 	
+	@Autowired
+	InterestRepository interestRepository;
 	@Autowired
 	//메일 발송을 위한 메소드 의존성 주입
 	CustomMailSender customMailSender;
@@ -50,6 +53,8 @@ public class MemberServiceImpl implements MemberService {
 		for (InterestDto interest : memberDto.getInterests()) {
 			
 			Interest interestEntity = Interest.toEntity(interest);
+			
+			System.out.println("관심사 : >>>>>>>>>" + interestEntity);
 			
 			saveMember.addInterests(interestEntity);
 		}

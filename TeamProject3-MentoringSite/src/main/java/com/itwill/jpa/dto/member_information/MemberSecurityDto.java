@@ -27,7 +27,6 @@ public class MemberSecurityDto {
 	
 	
 	public static MemberSecurityDto toDto(Member entity) {
-		System.out.println("<<<<<MemberSecurityDto : " + entity);
 		return MemberSecurityDto.builder()
 				.memberNo(entity.getMemberNo())
 	            .memberId(entity.getMemberId())
