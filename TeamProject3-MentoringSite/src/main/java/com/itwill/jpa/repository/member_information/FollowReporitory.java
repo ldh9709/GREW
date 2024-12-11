@@ -2,6 +2,8 @@ package com.itwill.jpa.repository.member_information;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -28,8 +30,9 @@ public interface FollowReporitory extends JpaRepository<Follow, Long>{
 			+ "JOIN mp.category c1 "
 			+ "JOIN c1.parentCategory c2 "
 			+ "WHERE f.menteeMember.memberNo = :menteeMemberNo"
+			+ "ORDER BY m.memberName ASC"
 			)
-	public List<FollowResponseDto> findFollowMentors(@Param("menteeMemberNo") Long menteeMemberNo);
+	public List<FollowResponseDto> findFollowMentors(@Param("menteeMemberNo") Long menteeMemberNo, Pageable pageable);
 	
 	/* 팔로워 멘티 수 찾기 */
 	public Integer countBymentorMember_MemberNo(Long mentorMemberNo);

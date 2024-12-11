@@ -3,6 +3,10 @@ package com.itwill.jpa.service.member_information;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.itwill.jpa.dto.member_information.FollowRequestDto;
@@ -62,9 +66,13 @@ public class FollowServiceImpl implements FollowService{
 		return followNo; 
 	}
 	
-	/*팔로잉 리스트 출력(멘토리스트)*/
-	public List<FollowResponseDto> getMentorList(Long menteeMemberNo){
-		return followReporitory.findFollowMentors(menteeMemberNo);
+	/*팔로잉 리스트 출력(멘토리스트, 이름 순서)*/
+	public Page<FollowResponseDto> getMentorList(Long menteeMemberNo, int pageNumber, int pageSize){
+		Pageable pageable = PageRequest.of(pageNumber, pageSize);
+		List<FollowResponseDto> followList = followReporitory.findFollowMentors(menteeMemberNo, pageable);
+		long totalCount = followList.size(); 
+		
+		return new PageImpl<>(followList, pageable, totalCount);
 	}
 	
 	/*팔로워 수(멘티 수)*/

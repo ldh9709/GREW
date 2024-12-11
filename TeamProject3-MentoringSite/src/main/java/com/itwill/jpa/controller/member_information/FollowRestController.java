@@ -4,6 +4,7 @@ import java.nio.charset.Charset;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
@@ -73,8 +74,8 @@ public class FollowRestController {
 	/*팔로잉 리스트 출력(멘토리스트)*/
 	@Operation(summary = "멘티 팔로잉 리스트 출력")
 	@GetMapping("/mentee/{menteeNo}")
-	public ResponseEntity<Response> getFollowingMentorList(@PathVariable(name = "menteeNo") Long menteeNo){
-		List<FollowResponseDto> followMentorList = followService.getMentorList(menteeNo);
+	public ResponseEntity<Response> getFollowingMentorList(@PathVariable(name = "menteeNo") Long menteeNo, int pageNumber, int pageSize){
+		Page<FollowResponseDto> followMentorList = followService.getMentorList(menteeNo, pageNumber, pageSize);
 		
 		Response response = new Response();
 		response.setStatus(ResponseStatusCode.READ_MENTORLIST_SUCCESS);
