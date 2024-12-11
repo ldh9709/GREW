@@ -23,7 +23,17 @@ public class ReviewDto {
     private LocalDateTime reviewDate; // 엔티티에서 자동 생성된 reviewDate
     private Long chatRoomNo;
     private Long memberNo;
+    private Long mentorMemberNo;
     
+    public ReviewDto(Long memberNo, Double reviewScore) {
+        this.memberNo = memberNo;
+        this.reviewScore = (int) Math.round(reviewScore); // 🔥 Double -> Integer 변환
+    }
+    public ReviewDto(Long memberNo, Integer reviewScore) {
+        this.memberNo = memberNo;
+        this.reviewScore = reviewScore;
+    }
+
     
     public static ReviewDto toDto(Review reviewEntity) {
         return ReviewDto.builder()
@@ -35,6 +45,7 @@ public class ReviewDto {
                 .reviewDate(reviewEntity.getReviewDate())
                 .chatRoomNo(reviewEntity.getChatRoom().getChatRoomNo())
                 .memberNo(reviewEntity.getChatRoom().getMentee().getMemberNo())
+                .mentorMemberNo(reviewEntity.getChatRoom().getMentor().getMemberNo())
                 .build();
     }
 }

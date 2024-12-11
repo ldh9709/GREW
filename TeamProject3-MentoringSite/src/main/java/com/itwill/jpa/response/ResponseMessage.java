@@ -18,7 +18,20 @@ public class ResponseMessage {
     public static final String UPDATE_MENTOR_BOARD_SUCCESS = "멘토 보드 수정 성공";
     public static final String DELETE_MENTOR_BOARD_SUCCESS = "멘토 보드 삭제 성공";
     public static final String MENTOR_BOARD_NOT_FOUND = "해당 멘토 보드를 찾을 수 없습니다.";
-    
+    /******************* MENTOR PROFILE 메시지 ************************/
+    public static final String CREATED_MENTOR_PROFILE_SUCCESS = "멘토 프로필 등록 성공";
+    public static final String READ_MENTOR_PROFILE_SUCCESS = "멘토 프로필 상세 조회 성공";
+    public static final String READ_MENTOR_PROFILE_LIST_SUCCESS = "멘토 프로필 목록 조회 성공";
+    public static final String UPDATE_MENTOR_PROFILE_SUCCESS = "멘토 프로필 수정 성공";
+    public static final String DELETE_MENTOR_PROFILE_SUCCESS = "멘토 프로필 삭제 성공";
+    public static final String MENTOR_PROFILE_NOT_FOUND = "해당 멘토 프로필을 찾을 수 없습니다.";
+    public static final String READ_MENTOR_PROFILE_LIST_FAIL = "멘토 프로필 목록 조회 실패";
+    public static final String MENTOR_PROFILE_STATUS_UPDATE_SUCCESS = "멘토 프로필 상태 업데이트 성공";
+    public static final String MENTOR_PROFILE_STATUS_UPDATE_FAIL = "멘토 프로필 상태 업데이트 실패";
+
+    /******************* MENTOR PROFILE TYPE 변경 메시지 ************************/
+    public static final String MENTOR_PROFILE_TYPE_CHANGE_SUCCESS = "멘토 프로필 타입 변경 성공";
+    public static final String MENTOR_PROFILE_TYPE_CHANGE_FAIL = "멘토 프로필 타입 변경 실패";
 	/******************* FOLLOW 메시지 ************************/
 	public static final String CREATE_FOLLOW_SUCCESS = "팔로우 등록 성공";
 	public static final String READ_MENTORLIST_SUCCESS = "팔로잉 멘토 리스트 조 성공";
