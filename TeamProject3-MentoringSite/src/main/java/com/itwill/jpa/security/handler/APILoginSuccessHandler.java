@@ -43,20 +43,20 @@ public class APILoginSuccessHandler implements AuthenticationSuccessHandler {
         
         // 4. 클레임을 JSON 문자열로 변환합니다.
         // 생성된 클레임 정보를 JSON 형식으로 변환합니다. 이는 클라이언트에게 반환될 응답 내용입니다.
-//        claims.put("accessToken", accessToken);
-//        claims.put("refreshToken", refreshToken);
-//        Gson gson = new Gson();
-//        String jsonStr = gson.toJson(claims);
-//        
-//        // 5. HTTP 응답 헤더와 본문 설정
-//        // 클라이언트가 JSON 형식으로 응답을 받을 수 있도록 응답 타입을 설정합니다.
-//        response.setContentType("application/json; charset=UTF-8");
-//        
-//        // 6. 응답 본문에 JSON 문자열을 출력합니다.
-//        PrintWriter printWriter = response.getWriter();
-//        printWriter.println(jsonStr);  // 클라이언트에게 JSON 형식의 클레임을 반환
-//        System.out.println("대성공");
-//        printWriter.close();
+        claims.put("accessToken", accessToken);
+        claims.put("refreshToken", refreshToken);
+        Gson gson = new Gson();
+        String jsonStr = gson.toJson(claims);
+        
+        // 5. HTTP 응답 헤더와 본문 설정
+        // 클라이언트가 JSON 형식으로 응답을 받을 수 있도록 응답 타입을 설정합니다.
+        response.setContentType("application/json; charset=UTF-8");
+        
+        // 6. 응답 본문에 JSON 문자열을 출력합니다.
+        PrintWriter printWriter = response.getWriter();
+        printWriter.println(jsonStr);  // 클라이언트에게 JSON 형식의 클레임을 반환
+        System.out.println("대성공");
+        printWriter.close();
         
         // 인증 성공 후 클라이언트에 응답을 보낸다
         // 토큰을 응답 헤더나 쿠키에 담아 클라이언트로 전송할 수 있음
