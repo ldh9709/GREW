@@ -171,9 +171,4 @@ public class AnswerServiceImpl implements AnswerService{
 		return new PageImpl<>(answerDtoList, pageable, answerEntityList.getTotalElements());
 	}
 	
-	
-	
-
-	
-
 }

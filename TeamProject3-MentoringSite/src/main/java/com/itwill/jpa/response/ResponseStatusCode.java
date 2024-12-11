@@ -55,7 +55,8 @@ public class ResponseStatusCode {
 	public static final int READ_INQUIRY_LIST_SUCCESS = 5300;
 	public static final int READ_INQUIRY_LIST_FAIL = 5301;
 	public static final int INCREASE_VIEW_INQUIRY_SUCCESS = 5400;
-	public static final int VIEW_INQUIRY_SUCCESS = 5500;
+	public static final int READ_INQUIRY_SUCCESS = 5500;
+	public static final int READ_INQUIRY_FAIL = 5501;
 	
 	/**********************ANSWER 메시지**************************/
 	public static final int CREATED_ANSWER_SUCCESS = 6000;
@@ -69,6 +70,7 @@ public class ResponseStatusCode {
 	public static final int READ_ANSWER_LIST_SUCCESS = 6500;
 	public static final int READ_ANSWER_LIST_FAIL = 6600;
 	public static final int READ_ANSWER_SUCCESS = 6700;
+	public static final int READ_ANSWER_FAIL = 6701;
 	
 	
 	/******************* CHATTING 메시지 ************************/

@@ -25,20 +25,21 @@ public class GlobalExceptionHandler {
     // 상태 코드에 따른 HttpStatus를 반환하는 메서드
     private HttpStatus mapStatusCodeToHttpStatus(int statusCode) {
         switch (statusCode) {
+	        // Inquiry 관련 상태 코드
+	        case ResponseStatusCode.CREATED_INQUIRY_FAIL:
+	        case ResponseStatusCode.UPDATE_INQUIRY_FAIL:
+	        case ResponseStatusCode.DELETE_INQUIRY_FAIL:
+	        case ResponseStatusCode.READ_INQUIRY_LIST_FAIL:
+	        case ResponseStatusCode.READ_INQUIRY_FAIL:
+	        	return HttpStatus.BAD_REQUEST; // 실패 시 BAD_REQUEST(400)
+	        	
             // Answer 관련 상태 코드
             case ResponseStatusCode.CREATED_ANSWER_FAIL:
             case ResponseStatusCode.UPDATE_ANSWER_FAIL:
             case ResponseStatusCode.DELETE_ANSWER_FAIL:
             case ResponseStatusCode.ACCEPT_ANSWER_FAIL:
             case ResponseStatusCode.READ_ANSWER_LIST_FAIL:
-                return HttpStatus.BAD_REQUEST; // 실패 시 BAD_REQUEST(400)
-
-            // Inquiry 관련 상태 코드
-
-            case ResponseStatusCode.CREATED_INQUIRY_FAIL:
-            case ResponseStatusCode.UPDATE_INQUIRY_FAIL:
-            case ResponseStatusCode.DELETE_INQUIRY_FAIL:
-            case ResponseStatusCode.READ_INQUIRY_LIST_FAIL:
+            case ResponseStatusCode.READ_ANSWER_FAIL:
                 return HttpStatus.BAD_REQUEST; // 실패 시 BAD_REQUEST(400)
 
             // 기본적으로 처리되지 않은 경우

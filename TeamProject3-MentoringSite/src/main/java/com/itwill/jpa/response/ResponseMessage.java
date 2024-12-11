@@ -59,7 +59,8 @@ public class ResponseMessage {
     public static final String READ_INQUIRY_LIST_SUCCESS = "질문 리스트 불러오기 성공";
     public static final String READ_INQUIRY_LIST_FAIL = "질문 리스트 불러오기 실패";
     public static final String INCREASE_VIEW_INQUIRY_SUCCESS = "조회수 증가 성공";
-    public static final String VIEW_INQUIRY_SUCCESS = "선택 질문 불러오기 성공";
+    public static final String READ_INQUIRY_SUCCESS = "선택 질문 불러오기 성공";
+    public static final String READ_INQUIRY_FAIL = "선택 질문 불러오기 실패";
     
     /**********************ANSWER 메시지**************************/
 	public static final String CREATED_ANSWER_SUCCESS = "답변 등록 성공";
@@ -73,6 +74,7 @@ public class ResponseMessage {
 	public static final String READ_ANSWER_LIST_SUCCESS = "답변 리스트 불러오기 성공";
 	public static final String READ_ANSWER_LIST_FAIL = "답변 리스트 불러오기 실패";
 	public static final String READ_ANSWER_SUCCESS = "선택 답변 불러오기 성공";
+	public static final String READ_ANSWER_FAIL = "선택 답변 불러오기 실패";
 	
 	/******************* CHATTING 메시지 ************************/
 	public static final String PENDING_CHATTING = "요청 대기 중"; // (멘토의 수락/거절 대기 상태)

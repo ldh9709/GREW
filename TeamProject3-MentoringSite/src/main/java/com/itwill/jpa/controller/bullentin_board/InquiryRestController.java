@@ -104,8 +104,8 @@ public class InquiryRestController {
 		Response response = new Response();
 
 		InquiryDto inquiryDto = inquiryService.getInquiry(inquiryNo);
-		response.setStatus(ResponseStatusCode.VIEW_INQUIRY_SUCCESS);
-		response.setMessage(ResponseMessage.VIEW_INQUIRY_SUCCESS);
+		response.setStatus(ResponseStatusCode.READ_INQUIRY_SUCCESS);
+		response.setMessage(ResponseMessage.READ_INQUIRY_SUCCESS);
 		response.setData(inquiryDto);
 
 		HttpHeaders httpHeaders = new HttpHeaders();
