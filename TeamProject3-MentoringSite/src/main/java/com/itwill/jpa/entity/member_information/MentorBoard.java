@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.itwill.jpa.dto.member_information.MentorBoardDto;
 
 import jakarta.persistence.*;
@@ -48,6 +49,7 @@ public class MentorBoard {
    
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_no")
+    @JsonBackReference
     private Member member;
     
     /* 초기값 설정 */

@@ -199,5 +199,27 @@ public class MentorBoardController {
         
         return  responseEntity ;
     }
+    
+    /**
+     * mentor_board_date 기준 내림차순으로 mentor_board_status = 1 인 MentorBoard 목록 조회
+     */
+    @Operation(summary = "멘토 보드 시간 기준 내림차순 정렬")
+    @GetMapping("/sorted-by-date")
+    public ResponseEntity<Response> getMentorBoardsSortedByDate() {
+        List<MentorBoard> sortedBoards = mentorBoardService.getMentorBoardsSortedByDate();
+
+        Response response = new Response();
+        response.setStatus(ResponseStatusCode.READ_MENTOR_BOARD_LIST_SUCCESS);
+        response.setMessage(ResponseMessage.READ_MENTOR_BOARD_LIST_SUCCESS);
+        response.setData(sortedBoards);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(new MediaType(MediaType.APPLICATION_JSON, Charset.forName("UTF-8")));
+
+        ResponseEntity<Response> responseEntity = 
+            new ResponseEntity<>(response, headers, HttpStatus.OK);
+
+        return responseEntity;
+    }
 }
 

@@ -37,4 +37,10 @@ public interface MentorBoardRepository extends JpaRepository<MentorBoard, Long> 
   		     + "OR m.memberName LIKE %:search%) "
   		     + "AND i.mentorBoardStatus = 1")
   		List<MentorBoard> findMentorBoardBySearch(@Param("search") String search);
+  	//페이징필요
+  	/**
+     * mentor_board_date 기준 내림차순으로 mentor_board_status = 1 인 MentorBoard 목록 조회
+     */
+    @Query("SELECT mb FROM MentorBoard mb WHERE mb.mentorBoardStatus = 1 ORDER BY mb.mentorBoardDate DESC")
+    List<MentorBoard> findAllMentorBoardsByDateOrderByDateDesc();
 }

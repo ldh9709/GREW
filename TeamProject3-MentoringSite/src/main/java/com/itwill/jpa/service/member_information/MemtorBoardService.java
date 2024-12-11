@@ -2,6 +2,8 @@ package com.itwill.jpa.service.member_information;
 
 import com.itwill.jpa.dto.bulletin_board.InquiryDto;
 import com.itwill.jpa.dto.member_information.MentorBoardDto;
+import com.itwill.jpa.entity.member_information.MentorBoard;
+
 import java.util.List;
 
 import org.springframework.data.domain.Page;
@@ -31,4 +33,7 @@ public interface MemtorBoardService {
   	
   //검색
   	List<MentorBoardDto> findMentorBoardBySearch(String search);
+  
+  	//시간으로 조회
+    List<MentorBoard> getMentorBoardsSortedByDate();
   	}

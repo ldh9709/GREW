@@ -125,4 +125,12 @@ public class MemtorBoardServiceImpl implements MemtorBoardService {
         }
         return mentorBoardDtos;
     }
+    
+    @Override
+    public List<MentorBoard> getMentorBoardsSortedByDate() {
+        return mentorBoardRepository.findAllMentorBoardsByDateOrderByDateDesc();
+    }
+    
+    
+    
 }
