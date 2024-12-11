@@ -120,7 +120,7 @@ public class ReportRestController {
 	
 	/* 신고 출력(1개) */
 	@Operation(summary = "특정 신고 상세정보 조회")
-	@GetMapping("/{report_no}")
+	@GetMapping("/detail/{report_no}")
 	public ResponseEntity<Response> getReportByReportNo(@PathVariable(value = "report_no") Long reportNo){
 		ReportDto report = reportService.getReportByreportNo(reportNo);
 		
@@ -159,9 +159,9 @@ public class ReportRestController {
 	
 	/* [어드민] 신고 출력(전체회원) */
 	@Operation(summary = "[어드민] 전체 신고 목록 조회")
-	@GetMapping()
-	public ResponseEntity<Response> getReportAll(@PathVariable(value="status") Integer status){
-		List<ReportDto> reports = reportService.getReportAll(status);
+	@GetMapping("/{filter}")
+	public ResponseEntity<Response> getReportAll(@PathVariable(value="filter") Integer filter){
+		List<ReportDto> reports = reportService.getReportAll(filter);
 		
 		Response response = new Response();
 		response.setStatus(ResponseStatusCode.READ_REPORT_LIST_SUCCESS);

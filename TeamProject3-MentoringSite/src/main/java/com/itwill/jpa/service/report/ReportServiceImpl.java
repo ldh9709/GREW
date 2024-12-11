@@ -108,7 +108,7 @@ public class ReportServiceImpl implements ReportService {
 	/* 신고 출력(특정 회원) */
 	@Override
 	public List<ReportDto> getReportByUserNo(Long memberNo) {
-		List<Report> reports= reportRepository.findByMemberMemberNo(memberNo);
+		List<Report> reports= reportRepository.findByMemberMemberNoOrderByReportDateDesc(memberNo);
 		List<ReportDto> reportDtos = new ArrayList<ReportDto>();
 		for (Report report : reports) {
 			reportDtos.add(ReportDto.toDto(report));
@@ -117,13 +117,27 @@ public class ReportServiceImpl implements ReportService {
 	}
 
 	/* [어드민] 신고 전체 출력 
-	 * 필터링: 상태별
-	 * 1 : 전체 , 2: 
+	 * 필터링, 기본 순서 date
+	 * 1 : 전체 , 2: 신고접수 
 	 * */
 	@Override
-	public List<ReportDto> getReportAll(Integer status) {
-		List<Report> reports = reportRepository.findAll();
+	public List<ReportDto> getReportAll(Integer filter) {
+		List<Report> reports = new ArrayList<>();
 		List<ReportDto> reportDtos = new ArrayList<>();
+		
+		switch (filter) {
+			case 1: {
+				/* 전체 출력 */
+				reports = reportRepository.findAllByOrderByReportDateDesc();
+				break;
+			}
+			case 2: {
+				/* 신고접수출력 출력 */
+				reports = reportRepository.findByReportStatusOrderByReportDateDesc(3);
+				break;
+			}
+		}
+			
 		for (Report report : reports) {
 			reportDtos.add(ReportDto.toDto(report));
 		}

@@ -13,5 +13,5 @@ public interface ReportService {
 	ReportDto updateReportStatusToFalseReport(Long reportNo);
 	ReportDto getReportByreportNo(Long reportNo);
 	List<ReportDto> getReportByUserNo(Long memberNo);
-	List<ReportDto> getReportAll(Integer status);
+	List<ReportDto> getReportAll(Integer filter);
 }
