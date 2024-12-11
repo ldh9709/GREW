@@ -160,8 +160,8 @@ public class ReportRestController {
 	/* [어드민] 신고 출력(전체회원) */
 	@Operation(summary = "[어드민] 전체 신고 목록 조회")
 	@GetMapping()
-	public ResponseEntity<Response> getReportAll(){
-		List<ReportDto> reports = reportService.getReportAll();
+	public ResponseEntity<Response> getReportAll(@PathVariable(value="status") Integer status){
+		List<ReportDto> reports = reportService.getReportAll(status);
 		
 		Response response = new Response();
 		response.setStatus(ResponseStatusCode.READ_REPORT_LIST_SUCCESS);

@@ -4,6 +4,7 @@ import java.nio.charset.Charset;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.itwill.jpa.dto.alarm.AlarmDto;
@@ -76,8 +78,11 @@ public class FollowRestController {
 	/*팔로잉 리스트 출력(멘토리스트)*/
 	@Operation(summary = "멘티 팔로잉 리스트 출력")
 	@GetMapping("/mentee/{menteeNo}")
-	public ResponseEntity<Response> getFollowingMentorList(@PathVariable(name = "menteeNo") Long menteeNo){
-		List<FollowResponseDto> followMentorList = followService.getMentorList(menteeNo);
+	public ResponseEntity<Response> getFollowingMentorList(
+			@PathVariable(name = "menteeNo") Long menteeNo,
+			@RequestParam(name = "page", defaultValue ="0") int page,
+			@RequestParam(name = "size", defaultValue ="6") int size){
+		Page<FollowResponseDto> followMentorList = followService.getMentorList(menteeNo, page, size);
 		
 		Response response = new Response();
 		response.setStatus(ResponseStatusCode.READ_MENTORLIST_SUCCESS);

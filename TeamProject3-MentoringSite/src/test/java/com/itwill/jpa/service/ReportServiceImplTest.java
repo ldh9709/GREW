@@ -27,11 +27,6 @@ class ReportServiceImplTest {
 	}
 
 //	@Test
-	void updateReportStatusToCancel() {
-		reportService.updateReportStatusToCancel(3L);
-	}
-	
-//	@Test
 	void updateReportStatusToInProgress() {
 		reportService.updateReportStatusToInProgress(2L);
 	}
@@ -51,6 +46,6 @@ class ReportServiceImplTest {
 
 //	@Test
 	void testSelectAll(){
-		System.out.println(reportService.getReportAll());
+		System.out.println(reportService.getReportAll(1));
 	}
 }
