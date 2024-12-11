@@ -110,38 +110,22 @@ public class AnswerRestController {
 	@Operation(summary = "답변 채택")
 	@PutMapping("/accept/{answerNo}")
 	public ResponseEntity<Response> acceptAnswer(@PathVariable(name = "answerNo") Long answerNo) throws Exception {
-		try {
-			AnswerDto acceptedAnswerDto = answerService.acceptAnswer(answerNo);
-			
-			Response response = new Response();
-			response.setStatus(ResponseStatusCode.ACCEPT_ANSWER_SUCCESS);
-			response.setMessage(ResponseMessage.ACCEPT_ANSWER_SUCCESS);
-			response.setData(acceptedAnswerDto);
-			
-			HttpHeaders httpHeaders = new HttpHeaders();
-		    httpHeaders.setContentType(new MediaType(MediaType.APPLICATION_JSON, Charset.forName("UTF-8")));
-		        
-	        // 5. 응답 Entity 생성(ResponseEntity)
-	        ResponseEntity<Response> responseEntity = 
-	                new ResponseEntity<Response>(response, httpHeaders, HttpStatus.OK);
-			
-			return responseEntity;
-		} catch (ResponseStatusException ex) {
-	        // 예외 발생 시 적절한 상태 코드와 메시지를 Response 객체에 담아 반환
-	        Response response = new Response();
-	        response.setStatus(ResponseStatusCode.ACCEPT_ANSWER_FAIL);
-	        response.setMessage(ResponseMessage.ACCEPT_ANSWER_FAIL);
-	        response.setData(null);
+		
+		AnswerDto acceptedAnswerDto = answerService.acceptAnswer(answerNo);
+		
+		Response response = new Response();
+		response.setStatus(ResponseStatusCode.ACCEPT_ANSWER_SUCCESS);
+		response.setMessage(ResponseMessage.ACCEPT_ANSWER_SUCCESS);
+		response.setData(acceptedAnswerDto);
+		
+		HttpHeaders httpHeaders = new HttpHeaders();
+	    httpHeaders.setContentType(new MediaType(MediaType.APPLICATION_JSON, Charset.forName("UTF-8")));
 	        
-	        HttpHeaders httpHeaders = new HttpHeaders();
-		    httpHeaders.setContentType(new MediaType(MediaType.APPLICATION_JSON, Charset.forName("UTF-8")));
-		        
-	        // 5. 응답 Entity 생성(ResponseEntity)
-	        ResponseEntity<Response> responseEntity = 
-	                new ResponseEntity<Response>(response, httpHeaders, HttpStatus.OK);
-	        
-	        return responseEntity;
-		}
+        // 5. 응답 Entity 생성(ResponseEntity)
+        ResponseEntity<Response> responseEntity = 
+                new ResponseEntity<Response>(response, httpHeaders, HttpStatus.OK);
+		
+		return responseEntity;
 	}
 	
 	
