@@ -42,8 +42,6 @@ public class MentorBoard {
     @Column(name = "mentor_board_views")
     private Integer mentorBoardViews;   // 조회수 
     
-    
-    
     @Column(name = "mentor_board_status")
     private Integer mentorBoardStatus;   //답글 삭제 여부 (1또는 2)
     

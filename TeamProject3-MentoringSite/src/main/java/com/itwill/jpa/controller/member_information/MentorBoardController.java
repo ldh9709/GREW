@@ -30,12 +30,13 @@ public class MentorBoardController {
     private MemtorBoardService mentorBoardService;
     @Autowired
     private AlarmService alarmService;
+    
     /* 멘토 보드 등록 */
     @Operation(summary = "멘토 보드 등록")
     @PostMapping
     public ResponseEntity<Response> saveMentorBoard(@RequestBody MentorBoardDto mentorBoardDto) {
     	MentorBoardDto savedBoard = mentorBoardService.saveMemtorBoard(mentorBoardDto);
-    	List<AlarmDto> saveAlarms = alarmService.saveAlarmsByMentorBoard(savedBoard);
+    	List<AlarmDto> saveAlarms = alarmService.createAlarmsByMentorBoard(savedBoard);
         Response response = new Response();
         response.setStatus(ResponseStatusCode.CREATED_MEMBER_SUCCESS);
         response.setMessage(ResponseMessage.CREATED_MEMBER_SUCCESS);
@@ -49,22 +50,30 @@ public class MentorBoardController {
 
     /* 멘토 보드 수정 */
     @Operation(summary = "멘토 보드 수정")
-    @PutMapping
-    public ResponseEntity<Response> updateMentorBoard(@RequestBody MentorBoardDto mentorBoardDto) throws Exception {
+    @PutMapping("/{mentorBoardNo}")
+    public ResponseEntity<Response> updateMentorBoard(
+            @PathVariable(name = "mentorBoardNo") Long mentorBoardId, 
+            @RequestBody MentorBoardDto mentorBoardDto
+        ) throws Exception {
+
+        // mentorBoardId를 DTO에 설정 (필요한 경우)
+        mentorBoardDto.setMentorBoardNo(mentorBoardId); 
+
+        // 기존 멘토 보드 수정
         MentorBoardDto updatedBoard = mentorBoardService.updateMemtorBoard(mentorBoardDto);
 
+        // 응답 생성
         Response response = new Response();
         response.setStatus(ResponseStatusCode.UPDATE_MEMBER_SUCCESS);
         response.setMessage(ResponseMessage.UPDATE_MEMBER_SUCCESS);
         response.setData(updatedBoard);
         
-    	HttpHeaders httpHeaders = new HttpHeaders();
-		httpHeaders.setContentType(new MediaType(MediaType.APPLICATION_JSON, Charset.forName("UTF-8")));
-		
-		ResponseEntity<Response> responseEntity = new ResponseEntity<Response>(response, httpHeaders,
-				HttpStatus.CREATED);
-
-		return responseEntity;
+        // 응답 헤더 생성
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.setContentType(new MediaType(MediaType.APPLICATION_JSON, Charset.forName("UTF-8")));
+        
+        ResponseEntity<Response> responseEntity = new ResponseEntity<>(response, httpHeaders, HttpStatus.CREATED);
+        return responseEntity;
     }
 
     /* 멘토 보드 삭제(상태 변경, PUT 방식) */

@@ -29,6 +29,6 @@ public interface MemtorBoardService {
   //조회순
   	List<MentorBoardDto> findByMentorBoardNoOrderByView(Long mentorBoardNo);
   	
- 	//검색
+  //검색
   	List<MentorBoardDto> findMentorBoardBySearch(String search);
-}
+  	}

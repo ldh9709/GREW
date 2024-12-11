@@ -19,11 +19,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.itwill.jpa.dto.alarm.AlarmDto;
 import com.itwill.jpa.dto.member_information.FollowRequestDto;
 import com.itwill.jpa.dto.member_information.FollowResponseDto;
 import com.itwill.jpa.response.Response;
 import com.itwill.jpa.response.ResponseMessage;
 import com.itwill.jpa.response.ResponseStatusCode;
+import com.itwill.jpa.service.alarm.AlarmService;
 import com.itwill.jpa.service.member_information.FollowService;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -34,18 +36,19 @@ public class FollowRestController {
 	
 	@Autowired
 	private FollowService followService;
-	
+	@Autowired
+	private AlarmService alarmService;
 	/*팔로우 등록*/
 	@Operation(summary = "팔로우 신청")
 	@PostMapping
 	public ResponseEntity<Response> createFollow(@RequestBody FollowRequestDto followDto){
 		followService.createFollow(followDto);
-		
+		AlarmDto alarmDto = alarmService.createAlarmByFollowByMentor(followDto.getMentorMemberNo());
 		Response response = new Response();
 		response.setStatus(ResponseStatusCode.CREATE_FOLLOW_SUCCESS);
 		response.setMessage(ResponseMessage.CREATE_FOLLOW_SUCCESS);
 		response.setData(followDto);
-		
+		response.setAddData(alarmDto);
 		HttpHeaders httpHeaders = new HttpHeaders();
 		httpHeaders.setContentType(new MediaType(MediaType.APPLICATION_JSON, Charset.forName("UTF-8")));
 		

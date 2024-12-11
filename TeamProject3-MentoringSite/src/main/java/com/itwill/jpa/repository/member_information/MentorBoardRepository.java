@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 import com.itwill.jpa.entity.bullentin_board.Inquiry;
 import com.itwill.jpa.entity.member_information.Member;
 import com.itwill.jpa.entity.member_information.MentorBoard;
+import com.itwill.jpa.entity.member_information.MentorProfile;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -17,14 +18,17 @@ import java.util.List;
 @Repository
 public interface MentorBoardRepository extends JpaRepository<MentorBoard, Long> {
 
+	
+	//페이징
 	   // 특정 사용자와 관련된 게시글 조회
-    List<MentorBoard> findByMember(Member member);
- 
+	@Query("SELECT mb FROM MentorBoard mb WHERE mb.member = :member AND mb.mentorBoardStatus = 1")
+    List<MentorBoard> findByMember(@Param("member") Member member);
+ //페이징
     // 조회수순
- 	@Query("SELECT i FROM MentorBoard i ORDER BY i. mentorBoardViews DESC")
- 	Page<MentorBoard> findAllMentorBoardOrderByView(Pageable pageable);
+    @Query("SELECT mb FROM MentorBoard mb WHERE mb.mentorBoardStatus = 1 ORDER BY mb.mentorBoardViews DESC")
+    Page<MentorBoard> findAllMentorBoardOrderByView(Pageable pageable);
 
- 
+ //페이징
  	//검색기능
   	@Query("SELECT i FROM MentorBoard i "
   		     + "JOIN i.member m "
@@ -33,5 +37,4 @@ public interface MentorBoardRepository extends JpaRepository<MentorBoard, Long> 
   		     + "OR m.memberName LIKE %:search%) "
   		     + "AND i.mentorBoardStatus = 1")
   		List<MentorBoard> findMentorBoardBySearch(@Param("search") String search);
-
 }

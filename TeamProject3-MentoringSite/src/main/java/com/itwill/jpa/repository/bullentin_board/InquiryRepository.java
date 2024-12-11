@@ -13,8 +13,7 @@ import com.itwill.jpa.entity.bullentin_board.Inquiry;
 
 @Repository
 public interface InquiryRepository extends JpaRepository<Inquiry, Long> {
-	//PK로 질문 조회
-	Inquiry findByInquiryNo(Long inquiryNo);
+
 	/** 카테고리별 질문 **/
 	// 조회수순
 	@Query("SELECT i FROM Inquiry i " + 
@@ -45,6 +44,11 @@ public interface InquiryRepository extends JpaRepository<Inquiry, Long> {
 		     + "OR i.inquiryContent LIKE %:search% "
 		     + "OR m.memberName LIKE %:search%) "
 		     + "AND i.inquiryStatus = 1")
-		Page<Inquiry> findInquiryBySearch(@Param("search") String search,Pageable pageable);
+	Page<Inquiry> findInquiryBySearch(@Param("search") String search,Pageable pageable);
 
+	// 내가 쓴 질문 리스트 출력
+	@Query("SELECT i FROM Inquiry i WHERE i.member.memberNo = :memberNo AND i.inquiryStatus = 1 " +
+		       "ORDER BY i.inquiryDate DESC")
+	Page<Inquiry> findByMemberMemberNoOrderByInquiryDateDesc(@Param("memberNo") Long memberNo, Pageable pageable);
+	
 }
