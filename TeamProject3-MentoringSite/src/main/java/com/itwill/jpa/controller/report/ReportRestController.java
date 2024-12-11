@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.itwill.jpa.dto.alarm.AlarmDto;
@@ -137,31 +138,15 @@ public class ReportRestController {
 		
 		return responseEntity;
 	}
-	/* 신고 출력(특정회원) */
-	@Operation(summary = "특정 회원 신고 목록 출력")
-	@GetMapping("/member/{member_no}")
-	public ResponseEntity<Response> getReportByUserNo(@PathVariable(value = "member_no") Long memberNo){
-		List<ReportDto> reports = reportService.getReportByUserNo(memberNo);
-		
-		Response response = new Response();
-		response.setStatus(ResponseStatusCode.READ_REPORT_SUCCESS);
-		response.setMessage(ResponseMessage.READ_REPORT_SUCCESS);
-		response.setData(reports);
-		
-		HttpHeaders httpHeaders = new HttpHeaders();
-		httpHeaders.setContentType(new MediaType(MediaType.APPLICATION_JSON,Charset.forName("UTF-8")));
-		
-		ResponseEntity<Response> responseEntity = 
-				new ResponseEntity<Response> (response, httpHeaders, HttpStatus.OK);
-		
-		return responseEntity;
-	}
 	
 	/* [어드민] 신고 출력(전체회원) */
 	@Operation(summary = "[어드민] 전체 신고 목록 조회")
-	@GetMapping("/{filter}")
-	public ResponseEntity<Response> getReportAll(@PathVariable(value="filter") Integer filter){
-		List<ReportDto> reports = reportService.getReportAll(filter);
+	@GetMapping()
+	public ResponseEntity<Response> getReportAll(
+			@RequestParam(name="filter") Integer filter,
+			@RequestParam(name = "page", defaultValue ="0") int page,
+			@RequestParam(name = "size", defaultValue ="10") int size){
+		List<ReportDto> reports = reportService.getReportAll(filter, page, size);
 		
 		Response response = new Response();
 		response.setStatus(ResponseStatusCode.READ_REPORT_LIST_SUCCESS);

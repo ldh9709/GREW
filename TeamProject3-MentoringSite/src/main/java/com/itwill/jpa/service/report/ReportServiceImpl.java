@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -73,7 +75,6 @@ public class ReportServiceImpl implements ReportService {
 				e.printStackTrace();
 			}
 		}
-		
 		/* type:INQUIRY인 경우 해당 게시글 상태변경 */
 		if(report.getReportType().equals("INQUIRY")) {
 			try {
@@ -105,35 +106,27 @@ public class ReportServiceImpl implements ReportService {
 	}
 	
 	
-	/* 신고 출력(특정 회원) */
-	@Override
-	public List<ReportDto> getReportByUserNo(Long memberNo) {
-		List<Report> reports= reportRepository.findByMemberMemberNoOrderByReportDateDesc(memberNo);
-		List<ReportDto> reportDtos = new ArrayList<ReportDto>();
-		for (Report report : reports) {
-			reportDtos.add(ReportDto.toDto(report));
-		}
-		return reportDtos;
-	}
 
 	/* [어드민] 신고 전체 출력 
 	 * 필터링, 기본 순서 date
 	 * 1 : 전체 , 2: 신고접수 
 	 * */
 	@Override
-	public List<ReportDto> getReportAll(Integer filter) {
+	public List<ReportDto> getReportAll(Integer filter,int pageNumber, int pageSize) {
+		
+		Pageable pageable = PageRequest.of(pageNumber, pageSize);
 		List<Report> reports = new ArrayList<>();
 		List<ReportDto> reportDtos = new ArrayList<>();
 		
 		switch (filter) {
 			case 1: {
 				/* 전체 출력 */
-				reports = reportRepository.findAllByOrderByReportDateDesc();
+				reports = reportRepository.findAllByOrderByReportDateDesc(pageable);
 				break;
 			}
 			case 2: {
 				/* 신고접수출력 출력 */
-				reports = reportRepository.findByReportStatusOrderByReportDateDesc(3);
+				reports = reportRepository.findByReportStatusOrderByReportDateDesc(3, pageable);
 				break;
 			}
 		}

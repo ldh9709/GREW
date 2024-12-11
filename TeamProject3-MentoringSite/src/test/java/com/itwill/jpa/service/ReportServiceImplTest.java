@@ -39,13 +39,4 @@ class ReportServiceImplTest {
 	void testUpdateStatusReport() {
 		reportService.updateReportStatusToFalseReport(3L);
 	}
-//	@Test
-	void testSelectByuserNo(){
-		System.out.println(reportService.getReportByUserNo(1L));
-	}
-
-//	@Test
-	void testSelectAll(){
-		System.out.println(reportService.getReportAll(1));
-	}
 }
