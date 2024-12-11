@@ -9,6 +9,8 @@ import com.itwill.jpa.service.alarm.AlarmService;
 import com.itwill.jpa.repository.member_information.MemberRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
@@ -92,45 +94,82 @@ public class MemtorBoardServiceImpl implements MemtorBoardService {
 	    }
 
 
-	 /* 특정 멘토의 모든 멘토 보드 조회 */
-    @Override
-    public List<MentorBoardDto> getMentorBoardsByMemberNo(Long memberNo) {
-        Member member = memberRepository.findById(memberNo).get();
+	    @Override
+	    public Page<MentorBoardDto> findByMentorBoardOrderByView(int page, int size) {
+	        Pageable pageable = PageRequest.of(page, size);
+	        Page<MentorBoard> mentorBoardPage = mentorBoardRepository.findAllMentorBoardOrderByView(pageable);
+	        return mentorBoardPage.map(MentorBoardDto::toDto);
+	    }
 
-        List<MentorBoard> mentorBoards = mentorBoardRepository.findByMember(member);
-        List<MentorBoardDto> mentorBoardDtos = new ArrayList<>();
-        for (MentorBoard board : mentorBoards) {
-            mentorBoardDtos.add(MentorBoardDto.toDto(board));
-        }
-        return mentorBoardDtos;
-    }
+	    @Override
+	    public Page<MentorBoardDto> findMentorBoardBySearch(String search, int page, int size) {
+	        Pageable pageable = PageRequest.of(page, size);
+	        Page<MentorBoard> mentorBoardPage = mentorBoardRepository.findMentorBoardBySearch(search, pageable);
+	        return mentorBoardPage.map(MentorBoardDto::toDto);
+	    }
 
-    /* 조회수 별로 멘토 보드 리스트 조회 */ 
-    @Override
-    public List<MentorBoardDto> findByMentorBoardNoOrderByView(Long mentorBoardNo) {
-        List<MentorBoard> boards = mentorBoardRepository.findAllMentorBoardOrderByView(Pageable.unpaged()).getContent();
-        List<MentorBoardDto> mentorBoardDtos = new ArrayList<>();
-        for (MentorBoard board : boards) {
-            mentorBoardDtos.add(MentorBoardDto.toDto(board));
-        }
-        return mentorBoardDtos;
-    }
-    /* 멘토 보드 검색창 검색 */
-    @Override
-    public List<MentorBoardDto> findMentorBoardBySearch(String search) {
-        List<MentorBoard> boards = mentorBoardRepository.findMentorBoardBySearch(search);
-        List<MentorBoardDto> mentorBoardDtos = new ArrayList<>();
-        for (MentorBoard board : boards) {
-            mentorBoardDtos.add(MentorBoardDto.toDto(board));
-        }
-        return mentorBoardDtos;
-    }
+	    @Override
+	    public Page<MentorBoardDto> getMentorBoardsSortedByDate(int page, int size) {
+	        Pageable pageable = PageRequest.of(page, size);
+	        Page<MentorBoard> mentorBoardPage = mentorBoardRepository.findAllMentorBoardsByDateOrderByDateDesc(pageable);
+	        return mentorBoardPage.map(MentorBoardDto::toDto);
+	    }
+
+	    @Override
+	    public Page<MentorBoardDto> findByMember(Long memberNo, int page, int size) {
+	        Pageable pageable = PageRequest.of(page, size);
+	        Member member = new Member();
+	        member.setMemberNo(memberNo);
+	        Page<MentorBoard> mentorBoardPage = mentorBoardRepository.findByMember(member, pageable);
+	        return mentorBoardPage.map(MentorBoardDto::toDto);
+	    }   
+	    
+	    
+	    
+	    
+	    
+	    
+	    
+	    
+//	 /* 특정 멘토의 모든 멘토 보드 조회 */
+//    @Override
+//    public List<MentorBoardDto> getMentorBoardsByMemberNo(Long memberNo) {
+//        Member member = memberRepository.findById(memberNo).get();
+//
+//        List<MentorBoard> mentorBoards = mentorBoardRepository.findByMember(member);
+//        List<MentorBoardDto> mentorBoardDtos = new ArrayList<>();
+//        for (MentorBoard board : mentorBoards) {
+//            mentorBoardDtos.add(MentorBoardDto.toDto(board));
+//        }
+//        return mentorBoardDtos;
+//    }
+
+//    /* 조회수 별로 멘토 보드 리스트 조회 */ 
+//    @Override
+//    public List<MentorBoardDto> findByMentorBoardNoOrderByView(Long mentorBoardNo) {
+//        List<MentorBoard> boards = mentorBoardRepository.findAllMentorBoardOrderByView(Pageable.unpaged()).getContent();
+//        List<MentorBoardDto> mentorBoardDtos = new ArrayList<>();
+//        for (MentorBoard board : boards) {
+//            mentorBoardDtos.add(MentorBoardDto.toDto(board));
+//        }
+//        return mentorBoardDtos;
+//    }
+//    /* 멘토 보드 검색창 검색 */
+//    @Override
+//    public List<MentorBoardDto> findMentorBoardBySearch(String search) {
+//        List<MentorBoard> boards = mentorBoardRepository.findMentorBoardBySearch(search);
+//        List<MentorBoardDto> mentorBoardDtos = new ArrayList<>();
+//        for (MentorBoard board : boards) {
+//            mentorBoardDtos.add(MentorBoardDto.toDto(board));
+//        }
+//        return mentorBoardDtos;
+//    }
     
-    @Override
-    public List<MentorBoard> getMentorBoardsSortedByDate() {
-        return mentorBoardRepository.findAllMentorBoardsByDateOrderByDateDesc();
-    }
-    
+//    @Override
+//    public List<MentorBoard> getMentorBoardsSortedByDate() {
+//        return mentorBoardRepository.findAllMentorBoardsByDateOrderByDateDesc();
+//    }
+//    
     
     
 }
