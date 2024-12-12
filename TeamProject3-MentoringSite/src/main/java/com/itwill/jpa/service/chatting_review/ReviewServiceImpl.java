@@ -68,7 +68,7 @@ public class ReviewServiceImpl implements ReviewService {
     /* 특정 리뷰 조회 */
     @Override
     public ReviewDto getReviewByReviewNo(Long reviewNo) {
-//        // 리뷰 조회
+        // 리뷰 조회
         Review review = reviewRepository.findByReviewNo(reviewNo);
         ReviewDto reviewDto = ReviewDto.toDto(review);
         

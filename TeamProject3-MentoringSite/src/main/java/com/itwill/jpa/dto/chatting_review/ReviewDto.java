@@ -45,8 +45,8 @@ public class ReviewDto {
                 .reviewScore(reviewEntity.getReviewScore())
                 .reviewDate(reviewEntity.getReviewDate())
                 .chatRoomNo(reviewEntity.getChatRoom().getChatRoomNo())
-                .menteeName(reviewEntity.getChatRoom().getMentee().getMemberName())
                 .memberNo(reviewEntity.getChatRoom().getMentee().getMemberNo())
+                .menteeName(reviewEntity.getChatRoom().getMentee().getMemberName())
                 .mentorMemberNo(reviewEntity.getChatRoom().getMentor().getMemberNo())
                 .build();
     }
