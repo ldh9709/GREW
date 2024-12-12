@@ -175,6 +175,25 @@ public class InquiryRestController {
 		
 		return responseEntity;
 	}
+	@Operation(summary = "최신 순으로 카테고리별 질문 출력")
+	@GetMapping("/date/{categoryNo}")
+	public ResponseEntity<Response> getByCategoryInquiryOrderByDate(@PathVariable(name = "categoryNo") Long categoryNo,
+			@RequestParam(name = "page",defaultValue = "0") int page,  // 기본값은 0 페이지
+			@RequestParam(name = "size",defaultValue = "10") int size) {
+		Page<InquiryDto> inquiryDtos = inquiryService.getByCategoryInquiryOrderByDate(categoryNo,page,size);
+		
+		Response response = new Response();
+		response.setStatus(ResponseStatusCode.READ_INQUIRY_LIST_SUCCESS);
+		response.setMessage(ResponseMessage.READ_INQUIRY_LIST_SUCCESS);
+		response.setData(inquiryDtos);
+		HttpHeaders httpHeaders = new HttpHeaders();
+		httpHeaders.setContentType(new MediaType(MediaType.APPLICATION_JSON,Charset.forName("UTF-8")));
+		
+		ResponseEntity<Response> responseEntity = 
+				new ResponseEntity<Response>(response, httpHeaders, HttpStatus.OK);
+		
+		return responseEntity;
+	}
 	@Operation(summary = "답변수 많은 순으로 전체 질문 출력")
 	@GetMapping("/answerCount")
 	public ResponseEntity<Response> getByAllInquiryOrderByAnswer(
@@ -211,6 +230,26 @@ public class InquiryRestController {
 		httpHeaders.setContentType(new MediaType(MediaType.APPLICATION_JSON,Charset.forName("UTF-8")));
 		
 	    ResponseEntity<Response> responseEntity = 
+				new ResponseEntity<Response>(response, httpHeaders, HttpStatus.OK);
+		
+		return responseEntity;
+	}
+	@Operation(summary = "최신 순으로 전체 질문 출력")
+	@GetMapping("/date")
+	public ResponseEntity<Response> getByAllInquiryOrderByDate(
+			@RequestParam(name = "page",defaultValue = "0") int page,  // 기본값은 0 페이지
+			@RequestParam(name = "size",defaultValue = "10") int size) {
+		Page<InquiryDto> inquiryDtos = inquiryService.getByAllInquiryOrderByDate(page,size);
+		
+		Response response = new Response();
+		response.setStatus(ResponseStatusCode.READ_INQUIRY_LIST_SUCCESS);
+		response.setMessage(ResponseMessage.READ_INQUIRY_LIST_SUCCESS);
+		response.setData(inquiryDtos);
+		
+		HttpHeaders httpHeaders = new HttpHeaders();
+		httpHeaders.setContentType(new MediaType(MediaType.APPLICATION_JSON,Charset.forName("UTF-8")));
+		
+		ResponseEntity<Response> responseEntity = 
 				new ResponseEntity<Response>(response, httpHeaders, HttpStatus.OK);
 		
 		return responseEntity;
