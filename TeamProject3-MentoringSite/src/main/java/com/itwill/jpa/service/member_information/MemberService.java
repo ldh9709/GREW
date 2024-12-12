@@ -5,11 +5,23 @@ import com.itwill.jpa.entity.member_information.Member;
 
 public interface MemberService {
 	
+	//아이디유효성 체크
+	Boolean checkIdValid(String memberId);
+	
+	//아이디 중복 체크
+	Boolean checkIdDupl(String memberId);
+	
+	//비밀번호 유효성 체크
+	Boolean checkPasswordValid(String memberPassword);
+	
+	//이메일 유효성 체크
+	Boolean checkEmailValid(String memberEamil);
+	
+	//이메일 중복 체크
+	Boolean checkEmailDupl(String memeberEmail);
+	
 	//회원가입
 	Member saveMember(MemberDto memberDto);
-	
-	//로그인
-	Member loginMember(String memberId, String memberPassword);
 	
 	//회원수정
 	Member updateMember(MemberDto memberDto);

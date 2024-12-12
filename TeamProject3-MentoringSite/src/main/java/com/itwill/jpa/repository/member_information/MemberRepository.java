@@ -12,6 +12,12 @@ import com.itwill.jpa.entity.member_information.Member;
 @Repository
 public interface MemberRepository extends JpaRepository<Member, Long> {
 	
+	//아이디 중복 여부
+	public Boolean existByMemberId(String memberId);
+	
+	//이메일 중복 여부
+	public Boolean existByMemberEmail(String memberEmail);
+	
 	//로그인 시 아이디와 비밀번호로 객체 찾기
 	public Member findMemberByMemberIdAndMemberPassword(String memberId, String memberPassword);
 	
