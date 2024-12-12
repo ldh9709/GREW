@@ -115,4 +115,9 @@ public class ResponseStatusCode {
 	public static final int LOGIN_FAIL_PASSWORD_MISMATCH_MEMBER = 8100;
 	public static final int CREATE_FAIL_EXISTED_MEMBER = 8200;
 	public static final int UNAUTHORIZED_MEMBER = 8300;
+	
+	
+	/******************* 일반적인오류 메시지 **********************/
+	public static final int INTERNAL_SERVER_ERROR = 10000;
+	
 }
