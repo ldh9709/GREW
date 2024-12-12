@@ -26,7 +26,7 @@ public class ChatRoomServiceImplTest {
 		ChatRoomDto chatRoomDto1 = ChatRoomDto.builder()
 						.chatRoomNo(7L)
 						.chatRoomStatus(1)
-						.chatRoomStratDate(LocalDateTime.now())
+						.chatRoomStartDate(LocalDateTime.now())
 						.chatRoomEndDate(null)
 						.menteeNo(3L)
 						.mentorNo(5L)
@@ -36,7 +36,7 @@ public class ChatRoomServiceImplTest {
 		ChatRoomDto chatRoomDto2 = ChatRoomDto.builder()
 				.chatRoomNo(8L)
 				.chatRoomStatus(1)
-				.chatRoomStratDate(LocalDateTime.now())
+				.chatRoomStartDate(LocalDateTime.now())
 				.chatRoomEndDate(null)
 				.menteeNo(3L)
 				.mentorNo(7L)
@@ -52,6 +52,7 @@ public class ChatRoomServiceImplTest {
 	void updateChattingName() {
 		chatRoomStatusService.updateChatRoomName(1L, 5L, "코딩 수업 채팅방");
 	}
+
 	//@Transactional
 	//@Test
 	void updateActive() throws Exception{

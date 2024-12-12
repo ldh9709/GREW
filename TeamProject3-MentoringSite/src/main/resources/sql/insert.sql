@@ -56,17 +56,29 @@ VALUES(member_no_SEQ.nextval,'eee','eee','eee@naver.com','박은미','ROLE_MENTO
 INSERT INTO member(member_no,member_id,member_password,member_email,member_name,member_role,member_points,member_status,member_join_date,member_report_count)
 VALUES(member_no_SEQ.nextval,'fff','fff','fff@naver.com','송대현','ROLE_MENTOR',5500,1,sysdate,0);
 INSERT INTO mentor_profile(mentor_profile_no, mentor_introduce, mentor_career, mentor_rating, mentor_mentoring_count, mentor_image, mentor_activity_count, mentor_follow_count, mentor_status, category_no, member_no)
-VALUES (mentor_profile_no_SEQ.NEXTVAL, '안녕하세요, 송대현 멘토입니다.', '경력자입니다', 5, 10, 'profile1.jpg', 100, 50, 1, 2, member_no_SEQ.CURRVAL);
+VALUES (mentor_profile_no_SEQ.NEXTVAL, '안녕하세요, 송대현 멘토입니다.', '경력자입니다', 5, 10, 'profile1.jpg', 100, 50, 3, 2, member_no_SEQ.CURRVAL);
 
 INSERT INTO member(member_no,member_id,member_password,member_email,member_name,member_role,member_points,member_status,member_join_date,member_report_count)
 VALUES(member_no_SEQ.nextval,'ggg','ggg','ggg@naver.com','양한수','ROLE_MENTOR',6300,1,sysdate,0);
 INSERT INTO mentor_profile(mentor_profile_no, mentor_introduce, mentor_career, mentor_rating, mentor_mentoring_count, mentor_image, mentor_activity_count, mentor_follow_count, mentor_status, category_no, member_no)
-VALUES (mentor_profile_no_SEQ.NEXTVAL, '안녕하세요, 양한수 멘토입니다.', '경력자입니다', 5, 10, 'profile1.jpg', 100, 50, 1, 8, member_no_SEQ.CURRVAL);
+VALUES (mentor_profile_no_SEQ.NEXTVAL, '안녕하세요, 양한수 멘토입니다.', '경력자입니다', 5, 10, 'profile1.jpg', 100, 50, 3, 8, member_no_SEQ.CURRVAL);
 
 INSERT INTO member(member_no,member_id,member_password,member_email,member_name,member_role,member_points,member_status,member_join_date,member_report_count)
 VALUES(member_no_SEQ.nextval,'hhh','hhh','hhh@naver.com','이도현','ROLE_MENTOR',4000,1,sysdate,0);
 INSERT INTO mentor_profile(mentor_profile_no, mentor_introduce, mentor_career, mentor_rating, mentor_mentoring_count, mentor_image, mentor_activity_count, mentor_follow_count, mentor_status, category_no, member_no)
-VALUES (mentor_profile_no_SEQ.NEXTVAL, '안녕하세요, 이도현 멘토입니다.', '경력자입니다', 5, 10, 'profile1.jpg', 100, 50, 1, 12, member_no_SEQ.CURRVAL);
+VALUES (mentor_profile_no_SEQ.NEXTVAL, '안녕하세요, 이도현 멘토입니다.', '경력자입니다', 5, 10, 'profile1.jpg', 100, 50, 3, 12, member_no_SEQ.CURRVAL);
+
+
+/*멘토 보드 등록*/
+INSERT INTO mentor_board (mentor_board_no, mentor_board_title, mentor_board_content, mentor_board_image, mentor_board_date, mentor_board_views, mentor_board_status, member_no) 
+VALUES (mentor_board_no_SEQ.nextval, '멘토링 꿀팁 대방출!', '멘티분들을 위해 멘토링에 필요한 모든 팁을 공유합니다.', 'image1.jpg', TO_DATE('2024-12-10 12:00:00', 'YYYY-MM-DD HH24:MI:SS'), 105, 1, 6);
+
+INSERT INTO mentor_board (mentor_board_no, mentor_board_title, mentor_board_content, mentor_board_image, mentor_board_date, mentor_board_views, mentor_board_status, member_no) 
+VALUES (mentor_board_no_SEQ.nextval, '효율적인 코딩 학습법', '초보자를 위한 효율적인 코딩 학습 방법을 소개합니다.', 'image2.jpg', TO_DATE('2024-12-11 15:30:00', 'YYYY-MM-DD HH24:MI:SS'), 200, 2, 6);
+
+INSERT INTO mentor_board (mentor_board_no, mentor_board_title, mentor_board_content, mentor_board_image, mentor_board_date, mentor_board_views, mentor_board_status, member_no) 
+VALUES (mentor_board_no_SEQ.nextval, '제목은 없습니다', '더미데이터에요 헤헷.', 'image2.jpg', TO_DATE('2024-12-11 15:31:01', 'YYYY-MM-DD HH24:MI:SS'), 200, 1, 6);
+
 
 /* 팔로우 등록 */
 INSERT INTO follow(follow_no,mentee_member_no,mentor_member_no)
@@ -89,6 +101,12 @@ INSERT INTO report(report_no,  report_type, report_target,report_reason, report_
 VALUES (report_no_SEQ.nextval, 'USER' , 3, 3,'광고쟁이', sysdate, 1, sysdate , 1);
 INSERT INTO report(report_no,  report_type, report_target,report_reason, report_content, report_date, report_status, resolved_date, member_no) 
 VALUES (report_no_SEQ.nextval, 'INQUIRY', 1, 4,'욕쟁이', sysdate, 1, sysdate , 3);
+INSERT INTO report(report_no,  report_type, report_target,report_reason, report_content, report_date, report_status, resolved_date, member_no) 
+VALUES (report_no_SEQ.nextval, 'ANSWER' , 2, 1,'나쁜사람', sysdate, 1, sysdate , 4);
+INSERT INTO report(report_no,  report_type, report_target,report_reason, report_content, report_date, report_status, resolved_date, member_no) 
+VALUES (report_no_SEQ.nextval, 'USER' , 2, 3,'스팸', sysdate, 1, sysdate , 2);
+INSERT INTO report(report_no,  report_type, report_target,report_reason, report_content, report_date, report_status, resolved_date, member_no) 
+VALUES (report_no_SEQ.nextval, 'INQUIRY', 2, 4,'별로임', sysdate, 1, sysdate , 1);
 
 /* 질문 등록 */
 insert into inquiry(inquiry_no,inquiry_title, inquiry_content, inquiry_date, inquiry_status, inquiry_views, category_no, member_no)
@@ -164,18 +182,18 @@ values (chat_message_SEQ.nextval, 1, sysdate, 1, 1, 'java에서 객체지향이 
 /* 채팅방 나갔는지 여부 확인 */
 
 /* 리뷰 등록 */
-insert into review (review_no, review_title, review_content,review_score,review_date,chat_room_no) 
-values (review_no_SEQ.nextval, '제목1', '그냥그래요', 3, sysdate, 1);
-insert into review (review_no, review_title, review_content,review_score,review_date,chat_room_no) 
-values (review_no_SEQ.nextval, '제목2', '적절해요', 4, sysdate, 1);
-insert into review (review_no, review_title, review_content,review_score,review_date,chat_room_no) 
-values (review_no_SEQ.nextval, '제목3', '최고에요', 5, sysdate, 1);
-insert into review (review_no, review_title, review_content,review_score,review_date,chat_room_no) 
-values (review_no_SEQ.nextval, '제목4', '별로에요', 1, sysdate, 2);
-insert into review (review_no, review_title, review_content,review_score,review_date,chat_room_no) 
-values (review_no_SEQ.nextval, '제목5', '최고에요', 5, sysdate, 2);
-insert into review (review_no, review_title, review_content,review_score,review_date,chat_room_no) 
-values (review_no_SEQ.nextval, '제목6', '그냥그래요', 3, sysdate, 2);
+insert into review (review_no, review_title,review_status,review_content,review_score,review_date,chat_room_no) 
+values (review_no_SEQ.nextval, '제목1',1, '그냥그래요', 3, sysdate, 1);
+insert into review (review_no, review_title,review_status, review_content,review_score,review_date,chat_room_no) 
+values (review_no_SEQ.nextval, '제목2',1, '적절해요', 4, sysdate, 1);
+insert into review (review_no, review_title,review_status, review_content,review_score,review_date,chat_room_no) 
+values (review_no_SEQ.nextval, '제목3',1, '최고에요', 5, sysdate, 1);
+insert into review (review_no, review_title,review_status, review_content,review_score,review_date,chat_room_no) 
+values (review_no_SEQ.nextval, '제목4',1, '별로에요', 1, sysdate, 2);
+insert into review (review_no, review_title,review_status, review_content,review_score,review_date,chat_room_no) 
+values (review_no_SEQ.nextval, '제목5',1, '최고에요', 5, sysdate, 2);
+insert into review (review_no, review_title,review_status, review_content,review_score,review_date,chat_room_no) 
+values (review_no_SEQ.nextval, '제목6',1, '그냥그래요', 3, sysdate, 2);
 
 /* 추천 등록 */
 insert into vote(vote_no, vote_type, vote_date, answer_no, member_no)

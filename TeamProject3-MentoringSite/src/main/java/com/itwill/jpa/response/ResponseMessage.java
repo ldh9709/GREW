@@ -18,10 +18,23 @@ public class ResponseMessage {
     public static final String UPDATE_MENTOR_BOARD_SUCCESS = "멘토 보드 수정 성공";
     public static final String DELETE_MENTOR_BOARD_SUCCESS = "멘토 보드 삭제 성공";
     public static final String MENTOR_BOARD_NOT_FOUND = "해당 멘토 보드를 찾을 수 없습니다.";
-    
+    /******************* MENTOR PROFILE 메시지 ************************/
+    public static final String CREATED_MENTOR_PROFILE_SUCCESS = "멘토 프로필 등록 성공";
+    public static final String READ_MENTOR_PROFILE_SUCCESS = "멘토 프로필 상세 조회 성공";
+    public static final String READ_MENTOR_PROFILE_LIST_SUCCESS = "멘토 프로필 목록 조회 성공";
+    public static final String UPDATE_MENTOR_PROFILE_SUCCESS = "멘토 프로필 수정 성공";
+    public static final String DELETE_MENTOR_PROFILE_SUCCESS = "멘토 프로필 삭제 성공";
+    public static final String MENTOR_PROFILE_NOT_FOUND = "해당 멘토 프로필을 찾을 수 없습니다.";
+    public static final String READ_MENTOR_PROFILE_LIST_FAIL = "멘토 프로필 목록 조회 실패";
+    public static final String MENTOR_PROFILE_STATUS_UPDATE_SUCCESS = "멘토 프로필 상태 업데이트 성공";
+    public static final String MENTOR_PROFILE_STATUS_UPDATE_FAIL = "멘토 프로필 상태 업데이트 실패";
+
+    /******************* MENTOR PROFILE TYPE 변경 메시지 ************************/
+    public static final String MENTOR_PROFILE_TYPE_CHANGE_SUCCESS = "멘토 프로필 타입 변경 성공";
+    public static final String MENTOR_PROFILE_TYPE_CHANGE_FAIL = "멘토 프로필 타입 변경 실패";
 	/******************* FOLLOW 메시지 ************************/
 	public static final String CREATE_FOLLOW_SUCCESS = "팔로우 등록 성공";
-	public static final String READ_MENTORLIST_SUCCESS = "팔로잉 멘토 리스트 조 성공";
+	public static final String READ_MENTORLIST_SUCCESS = "팔로잉 멘토 리스트 조회 성공";
 	public static final String READ_MENTEE_COUNT_SUCCESS = "팔로우 멘티 카운트 성공";
 	public static final String DELETE_FOLLOW_SUCCESS = "팔로우 취소 성공";
 	
@@ -59,7 +72,8 @@ public class ResponseMessage {
     public static final String READ_INQUIRY_LIST_SUCCESS = "질문 리스트 불러오기 성공";
     public static final String READ_INQUIRY_LIST_FAIL = "질문 리스트 불러오기 실패";
     public static final String INCREASE_VIEW_INQUIRY_SUCCESS = "조회수 증가 성공";
-    public static final String VIEW_INQUIRY_SUCCESS = "선택 질문 불러오기 성공";
+    public static final String READ_INQUIRY_SUCCESS = "선택 질문 불러오기 성공";
+    public static final String READ_INQUIRY_FAIL = "선택 질문 불러오기 실패";
     
     /**********************ANSWER 메시지**************************/
 	public static final String CREATED_ANSWER_SUCCESS = "답변 등록 성공";
@@ -73,6 +87,7 @@ public class ResponseMessage {
 	public static final String READ_ANSWER_LIST_SUCCESS = "답변 리스트 불러오기 성공";
 	public static final String READ_ANSWER_LIST_FAIL = "답변 리스트 불러오기 실패";
 	public static final String READ_ANSWER_SUCCESS = "선택 답변 불러오기 성공";
+	public static final String READ_ANSWER_FAIL = "선택 답변 불러오기 실패";
 	
 	/******************* CHATTING 메시지 ************************/
 	public static final String PENDING_CHATTING = "요청 대기 중"; // (멘토의 수락/거절 대기 상태)
@@ -106,4 +121,7 @@ public class ResponseMessage {
     public static final String LOGIN_FAIL_PASSWORD_MISMATCH_MEMBER = "회원 패스워드 불일치";
     public static final String CREATE_FAIL_EXISTED_MEMBER = "회원 아이디 중복";
     public static final String UNAUTHORIZED_MEMBER = "인증받지않은 요청입니다.";    
+    
+    /******************* 일반적인 오류 메시지 **********************/
+    public static final String INTERNAL_SERVER_ERROR ="서버 내부 오류가 발생했습니다. 나중에 다시 시도해주세요.";
 }

@@ -13,30 +13,52 @@ import com.itwill.jpa.entity.bullentin_board.Inquiry;
 
 @Repository
 public interface InquiryRepository extends JpaRepository<Inquiry, Long> {
-	//PK로 질문 조회
-	Inquiry findByInquiryNo(Long inquiryNo);
+
 	/** 카테고리별 질문 **/
 	// 조회수순
 	@Query("SELECT i FROM Inquiry i " + 
 			"WHERE i.category.categoryNo = :categoryNo " + 
 			"ORDER BY i.inquiryViews DESC")
-	List<Inquiry> findByCategoryInquiryOrderByView(@Param("categoryNo") Long categoryNo);
+	Page<Inquiry> findByCategoryInquiryOrderByView(@Param("categoryNo") Long categoryNo,Pageable pageable);
+	// 조회수순(대분류)
+	@Query("SELECT i FROM Inquiry i " + 
+			"WHERE i.category.parentCategory.categoryNo = :categoryNo " + 
+			"ORDER BY i.inquiryViews DESC")
+	Page<Inquiry> findByParentCategoryInquiryOrderByView(@Param("categoryNo") Long categoryNo,Pageable pageable);
+	// 최신순
+	@Query("SELECT i FROM Inquiry i " + 
+			"WHERE i.category.categoryNo = :categoryNo " + 
+			"ORDER BY i.inquiryDate DESC")
+	Page<Inquiry> findByCategoryInquiryOrderByDate(@Param("categoryNo") Long categoryNo,Pageable pageable);
+	// 최신순(대분류)
+	@Query("SELECT i FROM Inquiry i " + 
+			"WHERE i.category.parentCategory.categoryNo = :categoryNo " + 
+			"ORDER BY i.inquiryDate DESC")
+	Page<Inquiry> findByParentCategoryInquiryOrderByDate(@Param("categoryNo") Long categoryNo,Pageable pageable);
 
 	// 답변갯수순
 	@Query("SELECT i FROM Inquiry i " + 
 			"WHERE i.category.categoryNo = :categoryNo "
 			+ "ORDER BY (SELECT COUNT(a) FROM Answer a WHERE a.inquiry = i) DESC")
-	List<Inquiry> findByCategoryInquiryOrderByAnswer(@Param("categoryNo") Long categoryNo);
+	Page<Inquiry> findByCategoryInquiryOrderByAnswer(@Param("categoryNo") Long categoryNo,Pageable pageable);
+	// 답변갯수순
+	@Query("SELECT i FROM Inquiry i " + 
+			"WHERE i.category.parentCategory.categoryNo = :categoryNo "
+			+ "ORDER BY (SELECT COUNT(a) FROM Answer a WHERE a.inquiry = i) DESC")
+	Page<Inquiry> findByParentCategoryInquiryOrderByAnswer(@Param("categoryNo") Long categoryNo,Pageable pageable);
 
 	/** 전체질문 **/
 	// 조회수순
 	@Query("SELECT i FROM Inquiry i ORDER BY i.inquiryViews DESC")
 	Page<Inquiry> findAllInquiryOrderByView(Pageable pageable);
+	//최신순
+	@Query("SELECT i FROM Inquiry i ORDER BY i.inquiryDate DESC")
+	Page<Inquiry> findAllInquiryOrderByDate(Pageable pageable);
 
 	// 답변갯수순
 	@Query("SELECT i FROM Inquiry i " + 
 			"ORDER BY (SELECT COUNT(a) FROM Answer a WHERE a.inquiry = i) DESC")
-	List<Inquiry> findAllInquiriOrderByAnswer();
+	Page<Inquiry> findAllInquiriOrderByAnswer(Pageable pageable);
 	
 	//검색기능
 	@Query("SELECT i FROM Inquiry i "
@@ -45,6 +67,11 @@ public interface InquiryRepository extends JpaRepository<Inquiry, Long> {
 		     + "OR i.inquiryContent LIKE %:search% "
 		     + "OR m.memberName LIKE %:search%) "
 		     + "AND i.inquiryStatus = 1")
-		List<Inquiry> findInquiryBySearch(@Param("search") String search);
+	Page<Inquiry> findInquiryBySearch(@Param("search") String search,Pageable pageable);
 
+	// 내가 쓴 질문 리스트 출력
+	@Query("SELECT i FROM Inquiry i WHERE i.member.memberNo = :memberNo AND i.inquiryStatus = 1 " +
+		       "ORDER BY i.inquiryDate DESC")
+	Page<Inquiry> findByMemberMemberNoOrderByInquiryDateDesc(@Param("memberNo") Long memberNo, Pageable pageable);
+	
 }

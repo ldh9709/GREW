@@ -25,11 +25,11 @@ public class Interest {
     private Long interestNo;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "member_no" ,nullable = false)
+    @JoinColumn(name = "member_no")
     private Member member;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "category_no" ,nullable = false)
+    @JoinColumn(name = "category_no")
     private Category category;
     
     public static Interest toEntity(InterestDto interestDto) {

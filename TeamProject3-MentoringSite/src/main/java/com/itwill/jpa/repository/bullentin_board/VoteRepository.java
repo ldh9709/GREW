@@ -11,4 +11,5 @@ public interface VoteRepository extends JpaRepository<Vote, Long>{
 	Optional<Vote> findByMemberMemberNoAndAnswerAnswerNoAndVoteType(Long memberNo, Long answerNo, int i);
 	//추천에서 비추천을 뺀 값을 계산
 	Long countByAnswerAnswerNoAndVoteType(Long answerNo, int voteType);
+	
 }

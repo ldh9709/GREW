@@ -28,9 +28,9 @@ public class Category {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "category_no_SEQ")
     @Column(name = "category_no")
     private Long categoryNo;
-    @Column(name = "category_name" ,nullable = false)
+    @Column(name = "category_name")
     private String categoryName;
-    @Column(name = "category_depth" ,nullable = false)
+    @Column(name = "category_depth")
     private Integer categoryDepth;
     
     @ManyToOne(fetch = FetchType.LAZY)
@@ -43,8 +43,15 @@ public class Category {
     @OneToMany(mappedBy = "category", fetch = FetchType.LAZY)
     private List<Interest> interests = new ArrayList<>();
     
-    @OneToMany(mappedBy = "parentCategory", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
+    @OneToMany(mappedBy = "parentCategory", fetch = FetchType.LAZY, orphanRemoval = true)
     private List<Category> childCategories = new ArrayList<>();
+    
+    @PrePersist
+    public void setDefaultValues() {
+    	if(this.categoryName == null) this.categoryName="";
+    	if(this.categoryDepth == null) this.categoryDepth = 2;
+    }
+    
     
     public static Category toEntity(CategoryRequestDto categoryDto) {
         return Category.builder()
@@ -57,8 +64,5 @@ public class Category {
                 .build();
     }
     
-    public void addParentCategory(Category category) {
-    	
-    }
     
 }

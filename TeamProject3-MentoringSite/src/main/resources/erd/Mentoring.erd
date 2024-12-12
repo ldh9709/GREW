@@ -135,7 +135,11 @@
                         <linkedPath></linkedPath>
                         <tableName>MentorProfile</tableName>
                         <logicalName>MentorProfile</logicalName>
-                        <description></description>
+                        <description>1: 멘토생성(멘티)&#xd;
+2: 심사중&#xd;
+3: 심사완료&#xd;
+4: 탈퇴&#xd;
+</description>
                         <columns>
                           <net.java.amateras.db.visual.model.ColumnModel>
                             <columnName>mentor_profile_no</columnName>
@@ -545,7 +549,9 @@
                               <linkedPath></linkedPath>
                               <tableName>Answer</tableName>
                               <logicalName>Answer</logicalName>
-                              <description></description>
+                              <description>status &#xd;
+1: 활성화&#xd;
+2: 비활성화</description>
                               <columns>
                                 <net.java.amateras.db.visual.model.ColumnModel>
                                   <columnName>answer_no</columnName>
@@ -662,7 +668,9 @@
                         <linkedPath></linkedPath>
                         <tableName>Inquiry</tableName>
                         <logicalName>Inquiry</logicalName>
-                        <description></description>
+                        <description>status&#xd;
+1:활성화&#xd;
+2:비활성화</description>
                         <columns>
                           <net.java.amateras.db.visual.model.ColumnModel>
                             <columnName>Inquiry_no</columnName>
@@ -815,9 +823,14 @@
                       <defaultValue></defaultValue>
                     </net.java.amateras.db.visual.model.ColumnModel>
                     <net.java.amateras.db.visual.model.ColumnModel>
-                      <columnName>category_level</columnName>
-                      <logicalName>category_level</logicalName>
-                      <columnType class="net.java.amateras.db.dialect.ColumnType" reference="../../../targetConnections/net.java.amateras.db.visual.model.ForeignKeyModel[2]/source/columns/net.java.amateras.db.visual.model.ColumnModel[4]/columnType"/>
+                      <columnName>category_depth</columnName>
+                      <logicalName>category_depth</logicalName>
+                      <columnType class="net.java.amateras.db.dialect.ColumnType">
+                        <name>NUMBER</name>
+                        <logicalName>Numeric</logicalName>
+                        <supportSize>true</supportSize>
+                        <type>2</type>
+                      </columnType>
                       <size>10</size>
                       <notNull>false</notNull>
                       <primaryKey>false</primaryKey>
@@ -977,8 +990,8 @@
                   <constraint>
                     <height>-1</height>
                     <width>-1</width>
-                    <x>470</x>
-                    <y>532</y>
+                    <x>548</x>
+                    <y>529</y>
                   </constraint>
                   <sourceConnections>
                     <net.java.amateras.db.visual.model.ForeignKeyModel>
@@ -1236,8 +1249,8 @@
                   <constraint>
                     <height>-1</height>
                     <width>-1</width>
-                    <x>525</x>
-                    <y>787</y>
+                    <x>550</x>
+                    <y>729</y>
                   </constraint>
                   <sourceConnections>
                     <net.java.amateras.db.visual.model.ForeignKeyModel>
@@ -1461,7 +1474,13 @@
             <linkedPath></linkedPath>
             <tableName>ChatRoom</tableName>
             <logicalName>ChatRoom</logicalName>
-            <description></description>
+            <description>7000: 활동 요청&#xd;
+7100: 활동 진행중&#xd;
+7200: 활동 완료&#xd;
+7300: 상담 거절&#xd;
+7400: 상담 취소&#xd;
+7500: 강제종료&#xd;
+</description>
             <columns>
               <net.java.amateras.db.visual.model.ColumnModel>
                 <columnName>chat_room_no</columnName>
@@ -1603,7 +1622,27 @@
             <linkedPath></linkedPath>
             <tableName>Report</tableName>
             <logicalName>Report</logicalName>
-            <description></description>
+            <description>[status]&#xd;
+1: 신고접수&#xd;
+2: 접수중&#xd;
+3: 처리완료(신고인정)&#xd;
+4: 무고처리(신고취소)&#xd;
+&#xd;
+[target]&#xd;
+USER&#xd;
+ANSWER&#xd;
+INQUIRY&#xd;
+&#xd;
+[reason]&#xd;
+1: 욕설/비속어&#xd;
+2: 스팸 및 광고&#xd;
+3: 성적인 내용&#xd;
+4: 폭력적인 내용&#xd;
+5: 개인정보 유출&#xd;
+6: 기타&#xd;
+&#xd;
+&#xd;
+</description>
             <columns>
               <net.java.amateras.db.visual.model.ColumnModel>
                 <columnName>report_no</columnName>
@@ -1771,8 +1810,8 @@
             <constraint>
               <height>-1</height>
               <width>-1</width>
-              <x>1372</x>
-              <y>801</y>
+              <x>1240</x>
+              <y>692</y>
             </constraint>
             <sourceConnections>
               <net.java.amateras.db.visual.model.ForeignKeyModel reference="../../.."/>
@@ -1895,8 +1934,8 @@
             <constraint>
               <height>-1</height>
               <width>-1</width>
-              <x>1451</x>
-              <y>561</y>
+              <x>1346</x>
+              <y>542</y>
             </constraint>
             <sourceConnections>
               <net.java.amateras.db.visual.model.ForeignKeyModel reference="../../.."/>
@@ -2015,8 +2054,8 @@
             <constraint>
               <height>-1</height>
               <width>-1</width>
-              <x>1496</x>
-              <y>388</y>
+              <x>1447</x>
+              <y>442</y>
             </constraint>
             <sourceConnections>
               <net.java.amateras.db.visual.model.ForeignKeyModel reference="../../.."/>
@@ -2113,8 +2152,8 @@
             <constraint>
               <height>-1</height>
               <width>-1</width>
-              <x>1391</x>
-              <y>248</y>
+              <x>1333</x>
+              <y>259</y>
             </constraint>
             <sourceConnections>
               <net.java.amateras.db.visual.model.ForeignKeyModel reference="../../.."/>
@@ -2124,7 +2163,8 @@
             <linkedPath></linkedPath>
             <tableName>mentorBoard</tableName>
             <logicalName>mentorBoard</logicalName>
-            <description></description>
+            <description>1: 활성화&#xd;
+2: 비활성화</description>
             <columns>
               <net.java.amateras.db.visual.model.ColumnModel>
                 <columnName>mentor_board_no</columnName>
@@ -2203,8 +2243,8 @@
                 <defaultValue></defaultValue>
               </net.java.amateras.db.visual.model.ColumnModel>
               <net.java.amateras.db.visual.model.ColumnModel>
-                <columnName>mentor_status</columnName>
-                <logicalName>mentor_status</logicalName>
+                <columnName>mentor_board_status</columnName>
+                <logicalName>mentor_board_status</logicalName>
                 <columnType class="net.java.amateras.db.dialect.ColumnType">
                   <name>NUMBER</name>
                   <logicalName>Numeric</logicalName>
@@ -2392,7 +2432,8 @@
       <linkedPath></linkedPath>
       <tableName>Member</tableName>
       <logicalName>Member</logicalName>
-      <description></description>
+      <description>1: 활성화&#xd;
+2: 비활성화</description>
       <columns>
         <net.java.amateras.db.visual.model.ColumnModel>
           <columnName>member_no</columnName>
@@ -2511,6 +2552,22 @@
           <notNull>false</notNull>
           <primaryKey>false</primaryKey>
           <description></description>
+          <autoIncrement>false</autoIncrement>
+          <defaultValue></defaultValue>
+        </net.java.amateras.db.visual.model.ColumnModel>
+        <net.java.amateras.db.visual.model.ColumnModel>
+          <columnName>member_provider</columnName>
+          <logicalName>member_provider</logicalName>
+          <columnType class="net.java.amateras.db.dialect.ColumnType">
+            <name>VARCHAR2</name>
+            <logicalName>String</logicalName>
+            <supportSize>true</supportSize>
+            <type>12</type>
+          </columnType>
+          <size>10</size>
+          <notNull>false</notNull>
+          <primaryKey>false</primaryKey>
+          <description>SNS인증제공자(카카오, 네이버, 구글)</description>
           <autoIncrement>false</autoIncrement>
           <defaultValue></defaultValue>
         </net.java.amateras.db.visual.model.ColumnModel>

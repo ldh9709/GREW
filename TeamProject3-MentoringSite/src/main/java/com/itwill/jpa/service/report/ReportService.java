@@ -11,8 +11,6 @@ public interface ReportService {
 	ReportDto updateReportStatusToInProgress(Long reportNo);
 	ReportDto updateReportStatusToResolved(Long reportNo);
 	ReportDto updateReportStatusToFalseReport(Long reportNo);
-	ReportDto updateReportStatusToCancel(Long reportNo);
 	ReportDto getReportByreportNo(Long reportNo);
-	List<ReportDto> getReportByUserNo(Long memberNo);
-	List<ReportDto> getReportAll();
+	List<ReportDto> getReportAll(Integer filter,int pageNumber, int pageSize);
 }
