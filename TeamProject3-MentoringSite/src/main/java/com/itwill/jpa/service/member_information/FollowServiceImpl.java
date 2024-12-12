@@ -13,7 +13,6 @@ import com.itwill.jpa.dto.member_information.FollowRequestDto;
 import com.itwill.jpa.dto.member_information.FollowResponseDto;
 import com.itwill.jpa.entity.member_information.Follow;
 import com.itwill.jpa.entity.member_information.Member;
-import com.itwill.jpa.exception.member_information.AlreadyFollowedException;
 import com.itwill.jpa.repository.member_information.CategoryRepository;
 import com.itwill.jpa.repository.member_information.FollowReporitory;
 import com.itwill.jpa.repository.member_information.MemberRepository;
