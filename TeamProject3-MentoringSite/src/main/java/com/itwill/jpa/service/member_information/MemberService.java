@@ -23,4 +23,6 @@ public interface MemberService {
 	//회원 상태 수정
 	Member updateMemberStatus(MemberDto memberDto, Integer statusNo);
 	
+	//회원 신고 카운트 증가
+	Member incrementReportCount(Long MemberNo);
 }

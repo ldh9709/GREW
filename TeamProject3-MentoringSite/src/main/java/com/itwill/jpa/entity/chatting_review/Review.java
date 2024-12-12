@@ -64,6 +64,11 @@ public class Review {
     @PrePersist
     public void setDefaultValues() {
         if (this.reviewDate == null) this.reviewDate = LocalDateTime.now();
+
+        
+        
+        
+
         if(this.reviewStatus==0||this.reviewStatus==null)this.reviewStatus=1;
     }
 

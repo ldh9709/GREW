@@ -19,6 +19,17 @@ public class ResponseStatusCode {
 	public static final int DELETE_MENTOR_BOARD_SUCCESS = 2340;
 	public static final int MENTOR_BOARD_NOT_FOUND = 2350;
 	
+	/******************* MENTOR PROFILE 메시지 코드 ************************/
+	// 🔥 코드 상수 (멘토 프로필 관련 코드)
+    public static final int CREATED_MENTOR_PROFILE_SUCCESS_CODE = 2350;
+    public static final int READ_MENTOR_PROFILE_SUCCESS_CODE = 2355;
+    public static final int READ_MENTOR_PROFILE_LIST_SUCCESS_CODE = 2360;
+    public static final int UPDATE_MENTOR_PROFILE_SUCCESS_CODE = 2365;
+    public static final int DELETE_MENTOR_PROFILE_SUCCESS_CODE = 2370;
+    public static final int MENTOR_PROFILE_NOT_FOUND_CODE = 2375;
+    public static final int READ_MENTOR_PROFILE_LIST_FAIL_CODE = 2380;
+    public static final int MENTOR_PROFILE_STATUS_UPDATE_SUCCESS_CODE = 2385;
+    public static final int MENTOR_PROFILE_STATUS_UPDATE_FAIL_CODE = 2390;
 	/******************* FOLLOW 메시지 ************************/
 	public static final int CREATE_FOLLOW_SUCCESS = 2400;
 	public static final int READ_MENTORLIST_SUCCESS = 2410;
@@ -106,4 +117,9 @@ public class ResponseStatusCode {
 	public static final int LOGIN_FAIL_PASSWORD_MISMATCH_MEMBER = 8100;
 	public static final int CREATE_FAIL_EXISTED_MEMBER = 8200;
 	public static final int UNAUTHORIZED_MEMBER = 8300;
+	
+	
+	/******************* 일반적인오류 메시지 **********************/
+	public static final int INTERNAL_SERVER_ERROR = 10000;
+	
 }

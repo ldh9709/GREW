@@ -116,6 +116,14 @@ public class MemberServiceImpl implements MemberService {
 		return memberRepository.findByMemberNo(memberNo);
 	}
 
+	/***** 신고 카운트 증가 *****/
+	@Override
+	public Member incrementReportCount(Long MemberNo) {
+		Member member = memberRepository.findById(MemberNo).get();
+		member.setMemberReportCount(member.getMemberReportCount()+1);
+		return memberRepository.save(member);
+	}
+
 	/********************************* Interest CRUD **************************************/
 	
 

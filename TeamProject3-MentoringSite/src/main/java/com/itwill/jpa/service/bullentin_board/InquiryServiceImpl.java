@@ -44,6 +44,7 @@ public class InquiryServiceImpl implements InquiryService {
 	// 질문등록
 	@Override
 	public InquiryDto createInquiry(InquiryDto inquiryDto) {
+		
 	    try {
 	    	Inquiry inquiry = Inquiry.toEntity(inquiryDto);
 	        return InquiryDto.toDto(inquiryRepository.save(inquiry));
@@ -91,7 +92,7 @@ public class InquiryServiceImpl implements InquiryService {
 		        .orElseThrow(() -> new CustomException(ResponseStatusCode.READ_INQUIRY_FAIL, ResponseMessage.READ_INQUIRY_FAIL));
 
 		// IP 조회 기록을 DB에서 확인
-		InquiryIpView lastView = inquiryIpViewRepository.findByIpAddressAndInquiry_InquiryNo(ipAddress,inquiryNo);
+		InquiryIpView lastView = inquiryIpViewRepository.findByIpAddressAndInquiry_InquiryNo(ipAddress, inquiryNo);
 
 		long currentTime = System.currentTimeMillis();
 		long lastViewTime = lastView != null
@@ -107,8 +108,7 @@ public class InquiryServiceImpl implements InquiryService {
 			inquiryRepository.save(inquiry);
 
 			// IP 조회 기록 업데이트
-			InquiryIpViewDto updatedIpView = new InquiryIpViewDto(null, ipAddress, inquiryNo,
-					LocalDateTime.now());
+			InquiryIpViewDto updatedIpView = new InquiryIpViewDto(null, ipAddress, inquiryNo, LocalDateTime.now());
 			inquiryIpViewRepository.save(InquiryIpView.toEntity(updatedIpView));
 		}
 
@@ -134,6 +134,18 @@ public class InquiryServiceImpl implements InquiryService {
 	public Page<InquiryDto> getByCategoryInquiryOrderByView(Long categoryNo, int pageNumber, int pageSize) {
 		Pageable pageable = PageRequest.of(pageNumber, pageSize);
 		Page<Inquiry> inquiryEntityList = inquiryRepository.findByCategoryInquiryOrderByView(categoryNo, pageable);
+		List<InquiryDto> inquiryDtoList = new ArrayList<>();
+		for (Inquiry inquiryEntity : inquiryEntityList) {
+			inquiryDtoList.add(InquiryDto.toDto(inquiryEntity));
+		}
+		return new PageImpl<>(inquiryDtoList, pageable, inquiryEntityList.getTotalElements());
+	}
+
+	// 최신순
+	@Override
+	public Page<InquiryDto> getByCategoryInquiryOrderByDate(Long categoryNo, int pageNumber, int pageSize) {
+		Pageable pageable = PageRequest.of(pageNumber, pageSize);
+		Page<Inquiry> inquiryEntityList = inquiryRepository.findByCategoryInquiryOrderByDate(categoryNo, pageable);
 		List<InquiryDto> inquiryDtoList = new ArrayList<>();
 		for (Inquiry inquiryEntity : inquiryEntityList) {
 			inquiryDtoList.add(InquiryDto.toDto(inquiryEntity));
@@ -168,6 +180,20 @@ public class InquiryServiceImpl implements InquiryService {
 		return new PageImpl<>(inquiryDtoList, pageable, inquiryEntityList.getTotalElements());
 	}
 
+	// 최신순
+	@Override
+	public Page<InquiryDto> getByAllInquiryOrderByDate(int pageNumber, int pageSize) {
+		Pageable pageable = PageRequest.of(pageNumber, pageSize);
+		Page<Inquiry> inquiryEntityList = inquiryRepository.findAllInquiryOrderByDate(pageable);
+		List<InquiryDto> inquiryDtoList = new ArrayList<>();
+		for (Inquiry inquiryEntity : inquiryEntityList) {
+			inquiryDtoList.add(InquiryDto.toDto(inquiryEntity));
+		}
+
+		// PageImpl을 사용해 Page<InquiryDto> 반환
+		return new PageImpl<>(inquiryDtoList, pageable, inquiryEntityList.getTotalElements());
+	}
+
 	// 검색기능
 	@Override
 	public Page<InquiryDto> getInquiryBySearch(String search, int pageNumber, int pageSize) {
@@ -187,17 +213,17 @@ public class InquiryServiceImpl implements InquiryService {
 		return clientIp;
 	}
 
-	
-	//내가 쓴 질문리스트 출력
+	// 내가 쓴 질문리스트 출력
 	@Override
 	public Page<InquiryDto> getInquiryByMember(Long MemberNo, int pageNumber, int pageSize) {
 		Pageable pageable = PageRequest.of(pageNumber, pageSize);
-		Page<Inquiry> inquiryEntityList = inquiryRepository.findByMemberMemberNoOrderByInquiryDateDesc(MemberNo, pageable);
+		Page<Inquiry> inquiryEntityList = inquiryRepository.findByMemberMemberNoOrderByInquiryDateDesc(MemberNo,
+				pageable);
 		List<InquiryDto> inquiryDtoList = new ArrayList<>();
 		for (Inquiry inquiryEntity : inquiryEntityList) {
 			inquiryDtoList.add(InquiryDto.toDto(inquiryEntity));
 		}
-		
+
 		return new PageImpl<>(inquiryDtoList, pageable, inquiryEntityList.getTotalElements());
 	}
 
