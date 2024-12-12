@@ -13,7 +13,6 @@ public class HttpStatusMapper {
 
     static {
         // MEMBER 관련 상태 코드 매핑
-        // 예시: statusCodeMap.put(ResponseStatusCode.CREATED_MEMBER_SUCCESS, HttpStatus.CREATED);
 
         // MENTOR BOARD 관련 상태 코드 매핑
 
