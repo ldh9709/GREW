@@ -20,6 +20,11 @@ public interface InquiryRepository extends JpaRepository<Inquiry, Long> {
 			"WHERE i.category.categoryNo = :categoryNo " + 
 			"ORDER BY i.inquiryViews DESC")
 	Page<Inquiry> findByCategoryInquiryOrderByView(@Param("categoryNo") Long categoryNo,Pageable pageable);
+	// 조회수순
+	@Query("SELECT i FROM Inquiry i " + 
+			"WHERE i.category.categoryNo = :categoryNo " + 
+			"ORDER BY i.inquiryDate DESC")
+	Page<Inquiry> findByCategoryInquiryOrderByDate(@Param("categoryNo") Long categoryNo,Pageable pageable);
 
 	// 답변갯수순
 	@Query("SELECT i FROM Inquiry i " + 
@@ -31,6 +36,9 @@ public interface InquiryRepository extends JpaRepository<Inquiry, Long> {
 	// 조회수순
 	@Query("SELECT i FROM Inquiry i ORDER BY i.inquiryViews DESC")
 	Page<Inquiry> findAllInquiryOrderByView(Pageable pageable);
+	//최신순
+	@Query("SELECT i FROM Inquiry i ORDER BY i.inquiryDate DESC")
+	Page<Inquiry> findAllInquiryOrderByDate(Pageable pageable);
 
 	// 답변갯수순
 	@Query("SELECT i FROM Inquiry i " + 
