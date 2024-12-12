@@ -1,5 +1,6 @@
 package com.itwill.jpa.repository.member_information;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.EntityGraph;
@@ -13,12 +14,9 @@ import com.itwill.jpa.entity.member_information.Category;
 @Repository
 public interface CategoryRepository extends JpaRepository<Category, Long> {
 	
-	/*
-	 * @EntityGraph(attributePaths = {"childCategories", "mentorProfiles",
-	 * "interests"})
-	 * 
-	 * @Query("SELECT c FROM Category c WHERE c.categoryNo = :categoryNo")
-	 * Optional<Category> findCategoryWithChildrenAndProfiles(@Param("categoryNo")
-	 * Long categoryNo);
-	 */
+	@Query("SELECT c.categoryNo, c.categoryName, c.categoryDepth FROM Category c WHERE c.parentCategory.categoryNo = :parentCategoryNo")
+	List<Category> findChildCategoriesByParentCategoryNo(@Param("parentCategoryNo") Long parentCategoryNo);
+	
+	 @EntityGraph(attributePaths = {"childCategories"})
+	 Category findByCategoryNo(Long categoryNo);
 }

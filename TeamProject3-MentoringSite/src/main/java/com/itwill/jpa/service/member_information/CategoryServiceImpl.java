@@ -48,6 +48,29 @@ public class CategoryServiceImpl implements CategoryService{
 	} 
  	*/	
  	
+	/* 카테고리 대분류별 출력 */
+	@Override
+	public CategoryResponseDto getCategoriesBycategoryNo(Long categoryNo){
+		Category parentCategory = categoryRepository.findById(categoryNo).get();
+		List<Category> childCategories = categoryRepository.findCategoryByParentCategory(categoryNo);
+		
+		List<CategoryResponseDto> childCategoriesDto = new ArrayList<>();
+		
+		for (CategoryResponseDto categoryResponseDto : childCategoriesDto) {
+			childCategoriesDto.add(categoryResponseDto);
+		}
+		
+		CategoryResponseDto category = CategoryResponseDto.builder()
+				.categoryNo(parentCategory.getCategoryNo())
+				.categoryName(parentCategory.getCategoryName())
+				.categoryDepth(parentCategory.getCategoryDepth())
+				.childCategories(childCategoriesDto)
+				.build();
+		
+		return category;
+		
+	}
+	
 	/* 카테고리 리스트 출력 */
 	@Override
 	public List<CategoryResponseDto> getCategories() {
