@@ -13,16 +13,21 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import jakarta.transaction.Transactional;
+
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Transactional
 @Service
 public class MemtorBoardServiceImpl implements MemtorBoardService {
 
-	
+		private static final String IMAGE_PATH = "src/main/resources/static/images/mentor-board/";
+		
 	  @Autowired
 	    private MentorBoardRepository mentorBoardRepository;
 
@@ -125,6 +130,43 @@ public class MemtorBoardServiceImpl implements MemtorBoardService {
 	    }   
 	    
 	    
+	    @Override
+	    public void updateMentorBoardImage(Long mentorBoardNo, MultipartFile file) throws Exception {
+	        // 1️ 멘토 보드 정보 조회
+	        MentorBoard mentorBoard = mentorBoardRepository.findById(mentorBoardNo)
+	                .orElseThrow(() -> new IllegalArgumentException("해당 멘토 보드를 찾을 수 없습니다. mentorBoardNo: " + mentorBoardNo));
+
+	        // 2️ 절대 경로 가져오기
+	        String absolutePath = new File("").getAbsolutePath(); 
+	        String IMAGE_PATH = absolutePath + "/src/main/resources/static/images/mentor-board/"; // 절대 경로 생성
+
+	        // 3️ 디렉터리 확인 및 생성
+	        File saveDir = new File(IMAGE_PATH);
+	        if (!saveDir.exists()) {
+	            saveDir.mkdirs(); // 디렉터리가 없으면 생성
+	        }
+
+	        // 4️ 파일명 생성 (고유한 이름으로 생성)
+	        String originalFilename = file.getOriginalFilename();
+	        String fileExtension = originalFilename.substring(originalFilename.lastIndexOf("."));
+	        String fileName = UUID.randomUUID().toString() + fileExtension;
+
+	        // 5️ 파일 저장 경로 생성
+	        File saveFile = new File(IMAGE_PATH + fileName);
+
+	        // 6️ 파일 저장
+	        file.transferTo(saveFile);
+
+	        // 7️ mentorBoard 엔티티에 이미지 경로 저장
+	        mentorBoard.setMentorBoardImage("/images/mentor-board/" + fileName);
+	        mentorBoardRepository.save(mentorBoard);
+	    }
+	    
+	    
+	    
+}
+
+	    
 	    
 	    
 	    
@@ -172,4 +214,3 @@ public class MemtorBoardServiceImpl implements MemtorBoardService {
 //    
     
     
-}

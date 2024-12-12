@@ -38,6 +38,7 @@ public interface MentorBoardRepository extends JpaRepository<MentorBoard, Long> 
     
     
     
+}
     
     
 //	//페이징
@@ -64,4 +65,3 @@ public interface MentorBoardRepository extends JpaRepository<MentorBoard, Long> 
 //     */
 //    @Query("SELECT mb FROM MentorBoard mb WHERE mb.mentorBoardStatus = 1 ORDER BY mb.mentorBoardDate DESC")
 //    List<MentorBoard> findAllMentorBoardsByDateOrderByDateDesc();
-}

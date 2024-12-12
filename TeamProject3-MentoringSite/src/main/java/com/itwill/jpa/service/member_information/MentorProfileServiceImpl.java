@@ -22,13 +22,20 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.orm.ObjectOptimisticLockingFailureException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
 @Transactional
 public class MentorProfileServiceImpl implements MentorProfileService {
+	
+	private static final String IMAGE_PATH = "src/main/resources/static/images/mentor-profile/";
+	
+	
 	 @PersistenceContext
 	  private EntityManager entityManager;
 	 private final MentorProfileRepository mentorProfileRepository;
@@ -143,6 +150,39 @@ public class MentorProfileServiceImpl implements MentorProfileService {
         return mentorProfiles.map(MentorProfileDto::toDto);
     }
 
+    @Override
+    public void updateMentorProfileImage(Long mentorProfileNo, MultipartFile file) throws Exception {
+        // 1️⃣ 멘토 프로필 정보 조회
+        MentorProfile mentorProfile = mentorProfileRepository.findById(mentorProfileNo)
+                .orElseThrow(() -> new IllegalArgumentException("해당 멘토 프로필을 찾을 수 없습니다. mentorProfileNo: " + mentorProfileNo));
+
+        // 2️⃣ 절대 경로 가져오기
+        String absolutePath = new File("").getAbsolutePath();
+        String IMAGE_PATH = absolutePath + "/src/main/resources/static/images/mentor-profile/"; // 절대 경로 생성
+
+        // 3️⃣ 디렉터리 확인 및 생성
+        File saveDir = new File(IMAGE_PATH);
+        if (!saveDir.exists()) {
+            saveDir.mkdirs(); // 디렉터리가 없으면 생성
+        }
+
+        // 4️⃣ 파일명 생성 (고유한 이름으로 생성)
+        String originalFilename = file.getOriginalFilename();
+        String fileExtension = originalFilename.substring(originalFilename.lastIndexOf("."));
+        String fileName = UUID.randomUUID().toString() + fileExtension;
+
+        // 5️⃣ 파일 저장 경로 생성
+        File saveFile = new File(IMAGE_PATH + fileName);
+
+        // 6️⃣ 파일 저장
+        file.transferTo(saveFile);
+
+        // 7️⃣ mentorProfile 엔티티에 이미지 경로 저장
+        mentorProfile.setMentorImage("/images/mentor-profile/" + fileName);
+        mentorProfileRepository.save(mentorProfile);
+    }
+    
+    
 }
 
 //    /**
