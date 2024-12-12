@@ -52,11 +52,6 @@ public class CategoryServiceImpl implements CategoryService{
 	@Override
 	public CategoryResponseDto getCategoriesBycategoryNo(Long categoryNo){
 		Category category = categoryRepository.findByCategoryNo(categoryNo);
-//		List<CategoryResponseDto> childCategories = new ArrayList<>();
-//		
-//		for (Category child : category.getChildCategories()) {
-//			childCategories.add(CategoryResponseDto.toDto(category));
-//		}
 		
 		return CategoryResponseDto.toDto(category);
 		
