@@ -40,8 +40,8 @@ public class MentorBoardController {
     	MentorBoardDto savedBoard = mentorBoardService.saveMemtorBoard(mentorBoardDto);
     	List<AlarmDto> saveAlarms = alarmService.createAlarmsByMentorBoard(savedBoard);
         Response response = new Response();
-        response.setStatus(ResponseStatusCode.CREATED_MEMBER_SUCCESS);
-        response.setMessage(ResponseMessage.CREATED_MEMBER_SUCCESS);
+        response.setStatus(ResponseStatusCode.CREATED_MENTOR_BOARD_SUCCESS);
+        response.setMessage(ResponseMessage.CREATED_MENTOR_BOARD_SUCCESS);
         response.setData(savedBoard);
         response.setAddData(saveAlarms);
         HttpHeaders headers = new HttpHeaders();
@@ -66,8 +66,8 @@ public class MentorBoardController {
 
         // 응답 생성
         Response response = new Response();
-        response.setStatus(ResponseStatusCode.UPDATE_MEMBER_SUCCESS);
-        response.setMessage(ResponseMessage.UPDATE_MEMBER_SUCCESS);
+        response.setStatus(ResponseStatusCode.UPDATE_MENTOR_BOARD_SUCCESS);
+        response.setMessage(ResponseMessage.UPDATE_MENTOR_BOARD_SUCCESS);
         response.setData(updatedBoard);
         
         // 응답 헤더 생성
@@ -87,8 +87,8 @@ public class MentorBoardController {
         );
 
         Response response = new Response();
-        response.setStatus(ResponseStatusCode.DELETE_MEMBER_SUCCESS);
-        response.setMessage(ResponseMessage.DELETE_MEMBER_SUCCESS);
+        response.setStatus(ResponseStatusCode.DELETE_MENTOR_BOARD_SUCCESS);
+        response.setMessage(ResponseMessage.DELETE_MENTOR_BOARD_SUCCESS);
         response.setData(deletedBoard);
 
         HttpHeaders httpHeaders = new HttpHeaders();
@@ -107,8 +107,8 @@ public class MentorBoardController {
         MentorBoardDto mentorBoard = mentorBoardService.getMemtorBoard(mentorBoardNo);
 
         Response response = new Response();
-        response.setStatus(ResponseStatusCode.READ_MEMBER_SUCCESS);
-        response.setMessage(ResponseMessage.READ_MEMBER_SUCCESS);
+        response.setStatus(ResponseStatusCode.READ_MENTOR_BOARD_SUCCESS);
+        response.setMessage(ResponseMessage.READ_MENTOR_BOARD_SUCCESS);
         response.setData(mentorBoard);
 
         HttpHeaders headers = new HttpHeaders();
@@ -131,7 +131,7 @@ public class MentorBoardController {
 
         Response response = new Response();
         response.setStatus(ResponseStatusCode.UPDATE_MEMBER_SUCCESS);
-        response.setMessage("멘토 보드 조회수 증가 성공");
+        response.setMessage(ResponseMessage.UPDATE_MEMBER_SUCCESS);
         response.setData(updatedBoard);
 
         HttpHeaders headers = new HttpHeaders();
@@ -156,7 +156,7 @@ public class MentorBoardController {
 
         Response response = new Response();
         response.setStatus(ResponseStatusCode.READ_MEMBER_LIST_SUCCESS);
-        response.setMessage("멘토 보드 조회수 순 정렬 페이징 성공");
+        response.setMessage(ResponseMessage.READ_MEMBER_LIST_SUCCESS);
         response.setData(sortedBoards);
 
         HttpHeaders headers = new HttpHeaders();
@@ -179,7 +179,7 @@ public class MentorBoardController {
 
         Response response = new Response();
         response.setStatus(ResponseStatusCode.READ_MEMBER_LIST_SUCCESS);
-        response.setMessage("멘토 보드 검색 페이징 성공");
+        response.setMessage(ResponseMessage.READ_MEMBER_LIST_SUCCESS);
         response.setData(searchedBoards);
 
         HttpHeaders headers = new HttpHeaders();
@@ -201,7 +201,7 @@ public class MentorBoardController {
 
         Response response = new Response();
         response.setStatus(ResponseStatusCode.READ_MEMBER_LIST_SUCCESS);
-        response.setMessage("멘토 보드 날짜 기준 정렬 페이징 성공");
+        response.setMessage(ResponseMessage.READ_MEMBER_LIST_SUCCESS);
         response.setData(sortedBoards);
 
         HttpHeaders headers = new HttpHeaders();
@@ -224,7 +224,7 @@ public class MentorBoardController {
 
         Response response = new Response();
         response.setStatus(ResponseStatusCode.READ_MEMBER_LIST_SUCCESS);
-        response.setMessage("특정 사용자와 관련된 게시글 조회 페이징 성공");
+        response.setMessage(ResponseMessage.READ_MEMBER_LIST_SUCCESS);
         response.setData(mentorBoards);
 
         HttpHeaders headers = new HttpHeaders();
@@ -232,7 +232,7 @@ public class MentorBoardController {
 
         return new ResponseEntity<>(response, headers, HttpStatus.OK);
     }
-    
+    @Operation(summary = "이미지 업로드")
     @PostMapping("/{mentorBoardNo}/upload-image")
     public String uploadMentorBoardImage(
             @PathVariable("mentorBoardNo") Long mentorBoardNo,

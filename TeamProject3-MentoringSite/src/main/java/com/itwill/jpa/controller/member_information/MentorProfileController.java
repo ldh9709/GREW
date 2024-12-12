@@ -193,7 +193,7 @@ public class MentorProfileController {
         return new ResponseEntity<>(response, headers, HttpStatus.OK);
     }
     
-    
+    @Operation(summary = "이미지 업로드")
     @PostMapping("/{mentorProfileNo}/upload-image")
     public String uploadMentorProfileImage(
             @PathVariable("mentorProfileNo") Long mentorProfileNo,
