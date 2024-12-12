@@ -69,7 +69,7 @@ public class CategoryRestController {
 		return new ResponseEntity<Response>(response, headers, HttpStatus.OK);
 	}
 	
-	@Operation(summary = "카테고리 항목 출력(대분류)")
+	@Operation(summary = "카테고리별 항목 출력")
 	@GetMapping("/{categoryNo}")
 	public ResponseEntity<Response> getCategoriesBycategoryNo(@PathVariable(name="categoryNo") Long categoryNo){
 		CategoryResponseDto category = categoryService.getCategoriesBycategoryNo(categoryNo);

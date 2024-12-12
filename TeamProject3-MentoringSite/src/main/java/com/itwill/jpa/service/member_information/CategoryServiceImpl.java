@@ -11,6 +11,8 @@ import com.itwill.jpa.dto.member_information.CategoryResponseDto;
 import com.itwill.jpa.entity.member_information.Category;
 import com.itwill.jpa.repository.member_information.CategoryRepository;
 
+import jakarta.transaction.Transactional;
+
 @Service
 public class CategoryServiceImpl implements CategoryService{
 	
@@ -49,6 +51,7 @@ public class CategoryServiceImpl implements CategoryService{
  	*/	
  	
 	/* 카테고리 대분류별 출력 */
+	@Transactional
 	@Override
 	public CategoryResponseDto getCategoriesBycategoryNo(Long categoryNo){
 		Category category = categoryRepository.findByCategoryNo(categoryNo);
