@@ -153,7 +153,7 @@ public class AnswerRestController {
 	
 	/* 답변 상세보기 */
 	@Operation(summary = "답변 상세보기")
-	@GetMapping("/{answerNo}/answerDetail")
+	@GetMapping("view/{answerNo}")
 	public ResponseEntity<Response> getAnswerByAnswerNo(@PathVariable(name = "answerNo") Long answerNo) {
 		AnswerDto answerDto = answerService.getAnswer(answerNo);
 		
@@ -175,7 +175,7 @@ public class AnswerRestController {
 	/* 질문 하나에 달린 답변 */
 	/* 추천순 */
 	@Operation(summary = "질문에 작성된답변조회(추천순)")
-	@GetMapping("/answerList/{inquiryNo}/inquiryVote")
+	@GetMapping("/{inquiryNo}/answer-vote")
 	public ResponseEntity<Response> getByAnswerOrderByVoteDate(@PathVariable(name = "inquiryNo") Long inquiryNo,
 			@RequestParam(name = "page",defaultValue = "0") int page,  // 기본값은 0 페이지
             @RequestParam(name = "size",defaultValue = "10") int size) {
@@ -202,7 +202,7 @@ public class AnswerRestController {
 	/* 질문 하나에 달린 답변 */
 	/* 최신순 */
 	@Operation(summary = "질문에 작성된답변조회(최신순)")
-	@GetMapping("/answerList/{inquiryNo}/inquiryDate")
+	@GetMapping("/{inquiryNo}/inquiry-date")
 	public ResponseEntity<Response> getByInquiryAnswerOrderByDate(@PathVariable(name = "inquiryNo") Long inquiryNo,
 			@RequestParam(name = "page",defaultValue = "0") int page,  // 기본값은 0 페이지
             @RequestParam(name = "size",defaultValue = "10") int size) {
@@ -226,7 +226,7 @@ public class AnswerRestController {
 	/* 카테고리별 답변 리스트 */
 	/* 추천순 */
 	@Operation(summary = "카테고리별 답변조회(추천순)")
-	@GetMapping("/answerList/{categoryNo}/categoryVote")
+	@GetMapping("/{categoryNo}/answer-vote")
 	public ResponseEntity<Response> getByCategoryAnswerOrderByVotes(@PathVariable(name = "categoryNo") Long categoryNo,
 			@RequestParam(name = "page",defaultValue = "0") int page,  // 기본값은 0 페이지
             @RequestParam(name = "size",defaultValue = "10") int size){
@@ -251,7 +251,7 @@ public class AnswerRestController {
 	/* 카테고리별 답변 리스트 */
 	/* 최신순 */
 	@Operation(summary = "카테고리별 답변조회(최신순)")
-	@GetMapping("/answerList/{categoryNo}/categoryDate")
+	@GetMapping("/{categoryNo}/category-date")
 	public ResponseEntity<Response> getByCategoryAnswerOrderByDate(@PathVariable(name = "categoryNo") Long categoryNo,
 			@RequestParam(name = "page",defaultValue = "0") int page,  // 기본값은 0 페이지
             @RequestParam(name = "size",defaultValue = "10") int size){
@@ -275,7 +275,7 @@ public class AnswerRestController {
 	
 	/* 최근 3일동안 추천 많이 받은 답변 리스트 */
 	@Operation(summary = "최근 3일간 추천 많이 받은 답변 리스트")
-	@GetMapping("/answerList/recently-vote")
+	@GetMapping("/recently-vote")
 	public ResponseEntity<Response> getByAnswerOrderByVoteDate(
 			@RequestParam(name = "page",defaultValue = "0") int page,  // 기본값은 0 페이지
             @RequestParam(name = "size",defaultValue = "10") int size) {
@@ -298,7 +298,7 @@ public class AnswerRestController {
 	
 	/* 내가 작성한 답변내역 */
 	@Operation(summary = "내가 작성한 답변내역")
-	@GetMapping("answerList/{memberNo}")
+	@GetMapping("/{memberNo}")
 	public ResponseEntity<Response> getAnswerByMember(@PathVariable(name = "memberNo") Long memberNo,
 			@RequestParam(name = "page",defaultValue = "0") int page,  // 기본값은 0 페이지
             @RequestParam(name = "size",defaultValue = "10") int size) {
