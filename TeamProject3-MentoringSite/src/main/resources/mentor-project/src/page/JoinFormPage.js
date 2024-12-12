@@ -16,6 +16,11 @@ export const JoinFormPage = () => {
     interests: [] /* interest는 여러개라 배열로 받음 */
   });
 
+  //발송한 임시 번호
+  const [tempCode, setTempCode] = useState({
+    tempCode:""
+  });
+
   //회원가입에 사용할 핸들체인지
   const handleChangeJoinForm = (e) => {
     setMember({
@@ -53,17 +58,29 @@ export const JoinFormPage = () => {
     });
   };
   
+  //인증번호 발송
+  const sendJoinCode = async () => {
+
+    console.log("member : ", member);
+    console.log("member : ", member.memberEmail);
+
+    const response = await memberApi.sendJoinCode(member.memberEmail);
+    setTempCode(response.data);
+    console.log("Response from sendJoinCode:", response);
+  }
 
 
+  //회원가입 액션
   const MemberJoinAction = async () => {
     
     console.log("member : ", member);
+    console.log("tempCode : ", tempCode.data);
     
     if(member.memberId === "") {
       alert("아이디를 입력하세요.")
     }
 
-    const responseJsonObject = await memberApi.joinAction(member);
+    const responseJsonObject = await memberApi.joinAction(member, tempCode);
 
     switch (responseJsonObject.status) {
       case responseStatus.CREATED_USER:
@@ -135,7 +152,13 @@ export const JoinFormPage = () => {
             onChange={handleChangeJoinForm}
             required
           />
-          <button type="button">인증번호</button>
+           <input
+            type="button"
+            id="btn_send_join_code_action"
+            value="인증번호 발송"
+            onClick={sendJoinCode}
+            className="member-join-button"
+          />
         </div>
 
         <div className="form-join-group">
@@ -144,7 +167,7 @@ export const JoinFormPage = () => {
             id="emailCode"
             name="emailCode"
             placeholder="인증번호를 입력하세요"
-            onChange={handleChangeJoinForm}
+            onChange={(e) => setTempCode(e.target.value)}
             required
           />
         </div>

@@ -21,11 +21,32 @@ export const loginAction = async (sendJsonObject) => {
     return response.data;
 }
 
-export const joinAction = async (sendJsonObject) => {
-    console.log("Request Data: ", sendJsonObject);
+export const joinAction = async (member, tempCode) => {
+    console.log("Request Data: ", member);
+    console.log("Request Data: ", tempCode);
 
     const response = await fetch(`${BACKEND_SERVER}/member/createMember`, {
         method:'POST', 
+        headers:{
+            'Content-type':'application/json'
+        },
+        body:JSON.stringify({
+            memberDto : member,
+            tempCode: tempCode
+        })
+    });
+
+    const resultJsonObject = await response.json();
+    console.log("Response Data:", resultJsonObject);
+    return resultJsonObject;
+
+}
+
+export const sendJoinCode = async (sendJsonObject) => {
+    console.log("Request Data : ", sendJsonObject);
+
+    const response = await fetch(`${BACKEND_SERVER}/member/sendJoinCode`, {
+        method:'POST',
         headers:{
             'Content-type':'application/json'
         },
@@ -35,5 +56,4 @@ export const joinAction = async (sendJsonObject) => {
     const resultJsonObject = await response.json();
     console.log("Response Data:", resultJsonObject);
     return resultJsonObject;
-
 }

@@ -76,6 +76,7 @@ public class MemberDto {
 		private String MemberId;
 	}
 	
+	
 	/*
 	 * 일반 회원 가입에 사용
 	 * builderClassName = "JoinForm"으로 설정하면 JoinForm이라는 이름의 빌더 클래스가 생성된다.
@@ -90,6 +91,8 @@ public class MemberDto {
         private String email;
         
     }
+	
+	
 	
 	/*
 	 * SNS 회원가입에 사용

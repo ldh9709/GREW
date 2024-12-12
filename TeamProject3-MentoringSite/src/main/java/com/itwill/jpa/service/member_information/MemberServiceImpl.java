@@ -148,7 +148,7 @@ public class MemberServiceImpl implements MemberService {
 	/********************************* 이메일 발송 **************************************/
 	//회원가입 시 인증번호 메일 전송
 	@Override
-	public void sendJoinCode(MemberDto.JoinFormDto joinForm) {
+	public Integer sendJoinCode(MemberDto.JoinFormDto joinForm) {
 		//랜덤 숫자 객체 생성
 		Random random = new Random();
 		
@@ -162,6 +162,8 @@ public class MemberServiceImpl implements MemberService {
 		tempCode.put(joinForm.getEmail(), tempNo);
 		
 		System.out.println("저장된 인증번호: " + tempNo + ", 이메일: " + joinForm.getEmail());
+		
+		return tempNo;
 	}
 	
 	//인증번호 확인
@@ -170,6 +172,9 @@ public class MemberServiceImpl implements MemberService {
 		//입력받은 이메일로 저장된 인증번호 반환
 		Integer storedCode = tempCode.get(email);
 		
+		System.out.println("storedCode : <<<" + storedCode);
+		System.out.println("email : <<<" + email);
+		System.out.println("inputCode : <<<" + inputCode);
 		//유효성 검사 후 안맞으면 false 반환
 		if(storedCode == null || !storedCode.equals(inputCode)) {
 			return false;

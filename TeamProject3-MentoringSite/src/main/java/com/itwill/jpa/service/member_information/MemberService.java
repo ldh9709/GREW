@@ -24,7 +24,7 @@ public interface MemberService {
 	Member updateMemberStatus(MemberDto memberDto, Integer statusNo);
 	
 	//회원가입 시 인증번호 메일 발송
-	void sendJoinCode(MemberDto.JoinFormDto joinFormDto);
+	Integer sendJoinCode(MemberDto.JoinFormDto joinFormDto);
 	
 	//이메일에 해당하는 인증번호 가져오기
 	Integer getTempCode(String email);
