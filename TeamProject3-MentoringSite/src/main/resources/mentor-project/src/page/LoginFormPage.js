@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "../css/LoginFormPage.css";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import * as memberApi from "../api/memberApi";
 
 function LoginFormPage() {
@@ -88,11 +88,13 @@ function LoginFormPage() {
         <h3 className="signup-sub-title">SNS 로그인</h3>
 
         <div className="form-sns-group">
+          <Link to={'/oauth2/authorization/google'}>
           <img
             src="google_icon.svg"
             alt="google"
             style={{ height: "50px", marginRight: "50px" }}
           />
+          </Link>
           <img
             src="naver_icon.png"
             alt="naver"

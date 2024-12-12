@@ -8,6 +8,7 @@ import com.itwill.jpa.entity.member_information.Interest;
 import com.itwill.jpa.entity.member_information.Member;
 import com.itwill.jpa.entity.role.Role;
 import com.itwill.jpa.validation.annotation.Email;
+import com.itwill.jpa.validation.validator.MemberEmailValidator;
 
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
@@ -98,11 +99,11 @@ public class MemberDto {
 	 * SNS 회원가입에 사용
 	 */
 	@Builder(builderClassName = "JoinOAuth2", builderMethodName = "JoinOAuth2")
-    public static class JoinOAuth2Dtox {
-        private String email;
-        private String password;
-        private String provider;
-    }
+    public MemberDto(String memberEmail, String memberPassword, String memberProvider) {
+		this.memberEmail = memberEmail;
+		this.memberPassword = memberPassword;
+		this.memberProvider = memberProvider;
+	}
 	
 	
 	

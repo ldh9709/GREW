@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import com.itwill.jpa.auth.userinfo.GoogleUserInfo;
 import com.itwill.jpa.auth.userinfo.Oauth2UserInfo;
+import com.itwill.jpa.dto.member_information.MemberDto;
 import com.itwill.jpa.entity.member_information.Member;
 import com.itwill.jpa.repository.member_information.MemberRepository;
 
@@ -42,6 +43,8 @@ public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
 		 * OAuth2User 객체가 반환되며, 사용자의 속성(예: 이메일, 이름)을 포함
 		 */
 		OAuth2User oauth2User = super.loadUser(userRequest);
+		
+		System.out.println("oauth2User : " + oauth2User);
 		
 		//oauth2UserInfo 객체를 null로 생성
 		Oauth2UserInfo oauth2UserInfo = null;
@@ -72,7 +75,14 @@ public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
 		Member findMember = memberRepository.findByMemberEmail(email);
 		
 		if(findMember == null) {
+			findMember = Member.toEntity(MemberDto.JoinOAuth2()
+					.memberEmail(email)
+					.memberPassword(password)
+					.memberProvider(provider)
+					.build());	
 		}
+		
+		memberRepository.save(findMember);
 		
 		return null; 
 	}
