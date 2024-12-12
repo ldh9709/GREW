@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import com.itwill.jpa.auth.userinfo.GoogleUserInfo;
 import com.itwill.jpa.auth.userinfo.Oauth2UserInfo;
 import com.itwill.jpa.dto.member_information.MemberDto;
+import com.itwill.jpa.dto.member_information.MemberSecurityDto;
 import com.itwill.jpa.entity.member_information.Member;
 import com.itwill.jpa.repository.member_information.MemberRepository;
 
@@ -75,15 +76,17 @@ public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
 		Member findMember = memberRepository.findByMemberEmail(email);
 		
 		if(findMember == null) {
-			findMember = Member.toEntity(MemberDto.JoinOAuth2()
-					.memberEmail(email)
-					.memberPassword(password)
-					.memberProvider(provider)
-					.build());	
+			findMember = Member.toSecurityEntity(MemberSecurityDto.JoinOAuth2()
+											.memberEmail(email)
+											.memberPassword(password)
+											.memberProvider(provider)
+											.build());
+			
+			memberRepository.save(findMember);
 		}
 		
-		memberRepository.save(findMember);
+		MemberSecurityDto securityMember =	MemberSecurityDto.toDto(findMember);
 		
-		return null; 
+		return new PrincipalDetails(securityMember, oauth2UserInfo); 
 	}
 }

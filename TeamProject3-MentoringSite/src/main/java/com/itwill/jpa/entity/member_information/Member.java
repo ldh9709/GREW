@@ -7,6 +7,7 @@ import java.util.List;
 import org.hibernate.annotations.DynamicUpdate;
 
 import com.itwill.jpa.dto.member_information.MemberDto;
+import com.itwill.jpa.dto.member_information.MemberSecurityDto;
 import com.itwill.jpa.entity.alarm.Alarm;
 import com.itwill.jpa.entity.bullentin_board.Answer;
 import com.itwill.jpa.entity.bullentin_board.Inquiry;
@@ -169,6 +170,19 @@ public class Member {
 	            .memberName(memberDto.getMemberName())
 	            .build();
 	}
+	
+	/*
+	 * SecurityDTO -> Entitiy
+	 */
+	public static Member toSecurityEntity(MemberSecurityDto memberDto) {
+		return Member.builder()
+				.memberEmail(memberDto.getMemberEmail())
+				.memberPassword(memberDto.getMemberPassword())
+				.memberProvider(memberDto.getMemberProvider())
+				.build();
+	}
+	
+	
 	
 	//흥미 추가
 	public void addInterests(Interest interest) {
