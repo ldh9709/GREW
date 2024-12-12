@@ -47,12 +47,14 @@ public class ReviewRestController {
 	@PostMapping
 	public ResponseEntity<Response> insertReview(@RequestBody ReviewDto reviewDto){
 		
-		ReviewDto saveReview = ReviewDto.toDto(reviewService.saveReview(reviewDto));
+
+		ReviewDto saveReview = ReviewDto.toDto(reviewService.createReview(reviewDto));
 
 		
 		mentorProfileService.updateMentorRating(saveReview.getMentorMemberNo());
 
 		AlarmDto alarmDto = alarmService.createAlarmByReview(saveReview.getReviewNo());
+
 
 		
 		Response response = new Response();
@@ -70,8 +72,6 @@ public class ReviewRestController {
 		HttpHeaders httpHeaders = new HttpHeaders();
 		httpHeaders.setContentType(new MediaType(MediaType.APPLICATION_JSON, Charset.forName("UTF-8")));
 		
-//		ResponseEntity<Response> responseEntity = new ResponseEntity<Response>(response, httpHeaders,
-//				HttpStatus.CREATED);
 		
 		return new ResponseEntity<>(response, HttpStatus.CREATED);
 		
@@ -82,7 +82,7 @@ public class ReviewRestController {
 	public ResponseEntity<Response> updateReview(@RequestBody ReviewDto reviewDto){
 		
 		Response response = new Response();
-		Review review = reviewService.updateReview(reviewDto);
+		ReviewDto review = ReviewDto.toDto(reviewService.updateReview(reviewDto));
 		response.setStatus(ResponseStatusCode.UPDATE_REVIEW_SUCCESS);
 		response.setMessage(ResponseMessage.UPDATE_REVIEW_SUCCESS);
 		response.setData(review);
@@ -100,7 +100,9 @@ public class ReviewRestController {
 	public ResponseEntity<Response> deleteReview(@PathVariable(name = "reviewNo")Long reviewNo){
 		
 		Response response = new Response();
+
 		Review review = reviewService.deleteReview(reviewNo);
+
 		response.setStatus(ResponseStatusCode.DELETE_REVIEW_SUCCESS);
 		response.setMessage(ResponseMessage.DELETE_REVIEW_SUCCESS);
 		response.setData(review);
@@ -118,7 +120,7 @@ public class ReviewRestController {
 	public ResponseEntity<Response> selectReviewByReviewNo(@PathVariable(name="reviewNo") Long reviewNo){
 		
 		Response response = new Response();
-		Review review = reviewService.selectReviewByReviewNo(reviewNo);
+		ReviewDto review = reviewService.getReviewByReviewNo(reviewNo);
 		// 리뷰가 없는 경우
 	    if (review == null) {
 	        response.setStatus(ResponseStatusCode.VIEW_REVIEW_FAIL);  // 예를 들어, REVIEW_NOT_FOUND 상태 코드
@@ -142,7 +144,7 @@ public class ReviewRestController {
 	public ResponseEntity<Response> selectReviewByChatRoomNo(@PathVariable(name="chatRoomNo") Long chatRoomNo){
 		
 		Response response = new Response();
-		List<ReviewDto> reviews = reviewService.selectReviewByChatRoomNo(chatRoomNo);
+		List<ReviewDto> reviews = reviewService.getReviewByChatRoomNo(chatRoomNo);
 		response.setStatus(ResponseStatusCode.READ_REVIEW_LIST_SUCCESS);
 		response.setMessage(ResponseMessage.READ_REVIEW_LIST_SUCCESS);
 		response.setData(reviews);
@@ -156,11 +158,11 @@ public class ReviewRestController {
 		return responseEntity;
 	}
 	@Operation(summary = "특정 멤버 리뷰 목록 출력")
-	@GetMapping("/member/{member_no}")
+	@GetMapping("/member/{memberNo}")
 	public ResponseEntity<Response> selectReviewByMemberNo(@PathVariable(name="member_no") Long memberNo){
 		
 		Response response = new Response();
-		List<ReviewDto> reviews = reviewService.selectReviewByMemberNo(memberNo);
+		List<ReviewDto> reviews = reviewService.getReviewByMemberNo(memberNo);
 		response.setStatus(ResponseStatusCode.READ_REVIEW_LIST_SUCCESS);
 		response.setMessage(ResponseMessage.READ_REVIEW_LIST_SUCCESS);
 		response.setData(reviews);

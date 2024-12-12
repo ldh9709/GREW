@@ -19,7 +19,7 @@ public class ChatMessageServiceImpl implements ChatMessageService {
 	
 	/*메시지 저장*/
 	@Override
-	public ChatMessage saveChatMessage(ChatMessageDto chatMessageDto) {
+	public ChatMessage createChatMessage(ChatMessageDto chatMessageDto) {
 		ChatMessage message = ChatMessage.toEntity(chatMessageDto);
 		
 		
@@ -38,39 +38,15 @@ public class ChatMessageServiceImpl implements ChatMessageService {
 
 	/*특정 메시지 조회(신고위해필요)*/
 	@Override
-	public ChatMessage selectChatMessageByNo(Long chatMessageNo) {
+	public ChatMessage getChatMessageByNo(Long chatMessageNo) {
 		
 		return chatMessageRepository.findChatMessageByChatMessageNo(chatMessageNo);
 	}
 
-	/*채팅방의 메시지 리스트 조회*/
-	@Override
-	public List<ChatMessageDto> selectChatMessageByChatRoomNo(Long chatRoomNo) {
-		List<ChatMessage> chatMessages = chatMessageRepository.findChatMessageByChatRoom_ChatRoomNo(chatRoomNo);
-		List<ChatMessageDto> chatMessageList = new ArrayList<>();
-		for (ChatMessage chatMessage : chatMessages) {
-			chatMessageList.add(ChatMessageDto.toDto(chatMessage));
-		}
-		
-		return chatMessageList;
-	}
-
-	/*특정 멤버 번호에 따른 채팅 리스트 조회*/
-	@Override
-	public List<ChatMessageDto> selectChatMessageByMemberNo(Long memberNo) {
-		List<ChatMessage> chatMessages = chatMessageRepository.findChatMessageByMember_MemberNo(memberNo);
-		List<ChatMessageDto> chatMessageList = new ArrayList<>();
-		for (ChatMessage chatMessage : chatMessages) {
-			chatMessageList.add(ChatMessageDto.toDto(chatMessage));
-		}
-		
-		return chatMessageList;
-		
-	}
-
+	
 	/*모든 채팅 조회*/
 	@Override
-	public List<ChatMessageDto> selectChatMessageAll() {
+	public List<ChatMessageDto> getChatMessageAll() {
 		List<ChatMessage> chatMessages = chatMessageRepository.findAll();
 		List<ChatMessageDto> chatMessageList = new ArrayList<>();
 		for (ChatMessage chatMessage : chatMessages) {

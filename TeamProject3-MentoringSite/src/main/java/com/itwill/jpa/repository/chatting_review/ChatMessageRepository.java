@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import com.itwill.jpa.dto.chatting_review.ChatMessageDto;
 import com.itwill.jpa.entity.chatting_review.ChatMessage;
 
 public interface ChatMessageRepository extends JpaRepository<ChatMessage, Long>{
@@ -16,6 +17,7 @@ public interface ChatMessageRepository extends JpaRepository<ChatMessage, Long>{
 	
 	// 유저구분위해 필요
 	List<ChatMessage> findChatMessageByMember_MemberNo(Long memberNo);
+
 	
 	
 	

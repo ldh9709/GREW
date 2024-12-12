@@ -72,7 +72,8 @@ public class ResponseMessage {
     public static final String READ_INQUIRY_LIST_SUCCESS = "질문 리스트 불러오기 성공";
     public static final String READ_INQUIRY_LIST_FAIL = "질문 리스트 불러오기 실패";
     public static final String INCREASE_VIEW_INQUIRY_SUCCESS = "조회수 증가 성공";
-    public static final String VIEW_INQUIRY_SUCCESS = "선택 질문 불러오기 성공";
+    public static final String READ_INQUIRY_SUCCESS = "선택 질문 불러오기 성공";
+    public static final String READ_INQUIRY_FAIL = "선택 질문 불러오기 실패";
     
     /**********************ANSWER 메시지**************************/
 	public static final String CREATED_ANSWER_SUCCESS = "답변 등록 성공";
@@ -86,6 +87,7 @@ public class ResponseMessage {
 	public static final String READ_ANSWER_LIST_SUCCESS = "답변 리스트 불러오기 성공";
 	public static final String READ_ANSWER_LIST_FAIL = "답변 리스트 불러오기 실패";
 	public static final String READ_ANSWER_SUCCESS = "선택 답변 불러오기 성공";
+	public static final String READ_ANSWER_FAIL = "선택 답변 불러오기 실패";
 	
 	/******************* CHATTING 메시지 ************************/
 	public static final String PENDING_CHATTING = "요청 대기 중"; // (멘토의 수락/거절 대기 상태)
@@ -101,6 +103,7 @@ public class ResponseMessage {
 	public static final String CHATTING_LIST_SUCCESS = "채팅방 리스트 출력";
 	public static final String CHATTING_NAME_CHANGE = "채팅방 제목 변경 성공";
 	public static final String CHATTING_MESSAGE = "채팅방 대화 목록 출력";
+	public static final String READ_MESSAGE = "채팅 읽음";
 	
 	/******************* REVIEW 메시지 **********************/
 	public static final String CREATED_REVIEW_SUCCESS = "리뷰 등록 성공.";
@@ -118,4 +121,7 @@ public class ResponseMessage {
     public static final String LOGIN_FAIL_PASSWORD_MISMATCH_MEMBER = "회원 패스워드 불일치";
     public static final String CREATE_FAIL_EXISTED_MEMBER = "회원 아이디 중복";
     public static final String UNAUTHORIZED_MEMBER = "인증받지않은 요청입니다.";    
+    
+    /******************* 일반적인 오류 메시지 **********************/
+    public static final String INTERNAL_SERVER_ERROR ="서버 내부 오류가 발생했습니다. 나중에 다시 시도해주세요.";
 }

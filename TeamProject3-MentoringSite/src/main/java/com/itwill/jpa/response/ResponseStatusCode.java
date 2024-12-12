@@ -66,7 +66,8 @@ public class ResponseStatusCode {
 	public static final int READ_INQUIRY_LIST_SUCCESS = 5300;
 	public static final int READ_INQUIRY_LIST_FAIL = 5301;
 	public static final int INCREASE_VIEW_INQUIRY_SUCCESS = 5400;
-	public static final int VIEW_INQUIRY_SUCCESS = 5500;
+	public static final int READ_INQUIRY_SUCCESS = 5500;
+	public static final int READ_INQUIRY_FAIL = 5501;
 	
 	/**********************ANSWER 메시지**************************/
 	public static final int CREATED_ANSWER_SUCCESS = 6000;
@@ -80,6 +81,7 @@ public class ResponseStatusCode {
 	public static final int READ_ANSWER_LIST_SUCCESS = 6500;
 	public static final int READ_ANSWER_LIST_FAIL = 6600;
 	public static final int READ_ANSWER_SUCCESS = 6700;
+	public static final int READ_ANSWER_FAIL = 6701;
 	
 	
 	/******************* CHATTING 메시지 ************************/
@@ -96,6 +98,7 @@ public class ResponseStatusCode {
 	public static final int CHATTING_LIST_SUCCESS = 7010;
 	public static final int CHATTING_NAME_CHANGE = 7020;
 	public static final int CHATTING_MESSAGE = 7030;
+	public static final int READ_MESSAGE = 7040;
 	
 	
 	/******************* REVIEW 메시지 **********************/
@@ -115,4 +118,9 @@ public class ResponseStatusCode {
 	public static final int LOGIN_FAIL_PASSWORD_MISMATCH_MEMBER = 8100;
 	public static final int CREATE_FAIL_EXISTED_MEMBER = 8200;
 	public static final int UNAUTHORIZED_MEMBER = 8300;
+	
+	
+	/******************* 일반적인오류 메시지 **********************/
+	public static final int INTERNAL_SERVER_ERROR = 10000;
+	
 }

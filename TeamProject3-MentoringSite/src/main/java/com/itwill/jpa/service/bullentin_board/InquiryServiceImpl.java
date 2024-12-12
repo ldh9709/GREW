@@ -20,9 +20,12 @@ import com.itwill.jpa.dto.member_information.CategoryRequestDto;
 import com.itwill.jpa.entity.bullentin_board.Inquiry;
 import com.itwill.jpa.entity.bullentin_board.InquiryIpView;
 import com.itwill.jpa.entity.member_information.Category;
+import com.itwill.jpa.exception.CustomException;
 import com.itwill.jpa.repository.bullentin_board.InquiryIpViewRepository;
 import com.itwill.jpa.repository.bullentin_board.InquiryRepository;
 import com.itwill.jpa.repository.member_information.CategoryRepository;
+import com.itwill.jpa.response.ResponseMessage;
+import com.itwill.jpa.response.ResponseStatusCode;
 import com.itwill.jpa.util.ClientIp;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -37,18 +40,26 @@ public class InquiryServiceImpl implements InquiryService {
 	private InquiryIpViewRepository inquiryIpViewRepository; // Repository를 통해 조회 기록을 관리
 
 	private final ClientIp clientIpUtil = new ClientIp();// ip
+	
 	// 질문등록
-
 	@Override
 	public InquiryDto createInquiry(InquiryDto inquiryDto) {
 		
-		return InquiryDto.toDto(inquiryRepository.save(Inquiry.toEntity(inquiryDto)));
+	    try {
+	    	Inquiry inquiry = Inquiry.toEntity(inquiryDto);
+	        return InquiryDto.toDto(inquiryRepository.save(inquiry));
+	    } catch (Exception e) {
+	        throw new CustomException(ResponseStatusCode.CREATED_INQUIRY_FAIL, ResponseMessage.CREATED_INQUIRY_FAIL);
+	    }
 	}
 
 	// 질문수정
 	@Override
 	public InquiryDto updateInquiry(InquiryDto inquiryDto) throws Exception {
-		Inquiry inquiry = inquiryRepository.findById(inquiryDto.getInquiryNo()).get();
+		//질문이 존재하는지 확인
+		Inquiry inquiry = inquiryRepository.findById(inquiryDto.getInquiryNo())
+		        .orElseThrow(() -> new CustomException(ResponseStatusCode.UPDATE_INQUIRY_FAIL, ResponseMessage.UPDATE_INQUIRY_FAIL));
+		
 		inquiry.setInquiryTitle(inquiryDto.getInquiryTitle());
 		inquiry.setInquiryContent(inquiryDto.getInquiryContent());
 		inquiry.setInquiryDate(LocalDateTime.now());
@@ -59,8 +70,11 @@ public class InquiryServiceImpl implements InquiryService {
 	// 질문삭제
 	@Override
 	public InquiryDto deleteInquiry(Long inquiryNo) throws Exception {
-		Inquiry inquiry = inquiryRepository.findById(inquiryNo).get();
-		inquiry.setInquiryStatus(2);
+		//질문이 존재하는지 확인
+		Inquiry inquiry = inquiryRepository.findById(inquiryNo)
+		        .orElseThrow(() -> new CustomException(ResponseStatusCode.DELETE_INQUIRY_FAIL, ResponseMessage.DELETE_INQUIRY_FAIL));
+		
+		inquiry.setInquiryStatus(2); // 삭제 상태로 변경
 		return InquiryDto.toDto(inquiryRepository.save(inquiry));
 	}
 
@@ -73,11 +87,12 @@ public class InquiryServiceImpl implements InquiryService {
 	// 조회수 증가 제한: IP별로 일정 시간 내에 조회수 증가 제한
 	@Override
 	public InquiryDto increaseViewInquiry(Long inquiryNo, String ipAddress) throws Exception {
-		// Inquiry 조회
-		Inquiry inquiry = inquiryRepository.findById(inquiryNo).get();
+		// Inquiry 조회 질문이 없으면 예외처리
+		Inquiry inquiry = inquiryRepository.findById(inquiryNo)
+		        .orElseThrow(() -> new CustomException(ResponseStatusCode.READ_INQUIRY_FAIL, ResponseMessage.READ_INQUIRY_FAIL));
 
 		// IP 조회 기록을 DB에서 확인
-		InquiryIpView lastView = inquiryIpViewRepository.findByIpAddressAndInquiry_InquiryNo(ipAddress,inquiryNo);
+		InquiryIpView lastView = inquiryIpViewRepository.findByIpAddressAndInquiry_InquiryNo(ipAddress, inquiryNo);
 
 		long currentTime = System.currentTimeMillis();
 		long lastViewTime = lastView != null
@@ -93,8 +108,7 @@ public class InquiryServiceImpl implements InquiryService {
 			inquiryRepository.save(inquiry);
 
 			// IP 조회 기록 업데이트
-			InquiryIpViewDto updatedIpView = new InquiryIpViewDto(null, ipAddress, inquiryNo,
-					LocalDateTime.now());
+			InquiryIpViewDto updatedIpView = new InquiryIpViewDto(null, ipAddress, inquiryNo, LocalDateTime.now());
 			inquiryIpViewRepository.save(InquiryIpView.toEntity(updatedIpView));
 		}
 
@@ -114,12 +128,57 @@ public class InquiryServiceImpl implements InquiryService {
 		}
 		return new PageImpl<>(inquiryDtoList, pageable, inquiryEntityList.getTotalElements());
 	}
+	// 답변갯수순(대분류)
+	@Override
+	public Page<InquiryDto> getByParentCategoryInquiryOrderByAnswer(Long categoryNo, int pageNumber, int pageSize) {
+		Pageable pageable = PageRequest.of(pageNumber, pageSize);
+		Page<Inquiry> inquiryEntityList = inquiryRepository.findByParentCategoryInquiryOrderByAnswer(categoryNo, pageable);
+		List<InquiryDto> inquiryDtoList = new ArrayList<>();
+		for (Inquiry inquiryEntity : inquiryEntityList) {
+			inquiryDtoList.add(InquiryDto.toDto(inquiryEntity));
+		}
+		return new PageImpl<>(inquiryDtoList, pageable, inquiryEntityList.getTotalElements());
+	}
 
 	// 조회순
 	@Override
 	public Page<InquiryDto> getByCategoryInquiryOrderByView(Long categoryNo, int pageNumber, int pageSize) {
 		Pageable pageable = PageRequest.of(pageNumber, pageSize);
 		Page<Inquiry> inquiryEntityList = inquiryRepository.findByCategoryInquiryOrderByView(categoryNo, pageable);
+		List<InquiryDto> inquiryDtoList = new ArrayList<>();
+		for (Inquiry inquiryEntity : inquiryEntityList) {
+			inquiryDtoList.add(InquiryDto.toDto(inquiryEntity));
+		}
+		return new PageImpl<>(inquiryDtoList, pageable, inquiryEntityList.getTotalElements());
+	}
+	// 조회순(카테고리대분류)
+	@Override
+	public Page<InquiryDto> getByParentCategoryInquiryOrderByView(Long categoryNo, int pageNumber, int pageSize) {
+		Pageable pageable = PageRequest.of(pageNumber, pageSize);
+		Page<Inquiry> inquiryEntityList = inquiryRepository.findByParentCategoryInquiryOrderByView(categoryNo, pageable);
+		List<InquiryDto> inquiryDtoList = new ArrayList<>();
+		for (Inquiry inquiryEntity : inquiryEntityList) {
+			inquiryDtoList.add(InquiryDto.toDto(inquiryEntity));
+		}
+		return new PageImpl<>(inquiryDtoList, pageable, inquiryEntityList.getTotalElements());
+	}
+
+	// 최신순
+	@Override
+	public Page<InquiryDto> getByCategoryInquiryOrderByDate(Long categoryNo, int pageNumber, int pageSize) {
+		Pageable pageable = PageRequest.of(pageNumber, pageSize);
+		Page<Inquiry> inquiryEntityList = inquiryRepository.findByCategoryInquiryOrderByDate(categoryNo, pageable);
+		List<InquiryDto> inquiryDtoList = new ArrayList<>();
+		for (Inquiry inquiryEntity : inquiryEntityList) {
+			inquiryDtoList.add(InquiryDto.toDto(inquiryEntity));
+		}
+		return new PageImpl<>(inquiryDtoList, pageable, inquiryEntityList.getTotalElements());
+	}
+	// 최신순(대분류)
+	@Override
+	public Page<InquiryDto> getByParentCategoryInquiryOrderByDate(Long categoryNo, int pageNumber, int pageSize) {
+		Pageable pageable = PageRequest.of(pageNumber, pageSize);
+		Page<Inquiry> inquiryEntityList = inquiryRepository.findByParentCategoryInquiryOrderByDate(categoryNo, pageable);
 		List<InquiryDto> inquiryDtoList = new ArrayList<>();
 		for (Inquiry inquiryEntity : inquiryEntityList) {
 			inquiryDtoList.add(InquiryDto.toDto(inquiryEntity));
@@ -154,6 +213,20 @@ public class InquiryServiceImpl implements InquiryService {
 		return new PageImpl<>(inquiryDtoList, pageable, inquiryEntityList.getTotalElements());
 	}
 
+	// 최신순
+	@Override
+	public Page<InquiryDto> getByAllInquiryOrderByDate(int pageNumber, int pageSize) {
+		Pageable pageable = PageRequest.of(pageNumber, pageSize);
+		Page<Inquiry> inquiryEntityList = inquiryRepository.findAllInquiryOrderByDate(pageable);
+		List<InquiryDto> inquiryDtoList = new ArrayList<>();
+		for (Inquiry inquiryEntity : inquiryEntityList) {
+			inquiryDtoList.add(InquiryDto.toDto(inquiryEntity));
+		}
+
+		// PageImpl을 사용해 Page<InquiryDto> 반환
+		return new PageImpl<>(inquiryDtoList, pageable, inquiryEntityList.getTotalElements());
+	}
+
 	// 검색기능
 	@Override
 	public Page<InquiryDto> getInquiryBySearch(String search, int pageNumber, int pageSize) {
@@ -173,17 +246,17 @@ public class InquiryServiceImpl implements InquiryService {
 		return clientIp;
 	}
 
-	
-	//내가 쓴 질문리스트 출력
+	// 내가 쓴 질문리스트 출력
 	@Override
 	public Page<InquiryDto> getInquiryByMember(Long MemberNo, int pageNumber, int pageSize) {
 		Pageable pageable = PageRequest.of(pageNumber, pageSize);
-		Page<Inquiry> inquiryEntityList = inquiryRepository.findByMemberMemberNoOrderByInquiryDateDesc(MemberNo, pageable);
+		Page<Inquiry> inquiryEntityList = inquiryRepository.findByMemberMemberNoOrderByInquiryDateDesc(MemberNo,
+				pageable);
 		List<InquiryDto> inquiryDtoList = new ArrayList<>();
 		for (Inquiry inquiryEntity : inquiryEntityList) {
 			inquiryDtoList.add(InquiryDto.toDto(inquiryEntity));
 		}
-		
+
 		return new PageImpl<>(inquiryDtoList, pageable, inquiryEntityList.getTotalElements());
 	}
 

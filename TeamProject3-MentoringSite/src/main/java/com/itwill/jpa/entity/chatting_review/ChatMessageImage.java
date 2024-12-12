@@ -35,16 +35,18 @@ public class ChatMessageImage {
     @Column(name="image_name", nullable=false)
     private String imageName;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="chat_message_no", nullable=false)
-    private ChatMessage chatMessage; // 하나의 chatMessage에 여러 개의 ChatMessageImage가 속함
+    private ChatMessage chatMessage; 
+    
+    
 
     // 엔티티 -> DTO 변환
     public static ChatMessageImage toEntity(ChatMessageImageDto chatMessageImageDto) {
         return ChatMessageImage.builder()
                 .imageNo(chatMessageImageDto.getImageNo())
                 .imageName(chatMessageImageDto.getImageName())
-                .chatMessage(ChatMessage.toEntity(chatMessageImageDto.getChatMessage())) // chatMessageNo만 담기
+                .chatMessage(ChatMessage.builder().chatMessageNo(chatMessageImageDto.getChatMessageNo()).build()) // chatMessageNo만 담기
                 .build();
     }
 

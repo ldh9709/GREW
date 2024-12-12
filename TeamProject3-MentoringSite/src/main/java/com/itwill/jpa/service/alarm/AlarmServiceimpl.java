@@ -79,8 +79,11 @@ public class AlarmServiceimpl implements AlarmService {
 		List<AlarmDto> alarmDtos = new ArrayList<>();
 		List<Long> menteeList = followReporitory.findMenteeByMentor(mentorBoardDto.getMemberNo());
 		for (Long menteeMemberNo : menteeList) {
-			AlarmDto alarmDto = AlarmDto.builder().alarmContent("팔로잉하는 멘토가 게시물을 등록했습니다.").alarmType("follower")
-					.referenceType("mentorBoard").referenceNo(mentorBoardDto.getMentorBoardNo())
+			AlarmDto alarmDto = AlarmDto.builder()
+					.alarmContent("팔로잉하는 멘토가 게시물을 등록했습니다.")
+					.alarmType("follower")
+					.referenceType("mentorBoard")
+					.referenceNo(mentorBoardDto.getMentorBoardNo())
 					.memberNo(menteeMemberNo).build();
 			alarmRepository.save(Alarm.toEntity(alarmDto));
 			alarmDtos.add(alarmDto);

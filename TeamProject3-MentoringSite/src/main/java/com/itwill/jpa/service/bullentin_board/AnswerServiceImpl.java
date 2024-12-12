@@ -4,20 +4,20 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.catalina.startup.ClassLoaderFactory.Repository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 
 import com.itwill.jpa.dto.bulletin_board.AnswerDto;
 import com.itwill.jpa.entity.bullentin_board.Answer;
+import com.itwill.jpa.exception.CustomException;
 import com.itwill.jpa.repository.bullentin_board.AnswerRepository;
 import com.itwill.jpa.repository.bullentin_board.InquiryRepository;
+import com.itwill.jpa.response.ResponseMessage;
+import com.itwill.jpa.response.ResponseStatusCode;
 
 import jakarta.transaction.Transactional;
 @Transactional
@@ -31,13 +31,21 @@ public class AnswerServiceImpl implements AnswerService{
 	@Override
 	public AnswerDto createAnswer(AnswerDto answerDto){
 		
-		return AnswerDto.toDto(answerRepository.save(Answer.toEntity(answerDto)));
+		try {
+            Answer answer = Answer.toEntity(answerDto);
+            return AnswerDto.toDto(answerRepository.save(answer));
+        } catch (Exception e) {
+            throw new CustomException(ResponseStatusCode.CREATED_ANSWER_FAIL, ResponseMessage.CREATED_ANSWER_FAIL);
+        }
 	}
 	
 	/*답변수정*/
 	@Override
 	public AnswerDto updateAnswer(AnswerDto answerDto) throws Exception{
-		Answer answer = answerRepository.findById(answerDto.getAnswerNo()).get();
+		
+		Answer answer = answerRepository.findById(answerDto.getAnswerNo())
+                .orElseThrow(() -> new CustomException(ResponseStatusCode.ACCEPT_ANSWER_FAIL, ResponseMessage.ACCEPT_ANSWER_FAIL));
+		
 		answer.setAnswerContent(answerDto.getAnswerContent());
 		answer.setAnswerDate(LocalDateTime.now());
 		return AnswerDto.toDto(answerRepository.save(answer));
@@ -47,14 +55,19 @@ public class AnswerServiceImpl implements AnswerService{
 	@Override
 	public AnswerDto acceptAnswer(Long answerNo) throws Exception {
 		
+		//답변이 존재하는 확인
+		Answer answer = answerRepository.findById(answerNo)
+                .orElseThrow(() -> new CustomException(ResponseStatusCode.ACCEPT_ANSWER_FAIL, ResponseMessage.ACCEPT_ANSWER_FAIL));
+		
 		//이미 채택된 답변이 있는지 확인
-	    Answer acceptedAnswer = answerRepository.findAcceptedAnswerByInquiry(answerNo);
+	    Answer acceptedAnswer = answerRepository.findAcceptedAnswerByInquiry(answer.getInquiry().getInquiryNo());
 	    if (acceptedAnswer != null) {
-	    	// 예외를 던질 때 ResponseStatusException을 사용
-	        throw new ResponseStatusException(HttpStatus.CONFLICT, "이미 채택된 답변이 존재합니다.");
+	    	// 예외를 던질 때 사용자 정의 exception 사용
+	        throw new CustomException(
+	        		ResponseStatusCode.ACCEPT_ANSWER_FAIL,
+	        		ResponseMessage.ACCEPT_ANSWER_FAIL);
 	    }
 		
-		Answer answer = answerRepository.findById(answerNo).get();
 		answer.setAnswerAccept(2);
 		return AnswerDto.toDto(answerRepository.save(answer));
 	}
@@ -62,8 +75,11 @@ public class AnswerServiceImpl implements AnswerService{
 	/*답변삭제*/
 	@Override
 	public AnswerDto deleteAnswer(Long answerNo) throws Exception {
-		Answer answer = answerRepository.findById(answerNo).get();
-	    answer.setAnswerStatus(2);  
+		//답변이 존재하는지 확인
+		Answer answer = answerRepository.findById(answerNo)
+                .orElseThrow(() -> new CustomException(ResponseStatusCode.DELETE_ANSWER_FAIL, ResponseMessage.DELETE_ANSWER_FAIL));
+		
+	    answer.setAnswerStatus(2);  //삭제상태로 변경
 	    return AnswerDto.toDto(answerRepository.save(answer));
 	}
 	
@@ -155,9 +171,4 @@ public class AnswerServiceImpl implements AnswerService{
 		return new PageImpl<>(answerDtoList, pageable, answerEntityList.getTotalElements());
 	}
 	
-	
-	
-
-	
-
 }
