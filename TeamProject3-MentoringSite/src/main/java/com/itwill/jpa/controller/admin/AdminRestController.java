@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.itwill.jpa.dto.bulletin_board.AnswerDto;
 import com.itwill.jpa.dto.bulletin_board.InquiryDto;
 import com.itwill.jpa.response.Response;
 import com.itwill.jpa.response.ResponseMessage;
@@ -35,10 +36,7 @@ public class AdminRestController {
 	private  AnswerService answerService;
 
 	/************* 질문 ************/
-	/* (질문)게시글 전체출력 
-	 *  INQURIRY :getByAllInquiryOrderByDate
-	 *
-	 * */
+	/* (질문)게시글 전체출력 * */
 	@Operation(summary = "질문 게시글 전체 출력(최신순)")
 	@GetMapping("/Inquiry")
 	public ResponseEntity<Response> getAdminInquiriesOrderByDate(
@@ -60,8 +58,7 @@ public class AdminRestController {
 		return responseEntity;
 	}
 	
-	/* 카테고리별 출력 
-	 * getByCategoryInquiryOrderByDate*/
+	/* 카테고리별 출력 */
 	@Operation(summary = "관리자가 카테고리별 최신 순으로 질문을 출력")
 	@GetMapping("/Date/{categoryNo}")
 	public ResponseEntity<Response> getAdminCategoryInquiriesSortedByDate(@PathVariable(name = "categoryNo") Long categoryNo,
@@ -84,11 +81,45 @@ public class AdminRestController {
 	}
 	
 	/* 검색 내용 별 출력 (inquiry)*/
-	
-	
-	/* 검색 내용 별 출력 (answer)*/
-	
-	
+	@Operation(summary = "관리자 질문 검색 기능")
+	@GetMapping("/Search/{search}")
+	public ResponseEntity<Response> searchInquiriesForAdmin(@PathVariable(name = "search")String search
+			,@RequestParam(name = "page",defaultValue = "0") int page,  // 기본값은 0 페이지
+            @RequestParam(name = "size",defaultValue = "10") int size) {
+		// 검색어에 맞는 질문 목록을 가져옴
+		Page<InquiryDto> inquiryDtos = inquiryService.getInquiryBySearch(search,page,size);
+		// 응답 객체 생성 및 상태 코드 설정
+		Response response = new Response();
+		response.setStatus(ResponseStatusCode.READ_INQUIRY_LIST_SUCCESS);// 상태 코드: 성공
+		response.setMessage(ResponseMessage.READ_INQUIRY_LIST_SUCCESS+"검색 결과를 성공적으로 불러왔습니다.");// 더 명확한 메시지
+		response.setData(inquiryDtos);
+		
+		HttpHeaders httpHeaders = new HttpHeaders();
+		httpHeaders.setContentType(new MediaType(MediaType.APPLICATION_JSON,Charset.forName("UTF-8")));
+		// 응답 반환
+	    ResponseEntity<Response> responseEntity = 
+				new ResponseEntity<Response>(response, httpHeaders, HttpStatus.OK);
+		
+		return responseEntity;
+	}
+	  
+	/* 검색 내용 별 출력 (answer)
+	@Operation(summary = "관리자 답변 검색 기능")
+	@GetMapping("/admin/answerSearch/{search}")
+	public ResponseEntity<Response> searchAnswersForAdmin(@PathVariable(name = "search") String search,
+	        @RequestParam(name = "page", defaultValue = "0") int page,  // 기본값은 0 페이지
+	        @RequestParam(name = "size", defaultValue = "10") int size) {
+	    
+	    // 검색어에 맞는 답변 목록을 가져옴
+	    Page<AnswerDto> answerDtos = answerService.getByInquiryAnswerOrderByDate(null, page, size);
+	    Response response = new Response();
+		HttpHeaders httpHeaders = new HttpHeaders();
+	    httpHeaders.setContentType(new MediaType(MediaType.APPLICATION_JSON, Charset.forName("UTF-8")));
+		 // 응답 반환
+		ResponseEntity<Response> responseEntity = new ResponseEntity<>(response, httpHeaders, HttpStatus.OK);
+		return responseEntity;
+	    		
+	}*/
 	
 	/* 삭제(상태변경) */
 

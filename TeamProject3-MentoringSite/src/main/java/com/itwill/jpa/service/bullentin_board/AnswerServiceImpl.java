@@ -10,6 +10,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -155,8 +156,19 @@ public class AnswerServiceImpl implements AnswerService{
 		return new PageImpl<>(answerDtoList, pageable, answerEntityList.getTotalElements());
 	}
 	
-	
-	
+	/*
+	public Page<AnswerDto> searchAnswersByKeyword(String search, int page, int size) {
+	    Pageable pageable = PageRequest.of(page, size, Sort.by("answerDate").descending());
+	    
+	 // 'answer_content' 또는 'inquiry_title'에 검색어가 포함된 답변을 찾음
+	    Page<Answer> answers = answerRepository.searchAnswersByKeyword(search, pageable);
+	    
+	    // 'Answer' 엔티티를 'AnswerDto'로 변환
+	    Page<AnswerDto> answerDtos = answers.map(answer -> new AnswerDto(answer));
+
+	    return answerDtos;
+	}*/
+
 
 	
 

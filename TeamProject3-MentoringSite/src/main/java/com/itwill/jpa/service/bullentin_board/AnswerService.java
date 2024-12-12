@@ -33,5 +33,6 @@ public interface AnswerService {
 	//내가 작성한 답변내역
 	Page<AnswerDto> getAnswerByMember(Long MemberNo, int pageNumber, int pageSize);
 	
-	
+	//검색어로 보기
+	//Page<AnswerDto> searchAnswersByKeyword(String search, int page, int size);
 }
