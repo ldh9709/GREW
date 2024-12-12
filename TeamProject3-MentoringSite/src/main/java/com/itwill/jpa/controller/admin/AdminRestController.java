@@ -10,18 +10,21 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.itwill.jpa.dto.bulletin_board.AnswerDto;
 import com.itwill.jpa.dto.bulletin_board.InquiryDto;
+import com.itwill.jpa.dto.member_information.MentorBoardDto;
 import com.itwill.jpa.response.Response;
 import com.itwill.jpa.response.ResponseMessage;
 import com.itwill.jpa.response.ResponseStatusCode;
 import com.itwill.jpa.service.bullentin_board.AnswerService;
 import com.itwill.jpa.service.bullentin_board.AnswerServiceImpl;
 import com.itwill.jpa.service.bullentin_board.InquiryService;
+import com.itwill.jpa.service.member_information.MemtorBoardService;
 
 import io.swagger.v3.oas.annotations.Operation;
 
@@ -35,6 +38,8 @@ public class AdminRestController {
 	@Autowired
 	private  AnswerService answerService;
 
+	@Autowired
+    private MemtorBoardService mentorBoardService;
 	/************* 질문 ************/
 	/* (질문)게시글 전체출력 * */
 	@Operation(summary = "질문 게시글 전체 출력(최신순)")
@@ -105,7 +110,7 @@ public class AdminRestController {
 	  
 	/* 검색 내용 별 출력 (answer)
 	@Operation(summary = "관리자 답변 검색 기능")
-	@GetMapping("/admin/answerSearch/{search}")
+	@GetMapping("/answerSearch/{search}")
 	public ResponseEntity<Response> searchAnswersForAdmin(@PathVariable(name = "search") String search,
 	        @RequestParam(name = "page", defaultValue = "0") int page,  // 기본값은 0 페이지
 	        @RequestParam(name = "size", defaultValue = "10") int size) {
@@ -122,11 +127,49 @@ public class AdminRestController {
 	}*/
 	
 	/* 삭제(상태변경) */
+	@Operation(summary = "관리자 질문 삭제")
+	@PutMapping("/Delete/{inquiryNo}")
+	public ResponseEntity<Response> deleteInquiryForAdmin(@PathVariable(name = "inquiryNo") Long inquiryNo) throws Exception {
+	    // inquiryNo에 해당하는 질문을 삭제하는 서비스 호출
+	    InquiryDto inquiryDto = inquiryService.deleteInquiry(inquiryNo);
 
+	    // 응답 객체 생성
+	    Response response = new Response();
+	    response.setStatus(ResponseStatusCode.DELETE_INQUIRY_SUCCESS);
+	    response.setMessage(ResponseMessage.DELETE_INQUIRY_SUCCESS);
+	    response.setData(inquiryDto);
 
-	/* (멘토컨텐츠)게시글 전체출력 */
+	    // HTTP 헤더 설정
+	    HttpHeaders httpHeaders = new HttpHeaders();
+	    httpHeaders.setContentType(new MediaType(MediaType.APPLICATION_JSON, Charset.forName("UTF-8")));
+
+	    // ResponseEntity로 반환
+	    ResponseEntity<Response> responseEntity = new ResponseEntity<Response>(response, httpHeaders, HttpStatus.OK);
+	    return responseEntity;
+	}
+
+	/* (멘토컨텐츠)게시글 번호로출력 */
+	@Operation(summary = "멘토 게시글 번호로 출력(최신순) 관리자용")
+	@GetMapping("/admin/mentorBoards")
+	public ResponseEntity<Response> getAdminMentorBoardsOrderByDate(@PathVariable(name= "mentorBoardNo") Long mentorBoardNo) {
+        MentorBoardDto mentorBoard = mentorBoardService.getMemtorBoard(mentorBoardNo);
+
+	    // 응답 객체 생성
+	    Response response = new Response();
+	    response.setStatus(ResponseStatusCode.READ_MENTOR_BOARD_LIST_SUCCESS);
+	    response.setMessage(ResponseMessage.READ_MENTOR_BOARD_LIST_SUCCESS);
+	    response.setData(mentorBoard);
+
+	    // HTTP 헤더 설정
+	    HttpHeaders httpHeaders = new HttpHeaders();
+	    httpHeaders.setContentType(new MediaType(MediaType.APPLICATION_JSON, Charset.forName("UTF-8")));
+
+	    // ResponseEntity로 반환
+	    ResponseEntity<Response> responseEntity = new ResponseEntity<Response>(response, httpHeaders, HttpStatus.OK);
+	    return responseEntity;
+	}	/* (멘토컨텐츠)게시글 전체출력 =>method추가시*/
 	
-	/* 검색내용 별 출력 */
+	/* 검색내용 별 출력 (고려)=>List<MentorBoardDto> findMentorBoardBySearch(String search);*/
 	
 	
 }
