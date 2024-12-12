@@ -25,10 +25,16 @@ public interface InquiryService {
 	/*카테고리별 질문*/
 	//답변갯수순
 	Page<InquiryDto> getByCategoryInquiryOrderByAnswer(Long categoryNo,int pageNumber, int pageSize);
+	//답변갯수순(대분류)
+	Page<InquiryDto> getByParentCategoryInquiryOrderByAnswer(Long categoryNo,int pageNumber, int pageSize);
 	//조회순
 	Page<InquiryDto> getByCategoryInquiryOrderByView(Long categoryNo,int pageNumber, int pageSize);
+	//조회순(대분류)
+	Page<InquiryDto> getByParentCategoryInquiryOrderByView(Long categoryNo,int pageNumber, int pageSize);
 	//최신순
 	Page<InquiryDto> getByCategoryInquiryOrderByDate(Long categoryNo,int pageNumber, int pageSize);
+	//최신순(대분류)
+	Page<InquiryDto> getByParentCategoryInquiryOrderByDate(Long categoryNo,int pageNumber, int pageSize);
 	/*전체질문*/
 	//답변갯수순
 	Page<InquiryDto> getByAllInquiryOrderByAnswer(int pageNumber, int pageSize);

@@ -128,6 +128,17 @@ public class InquiryServiceImpl implements InquiryService {
 		}
 		return new PageImpl<>(inquiryDtoList, pageable, inquiryEntityList.getTotalElements());
 	}
+	// 답변갯수순(대분류)
+	@Override
+	public Page<InquiryDto> getByParentCategoryInquiryOrderByAnswer(Long categoryNo, int pageNumber, int pageSize) {
+		Pageable pageable = PageRequest.of(pageNumber, pageSize);
+		Page<Inquiry> inquiryEntityList = inquiryRepository.findByParentCategoryInquiryOrderByAnswer(categoryNo, pageable);
+		List<InquiryDto> inquiryDtoList = new ArrayList<>();
+		for (Inquiry inquiryEntity : inquiryEntityList) {
+			inquiryDtoList.add(InquiryDto.toDto(inquiryEntity));
+		}
+		return new PageImpl<>(inquiryDtoList, pageable, inquiryEntityList.getTotalElements());
+	}
 
 	// 조회순
 	@Override
@@ -140,12 +151,34 @@ public class InquiryServiceImpl implements InquiryService {
 		}
 		return new PageImpl<>(inquiryDtoList, pageable, inquiryEntityList.getTotalElements());
 	}
+	// 조회순(카테고리대분류)
+	@Override
+	public Page<InquiryDto> getByParentCategoryInquiryOrderByView(Long categoryNo, int pageNumber, int pageSize) {
+		Pageable pageable = PageRequest.of(pageNumber, pageSize);
+		Page<Inquiry> inquiryEntityList = inquiryRepository.findByParentCategoryInquiryOrderByView(categoryNo, pageable);
+		List<InquiryDto> inquiryDtoList = new ArrayList<>();
+		for (Inquiry inquiryEntity : inquiryEntityList) {
+			inquiryDtoList.add(InquiryDto.toDto(inquiryEntity));
+		}
+		return new PageImpl<>(inquiryDtoList, pageable, inquiryEntityList.getTotalElements());
+	}
 
 	// 최신순
 	@Override
 	public Page<InquiryDto> getByCategoryInquiryOrderByDate(Long categoryNo, int pageNumber, int pageSize) {
 		Pageable pageable = PageRequest.of(pageNumber, pageSize);
 		Page<Inquiry> inquiryEntityList = inquiryRepository.findByCategoryInquiryOrderByDate(categoryNo, pageable);
+		List<InquiryDto> inquiryDtoList = new ArrayList<>();
+		for (Inquiry inquiryEntity : inquiryEntityList) {
+			inquiryDtoList.add(InquiryDto.toDto(inquiryEntity));
+		}
+		return new PageImpl<>(inquiryDtoList, pageable, inquiryEntityList.getTotalElements());
+	}
+	// 최신순(대분류)
+	@Override
+	public Page<InquiryDto> getByParentCategoryInquiryOrderByDate(Long categoryNo, int pageNumber, int pageSize) {
+		Pageable pageable = PageRequest.of(pageNumber, pageSize);
+		Page<Inquiry> inquiryEntityList = inquiryRepository.findByParentCategoryInquiryOrderByDate(categoryNo, pageable);
 		List<InquiryDto> inquiryDtoList = new ArrayList<>();
 		for (Inquiry inquiryEntity : inquiryEntityList) {
 			inquiryDtoList.add(InquiryDto.toDto(inquiryEntity));

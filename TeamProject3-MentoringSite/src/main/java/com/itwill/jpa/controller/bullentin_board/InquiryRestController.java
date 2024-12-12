@@ -156,6 +156,25 @@ public class InquiryRestController {
 		
 		return responseEntity;
 	}
+	@Operation(summary = "답변수 많은 순으로 카테고리별(대분류) 질문 출력")
+	@GetMapping("/{categoryNo}/parent/answer-count")
+	public ResponseEntity<Response> getByParentCategoryInquiryOrderByAnswer(@PathVariable(name = "categoryNo") Long categoryNo,
+			@RequestParam(name = "page",defaultValue = "0") int page,  // 기본값은 0 페이지
+			@RequestParam(name = "size",defaultValue = "10") int size) {
+		Page<InquiryDto> inquiryDtos = inquiryService.getByParentCategoryInquiryOrderByAnswer(categoryNo,page,size);
+		
+		Response response = new Response();
+		response.setStatus(ResponseStatusCode.READ_INQUIRY_LIST_SUCCESS);
+		response.setMessage(ResponseMessage.READ_INQUIRY_LIST_SUCCESS);
+		response.setData(inquiryDtos);
+		HttpHeaders httpHeaders = new HttpHeaders();
+		httpHeaders.setContentType(new MediaType(MediaType.APPLICATION_JSON,Charset.forName("UTF-8")));
+		
+		ResponseEntity<Response> responseEntity = 
+				new ResponseEntity<Response>(response, httpHeaders, HttpStatus.OK);
+		
+		return responseEntity;
+	}
 	@Operation(summary = "조회수 많은 순으로 카테고리별 질문 출력")
 	@GetMapping("/{categoryNo}/view-count")
 	public ResponseEntity<Response> getByCategoryInquiryOrderByView(@PathVariable(name = "categoryNo") Long categoryNo,
@@ -175,12 +194,50 @@ public class InquiryRestController {
 		
 		return responseEntity;
 	}
+	@Operation(summary = "조회수 많은 순으로 카테고리별(대분류) 질문 출력")
+	@GetMapping("/{categoryNo}/parent/view-count")
+	public ResponseEntity<Response> getByParentCategoryInquiryOrderByView(@PathVariable(name = "categoryNo") Long categoryNo,
+			@RequestParam(name = "page",defaultValue = "0") int page,  // 기본값은 0 페이지
+			@RequestParam(name = "size",defaultValue = "10") int size) {
+		Page<InquiryDto> inquiryDtos = inquiryService.getByParentCategoryInquiryOrderByView(categoryNo,page,size);
+		
+		Response response = new Response();
+		response.setStatus(ResponseStatusCode.READ_INQUIRY_LIST_SUCCESS);
+		response.setMessage(ResponseMessage.READ_INQUIRY_LIST_SUCCESS);
+		response.setData(inquiryDtos);
+		HttpHeaders httpHeaders = new HttpHeaders();
+		httpHeaders.setContentType(new MediaType(MediaType.APPLICATION_JSON,Charset.forName("UTF-8")));
+		
+		ResponseEntity<Response> responseEntity = 
+				new ResponseEntity<Response>(response, httpHeaders, HttpStatus.OK);
+		
+		return responseEntity;
+	}
 	@Operation(summary = "최신 순으로 카테고리별 질문 출력")
 	@GetMapping("/{categoryNo}/date")
 	public ResponseEntity<Response> getByCategoryInquiryOrderByDate(@PathVariable(name = "categoryNo") Long categoryNo,
 			@RequestParam(name = "page",defaultValue = "0") int page,  // 기본값은 0 페이지
 			@RequestParam(name = "size",defaultValue = "10") int size) {
 		Page<InquiryDto> inquiryDtos = inquiryService.getByCategoryInquiryOrderByDate(categoryNo,page,size);
+		
+		Response response = new Response();
+		response.setStatus(ResponseStatusCode.READ_INQUIRY_LIST_SUCCESS);
+		response.setMessage(ResponseMessage.READ_INQUIRY_LIST_SUCCESS);
+		response.setData(inquiryDtos);
+		HttpHeaders httpHeaders = new HttpHeaders();
+		httpHeaders.setContentType(new MediaType(MediaType.APPLICATION_JSON,Charset.forName("UTF-8")));
+		
+		ResponseEntity<Response> responseEntity = 
+				new ResponseEntity<Response>(response, httpHeaders, HttpStatus.OK);
+		
+		return responseEntity;
+	}
+	@Operation(summary = "최신 순으로 카테고리별(대분류) 질문 출력")
+	@GetMapping("/{categoryNo}/parent/date")
+	public ResponseEntity<Response> getByParentCategoryInquiryOrderByDate(@PathVariable(name = "categoryNo") Long categoryNo,
+			@RequestParam(name = "page",defaultValue = "0") int page,  // 기본값은 0 페이지
+			@RequestParam(name = "size",defaultValue = "10") int size) {
+		Page<InquiryDto> inquiryDtos = inquiryService.getByParentCategoryInquiryOrderByDate(categoryNo,page,size);
 		
 		Response response = new Response();
 		response.setStatus(ResponseStatusCode.READ_INQUIRY_LIST_SUCCESS);
