@@ -41,7 +41,7 @@ public class FollowRestController {
 	/*팔로우 등록*/
 	@Operation(summary = "팔로우 신청")
 	@PostMapping
-	public ResponseEntity<Response> createFollow(@RequestBody FollowRequestDto followDto){
+	public ResponseEntity<Response> createFollow(@RequestBody FollowRequestDto followDto) throws Exception{
 		followService.createFollow(followDto);
 		AlarmDto alarmDto = alarmService.createAlarmByFollowByMentor(followDto.getMentorMemberNo());
 		Response response = new Response();

@@ -118,4 +118,7 @@ public class ResponseMessage {
     public static final String LOGIN_FAIL_PASSWORD_MISMATCH_MEMBER = "회원 패스워드 불일치";
     public static final String CREATE_FAIL_EXISTED_MEMBER = "회원 아이디 중복";
     public static final String UNAUTHORIZED_MEMBER = "인증받지않은 요청입니다.";    
+    
+    /******************* 일반적인 오류 메시지 **********************/
+    public static final String INTERNAL_SERVER_ERROR ="서버 내부 오류가 발생했습니다. 나중에 다시 시도해주세요.";
 }
