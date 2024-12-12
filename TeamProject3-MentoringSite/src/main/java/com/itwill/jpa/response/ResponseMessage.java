@@ -18,6 +18,12 @@ public class ResponseMessage {
     public static final String UPDATE_MENTOR_BOARD_SUCCESS = "멘토 보드 수정 성공";
     public static final String DELETE_MENTOR_BOARD_SUCCESS = "멘토 보드 삭제 성공";
     public static final String MENTOR_BOARD_NOT_FOUND = "해당 멘토 보드를 찾을 수 없습니다.";
+    public static final String CREATED_MENTOR_BOARD_FAIL = "멘토 보드 등록에 실패했습니다.";
+    public static final String UPDATE_MENTOR_BOARD_FAIL = "멘토 보드 수정에 실패했습니다.";
+    public static final String DELETE_MENTOR_BOARD_FAIL = "멘토 보드 삭제에 실패했습니다.";
+    public static final String IMAGE_UPLOAD_FAIL = "이미지 업로드에 실패했습니다.";
+    public static final String MEMBER_NOT_FOUND = "해당 멤버를 찾을 수 없습니다."; 
+    public static final String NOT_A_MENTOR = "해당 멤버는 멘토가 아닙니다."; 
     /******************* MENTOR PROFILE 메시지 ************************/
     public static final String CREATED_MENTOR_PROFILE_SUCCESS = "멘토 프로필 등록 성공";
     public static final String READ_MENTOR_PROFILE_SUCCESS = "멘토 프로필 상세 조회 성공";

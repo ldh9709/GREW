@@ -3,8 +3,12 @@ package com.itwill.jpa.service.member_information;
 import com.itwill.jpa.dto.alarm.AlarmDto;
 import com.itwill.jpa.dto.member_information.MentorBoardDto;
 import com.itwill.jpa.entity.member_information.MentorBoard;
+import com.itwill.jpa.entity.member_information.MentorProfile;
+import com.itwill.jpa.exception.CustomException;
 import com.itwill.jpa.entity.member_information.Member;
 import com.itwill.jpa.repository.member_information.MentorBoardRepository;
+import com.itwill.jpa.response.ResponseMessage;
+import com.itwill.jpa.response.ResponseStatusCode;
 import com.itwill.jpa.service.alarm.AlarmService;
 import com.itwill.jpa.repository.member_information.MemberRepository;
 
@@ -35,135 +39,230 @@ public class MemtorBoardServiceImpl implements MemtorBoardService {
 	    private MemberRepository memberRepository;
 	    
 
-	    /* 멘토 보드 등록 */
+	    
+	    
+	    /**
+	     * 멘토 보드 등록 메서드
+	     */
 	    @Override
 	    public MentorBoardDto saveMemtorBoard(MentorBoardDto mentorBoardDto) {
-	        return MentorBoardDto.toDto(mentorBoardRepository.save(MentorBoard.toEntity(mentorBoardDto)));
+	        try {
+	            //  멘토 프로필 상태(status) 체크 (status가 3이 아닌 경우 예외 발생)
+	            Long memberNo = mentorBoardDto.getMemberNo();
+	            Member member = memberRepository.findById(memberNo)
+	                    .orElseThrow(() -> new CustomException(
+	                        ResponseStatusCode.MEMBER_NOT_FOUND, 
+	                        ResponseMessage.MEMBER_NOT_FOUND
+	                    ));
+
+	            //  멘토 프로필이 존재하는지 확인
+	            MentorProfile mentorProfile = member.getMentorProfile();
+	            if (mentorProfile == null || mentorProfile.getMentorStatus() != 3) {
+	                throw new CustomException(
+	                    ResponseStatusCode.NOT_A_MENTOR, 
+	                    ResponseMessage.NOT_A_MENTOR
+	                );
+	            }
+
+	            //  DTO를 엔티티로 변환
+	            MentorBoard mentorBoard = MentorBoard.toEntity(mentorBoardDto);
+	            
+	            //  멘토 보드 저장
+	            MentorBoard savedBoard = mentorBoardRepository.save(mentorBoard);
+	            
+	            //  엔티티를 DTO로 변환하여 반환
+	            return MentorBoardDto.toDto(savedBoard);
+	        } catch (CustomException e) {
+	            //  커스텀 예외는 그대로 던짐
+	            throw e;
+	        } catch (Exception e) {
+	            //  그 외의 예외는 커스텀 예외로 감싸서 던짐
+	            throw new CustomException(
+	                ResponseStatusCode.CREATED_MENTOR_BOARD_FAIL, 
+	                ResponseMessage.CREATED_MENTOR_BOARD_FAIL
+	            );
+	        }
 	    }
 
+	    /**
+	     * 멘토 보드 수정 메서드    
+	     */
 	    @Override
-	    public MentorBoardDto updateMemtorBoard(MentorBoardDto mentorBoardDto) throws Exception {
-	        // 기존 객체를 조회
-	        MentorBoard existingBoard = mentorBoardRepository.findById(mentorBoardDto.getMentorBoardNo()).get();
-	        
-	        /* != null 인 경우로 나눠서 저장해야하는지? */
-	        // 필요한 필드만 업데이트
-	        if (mentorBoardDto.getMentorBoardTitle() != null) {
-	            existingBoard.setMentorBoardTitle(mentorBoardDto.getMentorBoardTitle());
-	        }
-	        if (mentorBoardDto.getMentorBoardContent() != null) {
-	            existingBoard.setMentorBoardContent(mentorBoardDto.getMentorBoardContent());
-	        }
-	        if (mentorBoardDto.getMentorBoardImage() != null) {
-	            existingBoard.setMentorBoardImage(mentorBoardDto.getMentorBoardImage());
-	        }
-	        if (mentorBoardDto.getMentorBoardStatus() != null) {
-	            existingBoard.setMentorBoardStatus(mentorBoardDto.getMentorBoardStatus());
-	        }
+	    public MentorBoardDto updateMemtorBoard(MentorBoardDto mentorBoardDto) {
+	        try {
+	            // 기존 멘토 보드 정보 조회
+	            MentorBoard existingBoard = mentorBoardRepository.findById(mentorBoardDto.getMentorBoardNo())
+	                    .orElseThrow(() -> new CustomException(
+	                        ResponseStatusCode.MENTOR_BOARD_NOT_FOUND, 
+	                        ResponseMessage.MENTOR_BOARD_NOT_FOUND
+	                    ));
 
-	        // 수정된 객체를 저장
-	        MentorBoard updatedBoard = mentorBoardRepository.save(existingBoard);
+	            // 필요한 필드 업데이트
+	            if (mentorBoardDto.getMentorBoardTitle() != null) {
+	                existingBoard.setMentorBoardTitle(mentorBoardDto.getMentorBoardTitle());
+	            }
+	            if (mentorBoardDto.getMentorBoardContent() != null) {
+	                existingBoard.setMentorBoardContent(mentorBoardDto.getMentorBoardContent());
+	            }
 
-	        // DTO로 변환하여 반환
-	        return MentorBoardDto.toDto(updatedBoard);
+	            // 멘토 보드 저장
+	            MentorBoard updatedBoard = mentorBoardRepository.save(existingBoard);
+	            return MentorBoardDto.toDto(updatedBoard);
+	        } catch (Exception e) {
+	            // 예외 발생 시 커스텀 예외 던짐
+	            throw new CustomException(
+	                ResponseStatusCode.UPDATE_MENTOR_BOARD_FAIL, 
+	                ResponseMessage.UPDATE_MENTOR_BOARD_FAIL
+	            );
+	        }
 	    }
 
-
-	    /* 멘토 보드 삭제(상태 변경) */
+	    /**
+	     * 멘토 보드 삭제 메서드 (상태 변경)	    
+	     */
 	    @Override
-	    public MentorBoardDto deleteMemtorBoard(MentorBoardDto mentorBoardDto) throws Exception {
-	        MentorBoard mentorBoard = mentorBoardRepository.findById(mentorBoardDto.getMentorBoardNo()).get();
-	        
-	        mentorBoard.setMentorBoardStatus(2); // 상태를 변경
-	        return MentorBoardDto.toDto(mentorBoardRepository.save(mentorBoard));
+	    public MentorBoardDto deleteMemtorBoard(MentorBoardDto mentorBoardDto) {
+	        try {
+	            // 기존 멘토 보드 정보 조회
+	            MentorBoard mentorBoard = mentorBoardRepository.findById(mentorBoardDto.getMentorBoardNo())
+	                    .orElseThrow(() -> new CustomException(
+	                        ResponseStatusCode.MENTOR_BOARD_NOT_FOUND, 
+	                        ResponseMessage.MENTOR_BOARD_NOT_FOUND
+	                    ));
+
+	            // 상태를 삭제 상태로 변경
+	            mentorBoard.setMentorBoardStatus(2); 
+	            return MentorBoardDto.toDto(mentorBoardRepository.save(mentorBoard));
+	        } catch (Exception e) {
+	            // 예외 발생 시 커스텀 예외 던짐
+	            throw new CustomException(
+	                ResponseStatusCode.DELETE_MENTOR_BOARD_FAIL, 
+	                ResponseMessage.DELETE_MENTOR_BOARD_FAIL
+	            );
+	        }
 	    }
 
-
-	    /* 멘토 보드 상세 조회 */
+	    /**
+	     * 멘토 보드 상세 조회 메서드	   
+	     */
 	    @Override
 	    public MentorBoardDto getMemtorBoard(Long mentorBoardNo) {
-	        MentorBoard mentorBoard = mentorBoardRepository.findById(mentorBoardNo).get();
-	        
-	        return MentorBoardDto.toDto(mentorBoard);
+	        return mentorBoardRepository.findById(mentorBoardNo)
+	                .map(MentorBoardDto::toDto)
+	                .orElseThrow(() -> new CustomException(
+	                    ResponseStatusCode.MENTOR_BOARD_NOT_FOUND, 
+	                    ResponseMessage.MENTOR_BOARD_NOT_FOUND
+	                ));
 	    }
 
-
-
-	    /* 멘토 보드 조회수 증가 */
+	    /**
+	     * 멘토 보드 조회수 증가 메서드  
+	     */
 	    @Override
-	    public MentorBoardDto increaseViewMentorBoard(MentorBoardDto mentorBoardDto) throws Exception {
-	        MentorBoard mentorBoard = mentorBoardRepository.findById(mentorBoardDto.getMentorBoardNo()).get();
+	    public MentorBoardDto increaseViewMentorBoard(MentorBoardDto mentorBoardDto) {
+	        try {
+	            MentorBoard mentorBoard = mentorBoardRepository.findById(mentorBoardDto.getMentorBoardNo())
+	                    .orElseThrow(() -> new CustomException(
+	                        ResponseStatusCode.MENTOR_BOARD_NOT_FOUND, 
+	                        ResponseMessage.MENTOR_BOARD_NOT_FOUND
+	                    ));
 
-	        mentorBoard.setMentorBoardViews(mentorBoard.getMentorBoardViews() + 1);
-	        return MentorBoardDto.toDto(mentorBoardRepository.save(mentorBoard));
+	            // 조회수 증가
+	            mentorBoard.setMentorBoardViews(mentorBoard.getMentorBoardViews() + 1);
+	            return MentorBoardDto.toDto(mentorBoardRepository.save(mentorBoard));
+	        } catch (Exception e) {
+	            // 예외 발생 시 커스텀 예외 던짐
+	            throw new CustomException(
+	                ResponseStatusCode.UPDATE_MENTOR_BOARD_FAIL, 
+	                ResponseMessage.UPDATE_MENTOR_BOARD_FAIL
+	            );
+	        }
 	    }
 
+	    /**
+	     * 멘토 보드 이미지 업로드 메서드
+	     */
+	    @Override
+	    public void updateMentorBoardImage(Long mentorBoardNo, MultipartFile file) {
+	        try {
+	            // 멘토 보드 정보 조회
+	            MentorBoard mentorBoard = mentorBoardRepository.findById(mentorBoardNo)
+	                    .orElseThrow(() -> new CustomException(
+	                        ResponseStatusCode.MENTOR_BOARD_NOT_FOUND, 
+	                        ResponseMessage.MENTOR_BOARD_NOT_FOUND
+	                    ));
 
+	            // 이미지 저장 경로 설정
+	            String absolutePath = new File("").getAbsolutePath();
+	            String IMAGE_PATH = absolutePath + "/src/main/resources/static/images/mentor-board/";
+
+	            // 디렉터리 생성
+	            File saveDir = new File(IMAGE_PATH);
+	            if (!saveDir.exists()) {
+	                saveDir.mkdirs();
+	            }
+
+	            // 파일명 생성 (UUID + 원본 파일명)
+	            String originalFilename = file.getOriginalFilename();
+	            String fileName = UUID.randomUUID().toString() + "_" + originalFilename;
+
+	            // 파일 저장 경로 생성
+	            File saveFile = new File(IMAGE_PATH + fileName);
+
+	            // 파일 저장
+	            file.transferTo(saveFile);
+
+	            // 멘토 보드 이미지 정보 업데이트
+	            mentorBoard.setMentorBoardImage("/images/mentor-board/" + fileName);
+	            mentorBoardRepository.save(mentorBoard);
+	        } catch (Exception e) {
+	            // 예외 발생 시 커스텀 예외 던짐
+	            throw new CustomException(
+	                ResponseStatusCode.IMAGE_UPLOAD_FAIL, 
+	                ResponseMessage.IMAGE_UPLOAD_FAIL
+	            );
+	        }
+	    }
+	
+	    
+	    
+	    
+	    
+	    
+	    
+	    
+	    
+	    
+	    
 	    @Override
 	    public Page<MentorBoardDto> findByMentorBoardOrderByView(int page, int size) {
-	        Pageable pageable = PageRequest.of(page, size);
-	        Page<MentorBoard> mentorBoardPage = mentorBoardRepository.findAllMentorBoardOrderByView(pageable);
-	        return mentorBoardPage.map(MentorBoardDto::toDto);
+	    	Pageable pageable = PageRequest.of(page, size);
+	    	Page<MentorBoard> mentorBoardPage = mentorBoardRepository.findAllMentorBoardOrderByView(pageable);
+	    	return mentorBoardPage.map(MentorBoardDto::toDto);
 	    }
-
+	    
 	    @Override
 	    public Page<MentorBoardDto> findMentorBoardBySearch(String search, int page, int size) {
-	        Pageable pageable = PageRequest.of(page, size);
-	        Page<MentorBoard> mentorBoardPage = mentorBoardRepository.findMentorBoardBySearch(search, pageable);
-	        return mentorBoardPage.map(MentorBoardDto::toDto);
+	    	Pageable pageable = PageRequest.of(page, size);
+	    	Page<MentorBoard> mentorBoardPage = mentorBoardRepository.findMentorBoardBySearch(search, pageable);
+	    	return mentorBoardPage.map(MentorBoardDto::toDto);
 	    }
-
+	    
 	    @Override
 	    public Page<MentorBoardDto> getMentorBoardsSortedByDate(int page, int size) {
-	        Pageable pageable = PageRequest.of(page, size);
-	        Page<MentorBoard> mentorBoardPage = mentorBoardRepository.findAllMentorBoardsByDateOrderByDateDesc(pageable);
-	        return mentorBoardPage.map(MentorBoardDto::toDto);
+	    	Pageable pageable = PageRequest.of(page, size);
+	    	Page<MentorBoard> mentorBoardPage = mentorBoardRepository.findAllMentorBoardsByDateOrderByDateDesc(pageable);
+	    	return mentorBoardPage.map(MentorBoardDto::toDto);
 	    }
-
+	    
 	    @Override
 	    public Page<MentorBoardDto> findByMember(Long memberNo, int page, int size) {
-	        Pageable pageable = PageRequest.of(page, size);
-	        Member member = new Member();
-	        member.setMemberNo(memberNo);
-	        Page<MentorBoard> mentorBoardPage = mentorBoardRepository.findByMember(member, pageable);
-	        return mentorBoardPage.map(MentorBoardDto::toDto);
+	    	Pageable pageable = PageRequest.of(page, size);
+	    	Member member = new Member();
+	    	member.setMemberNo(memberNo);
+	    	Page<MentorBoard> mentorBoardPage = mentorBoardRepository.findByMember(member, pageable);
+	    	return mentorBoardPage.map(MentorBoardDto::toDto);
 	    }   
-	    
-	    
-	    @Override
-	    public void updateMentorBoardImage(Long mentorBoardNo, MultipartFile file) throws Exception {
-	        // 1️ 멘토 보드 정보 조회
-	        MentorBoard mentorBoard = mentorBoardRepository.findById(mentorBoardNo)
-	                .orElseThrow(() -> new IllegalArgumentException("해당 멘토 보드를 찾을 수 없습니다. mentorBoardNo: " + mentorBoardNo));
-
-	        // 2️ 절대 경로 가져오기
-	        String absolutePath = new File("").getAbsolutePath(); 
-	        String IMAGE_PATH = absolutePath + "/src/main/resources/static/images/mentor-board/"; // 절대 경로 생성
-
-	        // 3️ 디렉터리 확인 및 생성
-	        File saveDir = new File(IMAGE_PATH);
-	        if (!saveDir.exists()) {
-	            saveDir.mkdirs(); // 디렉터리가 없으면 생성
-	        }
-
-	        // 4️ 파일명 생성 (고유한 이름으로 생성)
-	        String originalFilename = file.getOriginalFilename();
-	        String fileExtension = originalFilename.substring(originalFilename.lastIndexOf("."));
-	        String fileName = UUID.randomUUID().toString() + fileExtension;
-
-	        // 5️ 파일 저장 경로 생성
-	        File saveFile = new File(IMAGE_PATH + fileName);
-
-	        // 6️ 파일 저장
-	        file.transferTo(saveFile);
-
-	        // 7️ mentorBoard 엔티티에 이미지 경로 저장
-	        mentorBoard.setMentorBoardImage("/images/mentor-board/" + fileName);
-	        mentorBoardRepository.save(mentorBoard);
-	    }
-	    
-	    
-	    
 }
 
 	    

@@ -15,7 +15,11 @@ public class HttpStatusMapper {
         // MEMBER 관련 상태 코드 매핑
 
         // MENTOR BOARD 관련 상태 코드 매핑
-
+    	statusCodeMap.put(ResponseStatusCode.CREATED_MENTOR_BOARD_FAIL, HttpStatus.BAD_REQUEST);
+    	statusCodeMap.put(ResponseStatusCode.UPDATE_MENTOR_BOARD_FAIL, HttpStatus.BAD_REQUEST);
+    	statusCodeMap.put(ResponseStatusCode.DELETE_MENTOR_BOARD_FAIL, HttpStatus.BAD_REQUEST);
+    	statusCodeMap.put(ResponseStatusCode.MENTOR_BOARD_NOT_FOUND, HttpStatus.NOT_FOUND);
+    	statusCodeMap.put(ResponseStatusCode.IMAGE_UPLOAD_FAIL, HttpStatus.BAD_REQUEST);
         // FOLLOW 관련 상태 코드 매핑
 
         // CATEGORY 관련 상태 코드 매핑
