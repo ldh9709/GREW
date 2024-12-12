@@ -19,7 +19,7 @@ import lombok.NoArgsConstructor;
 public class ChatMessageDto {
 
     private Long chatMessageNo;
-    private String chatContent;
+    private String chatMessageContent;
     private LocalDateTime chatMessageDate; 
     private Integer chatMessageCheck;
 
@@ -31,10 +31,10 @@ public class ChatMessageDto {
     public static ChatMessageDto toDto(ChatMessage chatMessageEntity) {
         return ChatMessageDto.builder()
             .chatMessageNo(chatMessageEntity.getChatMessageNo())
-            .chatContent(chatMessageEntity.getChatContent())
+            .chatMessageContent(chatMessageEntity.getChatMessageContent())
             .chatMessageDate(chatMessageEntity.getChatMessageDate())
             .chatMessageCheck(chatMessageEntity.getChatMessageCheck())
-            .memberNo(chatMessageEntity.getMember().getMemberNo())  // 멘토 번호
+            .memberNo(chatMessageEntity.getMember().getMemberNo())  
             .chatRoomNo(chatMessageEntity.getChatRoom().getChatRoomNo())
             .build();
        

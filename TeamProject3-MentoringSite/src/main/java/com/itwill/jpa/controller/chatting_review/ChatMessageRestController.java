@@ -15,10 +15,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.itwill.jpa.dto.chatting_review.ChatMessageDto;
+import com.itwill.jpa.dto.chatting_review.ChatMessageImageDto;
 import com.itwill.jpa.entity.chatting_review.ChatMessage;
 import com.itwill.jpa.response.Response;
 import com.itwill.jpa.response.ResponseMessage;
 import com.itwill.jpa.response.ResponseStatusCode;
+import com.itwill.jpa.service.chatting_review.ChatMessageImageService;
 import com.itwill.jpa.service.chatting_review.ChatMessageService;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -29,12 +31,14 @@ public class ChatMessageRestController {
 
 	@Autowired
 	private ChatMessageService chatMessageService;
+	@Autowired
+	private ChatMessageImageService chatMessageImageService;
 	
 	@Operation(summary="메시지 등록")
 	@PostMapping
 	public ResponseEntity<Response> saveMessage(@RequestBody ChatMessageDto chatMessageDto){
 		Response response = new Response();
-		ChatMessage chatMessage =  chatMessageService.createChatMessage(chatMessageDto);
+		ChatMessageDto chatMessage =  ChatMessageDto.toDto(chatMessageService.createChatMessage(chatMessageDto));
 		response.setStatus(ResponseStatusCode.SEND_CHATTING_SUCCESS);
 		response.setMessage(ResponseMessage.SEND_CHATTING_SUCCESS);
 		response.setData(chatMessage);
@@ -52,7 +56,7 @@ public class ChatMessageRestController {
 	@PutMapping("/update/{chatmessageNo}")
 	public ResponseEntity<Response> updateChatMessageCheck(@RequestBody ChatMessageDto chatMessageDto){
 		Response response = new Response();
-		ChatMessage chatMessage =  chatMessageService.updateChatMessageCheck(chatMessageDto.getChatMessageNo());
+		ChatMessageDto chatMessage =  ChatMessageDto.toDto(chatMessageService.updateChatMessageCheck(chatMessageDto.getChatMessageNo()));
 		response.setStatus(ResponseStatusCode.READ_MESSAGE);
 		response.setMessage(ResponseMessage.READ_MESSAGE);
 		response.setData(chatMessage);
@@ -70,7 +74,7 @@ public class ChatMessageRestController {
 	@PutMapping("/{chatmessageNo}")
 	public ResponseEntity<Response> getChatMessageByChatMessageNo(@PathVariable(name="chatmessageNo") long chatmessageNo){
 		Response response = new Response();
-		ChatMessage chatMessage =  chatMessageService.getChatMessageByNo(chatmessageNo);
+		ChatMessageDto chatMessage =  ChatMessageDto.toDto(chatMessageService.getChatMessageByNo(chatmessageNo));
 		response.setStatus(ResponseStatusCode.CHATTING_LIST_SUCCESS);
 		response.setMessage(ResponseMessage.CHATTING_LIST_SUCCESS);
 		

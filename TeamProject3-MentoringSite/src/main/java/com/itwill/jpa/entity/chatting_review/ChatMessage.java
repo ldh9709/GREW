@@ -40,7 +40,7 @@ public class ChatMessage {
     private Long chatMessageNo;
 
     @Column(name="chat_message_content",nullable = false)
-    private String chatContent;
+    private String chatMessageContent;
 
     @Column(name="chat_message_date",nullable = false)
     private LocalDateTime chatMessageDate;
@@ -58,6 +58,7 @@ public class ChatMessage {
     @JsonBackReference
     private ChatRoom chatRoom;
     
+    
     @PrePersist
     public void setDefaultValues() {
     	if (this.chatMessageCheck==0) this.chatMessageCheck = 1;
@@ -68,7 +69,7 @@ public class ChatMessage {
     public static ChatMessage toEntity(ChatMessageDto chatMessageDto) {
         return ChatMessage.builder()
                              .chatMessageNo(chatMessageDto.getChatMessageNo())
-                             .chatContent(chatMessageDto.getChatContent())
+                             .chatMessageContent(chatMessageDto.getChatMessageContent())
                              .chatMessageDate(chatMessageDto.getChatMessageDate())
                              .chatMessageCheck(chatMessageDto.getChatMessageCheck())
                              .member(Member.builder().memberNo(chatMessageDto.getMemberNo()).build())

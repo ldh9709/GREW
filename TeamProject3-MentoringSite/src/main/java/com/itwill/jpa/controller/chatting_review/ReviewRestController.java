@@ -55,8 +55,6 @@ public class ReviewRestController {
 		HttpHeaders httpHeaders = new HttpHeaders();
 		httpHeaders.setContentType(new MediaType(MediaType.APPLICATION_JSON, Charset.forName("UTF-8")));
 		
-//		ResponseEntity<Response> responseEntity = new ResponseEntity<Response>(response, httpHeaders,
-//				HttpStatus.CREATED);
 		
 		return new ResponseEntity<>(response, HttpStatus.CREATED);
 		
@@ -67,7 +65,7 @@ public class ReviewRestController {
 	public ResponseEntity<Response> updateReview(@RequestBody ReviewDto reviewDto){
 		
 		Response response = new Response();
-		Review review = reviewService.updateReview(reviewDto);
+		ReviewDto review = ReviewDto.toDto(reviewService.updateReview(reviewDto));
 		response.setStatus(ResponseStatusCode.UPDATE_REVIEW_SUCCESS);
 		response.setMessage(ResponseMessage.UPDATE_REVIEW_SUCCESS);
 		response.setData(review);
@@ -85,7 +83,7 @@ public class ReviewRestController {
 	public ResponseEntity<Response> deleteReview(@RequestBody ReviewDto reviewDto){
 		
 		Response response = new Response();
-		Review review = reviewService.deleteReview(reviewDto.getReviewNo());
+		ReviewDto review = ReviewDto.toDto(reviewService.deleteReview(reviewDto.getReviewNo()));
 		response.setStatus(ResponseStatusCode.DELETE_REVIEW_SUCCESS);
 		response.setMessage(ResponseMessage.DELETE_REVIEW_SUCCESS);
 		response.setData(review);
@@ -141,7 +139,7 @@ public class ReviewRestController {
 		return responseEntity;
 	}
 	@Operation(summary = "특정 멤버 리뷰 목록 출력")
-	@GetMapping("/member/{member_no}")
+	@GetMapping("/member/{memberNo}")
 	public ResponseEntity<Response> selectReviewByMemberNo(@PathVariable(name="member_no") Long memberNo){
 		
 		Response response = new Response();
