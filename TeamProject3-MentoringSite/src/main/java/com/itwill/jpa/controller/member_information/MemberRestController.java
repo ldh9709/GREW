@@ -24,7 +24,10 @@ import com.itwill.jpa.entity.member_information.Member;
 import com.itwill.jpa.response.Response;
 import com.itwill.jpa.response.ResponseMessage;
 import com.itwill.jpa.response.ResponseStatusCode;
+import com.itwill.jpa.service.bullentin_board.AnswerService;
 import com.itwill.jpa.service.bullentin_board.InquiryService;
+import com.itwill.jpa.service.chatting_review.ChatRoomService;
+import com.itwill.jpa.service.chatting_review.ReviewService;
 import com.itwill.jpa.service.member_information.FollowService;
 import com.itwill.jpa.service.member_information.MemberService;
 
@@ -36,12 +39,19 @@ import jakarta.validation.Valid;
 @RestController
 @RequestMapping("/member")
 public class MemberRestController {
+	
 	@Autowired
 	private MemberService memberService;
 	@Autowired
 	private InquiryService inquiryService;
 	@Autowired
+	private AnswerService answerService;
+	@Autowired
 	private FollowService followService;
+	@Autowired
+	private ChatRoomService chatRoomService;
+	@Autowired
+	private ReviewService reviewService;
 	
 	/* 아이디 중복 */
 	
@@ -175,10 +185,43 @@ public class MemberRestController {
 			@PathVariable(name ="menteeNo") Long menteeNo){
 		
 		Integer inquiryCount = (int)inquiryService.getInquiryByMember(menteeNo, 0, 10).getTotalElements();
+		Integer counselCount = (int)chatRoomService.selectChatRoomAll(menteeNo).size();
 		Integer followCount = (int)followService.getMentorList(menteeNo, 0, 10).getTotalElements();
 		
 		Map<String, Integer> dataMap = new HashMap<>();
 		dataMap.put("inquiryCount", inquiryCount);
+		dataMap.put("counselCount", counselCount);
+		dataMap.put("followCount", followCount);
+		
+		Response response = new Response();
+		
+		//응답객체에 코드, 메시지, 객체 설정
+		response.setStatus(ResponseStatusCode.READ_MEMBER_SUCCESS);
+		response.setMessage(ResponseMessage.READ_MEMBER_SUCCESS);
+		response.setData(dataMap);
+		
+		HttpHeaders httpHeaders=new HttpHeaders();
+		httpHeaders.setContentType(new MediaType(MediaType.APPLICATION_JSON,Charset.forName("UTF-8")));
+		
+		ResponseEntity<Response> responseEntity = 
+				new ResponseEntity<Response>(response, httpHeaders, HttpStatus.OK);
+		
+		return responseEntity;
+	}
+	
+	/* 멘토 회원 활동 요약 */
+	@Operation(summary = "특정 멘티 활동 내역 요약")
+	@GetMapping("/summary/{mentorNo}")
+	public ResponseEntity<Response> getMentorSummary(
+			@PathVariable(name ="mentorNo") Long mentorNo){
+		
+		Integer answerCount = (int)answerService.getAnswerByMember(mentorNo, 0, 10).getTotalElements();
+		Integer counselCount = (int)chatRoomService.selectChatRoomAll(mentorNo).size();
+		Integer followCount = (int)followService.countFollower(mentorNo);
+		
+		Map<String, Integer> dataMap = new HashMap<>();
+		dataMap.put("answerCount", answerCount);
+		dataMap.put("counselCount", counselCount);
 		dataMap.put("followCount", followCount);
 		
 		Response response = new Response();
