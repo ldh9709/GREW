@@ -232,105 +232,50 @@ public class MentorBoardController {
 
         return new ResponseEntity<>(response, headers, HttpStatus.OK);
     }
-    @Operation(summary = "이미지 업로드")
+    
+    
+    
+    
+ // **이미지 업로드 엔드포인트**
     @PostMapping("/{mentorBoardNo}/upload-image")
-    public String uploadMentorBoardImage(
-            @PathVariable("mentorBoardNo") Long mentorBoardNo,
-            @RequestParam("file") MultipartFile file) {
+    public ResponseEntity<String> uploadImage( @PathVariable("mentorBoardNo") Long mentorBoardNo, @RequestParam("file") MultipartFile file) {
         try {
-            mentorBoardService.updateMentorBoardImage(mentorBoardNo, file);
-            return "이미지 업로드 성공";
+            mentorBoardService.uploadImage(mentorBoardNo, file);
+            return ResponseEntity.ok("이미지 업로드 성공");
         } catch (Exception e) {
-            return "이미지 업로드 실패: " + e.getMessage();
+            return ResponseEntity.status(500).body("이미지 업로드 실패: " + e.getMessage());
         }
     }
-    
-    
-    
-    
-    
-    
-    
-    
-//    /* 멘토 보드 검색 */
-//    @Operation(summary = "멘토 보드 검색")
-//    @GetMapping("/search")
-//    public ResponseEntity<Response> searchMentorBoards(@RequestParam(name = "query") String query) {
-//        List<MentorBoardDto> searchedBoards = mentorBoardService.findMentorBoardBySearch(query);
-//
-//        Response response = new Response();
-//        response.setStatus(ResponseStatusCode.READ_MEMBER_LIST_SUCCESS);
-//        response.setMessage("멘토 보드 검색 성공");
-//        response.setData(searchedBoards);
-//
-//        HttpHeaders headers = new HttpHeaders();
-//        headers.setContentType(new MediaType(MediaType.APPLICATION_JSON, Charset.forName("UTF-8")));
-//
-//        ResponseEntity<Response> responseEntity = 
-//				new ResponseEntity<Response>(response, headers, HttpStatus.OK);
-//        
-//        return  responseEntity ;
-//    }
 
-//    /* 멘토 보드 조회수 기준 정렬 */
-//    @Operation(summary = "멘토 보드 조회수 기준 정렬")
-//    @GetMapping("/sorted/views")
-//    public ResponseEntity<Response> getMentorBoardsSortedByViews() {
-//        List<MentorBoardDto> sortedBoards = mentorBoardService.findByMentorBoardNoOrderByView(null);
-//
-//        Response response = new Response();
-//        response.setStatus(ResponseStatusCode.READ_MEMBER_LIST_SUCCESS);
-//        response.setMessage("멘토 보드 조회수 순 정렬 성공");
-//        response.setData(sortedBoards);
-//
-//        HttpHeaders headers = new HttpHeaders();
-//        headers.setContentType(new MediaType(MediaType.APPLICATION_JSON, Charset.forName("UTF-8")));
-//
-//        ResponseEntity<Response> responseEntity = 
-//				new ResponseEntity<Response>(response, headers, HttpStatus.OK);
-//        
-//        return  responseEntity ;
-//    }
-    
-//    /**
-//     * mentor_board_date 기준 내림차순으로 mentor_board_status = 1 인 MentorBoard 목록 조회
-//     */
-//    @Operation(summary = "멘토 보드 시간 기준 내림차순 정렬")
-//    @GetMapping("/sorted-by-date")
-//    public ResponseEntity<Response> getMentorBoardsSortedByDate() {
-//        List<MentorBoard> sortedBoards = mentorBoardService.getMentorBoardsSortedByDate();
-//
-//        Response response = new Response();
-//        response.setStatus(ResponseStatusCode.READ_MENTOR_BOARD_LIST_SUCCESS);
-//        response.setMessage(ResponseMessage.READ_MENTOR_BOARD_LIST_SUCCESS);
-//        response.setData(sortedBoards);
-//
-//        HttpHeaders headers = new HttpHeaders();
-//        headers.setContentType(new MediaType(MediaType.APPLICATION_JSON, Charset.forName("UTF-8")));
-//
-//        ResponseEntity<Response> responseEntity = 
-//            new ResponseEntity<>(response, headers, HttpStatus.OK);
-//
-//        return responseEntity;
-//    }
-//    /* 특정 멘토의 모든 멘토 보드 조회 */
-//    @Operation(summary = "특정 멘토의 모든 멘토 보드 조회")
-//    @GetMapping("/mentor/{memberNo}")
-//    public ResponseEntity<Response> getMentorBoardsByMember(@PathVariable(name = "memberNo") Long memberNo) {
-//        List<MentorBoardDto> mentorBoards = mentorBoardService.getMentorBoardsByMemberNo(memberNo);
-//
-//        Response response = new Response();
-//        response.setStatus(ResponseStatusCode.READ_MEMBER_LIST_SUCCESS);
-//        response.setMessage(ResponseMessage.READ_MEMBER_LIST_SUCCESS);
-//        response.setData(mentorBoards);
-//
-//        HttpHeaders headers = new HttpHeaders();
-//        headers.setContentType(new MediaType(MediaType.APPLICATION_JSON, Charset.forName("UTF-8")));
-//
-//        ResponseEntity<Response> responseEntity = 
-//				new ResponseEntity<Response>(response, headers, HttpStatus.OK);
-//        
-//        return  responseEntity ;
-//    }
+    // **이미지 URL 가져오기 엔드포인트**
+    @GetMapping("/{mentorBoardNo}/image-url")
+    public ResponseEntity<String> getImageUrl(@PathVariable("mentorBoardNo") Long mentorBoardNo) {
+        try {
+            String imageUrl = mentorBoardService.getImageUrl(mentorBoardNo);
+            return ResponseEntity.ok(imageUrl);
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body("이미지 URL 조회 실패: " + e.getMessage());
+        }
+    }
 }
+    
+    
 
+    
+    
+    
+    
+
+//    @Operation(summary = "이미지 업로드")
+//    @PostMapping("/{mentorBoardNo}/upload-image")
+//    public String uploadMentorBoardImage(
+//            @PathVariable("mentorBoardNo") Long mentorBoardNo,
+//            @RequestParam("file") MultipartFile file) {
+//        try {
+//            mentorBoardService.updateMentorBoardImage(mentorBoardNo, file);
+//            return "이미지 업로드 성공";
+//        } catch (Exception e) {
+//            return "이미지 업로드 실패: " + e.getMessage();
+//        }
+//    }
+//    

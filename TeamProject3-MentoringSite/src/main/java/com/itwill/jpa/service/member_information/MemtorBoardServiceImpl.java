@@ -30,7 +30,7 @@ import java.util.UUID;
 @Service
 public class MemtorBoardServiceImpl implements MemtorBoardService {
 
-		private static final String IMAGE_PATH = "src/main/resources/static/images/mentor-board/";
+	private static final String UPLOAD_DIR = "C:/upload/mentor-board/"; // **외부 경로**
 		
 	  @Autowired
 	    private MentorBoardRepository mentorBoardRepository;
@@ -178,53 +178,37 @@ public class MemtorBoardServiceImpl implements MemtorBoardService {
 	            );
 	        }
 	    }
-
-	    /**
-	     * 멘토 보드 이미지 업로드 메서드
-	     */
-	    @Override
-	    public void updateMentorBoardImage(Long mentorBoardNo, MultipartFile file) {
-	        try {
-	            // 멘토 보드 정보 조회
-	            MentorBoard mentorBoard = mentorBoardRepository.findById(mentorBoardNo)
-	                    .orElseThrow(() -> new CustomException(
-	                        ResponseStatusCode.MENTOR_BOARD_NOT_FOUND, 
-	                        ResponseMessage.MENTOR_BOARD_NOT_FOUND
-	                    ));
-
-	            // 이미지 저장 경로 설정
-	            String absolutePath = new File("").getAbsolutePath();
-	            String IMAGE_PATH = absolutePath + "/src/main/resources/static/images/mentor-board/";
-
-	            // 디렉터리 생성
-	            File saveDir = new File(IMAGE_PATH);
-	            if (!saveDir.exists()) {
-	                saveDir.mkdirs();
-	            }
-
-	            // 파일명 생성 (UUID + 원본 파일명)
-	            String originalFilename = file.getOriginalFilename();
-	            String fileName = UUID.randomUUID().toString() + "_" + originalFilename;
-
-	            // 파일 저장 경로 생성
-	            File saveFile = new File(IMAGE_PATH + fileName);
-
-	            // 파일 저장
-	            file.transferTo(saveFile);
-
-	            // 멘토 보드 이미지 정보 업데이트
-	            mentorBoard.setMentorBoardImage("/images/mentor-board/" + fileName);
-	            mentorBoardRepository.save(mentorBoard);
-	        } catch (Exception e) {
-	            // 예외 발생 시 커스텀 예외 던짐
-	            throw new CustomException(
-	                ResponseStatusCode.IMAGE_UPLOAD_FAIL, 
-	                ResponseMessage.IMAGE_UPLOAD_FAIL
-	            );
-	        }
-	    }
 	
 	    
+	    
+	    @Override
+	    public void uploadImage(Long mentorBoardNo, MultipartFile file) throws Exception {
+	        MentorBoard mentorBoard = mentorBoardRepository.findById(mentorBoardNo)
+	                .orElseThrow(() -> new Exception("해당 멘토 보드를 찾을 수 없습니다."));
+
+	        String fileName = file.getOriginalFilename();
+	        String filePath = UPLOAD_DIR + mentorBoardNo + "/" + fileName;
+	        
+	        File directory = new File(UPLOAD_DIR + mentorBoardNo + "/");
+	        if (!directory.exists()) {
+	            directory.mkdirs(); // 디렉터리 생성
+	        }
+
+	        file.transferTo(new File(filePath)); // 파일 저장
+
+	        String imageUrl = "/upload/mentor-board/" + mentorBoardNo + "/" + fileName;
+	        mentorBoard.setMentorBoardImage(imageUrl); // DB에 URL 저장
+	        mentorBoardRepository.save(mentorBoard);
+	    }
+
+	    @Override
+	    public String getImageUrl(Long mentorBoardNo) throws Exception {
+	        MentorBoard mentorBoard = mentorBoardRepository.findById(mentorBoardNo)
+	                .orElseThrow(() -> new Exception("해당 멘토 보드를 찾을 수 없습니다."));
+	        
+	        return mentorBoard.getMentorBoardImage(); // 이미지 URL 반환
+	    }
+	
 	    
 	    
 	    
@@ -270,46 +254,49 @@ public class MemtorBoardServiceImpl implements MemtorBoardService {
 	    
 	    
 	    
-	    
-	    
-//	 /* 특정 멘토의 모든 멘토 보드 조회 */
-//    @Override
-//    public List<MentorBoardDto> getMentorBoardsByMemberNo(Long memberNo) {
-//        Member member = memberRepository.findById(memberNo).get();
-//
-//        List<MentorBoard> mentorBoards = mentorBoardRepository.findByMember(member);
-//        List<MentorBoardDto> mentorBoardDtos = new ArrayList<>();
-//        for (MentorBoard board : mentorBoards) {
-//            mentorBoardDtos.add(MentorBoardDto.toDto(board));
-//        }
-//        return mentorBoardDtos;
-//    }
 
-//    /* 조회수 별로 멘토 보드 리스트 조회 */ 
-//    @Override
-//    public List<MentorBoardDto> findByMentorBoardNoOrderByView(Long mentorBoardNo) {
-//        List<MentorBoard> boards = mentorBoardRepository.findAllMentorBoardOrderByView(Pageable.unpaged()).getContent();
-//        List<MentorBoardDto> mentorBoardDtos = new ArrayList<>();
-//        for (MentorBoard board : boards) {
-//            mentorBoardDtos.add(MentorBoardDto.toDto(board));
-//        }
-//        return mentorBoardDtos;
-//    }
-//    /* 멘토 보드 검색창 검색 */
-//    @Override
-//    public List<MentorBoardDto> findMentorBoardBySearch(String search) {
-//        List<MentorBoard> boards = mentorBoardRepository.findMentorBoardBySearch(search);
-//        List<MentorBoardDto> mentorBoardDtos = new ArrayList<>();
-//        for (MentorBoard board : boards) {
-//            mentorBoardDtos.add(MentorBoardDto.toDto(board));
-//        }
-//        return mentorBoardDtos;
-//    }
-    
-//    @Override
-//    public List<MentorBoard> getMentorBoardsSortedByDate() {
-//        return mentorBoardRepository.findAllMentorBoardsByDateOrderByDateDesc();
-//    }
-//    
-    
-    
+//
+//	    /**
+//	     * 멘토 보드 이미지 업로드 메서드
+//	     */
+//	    @Override
+//	    public void updateMentorBoardImage(Long mentorBoardNo, MultipartFile file) {
+//	        try {
+//	            // 멘토 보드 정보 조회
+//	            MentorBoard mentorBoard = mentorBoardRepository.findById(mentorBoardNo)
+//	                    .orElseThrow(() -> new CustomException(
+//	                        ResponseStatusCode.MENTOR_BOARD_NOT_FOUND, 
+//	                        ResponseMessage.MENTOR_BOARD_NOT_FOUND
+//	                    ));
+//
+//	            // 이미지 저장 경로 설정
+//	            String absolutePath = new File("").getAbsolutePath();
+//	            String IMAGE_PATH = absolutePath + "/src/main/resources/static/images/mentor-board/";
+//
+//	            // 디렉터리 생성
+//	            File saveDir = new File(IMAGE_PATH);
+//	            if (!saveDir.exists()) {
+//	                saveDir.mkdirs();
+//	            }
+//
+//	            // 파일명 생성 (UUID + 원본 파일명)
+//	            String originalFilename = file.getOriginalFilename();
+//	            String fileName = UUID.randomUUID().toString() + "_" + originalFilename;
+//
+//	            // 파일 저장 경로 생성
+//	            File saveFile = new File(IMAGE_PATH + fileName);
+//
+//	            // 파일 저장
+//	            file.transferTo(saveFile);
+//
+//	            // 멘토 보드 이미지 정보 업데이트
+//	            mentorBoard.setMentorBoardImage("/images/mentor-board/" + fileName);
+//	            mentorBoardRepository.save(mentorBoard);
+//	        } catch (Exception e) {
+//	            // 예외 발생 시 커스텀 예외 던짐
+//	            throw new CustomException(
+//	                ResponseStatusCode.IMAGE_UPLOAD_FAIL, 
+//	                ResponseMessage.IMAGE_UPLOAD_FAIL
+//	            );
+//	        }
+//	    }
