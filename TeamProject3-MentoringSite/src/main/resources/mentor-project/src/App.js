@@ -1,6 +1,6 @@
 import './App.css';
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import LoginFormPage from './page/LoginFormPage';
 import MainFormPage from './page/MainFormPage';
 import JoinFormPage from './page/JoinFormPage';
@@ -12,6 +12,7 @@ function App() {
     isLogin:false,
     loginUser: {}
   })
+
 
 
   return ( 
