@@ -22,6 +22,10 @@ import lombok.ToString;
 @Getter
 @ToString
 @EqualsAndHashCode
+/*
+ * Spring Security가 인증 및 권한 부여를 처리할 때 필요한 사용자 정보를 제공하는 클래스
+ * 일반 로그인과 OAuth2 로그인 모두에서 사용할 수 있도록 설계
+ */
 public class PrincipalDetails implements UserDetails, OAuth2User {
 	
 	private final MemberSecurityDto member;//일반 사용자 정보
@@ -31,12 +35,14 @@ public class PrincipalDetails implements UserDetails, OAuth2User {
 	//일반 로그인 시 사용
 	public PrincipalDetails(MemberSecurityDto member) {
 		this.member = member;
-		System.out.println("<<<<<PrincipalDetails : " + this.member);
+		System.out.println("<<<<<PrincipalDetailsMember : " + this.member);
 	}
 	//SNS 로그인 시 사용
 	public PrincipalDetails(MemberSecurityDto member, Oauth2UserInfo oauth2UserInfo) {
 		this.member = member;
+		System.out.println("<<<<<PrincipalDetailsMember : " + this.member);
 		this.oauth2UserInfo = oauth2UserInfo;
+		System.out.println("<<<<<PrincipalDetailsOauth2UserInfo : " + this.oauth2UserInfo);
 	}
 	
 	//해당 유저의 권한 목록 반환
