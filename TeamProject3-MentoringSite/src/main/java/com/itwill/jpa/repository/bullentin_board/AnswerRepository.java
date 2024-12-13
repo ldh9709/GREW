@@ -91,4 +91,20 @@ public interface AnswerRepository extends JpaRepository<Answer, Long>{
 		       "ORDER BY a.answerDate DESC")
 	Page<Answer> findByMemberMemberNoOrderByAnswerDateDesc(@Param("memberNo") Long memberNo, Pageable pageable);
 
+	// 답변 내용(answer_content) 또는 질문 제목(inquiry_title)에서 검색어를 포함하는 답변 찾기
+
+    @Query("SELECT a FROM Answer a " +
+           "JOIN a.inquiry i " +
+           "JOIN i.category c " +
+           "LEFT JOIN a.votes v " +
+           "WHERE (a.answerContent LIKE %:search% OR i.inquiryTitle LIKE %:search%) " +
+           "AND a.answerStatus = 1 " +
+           "GROUP BY a.answerNo, a.answerContent, a.answerDate, a.answerStatus, a.answerAccept, a.member, a.inquiry " +
+           "ORDER BY a.answerAccept DESC, " +
+           "(COUNT(CASE WHEN v.voteType = 1 THEN 1 END) - " +
+           "COUNT(CASE WHEN v.voteType = 2 THEN 1 END)) DESC")
+    Page<Answer> searchAnswersByKeyword(@Param("search") String search, Pageable pageable);
+
+
+
 }
