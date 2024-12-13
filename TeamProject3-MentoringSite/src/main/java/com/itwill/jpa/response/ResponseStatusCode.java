@@ -18,9 +18,13 @@ public class ResponseStatusCode {
 	public static final int UPDATE_MENTOR_BOARD_SUCCESS = 2330;
 	public static final int DELETE_MENTOR_BOARD_SUCCESS = 2340;
 	public static final int MENTOR_BOARD_NOT_FOUND = 2350;
-	
+	public static final int CREATED_MENTOR_BOARD_FAIL = 2301; // 멘토 보드 등록 실패
+	public static final int UPDATE_MENTOR_BOARD_FAIL = 2331; // 멘토 보드 수정 실패
+	public static final int DELETE_MENTOR_BOARD_FAIL = 2341; // 멘토 보드 삭제 실패
+	public static final int IMAGE_UPLOAD_FAIL = 2360; // 이미지 업로드 실패
+	public static final int MEMBER_NOT_FOUND = 2370; // 멤버를 찾을 수 없음 
+	public static final int NOT_A_MENTOR = 2375; // 멘토가 아님
 	/******************* MENTOR PROFILE 메시지 코드 ************************/
-	// 🔥 코드 상수 (멘토 프로필 관련 코드)
     public static final int CREATED_MENTOR_PROFILE_SUCCESS_CODE = 2350;
     public static final int READ_MENTOR_PROFILE_SUCCESS_CODE = 2355;
     public static final int READ_MENTOR_PROFILE_LIST_SUCCESS_CODE = 2360;
@@ -30,6 +34,12 @@ public class ResponseStatusCode {
     public static final int READ_MENTOR_PROFILE_LIST_FAIL_CODE = 2380;
     public static final int MENTOR_PROFILE_STATUS_UPDATE_SUCCESS_CODE = 2385;
     public static final int MENTOR_PROFILE_STATUS_UPDATE_FAIL_CODE = 2390;
+    public static final int CREATED_MENTOR_PROFILE_FAIL = 2395; // 멘토 프로필 생성 실패
+    public static final int ALREADY_HAS_MENTOR_PROFILE = 2396; // 이미 멘토 프로필이 존재함
+    public static final int MEMBER_MENTOR_NOT_FOUND = 2397; // 멤버를 찾을 수 없음
+    public static final int CATEGORY_NOT_FOUND = 2398; // 카테고리를 찾을 수 없음
+    public static final int IMAGE_MENTOR_UPLOAD_FAIL = 2399; // 이미지 업로드 실패
+    public static final int UPDATE_MENTOR_PROFILE_FAIL_CODE = 2389; // 이미지 업로드 실패
 	/******************* FOLLOW 메시지 ************************/
 	public static final int CREATE_FOLLOW_SUCCESS = 2400;
 	public static final int READ_MENTORLIST_SUCCESS = 2410;
@@ -135,5 +145,6 @@ public class ResponseStatusCode {
 	
 	/******************* 일반적인오류 메시지 **********************/
 	public static final int INTERNAL_SERVER_ERROR = 10000;
+	
 	
 }
