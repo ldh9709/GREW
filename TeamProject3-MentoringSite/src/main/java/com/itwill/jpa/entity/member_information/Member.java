@@ -191,8 +191,8 @@ public class Member {
 	}
 	
 	//비밀번호 변경
-		public void changePassword(String newPassword) {
-			this.memberPassword = newPassword;
-		}
+	public void changePassword(String newPassword) {
+		this.memberPassword = newPassword;
+	}
 		
 }

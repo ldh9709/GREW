@@ -2,6 +2,10 @@ import React, { useState } from "react";
 import "../css/LoginFormPage.css";
 import { Link, useNavigate } from "react-router-dom";
 import * as memberApi from "../api/memberApi";
+import { getGoogleLoginLink } from "../api/googleApi";
+
+const googleLogin = getGoogleLoginLink();
+
 
 function LoginFormPage() {
   const navigate = useNavigate();
@@ -88,7 +92,7 @@ function LoginFormPage() {
         <h3 className="signup-sub-title">SNS 로그인</h3>
 
         <div className="form-sns-group">
-          <Link to={"/oauth2/authorization/google"}>
+          <Link to={googleLogin}>
           <img
             src="google_icon.svg"
             alt="google"

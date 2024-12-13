@@ -41,7 +41,7 @@ public class JWTCheckFilter extends OncePerRequestFilter {
 
     log.info("check uri.............." + path);
     // swagger 경로의 호출은 체크하지 않음
-    if (path.startsWith("/swagger-ui") ||path.startsWith("/v3/api-docs")) {
+    if (path.startsWith("/swagger-ui") ||path.startsWith("/v3/api-docs") || path.startsWith("/favicon.ico")) {
       return true;
     }
  
@@ -57,6 +57,8 @@ public class JWTCheckFilter extends OncePerRequestFilter {
       return true;
     }
     
+    
+    
     //나머지 경로는 필터 적용됨
     return false;
   }
@@ -65,9 +67,13 @@ public class JWTCheckFilter extends OncePerRequestFilter {
   protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
       throws ServletException, IOException {
 	  	// 요청 헤더에서 Authorization 추출
+	  System.out.println(">>>>>>>>>>>>request : " + request);
+	  System.out.println(">>>>>>>>>>>>response : " + response);
+	  System.out.println(">>>>>>>>>>>>filterChain : " + filterChain);
+	  
         String authHeaderStr = request.getHeader("Authorization");
-        System.out.println(">>>>>>>>>>>>REQUEST : " + request);
         System.out.println(">>>>>>>>>>>>authHeaderStr : " + authHeaderStr);
+        
         try {
           // Authorization 헤더에서 'Bearer ' 부분을 제외한 토큰만 추출
           String accessToken = authHeaderStr.substring(7);

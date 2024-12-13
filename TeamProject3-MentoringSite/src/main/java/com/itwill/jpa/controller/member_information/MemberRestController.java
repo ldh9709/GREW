@@ -37,7 +37,7 @@ import jakarta.validation.Valid;
 
 @CrossOrigin(origins = "*")
 @RestController
-@RequestMapping("/member")
+@RequestMapping("/api/member")
 public class MemberRestController {
 	@Autowired
 	private MemberService memberService;

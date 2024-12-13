@@ -37,8 +37,8 @@ public class MemberServiceImpl implements MemberService {
 	//메일 발송을 위한 메소드 의존성 주입
 	CustomMailSender customMailSender;
 	
-	@Autowired
-	private PasswordEncoder passwordEncoder;
+	
+	private PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 	
 	//이메일별 인증번호 저장
 	private final Map<String, Integer> tempCode = new ConcurrentHashMap<>();
