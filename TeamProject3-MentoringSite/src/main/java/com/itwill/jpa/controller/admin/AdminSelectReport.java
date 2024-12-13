@@ -22,7 +22,7 @@ import io.swagger.v3.oas.annotations.Operation;
 
 @RestController
 @RequestMapping("/admin")
-public class AdminSelect_Report {
+public class AdminSelectReport {
 	
 	@Autowired
 	private ReportService reportService;
