@@ -63,9 +63,13 @@ public class ResponseMessage {
 	/******************* REPORT   메시지 ************************/
 	public static final String CREATED_REPORT_SUCCESS = "신고 등록 성공";
 	public static final String READ_REPORT_SUCCESS = "신고 조회 성공";
-	public static final String READ_REPORT_LIST_SUCCESS = "신고 리스트 성공";
+	public static final String READ_REPORT_LIST_SUCCESS = "신고 리스트 조회 성공";
 	public static final String UPDATE_REPORT_SUCCESS = "신고 상태변경 성공";
-	public static final String REPORT_FAIL = "신고 실패";
+	
+	public static final String CREATED_REPORT_FAIL = "신고 등록 실패";
+	public static final String READ_REPORT_FAIL = "신고 조회 실패";
+	public static final String READ_REPORT_LIST_FAIL= "신고 리스트 조회 실패";
+	public static final String UPDATE_REPORT_FAIL = "신고 상태변경 실패";
 	
 	/**********************INQUIRY 메시지**************************/
     public static final String CREATED_INQUIRY_SUCCESS = "질문 등록 성공";

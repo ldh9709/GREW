@@ -59,7 +59,11 @@ public class ResponseStatusCode {
 	public static final int READ_REPORT_SUCCESS = 4100;
 	public static final int READ_REPORT_LIST_SUCCESS = 4200;
 	public static final int UPDATE_REPORT_SUCCESS = 4300;
-	public static final int REPORT_FAIL = 4400;
+	
+	public static final int CREATED_REPORT_FAIL = 4400;
+	public static final int READ_REPORT_FAIL = 4500;
+	public static final int READ_REPORT_LIST_FAIL= 4600;
+	public static final int UPDATE_REPORT_FAIL = 4700;
 	
 	/**********************INQUIRY 메시지**************************/
 	public static final int CREATED_INQUIRY_SUCCESS = 5000;

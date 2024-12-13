@@ -26,6 +26,10 @@ public class HttpStatusMapper {
         // ALARM 관련 상태 코드 매핑
 
         // REPORT 관련 상태 코드 매핑
+    	statusCodeMap.put(ResponseStatusCode.CREATED_REPORT_FAIL, HttpStatus.BAD_REQUEST);
+    	statusCodeMap.put(ResponseStatusCode.READ_REPORT_FAIL, HttpStatus.NOT_FOUND);
+    	statusCodeMap.put(ResponseStatusCode.READ_REPORT_LIST_FAIL, HttpStatus.NOT_FOUND);
+    	statusCodeMap.put(ResponseStatusCode.UPDATE_REPORT_FAIL, HttpStatus.BAD_REQUEST);
 
         // INQUIRY 관련 상태 코드 매핑
         statusCodeMap.put(ResponseStatusCode.CREATED_INQUIRY_FAIL, HttpStatus.BAD_REQUEST);
