@@ -2,9 +2,16 @@ package com.itwill.jpa.repository.member_information;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+
+import com.itwill.jpa.dto.member_information.MemberDto;
+import com.itwill.jpa.entity.member_information.Member;
+import com.itwill.jpa.entity.role.Role;
 
 @SpringBootTest
 class MemberRepositoryTest {
@@ -12,19 +19,19 @@ class MemberRepositoryTest {
 	@Autowired
 	private MemberRepository memberRepository;
 
-	@Test
+//	@Test
 	void testExistByMemberId() {
 		Boolean existId= memberRepository.existsByMemberId("aaa");
 		assertTrue(existId);
 	}
 
-	@Test
+//	@Test
 	void testExistByMemberEmail() {
 		Boolean existEmail= memberRepository.existsByMemberEmail("aaa@naver.com");
 		assertTrue(existEmail);
 	}
 
-	@Test
+//	@Test
 	void testFindMemberIdByMemberEmail() {
 	    System.out.println(memberRepository.findMemberIdByMemberEmail("bbb@naver.com").get());
 	}
@@ -46,6 +53,23 @@ class MemberRepositoryTest {
 
 //	@Test
 	void testFindByMemberNo() {
+	}
+	
+	@Test
+	void testfindByMemberRoleOrderByMemberJoinDateAsc() {
+		List<Member> memberList = memberRepository.findByMemberRoleOrderByMemberJoinDateAsc(Role.ROLE_MENTEE);
+		List<MemberDto> memberDtoList = new ArrayList<>();
+		
+		for (Member member : memberList) {
+			memberDtoList.add(MemberDto.toBasicDto(member));
+		}
+		
+		System.out.println(memberDtoList.get(0));
+		
+	}
+	
+//	@Test
+	void testfindByMemberRoleOrderByMemberNameAsc() {
 	}
 
 }

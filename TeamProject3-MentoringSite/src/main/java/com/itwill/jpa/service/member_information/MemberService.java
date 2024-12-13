@@ -1,5 +1,7 @@
 package com.itwill.jpa.service.member_information;
 
+import java.util.List;
+
 import com.itwill.jpa.dto.member_information.MemberDto;
 import com.itwill.jpa.entity.member_information.Member;
 
@@ -40,6 +42,9 @@ public interface MemberService {
 	
 	//회원상세
 	Member getMember(Long memberNo);
+	
+	//회원 전체 출력
+	List<MemberDto> getMemberAll(String role, Integer order);
 	
 	//회원 상태 수정
 	Member updateMemberStatus(MemberDto memberDto, Integer statusNo);

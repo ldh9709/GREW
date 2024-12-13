@@ -2,6 +2,7 @@ package com.itwill.jpa.controller.member_information;
 
 import java.nio.charset.Charset;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +34,7 @@ import com.itwill.jpa.service.member_information.MemberService;
 import com.itwill.jpa.service.member_information.MentorBoardService;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 
@@ -151,6 +153,63 @@ public class MemberRestController {
 	}
 	*/
 	
+	/* 회원 수정 */
+	@Operation(summary = "회원 정보 수정")
+	@PutMapping("/{memberNo}")
+	public ResponseEntity<Response> updateMember(@RequestBody MemberDto memberDto) {
+		
+		//업데이트 메소드 실행
+		Member updateMember = memberService.updateMember(memberDto);
+		
+		MemberDto updateMemberDto = MemberDto.toDto(updateMember);
+		
+		Response response = new Response();
+		
+		if(updateMemberDto != null) {
+			//응답객체에 코드, 메시지, 객체 설정
+			response.setStatus(ResponseStatusCode.UPDATE_MEMBER_SUCCESS);
+			response.setMessage(ResponseMessage.UPDATE_MEMBER_SUCCESS);
+			response.setData(updateMemberDto);
+		}
+		
+		HttpHeaders httpHeaders=new HttpHeaders();
+		httpHeaders.setContentType(new MediaType(MediaType.APPLICATION_JSON,Charset.forName("UTF-8")));
+		
+		ResponseEntity<Response> responseEntity = 
+				new ResponseEntity<Response>(response, httpHeaders, HttpStatus.OK);
+		
+		return responseEntity;
+	}
+	
+	/* 회원 수정 */
+	@Operation(summary = "회원 상태 수정")
+	@PutMapping("/{memberNo}/status/{statusNo}")
+	public ResponseEntity<Response> updateMemberStatus(
+			@RequestBody MemberDto memberDto, 
+			@PathVariable(name = "statusNo") Integer statusNo) {
+		
+		//업데이트 메소드 실행
+		Member updateMember = memberService.updateMemberStatus(memberDto, statusNo);
+		
+		MemberDto updateMemberDto = MemberDto.toDto(updateMember);
+		
+		Response response = new Response();
+		
+		if(updateMemberDto != null) {
+			//응답객체에 코드, 메시지, 객체 설정
+			response.setStatus(ResponseStatusCode.UPDATE_MEMBER_SUCCESS);
+			response.setMessage(ResponseMessage.UPDATE_MEMBER_SUCCESS);
+			response.setData(updateMemberDto);
+		}
+		
+		HttpHeaders httpHeaders=new HttpHeaders();
+		httpHeaders.setContentType(new MediaType(MediaType.APPLICATION_JSON,Charset.forName("UTF-8")));
+		
+		ResponseEntity<Response> responseEntity = 
+				new ResponseEntity<Response>(response, httpHeaders, HttpStatus.OK);
+		 
+		return responseEntity;
+	}
 	
 	/* 회원 정보 보기 */
 	@Operation(summary = "회원 정보 상세보기")
@@ -245,24 +304,24 @@ public class MemberRestController {
 		return responseEntity;
 	}
 	
-	/* 회원 수정 */
-	@Operation(summary = "회원 정보 수정")
-	@PutMapping("/{memberNo}")
-	public ResponseEntity<Response> updateMember(@RequestBody MemberDto memberDto) {
+	
+	/* 회원 전체 출력 */
+	@Operation(summary = "회원 전체 출력")
+	@GetMapping()
+	public ResponseEntity<Response> getMemberAll(
+			@Parameter(name = "role", description = "필터링할 역할 (ROLE_MENTEE, ROLE_MENTOR)", required = true, example = "ROLE_MENTEE") 
+			@RequestParam(name ="role") String role, 
+			@Parameter(name = "order", description = "정렬 종류 (1: 가입 순, 2: 이름 순)", required = true, example = "1") 
+			@RequestParam(name ="order") Integer order
+			){
 		
-		//업데이트 메소드 실행
-		Member updateMember = memberService.updateMember(memberDto);
-		
-		MemberDto updateMemberDto = MemberDto.toDto(updateMember);
+		List<MemberDto> memberList = memberService.getMemberAll(role, order);
 		
 		Response response = new Response();
 		
-		if(updateMemberDto != null) {
-			//응답객체에 코드, 메시지, 객체 설정
-			response.setStatus(ResponseStatusCode.UPDATE_MEMBER_SUCCESS);
-			response.setMessage(ResponseMessage.UPDATE_MEMBER_SUCCESS);
-			response.setData(updateMemberDto);
-		}
+		response.setStatus(ResponseStatusCode.READ_MEMBER_LIST_SUCCESS);
+		response.setMessage(ResponseMessage.READ_MEMBER_LIST_SUCCESS);
+		response.setData(memberList);
 		
 		HttpHeaders httpHeaders=new HttpHeaders();
 		httpHeaders.setContentType(new MediaType(MediaType.APPLICATION_JSON,Charset.forName("UTF-8")));
@@ -271,36 +330,12 @@ public class MemberRestController {
 				new ResponseEntity<Response>(response, httpHeaders, HttpStatus.OK);
 		
 		return responseEntity;
+		
+		
+		
 	}
 	
-	/* 회원 수정 */
-	@Operation(summary = "회원 상태 수정")
-	@PutMapping("/{memberNo}/status/{statusNo}")
-	public ResponseEntity<Response> updateMemberStatus(
-			@RequestBody MemberDto memberDto, 
-			@PathVariable(name = "statusNo") Integer statusNo) {
-		
-		//업데이트 메소드 실행
-		Member updateMember = memberService.updateMemberStatus(memberDto, statusNo);
-		
-		MemberDto updateMemberDto = MemberDto.toDto(updateMember);
-		
-		Response response = new Response();
-		
-		if(updateMemberDto != null) {
-			//응답객체에 코드, 메시지, 객체 설정
-			response.setStatus(ResponseStatusCode.UPDATE_MEMBER_SUCCESS);
-			response.setMessage(ResponseMessage.UPDATE_MEMBER_SUCCESS);
-			response.setData(updateMemberDto);
-		}
-		
-		HttpHeaders httpHeaders=new HttpHeaders();
-		httpHeaders.setContentType(new MediaType(MediaType.APPLICATION_JSON,Charset.forName("UTF-8")));
-		
-		ResponseEntity<Response> responseEntity = 
-				new ResponseEntity<Response>(response, httpHeaders, HttpStatus.OK);
-		 
-		return responseEntity;
-	}
+	
+	
 	
 }

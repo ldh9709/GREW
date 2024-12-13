@@ -1,5 +1,6 @@
 package com.itwill.jpa.repository.member_information;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -9,6 +10,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import com.itwill.jpa.entity.member_information.Member;
+import com.itwill.jpa.entity.role.Role;
 
 
 @Repository
@@ -35,5 +37,10 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
 	
 	//PK로 멤버 조회
 	public Member findByMemberNo(Long memberNo);
+	
+	// 멤버의 역할(Role)로 필터링 및 정렬
+    List<Member> findByMemberRoleOrderByMemberJoinDateAsc(Role memberRole); // 가입 순 정렬
+    
+    List<Member> findByMemberRoleOrderByMemberNameAsc(Role memberRole); // 이름 순 정렬
 	
 }
