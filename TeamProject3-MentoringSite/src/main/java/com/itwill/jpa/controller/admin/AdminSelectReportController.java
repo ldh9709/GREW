@@ -60,9 +60,9 @@ public class AdminSelectReportController {
 	
 	/* [어드민] 신고 상태 변경 (검토중, 완료 등) */
 	@Operation(summary = "관리자 신고 상태 변경")
-	@PutMapping("/Reports/{report_no}/status")
+	@PutMapping("/report/{reportNo}/status")
 	public ResponseEntity<Response> updateReportStatusForAdmin(
-	        @PathVariable(name = "report_no") Long reportNo,
+	        @PathVariable(name = "reportNo") Long reportNo,
 	        @RequestParam(name = "status") String status) {
 	    
 	    // 신고 상태 변경: 상태에 따라 '검토중', '완료' 등으로 설정

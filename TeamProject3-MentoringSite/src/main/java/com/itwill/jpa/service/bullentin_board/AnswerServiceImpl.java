@@ -29,146 +29,174 @@ public class AnswerServiceImpl implements AnswerService{
 	private InquiryRepository inquiryRepository;
 	/*답변등록*/
 	@Override
-	public AnswerDto createAnswer(AnswerDto answerDto){
-		
+	public AnswerDto createAnswer(AnswerDto answerDto) {
 		try {
             Answer answer = Answer.toEntity(answerDto);
             return AnswerDto.toDto(answerRepository.save(answer));
         } catch (Exception e) {
-            throw new CustomException(ResponseStatusCode.CREATED_ANSWER_FAIL, ResponseMessage.CREATED_ANSWER_FAIL);
+            throw new CustomException(ResponseStatusCode.CREATED_ANSWER_FAIL, ResponseMessage.CREATED_ANSWER_FAIL, e);
         }
 	}
 	
 	/*답변수정*/
 	@Override
-	public AnswerDto updateAnswer(AnswerDto answerDto) throws Exception{
-		
-		Answer answer = answerRepository.findById(answerDto.getAnswerNo())
-                .orElseThrow(() -> new CustomException(ResponseStatusCode.ACCEPT_ANSWER_FAIL, ResponseMessage.ACCEPT_ANSWER_FAIL));
-		
-		answer.setAnswerContent(answerDto.getAnswerContent());
-		answer.setAnswerDate(LocalDateTime.now());
-		return AnswerDto.toDto(answerRepository.save(answer));
+	public AnswerDto updateAnswer(AnswerDto answerDto) {
+		try {
+			Answer answer = answerRepository.findById(answerDto.getAnswerNo()).get();
+			
+			answer.setAnswerContent(answerDto.getAnswerContent());
+			answer.setAnswerDate(LocalDateTime.now());
+			return AnswerDto.toDto(answerRepository.save(answer));
+		}catch (Exception e) {
+			throw new CustomException(ResponseStatusCode.UPDATE_ANSWER_FAIL, ResponseMessage.UPDATE_ANSWER_FAIL, e);
+		}
 	}
 	
 	/*답변채택*/
 	@Override
-	public AnswerDto acceptAnswer(Long answerNo) throws Exception {
-		
-		//답변이 존재하는 확인
-		Answer answer = answerRepository.findById(answerNo)
-                .orElseThrow(() -> new CustomException(ResponseStatusCode.ACCEPT_ANSWER_FAIL, ResponseMessage.ACCEPT_ANSWER_FAIL));
-		
-		//이미 채택된 답변이 있는지 확인
-	    Answer acceptedAnswer = answerRepository.findAcceptedAnswerByInquiry(answer.getInquiry().getInquiryNo());
-	    if (acceptedAnswer != null) {
-	    	// 예외를 던질 때 사용자 정의 exception 사용
-	        throw new CustomException(
-	        		ResponseStatusCode.ACCEPT_ANSWER_FAIL,
-	        		ResponseMessage.ACCEPT_ANSWER_FAIL);
-	    }
-		
-		answer.setAnswerAccept(2);
-		return AnswerDto.toDto(answerRepository.save(answer));
+	public AnswerDto acceptAnswer(Long answerNo) {
+		try {
+			//답변이 존재하는 확인
+			Answer answer = answerRepository.findById(answerNo).get();
+			
+			//이미 채택된 답변이 있는지 확인
+		    Answer acceptedAnswer = answerRepository.findAcceptedAnswerByInquiry(answer.getInquiry().getInquiryNo());
+		    
+		    answer.setAnswerAccept(2);
+			return AnswerDto.toDto(answerRepository.save(answer));
+		    
+		} catch (Exception e) {
+			throw new CustomException(ResponseStatusCode.ACCEPT_ANSWER_FAIL,ResponseMessage.ACCEPT_ANSWER_FAIL,e);
+		}
 	}
 	
 	/*답변삭제*/
 	@Override
-	public AnswerDto deleteAnswer(Long answerNo) throws Exception {
-		//답변이 존재하는지 확인
-		Answer answer = answerRepository.findById(answerNo)
-                .orElseThrow(() -> new CustomException(ResponseStatusCode.DELETE_ANSWER_FAIL, ResponseMessage.DELETE_ANSWER_FAIL));
-		
-	    answer.setAnswerStatus(2);  //삭제상태로 변경
-	    return AnswerDto.toDto(answerRepository.save(answer));
+	public AnswerDto deleteAnswer(Long answerNo) {
+		try {
+			//답변이 존재하는지 확인
+			Answer answer = answerRepository.findById(answerNo).get();
+			
+		    answer.setAnswerStatus(2);  //삭제상태로 변경
+		    return AnswerDto.toDto(answerRepository.save(answer));
+		} catch (Exception e) {
+			throw new CustomException(ResponseStatusCode.DELETE_ANSWER_FAIL, ResponseMessage.DELETE_ANSWER_FAIL,e);
+		}
 	}
 	
 	
 	/* 답변상세보기 */
 	@Override
 	public AnswerDto getAnswer(Long answerNo) {
-		return AnswerDto.toDto(answerRepository.findById(answerNo).get());
+		try {
+			return AnswerDto.toDto(answerRepository.findById(answerNo).get());
+		} catch (Exception e) {
+			throw new CustomException(ResponseStatusCode.READ_ANSWER_FAIL, ResponseMessage.READ_ANSWER_FAIL,e);
+		}
 	}
 	
 	/*질문 하나에 달린 답변*/
 	/*추천순*/
 	@Override
 	public Page<AnswerDto> getByInquiryAnswerOrderByVotes(Long inquiryNo,int pageNumber, int pageSize) {
-		Pageable pageable = PageRequest.of(pageNumber, pageSize);
-		Page<Answer> answerEntityList = 
-				answerRepository.findByInquiryAnswerOrderByVotes(inquiryNo,pageable);
-		List<AnswerDto> answerDtoList = new ArrayList<>();
-		for(Answer answerEntity:answerEntityList) {
-			answerDtoList.add(AnswerDto.toDto(answerEntity));
+		try {
+			Pageable pageable = PageRequest.of(pageNumber, pageSize);
+			Page<Answer> answerEntityList = 
+					answerRepository.findByInquiryAnswerOrderByVotes(inquiryNo,pageable);
+			List<AnswerDto> answerDtoList = new ArrayList<>();
+			for(Answer answerEntity:answerEntityList) {
+				answerDtoList.add(AnswerDto.toDto(answerEntity));
+			}
+			return new PageImpl<>(answerDtoList, pageable, answerEntityList.getTotalElements());
+		} catch (Exception e) {
+			throw new CustomException(ResponseStatusCode.READ_ANSWER_LIST_FAIL, ResponseMessage.READ_ANSWER_LIST_FAIL,e);
 		}
-		return new PageImpl<>(answerDtoList, pageable, answerEntityList.getTotalElements());
 	}
 	
 	/*최신순*/
 	@Override
 	public Page<AnswerDto> getByInquiryAnswerOrderByDate(Long inquiryNo,int pageNumber, int pageSize) {
-		Pageable pageable = PageRequest.of(pageNumber, pageSize);
-		Page<Answer> answerEntityList =
-				answerRepository.findByInquiryAnswerOrderByDate(inquiryNo,pageable);
-		List<AnswerDto> answerDtoList = new ArrayList<>();
-		for(Answer answerEntity:answerEntityList) {
-			answerDtoList.add(AnswerDto.toDto(answerEntity));
+		try {
+			Pageable pageable = PageRequest.of(pageNumber, pageSize);
+			Page<Answer> answerEntityList =
+					answerRepository.findByInquiryAnswerOrderByDate(inquiryNo,pageable);
+			List<AnswerDto> answerDtoList = new ArrayList<>();
+			for(Answer answerEntity:answerEntityList) {
+				answerDtoList.add(AnswerDto.toDto(answerEntity));
+			}
+			return new PageImpl<>(answerDtoList, pageable, answerEntityList.getTotalElements());
+		} catch (Exception e) {
+			throw new CustomException(ResponseStatusCode.READ_ANSWER_LIST_FAIL, ResponseMessage.READ_ANSWER_LIST_FAIL,e);
 		}
-		return new PageImpl<>(answerDtoList, pageable, answerEntityList.getTotalElements());
 	}
 	
 	/*카테고리 별 답변*/
 	/*추천순*/
 	@Override
 	public Page<AnswerDto> getByCategoryAnswerOrderByVotes(Long categoryNo,int pageNumber, int pageSize) {
-		Pageable pageable = PageRequest.of(pageNumber, pageSize);
-		Page<Answer> answerEntityList = 
-				answerRepository.findByCategoryAnswerOrderByVotes(categoryNo,pageable);
-		List<AnswerDto> answerDtoList = new ArrayList<>();
-		for(Answer answerEntity:answerEntityList) {
-			answerDtoList.add(AnswerDto.toDto(answerEntity));
+		try {
+			Pageable pageable = PageRequest.of(pageNumber, pageSize);
+			Page<Answer> answerEntityList = 
+					answerRepository.findByCategoryAnswerOrderByVotes(categoryNo,pageable);
+			List<AnswerDto> answerDtoList = new ArrayList<>();
+			for(Answer answerEntity:answerEntityList) {
+				answerDtoList.add(AnswerDto.toDto(answerEntity));
+			}
+			return new PageImpl<>(answerDtoList, pageable, answerEntityList.getTotalElements());
+		} catch (Exception e) {
+			throw new CustomException(ResponseStatusCode.READ_ANSWER_LIST_FAIL, ResponseMessage.READ_ANSWER_LIST_FAIL,e);
 		}
-		return new PageImpl<>(answerDtoList, pageable, answerEntityList.getTotalElements());
 	}
 	
 	/*최신순*/
 	@Override
 	public Page<AnswerDto> getByCategoryAnswerOrderByDate(Long categoryNo,int pageNumber, int pageSize) {
-		Pageable pageable = PageRequest.of(pageNumber, pageSize);
-		Page<Answer> answerEntityList = 
-				answerRepository.findByCategoryAnswerOrderByDate(categoryNo,pageable);
-		List<AnswerDto> answerDtoList = new ArrayList<>();
-		for(Answer answerEntity:answerEntityList) {
-			answerDtoList.add(AnswerDto.toDto(answerEntity));
+		try {
+			Pageable pageable = PageRequest.of(pageNumber, pageSize);
+			Page<Answer> answerEntityList = 
+					answerRepository.findByCategoryAnswerOrderByDate(categoryNo,pageable);
+			List<AnswerDto> answerDtoList = new ArrayList<>();
+			for(Answer answerEntity:answerEntityList) {
+				answerDtoList.add(AnswerDto.toDto(answerEntity));
+			}
+			return new PageImpl<>(answerDtoList, pageable, answerEntityList.getTotalElements());
+		} catch (Exception e) {
+			throw new CustomException(ResponseStatusCode.READ_ANSWER_LIST_FAIL, ResponseMessage.READ_ANSWER_LIST_FAIL,e);
 		}
-		return new PageImpl<>(answerDtoList, pageable, answerEntityList.getTotalElements());
 	}
 	
 	/*최근 3일간 추천 많은 답변*/
 	@Override
 	public Page<AnswerDto> getByAnswerOrderByVoteDate(int pageNumber, int pageSize) {
-		Pageable pageable = PageRequest.of(pageNumber, pageSize);
-		Page<Answer> answerEntityList = 
-				answerRepository.findByAnswerOrderByVoteDate(pageable);
-		List<AnswerDto> answerDtoList = new ArrayList<>();
-		for(Answer answerEntity:answerEntityList) {
-			answerDtoList.add(AnswerDto.toDto(answerEntity));
+		try {
+			Pageable pageable = PageRequest.of(pageNumber, pageSize);
+			Page<Answer> answerEntityList = 
+					answerRepository.findByAnswerOrderByVoteDate(pageable);
+			List<AnswerDto> answerDtoList = new ArrayList<>();
+			for(Answer answerEntity:answerEntityList) {
+				answerDtoList.add(AnswerDto.toDto(answerEntity));
+			}
+			return new PageImpl<>(answerDtoList, pageable, answerEntityList.getTotalElements());
+		} catch (Exception e) {
+			throw new CustomException(ResponseStatusCode.READ_ANSWER_LIST_FAIL, ResponseMessage.READ_ANSWER_LIST_FAIL,e);
 		}
-		return new PageImpl<>(answerDtoList, pageable, answerEntityList.getTotalElements());
 	}
 
 	//내가 작성한 답변내역
 	@Override
 	public Page<AnswerDto> getAnswerByMember(Long memberNo, int pageNumber, int pageSize) {
-		Pageable pageable = PageRequest.of(pageNumber, pageSize);
-		Page<Answer> answerEntityList = 
-				answerRepository.findByMemberMemberNoOrderByAnswerDateDesc(memberNo, pageable);
-		List<AnswerDto> answerDtoList = new ArrayList<>();
-		for(Answer answerEntity:answerEntityList) {
-			answerDtoList.add(AnswerDto.toDto(answerEntity));
+		try {
+			Pageable pageable = PageRequest.of(pageNumber, pageSize);
+			Page<Answer> answerEntityList = 
+					answerRepository.findByMemberMemberNoOrderByAnswerDateDesc(memberNo, pageable);
+			List<AnswerDto> answerDtoList = new ArrayList<>();
+			for(Answer answerEntity:answerEntityList) {
+				answerDtoList.add(AnswerDto.toDto(answerEntity));
+			}
+			return new PageImpl<>(answerDtoList, pageable, answerEntityList.getTotalElements());
+		} catch (Exception e) {
+			throw new CustomException(ResponseStatusCode.READ_ANSWER_LIST_FAIL, ResponseMessage.READ_ANSWER_LIST_FAIL,e);
 		}
-		
-		return new PageImpl<>(answerDtoList, pageable, answerEntityList.getTotalElements());
 	}
 	
 }

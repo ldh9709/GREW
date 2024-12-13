@@ -71,8 +71,12 @@ public class ResponseStatusCode {
 	public static final int READ_INQUIRY_LIST_SUCCESS = 5300;
 	public static final int READ_INQUIRY_LIST_FAIL = 5301;
 	public static final int INCREASE_VIEW_INQUIRY_SUCCESS = 5400;
+	public static final int INCREASE_VIEW_INQUIRY_FAIL = 5401;
 	public static final int READ_INQUIRY_SUCCESS = 5500;
 	public static final int READ_INQUIRY_FAIL = 5501;
+	public static final int READ_IPCHECK_SUCCESS = 5600;
+	public static final int READ_IPCHECK_FAIL = 5601;
+	
 	
 	/**********************ANSWER 메시지**************************/
 	public static final int CREATED_ANSWER_SUCCESS = 6000;

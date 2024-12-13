@@ -1,7 +1,11 @@
 package com.itwill.jpa.exception;
 
 import java.nio.charset.Charset;
+import java.util.ArrayList;
+import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -16,6 +20,8 @@ import com.itwill.jpa.util.HttpStatusMapper;
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
+	private static final Logger logger = LoggerFactory.getLogger(GlobalExceptionHandler.class);
+	
 	// 공통적으로 Content-Type을 application/json으로 설정
     private HttpHeaders createCommonHeaders() {
         HttpHeaders httpHeaders = new HttpHeaders();
@@ -33,12 +39,18 @@ public class GlobalExceptionHandler {
     // CustomException을 처리하는 핸들러
     @ExceptionHandler(CustomException.class)
     public ResponseEntity<Response> handleCustomException(CustomException ex) {
+    	
+    	// 스택 트레이스를 로그로 기록
+        logger.error("Exception occurred: ", ex);
+    	
         // Response 객체 생성
         Response response = new Response();
         response.setStatus(ex.getStatusCode());  // CustomException에서 제공된 상태 코드
         response.setMessage(ex.getMessage());    // CustomException에서 제공된 메시지
-        response.setData(null);                  // 데이터는 필요 없으므로 null
         
+        // 클라이언트에는 간단한 에러 메시지만 제공
+        response.setData(ex.getCause().getMessage());
+
         // 공통 헤더 설정
         HttpHeaders httpHeaders = createCommonHeaders();
         
