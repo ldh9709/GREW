@@ -30,6 +30,7 @@ import com.itwill.jpa.service.chatting_review.ChatRoomService;
 import com.itwill.jpa.service.chatting_review.ReviewService;
 import com.itwill.jpa.service.member_information.FollowService;
 import com.itwill.jpa.service.member_information.MemberService;
+import com.itwill.jpa.service.member_information.MentorBoardService;
 
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.servlet.http.HttpSession;
@@ -42,6 +43,8 @@ public class MemberRestController {
 	
 	@Autowired
 	private MemberService memberService;
+	@Autowired
+	private MentorBoardService boardService;
 	@Autowired
 	private InquiryService inquiryService;
 	@Autowired
@@ -179,8 +182,8 @@ public class MemberRestController {
 	}
 	
 	/* 멘티 회원 활동 요약 */
-	@Operation(summary = "특정 멘티 활동 내역 요약")
-	@GetMapping("/summary/{menteeNo}")
+	@Operation(summary = "멘티 활동 내역 요약")
+	@GetMapping("/mentee-summary/{menteeNo}")
 	public ResponseEntity<Response> getMenteeSummary(
 			@PathVariable(name ="menteeNo") Long menteeNo){
 		
@@ -210,19 +213,21 @@ public class MemberRestController {
 	}
 	
 	/* 멘토 회원 활동 요약 */
-	@Operation(summary = "특정 멘티 활동 내역 요약")
-	@GetMapping("/summary/{mentorNo}")
+	@Operation(summary = "멘토 활동 내역 요약")
+	@GetMapping("/mentor-summary/{mentorNo}")
 	public ResponseEntity<Response> getMentorSummary(
 			@PathVariable(name ="mentorNo") Long mentorNo){
 		
 		Integer answerCount = (int)answerService.getAnswerByMember(mentorNo, 0, 10).getTotalElements();
 		Integer counselCount = (int)chatRoomService.selectChatRoomAll(mentorNo).size();
 		Integer followCount = (int)followService.countFollower(mentorNo);
+		Integer borardCount = (int)boardService.findByMember(mentorNo, 0, 10).getTotalElements();
 		
 		Map<String, Integer> dataMap = new HashMap<>();
 		dataMap.put("answerCount", answerCount);
 		dataMap.put("counselCount", counselCount);
 		dataMap.put("followCount", followCount);
+		dataMap.put("borardCount", borardCount);
 		
 		Response response = new Response();
 		

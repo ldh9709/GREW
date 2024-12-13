@@ -27,7 +27,7 @@ import com.itwill.jpa.service.bullentin_board.AnswerService;
 import com.itwill.jpa.service.bullentin_board.AnswerServiceImpl;
 import com.itwill.jpa.service.bullentin_board.InquiryService;
 import com.itwill.jpa.service.member_information.MemberService;
-import com.itwill.jpa.service.member_information.MemtorBoardService;
+import com.itwill.jpa.service.member_information.MentorBoardService;
 
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.servlet.http.HttpSession;
@@ -43,7 +43,7 @@ public class AdminRestController {
 	private  AnswerService answerService;
 
 	@Autowired
-    private MemtorBoardService mentorBoardService;
+    private MentorBoardService mentorBoardService;
 	
 	@Autowired
 	private MemberService memberService;
