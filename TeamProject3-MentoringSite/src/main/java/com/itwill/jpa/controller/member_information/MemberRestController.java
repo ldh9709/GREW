@@ -59,6 +59,36 @@ public class MemberRestController {
 	private ReviewService reviewService;
 	
 	/* 아이디 중복 */
+	@Operation(summary = "아이디 중복 검사")
+	@GetMapping("/check-memberId")
+	public ResponseEntity<Response> checkIdDupl(@RequestParam(name = "memberId") String memberId){
+		
+		Boolean checkIdDupl = memberService.checkIdDupl(memberId);
+
+		Response response = new Response();
+		
+		//응답 객체 생성
+		
+		if(checkIdDupl == true) {
+			//응답객체에 코드, 메시지, 객체 설정
+			response.setStatus(ResponseStatusCode.CREATED_MEMBER_SUCCESS);
+			response.setMessage("삐빅 아이디 중복입니다");
+			response.setData(null);
+		}
+		
+		//인코딩 타입 설정
+		HttpHeaders httpHeaders = new HttpHeaders();
+		httpHeaders.setContentType(new MediaType(MediaType.APPLICATION_JSON, Charset.forName("UTF-8")));
+		
+		//반환할 응답Entity 생성
+		ResponseEntity<Response> responseEntity =
+				 new ResponseEntity<Response>(response, httpHeaders, HttpStatus.OK);
+		
+		//반환
+		return responseEntity;
+				
+	}
+	
 	
 	/* 회원 저장 */
 	@Operation(summary = "회원가입")

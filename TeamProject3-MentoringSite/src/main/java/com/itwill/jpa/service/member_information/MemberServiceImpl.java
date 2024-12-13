@@ -82,7 +82,7 @@ public class MemberServiceImpl implements MemberService {
 	/***** 아이디 중복체크 *****/	
 	public Boolean checkIdDupl(String memberId) {
 		Boolean exitsMember = memberRepository.existsByMemberId(memberId);
-		return exitsMember ? false : true;
+		return exitsMember;
 	}
 	
 	/* 이메일 중복 체크 */
@@ -206,9 +206,8 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	/***** 회원 전체 출력 ****
-	 * 필터링 role : 멘티, 멘토 
+	 * 필터 : 멘티, 멘토 
 	 * 정렬 : 1(초기) - 가입 순, 2-이름 순 
-	 * 
 	 * */
 	public List<MemberDto> getMemberAll(String roleStr, Integer order){
 		
