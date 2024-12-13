@@ -1,6 +1,8 @@
 package com.itwill.jpa.controller.member_information;
 
 import java.nio.charset.Charset;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.itwill.jpa.dto.member_information.MemberDto;
@@ -21,6 +24,8 @@ import com.itwill.jpa.entity.member_information.Member;
 import com.itwill.jpa.response.Response;
 import com.itwill.jpa.response.ResponseMessage;
 import com.itwill.jpa.response.ResponseStatusCode;
+import com.itwill.jpa.service.bullentin_board.InquiryService;
+import com.itwill.jpa.service.member_information.FollowService;
 import com.itwill.jpa.service.member_information.MemberService;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -33,6 +38,10 @@ import jakarta.validation.Valid;
 public class MemberRestController {
 	@Autowired
 	private MemberService memberService;
+	@Autowired
+	private InquiryService inquiryService;
+	@Autowired
+	private FollowService followService;
 	
 	/* 아이디 중복 */
 	
@@ -149,6 +158,35 @@ public class MemberRestController {
 			response.setMessage(ResponseMessage.READ_MEMBER_SUCCESS);
 			response.setData(loginMemberDto);
 		}
+		
+		HttpHeaders httpHeaders=new HttpHeaders();
+		httpHeaders.setContentType(new MediaType(MediaType.APPLICATION_JSON,Charset.forName("UTF-8")));
+		
+		ResponseEntity<Response> responseEntity = 
+				new ResponseEntity<Response>(response, httpHeaders, HttpStatus.OK);
+		
+		return responseEntity;
+	}
+	
+	/* 멘티 회원 활동 요약 */
+	@Operation(summary = "특정 멘티 활동 내역 요약")
+	@GetMapping("/summary/{menteeNo}")
+	public ResponseEntity<Response> getMenteeSummary(
+			@PathVariable(name ="menteeNo") Long menteeNo){
+		
+		Integer inquiryCount = (int)inquiryService.getInquiryByMember(menteeNo, 0, 10).getTotalElements();
+		Integer followCount = (int)followService.getMentorList(menteeNo, 0, 10).getTotalElements();
+		
+		Map<String, Integer> dataMap = new HashMap<>();
+		dataMap.put("inquiryCount", inquiryCount);
+		dataMap.put("followCount", followCount);
+		
+		Response response = new Response();
+		
+		//응답객체에 코드, 메시지, 객체 설정
+		response.setStatus(ResponseStatusCode.READ_MEMBER_SUCCESS);
+		response.setMessage(ResponseMessage.READ_MEMBER_SUCCESS);
+		response.setData(dataMap);
 		
 		HttpHeaders httpHeaders=new HttpHeaders();
 		httpHeaders.setContentType(new MediaType(MediaType.APPLICATION_JSON,Charset.forName("UTF-8")));
