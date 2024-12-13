@@ -30,10 +30,14 @@ import jakarta.persistence.OneToOne;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import oracle.jdbc.proxy.annotation.Signature;
 
 
 @Builder
@@ -46,19 +50,24 @@ import lombok.NoArgsConstructor;
 public class Member {
 	
 
-	@Id//PK설정
+	@Id
 	@SequenceGenerator(name = "member_no_SEQ", initialValue = 1, allocationSize = 1)
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "member_no_SEQ")
 	@Column(name = "member_no")
 	private Long memberNo;//멤버 번호 PK
 	
 	@Column(name = "member_id")
+	@Size(min = 3, max = 15, message ="아이디는 3자 이상 15자 이하로 입력해주세요.")
+	@Pattern(regexp = "^[a-zA-Z0-9_-]+$", message = "아이디는 영문자, 숫자, '-', '_'만 허용됩니다.")
 	private String memberId;//Id
 	
 	@Column(name = "member_password")
+	@Size(min = 8, message = "비밀번호는 최소 8자 이상이어야 합니다.")
+    @Pattern(regexp = "^(?=.*[a-zA-Z])(?=.*\\d)(?=.*[@$!%*?&]).*$", message = "비밀번호는 대문자, 소문자, 숫자, 특수문자 중 두 가지 이상을 포함해야 합니다.")
 	private String memberPassword;//비밀번호
 	
 	@Column(name = "member_email")
+	@Email(message = "유효하지 않은 이메일 형식입니다.")
 	private String memberEmail;//이메일
 	
 	@Column(name = "member_name")

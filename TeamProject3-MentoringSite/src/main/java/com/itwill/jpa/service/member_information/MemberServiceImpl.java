@@ -27,59 +27,60 @@ public class MemberServiceImpl implements MemberService {
 	 - 이메일 : 중복 확인 / 이메일 형식 (@)이 맞는지 체크(공백금지) / 도메인 유효성 검사
 	 * */
 	
+//	
+//	/***** 아이디 유효성(글자수, 포함글자) 체크 *****/
+//	public Boolean checkIdValid(String memberId) {
+//		boolean hasSpace = memberId.contains(" ");
+//		/* 예외처리적용예정 */
+//		if(memberId.length() < 3 || memberId.length() > 15) return false;
+//		if(!memberId.matches("^[a-zA-Z0-9_]+$")) return false;
+//		if(hasSpace) return false;
+//		return true;
+//	}
+//	
+//	
+//	/***** 비밀번호 유효성(글자수, 포함글자) 체크 *****/
+//	public Boolean checkPasswordValid(String memberPassword) {
+//		// 1. 비밀번호 길이 검사 (3~15글자)
+//		if(memberPassword.length() < 8) return false; //길이오류
+//		
+//		// 2. 두가지 이상 문자 조합 검사(대문자 소문자 숫자 특수문자 중 2가지 이상 허용 (공백 금지))
+//	    boolean hasUppercase = memberPassword.matches(".*[A-Z].*");
+//	    boolean hasLowercase = memberPassword.matches(".*[a-z].*");
+//	    boolean hasDigit = memberPassword.matches(".*[0-9].*");
+//	    boolean hasSpecialChar = memberPassword.matches(".*[!@#$%^&*(),.?\":{}|<>].*");
+//	    boolean hasSpace = memberPassword.contains(" ");
+//
+//	    // 공백이 있는 경우
+//	    if (hasSpace) {
+//	        return false; // 공백 오류
+//	    }
+//
+//	    // 두 가지 이상의 문자 유형을 만족하는지 확인
+//	    int typesCount = 0;
+//	    if (hasUppercase) typesCount++;
+//	    if (hasLowercase) typesCount++;
+//	    if (hasDigit) typesCount++;
+//	    if (hasSpecialChar) typesCount++;
+//
+//	    if (typesCount < 2) {
+//	        return false; // 형식 오류 (두 가지 이상 충족하지 않음)
+//	    }
+//	    
+//	    return true;
+//	}
+//	
+//	/* 이메일 유효성 체크 */
+//	public Boolean checkEmailValid(String memberEmail) {
+//		if(!memberEmail.matches("\\\\.[A-Za-z]{2,}$")) return false;
+//		return true;
+//	}
 	
-	/***** 아이디 유효성(글자수, 포함글자) 체크 *****/
-	public Boolean checkIdValid(String memberId) {
-		boolean hasSpace = memberId.contains(" ");
-		
-		/* 예외처리적용예정 */
-		if(memberId.length() < 3 || memberId.length() > 15) return false;
-		if(!memberId.matches("^[a-zA-Z0-9_]+$")) return false;
-		if(hasSpace) return false;
-		return true;
-	}
 	
 	/***** 아이디 중복체크 *****/	
 	public Boolean checkIdDupl(String memberId) {
 		Boolean exitsMember = memberRepository.existsByMemberId(memberId);
 		return exitsMember ? false : true;
-	}
-	
-	/***** 비밀번호 유효성(글자수, 포함글자) 체크 *****/
-	public Boolean checkPasswordValid(String memberPassword) {
-		// 1. 비밀번호 길이 검사 (3~15글자)
-		if(memberPassword.length() < 8) return false; //길이오류
-		
-		// 2. 두가지 이상 문자 조합 검사(대문자 소문자 숫자 특수문자 중 2가지 이상 허용 (공백 금지))
-	    boolean hasUppercase = memberPassword.matches(".*[A-Z].*");
-	    boolean hasLowercase = memberPassword.matches(".*[a-z].*");
-	    boolean hasDigit = memberPassword.matches(".*[0-9].*");
-	    boolean hasSpecialChar = memberPassword.matches(".*[!@#$%^&*(),.?\":{}|<>].*");
-	    boolean hasSpace = memberPassword.contains(" ");
-
-	    // 공백이 있는 경우
-	    if (hasSpace) {
-	        return false; // 공백 오류
-	    }
-
-	    // 두 가지 이상의 문자 유형을 만족하는지 확인
-	    int typesCount = 0;
-	    if (hasUppercase) typesCount++;
-	    if (hasLowercase) typesCount++;
-	    if (hasDigit) typesCount++;
-	    if (hasSpecialChar) typesCount++;
-
-	    if (typesCount < 2) {
-	        return false; // 형식 오류 (두 가지 이상 충족하지 않음)
-	    }
-	    
-	    return true;
-	}
-	
-	/* 이메일 유효성 체크 */
-	public Boolean checkEmailValid(String memberEmail) {
-		if(!memberEmail.matches("\\\\.[A-Za-z]{2,}$")) return false;
-		return true;
 	}
 	
 	/* 이메일 중복 체크 */
@@ -95,15 +96,7 @@ public class MemberServiceImpl implements MemberService {
 		String pw = memberDto.getMemberPassword();
 		String email = memberDto.getMemberEmail();
 		
-		//아이디 유효성 체크
-		checkIdValid(id);
 		checkIdDupl(id);
-		
-		//비밀번호 유효성 체크
-		checkPasswordValid(pw);
-		
-		//이메일 유효성 체크 
-		checkEmailValid(email);
 		checkEmailDupl(email);
 		
 		Member saveMember = Member.toEntity(memberDto);
@@ -123,6 +116,7 @@ public class MemberServiceImpl implements MemberService {
 	public String getMemberId(String memberEmail) {
 		String memberId = memberRepository.findMemberIdByMemberEmail(memberEmail).get();
 		return maskMemberId(memberId);
+		
 	}
 	
 	/***** 아이디 마스킹 처리 *****/
