@@ -20,6 +20,12 @@ public interface MemberService {
 	//이메일 중복 체크
 	Boolean checkEmailDupl(String memeberEmail);
 	
+	//아이디 찾기
+	String getMemberId(String memberId);
+	
+	//아이디 찾기
+	Member updateMemberPassword(String memberPassword);
+	
 	//회원가입
 	Member saveMember(MemberDto memberDto);
 	

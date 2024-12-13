@@ -34,9 +34,10 @@ public class MemberRestController {
 	@Autowired
 	private MemberService memberService;
 	
+	/* 아이디 중복 */
 	
 	/* 회원 저장 */
-	@Operation(summary = "회원가입/관심사 입력")
+	@Operation(summary = "회원가입")
 	@PostMapping
 	public ResponseEntity<Response> saveMember(@RequestBody MemberDto memberDto) {
 		
@@ -106,7 +107,7 @@ public class MemberRestController {
 	}
 	 */
 	
-	/* 회원 로그아웃 */
+	/* 회원 로그아웃 
 	@Operation(summary = "회원 로그아웃")
 	@GetMapping("/logout")
 	public ResponseEntity<Response> logoutMember(HttpSession session) {
@@ -126,11 +127,13 @@ public class MemberRestController {
 		
 		return responseEntity;
 	}
+	*/
+	
 	
 	/* 회원 정보 보기 */
-	@Operation(summary = "회원 정보 보기")
+	@Operation(summary = "회원 정보 상세보기")
 	@GetMapping("/{memberNo}")
-	public ResponseEntity<Response> getMember(@PathVariable(name = "memberNo") Long memberNo, HttpSession session) {
+	public ResponseEntity<Response> getMember(@PathVariable(name = "memberNo") Long memberNo) {
 		
 		//번호로 멤버 객체 찾기
 		Member loginMember = memberService.getMember(memberNo);

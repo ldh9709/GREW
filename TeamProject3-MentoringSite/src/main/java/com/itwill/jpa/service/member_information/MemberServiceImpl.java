@@ -41,7 +41,7 @@ public class MemberServiceImpl implements MemberService {
 	
 	/***** 아이디 중복체크 *****/	
 	public Boolean checkIdDupl(String memberId) {
-		Boolean exitsMember = memberRepository.existByMemberId(memberId);
+		Boolean exitsMember = memberRepository.existsByMemberId(memberId);
 		return exitsMember ? false : true;
 	}
 	
@@ -84,7 +84,7 @@ public class MemberServiceImpl implements MemberService {
 	
 	/* 이메일 중복 체크 */
 	public Boolean checkEmailDupl(String memberEmail) {
-		Boolean exitstEmail = memberRepository.existByMemberEmail(memberEmail);
+		Boolean exitstEmail = memberRepository.existsByMemberEmail(memberEmail);
 		return exitstEmail ? false : true;
 	}
 	
@@ -106,15 +106,13 @@ public class MemberServiceImpl implements MemberService {
 		checkEmailValid(email);
 		checkEmailDupl(email);
 		
-		//MemberDto Entity로 변경
 		Member saveMember = Member.toEntity(memberDto);
+		
 		//비밀번호 암호화 추가
 		
 		
 		for (InterestDto interest : memberDto.getInterests()) {
-			
 			Interest interestEntity = Interest.toEntity(interest);
-			
 			saveMember.addInterests(interestEntity);
 		}
 		
@@ -122,8 +120,17 @@ public class MemberServiceImpl implements MemberService {
 	}
 	
 	/***** 아이디 찾기 *****/
+	public String getMemberId(String memberEmail) {
+		String memberId = memberRepository.findMemberIdByMemberEmail(memberEmail).get();
+		return memberId;
+		
+	}
 	
 	/***** 비밀번호 재설정 *****/
+	public Member updateMemberPassword(String memberPassword) {
+		checkPasswordValid(memberPassword);
+		return null;
+	}
 	
 	/***** 회원 로그인 ****
 	@Override
@@ -162,46 +169,45 @@ public class MemberServiceImpl implements MemberService {
 		member.setMemberPassword(memberDto.getMemberPassword());
 		member.setMemberEmail(memberDto.getMemberEmail());
 		
-		//DB에 객체 업데이트(기존 객체 존재 시 업데이트됨)
 		return memberRepository.save(member);
 	}
 	
 	/***** 회원 상태 수정 *****/
 	@Override
 	public Member updateMemberStatus(MemberDto memberDto, Integer statusNo) {
-		//아이디로 회원 찾기
 		Member member = memberRepository.findByMemberNo(memberDto.getMemberNo());
-		
-		//회원 상태 변경
 		member.setMemberStatus(statusNo);
 		
-		//수정한 객체 반환
 		return memberRepository.save(member);
 	}
-	
 	
 	
 	/***** 회원 삭제 *****/
 	@Override
 	public Member deleteMember(Long memberNo) {
-		//ID로 멤버 찾기
 		Member findMember = memberRepository.findByMemberNo(memberNo);
-		
-		//DB에서 멤버 객체 삭제
 		memberRepository.deleteById(memberNo);;
 		
-		//삭제한 멤버 객체 반환
 		return findMember;
 	}
 	
-	/***** 회원 상세 *****/
+	/***** 회원 상세 ****
+	 * 질문 게시글, 상담내역, 팔로잉
+	 * 
+	 * */
+	
 	@Override
 	public Member getMember(Long memberNo) {
-		
-		//ID로 멤버 탐색
 		return memberRepository.findByMemberNo(memberNo);
 	}
 
+	/***** 회원 전체 출력 ****
+	 * 필터링 role : 멘티, 멘토 
+	 * 정렬 : 가입 순, 이름 순 
+	 * 
+	 * */
+	
+	
 	/***** 신고 카운트 증가 *****/
 	@Override
 	public Member incrementReportCount(Long MemberNo) {
@@ -209,8 +215,5 @@ public class MemberServiceImpl implements MemberService {
 		member.setMemberReportCount(member.getMemberReportCount()+1);
 		return memberRepository.save(member);
 	}
-
-	/********************************* Interest CRUD **************************************/
-	
 
 }
