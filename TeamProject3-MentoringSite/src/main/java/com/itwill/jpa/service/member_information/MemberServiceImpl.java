@@ -16,8 +16,6 @@ import com.itwill.jpa.repository.member_information.MemberRepository;
 @Service
 public class MemberServiceImpl implements MemberService {
 	
-	
-	//메소드 사용을 위한 리포지토리 의존성 주입
 	@Autowired
 	MemberRepository memberRepository;
 	
@@ -25,13 +23,10 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public Member saveMember(MemberDto memberDto) {
 		
-		//MemberDto Entity로 변경
 		Member saveMember = Member.toEntity(memberDto);
 		
 		for (InterestDto interest : memberDto.getInterests()) {
-			
 			Interest interestEntity = Interest.toEntity(interest);
-			
 			saveMember.addInterests(interestEntity);
 		}
 		
