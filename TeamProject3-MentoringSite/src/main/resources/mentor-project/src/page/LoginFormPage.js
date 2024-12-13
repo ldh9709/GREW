@@ -88,7 +88,7 @@ function LoginFormPage() {
         <h3 className="signup-sub-title">SNS 로그인</h3>
 
         <div className="form-sns-group">
-          <Link to={'/oauth2/authorization/google'}>
+          <Link to={"/oauth2/authorization/google"}>
           <img
             src="google_icon.svg"
             alt="google"

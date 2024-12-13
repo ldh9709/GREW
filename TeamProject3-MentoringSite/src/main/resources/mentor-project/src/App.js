@@ -23,7 +23,6 @@ function App() {
         </div>
         <header className="App-header">
           <Routes>
-            <Route path="/" element={<MainFormPage/>} />
             <Route path="/main" element={<MainFormPage/>} />
             <Route path="/login" element={<LoginFormPage/>} />
             <Route path="/Join" element={<JoinFormPage/>} />
