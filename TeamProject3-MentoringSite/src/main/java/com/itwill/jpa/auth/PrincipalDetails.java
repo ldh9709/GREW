@@ -48,7 +48,12 @@ public class PrincipalDetails implements UserDetails, OAuth2User {
 	//해당 유저의 권한 목록 반환
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
-		return Collections.singletonList(new SimpleGrantedAuthority(member.getMemberRole().name()));
+		//3항연산자 사용, Null이면 기본값 입력 아니면 그대로
+		String roleName = (member.getMemberRole() != null)
+			        ? member.getMemberRole().name()
+			        : "ROLE_USER"; // 기본 권한 설정
+		Collections.singletonList(new SimpleGrantedAuthority(member.getMemberRole().name()));
+		return null;
 	}
 	
 	//비밀번호 리턴
@@ -59,7 +64,7 @@ public class PrincipalDetails implements UserDetails, OAuth2User {
 	
 	@Override
 	public String getUsername() {
-		return member.getMemberId();
+		return member.getMemberName();
 	}
 	
 	

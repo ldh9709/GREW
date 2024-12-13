@@ -176,6 +176,7 @@ public class Member {
 	 */
 	public static Member toSecurityEntity(MemberSecurityDto memberDto) {
 		return Member.builder()
+				.memberName(memberDto.getMemberName())
 				.memberEmail(memberDto.getMemberEmail())
 				.memberPassword(memberDto.getMemberPassword())
 				.memberProvider(memberDto.getMemberProvider())

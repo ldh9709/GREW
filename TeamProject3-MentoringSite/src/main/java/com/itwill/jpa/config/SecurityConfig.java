@@ -107,14 +107,6 @@ public class SecurityConfig {
 		      httpSecurityCorsConfigurer.configurationSource(corsConfigurationSource());  // CORS 설정을 적용
 		    });
 		
-		//폼 기반 로그인 구성
-		httpSecurity.formLogin((config) -> {
-			config.loginPage("/login");
-			config.defaultSuccessUrl("/home", true);
-			config.successHandler(new APILoginSuccessHandler());
-			config.failureHandler(new APILoginFailHandler());
-		});
-		httpSecurity.addFilterBefore(new JWTCheckFilter(), UsernamePasswordAuthenticationFilter.class);
 		
 		/*
 		 * Spring Security에 UserDetailsService 구현체를 등록하는 역할
@@ -126,7 +118,7 @@ public class SecurityConfig {
 		//SNS로그인
 		httpSecurity.oauth2Login((t) -> {
 			t.loginPage("/login")//로그인 페이지 경로
-			 .defaultSuccessUrl("/main")//로그인 성공 후 리다이렉트 경로
+			 .defaultSuccessUrl("http://localhost:3000/main")//로그인 성공 후 리다이렉트 경로
 			 .userInfoEndpoint((userInfoEndpointConfig) -> {
 			 /***
 			  * Spring Security의 OAuth2 사용자 정보 처리는 userInfoEndpoint를 통해 수행된다.
@@ -141,6 +133,16 @@ public class SecurityConfig {
 			 });
 		});
 		
+		//폼 기반 로그인 구성
+		httpSecurity.formLogin((config) -> {
+			config.loginPage("/login");
+			config.defaultSuccessUrl("/home", true);
+			config.successHandler(new APILoginSuccessHandler());
+			config.failureHandler(new APILoginFailHandler());
+		});
+		
+		//httpSecurity.addFilterBefore(new JWTCheckFilter(), UsernamePasswordAuthenticationFilter.class);
+				
 		//로그아웃
 		httpSecurity.logout((t) -> {
 			t.logoutUrl("/logout")//로그아웃

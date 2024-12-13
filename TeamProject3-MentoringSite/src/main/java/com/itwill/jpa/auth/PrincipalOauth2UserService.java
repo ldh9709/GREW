@@ -53,12 +53,15 @@ public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
         if (provider.equals("google")) {
             // 제공자별로 다른 JSON 구조를 파싱
             oauth2UserInfo = new GoogleUserInfo(oauth2User.getAttributes());
+            System.out.println("oauth2UserInfo : >>>>>" + oauth2UserInfo);
         } else if (provider.equals("naver")) {
             // Naver 추가 로직
         } else if (provider.equals("kakao")) {
             // Kakao 추가 로직
         }
-
+        // 인증 제공자의 이름을 가져옴
+        String name = oauth2UserInfo.getName();
+        System.out.println("name : >>>" + name);
         // 인증 제공자의 이메일을 가져옴
         String email = oauth2UserInfo.getEmail();
 
@@ -69,16 +72,16 @@ public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
 
         if (findMember == null) {
             findMember = Member.toSecurityEntity(MemberSecurityDto.JoinOAuth2()
+            		.memberName(name)
                     .memberEmail(email)
                     .memberPassword(password) // 암호화된 비밀번호 저장
                     .memberProvider(provider)
                     .build());
-
             memberRepository.save(findMember);
         }
-
+        
         MemberSecurityDto securityMember = MemberSecurityDto.toDto(findMember);
-
+        System.out.println("securityMember : >>>" + securityMember);
         return new PrincipalDetails(securityMember, oauth2UserInfo);
     }
 }
