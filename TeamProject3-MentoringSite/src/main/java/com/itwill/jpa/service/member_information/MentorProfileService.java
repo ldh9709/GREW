@@ -38,15 +38,9 @@ public interface MentorProfileService {
     Page<MentorProfileDto> searchMentorProfiles(String keyword, int page, int size);
 
     Page<MentorProfileDto> getMentorProfilesByCategoryNo(Long categoryNo, int page, int size);
- //이미지업로드
-    void updateMentorProfileImage(Long mentorProfileNo, MultipartFile file) throws Exception;
+    
+    void uploadMentorProfileImage(Long mentorProfileNo, MultipartFile file) throws Exception;
+    
+    String getMentorProfileImageUrl(Long mentorProfileNo);
 }
 
-//    // 특정 상태의 모든 멘토 프로필 조회
-//    List<MentorProfile> getMentorsByStatus(int status);
-
-//    // 멘토 검색 (이름, 소개글, 경력)
-//    List<MentorProfile> searchMentorProfiles(String keyword);
-
-//    // 특정 카테고리와 관련된 멘토 프로필 조회
-//    List<MentorProfile> getMentorProfilesByCategoryNo(Long categoryNo);

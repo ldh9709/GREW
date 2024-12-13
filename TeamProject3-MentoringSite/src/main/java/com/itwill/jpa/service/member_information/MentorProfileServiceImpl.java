@@ -28,6 +28,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -36,7 +37,7 @@ import java.util.stream.Collectors;
 @Transactional
 public class MentorProfileServiceImpl implements MentorProfileService {
 	
-	private static final String IMAGE_PATH = "src/main/resources/static/images/mentor-profile/";
+	private static final String IMAGE_PATH = "C:/mentor-profile-images/";
 	
 	
 	 @PersistenceContext
@@ -157,44 +158,7 @@ public class MentorProfileServiceImpl implements MentorProfileService {
         }
     }
 
-   
-    /**
-     * 멘토의 프로필 이미지를 업데이트하는 메서드
-     */
-    @Override
-    public void updateMentorProfileImage(Long mentorProfileNo, MultipartFile file) {
-        MentorProfile mentorProfile = mentorProfileRepository.findById(mentorProfileNo)
-                .orElseThrow(() -> new CustomException(
-                        ResponseStatusCode.MENTOR_PROFILE_NOT_FOUND_CODE,
-                        ResponseMessage.MENTOR_PROFILE_NOT_FOUND
-                ));
-
-        try {
-            String absolutePath = new File("").getAbsolutePath();
-            String IMAGE_PATH = absolutePath + "/src/main/resources/static/images/mentor-profile/";
-
-            File saveDir = new File(IMAGE_PATH);
-            if (!saveDir.exists()) {
-                saveDir.mkdirs();
-            }
-
-            String originalFilename = file.getOriginalFilename();
-            String fileName = UUID.randomUUID().toString() + "_" + originalFilename;
-
-            File saveFile = new File(IMAGE_PATH + fileName);
-            file.transferTo(saveFile);
-
-            mentorProfile.setMentorImage("/images/mentor-profile/" + fileName);
-            mentorProfileRepository.save(mentorProfile);
-        } catch (Exception e) {
-            throw new CustomException(
-                    ResponseStatusCode.IMAGE_MENTOR_UPLOAD_FAIL,
-                    ResponseMessage.IMAGE_MENTOR_UPLOAD_FAIL
-            );
-        }
-    }
-    
-    
+ 
     @Override
     public Page<MentorProfileDto> getMentorsByStatus(int status, int page, int size) {
     	Pageable pageable = PageRequest.of(page, size);
@@ -216,30 +180,58 @@ public class MentorProfileServiceImpl implements MentorProfileService {
     	return mentorProfiles.map(MentorProfileDto::toDto);
     }
     
-}
+    
+    /**
+     * 프로필 이미지 업로드 메서드
+     */
+    @Override
+    public void uploadMentorProfileImage(Long mentorProfileNo, MultipartFile file) {
+        try {
+            // 멘토 프로필 정보 조회
+            MentorProfile mentorProfile = mentorProfileRepository.findById(mentorProfileNo)
+                    .orElseThrow(() -> new CustomException(
+                            ResponseStatusCode.MENTOR_PROFILE_NOT_FOUND_CODE , 
+                            ResponseMessage.MENTOR_PROFILE_NOT_FOUND
+                    ));
 
-//    /**
-//     * 특정 상태의 모든 멘토 프로필을 조회합니다.
-//     */
-//    @Override
-//    public List<MentorProfile> getMentorsByStatus(int status) {
-//        return mentorProfileRepository.findByMentorStatus(status);
-//    }
-//
-//
-//    /**
-//     * 특정 키워드(이름, 소개글, 경력)으로 멘토를 검색합니다.
-//     */
-//    @Override
-//    public List<MentorProfile> searchMentorProfiles(String keyword) {
-//        return mentorProfileRepository.searchMentorProfiles(keyword);
-//    }
-//    /**
-//     * 카테고리 번호로 멘토 프로필 목록 조회
-//    
-//   */
-//    @Override
-//    public List<MentorProfile> getMentorProfilesByCategoryNo(Long categoryNo) {
-//        return mentorProfileRepository.findByCategoryNo(categoryNo);
-//    }
-//    
+            // 이미지 저장 경로 설정
+            File directory = new File(IMAGE_PATH);
+            if (!directory.exists()) {
+                directory.mkdirs(); // 디렉터리가 없으면 생성
+            }
+
+            // 파일명 생성 (UUID + 원본 파일명)
+            String originalFilename = file.getOriginalFilename();
+            String fileName = UUID.randomUUID().toString() + "_" + originalFilename;
+
+            // 파일 경로 설정
+            File saveFile = new File(IMAGE_PATH + fileName);
+            file.transferTo(saveFile); // 파일 저장
+
+            // MentorProfile 엔티티의 이미지 URL을 업데이트
+            mentorProfile.setMentorImage("/mentor-profile-images/" + fileName);
+            mentorProfileRepository.save(mentorProfile);
+        } catch (IOException e) {
+            throw new CustomException(ResponseStatusCode.IMAGE_UPLOAD_FAIL, ResponseMessage.IMAGE_UPLOAD_FAIL);
+        }
+    }
+
+    /**
+     * 프로필 이미지 URL 조회 메서드
+     */
+    @Override
+    public String getMentorProfileImageUrl(Long mentorProfileNo) {
+        MentorProfile mentorProfile = mentorProfileRepository.findById(mentorProfileNo)
+                .orElseThrow(() -> new CustomException(
+                        ResponseStatusCode.MENTOR_PROFILE_NOT_FOUND_CODE , 
+                        ResponseMessage.MENTOR_PROFILE_NOT_FOUND
+                ));
+
+        return mentorProfile.getMentorImage();
+    }
+}
+    
+    
+    
+
+
