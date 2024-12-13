@@ -15,6 +15,8 @@ function MainFormPage() {
         <Link to={'/join'}>
         <input type="button" className="cta-button"value="회원가입"/>
         </Link>
+
+        
       </header>
 
       <section className="features-section">

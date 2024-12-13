@@ -116,8 +116,8 @@ public class SecurityConfig {
 		httpSecurity.userDetailsService(principalDetailsService);
 		 
 		//SNS로그인
-		httpSecurity.oauth2Login((t) -> {
-			t.loginPage("/login")//로그인 페이지 경로
+		httpSecurity.oauth2Login((config) -> {
+			config.loginPage("/login")//로그인 페이지 경로
 			 .defaultSuccessUrl("http://localhost:3000/main")//로그인 성공 후 리다이렉트 경로
 			 .userInfoEndpoint((userInfoEndpointConfig) -> {
 			 /***
@@ -130,6 +130,8 @@ public class SecurityConfig {
 			  * 6. 인증된 사용자 정보는 PrincipalDetails 객체로 반환되어 Spring Security 세션에 저장
 			  */
 				userInfoEndpointConfig.userService(principalOauth2UserSerivce);
+				config.successHandler(new APILoginSuccessHandler());
+				config.failureHandler(new APILoginFailHandler());
 			 });
 		});
 		
@@ -141,7 +143,7 @@ public class SecurityConfig {
 			config.failureHandler(new APILoginFailHandler());
 		});
 		
-		//httpSecurity.addFilterBefore(new JWTCheckFilter(), UsernamePasswordAuthenticationFilter.class);
+		httpSecurity.addFilterBefore(new JWTCheckFilter(), UsernamePasswordAuthenticationFilter.class);
 				
 		//로그아웃
 		httpSecurity.logout((t) -> {

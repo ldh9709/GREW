@@ -10,42 +10,24 @@ spring:
               - email
               - profile
             redirect-uri: http://localhost:8080/login/oauth2/code/google
-          # Uncomment if Kakao settings are needed
-          # kakao:
-          #   client-id: 4c35ca8aa57dce8c012fbd79aaa84c16
-          #   redirect-uri: "{baseUrl}/login/oauth2/code/{registrationId}"
-          #   client-authentication-method: client_secret_post
-          #   authorization-grant-type: authorization_code
-          #   scope:
-          #     - profile_nickname
-          #     - account_email
-          #   client-name: Kakao
-          # Uncomment if Naver settings are needed
-          # naver:
-          #   client-id: uKiP7WPNBZBkt2l_R87L
-          #   client-secret: bMK2yjMkyl
-          #   scope:
-          #     - name
-          #     - email
-          #     - profile_image
-          #   client-name: Naver
-          #   authorization-grant-type: authorization_code
-          #   redirect-uri: "{baseUrl}/login/oauth2/code/{registrationId}"
+          kakao:
+            client-id: ada59583cab77aa3606c7a986e7f8e9b
+            client-secret: D9p8AYFlDVXeICxsmHAClHMDkxVi4jbn
+            redirect-uri: http://localhost:8080/login/oauth2/code/kakao
+            client-authentication-method: post
+            authorization-grant-type: authorization_code
+            scope:
+              - profile_nickname
+              - account_email
+            client-name: Kakao
         provider:
           google:
             authorization-uri: https://accounts.google.com/o/oauth2/v2/auth
             token-uri: https://oauth2.googleapis.com/token
             user-info-uri: https://www.googleapis.com/oauth2/v3/userinfo
             user-name-attribute: sub
-          # Uncomment if Kakao settings are needed
-          # kakao:
-          #   authorization-uri: https://kauth.kakao.com/oauth/authorize
-          #   token-uri: https://kauth.kakao.com/oauth/token
-          #   user-info-uri: https://kapi.kakao.com/v2/user/me
-          #   user-name-attribute: id
-          # Uncomment if Naver settings are needed
-          # naver:
-          #   authorization-uri: https://nid.naver.com/oauth2.0/authorize
-          #   token-uri: https://nid.naver.com/oauth2.0/token
-          #   user-info-uri: https://openapi.naver.com/v1/nid/me
-          #   user-name-attribute: response
+          kakao:
+            authorization-uri: https://kauth.kakao.com/oauth/authorize
+            token-uri: https://kauth.kakao.com/oauth/token
+            user-info-uri: https://kapi.kakao.com/v2/user/me
+            user-name-attribute: id

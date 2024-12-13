@@ -165,27 +165,28 @@ public class MemberRestController {
 		//반환
 		return responseEntity;
 	}
+	
 	*/
-	/* 회원 로그아웃 */
-	@Operation(summary = "회원 로그아웃")
-	@GetMapping("/logout")
-	public ResponseEntity<Response> logoutMember(HttpSession session) {
-		
-		//세션 제거
-		session.invalidate();
-		
-		Response response = new Response();
-		response.setStatus(ResponseStatusCode.LOGOUT_MEMBER_SUCCESS);
-		response.setMessage(ResponseMessage.LOGOUT_MEMBER_SUCCESS);
-		
-		HttpHeaders httpHeaders=new HttpHeaders();
-		httpHeaders.setContentType(new MediaType(MediaType.APPLICATION_JSON,Charset.forName("UTF-8")));
-		
-		ResponseEntity<Response> responseEntity = 
-				new ResponseEntity<Response>(response, httpHeaders, HttpStatus.OK);
-		
-		return responseEntity;
-	}
+//	/* 회원 로그아웃 */
+//	@Operation(summary = "회원 로그아웃")
+//	@GetMapping("/logout")
+//	public ResponseEntity<Response> logoutMember(HttpSession session) {
+//		
+//		//세션 제거
+//		session.invalidate();
+//		
+//		Response response = new Response();
+//		response.setStatus(ResponseStatusCode.LOGOUT_MEMBER_SUCCESS);
+//		response.setMessage(ResponseMessage.LOGOUT_MEMBER_SUCCESS);
+//		
+//		HttpHeaders httpHeaders=new HttpHeaders();
+//		httpHeaders.setContentType(new MediaType(MediaType.APPLICATION_JSON,Charset.forName("UTF-8")));
+//		
+//		ResponseEntity<Response> responseEntity = 
+//				new ResponseEntity<Response>(response, httpHeaders, HttpStatus.OK);
+//		
+//		return responseEntity;
+//	}
 	
 	/* 회원 정보 보기 */
 	@Operation(summary = "회원 정보 보기")

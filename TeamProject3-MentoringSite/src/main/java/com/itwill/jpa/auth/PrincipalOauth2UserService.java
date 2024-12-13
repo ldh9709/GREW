@@ -10,6 +10,7 @@ import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 
 import com.itwill.jpa.auth.userinfo.GoogleUserInfo;
+import com.itwill.jpa.auth.userinfo.KakaoUserInfo;
 import com.itwill.jpa.auth.userinfo.Oauth2UserInfo;
 import com.itwill.jpa.dto.member_information.MemberSecurityDto;
 import com.itwill.jpa.entity.member_information.Member;
@@ -56,8 +57,10 @@ public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
             System.out.println("oauth2UserInfo : >>>>>" + oauth2UserInfo);
         } else if (provider.equals("naver")) {
             // Naver 추가 로직
+        	
         } else if (provider.equals("kakao")) {
             // Kakao 추가 로직
+        	oauth2UserInfo= new KakaoUserInfo(oauth2User.getAttributes());
         }
         // 인증 제공자의 이름을 가져옴
         String name = oauth2UserInfo.getName();
