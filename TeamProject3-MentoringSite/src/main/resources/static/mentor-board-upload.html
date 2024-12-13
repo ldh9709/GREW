@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>멘토 보드 이미지 업로드</title>
+    <style>
+        img {
+            width: 200px;
+            height: 200px;
+            object-fit: cover;
+            display: block;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+<h1>멘토 보드 이미지 업로드</h1>
+
+<!-- 이미지 미리보기 부분 -->
+<form action="/mentor-board/1/upload-image" method="post" enctype="multipart/form-data">
+    <input type="file" name="file" id="fileInput" accept="image/*" required>
+    <img id="imagePreview" src="" alt="이미지 미리보기" style="display:none;">
+    <button type="submit">이미지 업로드</button>
+</form>
+
+<script>
+    const fileInput = document.getElementById('fileInput');
+    const imagePreview = document.getElementById('imagePreview');
+
+    fileInput.addEventListener('change', function(event) {
+        const file = event.target.files[0];
+
+        if (file) {
+            const reader = new FileReader();
+            
+            // 파일 읽기 완료 시 미리보기 이미지를 설정
+            reader.onload = function(e) {
+                imagePreview.src = e.target.result;
+                imagePreview.style.display = 'block'; // 미리보기 보이기
+            };
+
+            reader.readAsDataURL(file); // 파일을 base64로 인코딩하여 미리보기를 설정
+        }
+    });
+</script>
+
+</body>
+</html>

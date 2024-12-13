@@ -7,6 +7,7 @@ import com.itwill.jpa.entity.member_information.MentorBoard;
 import java.util.List;
 
 import org.springframework.data.domain.Page;
+import org.springframework.web.multipart.MultipartFile;
 
 public interface MemtorBoardService {
 
@@ -32,6 +33,9 @@ public interface MemtorBoardService {
     Page<MentorBoardDto> getMentorBoardsSortedByDate(int page, int size);
     
     Page<MentorBoardDto> findByMember(Long memberNo, int page, int size);
+    
+    void updateMentorBoardImage(Long mentorBoardNo, MultipartFile file) throws Exception;
+}
 //    // 특정 멘토의 보드 리스트 보기
 //    List<MentorBoardDto> getMentorBoardsByMemberNo(Long memBerNo);
 //    
@@ -43,4 +47,3 @@ public interface MemtorBoardService {
 //  
 //  	//시간으로 조회
 //    List<MentorBoard> getMentorBoardsSortedByDate();
-}

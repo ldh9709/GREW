@@ -16,6 +16,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import io.swagger.v3.oas.annotations.Operation;
 
@@ -192,8 +193,18 @@ public class MentorProfileController {
         return new ResponseEntity<>(response, headers, HttpStatus.OK);
     }
     
-    
-    
+    @Operation(summary = "이미지 업로드")
+    @PostMapping("/{mentorProfileNo}/upload-image")
+    public String uploadMentorProfileImage(
+            @PathVariable("mentorProfileNo") Long mentorProfileNo,
+            @RequestParam("file") MultipartFile file) {
+        try {
+            mentorProfileService.updateMentorProfileImage(mentorProfileNo, file);
+            return "이미지 업로드 성공";
+        } catch (Exception e) {
+            return "이미지 업로드 실패: " + e.getMessage();
+        }
+    }
     
     
     

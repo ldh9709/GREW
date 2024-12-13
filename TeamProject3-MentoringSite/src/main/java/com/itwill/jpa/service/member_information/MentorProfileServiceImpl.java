@@ -5,10 +5,13 @@ import com.itwill.jpa.dto.member_information.MentorProfileDto;
 import com.itwill.jpa.entity.member_information.Category;
 import com.itwill.jpa.entity.member_information.Member;
 import com.itwill.jpa.entity.member_information.MentorProfile;
+import com.itwill.jpa.exception.CustomException;
 import com.itwill.jpa.repository.chatting_review.ReviewRepository;
 import com.itwill.jpa.repository.member_information.CategoryRepository;
 import com.itwill.jpa.repository.member_information.MemberRepository;
 import com.itwill.jpa.repository.member_information.MentorProfileRepository;
+import com.itwill.jpa.response.ResponseMessage;
+import com.itwill.jpa.response.ResponseStatusCode;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
@@ -22,13 +25,20 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.orm.ObjectOptimisticLockingFailureException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
 @Transactional
 public class MentorProfileServiceImpl implements MentorProfileService {
+	
+	private static final String IMAGE_PATH = "src/main/resources/static/images/mentor-profile/";
+	
+	
 	 @PersistenceContext
 	  private EntityManager entityManager;
 	 private final MentorProfileRepository mentorProfileRepository;
@@ -77,72 +87,135 @@ public class MentorProfileServiceImpl implements MentorProfileService {
         mentorProfileRepository.updateMentorStatus(memberNo, 4);
     }
 
-    
+    /**
+     * 멘토 프로필 생성 메서드
+     */
     @Override
     public void createMentorProfile(Long memberNo, MentorProfileDto mentorProfileDto) {
-        // 1️ 회원(Member) 정보 조회
+        // 1️⃣ 회원 정보 조회
         Member member = memberRepository.findById(memberNo)
-                .orElseThrow(() -> new IllegalArgumentException("회원 정보를 찾을 수 없습니다. memberNo: " + memberNo));
+                .orElseThrow(() -> new CustomException(
+                        ResponseStatusCode.MEMBER_MENTOR_NOT_FOUND,
+                        ResponseMessage.MEMBER_MENTOR_NOT_FOUND
+                ));
 
-        // 2️ 카테고리 정보 조회
+        // 2️⃣ 카테고리 정보 조회
         Category category = categoryRepository.findById(mentorProfileDto.getCategoryNo())
-                .orElseThrow(() -> new IllegalArgumentException("카테고리 정보를 찾을 수 없습니다. categoryNo: " + mentorProfileDto.getCategoryNo()));
+                .orElseThrow(() -> new CustomException(
+                        ResponseStatusCode.CATEGORY_NOT_FOUND,
+                        ResponseMessage.CATEGORY_NOT_FOUND
+                ));
 
-        // 3️ 이미 멘토 프로필이 존재하는지 확인
+        // 3️⃣ 멘토 프로필 중복 확인
         if (mentorProfileRepository.findByMember(member) != null) {
-            throw new IllegalStateException("해당 회원은 이미 멘토 프로필을 가지고 있습니다. memberNo: " + memberNo);
+            throw new CustomException(
+                    ResponseStatusCode.ALREADY_HAS_MENTOR_PROFILE,
+                    ResponseMessage.ALREADY_HAS_MENTOR_PROFILE
+            );
         }
 
-        // 4️ MentorProfileDto → MentorProfile 엔티티로 변환 (MentorProfile 엔티티의 toEntity 메서드 사용)
-        MentorProfile mentorProfile = MentorProfile.toEntity(mentorProfileDto, member, category);
-        mentorProfile.setMentorStatus(2); // 멘토의 초기 상태를 "생성 대기"로 설정
-
-        // 5️ 멘토 프로필 저장
-        mentorProfileRepository.save(mentorProfile);
-        
-        
+        try {
+            MentorProfile mentorProfile = MentorProfile.toEntity(mentorProfileDto, member, category);
+            mentorProfile.setMentorStatus(2); // 심사중 상태로 설정
+            mentorProfileRepository.save(mentorProfile);
+        } catch (Exception e) {
+            throw new CustomException(
+                    ResponseStatusCode.CREATED_MENTOR_PROFILE_FAIL,
+                    ResponseMessage.CREATED_MENTOR_PROFILE_FAIL
+            );
+        }
     }
 
 
     /**
-     * 특정 멘토의 평균 점수를 반환합니다.
+     * 멘토의 평균 점수를 반환하는 메서드
      */
     @Override
     public Double getAverageMentorRating(Long memberNo) {
-    	MentorProfile mentorProfile = mentorProfileRepository.findByMemberNo(memberNo);
-    	if (mentorProfile == null) {
-    	    throw new IllegalStateException("해당 멘토 프로필을 찾을 수 없습니다.");
-    	}
+        MentorProfile mentorProfile = mentorProfileRepository.findByMemberNo(memberNo);
+        if (mentorProfile == null) {
+            throw new CustomException(
+                    ResponseStatusCode.MENTOR_PROFILE_NOT_FOUND_CODE,
+                    ResponseMessage.MENTOR_PROFILE_NOT_FOUND
+            );
+        }
         return mentorProfile.getMentorRating();
     }
 
-    // 멘토의 mentor_rating 업데이트
+    /**
+     * 멘토의 mentor_rating 업데이트
+     */
     @Transactional
     public void updateMentorRating(Long memberNo) {
-        mentorProfileRepository.updateMentorRatingByMemberNo(memberNo);
+        try {
+            mentorProfileRepository.updateMentorRatingByMemberNo(memberNo);
+        } catch (Exception e) {
+            throw new CustomException(
+                ResponseStatusCode.UPDATE_MENTOR_PROFILE_FAIL_CODE,
+                ResponseMessage.UPDATE_MENTOR_PROFILE_FAIL_CODE
+            );
+        }
     }
 
+   
+    /**
+     * 멘토의 프로필 이미지를 업데이트하는 메서드
+     */
+    @Override
+    public void updateMentorProfileImage(Long mentorProfileNo, MultipartFile file) {
+        MentorProfile mentorProfile = mentorProfileRepository.findById(mentorProfileNo)
+                .orElseThrow(() -> new CustomException(
+                        ResponseStatusCode.MENTOR_PROFILE_NOT_FOUND_CODE,
+                        ResponseMessage.MENTOR_PROFILE_NOT_FOUND
+                ));
+
+        try {
+            String absolutePath = new File("").getAbsolutePath();
+            String IMAGE_PATH = absolutePath + "/src/main/resources/static/images/mentor-profile/";
+
+            File saveDir = new File(IMAGE_PATH);
+            if (!saveDir.exists()) {
+                saveDir.mkdirs();
+            }
+
+            String originalFilename = file.getOriginalFilename();
+            String fileName = UUID.randomUUID().toString() + "_" + originalFilename;
+
+            File saveFile = new File(IMAGE_PATH + fileName);
+            file.transferTo(saveFile);
+
+            mentorProfile.setMentorImage("/images/mentor-profile/" + fileName);
+            mentorProfileRepository.save(mentorProfile);
+        } catch (Exception e) {
+            throw new CustomException(
+                    ResponseStatusCode.IMAGE_MENTOR_UPLOAD_FAIL,
+                    ResponseMessage.IMAGE_MENTOR_UPLOAD_FAIL
+            );
+        }
+    }
+    
+    
     @Override
     public Page<MentorProfileDto> getMentorsByStatus(int status, int page, int size) {
-        Pageable pageable = PageRequest.of(page, size);
-        Page<MentorProfile> mentorProfiles = mentorProfileRepository.findByMentorStatus(status, pageable);
-        return mentorProfiles.map(MentorProfileDto::toDto);
+    	Pageable pageable = PageRequest.of(page, size);
+    	Page<MentorProfile> mentorProfiles = mentorProfileRepository.findByMentorStatus(status, pageable);
+    	return mentorProfiles.map(MentorProfileDto::toDto);
     }
-
+    
     @Override
     public Page<MentorProfileDto> searchMentorProfiles(String keyword, int page, int size) {
-        Pageable pageable = PageRequest.of(page, size);
-        Page<MentorProfile> mentorProfiles = mentorProfileRepository.searchMentorProfiles(keyword, pageable);
-        return mentorProfiles.map(MentorProfileDto::toDto);
+    	Pageable pageable = PageRequest.of(page, size);
+    	Page<MentorProfile> mentorProfiles = mentorProfileRepository.searchMentorProfiles(keyword, pageable);
+    	return mentorProfiles.map(MentorProfileDto::toDto);
     }
-
+    
     @Override
     public Page<MentorProfileDto> getMentorProfilesByCategoryNo(Long categoryNo, int page, int size) {
-        Pageable pageable = PageRequest.of(page, size);
-        Page<MentorProfile> mentorProfiles = mentorProfileRepository.findByCategoryNo(categoryNo, pageable);
-        return mentorProfiles.map(MentorProfileDto::toDto);
+    	Pageable pageable = PageRequest.of(page, size);
+    	Page<MentorProfile> mentorProfiles = mentorProfileRepository.findByCategoryNo(categoryNo, pageable);
+    	return mentorProfiles.map(MentorProfileDto::toDto);
     }
-
+    
 }
 
 //    /**

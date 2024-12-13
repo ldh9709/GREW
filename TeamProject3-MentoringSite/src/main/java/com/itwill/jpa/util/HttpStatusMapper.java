@@ -15,8 +15,19 @@ public class HttpStatusMapper {
         // MEMBER 관련 상태 코드 매핑
 
         // MENTOR BOARD 관련 상태 코드 매핑
-
-        // FOLLOW 관련 상태 코드 매핑
+    	statusCodeMap.put(ResponseStatusCode.CREATED_MENTOR_BOARD_FAIL, HttpStatus.BAD_REQUEST);
+    	statusCodeMap.put(ResponseStatusCode.UPDATE_MENTOR_BOARD_FAIL, HttpStatus.BAD_REQUEST);
+    	statusCodeMap.put(ResponseStatusCode.DELETE_MENTOR_BOARD_FAIL, HttpStatus.BAD_REQUEST);
+    	statusCodeMap.put(ResponseStatusCode.MENTOR_BOARD_NOT_FOUND, HttpStatus.NOT_FOUND);
+    	statusCodeMap.put(ResponseStatusCode.IMAGE_UPLOAD_FAIL, HttpStatus.BAD_REQUEST);
+       //MENTOR PROFILE 관련 상태 코드 매핑
+    	statusCodeMap.put(ResponseStatusCode.CREATED_MENTOR_PROFILE_FAIL, HttpStatus.BAD_REQUEST); // 멘토 프로필 생성 실패
+    	statusCodeMap.put(ResponseStatusCode.MENTOR_PROFILE_NOT_FOUND_CODE, HttpStatus.NOT_FOUND); // 멘토 프로필을 찾을 수 없음
+    	statusCodeMap.put(ResponseStatusCode.UPDATE_MENTOR_PROFILE_FAIL_CODE, HttpStatus.BAD_REQUEST); // 멘토 프로필 수정 실패
+    	statusCodeMap.put(ResponseStatusCode.MENTOR_PROFILE_STATUS_UPDATE_FAIL_CODE, HttpStatus.BAD_REQUEST); // 멘토 프로필 상태 업데이트 실패
+    	statusCodeMap.put(ResponseStatusCode.IMAGE_UPLOAD_FAIL, HttpStatus.BAD_REQUEST); // 이미지 업로드 실패
+    	
+    	// FOLLOW 관련 상태 코드 매핑
 
         // CATEGORY 관련 상태 코드 매핑
 
