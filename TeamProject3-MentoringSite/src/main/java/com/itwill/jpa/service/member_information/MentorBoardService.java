@@ -8,7 +8,7 @@ import java.util.List;
 
 import org.springframework.data.domain.Page;
 
-public interface MemtorBoardService {
+public interface MentorBoardService {
 
     // 멘토 보드 글쓰기
     MentorBoardDto saveMemtorBoard(MentorBoardDto mentorBoardDto);

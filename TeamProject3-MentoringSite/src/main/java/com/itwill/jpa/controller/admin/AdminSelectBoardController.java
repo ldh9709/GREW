@@ -25,7 +25,7 @@ import com.itwill.jpa.response.ResponseStatusCode;
 import com.itwill.jpa.service.bullentin_board.AnswerService;
 import com.itwill.jpa.service.bullentin_board.InquiryService;
 import com.itwill.jpa.service.member_information.MemberService;
-import com.itwill.jpa.service.member_information.MemtorBoardService;
+import com.itwill.jpa.service.member_information.MentorBoardService;
 
 import io.swagger.v3.oas.annotations.Operation;
 
@@ -43,7 +43,7 @@ public class AdminSelectBoardController {
 	private MemberService memberService;
 	
 	@Autowired
-	private MemtorBoardService mentorBoardService;
+	private MentorBoardService mentorBoardService;
 
 	/************* 질문 ************/
 	/* (질문)게시글 전체출력 * */

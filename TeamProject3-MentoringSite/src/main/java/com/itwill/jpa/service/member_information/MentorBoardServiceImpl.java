@@ -20,7 +20,7 @@ import java.util.List;
 
 @Transactional
 @Service
-public class MemtorBoardServiceImpl implements MemtorBoardService {
+public class MentorBoardServiceImpl implements MentorBoardService {
 
 	
 	  @Autowired

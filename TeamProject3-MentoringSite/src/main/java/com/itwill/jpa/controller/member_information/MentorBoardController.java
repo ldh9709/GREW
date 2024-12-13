@@ -8,7 +8,7 @@ import com.itwill.jpa.response.Response;
 import com.itwill.jpa.response.ResponseMessage;
 import com.itwill.jpa.response.ResponseStatusCode;
 import com.itwill.jpa.service.alarm.AlarmService;
-import com.itwill.jpa.service.member_information.MemtorBoardService;
+import com.itwill.jpa.service.member_information.MentorBoardService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -28,7 +28,7 @@ import java.util.List;
 public class MentorBoardController {
 
     @Autowired
-    private MemtorBoardService mentorBoardService;
+    private MentorBoardService mentorBoardService;
     @Autowired
     private AlarmService alarmService;
     
