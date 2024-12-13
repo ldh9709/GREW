@@ -36,6 +36,11 @@ public class ResponseStatusCode {
 	public static final int READ_MENTEE_COUNT_SUCCESS = 2420;
 	public static final int DELETE_FOLLOW_SUCCESS = 2430;
 	
+	public static final int CREATE_FOLLOW_FAIL = 2440;
+	public static final int READ_MENTORLIST_FAIL= 2450;
+	public static final int READ_MENTEE_COUNT_FAIL= 2460;
+	public static final int DELETE_FOLLOW_FAIL= 2470;
+	
 	/******************* CATEGORY 메시지 ************************/
 	public static final int CREATE_CATEGORY_SUCCESS = 2400;
 	public static final int READ_CATEGORY_SUCCESS = 2410;
@@ -54,7 +59,11 @@ public class ResponseStatusCode {
 	public static final int READ_REPORT_SUCCESS = 4100;
 	public static final int READ_REPORT_LIST_SUCCESS = 4200;
 	public static final int UPDATE_REPORT_SUCCESS = 4300;
-	public static final int REPORT_FAIL = 4400;
+	
+	public static final int CREATED_REPORT_FAIL = 4400;
+	public static final int READ_REPORT_FAIL = 4500;
+	public static final int READ_REPORT_LIST_FAIL= 4600;
+	public static final int UPDATE_REPORT_FAIL = 4700;
 	
 	/**********************INQUIRY 메시지**************************/
 	public static final int CREATED_INQUIRY_SUCCESS = 5000;

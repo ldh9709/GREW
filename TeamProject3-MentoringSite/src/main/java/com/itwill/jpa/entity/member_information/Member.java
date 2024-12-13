@@ -1,6 +1,5 @@
 package com.itwill.jpa.entity.member_information;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,10 +14,13 @@ import com.itwill.jpa.entity.bullentin_board.Vote;
 import com.itwill.jpa.entity.chatting_review.ChatMessage;
 import com.itwill.jpa.entity.chatting_review.ChatRoomStatus;
 import com.itwill.jpa.entity.report.Report;
+import com.itwill.jpa.entity.role.Role;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -28,11 +30,14 @@ import jakarta.persistence.OneToOne;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
+import oracle.jdbc.proxy.annotation.Signature;
 
 
 @Builder
@@ -45,26 +50,28 @@ import lombok.ToString;
 public class Member {
 	
 
-	@Id//PK설정
+	@Id
 	@SequenceGenerator(name = "member_no_SEQ", initialValue = 1, allocationSize = 1)
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "member_no_SEQ")
 	@Column(name = "member_no")
 	private Long memberNo;//멤버 번호 PK
 	
 	@Column(name = "member_id")
+	@Size(min = 3, max = 15, message ="아이디는 3자 이상 15자 이하로 입력해주세요.")
+	@Pattern(regexp = "^[a-zA-Z0-9_-]+$", message = "아이디는 영문자, 숫자, '-', '_'만 허용됩니다.")
 	private String memberId;//Id
 	
 	@Column(name = "member_password")
+	@Size(min = 8, message = "비밀번호는 최소 8자 이상이어야 합니다.")
+    @Pattern(regexp = "^(?=.*[a-zA-Z])(?=.*\\d)(?=.*[@$!%*?&]).*$", message = "비밀번호는 대문자, 소문자, 숫자, 특수문자 중 두 가지 이상을 포함해야 합니다.")
 	private String memberPassword;//비밀번호
 	
 	@Column(name = "member_email")
+	@Email(message = "유효하지 않은 이메일 형식입니다.")
 	private String memberEmail;//이메일
 	
 	@Column(name = "member_name")
 	private String memberName;//이름
-	
-	@Column(name = "member_role")
-	private String memberRole;//역할
 	
 	@Column(name = "member_points")
 	private Integer memberPoints;//멤버 연필 포인트
@@ -78,10 +85,22 @@ public class Member {
 	@Column(name = "member_report_count")
 	private Integer memberReportCount;//신고 당한 횟수
 	
+	/***********************시큐리티를 위한 멤버 필드*****************************/
+	@Enumerated(EnumType.STRING)
+	@Column(name = "member_role")
+	private Role memberRole;//역할
+	
+	@Column(name = "member_provider")
+	private String memberProvider;//인증 제공자(일반 로그인이면 Null, 아니면 Google 등)
+	
+	
+	
+	
+	
 	/* 초기값 설정 */
 	@PrePersist
 	public void setDefaultValues() {
-		if (this.memberRole == null) this.memberRole = "MENTEE";
+		if (this.memberRole == null) this.memberRole = Role.ROLE_MENTEE;
 		if (this.memberPoints == null) this.memberPoints = 0;
 		if (this.memberStatus == null || this.memberStatus == 0) this.memberStatus = 1;
 		if (this.memberJoinDate == null) this.memberJoinDate = LocalDateTime.now();
@@ -110,7 +129,7 @@ public class Member {
 	
 	/* (멘토)한 명의 유저가 팔로우는 여러개 보유 가능 */
 	@OneToMany(mappedBy = "menteeMember", fetch = FetchType.LAZY)
-	private List<Follow> followMentees = new ArrayList<>();
+	private List<Follow> followMestees = new ArrayList<>();
 	
 	/* (멘티)한 명의 유저가 팔로우는 여러개 보유 가능 */
 	@OneToMany(mappedBy = "mentorMember", fetch = FetchType.LAZY)
@@ -159,10 +178,15 @@ public class Member {
 	            .build();
 	}
 	
+	//흥미 추가
 	public void addInterests(Interest interest) {
 		interests.add(interest);
 		interest.setMember(this);
 	}
 	
-	
+	//비밀번호 변경
+		public void changePassword(String newPassword) {
+			this.memberPassword = newPassword;
+		}
+		
 }

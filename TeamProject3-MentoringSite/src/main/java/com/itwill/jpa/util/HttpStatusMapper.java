@@ -17,12 +17,19 @@ public class HttpStatusMapper {
         // MENTOR BOARD 관련 상태 코드 매핑
 
         // FOLLOW 관련 상태 코드 매핑
-
+    	statusCodeMap.put(ResponseStatusCode.CREATE_FOLLOW_FAIL, HttpStatus.BAD_REQUEST);
+    	statusCodeMap.put(ResponseStatusCode.READ_MENTORLIST_FAIL, HttpStatus.NOT_FOUND);
+    	statusCodeMap.put(ResponseStatusCode.READ_MENTEE_COUNT_FAIL, HttpStatus.NOT_FOUND);
+    	statusCodeMap.put(ResponseStatusCode.DELETE_FOLLOW_FAIL, HttpStatus.BAD_REQUEST);
         // CATEGORY 관련 상태 코드 매핑
 
         // ALARM 관련 상태 코드 매핑
 
         // REPORT 관련 상태 코드 매핑
+    	statusCodeMap.put(ResponseStatusCode.CREATED_REPORT_FAIL, HttpStatus.BAD_REQUEST);
+    	statusCodeMap.put(ResponseStatusCode.READ_REPORT_FAIL, HttpStatus.NOT_FOUND);
+    	statusCodeMap.put(ResponseStatusCode.READ_REPORT_LIST_FAIL, HttpStatus.NOT_FOUND);
+    	statusCodeMap.put(ResponseStatusCode.UPDATE_REPORT_FAIL, HttpStatus.BAD_REQUEST);
 
         // INQUIRY 관련 상태 코드 매핑
         statusCodeMap.put(ResponseStatusCode.CREATED_INQUIRY_FAIL, HttpStatus.BAD_REQUEST);
