@@ -1,6 +1,7 @@
 package com.itwill.jpa.service.member_information;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,7 @@ import com.itwill.jpa.dto.member_information.MemberDto;
 import com.itwill.jpa.entity.member_information.Category;
 import com.itwill.jpa.entity.member_information.Interest;
 import com.itwill.jpa.entity.member_information.Member;
+import com.itwill.jpa.entity.role.Role;
 import com.itwill.jpa.repository.member_information.MemberRepository;
 
 @Service
@@ -197,19 +199,7 @@ public class MemberServiceImpl implements MemberService {
 		return findMember;
 	}
 	
-	/***** 회원 상세(멘티) ****
-	 * 질문 수 / 상담 횟수 / 팔로잉 수
-	 * 질문 게시글, 상담내역, 팔로잉
-	 * 
-	 * */
-	
-	/***** 회원 상세(멘토) ****
-	 * 답변 수 / 상담 횟수 / 리뷰 수 / 컨텐츠 수
-	 * 답변 게시글, 상담 내역, 리뷰내역, 컨텐츠
-	 * 
-	 * */
-	
-	/**** 회원 상세 보기 ****/
+	/**** 회원정보 상세 보기 ****/
 	@Override
 	public Member getMember(Long memberNo) {
 		return memberRepository.findByMemberNo(memberNo);
@@ -217,9 +207,36 @@ public class MemberServiceImpl implements MemberService {
 
 	/***** 회원 전체 출력 ****
 	 * 필터링 role : 멘티, 멘토 
-	 * 정렬 : 가입 순, 이름 순 
+	 * 정렬 : 1(초기) - 가입 순, 2-이름 순 
 	 * 
 	 * */
+	public List<MemberDto> getMemberAll(String roleStr, Integer order){
+		
+		Role role = Role.ROLE_MENTEE; 
+		if(roleStr.equals("ROLE_MENTOR")) {
+			role = Role.ROLE_MENTOR;
+		}
+		
+		List<Member> memberList = new ArrayList<>();
+		List<MemberDto> memberDtoList = new ArrayList<>();
+		
+		switch (order) {
+			case 1: {
+				memberList = memberRepository.findByMemberRoleOrderByMemberJoinDateAsc(role);
+				break;
+			}
+			case 2: {
+				memberList = memberRepository.findByMemberRoleOrderByMemberNameAsc(role);
+				break;
+			}
+		}
+		
+		for (Member member : memberList) {
+			memberDtoList.add(MemberDto.toBasicDto(member));
+		}
+		
+		return memberDtoList;
+	}
 	
 	
 	/***** 신고 카운트 증가 *****/
