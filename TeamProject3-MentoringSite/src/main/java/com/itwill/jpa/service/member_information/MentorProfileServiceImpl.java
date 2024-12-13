@@ -5,10 +5,13 @@ import com.itwill.jpa.dto.member_information.MentorProfileDto;
 import com.itwill.jpa.entity.member_information.Category;
 import com.itwill.jpa.entity.member_information.Member;
 import com.itwill.jpa.entity.member_information.MentorProfile;
+import com.itwill.jpa.exception.CustomException;
 import com.itwill.jpa.repository.chatting_review.ReviewRepository;
 import com.itwill.jpa.repository.member_information.CategoryRepository;
 import com.itwill.jpa.repository.member_information.MemberRepository;
 import com.itwill.jpa.repository.member_information.MentorProfileRepository;
+import com.itwill.jpa.response.ResponseMessage;
+import com.itwill.jpa.response.ResponseStatusCode;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
@@ -84,104 +87,134 @@ public class MentorProfileServiceImpl implements MentorProfileService {
         mentorProfileRepository.updateMentorStatus(memberNo, 4);
     }
 
-    
+    /**
+     * 멘토 프로필 생성 메서드
+     */
     @Override
     public void createMentorProfile(Long memberNo, MentorProfileDto mentorProfileDto) {
-        // 1️ 회원(Member) 정보 조회
+        // 1️⃣ 회원 정보 조회
         Member member = memberRepository.findById(memberNo)
-                .orElseThrow(() -> new IllegalArgumentException("회원 정보를 찾을 수 없습니다. memberNo: " + memberNo));
+                .orElseThrow(() -> new CustomException(
+                        ResponseStatusCode.MEMBER_MENTOR_NOT_FOUND,
+                        ResponseMessage.MEMBER_MENTOR_NOT_FOUND
+                ));
 
-        // 2️ 카테고리 정보 조회
+        // 2️⃣ 카테고리 정보 조회
         Category category = categoryRepository.findById(mentorProfileDto.getCategoryNo())
-                .orElseThrow(() -> new IllegalArgumentException("카테고리 정보를 찾을 수 없습니다. categoryNo: " + mentorProfileDto.getCategoryNo()));
+                .orElseThrow(() -> new CustomException(
+                        ResponseStatusCode.CATEGORY_NOT_FOUND,
+                        ResponseMessage.CATEGORY_NOT_FOUND
+                ));
 
-        // 3️ 이미 멘토 프로필이 존재하는지 확인
+        // 3️⃣ 멘토 프로필 중복 확인
         if (mentorProfileRepository.findByMember(member) != null) {
-            throw new IllegalStateException("해당 회원은 이미 멘토 프로필을 가지고 있습니다. memberNo: " + memberNo);
+            throw new CustomException(
+                    ResponseStatusCode.ALREADY_HAS_MENTOR_PROFILE,
+                    ResponseMessage.ALREADY_HAS_MENTOR_PROFILE
+            );
         }
 
-        // 4️ MentorProfileDto → MentorProfile 엔티티로 변환 (MentorProfile 엔티티의 toEntity 메서드 사용)
-        MentorProfile mentorProfile = MentorProfile.toEntity(mentorProfileDto, member, category);
-        mentorProfile.setMentorStatus(2); // 멘토의 초기 상태를 "생성 대기"로 설정
-
-        // 5️ 멘토 프로필 저장
-        mentorProfileRepository.save(mentorProfile);
-        
-        
+        try {
+            MentorProfile mentorProfile = MentorProfile.toEntity(mentorProfileDto, member, category);
+            mentorProfile.setMentorStatus(2); // 심사중 상태로 설정
+            mentorProfileRepository.save(mentorProfile);
+        } catch (Exception e) {
+            throw new CustomException(
+                    ResponseStatusCode.CREATED_MENTOR_PROFILE_FAIL,
+                    ResponseMessage.CREATED_MENTOR_PROFILE_FAIL
+            );
+        }
     }
 
 
     /**
-     * 특정 멘토의 평균 점수를 반환합니다.
+     * 멘토의 평균 점수를 반환하는 메서드
      */
     @Override
     public Double getAverageMentorRating(Long memberNo) {
-    	MentorProfile mentorProfile = mentorProfileRepository.findByMemberNo(memberNo);
-    	if (mentorProfile == null) {
-    	    throw new IllegalStateException("해당 멘토 프로필을 찾을 수 없습니다.");
-    	}
+        MentorProfile mentorProfile = mentorProfileRepository.findByMemberNo(memberNo);
+        if (mentorProfile == null) {
+            throw new CustomException(
+                    ResponseStatusCode.MENTOR_PROFILE_NOT_FOUND_CODE,
+                    ResponseMessage.MENTOR_PROFILE_NOT_FOUND
+            );
+        }
         return mentorProfile.getMentorRating();
     }
 
-    // 멘토의 mentor_rating 업데이트
+    /**
+     * 멘토의 mentor_rating 업데이트
+     */
     @Transactional
     public void updateMentorRating(Long memberNo) {
-        mentorProfileRepository.updateMentorRatingByMemberNo(memberNo);
-    }
-
-    @Override
-    public Page<MentorProfileDto> getMentorsByStatus(int status, int page, int size) {
-        Pageable pageable = PageRequest.of(page, size);
-        Page<MentorProfile> mentorProfiles = mentorProfileRepository.findByMentorStatus(status, pageable);
-        return mentorProfiles.map(MentorProfileDto::toDto);
-    }
-
-    @Override
-    public Page<MentorProfileDto> searchMentorProfiles(String keyword, int page, int size) {
-        Pageable pageable = PageRequest.of(page, size);
-        Page<MentorProfile> mentorProfiles = mentorProfileRepository.searchMentorProfiles(keyword, pageable);
-        return mentorProfiles.map(MentorProfileDto::toDto);
-    }
-
-    @Override
-    public Page<MentorProfileDto> getMentorProfilesByCategoryNo(Long categoryNo, int page, int size) {
-        Pageable pageable = PageRequest.of(page, size);
-        Page<MentorProfile> mentorProfiles = mentorProfileRepository.findByCategoryNo(categoryNo, pageable);
-        return mentorProfiles.map(MentorProfileDto::toDto);
-    }
-
-    @Override
-    public void updateMentorProfileImage(Long mentorProfileNo, MultipartFile file) throws Exception {
-        // 1️⃣ 멘토 프로필 정보 조회
-        MentorProfile mentorProfile = mentorProfileRepository.findById(mentorProfileNo)
-                .orElseThrow(() -> new IllegalArgumentException("해당 멘토 프로필을 찾을 수 없습니다. mentorProfileNo: " + mentorProfileNo));
-
-        // 2️⃣ 절대 경로 가져오기
-        String absolutePath = new File("").getAbsolutePath();
-        String IMAGE_PATH = absolutePath + "/src/main/resources/static/images/mentor-profile/"; // 절대 경로 생성
-
-        // 3️⃣ 디렉터리 확인 및 생성
-        File saveDir = new File(IMAGE_PATH);
-        if (!saveDir.exists()) {
-            saveDir.mkdirs(); // 디렉터리가 없으면 생성
+        try {
+            mentorProfileRepository.updateMentorRatingByMemberNo(memberNo);
+        } catch (Exception e) {
+            throw new CustomException(
+                ResponseStatusCode.UPDATE_MENTOR_PROFILE_FAIL_CODE,
+                ResponseMessage.UPDATE_MENTOR_PROFILE_FAIL_CODE
+            );
         }
+    }
 
-        // 4️⃣ 파일명 생성 (고유한 이름으로 생성)
-        String originalFilename = file.getOriginalFilename();
-        String fileExtension = originalFilename.substring(originalFilename.lastIndexOf("."));
-        String fileName = UUID.randomUUID().toString() + fileExtension;
+   
+    /**
+     * 멘토의 프로필 이미지를 업데이트하는 메서드
+     */
+    @Override
+    public void updateMentorProfileImage(Long mentorProfileNo, MultipartFile file) {
+        MentorProfile mentorProfile = mentorProfileRepository.findById(mentorProfileNo)
+                .orElseThrow(() -> new CustomException(
+                        ResponseStatusCode.MENTOR_PROFILE_NOT_FOUND_CODE,
+                        ResponseMessage.MENTOR_PROFILE_NOT_FOUND
+                ));
 
-        // 5️⃣ 파일 저장 경로 생성
-        File saveFile = new File(IMAGE_PATH + fileName);
+        try {
+            String absolutePath = new File("").getAbsolutePath();
+            String IMAGE_PATH = absolutePath + "/src/main/resources/static/images/mentor-profile/";
 
-        // 6️⃣ 파일 저장
-        file.transferTo(saveFile);
+            File saveDir = new File(IMAGE_PATH);
+            if (!saveDir.exists()) {
+                saveDir.mkdirs();
+            }
 
-        // 7️⃣ mentorProfile 엔티티에 이미지 경로 저장
-        mentorProfile.setMentorImage("/images/mentor-profile/" + fileName);
-        mentorProfileRepository.save(mentorProfile);
+            String originalFilename = file.getOriginalFilename();
+            String fileName = UUID.randomUUID().toString() + "_" + originalFilename;
+
+            File saveFile = new File(IMAGE_PATH + fileName);
+            file.transferTo(saveFile);
+
+            mentorProfile.setMentorImage("/images/mentor-profile/" + fileName);
+            mentorProfileRepository.save(mentorProfile);
+        } catch (Exception e) {
+            throw new CustomException(
+                    ResponseStatusCode.IMAGE_MENTOR_UPLOAD_FAIL,
+                    ResponseMessage.IMAGE_MENTOR_UPLOAD_FAIL
+            );
+        }
     }
     
+    
+    @Override
+    public Page<MentorProfileDto> getMentorsByStatus(int status, int page, int size) {
+    	Pageable pageable = PageRequest.of(page, size);
+    	Page<MentorProfile> mentorProfiles = mentorProfileRepository.findByMentorStatus(status, pageable);
+    	return mentorProfiles.map(MentorProfileDto::toDto);
+    }
+    
+    @Override
+    public Page<MentorProfileDto> searchMentorProfiles(String keyword, int page, int size) {
+    	Pageable pageable = PageRequest.of(page, size);
+    	Page<MentorProfile> mentorProfiles = mentorProfileRepository.searchMentorProfiles(keyword, pageable);
+    	return mentorProfiles.map(MentorProfileDto::toDto);
+    }
+    
+    @Override
+    public Page<MentorProfileDto> getMentorProfilesByCategoryNo(Long categoryNo, int page, int size) {
+    	Pageable pageable = PageRequest.of(page, size);
+    	Page<MentorProfile> mentorProfiles = mentorProfileRepository.findByCategoryNo(categoryNo, pageable);
+    	return mentorProfiles.map(MentorProfileDto::toDto);
+    }
     
 }
 

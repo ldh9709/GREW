@@ -34,7 +34,12 @@ public class ResponseMessage {
     public static final String READ_MENTOR_PROFILE_LIST_FAIL = "멘토 프로필 목록 조회 실패";
     public static final String MENTOR_PROFILE_STATUS_UPDATE_SUCCESS = "멘토 프로필 상태 업데이트 성공";
     public static final String MENTOR_PROFILE_STATUS_UPDATE_FAIL = "멘토 프로필 상태 업데이트 실패";
-
+    public static final String CREATED_MENTOR_PROFILE_FAIL = "멘토 프로필 등록에 실패했습니다.";
+    public static final String ALREADY_HAS_MENTOR_PROFILE = "해당 회원은 이미 멘토 프로필을 가지고 있습니다.";
+    public static final String MEMBER_MENTOR_NOT_FOUND = "해당 멤버를 찾을 수 없습니다.";
+    public static final String CATEGORY_NOT_FOUND = "해당 카테고리를 찾을 수 없습니다.";
+    public static final String IMAGE_MENTOR_UPLOAD_FAIL = "이미지 업로드에 실패했습니다.";
+    public static final String UPDATE_MENTOR_PROFILE_FAIL_CODE = "멘토 프로필수정 실패.";
     /******************* MENTOR PROFILE TYPE 변경 메시지 ************************/
     public static final String MENTOR_PROFILE_TYPE_CHANGE_SUCCESS = "멘토 프로필 타입 변경 성공";
     public static final String MENTOR_PROFILE_TYPE_CHANGE_FAIL = "멘토 프로필 타입 변경 실패";
