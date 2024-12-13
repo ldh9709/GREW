@@ -46,7 +46,7 @@ public class FollowServiceImpl implements FollowService{
 			Follow follow = Follow.toEntity(followDto);
 			followReporitory.save(follow);
 		} catch (Exception e) {
-			throw new CustomException(ResponseStatusCode.CREATE_FOLLOW_FAIL, ResponseMessage.CREATE_FOLLOW_FAIL);
+			throw new CustomException(ResponseStatusCode.CREATE_FOLLOW_FAIL, ResponseMessage.CREATE_FOLLOW_FAIL,e);
 		}
 		return followDto;
 	}
