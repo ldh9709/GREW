@@ -183,7 +183,7 @@ public class MemberRestController {
 	}
 	*/
 	
-	/* 회원 수정 */
+	/* 회원 정보 수정 */
 	@Operation(summary = "회원 정보 수정")
 	@PutMapping("/{memberNo}")
 	public ResponseEntity<Response> updateMember(@RequestBody MemberDto memberDto) {
@@ -211,15 +211,15 @@ public class MemberRestController {
 		return responseEntity;
 	}
 	
-	/* 회원 수정 */
+	/* 회원 상태 수정 */
 	@Operation(summary = "회원 상태 수정")
 	@PutMapping("/{memberNo}/status/{statusNo}")
 	public ResponseEntity<Response> updateMemberStatus(
-			@RequestBody MemberDto memberDto, 
+			@PathVariable(name="memberNo") Long memberNo,
 			@PathVariable(name = "statusNo") Integer statusNo) {
 		
 		//업데이트 메소드 실행
-		Member updateMember = memberService.updateMemberStatus(memberDto, statusNo);
+		Member updateMember = memberService.updateMemberStatus(memberNo, statusNo);
 		
 		MemberDto updateMemberDto = MemberDto.toDto(updateMember);
 		

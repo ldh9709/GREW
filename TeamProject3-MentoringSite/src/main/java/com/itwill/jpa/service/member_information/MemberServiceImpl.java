@@ -182,8 +182,8 @@ public class MemberServiceImpl implements MemberService {
 	
 	/***** 회원 상태 수정 *****/
 	@Override
-	public Member updateMemberStatus(MemberDto memberDto, Integer statusNo) {
-		Member member = memberRepository.findByMemberNo(memberDto.getMemberNo());
+	public Member updateMemberStatus(Long memberNo, Integer statusNo) {
+		Member member = memberRepository.findByMemberNo(memberNo);
 		member.setMemberStatus(statusNo);
 		
 		return memberRepository.save(member);
