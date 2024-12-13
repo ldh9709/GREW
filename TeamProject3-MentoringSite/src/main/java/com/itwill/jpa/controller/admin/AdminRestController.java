@@ -18,18 +18,25 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.itwill.jpa.dto.bulletin_board.AnswerDto;
 import com.itwill.jpa.dto.bulletin_board.InquiryDto;
+import com.itwill.jpa.dto.member_information.MemberDto;
 import com.itwill.jpa.dto.member_information.MentorBoardDto;
+<<<<<<< HEAD
 import com.itwill.jpa.dto.report.ReportDto;
+=======
+import com.itwill.jpa.entity.member_information.Member;
+>>>>>>> refs/heads/master
 import com.itwill.jpa.response.Response;
 import com.itwill.jpa.response.ResponseMessage;
 import com.itwill.jpa.response.ResponseStatusCode;
 import com.itwill.jpa.service.bullentin_board.AnswerService;
 import com.itwill.jpa.service.bullentin_board.AnswerServiceImpl;
 import com.itwill.jpa.service.bullentin_board.InquiryService;
+import com.itwill.jpa.service.member_information.MemberService;
 import com.itwill.jpa.service.member_information.MemtorBoardService;
 import com.itwill.jpa.service.report.ReportService;
 
 import io.swagger.v3.oas.annotations.Operation;
+import jakarta.servlet.http.HttpSession;
 
 @RestController
 @RequestMapping("/admin")
@@ -45,7 +52,11 @@ public class AdminRestController {
     private MemtorBoardService mentorBoardService;
 	
 	@Autowired
+<<<<<<< HEAD
 	private ReportService reportService;
+=======
+	private MemberService memberService;
+>>>>>>> refs/heads/master
 	
 	/************* 질문 ************/
 	/* (질문)게시글 전체출력 * */
@@ -155,7 +166,7 @@ public class AdminRestController {
 	    return responseEntity;
 	}
 
-	/* (멘토컨텐츠)게시글 번호로출력 */
+	/* (멘토컨텐츠)게시글 번호로출력 수정 必*/
 	@Operation(summary = "멘토 게시글 번호로 출력(최신순) 관리자용")
 	@GetMapping("/MentorBoards")
 	public ResponseEntity<Response> getAdminMentorBoardsOrderByDate(@PathVariable(name= "mentorBoardNo") Long mentorBoardNo) {
@@ -178,6 +189,7 @@ public class AdminRestController {
 	
 	/* 검색내용 별 출력 (고려)=>List<MentorBoardDto> findMentorBoardBySearch(String search);*/
 	
+<<<<<<< HEAD
 	/* [어드민] 신고 출력(전체회원) */
 	@Operation(summary = "[어드민] 전체 신고 목록 조회")
 	@GetMapping("/Reports")
@@ -249,6 +261,7 @@ public class AdminRestController {
 
 	    return responseEntity;
 	}
+
 
 	
 }
