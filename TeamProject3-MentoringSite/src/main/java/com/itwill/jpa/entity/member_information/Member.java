@@ -92,7 +92,6 @@ public class Member {
 	@PrePersist
 	public void setDefaultValues() {
 		if (this.memberRole == null) this.memberRole = Role.ROLE_MENTEE;
-		//if (this.memberRole == null) this.memberRole = "Role_Mentee";
 		if (this.memberPoints == null) this.memberPoints = 0;
 		if (this.memberStatus == null || this.memberStatus == 0) this.memberStatus = 1;
 		if (this.memberJoinDate == null) this.memberJoinDate = LocalDateTime.now();

@@ -122,14 +122,26 @@ public class MemberServiceImpl implements MemberService {
 	/***** 아이디 찾기 *****/
 	public String getMemberId(String memberEmail) {
 		String memberId = memberRepository.findMemberIdByMemberEmail(memberEmail).get();
-		return memberId;
+		return maskMemberId(memberId);
+	}
+	
+	/***** 아이디 마스킹 처리 *****/
+	public String maskMemberId(String memberId) {
+		int length = memberId.length();
+		
+		if(length <=6) {
+			//앞 2글자만 보임
+			return memberId.substring(0,2) + "*".repeat(length -2);
+		}else {
+			//앞 2글자, 뒤 2글자만 보임
+			return memberId.substring(0,2) + "*".repeat(length-4) + memberId.substring(length-2);
+		}
 		
 	}
 	
 	/***** 비밀번호 재설정 *****/
-	public Member updateMemberPassword(String memberPassword) {
-		checkPasswordValid(memberPassword);
-		return null;
+	public void updateMemberPassword(Member member, String newPassword) {
+		member.changePassword(newPassword);
 	}
 	
 	/***** 회원 로그인 ****

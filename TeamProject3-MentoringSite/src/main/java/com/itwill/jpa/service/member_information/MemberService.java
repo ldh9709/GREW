@@ -23,8 +23,11 @@ public interface MemberService {
 	//아이디 찾기
 	String getMemberId(String memberId);
 	
-	//아이디 찾기
-	Member updateMemberPassword(String memberPassword);
+	//아이디 마스킹 처리
+	String maskMemberId(String memberId);
+	
+	//비밀번호 변경
+	void updateMemberPassword(Member member, String newPassword);
 	
 	//회원가입
 	Member saveMember(MemberDto memberDto);
