@@ -1,6 +1,5 @@
 package com.itwill.jpa.entity.member_information;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,10 +14,13 @@ import com.itwill.jpa.entity.bullentin_board.Vote;
 import com.itwill.jpa.entity.chatting_review.ChatMessage;
 import com.itwill.jpa.entity.chatting_review.ChatRoomStatus;
 import com.itwill.jpa.entity.report.Report;
+import com.itwill.jpa.entity.role.Role;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -32,7 +34,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
 
 
 @Builder
@@ -63,9 +64,6 @@ public class Member {
 	@Column(name = "member_name")
 	private String memberName;//이름
 	
-	@Column(name = "member_role")
-	private String memberRole;//역할
-	
 	@Column(name = "member_points")
 	private Integer memberPoints;//멤버 연필 포인트
 	
@@ -78,10 +76,23 @@ public class Member {
 	@Column(name = "member_report_count")
 	private Integer memberReportCount;//신고 당한 횟수
 	
+	/***********************시큐리티를 위한 멤버 필드*****************************/
+	@Enumerated(EnumType.STRING)
+	@Column(name = "member_role")
+	private Role memberRole;//역할
+	
+	@Column(name = "member_provider")
+	private String memberProvider;//인증 제공자(일반 로그인이면 Null, 아니면 Google 등)
+	
+	
+	
+	
+	
 	/* 초기값 설정 */
 	@PrePersist
 	public void setDefaultValues() {
-		if (this.memberRole == null) this.memberRole = "MENTEE";
+		if (this.memberRole == null) this.memberRole = Role.ROLE_MENTEE;
+		//if (this.memberRole == null) this.memberRole = "Role_Mentee";
 		if (this.memberPoints == null) this.memberPoints = 0;
 		if (this.memberStatus == null || this.memberStatus == 0) this.memberStatus = 1;
 		if (this.memberJoinDate == null) this.memberJoinDate = LocalDateTime.now();
@@ -110,7 +121,7 @@ public class Member {
 	
 	/* (멘토)한 명의 유저가 팔로우는 여러개 보유 가능 */
 	@OneToMany(mappedBy = "menteeMember", fetch = FetchType.LAZY)
-	private List<Follow> followMentees = new ArrayList<>();
+	private List<Follow> followMestees = new ArrayList<>();
 	
 	/* (멘티)한 명의 유저가 팔로우는 여러개 보유 가능 */
 	@OneToMany(mappedBy = "mentorMember", fetch = FetchType.LAZY)
@@ -159,10 +170,15 @@ public class Member {
 	            .build();
 	}
 	
+	//흥미 추가
 	public void addInterests(Interest interest) {
 		interests.add(interest);
 		interest.setMember(this);
 	}
 	
-	
+	//비밀번호 변경
+		public void changePassword(String newPassword) {
+			this.memberPassword = newPassword;
+		}
+		
 }
