@@ -36,59 +36,12 @@ import jakarta.servlet.http.HttpSession;
 @RequestMapping("/admin")
 public class AdminRestController {
 	
-	
-	
-	@Autowired
-	private  AnswerService answerService;
-
 	@Autowired
     private MentorBoardService mentorBoardService;
 	
-	@Autowired
-	private MemberService memberService;
-	
-	
-	  
-	/* 검색 내용 별 출력 (answer)
-	@Operation(summary = "관리자 답변 검색 기능")
-	@GetMapping("/answerSearch/{search}")
-	public ResponseEntity<Response> searchAnswersForAdmin(@PathVariable(name = "search") String search,
-	        @RequestParam(name = "page", defaultValue = "0") int page,  // 기본값은 0 페이지
-	        @RequestParam(name = "size", defaultValue = "10") int size) {
-	    
-	    // 검색어에 맞는 답변 목록을 가져옴
-	    Page<AnswerDto> answerDtos = answerService.getByInquiryAnswerOrderByDate(null, page, size);
-	    Response response = new Response();
-		HttpHeaders httpHeaders = new HttpHeaders();
-	    httpHeaders.setContentType(new MediaType(MediaType.APPLICATION_JSON, Charset.forName("UTF-8")));
-		 // 응답 반환
-		ResponseEntity<Response> responseEntity = new ResponseEntity<>(response, httpHeaders, HttpStatus.OK);
-		return responseEntity;
-	    		
-	}*/
-	
 	
 
-	/* (멘토컨텐츠)게시글 번호로출력 수정 必*/
-	@Operation(summary = "멘토 게시글 번호로 출력(최신순) 관리자용")
-	@GetMapping("/admin/mentorBoards")
-	public ResponseEntity<Response> getAdminMentorBoardsOrderByDate(@PathVariable(name= "mentorBoardNo") Long mentorBoardNo) {
-        MentorBoardDto mentorBoard = mentorBoardService.getMemtorBoard(mentorBoardNo);
-
-	    // 응답 객체 생성
-	    Response response = new Response();
-	    response.setStatus(ResponseStatusCode.READ_MENTOR_BOARD_LIST_SUCCESS);
-	    response.setMessage(ResponseMessage.READ_MENTOR_BOARD_LIST_SUCCESS);
-	    response.setData(mentorBoard);
-
-	    // HTTP 헤더 설정
-	    HttpHeaders httpHeaders = new HttpHeaders();
-	    httpHeaders.setContentType(new MediaType(MediaType.APPLICATION_JSON, Charset.forName("UTF-8")));
-
-	    // ResponseEntity로 반환
-	    ResponseEntity<Response> responseEntity = new ResponseEntity<Response>(response, httpHeaders, HttpStatus.OK);
-	    return responseEntity;
-	}	/* (멘토컨텐츠)게시글 전체출력 =>method추가시*/
+		/* (멘토컨텐츠)게시글 전체출력 =>method추가시*/
 	
 	/* 검색내용 별 출력 (고려)=>List<MentorBoardDto> findMentorBoardBySearch(String search);*/
 	

@@ -17,12 +17,15 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.itwill.jpa.dto.bulletin_board.AnswerDto;
 import com.itwill.jpa.dto.bulletin_board.InquiryDto;
+import com.itwill.jpa.dto.member_information.MentorBoardDto;
 import com.itwill.jpa.repository.bullentin_board.AnswerRepository;
 import com.itwill.jpa.response.Response;
 import com.itwill.jpa.response.ResponseMessage;
 import com.itwill.jpa.response.ResponseStatusCode;
 import com.itwill.jpa.service.bullentin_board.AnswerService;
 import com.itwill.jpa.service.bullentin_board.InquiryService;
+import com.itwill.jpa.service.member_information.MemberService;
+import com.itwill.jpa.service.member_information.MemtorBoardService;
 
 import io.swagger.v3.oas.annotations.Operation;
 
@@ -35,6 +38,12 @@ public class AdminSelectBoardController {
 	
 	@Autowired 
 	private AnswerService answerService;
+	
+	@Autowired
+	private MemberService memberService;
+	
+	@Autowired
+	private MemtorBoardService mentorBoardService;
 
 	/************* 질문 ************/
 	/* (질문)게시글 전체출력 * */
@@ -149,5 +158,79 @@ public class AdminSelectBoardController {
 	    ResponseEntity<Response> responseEntity = new ResponseEntity<>(response, httpHeaders, HttpStatus.OK);
 	    return responseEntity;
 	}*/
+	
+	/************* 질문 ************
+	 (멘토컨텐츠)게시글 번호로출력 수정 必
+	@Operation(summary = "멘토 게시글 번호로 출력(최신순) 관리자용")
+	@GetMapping("/admin/mentorBoards")
+	public ResponseEntity<Response> getAdminMentorBoardsOrderByDate(@PathVariable(name= "mentorBoardNo") Long mentorBoardNo) {
+        MentorBoardDto mentorBoard = mentorBoardService.getMemtorBoard(mentorBoardNo);
+
+	    // 응답 객체 생성
+	    Response response = new Response();
+	    response.setStatus(ResponseStatusCode.READ_MENTOR_BOARD_LIST_SUCCESS);
+	    response.setMessage(ResponseMessage.READ_MENTOR_BOARD_LIST_SUCCESS);
+	    response.setData(mentorBoard);
+
+	    // HTTP 헤더 설정
+	    HttpHeaders httpHeaders = new HttpHeaders();
+	    httpHeaders.setContentType(new MediaType(MediaType.APPLICATION_JSON, Charset.forName("UTF-8")));
+
+	    // ResponseEntity로 반환
+	    ResponseEntity<Response> responseEntity = new ResponseEntity<Response>(response, httpHeaders, HttpStatus.OK);
+	    return responseEntity;
+	}*/
+
+	/************* 컨텐츠 ************/
+	/* (멘토)게시글 전체출력 * */
+	@Operation(summary = "멘토 게시글 최신순 목록")
+	@GetMapping("/mentorBoards")
+	public ResponseEntity<Response> getAdminMentorBoardsForAdmin(
+	        @RequestParam(name = "page", defaultValue = "0") int page,  // 기본값은 0 페이지
+	        @RequestParam(name = "size", defaultValue = "10") int size) { // 기본값은 10 개 항목
+
+	    // 게시글 목록을 최신순으로 가져오기
+	    Page<MentorBoardDto> mentorBoardsPage = mentorBoardService.getMentorBoardsSortedByDate(page, size);
+
+	    // 응답 객체 생성
+	    Response response = new Response();
+	    response.setStatus(ResponseStatusCode.READ_MENTOR_BOARD_LIST_SUCCESS);
+	    response.setMessage(ResponseMessage.READ_MENTOR_BOARD_LIST_SUCCESS);
+	    response.setData(mentorBoardsPage); // 여러 게시글 목록을 응답 데이터로 설정
+
+	    // HTTP 헤더 설정
+	    HttpHeaders httpHeaders = new HttpHeaders();
+	    httpHeaders.setContentType(new MediaType(MediaType.APPLICATION_JSON, Charset.forName("UTF-8")));
+
+	    // ResponseEntity로 반환
+	    return new ResponseEntity<>(response, httpHeaders, HttpStatus.OK);
+	}
+	
+	@Operation(summary = "멘토 게시글 검색 기능")
+	@GetMapping("/admin/mentorBoards/search")
+	public ResponseEntity<Response> getAdminMentorBoardsForAdminWithSearch(
+	        @RequestParam(name = "search", required = false, defaultValue = "") String search,  // 검색어 (기본값은 빈 문자열)
+	        @RequestParam(name = "page", defaultValue = "0") int page,  // 기본값은 0 페이지
+	        @RequestParam(name = "size", defaultValue = "10") int size) { // 기본값은 10 개 항목
+
+	    // 게시글 목록을 검색어와 함께 가져오기
+	    Page<MentorBoardDto> mentorBoardsPage = mentorBoardService.findMentorBoardBySearch(search, page, size);
+
+	    // 응답 객체 생성
+	    Response response = new Response();
+	    response.setStatus(ResponseStatusCode.READ_MENTOR_BOARD_LIST_SUCCESS);
+	    response.setMessage(ResponseMessage.READ_MENTOR_BOARD_LIST_SUCCESS);
+	    response.setData(mentorBoardsPage); // 검색된 게시글 목록을 응답 데이터로 설정
+
+	    // HTTP 헤더 설정
+	    HttpHeaders httpHeaders = new HttpHeaders();
+	    httpHeaders.setContentType(new MediaType(MediaType.APPLICATION_JSON, Charset.forName("UTF-8")));
+
+	    // ResponseEntity로 반환
+	    return new ResponseEntity<>(response, httpHeaders, HttpStatus.OK);
+	}
+
+
+	
 
 }
