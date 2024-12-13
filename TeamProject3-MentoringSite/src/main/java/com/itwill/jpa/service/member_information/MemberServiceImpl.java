@@ -197,11 +197,19 @@ public class MemberServiceImpl implements MemberService {
 		return findMember;
 	}
 	
-	/***** 회원 상세 ****
+	/***** 회원 상세(멘티) ****
+	 * 질문 수 / 상담 횟수 / 팔로잉 수
 	 * 질문 게시글, 상담내역, 팔로잉
 	 * 
 	 * */
 	
+	/***** 회원 상세(멘토) ****
+	 * 답변 수 / 상담 횟수 / 리뷰 수 / 컨텐츠 수
+	 * 답변 게시글, 상담 내역, 리뷰내역, 컨텐츠
+	 * 
+	 * */
+	
+	/**** 회원 상세 보기 ****/
 	@Override
 	public Member getMember(Long memberNo) {
 		return memberRepository.findByMemberNo(memberNo);
