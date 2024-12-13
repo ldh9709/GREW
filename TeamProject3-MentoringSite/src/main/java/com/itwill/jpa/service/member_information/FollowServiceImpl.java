@@ -13,9 +13,12 @@ import com.itwill.jpa.dto.member_information.FollowRequestDto;
 import com.itwill.jpa.dto.member_information.FollowResponseDto;
 import com.itwill.jpa.entity.member_information.Follow;
 import com.itwill.jpa.entity.member_information.Member;
+import com.itwill.jpa.exception.CustomException;
 import com.itwill.jpa.repository.member_information.CategoryRepository;
 import com.itwill.jpa.repository.member_information.FollowReporitory;
 import com.itwill.jpa.repository.member_information.MemberRepository;
+import com.itwill.jpa.response.ResponseMessage;
+import com.itwill.jpa.response.ResponseStatusCode;
 
 @Service
 public class FollowServiceImpl implements FollowService{
@@ -29,20 +32,22 @@ public class FollowServiceImpl implements FollowService{
 	
 	/*팔로우 등록*/
 	public FollowRequestDto createFollow(FollowRequestDto followDto) {
-		
-		/* 팔로우가 이미 되어있는지 확인 */
-		Boolean followExist = followReporitory.existsByMenteeMember_MemberNoAndMentorMember_MemberNo(followDto.getMenteeMemberNo(), followDto.getMentorMemberNo());
-		
-		
-		/* 팔로우 멘토 follow_count 증가*/
-		Member mentorMember = memberRepository.findById(followDto.getMentorMemberNo()).get();
-		mentorMember.getMentorProfile().setMentorFollowCount(mentorMember.getMentorProfile().getMentorFollowCount()+1); 
-		memberRepository.save(mentorMember);
-		
-		/* 팔로우 저장 */
-		Follow follow = Follow.toEntity(followDto);
-		followReporitory.save(follow);
-		
+		try {
+			/* 팔로우가 이미 되어있는지 확인 */
+			Boolean followExist = followReporitory.existsByMenteeMember_MemberNoAndMentorMember_MemberNo(followDto.getMenteeMemberNo(), followDto.getMentorMemberNo());
+			
+			
+			/* 팔로우 멘토 follow_count 증가*/
+			Member mentorMember = memberRepository.findById(followDto.getMentorMemberNo()).get();
+			mentorMember.getMentorProfile().setMentorFollowCount(mentorMember.getMentorProfile().getMentorFollowCount()+1); 
+			memberRepository.save(mentorMember);
+			
+			/* 팔로우 저장 */
+			Follow follow = Follow.toEntity(followDto);
+			followReporitory.save(follow);
+		} catch (Exception e) {
+			throw new CustomException(ResponseStatusCode.CREATE_FOLLOW_FAIL, ResponseMessage.CREATE_FOLLOW_FAIL);
+		}
 		return followDto;
 	}
 	

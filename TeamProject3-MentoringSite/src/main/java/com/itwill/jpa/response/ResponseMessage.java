@@ -38,6 +38,11 @@ public class ResponseMessage {
 	public static final String READ_MENTEE_COUNT_SUCCESS = "팔로우 멘티 카운트 성공";
 	public static final String DELETE_FOLLOW_SUCCESS = "팔로우 취소 성공";
 	
+	public static final String CREATE_FOLLOW_FAIL = "팔로우 등록 성공";
+	public static final String READ_MENTORLIST_FAIL = "팔로잉 멘토 리스트 조회 성공";
+	public static final String READ_MENTEE_COUNT_FAIL = "팔로우 멘티 카운트 성공";
+	public static final String DELETE_FOLLOW_FAIL = "팔로우 취소 성공";
+	
 	/******************* CATEGORY 메시지 ************************/
 	public static final String CREATE_CATEGORY_SUCCESS = "카테고리 등록 성공";
 	public static final String READ_CATEGORY_SUCCESS = "카테고리 조회 성공";
