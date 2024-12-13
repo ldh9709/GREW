@@ -179,6 +179,7 @@ public class AdminRestController {
 	
 	/* 검색내용 별 출력 (고려)=>List<MentorBoardDto> findMentorBoardBySearch(String search);*/
 	
+	/* 번호로 보기 수정 必
 	@Operation(summary = "관리자 전용 회원 정보 보기 - MENTEE")
 	@GetMapping("/{memberNo}")
 	public ResponseEntity<Response> getAdminMentee(@PathVariable(name = "memberNo") Long memberNo) {
@@ -198,7 +199,7 @@ public class AdminRestController {
 	    httpHeaders.setContentType(new MediaType(MediaType.APPLICATION_JSON, Charset.forName("UTF-8")));
 
 	    return new ResponseEntity<>(response, httpHeaders, HttpStatus.OK);
-	}
+	}*/
 	
 	
 }
