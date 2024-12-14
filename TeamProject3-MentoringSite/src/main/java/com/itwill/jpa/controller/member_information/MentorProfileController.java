@@ -71,11 +71,11 @@ public class MentorProfileController {
      */
     @Operation(summary = "멘토 프로필 생성")
     @PostMapping("/{memberNo}/create-profile")
-    public ResponseEntity<Response> createMentorProfile(
+    public ResponseEntity<Response> saveMentorProfile(
             @PathVariable(name = "memberNo") Long memberNo,  
             @RequestBody MentorProfileDto mentorProfileDto) {
 
-        mentorProfileService.createMentorProfile(memberNo, mentorProfileDto);
+        mentorProfileService.saveMentorProfile(memberNo, mentorProfileDto);
         
         Response response = new Response();
         response.setStatus(ResponseStatusCode.CREATED_MENTOR_PROFILE_SUCCESS_CODE);
@@ -105,7 +105,7 @@ public class MentorProfileController {
         Response response = new Response();
         try {
             // 🔥 멘토 상태 변경 서비스 호출
-            mentorProfileService.setMentorStatus(memberNo, status);
+            mentorProfileService.updateMentorStatus(memberNo, status);
 
             // 🔥 성공 응답 생성
             response.setStatus(ResponseStatusCode.UPDATE_MENTOR_PROFILE_SUCCESS_CODE);
@@ -166,7 +166,7 @@ public class MentorProfileController {
             @RequestParam(name = "page", defaultValue = "0") int page,
             @RequestParam(name = "size", defaultValue = "10") int size
     ) {
-        Page<MentorProfileDto> mentors = mentorProfileService.searchMentorProfiles(keyword, page, size);
+        Page<MentorProfileDto> mentors = mentorProfileService.getMentorProfiles(keyword, page, size);
 
         Response response = new Response();
         response.setStatus(ResponseStatusCode.READ_MENTOR_PROFILE_LIST_SUCCESS_CODE);
