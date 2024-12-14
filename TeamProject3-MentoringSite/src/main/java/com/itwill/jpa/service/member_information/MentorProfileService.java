@@ -32,6 +32,17 @@ public interface MentorProfileService {
     
     void uploadMentorProfileImage(Long mentorProfileNo, MultipartFile file) throws Exception;
     
-    String getMentorProfileImageUrl(Long mentorProfileNo);
+   String getMentorProfileImageUrl(Long mentorProfileNo);
+    //-------------
+    void updateMentorProfile(Long mentorProfileNo, MentorProfileDto mentorProfileDto);
+    
+ // 멘토 프로필의 멘토링 횟수 조회
+    Integer getMentorMentoringCount(Long mentorProfileNo);
+
+    // 멘토 프로필의 팔로우 수 조회
+    Integer getMentorFollowCount(Long mentorProfileNo);
+
+    // 멘토 프로필의 활동 수 조회
+    Integer getMentorActivityCount(Long mentorProfileNo);
 }
 

@@ -40,6 +40,7 @@ public class ResponseMessage {
     public static final String CATEGORY_NOT_FOUND = "해당 카테고리를 찾을 수 없습니다.";
     public static final String IMAGE_MENTOR_UPLOAD_FAIL = "이미지 업로드에 실패했습니다.";
     public static final String UPDATE_MENTOR_PROFILE_FAIL_CODE = "멘토 프로필수정 실패.";
+    public static final String READ_MENTOR_PROFILE_FAIL = "멘토 프로필 조회에 실패했습니다.";
     /******************* MENTOR PROFILE TYPE 변경 메시지 ************************/
     public static final String MENTOR_PROFILE_TYPE_CHANGE_SUCCESS = "멘토 프로필 타입 변경 성공";
     public static final String MENTOR_PROFILE_TYPE_CHANGE_FAIL = "멘토 프로필 타입 변경 실패";

@@ -34,7 +34,9 @@ public class HttpStatusMapper {
     	statusCodeMap.put(ResponseStatusCode.UPDATE_MENTOR_PROFILE_FAIL_CODE, HttpStatus.BAD_REQUEST); // 멘토 프로필 수정 실패
     	statusCodeMap.put(ResponseStatusCode.MENTOR_PROFILE_STATUS_UPDATE_FAIL_CODE, HttpStatus.BAD_REQUEST); // 멘토 프로필 상태 업데이트 실패
     	statusCodeMap.put(ResponseStatusCode.IMAGE_UPLOAD_FAIL, HttpStatus.BAD_REQUEST); // 이미지 업로드 실패
-    	
+    	statusCodeMap.put(ResponseStatusCode.CATEGORY_NOT_FOUND, HttpStatus.BAD_REQUEST); // CATEGORY_NOT_FOUND (400)
+    	statusCodeMap.put(ResponseStatusCode.MENTOR_PROFILE_NOT_FOUND_CODE, HttpStatus.NOT_FOUND); // MENTOR_PROFILE_NOT_FOUND (404)
+    	statusCodeMap.put(ResponseStatusCode.UPDATE_MENTOR_PROFILE_FAIL_CODE, HttpStatus.BAD_REQUEST); // UPDATE_MENTOR_PROFILE_FAIL_CODE (400)
 
         // CATEGORY 관련 상태 코드 매핑
 

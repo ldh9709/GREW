@@ -40,6 +40,7 @@ public class ResponseStatusCode {
     public static final int CATEGORY_NOT_FOUND = 2398; // 카테고리를 찾을 수 없음
     public static final int IMAGE_MENTOR_UPLOAD_FAIL = 2399; // 이미지 업로드 실패
     public static final int UPDATE_MENTOR_PROFILE_FAIL_CODE = 2389; // 이미지 업로드 실패
+    public static final int READ_MENTOR_PROFILE_FAIL = 2387; // 멘토 프로필 조회 실패
 	/******************* FOLLOW 메시지 ************************/
 	public static final int CREATE_FOLLOW_SUCCESS = 2400;
 	public static final int READ_MENTORLIST_SUCCESS = 2410;
