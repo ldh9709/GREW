@@ -1,6 +1,9 @@
 package com.itwill.jpa.service.member_information;
 
+import com.itwill.jpa.dto.chatting_review.ChatRoomDto;
+import com.itwill.jpa.dto.chatting_review.ReviewDto;
 import com.itwill.jpa.dto.member_information.MentorProfileDto;
+import com.itwill.jpa.entity.chatting_review.ChatRoom;
 import com.itwill.jpa.entity.member_information.Category;
 import com.itwill.jpa.entity.member_information.Member;
 import com.itwill.jpa.entity.member_information.MentorProfile;
@@ -10,6 +13,9 @@ import com.itwill.jpa.repository.member_information.MemberRepository;
 import com.itwill.jpa.repository.member_information.MentorProfileRepository;
 import com.itwill.jpa.response.ResponseMessage;
 import com.itwill.jpa.response.ResponseStatusCode;
+import com.itwill.jpa.service.chatting_review.ChatRoomService;
+import com.itwill.jpa.service.chatting_review.ReviewService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -20,6 +26,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -33,7 +41,9 @@ public class MentorProfileServiceImpl implements MentorProfileService {
     private MemberRepository memberRepository;
     @Autowired
     private CategoryRepository categoryRepository;
-
+    @Autowired
+    private ReviewService reviewService;
+    
     @Autowired
     public MentorProfileServiceImpl(MentorProfileRepository mentorProfileRepository) {
         this.mentorProfileRepository = mentorProfileRepository;
@@ -83,6 +93,8 @@ public class MentorProfileServiceImpl implements MentorProfileService {
         }
     }
 
+    
+    
     /**
      * 멘토의 평균 점수를 반환하는 메서드
      */
@@ -101,6 +113,20 @@ public class MentorProfileServiceImpl implements MentorProfileService {
         }
     }
 
+    /* 멘토 평점 업데이트 */
+   public Double updateMentorRatingg(Long mentorNo) {
+	   List<ReviewDto> reviewList = reviewService.getReviewByMemberNo(mentorNo);
+	   double count = reviewList.size();
+	   double totScore = 0;
+	   
+	   for (ReviewDto reviewDto : reviewList) {
+		  totScore += reviewDto.getReviewScore();
+	   }
+	   
+	   return totScore/count;
+   }
+    
+    
     /**
      * 멘토의 mentor_rating 업데이트
      */
