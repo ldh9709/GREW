@@ -90,8 +90,8 @@ public class MemberRestController {
 	}
 	
 	
-	/* 회원 저장 */
-	@Operation(summary = "회원가입")
+	/* 회원 가입(멘티) */
+	@Operation(summary = "회원가입(멘티)")
 	@PostMapping
 	public ResponseEntity<Response> saveMember(@RequestBody MemberDto memberDto) {
 		

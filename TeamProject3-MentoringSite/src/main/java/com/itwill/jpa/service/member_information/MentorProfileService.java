@@ -13,9 +13,9 @@ import org.springframework.web.multipart.MultipartFile;
 public interface MentorProfileService {
 
 	//멘토 생성 
-	void createMentorProfile(Long memberNo, MentorProfileDto mentorProfileDto);
+	void saveMentorProfile(Long memberNo, MentorProfileDto mentorProfileDto);
  //유저 상태 변경 1 멘티 2처음 만들어지고 심사 3멘토 4탈퇴
-	void setMentorStatus(Long memberNo, int status);
+	void updateMentorStatus(Long memberNo, int status);
 
     // 특정 멘토의 평균 점수를 반환
     Double getAverageMentorRating(Long memberNo);
@@ -26,7 +26,7 @@ public interface MentorProfileService {
     
     Page<MentorProfileDto> getMentorsByStatus(int status, int page, int size);
 
-    Page<MentorProfileDto> searchMentorProfiles(String keyword, int page, int size);
+    Page<MentorProfileDto> getMentorProfiles(String keyword, int page, int size);
 
     Page<MentorProfileDto> getMentorProfilesByCategoryNo(Long categoryNo, int page, int size);
     

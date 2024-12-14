@@ -44,7 +44,7 @@ public class MentorProfileServiceImpl implements MentorProfileService {
      * 멘토 상태를 변경하는 메서드
      */
     @Override
-    public void setMentorStatus(Long memberNo, int status) {
+    public void updateMentorStatus(Long memberNo, int status) {
         try {
             mentorProfileRepository.updateMentorStatus(memberNo, status);
         } catch (Exception e) {
@@ -56,16 +56,16 @@ public class MentorProfileServiceImpl implements MentorProfileService {
      * 멘토 프로필 생성 메서드
      */
     @Override
-    public void createMentorProfile(Long memberNo, MentorProfileDto mentorProfileDto) {
+    public void saveMentorProfile(Long memberNo, MentorProfileDto mentorProfileDto) {
         try {
             // 1️⃣ 회원 정보 조회
-            Member member = memberRepository.findById(memberNo).orElse(null);
+            Member member = memberRepository.findById(memberNo).get();
             if (member == null) {
                 throw new CustomException(ResponseStatusCode.MEMBER_MENTOR_NOT_FOUND, ResponseMessage.MEMBER_MENTOR_NOT_FOUND, null);
             }
 
             // 2️⃣ 카테고리 정보 조회
-            Category category = categoryRepository.findById(mentorProfileDto.getCategoryNo()).orElse(null);
+            Category category = categoryRepository.findById(mentorProfileDto.getCategoryNo()).get();
             if (category == null) {
                 throw new CustomException(ResponseStatusCode.CATEGORY_NOT_FOUND, ResponseMessage.CATEGORY_NOT_FOUND, null);
             }
@@ -77,10 +77,8 @@ public class MentorProfileServiceImpl implements MentorProfileService {
 
             // 4️⃣ 멘토 프로필 생성 및 저장
             MentorProfile mentorProfile = MentorProfile.toEntity(mentorProfileDto, member, category);
-            mentorProfile.setMentorStatus(2); // 심사중 상태로 설정
+            mentorProfile.setMentorStatus(1); // 초기값 1로 등록
             mentorProfileRepository.save(mentorProfile);
-        } catch (CustomException e) {
-            throw e;
         } catch (Exception e) {
             throw new CustomException(ResponseStatusCode.CREATED_MENTOR_PROFILE_FAIL, ResponseMessage.CREATED_MENTOR_PROFILE_FAIL, e);
         }
@@ -134,7 +132,7 @@ public class MentorProfileServiceImpl implements MentorProfileService {
      * 멘토 프로필 검색
      */
     @Override
-    public Page<MentorProfileDto> searchMentorProfiles(String keyword, int page, int size) {
+    public Page<MentorProfileDto> getMentorProfiles(String keyword, int page, int size) {
         try {
             Pageable pageable = PageRequest.of(page, size);
             Page<MentorProfile> mentorProfiles = mentorProfileRepository.searchMentorProfiles(keyword, pageable);
