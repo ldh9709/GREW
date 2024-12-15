@@ -12,37 +12,71 @@ import org.springframework.web.multipart.MultipartFile;
 
 public interface MentorProfileService {
 
-	//멘토 생성 
-	void saveMentorProfile(Long memberNo, MentorProfileDto mentorProfileDto);
- //유저 상태 변경 1 멘티 2처음 만들어지고 심사 3멘토 4탈퇴
-	void updateMentorStatus(Long memberNo, int status);
+    /**
+     * 멘토 프로필 생성
+     */
+    void saveMentorProfile(Long memberNo, MentorProfileDto mentorProfileDto);
 
-    // 특정 멘토의 평균 점수를 반환
+    /**
+     * 멘토의 상태를 변경
+     * status 변경할 상태 (1: 멘티, 2: 심사 중, 3: 멘토, 4: 탈퇴)
+     */
+    void updateMentorStatus(Long memberNo, int status);
+
+    /**
+     * 특정 멘토의 평균 평점을 반환
+     */
     Double getAverageMentorRating(Long memberNo);
-    
-    // 특정 멘토의 평점을 업데이트 //지우지말것
+
+    /**
+     * 특정 멘토의 평점을 업데이트
+     *  삭제 금지 메서드
+     */
     void updateMentorRating(Long memberNo);
-    
-    
+
+    /**
+     * 특정 상태의 멘토 프로필을 페이지로 반환
+     * status 조회할 멘토의 상태 (1: 멘티, 2: 심사 중, 3: 멘토, 4: 탈퇴)
+     */
     Page<MentorProfileDto> getMentorsByStatus(int status, int page, int size);
 
+    /**
+     * 키워드를 기준으로 멘토 프로필을 검색
+     */
     Page<MentorProfileDto> getMentorProfiles(String keyword, int page, int size);
 
+    /**
+     * 특정 카테고리에 속한 멘토 프로필을 페이지로 반환
+     */
     Page<MentorProfileDto> getMentorProfilesByCategoryNo(Long categoryNo, int page, int size);
-    
+
+    /**
+     * 멘토 프로필 이미지 업로드
+     */
     void uploadMentorProfileImage(Long mentorProfileNo, MultipartFile file) throws Exception;
-    
-   String getMentorProfileImageUrl(Long mentorProfileNo);
-    //-------------
+
+    /**
+     * 멘토 프로필의 이미지 URL을 가져오기
+     */
+    String getMentorProfileImageUrl(Long mentorProfileNo);
+
+    /**
+     * 멘토 프로필 정보 수정
+     */
     void updateMentorProfile(Long mentorProfileNo, MentorProfileDto mentorProfileDto);
-    
- // 멘토 프로필의 멘토링 횟수 조회
+
+    /**
+     * 멘토 프로필의 멘토링 횟수 조회
+     */
     Integer getMentorMentoringCount(Long mentorProfileNo);
 
-    // 멘토 프로필의 팔로우 수 조회
+    /**
+     * 멘토 프로필의 팔로우 수 조회
+     */
     Integer getMentorFollowCount(Long mentorProfileNo);
 
-    // 멘토 프로필의 활동 수 조회
+    /**
+     * 멘토 프로필의 활동 수 조회
+     */
     Integer getMentorActivityCount(Long mentorProfileNo);
 }
-
