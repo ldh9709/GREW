@@ -14,16 +14,17 @@ public interface MentorProfileService {
 
 	//멘토 생성 
 	void saveMentorProfile(Long memberNo, MentorProfileDto mentorProfileDto);
- //유저 상태 변경 1 멘티 2처음 만들어지고 심사 3멘토 4탈퇴
+	//유저 상태 변경 1 멘티 2처음 만들어지고 심사 3멘토 4탈퇴
 	void updateMentorStatus(Long memberNo, int status);
 
+	// 멘토 평점 업데이트
+	Double updateMentorRatingg(Long mentorNo, Double averageScore);
+	
     // 특정 멘토의 평균 점수를 반환
     Double getAverageMentorRating(Long memberNo);
     
     // 특정 멘토의 평점을 업데이트 //지우지말것
     void updateMentorRating(Long memberNo);
-    
-    Double updateMentorRatingg(Long memberNo);
     
     
     Page<MentorProfileDto> getMentorsByStatus(int status, int page, int size);

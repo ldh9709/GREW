@@ -35,19 +35,13 @@ import java.util.UUID;
 public class MentorProfileServiceImpl implements MentorProfileService {
 
     private static final String IMAGE_PATH = "C:/mentor-profile-images/";
-    private final MentorProfileRepository mentorProfileRepository;
-
+    
+    @Autowired
+    private MentorProfileRepository mentorProfileRepository;
     @Autowired
     private MemberRepository memberRepository;
     @Autowired
     private CategoryRepository categoryRepository;
-    @Autowired
-    private ReviewService reviewService;
-    
-    @Autowired
-    public MentorProfileServiceImpl(MentorProfileRepository mentorProfileRepository) {
-        this.mentorProfileRepository = mentorProfileRepository;
-    }
 
     /**
      * 멘토 상태를 변경하는 메서드
@@ -93,8 +87,6 @@ public class MentorProfileServiceImpl implements MentorProfileService {
         }
     }
 
-    
-    
     /**
      * 멘토의 평균 점수를 반환하는 메서드
      */
@@ -114,21 +106,16 @@ public class MentorProfileServiceImpl implements MentorProfileService {
     }
 
     /* 멘토 평점 업데이트 */
-   public Double updateMentorRatingg(Long mentorNo) {
-	   MentorProfile mentorProfile = mentorProfileRepository.findById(mentorNo).get();
-	   List<ReviewDto> reviewList = reviewService.getReviewByMemberNo(mentorNo);
-	   double count = reviewList.size();
-	   double totScore = 0;
-	   
-	   for (ReviewDto reviewDto : reviewList) {
-		  totScore += reviewDto.getReviewScore();
-	   }
-	   //리뷰 평균 점수 계산
-	   double resultTot = totScore/count;
-	   
-	   mentorProfile.setMentorRating(resultTot);
-	   mentorProfileRepository.save(mentorProfile);
-	   return totScore/count;
+   public Double updateMentorRatingg(Long mentorNo, Double averageScore) {
+	   try {
+		   MentorProfile mentorProfile = mentorProfileRepository.findById(mentorNo).get();
+		   
+		   mentorProfile.setMentorRating(averageScore);
+		   mentorProfileRepository.save(mentorProfile);
+		   return averageScore;
+		} catch (Exception e) {
+			  throw new CustomException(ResponseStatusCode.UPDATE_MENTOR_PROFILE_FAIL_CODE, ResponseMessage.UPDATE_MENTOR_PROFILE_FAIL_CODE, e);
+		}
    }
     
     
@@ -186,6 +173,8 @@ public class MentorProfileServiceImpl implements MentorProfileService {
         }
     }
 
+    
+    
     /**
      * 프로필 이미지 업로드 메서드
      */
