@@ -86,6 +86,42 @@ public class MentorProfileServiceImpl implements MentorProfileService {
             throw new CustomException(ResponseStatusCode.CREATED_MENTOR_PROFILE_FAIL, ResponseMessage.CREATED_MENTOR_PROFILE_FAIL, e);
         }
     }
+    /* 멘토링 전체활동 수 업데이트 */
+    public Integer updateMentoringCount(Long memberNo) {
+    	MentorProfile mentorProfile = mentorProfileRepository.findByMember_MemberNo(memberNo);
+    	Integer mentoringCount = mentorProfile.getMentorMentoringCount();
+    	
+    	mentorProfile.setMentorMentoringCount(mentoringCount+1);
+    	mentorProfileRepository.save(mentorProfile);
+    	
+    	return mentoringCount+1;
+    }
+    
+    /* 멘토링 완료 활동 수 업데이트 */
+    public Integer updateAcitityCount(Long memberNo) {
+    	MentorProfile mentorProfile = mentorProfileRepository.findByMember_MemberNo(memberNo);
+    	Integer mentorActivityCount = mentorProfile.getMentorActivityCount();
+    	
+    	mentorProfile.setMentorMentoringCount(mentorActivityCount+1);
+    	mentorProfileRepository.save(mentorProfile);
+    	
+    	return mentorActivityCount+1;
+    }
+    
+    /* 멘토 평점 업데이트 */
+    public Double updateMentorRatingg(Long memberNo, Double averageScore) {
+    	try {
+    		Member member = memberRepository.findByMemberNo(memberNo);
+    		Long mentorNo = member.getMentorProfile().getMentorProfileNo();
+    		MentorProfile mentorProfile = mentorProfileRepository.findById(mentorNo).get();
+    		
+    		mentorProfile.setMentorRating(averageScore);
+    		mentorProfileRepository.save(mentorProfile);
+    		return averageScore;
+    	} catch (Exception e) {
+    		throw new CustomException(ResponseStatusCode.UPDATE_MENTOR_PROFILE_FAIL_CODE, ResponseMessage.UPDATE_MENTOR_PROFILE_FAIL_CODE, e);
+    	}
+    }
 
     /**
      * 멘토의 평균 점수를 반환하는 메서드
@@ -104,19 +140,6 @@ public class MentorProfileServiceImpl implements MentorProfileService {
             throw new CustomException(ResponseStatusCode.MENTOR_PROFILE_NOT_FOUND_CODE, ResponseMessage.MENTOR_PROFILE_NOT_FOUND, e);
         }
     }
-
-    /* 멘토 평점 업데이트 */
-   public Double updateMentorRatingg(Long mentorNo, Double averageScore) {
-	   try {
-		   MentorProfile mentorProfile = mentorProfileRepository.findById(mentorNo).get();
-		   
-		   mentorProfile.setMentorRating(averageScore);
-		   mentorProfileRepository.save(mentorProfile);
-		   return averageScore;
-		} catch (Exception e) {
-			  throw new CustomException(ResponseStatusCode.UPDATE_MENTOR_PROFILE_FAIL_CODE, ResponseMessage.UPDATE_MENTOR_PROFILE_FAIL_CODE, e);
-		}
-   }
     
     
     /**

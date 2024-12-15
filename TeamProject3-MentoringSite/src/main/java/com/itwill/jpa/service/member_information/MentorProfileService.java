@@ -17,6 +17,12 @@ public interface MentorProfileService {
 	//유저 상태 변경 1 멘티 2처음 만들어지고 심사 3멘토 4탈퇴
 	void updateMentorStatus(Long memberNo, int status);
 
+	// 멘토링 전체활동 수 업데이트
+	Integer updateMentoringCount(Long memberNo);
+	
+	// 멘토링 완료 활동 수 업데이트
+	Integer updateAcitityCount(Long memberNo);
+	
 	// 멘토 평점 업데이트
 	Double updateMentorRatingg(Long mentorNo, Double averageScore);
 	

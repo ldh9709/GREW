@@ -18,10 +18,10 @@ public class MentorManager {
 	private ReviewService reviewService;
 	
 	@Transactional
-    public double handleMentorRating(Long mentorNo) {
+    public double handleMentorRating(Long memberNo) {
 		
 		// 1. 멘토의 리뷰 데이터 가져오기
-		List<ReviewDto> reviewList = reviewService.getReviewByMemberNo(mentorNo);
+		List<ReviewDto> reviewList = reviewService.getReviewByMemberNo(memberNo);
 		
 		// 2. 평균 평점 계산
 		double count = reviewList.size();
@@ -34,9 +34,10 @@ public class MentorManager {
 		double averageScore = totScore/count;
 		
 		// 4.. 멘토 프로필의 평점 업데이트
-		mentorProfileService.updateMentorRatingg(mentorNo, averageScore);
+		mentorProfileService.updateMentorRatingg(memberNo, averageScore);
 		
 		// 5.. 결과 반환
 		return averageScore;
     }
+	
 }
