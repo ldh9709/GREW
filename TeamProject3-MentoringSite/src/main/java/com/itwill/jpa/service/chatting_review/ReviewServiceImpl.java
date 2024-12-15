@@ -2,8 +2,10 @@ package com.itwill.jpa.service.chatting_review;
 
 import com.itwill.jpa.dto.chatting_review.ReviewDto;
 import com.itwill.jpa.entity.chatting_review.Review;
+import com.itwill.jpa.entity.member_information.MentorProfile;
 import com.itwill.jpa.repository.chatting_review.ChatRoomRepository;
 import com.itwill.jpa.repository.chatting_review.ReviewRepository;
+import com.itwill.jpa.service.member_information.MentorProfileService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,6 +22,9 @@ public class ReviewServiceImpl implements ReviewService {
 
     private final ReviewRepository reviewRepository;
     private final ChatRoomRepository chatRoomRepository;
+    
+    @Autowired
+    private MentorProfileService mentorProfileService;
 
     @Autowired
     public ReviewServiceImpl(ReviewRepository reviewRepository, ChatRoomRepository chatRoomRepository) {
@@ -32,6 +37,10 @@ public class ReviewServiceImpl implements ReviewService {
     public Review createReview(ReviewDto reviewDto) {
         // DTO를 엔티티로 변환
         Review review = Review.toEntity(reviewDto);
+        
+        //멘토 프로필 리뷰 점수 저장
+       mentorProfileService.updateMentorRatingg(review.getChatRoom().getMentor().getMentorProfile().getMentorProfileNo());
+        
         // 리뷰 저장
         return reviewRepository.save(review);
     }

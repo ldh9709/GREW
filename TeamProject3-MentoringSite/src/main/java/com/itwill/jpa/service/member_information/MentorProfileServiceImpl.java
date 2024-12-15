@@ -115,6 +115,7 @@ public class MentorProfileServiceImpl implements MentorProfileService {
 
     /* 멘토 평점 업데이트 */
    public Double updateMentorRatingg(Long mentorNo) {
+	   MentorProfile mentorProfile = mentorProfileRepository.findById(mentorNo).get();
 	   List<ReviewDto> reviewList = reviewService.getReviewByMemberNo(mentorNo);
 	   double count = reviewList.size();
 	   double totScore = 0;
@@ -122,7 +123,11 @@ public class MentorProfileServiceImpl implements MentorProfileService {
 	   for (ReviewDto reviewDto : reviewList) {
 		  totScore += reviewDto.getReviewScore();
 	   }
+	   //리뷰 평균 점수 계산
+	   double resultTot = totScore/count;
 	   
+	   mentorProfile.setMentorRating(resultTot);
+	   mentorProfileRepository.save(mentorProfile);
 	   return totScore/count;
    }
     

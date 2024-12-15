@@ -23,6 +23,8 @@ public interface MentorProfileService {
     // 특정 멘토의 평점을 업데이트 //지우지말것
     void updateMentorRating(Long memberNo);
     
+    Double updateMentorRatingg(Long memberNo);
+    
     
     Page<MentorProfileDto> getMentorsByStatus(int status, int page, int size);
 
