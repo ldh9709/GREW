@@ -165,7 +165,7 @@ values(answer_no_SEQ.nextval, 'JAVA를 배우세요 추천합니다!',sysdate, 1
 
 /* 채팅방 요정 등록 */
 insert into chat_room (chat_room_no, chat_room_status, chat_room_start_date, chat_room_end_date, mentee_no, mentor_no)
-values(chat_room_no_SEQ.nextval, 7000, sysdate, null, 1, 5);
+values(chat_room_no_SEQ.nextval, 7000, sysdate, null, 1, 6);
 insert into chat_room (chat_room_no, chat_room_status, chat_room_start_date, chat_room_end_date, mentee_no, mentor_no)
 values(chat_room_no_SEQ.nextval, 7100, sysdate, null, 3, 6);
 insert into chat_room (chat_room_no, chat_room_status, chat_room_start_date, chat_room_end_date, mentee_no, mentor_no)
@@ -175,7 +175,7 @@ values(chat_room_no_SEQ.nextval, 7300, sysdate, null, 2, 8);
 insert into chat_room (chat_room_no, chat_room_status, chat_room_start_date, chat_room_end_date, mentee_no, mentor_no)
 values(chat_room_no_SEQ.nextval, 7400, sysdate, null, 1, 7);
 insert into chat_room (chat_room_no, chat_room_status, chat_room_start_date, chat_room_end_date, mentee_no, mentor_no)
-values(chat_room_no_SEQ.nextval, 7500, sysdate, null, 2, 5);
+values(chat_room_no_SEQ.nextval, 7500, sysdate, null, 2, 6);
 
 /* 채팅방 내용 등록 */
 insert into chat_message (chat_message_no, chat_message_check, chat_message_date, chat_room_no, member_no, chat_message_content) 

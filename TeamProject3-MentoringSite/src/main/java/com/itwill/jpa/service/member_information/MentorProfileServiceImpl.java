@@ -30,8 +30,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-@Service
 @Transactional
+@Service
 public class MentorProfileServiceImpl implements MentorProfileService {
 
     private static final String IMAGE_PATH = "C:/mentor-profile-images/";
@@ -102,7 +102,7 @@ public class MentorProfileServiceImpl implements MentorProfileService {
     	MentorProfile mentorProfile = mentorProfileRepository.findByMember_MemberNo(memberNo);
     	Integer mentorActivityCount = mentorProfile.getMentorActivityCount();
     	
-    	mentorProfile.setMentorMentoringCount(mentorActivityCount+1);
+    	mentorProfile.setMentorActivityCount(mentorActivityCount+1);
     	mentorProfileRepository.save(mentorProfile);
     	
     	return mentorActivityCount+1;
