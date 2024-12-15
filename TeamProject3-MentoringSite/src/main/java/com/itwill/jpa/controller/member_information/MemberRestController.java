@@ -8,6 +8,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.validation.BindingResult;
@@ -219,12 +220,24 @@ public class MemberRestController {
 	
 	/***** 회원 정보 보기(토큰) *****/
 	@Operation(summary = "회원 정보 보기(토큰)")
-	@GetMapping("/{memberNo}")
-	public ResponseEntity<Response> getMember(@PathVariable(name = "memberNo") Long memberNo, HttpSession session) {
+	@GetMapping("/profile")
+	public ResponseEntity<Response> getMember(@PathVariable(name = "memberNo") Long memberNo, 
+		Authentication authentication) {
 		
-		//번호로 멤버 객체 찾기
-		Member loginMember = memberService.getMember(memberNo);
+		//이름으로 번호찾기
+		String authenticatedMemberNo = authentication.getName();
 		
+		System.out.println(">>>>> authentication : " + authentication);
+		System.out.println(">>>>> authentication.getName() : " + authentication.getName());
+		System.out.println(">>>>> authenticatedMemberNo : " + authenticatedMemberNo);
+		
+		if (!memberNo.toString().equals(authenticatedMemberNo)) {
+            throw new AccessDeniedException("해당 정보에 접근할 권한이 없습니다.");
+        }
+		
+		// 번호로 멤버 객체 찾기
+        Member loginMember = memberService.getMember(memberNo);
+        
 		//DTO객체로 변환
 		MemberDto loginMemberDto = MemberDto.toDto(loginMember);
 		

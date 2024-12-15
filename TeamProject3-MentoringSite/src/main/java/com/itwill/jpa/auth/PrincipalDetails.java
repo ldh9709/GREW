@@ -52,8 +52,7 @@ public class PrincipalDetails implements UserDetails, OAuth2User {
 		String roleName = (member.getMemberRole() != null)
 			        ? member.getMemberRole().name()
 			        : "ROLE_USER"; // 기본 권한 설정
-		Collections.singletonList(new SimpleGrantedAuthority(member.getMemberRole().name()));
-		return null;
+		return Collections.singletonList(new SimpleGrantedAuthority(member.getMemberRole().name()));
 	}
 	
 	//비밀번호 리턴
