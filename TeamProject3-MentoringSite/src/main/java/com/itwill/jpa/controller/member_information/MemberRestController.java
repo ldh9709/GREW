@@ -33,6 +33,7 @@ import com.itwill.jpa.service.member_information.EmailService;
 import com.itwill.jpa.service.member_information.MemberService;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 
@@ -220,6 +221,7 @@ public class MemberRestController {
 	
 	/***** 회원 정보 보기(토큰) *****/
 	@Operation(summary = "회원 정보 보기(토큰)")
+	@SecurityRequirement(name = "BearerAuth")
 	@GetMapping("/profile")
 	public ResponseEntity<Response> getMember(@PathVariable(name = "memberNo") Long memberNo, 
 		Authentication authentication) {

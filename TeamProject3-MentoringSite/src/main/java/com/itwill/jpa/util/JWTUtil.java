@@ -28,6 +28,7 @@ public class JWTUtil {
     public static String generateToken(Map<String, Object> valueMap, int min) {
     	
     	SecretKey key = null;
+    	
     	try {
     		key = Keys.hmacShaKeyFor(JWTUtil.key.getBytes("UTF-8"));
 		} catch (Exception e) {
@@ -68,9 +69,12 @@ public class JWTUtil {
     				.setSigningKey(key)
     				.build()
     				//토큰을 파싱하고 서명을 검증, 실패 시 에러
-    				.parseClaimsJwt(token)
+    				//parseClaimsJwt : 서명이 없는 토큰 파싱이라 수정
+    				.parseClaimsJws(token)
     				//파싱된 클레임 데이터를 반환
     				.getBody();
+    		
+    		System.out.println(">>>>>>>>>> JWTUtil Claim : " + claim);
     		
         }catch(MalformedJwtException malformedJwtException){
         	//토큰의 구조가 잘못된 경우
