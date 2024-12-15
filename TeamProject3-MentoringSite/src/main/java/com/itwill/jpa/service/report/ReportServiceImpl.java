@@ -162,16 +162,16 @@ public class ReportServiceImpl implements ReportService {
 			List<ReportDto> reportDtos = new ArrayList<>();
 			
 			switch (filter) {
-			case 1: {
-				/* 전체 출력 */
-				reports = reportRepository.findAllByOrderByReportDateDesc(pageable);
-				break;
-			}
-			case 2: {
-				/* 신고접수출력 출력 */
-				reports = reportRepository.findByReportStatusOrderByReportDateDesc(3, pageable);
-				break;
-			}
+				case 1: {
+					/* 전체 출력 */
+					reports = reportRepository.findAllByOrderByReportDateDesc(pageable);
+					break;
+				}
+				case 2: {
+					/* 신고접수출력 출력 */
+					reports = reportRepository.findByReportStatusOrderByReportDateDesc(3, pageable);
+					break;
+				}
 			}
 			
 			for (Report report : reports) {

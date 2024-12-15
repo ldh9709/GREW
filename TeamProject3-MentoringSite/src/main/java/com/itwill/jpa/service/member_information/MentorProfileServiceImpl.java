@@ -18,6 +18,7 @@ import com.itwill.jpa.service.chatting_review.ReviewService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -167,6 +168,26 @@ public class MentorProfileServiceImpl implements MentorProfileService {
         }
     }
 
+    /**
+     * 멘토 프로필 전체 조회
+     */
+    @Override
+    public Page<MentorProfileDto> getMentorAll(int page, int size) {
+    	try {
+    		Pageable pageable = PageRequest.of(page, size);
+    		Page<MentorProfile> mentorProfiles = mentorProfileRepository.findAll(pageable);
+    		List<MentorProfileDto> mentorProfileDtos = new ArrayList<>();
+    		
+    		for (MentorProfile mentorProfile : mentorProfiles) {
+    			mentorProfileDtos.add(MentorProfileDto.toDto(mentorProfile));
+			}
+    		
+    		return new PageImpl<>(mentorProfileDtos, pageable, mentorProfiles.getTotalElements());
+    	} catch (Exception e) {
+    		throw new CustomException(ResponseStatusCode.MENTOR_PROFILE_NOT_FOUND_CODE, ResponseMessage.MENTOR_PROFILE_NOT_FOUND, e);
+    	}
+    }
+    
     /**
      * 멘토 프로필 상태별 조회
      */

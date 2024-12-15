@@ -35,6 +35,8 @@ public interface MentorProfileService {
     // 특정 멘토의 평점을 업데이트 //지우지말것
     void updateMentorRating(Long memberNo);
     
+    //멘토 전체 조회
+    Page<MentorProfileDto> getMentorAll(int page, int size);
     
     Page<MentorProfileDto> getMentorsByStatus(int status, int page, int size);
 
@@ -47,6 +49,7 @@ public interface MentorProfileService {
    String getMentorProfileImageUrl(Long mentorProfileNo);
     //-------------
     void updateMentorProfile(Long mentorProfileNo, MentorProfileDto mentorProfileDto);
+    
     
  // 멘토 프로필의 멘토링 횟수 조회
     Integer getMentorMentoringCount(Long mentorProfileNo);

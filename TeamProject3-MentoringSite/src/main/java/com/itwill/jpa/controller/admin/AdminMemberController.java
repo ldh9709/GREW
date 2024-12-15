@@ -29,7 +29,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 
 @RestController
-@RequestMapping("/admin/member")
+@RequestMapping("/admin")
 public class AdminMemberController {
 	
 	@Autowired
@@ -40,7 +40,7 @@ public class AdminMemberController {
 	
 	/* 회원 전체 정보 */
 	@Operation(summary = "회원 전체 출력")
-	@GetMapping()
+	@GetMapping("/member")
 	public ResponseEntity<Response> getMemberAll(
 			@Parameter(name = "role", description = "필터링할 역할 (ROLE_MENTEE, ROLE_MENTOR)", required = true, example = "ROLE_MENTEE") 
 			@RequestParam(name ="role") String role, 
@@ -65,10 +65,48 @@ public class AdminMemberController {
 		return responseEntity;
 	}
 	
-	/* 멘토 전체 정보 */
+	/* 멘토 전체 정보 */ 
+    @Operation(summary = "멘토 프로필 전체 리스트 조회")
+    @GetMapping("/mentor")
+    public ResponseEntity<Response> getMentorsByStatus(
+            @RequestParam(name = "page", defaultValue = "0") int page,
+            @RequestParam(name = "size", defaultValue = "10") int size
+    ) {
+        Page<MentorProfileDto> mentors = mentorProfileService.getMentorAll(page, size);
+
+        Response response = new Response();
+        response.setStatus(ResponseStatusCode.READ_MENTOR_PROFILE_LIST_SUCCESS_CODE);
+        response.setMessage(ResponseMessage.READ_MENTOR_PROFILE_LIST_SUCCESS);
+        response.setData(mentors);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(new MediaType(MediaType.APPLICATION_JSON, Charset.forName("UTF-8")));
+
+        return new ResponseEntity<>(response, headers, HttpStatus.OK);
+    }
+    
+    @Operation(summary = "멘토 프로필 리스트 출력(상태별)")
+    @GetMapping("/mentor/status/{status}")
+    public ResponseEntity<Response> getMentorsByStatus(
+            @PathVariable(name = "status") int status,
+            @RequestParam(name = "page", defaultValue = "0") int page,
+            @RequestParam(name = "size", defaultValue = "10") int size
+    ) {
+        Page<MentorProfileDto> mentors = mentorProfileService.getMentorsByStatus(status, page, size);
+
+        Response response = new Response();
+        response.setStatus(ResponseStatusCode.READ_MENTOR_PROFILE_LIST_SUCCESS_CODE);
+        response.setMessage(ResponseMessage.READ_MENTOR_PROFILE_LIST_SUCCESS);
+        response.setData(mentors);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(new MediaType(MediaType.APPLICATION_JSON, Charset.forName("UTF-8")));
+
+        return new ResponseEntity<>(response, headers, HttpStatus.OK);
+    }
 	
-    @Operation(summary = "멘토 리스트 출력(카테고리)")
-    @GetMapping("/category/{categoryNo}")
+    @Operation(summary = "멘토 프로필 리스트 출력(카테고리)")
+    @GetMapping("/mentor/category/{categoryNo}")
     public ResponseEntity<Response> getMentorProfilesByCategoryNo(
             @PathVariable(name = "categoryNo") Long categoryNo,
             @RequestParam(name = "page", defaultValue = "0") int page,
@@ -90,7 +128,7 @@ public class AdminMemberController {
     
     /* 멘토 상태 변경 */
     @Operation(summary = "멘토 프로필 상태변경")
-    @PutMapping("/status/{memberNo}")
+    @PutMapping("/mentor/update-state/{memberNo}")
     public ResponseEntity<Response> setMentorStatus(
         @PathVariable("memberNo") Long memberNo, 
         @RequestParam("status") int status
