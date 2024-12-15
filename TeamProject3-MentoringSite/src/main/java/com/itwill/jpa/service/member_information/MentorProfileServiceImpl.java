@@ -245,17 +245,113 @@ public class MentorProfileServiceImpl implements MentorProfileService {
      * 프로필 이미지 URL 조회 메서드
      */
     @Override
+    public void updateMentorProfile(Long mentorProfileNo, MentorProfileDto mentorProfileDto) {
+        try {
+            // 🔥 멘토 프로필 조회
+            MentorProfile mentorProfile = mentorProfileRepository.findById(mentorProfileNo)
+                    .orElseThrow(() -> new CustomException(
+                            ResponseStatusCode.MENTOR_PROFILE_NOT_FOUND_CODE,
+                            ResponseMessage.MENTOR_PROFILE_NOT_FOUND, null
+                    ));
+            
+            // 🔥 카테고리 조회
+            Category category = categoryRepository.findById(mentorProfileDto.getCategoryNo())
+                    .orElseThrow(() -> new CustomException(
+                            ResponseStatusCode.CATEGORY_NOT_FOUND,
+                            ResponseMessage.CATEGORY_NOT_FOUND, null
+                    ));
+            
+            // 🔥 프로필 정보 업데이트
+            mentorProfile.setMentorCareer(mentorProfileDto.getMentorCareer());
+            mentorProfile.setMentorIntroduce(mentorProfileDto.getMentorIntroduce());
+            mentorProfile.setMentorImage(mentorProfileDto.getMentorImage());
+            mentorProfile.setCategory(category); // 카테고리 설정
+            
+            // 🔥 저장
+            mentorProfileRepository.save(mentorProfile);
+            
+        } catch (CustomException e) {
+            throw e; // 그대로 예외 던지기
+        } catch (Exception e) {
+            throw new CustomException(
+                ResponseStatusCode.UPDATE_MENTOR_PROFILE_FAIL_CODE, 
+                ResponseMessage.UPDATE_MENTOR_PROFILE_FAIL_CODE, 
+                e
+            );
+        }
+    }
+    
+    
+    @Override
     public String getMentorProfileImageUrl(Long mentorProfileNo) {
         try {
-            MentorProfile mentorProfile = mentorProfileRepository.findById(mentorProfileNo).orElse(null);
-            if (mentorProfile == null) {
-                throw new CustomException(ResponseStatusCode.MENTOR_PROFILE_NOT_FOUND_CODE, ResponseMessage.MENTOR_PROFILE_NOT_FOUND, null);
-            }
+            // 🔥 멘토 프로필 조회
+            MentorProfile mentorProfile = mentorProfileRepository.findById(mentorProfileNo)
+                    .orElseThrow(() -> new CustomException(
+                            ResponseStatusCode.MENTOR_PROFILE_NOT_FOUND_CODE, 
+                            ResponseMessage.MENTOR_PROFILE_NOT_FOUND, null
+                    ));
+
+            // 🔥 멘토 이미지 URL 반환
             return mentorProfile.getMentorImage();
         } catch (CustomException e) {
+            // ⚠️ CustomException이 발생한 경우 그대로 예외를 던짐
             throw e;
         } catch (Exception e) {
-            throw new CustomException(ResponseStatusCode.MENTOR_PROFILE_NOT_FOUND_CODE, ResponseMessage.MENTOR_PROFILE_NOT_FOUND, e);
+            // ⚠️ 예기치 않은 예외가 발생한 경우 서버 내부 오류로 CustomException을 던짐
+            throw new CustomException(
+                ResponseStatusCode.INTERNAL_SERVER_ERROR, 
+                ResponseMessage.INTERNAL_SERVER_ERROR, 
+                e
+            );
+        }
+    }
+
+    
+    
+    
+    
+    
+    
+    
+    @Override
+    public Integer getMentorMentoringCount(Long mentorProfileNo) {
+        try {
+            Integer count = mentorProfileRepository.findMentorMentoringCountByProfileNo(mentorProfileNo);
+            if (count == null) {
+                throw new CustomException(ResponseStatusCode.READ_MENTOR_PROFILE_FAIL, ResponseMessage.READ_MENTOR_PROFILE_FAIL, null);
+            }
+            return count;
+        } catch (Exception e) {
+            throw new CustomException(ResponseStatusCode.READ_MENTOR_PROFILE_FAIL, ResponseMessage.READ_MENTOR_PROFILE_FAIL, e);
+        }
+    }
+
+    @Override
+    public Integer getMentorFollowCount(Long mentorProfileNo) {
+        try {
+            Integer count = mentorProfileRepository.findMentorFollowCountByProfileNo(mentorProfileNo);
+            if (count == null) {
+                throw new CustomException(ResponseStatusCode.READ_MENTOR_PROFILE_FAIL, ResponseMessage.READ_MENTOR_PROFILE_FAIL, null);
+            }
+            return count;
+        } catch (Exception e) {
+            throw new CustomException(ResponseStatusCode.READ_MENTOR_PROFILE_FAIL, ResponseMessage.READ_MENTOR_PROFILE_FAIL, e);
+        }
+    }
+
+    @Override
+    public Integer getMentorActivityCount(Long mentorProfileNo) {
+        try {
+            Integer count = mentorProfileRepository.findMentorActivityCountByProfileNo(mentorProfileNo);
+            if (count == null) {
+                throw new CustomException(ResponseStatusCode.READ_MENTOR_PROFILE_FAIL, ResponseMessage.READ_MENTOR_PROFILE_FAIL, null);
+            }
+            return count;
+        } catch (Exception e) {
+            throw new CustomException(ResponseStatusCode.READ_MENTOR_PROFILE_FAIL, ResponseMessage.READ_MENTOR_PROFILE_FAIL, e);
         }
     }
 }
+    
+
