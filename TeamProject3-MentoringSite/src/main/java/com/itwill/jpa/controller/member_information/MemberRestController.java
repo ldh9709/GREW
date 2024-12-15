@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.itwill.jpa.auth.PrincipalDetails;
 import com.itwill.jpa.dto.member_information.MemberDto;
 import com.itwill.jpa.dto.member_information.MemberJoinDto;
 import com.itwill.jpa.entity.member_information.Member;
@@ -223,19 +224,15 @@ public class MemberRestController {
 	@Operation(summary = "회원 정보 보기(토큰)")
 	@SecurityRequirement(name = "BearerAuth")
 	@GetMapping("/profile")
-	public ResponseEntity<Response> getMember(@PathVariable(name = "memberNo") Long memberNo, 
-		Authentication authentication) {
+	public ResponseEntity<Response> getMember(Authentication authentication) {
 		
-		//이름으로 번호찾기
-		String authenticatedMemberNo = authentication.getName();
+		//PrincipalDetails에서 memberNo를 가져옴
+		PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
+		Long memberNo = principalDetails.getmemberNo();
 		
 		System.out.println(">>>>> authentication : " + authentication);
 		System.out.println(">>>>> authentication.getName() : " + authentication.getName());
-		System.out.println(">>>>> authenticatedMemberNo : " + authenticatedMemberNo);
 		
-		if (!memberNo.toString().equals(authenticatedMemberNo)) {
-            throw new AccessDeniedException("해당 정보에 접근할 권한이 없습니다.");
-        }
 		
 		// 번호로 멤버 객체 찾기
         Member loginMember = memberService.getMember(memberNo);

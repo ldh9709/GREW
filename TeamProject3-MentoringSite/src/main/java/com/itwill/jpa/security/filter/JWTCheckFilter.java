@@ -46,9 +46,9 @@ public class JWTCheckFilter extends OncePerRequestFilter {
     }
  
     // 특정 API 경로들은 JWT 체크를 하지 않음
-    if (path.startsWith("/member/")) {
-      return true;
-    }
+//    if (path.startsWith("/member/")) {
+//      return true;
+//    }
     if (path.startsWith("/login")) {
       return true;
     }
@@ -56,8 +56,6 @@ public class JWTCheckFilter extends OncePerRequestFilter {
     if (path.startsWith("/api/products/view/")) {
       return true;
     }
-    
-    
     
     //나머지 경로는 필터 적용됨
     return false;
@@ -84,26 +82,41 @@ public class JWTCheckFilter extends OncePerRequestFilter {
           
           // 클레임에서 사용자 정보를 추출
           //filterChain.doFilter(request, response); //이하 추가
-          Long no = (Long) claims.get("memberNo");
-          String id = (String) claims.get("memberId");
-          String password = (String) claims.get("memberPassword");
-          String email = (String) claims.get("memberEmail");
-          String name = (String) claims.get("memberName");
-          Integer status = (Integer) claims.get("memberStatus");
-          Role role = (Role) claims.get("memberRole");
-          String provider = (String) claims.get("memberProvider");
+          Long memberNo = ((Number) claims.get("memberNo")).longValue(); // Integer -> Long 변환
+          String memberId = (String) claims.get("memberId");
+          String memberPassword = (String) claims.get("memberPassword");
+          String memberEmail = (String) claims.get("memberEmail");
+          String memberName = (String) claims.get("memberName");
+          Integer memberStatus = (Integer) claims.get("memberStatus");
+          String memberProvider = (String) claims.get("memberProvider");
           
-          // 사용자 정보를 담은 DTO 생성
-          MemberSecurityDto memberDTO = new MemberSecurityDto(no,id,password,email,name,status,role,provider);
+          //memberRole을 처리하기 위해 String으로 받고 Role로 변환
+          String roleName = (String) claims.get("memberRole");
+          Role memberRole = Role.valueOf(roleName);
+          
+          //사용자 정보를 담은 DTO 생성
+          MemberSecurityDto memberDto = MemberSecurityDto.builder()
+                  .memberNo(memberNo)
+                  .memberId(memberId)
+                  .memberPassword(memberPassword)
+                  .memberEmail(memberEmail)
+                  .memberName(memberName)
+                  .memberStatus(memberStatus)
+                  .memberRole(memberRole)
+                  .memberProvider(memberProvider)
+                  .build();
+          
+          System.out.println(">>>>>JWTCheckFilter memberDTO : " + memberDto);
           // PrincipalDetails 객체 생성: 일반 로그인 또는 SNS 로그인 처리
-          PrincipalDetails principalDetails = new PrincipalDetails(memberDTO);
+          PrincipalDetails principalDetails = new PrincipalDetails(memberDto);
+          System.out.println(">>>>>JWTCheckFilter principalDetails : " + principalDetails);
           
           log.info("-----------------------------------");
-          log.info(memberDTO);
+          log.info(memberDto);
           log.info(principalDetails.getAuthorities());
           // 인증 객체 생성
           UsernamePasswordAuthenticationToken authenticationToken
-          = new UsernamePasswordAuthenticationToken(principalDetails, password, principalDetails.getAuthorities());
+          = new UsernamePasswordAuthenticationToken(principalDetails, memberPassword, principalDetails.getAuthorities());
           // Spring Security의 SecurityContext에 인증 객체 설정
           SecurityContextHolder.getContext().setAuthentication(authenticationToken);
           

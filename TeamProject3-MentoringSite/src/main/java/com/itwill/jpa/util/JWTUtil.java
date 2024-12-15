@@ -26,7 +26,7 @@ public class JWTUtil {
 
     // JWT 생성 메서드(클레임,유효시간)
     public static String generateToken(Map<String, Object> valueMap, int min) {
-    	
+    	System.out.println(">>>>>generateToken valueMap : " + valueMap);
     	SecretKey key = null;
     	
     	try {
@@ -34,6 +34,7 @@ public class JWTUtil {
 		} catch (Exception e) {
 			throw new RuntimeException(e.getMessage());
 		}
+    	
         String jwtStr = Jwts.builder()
         		//헤더에 "typ": "JWT"를 설정하여 이 토큰이 JWT임을 명시
                 .setHeader(Map.of("typ","JWT"))
@@ -56,7 +57,7 @@ public class JWTUtil {
      * 리턴값: 검증된 토큰에서 추출한 클레임 데이터(Map 형태)
      */
     public static Map<String, Object> validateToken(String token){
-    	
+    	System.out.println("validateToken token : >>>>>" + token);
     	Map<String, Object> claim = null;
     	
     	try {
