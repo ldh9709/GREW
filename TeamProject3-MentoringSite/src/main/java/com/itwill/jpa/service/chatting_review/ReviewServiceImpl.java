@@ -41,7 +41,7 @@ public class ReviewServiceImpl implements ReviewService {
         Review review = Review.toEntity(reviewDto);
         
         /* 멘토 평점 업데이트 */
-        Double averageScore = reviewReverageScore(reviewDto.getMentorMemberNo());
+        Double averageScore = reviewAverageScore(reviewDto.getMentorMemberNo());
         mentorProfileService.updateMentorRatingg2(reviewDto.getMentorMemberNo(), averageScore);
 
 //        manager.handleMentorRating(reviewDto.getMentorMemberNo());
@@ -133,7 +133,7 @@ public class ReviewServiceImpl implements ReviewService {
     
     
     /* 특정 멘토 리뷰 평점 */
-    public Double reviewReverageScore(Long mentorNo) {
+    public Double reviewAverageScore(Long mentorNo) {
         /* 멘토 평점 업데이트 (리뷰 수, 총점 전달) */
         List<ReviewDto> reviews = getReviewByMemberNo(mentorNo);
         
