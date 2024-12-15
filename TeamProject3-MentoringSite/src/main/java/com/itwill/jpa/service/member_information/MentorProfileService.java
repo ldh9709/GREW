@@ -26,6 +26,9 @@ public interface MentorProfileService {
 	// 멘토 평점 업데이트
 	Double updateMentorRatingg(Long mentorNo, Double averageScore);
 	
+	// 멘토 평점 업데이트
+	Double updateMentorRatingg2(Long mentorNo, Double averageScore);
+	
     // 특정 멘토의 평균 점수를 반환
     Double getAverageMentorRating(Long memberNo);
     

@@ -111,6 +111,19 @@ public class MentorProfileServiceImpl implements MentorProfileService {
     /* 멘토 평점 업데이트 */
     public Double updateMentorRatingg(Long memberNo, Double averageScore) {
     	try {
+    		MentorProfile mentorProfile = mentorProfileRepository.findByMember_MemberNo(memberNo);
+    		
+    		mentorProfile.setMentorRating(averageScore);
+    		mentorProfileRepository.save(mentorProfile);
+    		return averageScore;
+    	} catch (Exception e) {
+    		throw new CustomException(ResponseStatusCode.UPDATE_MENTOR_PROFILE_FAIL_CODE, ResponseMessage.UPDATE_MENTOR_PROFILE_FAIL_CODE, e);
+    	}
+    }
+    
+    /* 멘토 평점 업데이트 */
+    public Double updateMentorRatingg2(Long memberNo, Double averageScore) {
+    	try {
     		Member member = memberRepository.findByMemberNo(memberNo);
     		Long mentorNo = member.getMentorProfile().getMentorProfileNo();
     		MentorProfile mentorProfile = mentorProfileRepository.findById(mentorNo).get();

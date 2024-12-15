@@ -24,12 +24,14 @@ public class ReviewServiceImpl implements ReviewService {
     private final ReviewRepository reviewRepository;
     private final ChatRoomRepository chatRoomRepository;
     private final MentorManager manager;
+    private final MentorProfileService mentorProfileService;
 
     @Autowired
-    public ReviewServiceImpl(ReviewRepository reviewRepository, ChatRoomRepository chatRoomRepository) {
+    public ReviewServiceImpl(ReviewRepository reviewRepository, ChatRoomRepository chatRoomRepository, MentorProfileService mentorProfileService) {
         this.reviewRepository = reviewRepository;
         this.chatRoomRepository = chatRoomRepository;
 		this.manager = new MentorManager();
+		this.mentorProfileService = mentorProfileService;
     }
 
     /* 리뷰 생성 */
@@ -37,7 +39,12 @@ public class ReviewServiceImpl implements ReviewService {
     public Review createReview(ReviewDto reviewDto) {
         // DTO를 엔티티로 변환
         Review review = Review.toEntity(reviewDto);
-        manager.handleMentorRating(reviewDto.getMentorMemberNo());
+        
+        /* 멘토 평점 업데이트 */
+        Double averageScore = reviewReverageScore(reviewDto.getMentorMemberNo());
+        mentorProfileService.updateMentorRatingg2(reviewDto.getMentorMemberNo(), averageScore);
+
+//        manager.handleMentorRating(reviewDto.getMentorMemberNo());
         // 리뷰 저장
         return reviewRepository.save(review);
     }
@@ -122,5 +129,24 @@ public class ReviewServiceImpl implements ReviewService {
             reviewDtoList.add(ReviewDto.toDto(review));
         }
         return reviewDtoList;
+    }
+    
+    
+    /* 특정 멘토 리뷰 평점 */
+    public Double reviewReverageScore(Long mentorNo) {
+        /* 멘토 평점 업데이트 (리뷰 수, 총점 전달) */
+        List<ReviewDto> reviews = getReviewByMemberNo(mentorNo);
+        
+        Integer totCount = reviews.size();
+        Double totScore = 0.0;
+        Double averageScore = 0.0;
+        for (ReviewDto review : reviews) {
+        	totScore += review.getReviewScore();
+		}
+        
+        averageScore =totScore/totCount;
+        
+        return averageScore;
+        
     }
 }
