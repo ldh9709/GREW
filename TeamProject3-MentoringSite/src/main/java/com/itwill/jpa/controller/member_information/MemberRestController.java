@@ -217,6 +217,36 @@ public class MemberRestController {
 		return responseEntity;
 	}
 	
+	/***** 회원 정보 보기(토큰) *****/
+	@Operation(summary = "회원 정보 보기(토큰)")
+	@GetMapping("/{memberNo}")
+	public ResponseEntity<Response> getMember(@PathVariable(name = "memberNo") Long memberNo, HttpSession session) {
+		
+		//번호로 멤버 객체 찾기
+		Member loginMember = memberService.getMember(memberNo);
+		
+		//DTO객체로 변환
+		MemberDto loginMemberDto = MemberDto.toDto(loginMember);
+		
+		Response response = new Response();
+		
+		if(loginMemberDto != null) {
+			//응답객체에 코드, 메시지, 객체 설정
+			response.setStatus(ResponseStatusCode.READ_MEMBER_SUCCESS);
+			response.setMessage(ResponseMessage.READ_MEMBER_SUCCESS);
+			response.setData(loginMemberDto);
+		}
+		
+		HttpHeaders httpHeaders=new HttpHeaders();
+		httpHeaders.setContentType(new MediaType(MediaType.APPLICATION_JSON,Charset.forName("UTF-8")));
+		
+		ResponseEntity<Response> responseEntity = 
+				new ResponseEntity<Response>(response, httpHeaders, HttpStatus.OK);
+		
+		return responseEntity;
+	}
+	
+	
 	/* 회원 수정 */
 	@Operation(summary = "회원 정보 수정")
 	@PutMapping("/{memberNo}")
