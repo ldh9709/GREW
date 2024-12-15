@@ -31,12 +31,8 @@ import java.util.Map;
 @RequestMapping("/mentor-profile")
 public class MentorProfileController {
 
-    private final MentorProfileService mentorProfileService;
-
-    @Autowired
-    public MentorProfileController(MentorProfileService mentorProfileService) {
-        this.mentorProfileService = mentorProfileService;
-    }
+	@Autowired
+    private MentorProfileService mentorProfileService;
 
     /**
      * 특정 멘토의 평균 점수를 조회합니다.
@@ -84,16 +80,6 @@ public class MentorProfileController {
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
     /**
      * 멘토 상태를 변경하는 엔드포인트
      */
@@ -129,16 +115,10 @@ public class MentorProfileController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
         }
     }
-
     
-    
-    
-    
-    
-    
-    
-    
-    
+    /**
+     * 멘토 전체 리스트
+     */
     
     @Operation(summary = "특정 상태의 멘토 목록 조회 페이징")
     @GetMapping("/status/{status}")
@@ -200,11 +180,6 @@ public class MentorProfileController {
         return new ResponseEntity<>(response, headers, HttpStatus.OK);
     }
     
-    
-    
-    
-    
-    
     /**
      * 멘토 프로필 이미지 업로드 메서드
      */
@@ -240,8 +215,6 @@ public class MentorProfileController {
         }
     }
     
-    //--------------------------------------------
-    
     @Operation(summary = "멘토 프로필 수정")
     @PutMapping("/{mentorProfileNo}")
     public ResponseEntity<Response> updateMentorProfile(
@@ -274,13 +247,6 @@ public class MentorProfileController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
         }
     }
-    
-
-    
-    
-    
-    
-    
     
     @Operation(summary = "멘토의 멘토링 횟수 조회")
     @GetMapping("/{mentorProfileNo}/mentoring-count")
