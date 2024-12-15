@@ -12,6 +12,7 @@ public class KakaoUserInfo implements Oauth2UserInfo {
 	private Map<String, Object> attributesProfile;
 	
 	public KakaoUserInfo(Map<String, Object> attributes) {
+		System.out.println(">>>>> kakao attributes : " + attributes);
 		this.attributes = attributes;
 		this.attributesAccount = (Map<String, Object>) attributes.get("kakao_account");
 		this.attributesProfile = (Map<String, Object>) attributesAccount.get("profile");
@@ -29,7 +30,7 @@ public class KakaoUserInfo implements Oauth2UserInfo {
 
 	@Override
 	public String getProvider() {
-		return "kakao";
+		return "Kakao";
 	}
 
 	@Override

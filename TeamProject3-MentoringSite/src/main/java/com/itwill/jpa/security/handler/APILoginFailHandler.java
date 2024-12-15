@@ -18,7 +18,20 @@ public class APILoginFailHandler implements AuthenticationFailureHandler {
 	@Override
 	public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response,
 			AuthenticationException exception) throws IOException, ServletException {
+		
+		System.out.println(">>>>> Authorization Code: " + request.getParameter("code"));
+		System.out.println(">>>>> Authentication Exception Message: " + exception.getMessage());
+		System.out.println(">>>>> Authentication Exception Cause: " + exception.getCause());
 
+		System.out.println(">>>>> Request URI: " + request.getRequestURI());
+		System.out.println(">>>>> Request Method: " + request.getMethod());
+		System.out.println(">>>>> Client IP: " + request.getRemoteAddr());
+		System.out.println(">>>>> Request Parameters: " + request.getParameterMap());
+		
+		request.getHeaderNames().asIterator().forEachRemaining(header -> {
+		    System.out.println(">>>>> Header: " + header + " = " + request.getHeader(header));
+		});
+		
 	    Gson gson = new Gson();
 	    
 	    String jsonStr = gson.toJson(Map.of("error", "ERROR_LOGIN"));

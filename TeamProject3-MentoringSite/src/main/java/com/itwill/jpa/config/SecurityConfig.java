@@ -156,7 +156,7 @@ public class SecurityConfig {
 		      // swagger설정
 		      authorizeHttpRequestsConfig
 //			      .requestMatchers(SwaggerPatterns).permitAll()
-			      .requestMatchers("/**","/login").permitAll()
+			      .requestMatchers("/**","/login","/oauth2/**").permitAll()
 			      .anyRequest().authenticated();
 		    });
 

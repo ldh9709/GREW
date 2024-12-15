@@ -97,11 +97,14 @@ function LoginFormPage() {
           />
           </Link>
 
+          <Link to={"http://localhost:8080/oauth2/authorization/naver"}>
           <img
             src="naver_icon.png"
             alt="naver"
             style={{ height: "50px", marginRight: "50px" }}
           />
+          </Link>
+
           <Link to={"http://localhost:8080/oauth2/authorization/kakao"}>
           <img
             src="kakao_icon.svg"

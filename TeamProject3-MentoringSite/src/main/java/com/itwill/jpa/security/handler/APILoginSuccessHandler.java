@@ -36,6 +36,8 @@ public class APILoginSuccessHandler implements AuthenticationSuccessHandler {
         // getClaims() 메서드를 통해 사용자의 이메일, 역할, 그리고 SNS 로그인 여부 등의 정보를 가져옵니다. -> JWT필요한 데이터 정보를 가져옴
         Map<String, Object> claims = principal.getClaims();
         
+        System.out.println(">>>>> principal : " + principal);
+        System.out.println(">>>>> claims : " + claims);
         // 3. JWT 토큰을 생성합니다.
         // JWTUtil.generateToken() 메서드를 사용해 액세스 토큰(accessToken)과 리프레시 토큰(refreshToken)을 생성합니다.
         String accessToken = JWTUtil.generateToken(claims, 10);  // access token은 10분 동안 유효
@@ -61,7 +63,10 @@ public class APILoginSuccessHandler implements AuthenticationSuccessHandler {
         // 인증 성공 후 클라이언트에 응답을 보낸다
         // 토큰을 응답 헤더나 쿠키에 담아 클라이언트로 전송할 수 있음
         response.setHeader("Authorization", "Bearer " + accessToken);
-
+        
+        if (response.isCommitted()) {
+        	return;
+        }
         // 토큰 전송 후 원하는 페이지로 리다이렉트
         response.sendRedirect("/home");
 	}
