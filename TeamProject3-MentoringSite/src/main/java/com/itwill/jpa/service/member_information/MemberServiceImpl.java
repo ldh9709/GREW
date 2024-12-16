@@ -100,6 +100,7 @@ public class MemberServiceImpl implements MemberService {
 		member.setMemberName(memberDto.getMemberName());
 		member.setMemberPassword(memberDto.getMemberPassword());
 		member.setMemberEmail(memberDto.getMemberEmail());
+		member.setInterests(interests);
 		
 		//DB에 객체 업데이트(기존 객체 존재 시 업데이트됨)
 		return memberRepository.save(member);
