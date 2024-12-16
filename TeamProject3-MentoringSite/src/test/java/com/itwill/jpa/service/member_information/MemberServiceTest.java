@@ -25,7 +25,7 @@ class MemberServiceTest {
     @Autowired
     private MemberRepository memberRepository; // 테스트 데이터 저장용
 
-    //@Test
+    @Test
     //비밀번호 찾기 코드 전송
     void testFindPasswordAndSendEmail() {
         // 테스트 데이터 저장
@@ -33,7 +33,7 @@ class MemberServiceTest {
                 .memberNo(1L)
                 .memberId("qqq")
                 .memberPassword("oldPassword")
-                .memberEmail("do16_@naver.com") // 실제 이메일 주소 입력
+                .memberEmail("zszz5434@gmail.com") // 실제 이메일 주소 입력
                 .memberName("QQQ")
                 .build();
 
@@ -41,15 +41,14 @@ class MemberServiceTest {
 
         // 테스트용 DTO 생성
         MemberDto.findPassword findPasswordDto = MemberDto.findPassword.builder()
-                .email("do16_@naver.com")
-                .MemberId("qqq")
+                .email("zszz5434@gmail.com")
                 .build();
         
         // 서비스 호출 (이메일 발송 포함)
         memberService.findPassword(findPasswordDto);
         
         // 결과 검증 (DB의 비밀번호가 변경되었는지 확인)
-        Member updatedMember = memberRepository.findByMemberEmail("do16_@naver.com");
+        Member updatedMember = memberRepository.findByMemberEmail("zszz5434@gmail.com");
         assertEquals("zszz5434@gmail.com", updatedMember.getMemberEmail());
         System.out.println("새로운 비밀번호가 이메일로 발송되었습니다.");
     }
@@ -58,11 +57,11 @@ class MemberServiceTest {
     void findMemberByMemberId() {
     	System.out.println(MemberSecurityDto.toDto(memberRepository.findMemberByMemberId("aaa")));
     }
-    @Test
+    //@Test
     void testSendJoinCode() {
     	
     	 MemberDto.JoinFormDto joinFormDto = MemberDto.JoinFormDto.builder()
-                 .email("do16_@naver.com") // 실제 이메일 주소
+                 .email("zszz5434@gmail.com") // 실제 이메일 주소
                  .build();
     	 
     	 memberService.sendJoinCode(joinFormDto);

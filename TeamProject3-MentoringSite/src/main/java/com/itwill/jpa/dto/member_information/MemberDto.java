@@ -102,8 +102,6 @@ public class MemberDto {
 	public static class findPassword {
 		@Email
 		private String email;
-		
-		private String MemberId;
 	}
 	
 	
