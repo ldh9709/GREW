@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.itwill.jpa.dto.alarm.AlarmDto;
@@ -31,10 +32,10 @@ public class VoteRestController {
 	@Autowired
 	private AlarmService alarmService;
 	@Operation(summary = "추천")
-	@PostMapping("/upvote")
-	public ResponseEntity<Response> upVote(@RequestBody VoteDto voteDto) {
-		VoteDto savedvote=voteService.upVote(voteDto);
-	    AlarmDto alarmDto=alarmService.createAlarmByVoteByMentor(voteDto.getAnswerNo());
+	@PostMapping("/{answerNo}/upvote")
+	public ResponseEntity<Response> upVote(@PathVariable("answerNo")Long answerNo, @RequestParam("memberNo")Long memberNo) {
+		VoteDto savedvote=voteService.upVote(answerNo,memberNo);
+	    AlarmDto alarmDto=alarmService.createAlarmByVoteByMentor(answerNo);
 		Response response = new Response();
 		response.setStatus(ResponseStatusCode.CREATED_ANSWER_SUCCESS);
 		response.setMessage("추천 등록 성공~!");
@@ -49,9 +50,9 @@ public class VoteRestController {
 
 	}
 	@Operation(summary = "비추천")
-	@PostMapping("/downvote")
-	public ResponseEntity<Response> downVote(@RequestBody VoteDto voteDto) {
-		VoteDto savedvote=voteService.downVote(voteDto);
+	@PostMapping("/{answerNo}/downvote")
+	public ResponseEntity<Response> downVote(@PathVariable("answerNo")Long answerNo, @RequestParam("memberNo")Long memberNo) {
+		VoteDto savedvote=voteService.downVote(answerNo,memberNo);
 		Response response = new Response();
 		response.setStatus(ResponseStatusCode.CREATED_ANSWER_SUCCESS);
 		response.setMessage("비추천 등록 성공~!");
