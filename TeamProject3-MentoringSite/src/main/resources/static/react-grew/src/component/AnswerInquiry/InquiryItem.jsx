@@ -1,5 +1,5 @@
 import React from 'react'
-import * as inquiryApi from "../api/inquiryApi";
+import * as inquiryApi from "../../api/inquiryApi";
 export default function InquiryItem({inquiry}) {
   
   return (

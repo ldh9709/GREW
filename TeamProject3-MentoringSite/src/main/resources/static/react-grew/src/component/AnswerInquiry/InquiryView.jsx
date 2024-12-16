@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import * as inquiryApi from "../api/inquiryApi";
-import * as answerApi from "../api/answerApi";
+import * as inquiryApi from "../../api/inquiryApi";
+import * as answerApi from "../../api/answerApi";
 import AnswerItem from "./AnswerItem";
 function InquiryView() {
   const navigate = useNavigate();

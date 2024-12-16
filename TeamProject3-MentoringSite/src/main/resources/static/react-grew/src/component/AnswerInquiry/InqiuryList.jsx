@@ -1,8 +1,8 @@
-import "../css/styles.css";
+import "../../css/styles.css";
 import React, { useEffect, useState } from "react";
-import * as inquiryApi from "../api/inquiryApi";
+import * as inquiryApi from "../../api/inquiryApi";
 import InquiryItem from "./InquiryItem";
-import * as categoryApi from "../api/categoryApi";
+import * as categoryApi from "../../api/categoryApi";
 function InqiuryList() {
   const [inquirys, setInquiry] = useState([]);
   const [currentPage, setCurrentPage] = useState(1); // 현재 페이지 번호

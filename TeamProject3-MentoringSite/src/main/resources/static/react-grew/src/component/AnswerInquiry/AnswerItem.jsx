@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import "../css/styles.css";
-import * as answerApi from "../api/answerApi";
+import "../../css/styles.css";
+import * as answerApi from "../../api/answerApi";
 export default function AnswerItem({ answer }) {
     const [voteCount, setVoteCount] = useState(null);
 

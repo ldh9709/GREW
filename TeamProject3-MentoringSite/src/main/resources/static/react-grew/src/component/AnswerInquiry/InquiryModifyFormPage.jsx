@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react'
-import * as inquiryApi from "../api/inquiryApi";
+import * as inquiryApi from "../../api/inquiryApi";
 import { useNavigate, useParams } from 'react-router-dom';
 export default function InqiuryModifyFormPage() {
   const modifyFormRef = useRef();
