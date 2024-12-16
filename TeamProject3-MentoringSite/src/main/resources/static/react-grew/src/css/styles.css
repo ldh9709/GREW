@@ -1,0 +1,83 @@
+html, body {
+	margin: 0;
+	padding: 0;
+}
+body {
+	font: 76% arial, sans-serif;
+}
+p {
+	margin: 0 10px 10px
+}
+a {
+	padding: 5px;
+	color: #000000;
+	text-decoration: none;
+}
+input {
+	font-size: 8pt;
+	color: #333333;
+}
+td {
+	font-size: 12px;
+	color: #333333;
+	line-height: 18px;
+}
+table {
+	width: 100%;
+	height: 100%;
+	
+}
+form {
+	margin:10px;
+	margin-right: 0px;
+	text-align: center;
+}
+/*
+layout
+*/
+
+div#container {
+	width: 1150px;
+	margin: 0 auto
+}
+
+
+div#content {
+	margin: 0 0 0 0px
+}
+.radio-container { /*정렬을 위한 라디오 버튼css*/
+	display: flex;
+	justify-content: flex-end; /* 오른쪽 정렬 */
+	gap: 10px; /* 라디오 버튼들 간의 간격 */
+	margin-bottom: 10px;
+  }
+.pagenation{
+	display: flex;
+	justify-content: center; /*가운데 정렬*/
+	margin-top: 30px; /*위에 컨텐츠와의 거리*/
+	gap:5px; /*버튼간거리*/
+}
+
+  .answer-item {
+	display: flex;
+	justify-content: space-between;
+	padding: 10px;
+	border: 1px solid #ddd;
+	background-color: #ffffff;
+  }
+  
+  .answer-item div {
+	flex: 1; /* 각 항목에 동일한 비율로 공간 할당 */
+	padding-left: 10px;
+	text-align: left;
+  }  
+
+  .answer-content{
+	text-align: left;
+  }
+  .answer-member{
+
+  }
+  .answer-date {
+	text-align: left;
+  }
