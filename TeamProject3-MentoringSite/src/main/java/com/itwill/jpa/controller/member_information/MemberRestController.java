@@ -228,7 +228,7 @@ public class MemberRestController {
 		
 		//PrincipalDetails에서 memberNo를 가져옴
 		PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
-		Long memberNo = principalDetails.getmemberNo();
+		Long memberNo = principalDetails.getMemberNo();
 		
 		System.out.println(">>>>> authentication : " + authentication);
 		System.out.println(">>>>> authentication.getName() : " + authentication.getName());
@@ -263,6 +263,11 @@ public class MemberRestController {
 	@Operation(summary = "회원 정보 수정")
 	@PutMapping("/{memberNo}")
 	public ResponseEntity<Response> updateMember(@RequestBody MemberDto memberDto) {
+		
+		Authentication authentication =	SecurityContextHolder.getContext().getAuthentication();
+		PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
+		
+		Long memberNo = principalDetails.getMemberNo();
 		
 		//업데이트 메소드 실행
 		Member updateMember = memberService.updateMember(memberDto);
