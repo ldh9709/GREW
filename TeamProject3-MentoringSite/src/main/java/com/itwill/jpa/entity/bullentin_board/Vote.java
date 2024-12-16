@@ -7,7 +7,6 @@ import org.hibernate.annotations.CreationTimestamp;
 import com.itwill.jpa.dto.bulletin_board.VoteDto;
 import com.itwill.jpa.entity.member_information.Member;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;

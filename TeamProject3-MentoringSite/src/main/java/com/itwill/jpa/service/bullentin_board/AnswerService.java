@@ -1,7 +1,5 @@
 package com.itwill.jpa.service.bullentin_board;
 
-import java.util.List;
-
 import org.springframework.data.domain.Page;
 
 import com.itwill.jpa.dto.bulletin_board.AnswerDto;

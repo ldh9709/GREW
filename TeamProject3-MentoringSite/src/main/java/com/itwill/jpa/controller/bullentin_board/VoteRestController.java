@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.itwill.jpa.dto.alarm.AlarmDto;
 import com.itwill.jpa.dto.bulletin_board.VoteDto;
 import com.itwill.jpa.response.Response;
-import com.itwill.jpa.response.ResponseMessage;
 import com.itwill.jpa.response.ResponseStatusCode;
 import com.itwill.jpa.service.alarm.AlarmService;
 import com.itwill.jpa.service.bullentin_board.VoteService;

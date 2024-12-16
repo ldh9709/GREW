@@ -2,10 +2,7 @@ package com.itwill.jpa.dto.bulletin_board;
 
 import java.time.LocalDateTime;
 
-import com.itwill.jpa.dto.member_information.MemberDto;
 import com.itwill.jpa.entity.bullentin_board.Answer;
-import com.itwill.jpa.entity.bullentin_board.Inquiry;
-import com.itwill.jpa.entity.member_information.Member;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

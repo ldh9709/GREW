@@ -11,7 +11,7 @@ GET  /answer/answerList/{categoryNo}/categoryVote
 GET  /answer/answerList/{categoryNo}/categoryDate
 GET  /answer/answerList/recently-vote
 */
-//질문하나의 답변 최신순
+//답변 최신순
 export const AnswerByDate=async(inquiryNo,page,size)=>{
     const response=await fetch(`${BACKEND_SERVER}/answer/${inquiryNo}/answer-date?page=${page}&size=${size}`,{
         method:'GET'
@@ -19,7 +19,7 @@ export const AnswerByDate=async(inquiryNo,page,size)=>{
     const responseJsonObject=await response.json();
     return responseJsonObject;
 }
-//답변 추천순순
+//답변 추천순
 export const AnswerByVote=async(inquiryNo,page,size)=>{
     const response=await fetch(`${BACKEND_SERVER}/answer/${inquiryNo}/answer-vote?page=${page}&size=${size}`,{
         method:'GET'
