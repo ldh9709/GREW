@@ -35,18 +35,14 @@ export const countVote = async(answerNo)=>{
     return responseJsonObject;
 }
 export const upVote = async (answerNo, memberNo) => {
-    const response = await fetch(`${BACKEND_SERVER}/vote/upvote`, {
+    const response = await fetch(`${BACKEND_SERVER}/vote/${answerNo}/upvote?memberNo=${memberNo}`, {
         method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ answerNo, memberNo })  // answerNo와 memberNo를 body에 포함
     });
     const responseJsonObject = await response.json();
     return responseJsonObject;
 }
-export const downVote = async()=>{
-    const response= await fetch(`${BACKEND_SERVER}/vote/downvote`,{
+export const downVote = async(answerNo, memberNo)=>{
+    const response= await fetch(`${BACKEND_SERVER}/vote/${answerNo}/downvote?memberNo=${memberNo}`,{
         method:'POST'
     });
     const responseJsonObject=await response.json();

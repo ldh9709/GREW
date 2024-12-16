@@ -3,7 +3,6 @@ import "../../css/styles.css";
 import * as answerApi from "../../api/answerApi";
 export default function AnswerItem({ answer }) {
     const [voteCount, setVoteCount] = useState(null);
-
     async function fetchData() {
       try {
         // 비동기 호출
@@ -19,11 +18,24 @@ export default function AnswerItem({ answer }) {
 
     const handleUpvote = async () => {
       try {
-        const response = await answerApi.upVote(answer.answerNo, 6);  // API 호출
-        if (response.status === 6000) {  // 추천 성공 상태 확인
-          console.log("성공");
+        const response = await answerApi.upVote(answer.answerNo,1);  // API 호출
+        if (response.status === 6000) { 
+          fetchData(); // 추천 성공 상태 확인
         } else {
-          console.error('추천 실패:', response.message);  // 실패 시 에러 로그
+          alert('이미 추천 혹은 비추천을 누르셨습니다');  // 실패 시 에러 로그
+        }
+      } catch (error) {
+        console.error('API 호출 중 오류 발생:', error.response ? error.response.data : error);  // 오류 로그
+    alert('API 호출 중 오류 발생: ' + error.message);  // 사용자에게 오류 메시지 표시
+      }
+    };
+    const handleDownvote = async () => {
+      try {
+        const response = await answerApi.downVote(answer.answerNo,1);  // API 호출
+        if (response.status === 6000) {
+          fetchData();  // 추천 성공 상태 확인
+        } else {
+          alert('이미 추천 혹은 비추천을 누르셨습니다');  // 실패 시 에러 로그
         }
       } catch (error) {
         console.error('API 호출 중 오류 발생:', error);  // 오류 처리
@@ -36,8 +48,11 @@ export default function AnswerItem({ answer }) {
         <div className="answer-date">{answer.answerDate.substring(0, 10)}</div>
         <button onClick={handleUpvote}>추천
         </button>
+        <div>
+
            {voteCount}   
-        <button>비추천
+        </div>
+        <button onClick={handleDownvote}>비추천
         </button>
       </>
     );
