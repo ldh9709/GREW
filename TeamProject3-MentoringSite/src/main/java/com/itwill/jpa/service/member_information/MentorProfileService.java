@@ -22,12 +22,6 @@ public interface MentorProfileService {
 	// 멘토링 완료 활동 수 업데이트
 	Integer updateAcitityCount(Long memberNo);
 	
-	// 멘토 평점 업데이트
-	Double updateMentorRatingg(Long mentorNo, Double averageScore);
-	
-	// 멘토 평점 업데이트
-	Double updateMentorRatingg2(Long mentorNo, Double averageScore);
-	
     /**
      * 멘토의 상태를 변경
      * status 변경할 상태 (1: 멘티, 2: 심사 중, 3: 멘토, 4: 탈퇴)

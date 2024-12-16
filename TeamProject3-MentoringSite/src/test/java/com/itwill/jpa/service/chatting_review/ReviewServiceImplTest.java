@@ -23,9 +23,5 @@ class ReviewServiceImplTest {
 		System.out.println(reviewService.getReviewByMemberNo(5L));
 	}
 	
-//	@Test
-	void testReviewReverageScore() {
-		System.out.println(reviewService.reviewAverageScore(5L));
-	}
 
 }

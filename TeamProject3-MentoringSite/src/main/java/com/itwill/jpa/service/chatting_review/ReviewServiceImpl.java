@@ -6,7 +6,6 @@ import com.itwill.jpa.entity.member_information.MentorProfile;
 import com.itwill.jpa.repository.chatting_review.ChatRoomRepository;
 import com.itwill.jpa.repository.chatting_review.ReviewRepository;
 import com.itwill.jpa.service.member_information.MentorProfileService;
-import com.itwill.jpa.service.member_information.MentorManager;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,14 +22,12 @@ public class ReviewServiceImpl implements ReviewService {
 
     private final ReviewRepository reviewRepository;
     private final ChatRoomRepository chatRoomRepository;
-    private final MentorManager manager;
     private final MentorProfileService mentorProfileService;
 
     @Autowired
     public ReviewServiceImpl(ReviewRepository reviewRepository, ChatRoomRepository chatRoomRepository, MentorProfileService mentorProfileService) {
         this.reviewRepository = reviewRepository;
         this.chatRoomRepository = chatRoomRepository;
-		this.manager = new MentorManager();
 		this.mentorProfileService = mentorProfileService;
     }
 
@@ -39,12 +36,7 @@ public class ReviewServiceImpl implements ReviewService {
     public Review createReview(ReviewDto reviewDto) {
         // DTO를 엔티티로 변환
         Review review = Review.toEntity(reviewDto);
-        
-        /* 멘토 평점 업데이트 */
-        Double averageScore = reviewAverageScore(reviewDto.getMentorMemberNo());
-        mentorProfileService.updateMentorRatingg2(reviewDto.getMentorMemberNo(), averageScore);
 
-//        manager.handleMentorRating(reviewDto.getMentorMemberNo());
         // 리뷰 저장
         return reviewRepository.save(review);
     }
@@ -131,22 +123,4 @@ public class ReviewServiceImpl implements ReviewService {
         return reviewDtoList;
     }
     
-    
-    /* 특정 멘토 리뷰 평점 */
-    public Double reviewAverageScore(Long mentorNo) {
-        /* 멘토 평점 업데이트 (리뷰 수, 총점 전달) */
-        List<ReviewDto> reviews = getReviewByMemberNo(mentorNo);
-        
-        Integer totCount = reviews.size();
-        Double totScore = 0.0;
-        Double averageScore = 0.0;
-        for (ReviewDto review : reviews) {
-        	totScore += review.getReviewScore();
-		}
-        
-        averageScore =totScore/totCount;
-        
-        return averageScore;
-        
-    }
 }
