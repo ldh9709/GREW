@@ -116,7 +116,8 @@ body {
 #message-form {
     position: fixed; /* 화면 하단에 고정 */
     bottom: 0; /* 하단에서 0px 위치 */
-    width: 22%; /* 가로로 전체 채우기 */
+    right: 0;
+    width: 16%; /* 가로로 전체 채우기 */
     background-color: white; /* 배경색 설정 */
     display: flex; /* 플렉스 레이아웃 */
     padding: 10px;

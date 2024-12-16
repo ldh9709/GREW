@@ -1,10 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
 import SockJS from 'sockjs-client';
 import { Client as StompClient } from '@stomp/stompjs';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
-const ChattingMessage = () => {
-  const { roomId } = useParams(); // URL에서 roomId 가져오기
+const ChattingMessage = ({ roomId }) => {
   const navigate = useNavigate(); // 리다이렉트를 위해 사용
   const [username, setUsername] = useState('');
   const [messageContent, setMessageContent] = useState('');
