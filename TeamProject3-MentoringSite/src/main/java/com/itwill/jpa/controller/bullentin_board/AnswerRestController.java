@@ -202,7 +202,7 @@ public class AnswerRestController {
 	/* 질문 하나에 달린 답변 */
 	/* 최신순 */
 	@Operation(summary = "질문에 작성된답변조회(최신순)")
-	@GetMapping("/{inquiryNo}/inquiry-date")
+	@GetMapping("/{inquiryNo}/answer-date")
 	public ResponseEntity<Response> getByInquiryAnswerOrderByDate(@PathVariable(name = "inquiryNo") Long inquiryNo,
 			@RequestParam(name = "page",defaultValue = "0") int page,  // 기본값은 0 페이지
             @RequestParam(name = "size",defaultValue = "10") int size) {
