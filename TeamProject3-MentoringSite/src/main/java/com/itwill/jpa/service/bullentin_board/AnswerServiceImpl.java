@@ -15,7 +15,6 @@ import com.itwill.jpa.dto.bulletin_board.AnswerDto;
 import com.itwill.jpa.entity.bullentin_board.Answer;
 import com.itwill.jpa.exception.CustomException;
 import com.itwill.jpa.repository.bullentin_board.AnswerRepository;
-import com.itwill.jpa.repository.bullentin_board.InquiryRepository;
 import com.itwill.jpa.response.ResponseMessage;
 import com.itwill.jpa.response.ResponseStatusCode;
 
@@ -25,8 +24,7 @@ import jakarta.transaction.Transactional;
 public class AnswerServiceImpl implements AnswerService{
 	@Autowired
 	private AnswerRepository answerRepository;
-	@Autowired
-	private InquiryRepository inquiryRepository;
+
 	/*답변등록*/
 	@Override
 	public AnswerDto createAnswer(AnswerDto answerDto) {
