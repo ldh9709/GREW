@@ -25,7 +25,7 @@ export const joinAction = async (member, tempCode) => {
     console.log("Request Data: ", member);
     console.log("Request Data: ", tempCode);
 
-    const response = await fetch(`${BACKEND_SERVER}/member/createMember`, {
+    const response = await fetch(`${BACKEND_SERVER}/api/member/createMember`, {
         method:'POST', 
         headers:{
             'Content-type':'application/json'
@@ -45,7 +45,7 @@ export const joinAction = async (member, tempCode) => {
 export const sendJoinCode = async (sendJsonObject) => {
     console.log("Request Data : ", sendJsonObject);
 
-    const response = await fetch(`${BACKEND_SERVER}/member/sendJoinCode`, {
+    const response = await fetch(`${BACKEND_SERVER}/api/member/sendJoinCode`, {
         method:'POST',
         headers:{
             'Content-type':'application/json'
