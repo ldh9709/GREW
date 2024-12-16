@@ -48,7 +48,7 @@ public class AdminSelectBoardController {
 	/************* 질문 ************/
 	/* (질문)게시글 전체출력 * */
 	@Operation(summary = "질문 게시글 전체 출력(최신순)")
-	@GetMapping("/Inquiry")
+	@GetMapping("/inquiry")
 	public ResponseEntity<Response> getAdminInquiriesOrderByDate(
 			@RequestParam(name = "page",defaultValue = "0") int page,  // 기본값은 0 페이지
 			@RequestParam(name = "size",defaultValue = "10") int size) {
