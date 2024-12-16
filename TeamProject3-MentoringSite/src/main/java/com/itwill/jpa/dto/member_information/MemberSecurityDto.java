@@ -43,7 +43,8 @@ public class MemberSecurityDto {
 	 * SNS 회원가입에 사용
 	 */
 	@Builder(builderClassName = "JoinOAuth2", builderMethodName = "JoinOAuth2")
-    public MemberSecurityDto(String memberName, String memberEmail, String memberPassword, String memberProvider) {
+    public MemberSecurityDto(String memberId, String memberName, String memberEmail, String memberPassword, String memberProvider) {
+		this.memberId = memberId;
 		this.memberName = memberName;
 		this.memberEmail = memberEmail;
 		this.memberPassword = memberPassword;

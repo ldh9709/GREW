@@ -34,7 +34,10 @@ public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
         // OAuth2 서버(예: Google, Kakao)와 통신하여 사용자 정보를 가져옴.
         OAuth2User oauth2User = super.loadUser(userRequest);
-
+        
+        //MemberId 랜덤부여
+        String randomId = UUID.randomUUID().toString().replace("-", "").substring(0,9);
+        
         System.out.println(">>>" + oauth2User.getClass().getSimpleName());
         System.out.println(">>> 인증유저" + oauth2User);
         System.out.println("***********useRequest********");
@@ -77,6 +80,7 @@ public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
 
         if (findMember == null) {
             findMember = Member.toSecurityEntity(MemberSecurityDto.JoinOAuth2()
+            		.memberId(randomId)
             		.memberName(name)
                     .memberEmail(email)
                     .memberPassword(password) // 암호화된 비밀번호 저장

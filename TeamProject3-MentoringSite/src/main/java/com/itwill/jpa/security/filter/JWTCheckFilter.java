@@ -45,10 +45,6 @@ public class JWTCheckFilter extends OncePerRequestFilter {
       return true;
     }
  
-    // 특정 API 경로들은 JWT 체크를 하지 않음
-//    if (path.startsWith("/member/")) {
-//      return true;
-//    }
     if (path.startsWith("/login")) {
       return true;
     }

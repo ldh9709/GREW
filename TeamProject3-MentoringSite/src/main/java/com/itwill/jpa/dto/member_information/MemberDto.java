@@ -70,6 +70,8 @@ public class MemberDto {
 	            .memberEmail(memberEntity.getMemberEmail())
 	            .memberName(memberEntity.getMemberName())
 	            .memberStatus(memberEntity.getMemberStatus())
+	            .memberRole(memberEntity.getMemberRole())
+	            .memberProvider(memberEntity.getMemberProvider())
 	            .interests(memberEntity.getInterests().stream()
 	            		.map(InterestDto::toDto)
 	            		.toList())
