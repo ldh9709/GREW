@@ -193,7 +193,7 @@ public class AnswerRestController {
 	    ResponseEntity<Response> responseEntity = 
 				new ResponseEntity<Response>(response, httpHeaders, HttpStatus.OK);
 		
-	    return responseEntity;
+	    return responseEntity; 
 		
 		
 	}
@@ -226,7 +226,7 @@ public class AnswerRestController {
 	/* 카테고리별 답변 리스트 */
 	/* 추천순 */
 	@Operation(summary = "카테고리별 답변조회(추천순)")
-	@GetMapping("/{categoryNo}/answer-vote")
+	@GetMapping("/{categoryNo}/category-vote")
 	public ResponseEntity<Response> getByCategoryAnswerOrderByVotes(@PathVariable(name = "categoryNo") Long categoryNo,
 			@RequestParam(name = "page",defaultValue = "0") int page,  // 기본값은 0 페이지
             @RequestParam(name = "size",defaultValue = "10") int size){
