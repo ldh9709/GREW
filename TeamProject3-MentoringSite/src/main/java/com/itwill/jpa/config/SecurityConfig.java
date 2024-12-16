@@ -143,7 +143,7 @@ public class SecurityConfig {
 			config.failureHandler(new APILoginFailHandler());
 		});
 		
-		httpSecurity.addFilterBefore(new JWTCheckFilter(), UsernamePasswordAuthenticationFilter.class);
+		//httpSecurity.addFilterBefore(new JWTCheckFilter(), UsernamePasswordAuthenticationFilter.class);
 				
 		//로그아웃
 		httpSecurity.logout((t) -> {
