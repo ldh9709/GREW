@@ -32,7 +32,7 @@ public class AdminSelectReportController {
 	
 	/* [어드민] 신고 출력(전체회원) */
 	@Operation(summary = "[어드민] 전체 신고 목록 조회")
-	@GetMapping("/Reports")
+	@GetMapping("/reports")
 	public ResponseEntity<Response> getAdminReportList(
 	        @RequestParam(name = "filter") Integer filter,
 	        @RequestParam(name = "page", defaultValue = "0") int page,

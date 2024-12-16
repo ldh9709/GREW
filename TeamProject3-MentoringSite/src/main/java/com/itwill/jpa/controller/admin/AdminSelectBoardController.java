@@ -69,8 +69,8 @@ public class AdminSelectBoardController {
 	}
 	
 	/* 카테고리별 출력 */
-	@Operation(summary = "관리자가 카테고리별 최신 순으로 질문을 출력")
-	@GetMapping("/Date/{categoryNo}")
+	@Operation(summary = "질문을 최신 순으로 출력")
+	@GetMapping("/date/{categoryNo}")
 	public ResponseEntity<Response> getAdminCategoryInquiriesSortedByDate(@PathVariable(name = "categoryNo") Long categoryNo,
 			@RequestParam(name = "page",defaultValue = "0") int page,  // 기본값은 0 페이지
 			@RequestParam(name = "size",defaultValue = "10") int size) {
@@ -91,8 +91,8 @@ public class AdminSelectBoardController {
 	}
 	
 	/* 검색 내용 별 출력 (inquiry)*/
-	@Operation(summary = "관리자 질문 검색 기능")
-	@GetMapping("/Search/{search}")
+	@Operation(summary = "질문 검색 기능")
+	@GetMapping("/search/{search}")
 	public ResponseEntity<Response> searchInquiriesForAdmin(@PathVariable(name = "search")String search
 			,@RequestParam(name = "page",defaultValue = "0") int page,  // 기본값은 0 페이지
             @RequestParam(name = "size",defaultValue = "10") int size) {
@@ -114,8 +114,8 @@ public class AdminSelectBoardController {
 	}
 	
 	/* 삭제(상태변경) */
-	@Operation(summary = "관리자 질문 삭제")
-	@PutMapping("/Delete/{inquiryNo}")
+	@Operation(summary = "질문 삭제(상태변경)")
+	@PutMapping("/delete/{inquiryNo}")
 	public ResponseEntity<Response> deleteInquiryForAdmin(@PathVariable(name = "inquiryNo") Long inquiryNo) throws Exception {
 	    // inquiryNo에 해당하는 질문을 삭제하는 서비스 호출
 	    InquiryDto inquiryDto = inquiryService.deleteInquiry(inquiryNo);
@@ -207,7 +207,7 @@ public class AdminSelectBoardController {
 	}
 	
 	@Operation(summary = "멘토 게시글 검색 기능")
-	@GetMapping("/admin/mentorBoards/search")
+	@GetMapping("/mentorBoards/search")
 	public ResponseEntity<Response> getAdminMentorBoardsForAdminWithSearch(
 	        @RequestParam(name = "search", required = false, defaultValue = "") String search,  // 검색어 (기본값은 빈 문자열)
 	        @RequestParam(name = "page", defaultValue = "0") int page,  // 기본값은 0 페이지
