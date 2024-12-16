@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.validation.BindingResult;
@@ -223,6 +224,7 @@ public class MemberRestController {
 	/***** 회원 정보 보기(토큰) *****/
 	@Operation(summary = "회원 정보 보기(토큰)")
 	@SecurityRequirement(name = "BearerAuth")
+	@Secured("ROLE_MENTEE")
 	@GetMapping("/profile")
 	public ResponseEntity<Response> getMember(Authentication authentication) {
 		

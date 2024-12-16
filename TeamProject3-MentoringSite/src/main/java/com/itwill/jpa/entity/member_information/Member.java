@@ -98,7 +98,18 @@ public class Member {
 		if (this.memberStatus == null || this.memberStatus == 0) this.memberStatus = 1;
 		if (this.memberJoinDate == null) this.memberJoinDate = LocalDateTime.now();
 		if (this.memberReportCount == null) this.memberReportCount = 0;
-		
+		 if (this.interests == null || this.interests.isEmpty()) {
+		this.interests = new ArrayList<>();
+		this.addInterests(Interest.builder()
+				                .category(Category.builder().categoryNo(19L).build())
+				                .build());
+        this.addInterests(Interest.builder()
+				                .category(Category.builder().categoryNo(20L).build())
+				                .build());
+        this.addInterests(Interest.builder()
+				                .category(Category.builder().categoryNo(21L).build())
+				                .build());
+		 }
 	}
 	
 	/*

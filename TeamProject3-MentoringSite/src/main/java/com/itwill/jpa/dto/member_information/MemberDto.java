@@ -10,6 +10,8 @@ import com.itwill.jpa.entity.role.Role;
 import com.itwill.jpa.validation.annotation.Email;
 import com.itwill.jpa.validation.validator.MemberEmailValidator;
 
+import io.swagger.v3.oas.annotations.media.ArraySchema;
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -24,16 +26,39 @@ import lombok.Setter;
 @AllArgsConstructor
 
 public class MemberDto {
+	
+	@Schema(description = "멤버 번호", example = "1")
 	private Long memberNo;
+	
+	@Schema(description = "멤버 ID", example = "aaa")
 	private String memberId;
+	
+	@Schema(description = "멤버 PASSWORD", example = "aaa")
 	private String memberPassword;
+	
+	@Schema(description = "멤버 EMAIL", example = "aaa@naver.com")
 	private String memberEmail;
+	
+	@Schema(description = "멤버 NAME", example = "김진영")
 	private String memberName;
+	
+	@Schema(description = "멤버 STATUS", example = "1")
 	private Integer memberStatus;	
+	
+	@Schema(description = "멤버 ROLE", example = "ROLE_MENTEE")
 	private Role memberRole;
+	
+	@Schema(description = "멤버 PROVIDER", example = "NULL")
 	private String memberProvider;
 	
-	private List<InterestDto> interests;
+	@ArraySchema(
+	        schema = @Schema(description = "멤버 관심사 리스트", example = "[\n" +
+	                "  {\"interestNo\": null, \"memberNo\": 1, \"categoryNo\": 2},\n" +
+	                "  {\"interestNo\": null, \"memberNo\": 1, \"categoryNo\": 3},\n" +
+	                "  {\"interestNo\": null, \"memberNo\": 1, \"categoryNo\": 4}\n" +
+	                "]")
+	    )
+	    private List<InterestDto> interests;
 	
 	
 	 /* Entitiy -> DTO*/

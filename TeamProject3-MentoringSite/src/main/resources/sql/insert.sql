@@ -39,6 +39,14 @@ VALUES(category_no_SEQ.nextval,'마케팅 전략',2,15);
 INSERT INTO category(category_no, category_name, category_depth, parent_category_no)
 VALUES(category_no_SEQ.nextval,'법률 특허 상담',2,15);
 
+INSERT INTO category(category_no, category_name, category_depth, parent_category_no)
+VALUES(category_no_SEQ.nextval,'관심사를 선택해주세요 (1)',3, null);
+INSERT INTO category(category_no, category_name, category_depth, parent_category_no)
+VALUES(category_no_SEQ.nextval,'관심사를 선택해주세요 (2)',3, null);
+INSERT INTO category(category_no, category_name, category_depth, parent_category_no)
+VALUES(category_no_SEQ.nextval,'관심사를 선택해주세요 (3)',3, null);
+
+
 
 /* 멘티 등록 */
 INSERT INTO member(member_no,member_id,member_password,member_email,member_name,member_points,member_status,member_join_date,member_report_count,member_role,member_provider)
