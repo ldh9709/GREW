@@ -263,16 +263,16 @@ public class MemberRestController {
 	
 	/* 회원 수정 */
 	@Operation(summary = "회원 정보 수정")
-	@PutMapping("/{memberNo}")
+	@PutMapping
 	public ResponseEntity<Response> updateMember(@RequestBody MemberDto memberDto) {
 		
-		Authentication authentication =	SecurityContextHolder.getContext().getAuthentication();
-		PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
-		
-		Long memberNo = principalDetails.getMemberNo();
-		
-		//클라이언트에서 보낸 데이터 무시하고 인증된 사용자 정보로 덮어씀(생략가능, 명시적으로 입력)
-		memberDto.setMemberNo(memberNo);
+//		Authentication authentication =	SecurityContextHolder.getContext().getAuthentication();
+//		PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
+//		
+//		Long memberNo = principalDetails.getMemberNo();
+//		
+//		//클라이언트에서 보낸 데이터 무시하고 인증된 사용자 정보로 덮어씀(생략가능, 명시적으로 입력)
+//		memberDto.setMemberNo(memberNo);
 		
 		//업데이트 메소드 실행
 		Member updateMember = memberService.updateMember(memberDto);

@@ -53,9 +53,9 @@ public class MemberDto {
 	
 	@ArraySchema(
 	        schema = @Schema(description = "멤버 관심사 리스트", example = "[\n" +
-	                "  {\"interestNo\": 1, \"memberNo\": 1, \"categoryNo\": 2},\n" +
-	                "  {\"interestNo\": 2, \"memberNo\": 1, \"categoryNo\": 3},\n" +
-	                "  {\"interestNo\": 3, \"memberNo\": 1, \"categoryNo\": 4}\n" +
+	                "  {\"interestNo\": null, \"memberNo\": 1, \"categoryNo\": 19},\n" +
+	                "  {\"interestNo\": null, \"memberNo\": 1, \"categoryNo\": 20},\n" +
+	                "  {\"interestNo\": null, \"memberNo\": 1, \"categoryNo\": 21}\n" +
 	                "]")
 	    )
 	    private List<InterestDto> interests;
