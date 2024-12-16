@@ -186,7 +186,12 @@ public class MemberRestController {
 	/* 회원 정보 수정 */
 	@Operation(summary = "회원 정보 수정")
 	@PutMapping("/{memberNo}")
-	public ResponseEntity<Response> updateMember(@RequestBody MemberDto memberDto) {
+	public ResponseEntity<Response> updateMember(
+			@RequestBody MemberDto memberDto,
+			@PathVariable("memberNo") Long memberNo
+			) {
+		
+		System.out.println(memberDto);
 		
 		//업데이트 메소드 실행
 		Member updateMember = memberService.updateMember(memberDto);
@@ -229,7 +234,7 @@ public class MemberRestController {
 			//응답객체에 코드, 메시지, 객체 설정
 			response.setStatus(ResponseStatusCode.UPDATE_MEMBER_SUCCESS);
 			response.setMessage(ResponseMessage.UPDATE_MEMBER_SUCCESS);
-			response.setData(updateMemberDto);
+			response.setData(updateMember);
 		}
 		
 		HttpHeaders httpHeaders=new HttpHeaders();

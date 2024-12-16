@@ -60,6 +60,14 @@ VALUES(category_no_SEQ.nextval, '관심사를 선택해주세요', 1, null);
 /* 멘티 등록 */
 INSERT INTO member(member_no,member_id,member_password,member_email,member_name,member_points,member_status,member_join_date,member_report_count,member_role,member_provider)
 VALUES(member_no_SEQ.nextval,'aaa','aaa','aaa@naver.com','김진영',12000,1,sysdate,0,'ROLE_MENTEE','');
+/* 관심사 등록 */
+insert into interest (interest_no, member_no, category_no) 
+values(interest_no_SEQ.nextval, 1, 2);
+insert into interest (interest_no, member_no, category_no) 
+values(interest_no_SEQ.nextval, 1, 3);
+insert into interest (interest_no, member_no, category_no) 
+values(interest_no_SEQ.nextval, 1, 4);
+
 INSERT INTO member(member_no,member_id,member_password,member_email,member_name,member_points,member_status,member_join_date,member_report_count,member_role,member_provider)
 VALUES(member_no_SEQ.nextval,'bbb','bbb','bbb@naver.com','김찬영',500,1,sysdate,0,'ROLE_MENTEE','');
 INSERT INTO member(member_no,member_id,member_password,member_email,member_name,member_points,member_status,member_join_date,member_report_count,member_role,member_provider)
