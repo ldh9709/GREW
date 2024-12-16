@@ -4,6 +4,8 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.undo.CannotUndoException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -15,10 +17,13 @@ import com.itwill.jpa.dto.bulletin_board.InquiryDto;
 import com.itwill.jpa.dto.report.ReportDto;
 import com.itwill.jpa.entity.member_information.Member;
 import com.itwill.jpa.entity.report.Report;
+import com.itwill.jpa.exception.CustomException;
 import com.itwill.jpa.repository.bullentin_board.AnswerRepository;
 import com.itwill.jpa.repository.bullentin_board.InquiryRepository;
 import com.itwill.jpa.repository.member_information.MemberRepository;
 import com.itwill.jpa.repository.report.ReportRepository;
+import com.itwill.jpa.response.ResponseMessage;
+import com.itwill.jpa.response.ResponseStatusCode;
 import com.itwill.jpa.service.bullentin_board.AnswerService;
 import com.itwill.jpa.service.bullentin_board.InquiryService;
 import com.itwill.jpa.service.member_information.MemberService;
@@ -40,87 +45,107 @@ public class ReportServiceImpl implements ReportService {
 	/*신고등록*/
 	@Override
 	public ReportDto createReport(ReportDto reportDto){
-		Report report = Report.toEntity(reportDto);
-		reportRepository.save(report);
-		return reportDto;
+		try {
+			Report report = Report.toEntity(reportDto);
+			reportRepository.save(report);
+			return reportDto;
+		} catch (Exception e) {
+			throw new CustomException(ResponseStatusCode.CREATED_REPORT_FAIL, ResponseMessage.READ_REPORT_FAIL, e);
+		}
 	}
 
 	/* [어드민] 신고 상태 변경 : 접수중 */
 	@Transactional
 	@Override
 	public ReportDto updateReportStatusToInProgress(Long reportNo) {
-		Report report = reportRepository.findById(reportNo).get();
-		report.setReportStatus(2);
-		reportRepository.save(report);
-		return ReportDto.toDto(reportRepository.findById(reportNo).get()); 
+		try {
+			Report report = reportRepository.findById(reportNo).get();
+			report.setReportStatus(2);
+			reportRepository.save(report);
+			return ReportDto.toDto(reportRepository.findById(reportNo).get()); 
+		} catch (Exception e) {
+			throw new CustomException(ResponseStatusCode.UPDATE_REPORT_FAIL, ResponseMessage.UPDATE_REPORT_FAIL, e);
+		}
 	}
 	
 	/* [어드민] 신고 상태 변경 : 처리완료 */
 	@Transactional
 	@Override
 	public ReportDto updateReportStatusToResolved(Long reportNo) {
-		Report report = reportRepository.findById(reportNo).get();
-		
-		if(report == null) {
-			throw new IllegalArgumentException("report 생성 오류");
-		}
-		
-		report.setReportStatus(3);
-		
-		/* type:MEMBER인 경우 
-		 * - 해당 멤버 신고 카운트 증가 
-		 * */
-		if(report.getReportType().equals("MEMBER")) {
-			memberService.incrementReportCount(report.getReportTarget());
-		}
-
-		/* 
-		 * type:ANSWER인 경우
-		 * - 해당 게시글 상태변경
-		 * - 해당 게시글 작성자 신고 카운트 증가
-		 * */
-		if(report.getReportType().equals("ANSWER")) {
-			try {
-				AnswerDto answer = answerService.deleteAnswer(report.getReportTarget());
-				Long writeNo = answer.getMemberNo();
-				memberService.incrementReportCount(writeNo);
-			} catch (Exception e) {
-				e.printStackTrace();
+		try {
+			Report report = reportRepository.findById(reportNo).get();
+			
+			if(report == null) {
+				throw new IllegalArgumentException("report 생성 오류");
 			}
-		}
-		/* type:INQUIRY인 경우 
-		 * - 해당 게시글 상태변경
-		 * - 해당 게시글 작성자 카운트 증가 
-		 * */
-		if(report.getReportType().equals("INQUIRY")) {
-			try {
-				InquiryDto inquiry = inquiryService.deleteInquiry(report.getReportTarget());
-				Long writerNo = inquiry.getMemberNo();
-				memberService.incrementReportCount(writerNo);
-			} catch (Exception e) {
-				e.printStackTrace();
+			
+			report.setReportStatus(3);
+			
+			/* type:MEMBER인 경우 
+			 * - 해당 멤버 신고 카운트 증가 
+			 * */
+			if(report.getReportType().equals("MEMBER")) {
+				memberService.incrementReportCount(report.getReportTarget());
 			}
+			
+			/* 
+			 * type:ANSWER인 경우
+			 * - 해당 게시글 상태변경
+			 * - 해당 게시글 작성자 신고 카운트 증가
+			 * */
+			if(report.getReportType().equals("ANSWER")) {
+				try {
+					AnswerDto answer = answerService.deleteAnswer(report.getReportTarget());
+					Long writeNo = answer.getMemberNo();
+					memberService.incrementReportCount(writeNo);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+			/* type:INQUIRY인 경우 
+			 * - 해당 게시글 상태변경
+			 * - 해당 게시글 작성자 카운트 증가 
+			 * */
+			if(report.getReportType().equals("INQUIRY")) {
+				try {
+					InquiryDto inquiry = inquiryService.deleteInquiry(report.getReportTarget());
+					Long writerNo = inquiry.getMemberNo();
+					memberService.incrementReportCount(writerNo);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+			report.setResolvedDate(LocalDateTime.now());
+			return ReportDto.toDto(reportRepository.findById(reportNo).get());
+		} catch (Exception e) {
+			throw new CustomException(ResponseStatusCode.UPDATE_REPORT_FAIL, ResponseMessage.UPDATE_REPORT_FAIL, e);
 		}
-		report.setResolvedDate(LocalDateTime.now());
-		return ReportDto.toDto(reportRepository.findById(reportNo).get());
 	}
 	
 	/* [어드민] 신고 상태 변경 : 무고처리 */
 	@Transactional
 	@Override
 	public ReportDto updateReportStatusToFalseReport(Long reportNo) {
-		Report report = reportRepository.findById(reportNo).get();
-		report.setReportStatus(4);
-		report.setResolvedDate(LocalDateTime.now());
-		return ReportDto.toDto(reportRepository.findById(reportNo).get());
+		try {
+			Report report = reportRepository.findById(reportNo).get();
+			report.setReportStatus(4);
+			report.setResolvedDate(LocalDateTime.now());
+			return ReportDto.toDto(reportRepository.findById(reportNo).get());
+		} catch (Exception e) {
+			throw new CustomException(ResponseStatusCode.UPDATE_REPORT_FAIL, ResponseMessage.UPDATE_REPORT_FAIL, e);
+		}
 	}
 	
 	
 	/* 신고 정보 상세 보기 */ 
 	public ReportDto getReportByreportNo(Long reportNo) {
-		Report report = reportRepository.findById(reportNo).get();
-		ReportDto reportDto = ReportDto.toDto(report);
-		return reportDto;
+		try {
+			Report report = reportRepository.findById(reportNo).get();
+			ReportDto reportDto = ReportDto.toDto(report);
+			return reportDto;
+		} catch (Exception e) {
+			throw new CustomException(ResponseStatusCode.READ_REPORT_FAIL, ResponseMessage.READ_REPORT_FAIL, e);
+		}
 	}
 	
 	
@@ -131,12 +156,12 @@ public class ReportServiceImpl implements ReportService {
 	 * */
 	@Override
 	public List<ReportDto> getReportAll(Integer filter,int pageNumber, int pageSize) {
-		
-		Pageable pageable = PageRequest.of(pageNumber, pageSize);
-		List<Report> reports = new ArrayList<>();
-		List<ReportDto> reportDtos = new ArrayList<>();
-		
-		switch (filter) {
+		try {
+			Pageable pageable = PageRequest.of(pageNumber, pageSize);
+			List<Report> reports = new ArrayList<>();
+			List<ReportDto> reportDtos = new ArrayList<>();
+			
+			switch (filter) {
 			case 1: {
 				/* 전체 출력 */
 				reports = reportRepository.findAllByOrderByReportDateDesc(pageable);
@@ -147,12 +172,15 @@ public class ReportServiceImpl implements ReportService {
 				reports = reportRepository.findByReportStatusOrderByReportDateDesc(3, pageable);
 				break;
 			}
-		}
+			}
 			
-		for (Report report : reports) {
-			reportDtos.add(ReportDto.toDto(report));
+			for (Report report : reports) {
+				reportDtos.add(ReportDto.toDto(report));
+			}
+			return reportDtos;
+		} catch (Exception e) {
+			throw new CustomException(ResponseStatusCode.READ_REPORT_LIST_FAIL, ResponseMessage.READ_REPORT_LIST_FAIL, e);
 		}
-		return reportDtos;
 	}
 }
 

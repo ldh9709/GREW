@@ -2433,7 +2433,13 @@ INQUIRY&#xd;
       <tableName>Member</tableName>
       <logicalName>Member</logicalName>
       <description>1: 활성화&#xd;
-2: 비활성화</description>
+2: 비활성화&#xd;
+&#xd;
+&#xd;
+[role]&#xd;
+ROLE_MENTEE&#xd;
+ROLE_MENTOR&#xd;
+ROLE_ADMIN</description>
       <columns>
         <net.java.amateras.db.visual.model.ColumnModel>
           <columnName>member_no</columnName>

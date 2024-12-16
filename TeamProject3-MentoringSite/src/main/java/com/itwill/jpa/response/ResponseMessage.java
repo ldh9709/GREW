@@ -18,6 +18,12 @@ public class ResponseMessage {
     public static final String UPDATE_MENTOR_BOARD_SUCCESS = "멘토 보드 수정 성공";
     public static final String DELETE_MENTOR_BOARD_SUCCESS = "멘토 보드 삭제 성공";
     public static final String MENTOR_BOARD_NOT_FOUND = "해당 멘토 보드를 찾을 수 없습니다.";
+    public static final String CREATED_MENTOR_BOARD_FAIL = "멘토 보드 등록에 실패했습니다.";
+    public static final String UPDATE_MENTOR_BOARD_FAIL = "멘토 보드 수정에 실패했습니다.";
+    public static final String DELETE_MENTOR_BOARD_FAIL = "멘토 보드 삭제에 실패했습니다.";
+    public static final String IMAGE_UPLOAD_FAIL = "이미지 업로드에 실패했습니다.";
+    public static final String MEMBER_NOT_FOUND = "해당 멤버를 찾을 수 없습니다."; 
+    public static final String NOT_A_MENTOR = "해당 멤버는 멘토가 아닙니다."; 
     /******************* MENTOR PROFILE 메시지 ************************/
     public static final String CREATED_MENTOR_PROFILE_SUCCESS = "멘토 프로필 등록 성공";
     public static final String READ_MENTOR_PROFILE_SUCCESS = "멘토 프로필 상세 조회 성공";
@@ -28,7 +34,13 @@ public class ResponseMessage {
     public static final String READ_MENTOR_PROFILE_LIST_FAIL = "멘토 프로필 목록 조회 실패";
     public static final String MENTOR_PROFILE_STATUS_UPDATE_SUCCESS = "멘토 프로필 상태 업데이트 성공";
     public static final String MENTOR_PROFILE_STATUS_UPDATE_FAIL = "멘토 프로필 상태 업데이트 실패";
-
+    public static final String CREATED_MENTOR_PROFILE_FAIL = "멘토 프로필 등록에 실패했습니다.";
+    public static final String ALREADY_HAS_MENTOR_PROFILE = "해당 회원은 이미 멘토 프로필을 가지고 있습니다.";
+    public static final String MEMBER_MENTOR_NOT_FOUND = "해당 멤버를 찾을 수 없습니다.";
+    public static final String CATEGORY_NOT_FOUND = "해당 카테고리를 찾을 수 없습니다.";
+    public static final String IMAGE_MENTOR_UPLOAD_FAIL = "이미지 업로드에 실패했습니다.";
+    public static final String UPDATE_MENTOR_PROFILE_FAIL_CODE = "멘토 프로필수정 실패.";
+    public static final String READ_MENTOR_PROFILE_FAIL = "멘토 프로필 조회에 실패했습니다.";
     /******************* MENTOR PROFILE TYPE 변경 메시지 ************************/
     public static final String MENTOR_PROFILE_TYPE_CHANGE_SUCCESS = "멘토 프로필 타입 변경 성공";
     public static final String MENTOR_PROFILE_TYPE_CHANGE_FAIL = "멘토 프로필 타입 변경 실패";
@@ -37,6 +49,11 @@ public class ResponseMessage {
 	public static final String READ_MENTORLIST_SUCCESS = "팔로잉 멘토 리스트 조회 성공";
 	public static final String READ_MENTEE_COUNT_SUCCESS = "팔로우 멘티 카운트 성공";
 	public static final String DELETE_FOLLOW_SUCCESS = "팔로우 취소 성공";
+	
+	public static final String CREATE_FOLLOW_FAIL = "팔로우 등록 실패";
+	public static final String READ_MENTORLIST_FAIL = "팔로잉 멘토 리스트 조회 실패";
+	public static final String READ_MENTEE_COUNT_FAIL = "팔로우 멘티 카운트 실패";
+	public static final String DELETE_FOLLOW_FAIL = "팔로우 취소 실패";
 	
 	/******************* CATEGORY 메시지 ************************/
 	public static final String CREATE_CATEGORY_SUCCESS = "카테고리 등록 성공";
@@ -58,9 +75,13 @@ public class ResponseMessage {
 	/******************* REPORT   메시지 ************************/
 	public static final String CREATED_REPORT_SUCCESS = "신고 등록 성공";
 	public static final String READ_REPORT_SUCCESS = "신고 조회 성공";
-	public static final String READ_REPORT_LIST_SUCCESS = "신고 리스트 성공";
+	public static final String READ_REPORT_LIST_SUCCESS = "신고 리스트 조회 성공";
 	public static final String UPDATE_REPORT_SUCCESS = "신고 상태변경 성공";
-	public static final String REPORT_FAIL = "신고 실패";
+	
+	public static final String CREATED_REPORT_FAIL = "신고 등록 실패";
+	public static final String READ_REPORT_FAIL = "신고 조회 실패";
+	public static final String READ_REPORT_LIST_FAIL= "신고 리스트 조회 실패";
+	public static final String UPDATE_REPORT_FAIL = "신고 상태변경 실패";
 	
 	/**********************INQUIRY 메시지**************************/
     public static final String CREATED_INQUIRY_SUCCESS = "질문 등록 성공";
@@ -72,8 +93,11 @@ public class ResponseMessage {
     public static final String READ_INQUIRY_LIST_SUCCESS = "질문 리스트 불러오기 성공";
     public static final String READ_INQUIRY_LIST_FAIL = "질문 리스트 불러오기 실패";
     public static final String INCREASE_VIEW_INQUIRY_SUCCESS = "조회수 증가 성공";
+    public static final String INCREASE_VIEW_INQUIRY_FAIL = "조회수 증가 실패";
     public static final String READ_INQUIRY_SUCCESS = "선택 질문 불러오기 성공";
     public static final String READ_INQUIRY_FAIL = "선택 질문 불러오기 실패";
+    public static final String READ_IPCHECK_SUCCESS = "아이피 체크 성공";
+	public static final String READ_IPCHECK_FAIL = "아이피 체크 실패";
     
     /**********************ANSWER 메시지**************************/
 	public static final String CREATED_ANSWER_SUCCESS = "답변 등록 성공";

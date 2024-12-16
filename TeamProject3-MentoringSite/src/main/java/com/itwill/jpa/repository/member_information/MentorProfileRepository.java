@@ -66,6 +66,38 @@ public interface MentorProfileRepository extends JpaRepository<MentorProfile, Lo
      @Query("SELECT mp FROM MentorProfile mp WHERE mp.mentorStatus = :status")
      Page<MentorProfile> findByMentorStatus(@Param("status") int status, Pageable pageable);
     
+     
+     /**
+      * 멘토 프로필의 특정 필드들을 업데이트하는 메서드
+      */
+     @Modifying
+     @Query("UPDATE MentorProfile mp SET " +
+            "mp.mentorCareer = :mentorCareer, " +
+            "mp.mentorIntroduce = :mentorIntroduce, " +
+            "mp.mentorImage = :mentorImage, " +
+            "mp.category.categoryNo = :categoryNo " +
+            "WHERE mp.mentorProfileNo = :mentorProfileNo")
+     int updateMentorProfile(
+             Long mentorProfileNo, 
+             String mentorCareer, 
+             String mentorIntroduce, 
+             String mentorImage, 
+             Long categoryNo
+     );
+     
+     // 멘토 프로필의 멘토링 횟수 조회
+     @Query("SELECT mp.mentorMentoringCount FROM MentorProfile mp WHERE mp.mentorProfileNo = :mentorProfileNo")
+     Integer findMentorMentoringCountByProfileNo(@Param("mentorProfileNo") Long mentorProfileNo);
+     
+     // 멘토 프로필의 팔로우 수 조회
+     @Query("SELECT mp.mentorFollowCount FROM MentorProfile mp WHERE mp.mentorProfileNo = :mentorProfileNo")
+     Integer findMentorFollowCountByProfileNo(@Param("mentorProfileNo") Long mentorProfileNo);
+
+     // 멘토 프로필의 활동 수 조회
+     @Query("SELECT mp.mentorActivityCount FROM MentorProfile mp WHERE mp.mentorProfileNo = :mentorProfileNo")
+     Integer findMentorActivityCountByProfileNo(@Param("mentorProfileNo") Long mentorProfileNo);
+     
+     
 }
 
 
@@ -75,29 +107,3 @@ public interface MentorProfileRepository extends JpaRepository<MentorProfile, Lo
 
 
 
-
-
-//    /**
-//     * 특정 상태의 모든 멘토 프로필 조회
-//     */
-//    @Query("SELECT mp FROM MentorProfile mp WHERE mp.mentorStatus = :status")
-//    List<MentorProfile> findByMentorStatus(@Param("status") int status);
-//   
-//    /**
-//     * 카테고리 번호로 멘토 프로필 조회
-//     */
-//    @Query("SELECT mp FROM MentorProfile mp WHERE mp.category.categoryNo = :categoryNo")
-//    List<MentorProfile> findByCategoryNo(@Param("categoryNo") Long categoryNo);
-
-//멘토 평점 조회 - mentor_rating를 조회 ()
-//    /**
-//     * 멘토 프로필 검색: 이름, 소개글, 경력에서 키워드를 검색
-//     */
-//	@Query("SELECT mp FROM MentorProfile mp " +
-//		       "JOIN FETCH mp.member " + 
-//		       "JOIN FETCH mp.category " + 
-//		       "WHERE mp.mentorStatus = 3 AND " + 
-//		       "(LOWER(mp.mentorIntroduce) LIKE LOWER(CONCAT('%', :keyword, '%')) " +
-//		       "OR LOWER(mp.mentorCareer) LIKE LOWER(CONCAT('%', :keyword, '%')) " +
-//		       "OR LOWER(mp.member.memberName) LIKE LOWER(CONCAT('%', :keyword, '%')))")
-//		List<MentorProfile> searchMentorProfiles(@Param("keyword") String keyword);

@@ -35,7 +35,7 @@ public class MentorBoard {
     private String mentorBoardContent; // 글
     
     @Column(name = "mentor_board_image")
-    private String mentorBoardImage;   // 보드 이미지 
+    private String mentorBoardImage;   // **이미지 경로(URL) 저장**
 
     @Column(name = "mentor_board_date")
     private LocalDateTime mentorBoardDate;   // 날짜 

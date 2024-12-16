@@ -8,7 +8,7 @@ import com.itwill.jpa.response.Response;
 import com.itwill.jpa.response.ResponseMessage;
 import com.itwill.jpa.response.ResponseStatusCode;
 import com.itwill.jpa.service.alarm.AlarmService;
-import com.itwill.jpa.service.member_information.MemtorBoardService;
+import com.itwill.jpa.service.member_information.MentorBoardService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -17,6 +17,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import io.swagger.v3.oas.annotations.Operation;
 
@@ -28,7 +29,7 @@ import java.util.List;
 public class MentorBoardController {
 
     @Autowired
-    private MemtorBoardService mentorBoardService;
+    private MentorBoardService mentorBoardService;
     @Autowired
     private AlarmService alarmService;
     
@@ -39,8 +40,8 @@ public class MentorBoardController {
     	MentorBoardDto savedBoard = mentorBoardService.saveMemtorBoard(mentorBoardDto);
     	List<AlarmDto> saveAlarms = alarmService.createAlarmsByMentorBoard(savedBoard);
         Response response = new Response();
-        response.setStatus(ResponseStatusCode.CREATED_MEMBER_SUCCESS);
-        response.setMessage(ResponseMessage.CREATED_MEMBER_SUCCESS);
+        response.setStatus(ResponseStatusCode.CREATED_MENTOR_BOARD_SUCCESS);
+        response.setMessage(ResponseMessage.CREATED_MENTOR_BOARD_SUCCESS);
         response.setData(savedBoard);
         response.setAddData(saveAlarms);
         HttpHeaders headers = new HttpHeaders();
@@ -65,8 +66,8 @@ public class MentorBoardController {
 
         // 응답 생성
         Response response = new Response();
-        response.setStatus(ResponseStatusCode.UPDATE_MEMBER_SUCCESS);
-        response.setMessage(ResponseMessage.UPDATE_MEMBER_SUCCESS);
+        response.setStatus(ResponseStatusCode.UPDATE_MENTOR_BOARD_SUCCESS);
+        response.setMessage(ResponseMessage.UPDATE_MENTOR_BOARD_SUCCESS);
         response.setData(updatedBoard);
         
         // 응답 헤더 생성
@@ -86,8 +87,8 @@ public class MentorBoardController {
         );
 
         Response response = new Response();
-        response.setStatus(ResponseStatusCode.DELETE_MEMBER_SUCCESS);
-        response.setMessage(ResponseMessage.DELETE_MEMBER_SUCCESS);
+        response.setStatus(ResponseStatusCode.DELETE_MENTOR_BOARD_SUCCESS);
+        response.setMessage(ResponseMessage.DELETE_MENTOR_BOARD_SUCCESS);
         response.setData(deletedBoard);
 
         HttpHeaders httpHeaders = new HttpHeaders();
@@ -106,8 +107,8 @@ public class MentorBoardController {
         MentorBoardDto mentorBoard = mentorBoardService.getMemtorBoard(mentorBoardNo);
 
         Response response = new Response();
-        response.setStatus(ResponseStatusCode.READ_MEMBER_SUCCESS);
-        response.setMessage(ResponseMessage.READ_MEMBER_SUCCESS);
+        response.setStatus(ResponseStatusCode.READ_MENTOR_BOARD_SUCCESS);
+        response.setMessage(ResponseMessage.READ_MENTOR_BOARD_SUCCESS);
         response.setData(mentorBoard);
 
         HttpHeaders headers = new HttpHeaders();
@@ -130,7 +131,7 @@ public class MentorBoardController {
 
         Response response = new Response();
         response.setStatus(ResponseStatusCode.UPDATE_MEMBER_SUCCESS);
-        response.setMessage("멘토 보드 조회수 증가 성공");
+        response.setMessage(ResponseMessage.UPDATE_MEMBER_SUCCESS);
         response.setData(updatedBoard);
 
         HttpHeaders headers = new HttpHeaders();
@@ -155,7 +156,7 @@ public class MentorBoardController {
 
         Response response = new Response();
         response.setStatus(ResponseStatusCode.READ_MEMBER_LIST_SUCCESS);
-        response.setMessage("멘토 보드 조회수 순 정렬 페이징 성공");
+        response.setMessage(ResponseMessage.READ_MEMBER_LIST_SUCCESS);
         response.setData(sortedBoards);
 
         HttpHeaders headers = new HttpHeaders();
@@ -178,7 +179,7 @@ public class MentorBoardController {
 
         Response response = new Response();
         response.setStatus(ResponseStatusCode.READ_MEMBER_LIST_SUCCESS);
-        response.setMessage("멘토 보드 검색 페이징 성공");
+        response.setMessage(ResponseMessage.READ_MEMBER_LIST_SUCCESS);
         response.setData(searchedBoards);
 
         HttpHeaders headers = new HttpHeaders();
@@ -200,7 +201,7 @@ public class MentorBoardController {
 
         Response response = new Response();
         response.setStatus(ResponseStatusCode.READ_MEMBER_LIST_SUCCESS);
-        response.setMessage("멘토 보드 날짜 기준 정렬 페이징 성공");
+        response.setMessage(ResponseMessage.READ_MEMBER_LIST_SUCCESS);
         response.setData(sortedBoards);
 
         HttpHeaders headers = new HttpHeaders();
@@ -223,7 +224,7 @@ public class MentorBoardController {
 
         Response response = new Response();
         response.setStatus(ResponseStatusCode.READ_MEMBER_LIST_SUCCESS);
-        response.setMessage("특정 사용자와 관련된 게시글 조회 페이징 성공");
+        response.setMessage(ResponseMessage.READ_MEMBER_LIST_SUCCESS);
         response.setData(mentorBoards);
 
         HttpHeaders headers = new HttpHeaders();
@@ -235,91 +236,46 @@ public class MentorBoardController {
     
     
     
-    
-    
-    
-    
-    
-    
-//    /* 멘토 보드 검색 */
-//    @Operation(summary = "멘토 보드 검색")
-//    @GetMapping("/search")
-//    public ResponseEntity<Response> searchMentorBoards(@RequestParam(name = "query") String query) {
-//        List<MentorBoardDto> searchedBoards = mentorBoardService.findMentorBoardBySearch(query);
-//
-//        Response response = new Response();
-//        response.setStatus(ResponseStatusCode.READ_MEMBER_LIST_SUCCESS);
-//        response.setMessage("멘토 보드 검색 성공");
-//        response.setData(searchedBoards);
-//
-//        HttpHeaders headers = new HttpHeaders();
-//        headers.setContentType(new MediaType(MediaType.APPLICATION_JSON, Charset.forName("UTF-8")));
-//
-//        ResponseEntity<Response> responseEntity = 
-//				new ResponseEntity<Response>(response, headers, HttpStatus.OK);
-//        
-//        return  responseEntity ;
-//    }
+ // **이미지 업로드 엔드포인트**
+    @PostMapping("/{mentorBoardNo}/upload-image")
+    public ResponseEntity<String> uploadImage( @PathVariable("mentorBoardNo") Long mentorBoardNo, @RequestParam("file") MultipartFile file) {
+        try {
+            mentorBoardService.uploadImage(mentorBoardNo, file);
+            return ResponseEntity.ok("이미지 업로드 성공");
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body("이미지 업로드 실패: " + e.getMessage());
+        }
+    }
 
-//    /* 멘토 보드 조회수 기준 정렬 */
-//    @Operation(summary = "멘토 보드 조회수 기준 정렬")
-//    @GetMapping("/sorted/views")
-//    public ResponseEntity<Response> getMentorBoardsSortedByViews() {
-//        List<MentorBoardDto> sortedBoards = mentorBoardService.findByMentorBoardNoOrderByView(null);
-//
-//        Response response = new Response();
-//        response.setStatus(ResponseStatusCode.READ_MEMBER_LIST_SUCCESS);
-//        response.setMessage("멘토 보드 조회수 순 정렬 성공");
-//        response.setData(sortedBoards);
-//
-//        HttpHeaders headers = new HttpHeaders();
-//        headers.setContentType(new MediaType(MediaType.APPLICATION_JSON, Charset.forName("UTF-8")));
-//
-//        ResponseEntity<Response> responseEntity = 
-//				new ResponseEntity<Response>(response, headers, HttpStatus.OK);
-//        
-//        return  responseEntity ;
-//    }
-    
-//    /**
-//     * mentor_board_date 기준 내림차순으로 mentor_board_status = 1 인 MentorBoard 목록 조회
-//     */
-//    @Operation(summary = "멘토 보드 시간 기준 내림차순 정렬")
-//    @GetMapping("/sorted-by-date")
-//    public ResponseEntity<Response> getMentorBoardsSortedByDate() {
-//        List<MentorBoard> sortedBoards = mentorBoardService.getMentorBoardsSortedByDate();
-//
-//        Response response = new Response();
-//        response.setStatus(ResponseStatusCode.READ_MENTOR_BOARD_LIST_SUCCESS);
-//        response.setMessage(ResponseMessage.READ_MENTOR_BOARD_LIST_SUCCESS);
-//        response.setData(sortedBoards);
-//
-//        HttpHeaders headers = new HttpHeaders();
-//        headers.setContentType(new MediaType(MediaType.APPLICATION_JSON, Charset.forName("UTF-8")));
-//
-//        ResponseEntity<Response> responseEntity = 
-//            new ResponseEntity<>(response, headers, HttpStatus.OK);
-//
-//        return responseEntity;
-//    }
-//    /* 특정 멘토의 모든 멘토 보드 조회 */
-//    @Operation(summary = "특정 멘토의 모든 멘토 보드 조회")
-//    @GetMapping("/mentor/{memberNo}")
-//    public ResponseEntity<Response> getMentorBoardsByMember(@PathVariable(name = "memberNo") Long memberNo) {
-//        List<MentorBoardDto> mentorBoards = mentorBoardService.getMentorBoardsByMemberNo(memberNo);
-//
-//        Response response = new Response();
-//        response.setStatus(ResponseStatusCode.READ_MEMBER_LIST_SUCCESS);
-//        response.setMessage(ResponseMessage.READ_MEMBER_LIST_SUCCESS);
-//        response.setData(mentorBoards);
-//
-//        HttpHeaders headers = new HttpHeaders();
-//        headers.setContentType(new MediaType(MediaType.APPLICATION_JSON, Charset.forName("UTF-8")));
-//
-//        ResponseEntity<Response> responseEntity = 
-//				new ResponseEntity<Response>(response, headers, HttpStatus.OK);
-//        
-//        return  responseEntity ;
-//    }
+    // **이미지 URL 가져오기 엔드포인트**
+    @GetMapping("/{mentorBoardNo}/image-url")
+    public ResponseEntity<String> getImageUrl(@PathVariable("mentorBoardNo") Long mentorBoardNo) {
+        try {
+            String imageUrl = mentorBoardService.getImageUrl(mentorBoardNo);
+            return ResponseEntity.ok(imageUrl);
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body("이미지 URL 조회 실패: " + e.getMessage());
+        }
+    }
 }
+    
+    
 
+    
+    
+    
+    
+
+//    @Operation(summary = "이미지 업로드")
+//    @PostMapping("/{mentorBoardNo}/upload-image")
+//    public String uploadMentorBoardImage(
+//            @PathVariable("mentorBoardNo") Long mentorBoardNo,
+//            @RequestParam("file") MultipartFile file) {
+//        try {
+//            mentorBoardService.updateMentorBoardImage(mentorBoardNo, file);
+//            return "이미지 업로드 성공";
+//        } catch (Exception e) {
+//            return "이미지 업로드 실패: " + e.getMessage();
+//        }
+//    }
+//    
