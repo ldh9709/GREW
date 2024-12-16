@@ -51,7 +51,7 @@ public class PrincipalDetails implements UserDetails, OAuth2User {
 		//3항연산자 사용, Null이면 기본값 입력 아니면 그대로
 		String roleName = (member.getMemberRole() != null)
 			        ? member.getMemberRole().name()
-			        : "ROLE_USER"; // 기본 권한 설정
+			        : "ROLE_MENTEE"; // 기본 권한 설정
 		return Collections.singletonList(new SimpleGrantedAuthority(member.getMemberRole().name()));
 	}
 	

@@ -10,6 +10,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.validation.BindingResult;
@@ -224,6 +225,7 @@ public class MemberRestController {
 	/***** 회원 정보 보기(토큰) *****/
 	@Operation(summary = "회원 정보 보기(토큰)")
 	@SecurityRequirement(name = "BearerAuth")
+	@PreAuthorize("hasRole('MENTEE')")
 	@GetMapping("/profile")
 	public ResponseEntity<Response> getMember(Authentication authentication) {
 		
@@ -231,9 +233,11 @@ public class MemberRestController {
 		PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
 		Long memberNo = principalDetails.getMemberNo();
 		
+		System.out.println(">>>>> getAuthorities : " + authentication.getAuthorities());
 		System.out.println(">>>>> authentication : " + authentication);
 		System.out.println(">>>>> authentication.getName() : " + authentication.getName());
-		
+		System.out.println(">>> Granted Authorities: " + authentication.getAuthorities());
+		System.out.println(">>> PrincipalDetails Authorities: " + principalDetails.getAuthorities());
 		
 		// 번호로 멤버 객체 찾기
         Member loginMember = memberService.getMember(memberNo);

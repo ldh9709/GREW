@@ -5,6 +5,8 @@ import java.util.Arrays;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -31,6 +33,7 @@ import com.itwill.jpa.security.handler.APILoginSuccessHandler;
 
 @Configuration//이 클래스를 읽고 빈으로 등록한다
 @EnableWebSecurity(debug = true)//Spring Security의 설정을 활성화
+@EnableMethodSecurity
 public class SecurityConfig {
 	/***** 구현 안 된 부분
 	 * .failureForwardUrl(formLoginFailureHandler); 로그인 실패 시 동작처리 : 아직 메소드 구현X
@@ -151,16 +154,17 @@ public class SecurityConfig {
 			 .logoutSuccessUrl("/login");//성공 후 리다이렉트
 		});
 
-		//페이지 접근 경로
+		/***** 페이지 접근 경로 *****/
 		httpSecurity.authorizeHttpRequests((authorizeHttpRequestsConfig) -> {
 		      // swagger설정
 		      authorizeHttpRequestsConfig
-//			      .requestMatchers(SwaggerPatterns).permitAll()
-		      	  .requestMatchers("/profile").authenticated()//끝이 profile인 URL은 인증된 사용자만 접근 가능
-			      .requestMatchers("/**","/login","/oauth2/**").permitAll()
+			      //.requestMatchers(SwaggerPatterns).permitAll()
+		      	  //.requestMatchers("/profile").authenticated()//끝이 profile인 URL은 인증된 사용자만 접근 가능
+		      	  .requestMatchers("/profile").hasRole("MENTEE")//끝이 profile인 URL은 MENTEE만 접근 가능
+			      .requestMatchers("/login","/oauth2/**").permitAll()
 			      .anyRequest().authenticated();
 		    });
-
+		
 		return httpSecurity.build();
 		
 		
