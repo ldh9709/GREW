@@ -225,7 +225,7 @@ public class MemberRestController {
 	/***** 회원 정보 보기(토큰) *****/
 	@Operation(summary = "회원 정보 보기(토큰)")
 	@SecurityRequirement(name = "BearerAuth")
-	@PreAuthorize("hasRole('MENTEE')")
+	//@PreAuthorize("hasRole('MENTEE')")
 	@GetMapping("/profile")
 	public ResponseEntity<Response> getMember(Authentication authentication) {
 		
