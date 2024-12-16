@@ -40,11 +40,17 @@ public class ResponseStatusCode {
     public static final int CATEGORY_NOT_FOUND = 2398; // 카테고리를 찾을 수 없음
     public static final int IMAGE_MENTOR_UPLOAD_FAIL = 2399; // 이미지 업로드 실패
     public static final int UPDATE_MENTOR_PROFILE_FAIL_CODE = 2389; // 이미지 업로드 실패
+    public static final int READ_MENTOR_PROFILE_FAIL = 2387; // 멘토 프로필 조회 실패
 	/******************* FOLLOW 메시지 ************************/
 	public static final int CREATE_FOLLOW_SUCCESS = 2400;
 	public static final int READ_MENTORLIST_SUCCESS = 2410;
 	public static final int READ_MENTEE_COUNT_SUCCESS = 2420;
 	public static final int DELETE_FOLLOW_SUCCESS = 2430;
+	
+	public static final int CREATE_FOLLOW_FAIL = 2440;
+	public static final int READ_MENTORLIST_FAIL= 2450;
+	public static final int READ_MENTEE_COUNT_FAIL= 2460;
+	public static final int DELETE_FOLLOW_FAIL= 2470;
 	
 	/******************* CATEGORY 메시지 ************************/
 	public static final int CREATE_CATEGORY_SUCCESS = 2400;
@@ -64,7 +70,11 @@ public class ResponseStatusCode {
 	public static final int READ_REPORT_SUCCESS = 4100;
 	public static final int READ_REPORT_LIST_SUCCESS = 4200;
 	public static final int UPDATE_REPORT_SUCCESS = 4300;
-	public static final int REPORT_FAIL = 4400;
+	
+	public static final int CREATED_REPORT_FAIL = 4400;
+	public static final int READ_REPORT_FAIL = 4500;
+	public static final int READ_REPORT_LIST_FAIL= 4600;
+	public static final int UPDATE_REPORT_FAIL = 4700;
 	
 	/**********************INQUIRY 메시지**************************/
 	public static final int CREATED_INQUIRY_SUCCESS = 5000;
@@ -136,5 +146,6 @@ public class ResponseStatusCode {
 	
 	/******************* 일반적인오류 메시지 **********************/
 	public static final int INTERNAL_SERVER_ERROR = 10000;
+	
 	
 }

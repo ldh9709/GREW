@@ -14,7 +14,15 @@ public class HttpStatusMapper {
     static {
         // MEMBER 관련 상태 코드 매핑
 
-        // MENTOR BOARD 관련 상태 코드 매핑
+
+
+        // FOLLOW 관련 상태 코드 매핑
+    	statusCodeMap.put(ResponseStatusCode.CREATE_FOLLOW_FAIL, HttpStatus.BAD_REQUEST);
+    	statusCodeMap.put(ResponseStatusCode.READ_MENTORLIST_FAIL, HttpStatus.NOT_FOUND);
+    	statusCodeMap.put(ResponseStatusCode.READ_MENTEE_COUNT_FAIL, HttpStatus.NOT_FOUND);
+    	statusCodeMap.put(ResponseStatusCode.DELETE_FOLLOW_FAIL, HttpStatus.BAD_REQUEST);
+
+    	// MENTOR BOARD 관련 상태 코드 매핑
     	statusCodeMap.put(ResponseStatusCode.CREATED_MENTOR_BOARD_FAIL, HttpStatus.BAD_REQUEST);
     	statusCodeMap.put(ResponseStatusCode.UPDATE_MENTOR_BOARD_FAIL, HttpStatus.BAD_REQUEST);
     	statusCodeMap.put(ResponseStatusCode.DELETE_MENTOR_BOARD_FAIL, HttpStatus.BAD_REQUEST);
@@ -26,14 +34,19 @@ public class HttpStatusMapper {
     	statusCodeMap.put(ResponseStatusCode.UPDATE_MENTOR_PROFILE_FAIL_CODE, HttpStatus.BAD_REQUEST); // 멘토 프로필 수정 실패
     	statusCodeMap.put(ResponseStatusCode.MENTOR_PROFILE_STATUS_UPDATE_FAIL_CODE, HttpStatus.BAD_REQUEST); // 멘토 프로필 상태 업데이트 실패
     	statusCodeMap.put(ResponseStatusCode.IMAGE_UPLOAD_FAIL, HttpStatus.BAD_REQUEST); // 이미지 업로드 실패
-    	
-    	// FOLLOW 관련 상태 코드 매핑
+    	statusCodeMap.put(ResponseStatusCode.CATEGORY_NOT_FOUND, HttpStatus.BAD_REQUEST); // CATEGORY_NOT_FOUND (400)
+    	statusCodeMap.put(ResponseStatusCode.MENTOR_PROFILE_NOT_FOUND_CODE, HttpStatus.NOT_FOUND); // MENTOR_PROFILE_NOT_FOUND (404)
+    	statusCodeMap.put(ResponseStatusCode.UPDATE_MENTOR_PROFILE_FAIL_CODE, HttpStatus.BAD_REQUEST); // UPDATE_MENTOR_PROFILE_FAIL_CODE (400)
 
         // CATEGORY 관련 상태 코드 매핑
 
         // ALARM 관련 상태 코드 매핑
 
         // REPORT 관련 상태 코드 매핑
+    	statusCodeMap.put(ResponseStatusCode.CREATED_REPORT_FAIL, HttpStatus.BAD_REQUEST);
+    	statusCodeMap.put(ResponseStatusCode.READ_REPORT_FAIL, HttpStatus.NOT_FOUND);
+    	statusCodeMap.put(ResponseStatusCode.READ_REPORT_LIST_FAIL, HttpStatus.NOT_FOUND);
+    	statusCodeMap.put(ResponseStatusCode.UPDATE_REPORT_FAIL, HttpStatus.BAD_REQUEST);
 
         // INQUIRY 관련 상태 코드 매핑
         statusCodeMap.put(ResponseStatusCode.CREATED_INQUIRY_FAIL, HttpStatus.BAD_REQUEST);

@@ -1,46 +1,115 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <title>멘토 보드 이미지 업로드</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>이미지 업로드 및 가져오기</title>
     <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        form {
+            margin-bottom: 20px;
+        }
+
         img {
-            width: 200px;
-            height: 200px;
-            object-fit: cover;
-            display: block;
-            margin-top: 10px;
+            max-width: 300px;
+            height: auto;
+            border: 1px solid #ddd;
+            margin-top: 20px;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
         }
     </style>
 </head>
 <body>
-<h1>멘토 보드 이미지 업로드</h1>
 
-<!-- 이미지 미리보기 부분 -->
-<form action="/mentor-board/1/upload-image" method="post" enctype="multipart/form-data">
-    <input type="file" name="file" id="fileInput" accept="image/*" required>
-    <img id="imagePreview" src="" alt="이미지 미리보기" style="display:none;">
+<h1>이미지 업로드 및 미리보기</h1>
+
+<!-- 📤 이미지 업로드 폼 -->
+<h2>이미지 업로드</h2>
+<form id="upload-form">
+    <label for="mentorBoardNo">멘토 보드 번호:</label>
+    <input type="number" id="mentorBoardNo" name="mentorBoardNo" required>
+    
+    <label for="file">이미지 파일 선택:</label>
+    <input type="file" id="file" name="file" accept="image/*" required>
+    
     <button type="submit">이미지 업로드</button>
 </form>
 
+<hr>
+
+<!-- 📥 이미지 가져오기 폼 -->
+<h2>이미지 가져오기</h2>
+<form id="fetch-form">
+    <label for="fetchMentorBoardNo">멘토 보드 번호:</label>
+    <input type="number" id="fetchMentorBoardNo" name="fetchMentorBoardNo" required>
+    <button type="submit">이미지 가져오기</button>
+</form>
+
+<!-- 이미지 미리보기 -->
+<h3>업로드된 이미지 미리보기</h3>
+<img id="fetched-image" src="" alt="이미지를 가져오면 여기에 표시됩니다." style="display: none;">
+
 <script>
-    const fileInput = document.getElementById('fileInput');
-    const imagePreview = document.getElementById('imagePreview');
+    // 📤 이미지 업로드 로직
+    document.getElementById('upload-form').addEventListener('submit', function(event) {
+        event.preventDefault();
+        
+        const mentorBoardNo = document.getElementById('mentorBoardNo').value;
+        const fileInput = document.getElementById('file');
+        const formData = new FormData();
+        formData.append('file', fileInput.files[0]);
 
-    fileInput.addEventListener('change', function(event) {
-        const file = event.target.files[0];
+        fetch(`/mentor-board/${mentorBoardNo}/upload-image`, {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => response.text())
+        .then(result => {
+            alert('이미지 업로드 성공');
+            console.log('업로드 결과:', result);
+        })
+        .catch(error => {
+            alert('이미지 업로드 실패');
+            console.error('오류 발생:', error);
+        });
+    });
 
-        if (file) {
-            const reader = new FileReader();
-            
-            // 파일 읽기 완료 시 미리보기 이미지를 설정
-            reader.onload = function(e) {
-                imagePreview.src = e.target.result;
-                imagePreview.style.display = 'block'; // 미리보기 보이기
-            };
+    // 📥 이미지 가져오기 로직
+    document.getElementById('fetch-form').addEventListener('submit', function(event) {
+        event.preventDefault();
 
-            reader.readAsDataURL(file); // 파일을 base64로 인코딩하여 미리보기를 설정
-        }
+        const mentorBoardNo = document.getElementById('fetchMentorBoardNo').value;
+
+        fetch(`/mentor-board/${mentorBoardNo}/image-url`)
+        .then(response => response.text())
+        .then(imageUrl => {
+            if (imageUrl) {
+                const imageElement = document.getElementById('fetched-image');
+                imageElement.src = imageUrl + '?t=' + new Date().getTime(); // 캐시 방지
+                imageElement.style.display = 'block'; // 이미지 표시
+            } else {
+                alert('이미지를 찾을 수 없습니다.');
+            }
+        })
+        .catch(error => {
+            alert('이미지를 가져오는 중 오류 발생');
+            console.error('오류 발생:', error);
+        });
     });
 </script>
 
