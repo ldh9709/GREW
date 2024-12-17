@@ -29,10 +29,9 @@ public class ReviewServiceImpl implements ReviewService {
 
     /* 리뷰 생성 */
     @Override
-    public Review saveReview(ReviewDto reviewDto) {
+    public Review createReview(ReviewDto reviewDto) {
         // DTO를 엔티티로 변환
         Review review = Review.toEntity(reviewDto);
-        
         // 리뷰 저장
         return reviewRepository.save(review);
     }
@@ -54,34 +53,32 @@ public class ReviewServiceImpl implements ReviewService {
     	
     }
 
-    /* 리뷰 삭제 */
+    /* 리뷰 삭제(상태업데이트) */
     @Transactional
     @Override
     public Review deleteReview(Long reviewNo) {
         // 리뷰 조회
         Review findReview = reviewRepository.findByReviewNo(reviewNo);
-        reviewRepository.deleteById(reviewNo);
+        findReview.setReviewStatus(2);
+        reviewRepository.save(findReview);
         
         return findReview;
     }
 
     /* 특정 리뷰 조회 */
     @Override
-    public Review selectReviewByReviewNo(Long reviewNo) {
-//        // 리뷰 조회
-//        Optional<Review> reviewOptional = reviewRepository.findById(reviewNo);
-//        if (reviewOptional.isPresent()) {
-//            return ReviewDto.toDto(reviewOptional.get());
-//        } else {
-//            throw new RuntimeException("Review not found");
-//        }
-    	return reviewRepository.findByReviewNo(reviewNo);
+    public ReviewDto getReviewByReviewNo(Long reviewNo) {
+        // 리뷰 조회
+        Review review = reviewRepository.findByReviewNo(reviewNo);
+        ReviewDto reviewDto = ReviewDto.toDto(review);
+        
+    	return reviewDto;
     }
 
     /* 특정 요청 번호에 따른 리뷰 리스트 조회 */
     @Override
-    public List<ReviewDto> selectReviewByChatRoomNo(Long chatRoomNo) {
-        List<Review> reviews = reviewRepository.findReviewByChatRoom_ChatRoomNo(chatRoomNo);
+    public List<ReviewDto> getReviewByChatRoomNo(Long chatRoomNo) {
+        List<Review> reviews = reviewRepository.findReviewByChatRoom_ChatRoomNoAndReviewStatus(chatRoomNo,1);
         List<ReviewDto> reviewDtolist = new ArrayList<>();
         for (Review review : reviews) {
             reviewDtolist.add(ReviewDto.toDto(review));
@@ -91,14 +88,14 @@ public class ReviewServiceImpl implements ReviewService {
 
     /* 특정 멤버 번호에 따른 리뷰 리스트 조회 */
     @Override
-    public List<ReviewDto> selectReviewByMemberNo(Long memberNo) {
+    public List<ReviewDto> getReviewByMemberNo(Long memberNo) {
         Set<Review> reviews = new HashSet<>();
 
         // 멘티 번호로 리뷰 조회
-        reviews.addAll(reviewRepository.findReviewByChatRoom_Mentee_MemberNo(memberNo));
+        reviews.addAll(reviewRepository.findReviewByChatRoom_Mentee_MemberNoAndReviewStatus(memberNo,1));
 
         // 멘토 번호로 리뷰 조회
-        reviews.addAll(reviewRepository.findReviewByChatRoom_Mentor_MemberNo(memberNo));
+        reviews.addAll(reviewRepository.findReviewByChatRoom_Mentor_MemberNoAndReviewStatus(memberNo,1));
 
         // 리뷰를 DTO로 변환
         List<ReviewDto> reviewDtoList = new ArrayList<>();
@@ -112,7 +109,7 @@ public class ReviewServiceImpl implements ReviewService {
 
     /* 모든 리뷰 리스트 조회 */
     @Override
-    public List<ReviewDto> selectReviewAll() {
+    public List<ReviewDto> getReviewAll() {
         List<Review> reviews = reviewRepository.findAll();
         List<ReviewDto> reviewDtoList = new ArrayList<>();
         for (Review review : reviews) {

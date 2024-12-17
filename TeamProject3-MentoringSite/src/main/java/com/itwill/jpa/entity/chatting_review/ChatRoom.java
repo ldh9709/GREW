@@ -48,12 +48,10 @@ public class ChatRoom {
 	@Column(name = "chat_room_end_date")
 	private LocalDateTime chatRoomEndDate;
 	
-	@ToString.Exclude
 	@ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "mentee_no", nullable = false)
     private Member mentee;
 	
-	@ToString.Exclude
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "mentor_no", nullable = false)
     private Member mentor;
@@ -73,14 +71,13 @@ public class ChatRoom {
     public void setDefaultValues() {
     	if (this.chatRoomStatus == 0 || this.chatRoomStatus == null) this.chatRoomStatus = 7000;
     	if (this.chatRoomStartDate == null) this.chatRoomStartDate = LocalDateTime.now();
-    	if (this.chatRoomEndDate == null) this.chatRoomEndDate = null;
     }
     
     public static ChatRoom toEntity(ChatRoomDto mentoringRequestDto) {
         return ChatRoom.builder()
                 .chatRoomNo(mentoringRequestDto.getChatRoomNo())
                 .chatRoomStatus(mentoringRequestDto.getChatRoomStatus())
-                .chatRoomStartDate(mentoringRequestDto.getChatRoomStratDate())
+                .chatRoomStartDate(mentoringRequestDto.getChatRoomStartDate())
                 .chatRoomEndDate(mentoringRequestDto.getChatRoomEndDate())
                 .mentee(Member.builder().memberNo(mentoringRequestDto.getMenteeNo()).build())
                 .mentor(Member.builder().memberNo(mentoringRequestDto.getMentorNo()).build())

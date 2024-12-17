@@ -2,7 +2,6 @@ package com.itwill.jpa.dto.bulletin_board;
 
 import java.time.LocalDateTime;
 
-import com.itwill.jpa.dto.member_information.MemberDto;
 import com.itwill.jpa.entity.bullentin_board.Inquiry;
 
 import lombok.AllArgsConstructor;
@@ -22,7 +21,7 @@ public class InquiryDto {
     private LocalDateTime inquiryDate;
     private Integer inquiryStatus;
     private Integer inquiryViews;
-    
+    private Long parentsCategoryNo;
     private Long categoryNo;
     private Long memberNo;
     private String memberName;
@@ -38,6 +37,7 @@ public class InquiryDto {
                 .inquiryDate(inquiryEntity.getInquiryDate())
                 .inquiryStatus(inquiryEntity.getInquiryStatus())
                 .inquiryViews(inquiryEntity.getInquiryViews())
+                .parentsCategoryNo(inquiryEntity.getCategory().getParentCategory().getCategoryNo())
                 .categoryNo(inquiryEntity.getCategory().getCategoryNo())
                 .memberNo(inquiryEntity.getMember().getMemberNo())
                 .memberName(inquiryEntity.getMember().getMemberName())

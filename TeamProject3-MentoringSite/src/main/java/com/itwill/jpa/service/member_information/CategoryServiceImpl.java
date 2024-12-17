@@ -11,6 +11,8 @@ import com.itwill.jpa.dto.member_information.CategoryResponseDto;
 import com.itwill.jpa.entity.member_information.Category;
 import com.itwill.jpa.repository.member_information.CategoryRepository;
 
+import jakarta.transaction.Transactional;
+
 @Service
 public class CategoryServiceImpl implements CategoryService{
 	
@@ -37,16 +39,27 @@ public class CategoryServiceImpl implements CategoryService{
 		return categoryDto;
 	}
 
-	/* 카테고리 삭제 */
+	/* 
+	 카테고리 삭제
 	@Override
 	public CategoryRequestDto deleteCategory(Long categoryNo) {
-		/* 메인카테고리삭제 -> 서브카테고리까지 전체 삭제*/
 		Category category = categoryRepository.findById(categoryNo).get();
 		
 		categoryRepository.delete(category);
 		return null;
+	} 
+ 	*/	
+ 	
+	/* 카테고리 대분류별 출력 */
+	@Transactional
+	@Override
+	public CategoryResponseDto getCategoriesBycategoryNo(Long categoryNo){
+		Category category = categoryRepository.findByCategoryNo(categoryNo);
+		
+		return CategoryResponseDto.toDto(category);
+		
 	}
-
+	
 	/* 카테고리 리스트 출력 */
 	@Override
 	public List<CategoryResponseDto> getCategories() {

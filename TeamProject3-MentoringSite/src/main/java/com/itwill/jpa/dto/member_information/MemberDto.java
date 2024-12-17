@@ -1,6 +1,7 @@
 package com.itwill.jpa.dto.member_information;
 
 import java.util.HashMap;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 
@@ -24,7 +25,6 @@ import lombok.Setter;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-
 public class MemberDto {
 	
 	@Schema(description = "멤버 번호", example = "1")
@@ -70,6 +70,9 @@ public class MemberDto {
 	            .memberEmail(memberEntity.getMemberEmail())
 	            .memberName(memberEntity.getMemberName())
 	            .memberStatus(memberEntity.getMemberStatus())
+	            //.memberPoint(memberEntity.getMemberPoints())
+	            //.memberJoinDate(memberEntity.getMemberJoinDate())
+	            //.memberReportCount(memberEntity.getMemberReportCount())
 	            .memberRole(memberEntity.getMemberRole())
 	            .memberProvider(memberEntity.getMemberProvider())
 	            .interests(memberEntity.getInterests().stream()
@@ -133,6 +136,21 @@ public class MemberDto {
 	
 	
 	
+	public static MemberDto toBasicDto(Member memberEntity) {
+		return MemberDto.builder()
+				.memberNo(memberEntity.getMemberNo())
+	            .memberId(memberEntity.getMemberId())
+	            .memberPassword(memberEntity.getMemberPassword())
+	            .memberEmail(memberEntity.getMemberEmail())
+	            .memberName(memberEntity.getMemberName())
+	            .memberStatus(memberEntity.getMemberStatus())
+	            //.memberPoint(memberEntity.getMemberPoints())
+	            //.memberJoinDate(memberEntity.getMemberJoinDate())
+	            //.memberReportCount(memberEntity.getMemberReportCount())
+	            .memberRole(memberEntity.getMemberRole())
+	            .memberProvider(memberEntity.getMemberProvider())
+	            .build();
+	}
 	
 	
 }

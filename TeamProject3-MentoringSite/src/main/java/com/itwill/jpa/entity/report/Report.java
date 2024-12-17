@@ -34,29 +34,29 @@ public class Report {
 	@Column(name="report_no")
 	private Long reportNo;
 	
-	@Column(name="report_type", nullable = false)
+	@Column(name="report_type")
 	private String reportType;
 	
-	@Column(name="report_target", nullable = false)
+	@Column(name="report_target")
 	private Long reportTarget;
 	
-	@Column(name="report_reason", nullable = false)
+	@Column(name="report_reason")
 	private Integer reportReason;
 	
-	@Column(name = "report_content", length = 300, nullable = false)
+	@Column(name = "report_content", length = 300)
 	private String reportContent;
 	
-	@Column(name="report_date", nullable = false)
+	@Column(name="report_date")
 	private LocalDateTime reportDate;
 	
 	@Column(name="resolved_date")
 	private LocalDateTime resolvedDate;
 	
-	@Column(name="report_status", nullable = false)
+	@Column(name="report_status")
 	private Integer reportStatus;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "member_no", nullable = false)
+	@JoinColumn(name = "member_no")
 	private Member member;
 	
 	/* 초기값 설정 */

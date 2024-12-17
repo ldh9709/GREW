@@ -31,10 +31,14 @@ import jakarta.persistence.OneToOne;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import oracle.jdbc.proxy.annotation.Signature;
 
 
 @Builder
@@ -47,19 +51,24 @@ import lombok.NoArgsConstructor;
 public class Member {
 	
 
-	@Id//PK설정
+	@Id
 	@SequenceGenerator(name = "member_no_SEQ", initialValue = 1, allocationSize = 1)
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "member_no_SEQ")
 	@Column(name = "member_no")
 	private Long memberNo;//멤버 번호 PK
 	
 	@Column(name = "member_id")
+	@Size(min = 3, max = 15, message ="아이디는 3자 이상 15자 이하로 입력해주세요.")
+	@Pattern(regexp = "^[a-zA-Z0-9_-]+$", message = "아이디는 영문자, 숫자, '-', '_'만 허용됩니다.")
 	private String memberId;//Id
 	
 	@Column(name = "member_password")
+	@Size(min = 8, message = "비밀번호는 최소 8자 이상이어야 합니다.")
+    @Pattern(regexp = "^(?=.*[a-zA-Z])(?=.*\\d)(?=.*[@$!%*?&]).*$", message = "비밀번호는 대문자, 소문자, 숫자, 특수문자 중 두 가지 이상을 포함해야 합니다.")
 	private String memberPassword;//비밀번호
 	
 	@Column(name = "member_email")
+	@Email(message = "유효하지 않은 이메일 형식입니다.")
 	private String memberEmail;//이메일
 	
 	@Column(name = "member_name")
@@ -93,7 +102,6 @@ public class Member {
 	@PrePersist
 	public void setDefaultValues() {
 		if (this.memberRole == null) this.memberRole = Role.ROLE_MENTEE;
-		//if (this.memberRole == null) this.memberRole = "Role_Mentee";
 		if (this.memberPoints == null) this.memberPoints = 0;
 		if (this.memberStatus == null || this.memberStatus == 0) this.memberStatus = 1;
 		if (this.memberJoinDate == null) this.memberJoinDate = LocalDateTime.now();
@@ -125,6 +133,7 @@ public class Member {
 
 	/* 한 명의 유저가 관심사 여러개 보유 가능 */
 	@OneToMany(mappedBy = "member", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@Size(min = 3, max = 3, message = "3개의 관심사를 선택해야 합니다.")
 	@Builder.Default
 	private List<Interest> interests = new ArrayList<>();
 	
@@ -200,13 +209,16 @@ public class Member {
 	
 	//흥미 추가
 	public void addInterests(Interest interest) {
+        if (interests.size() ==  3) {
+            throw new IllegalStateException("3개의 관심사를 설정해야합니다.");
+        }
 		interests.add(interest);
 		interest.setMember(this);
 	}
 	
 	//비밀번호 변경
-	public void changePassword(String newPassword) {
-		this.memberPassword = newPassword;
-	}
+		public void changePassword(String newPassword) {
+			this.memberPassword = newPassword;
+		}
 		
 }

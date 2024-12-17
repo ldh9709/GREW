@@ -15,21 +15,18 @@ class FollowServiceTest {
 	@Autowired
 	private FollowReporitory followReporitory;
 	
-	@Autowired
-	private CategoryRepository categoryRepository;
-	
 //	@Test
-	void test() {
-		System.out.println(followReporitory.findFollowMentors(1L));
-	}
+//	void test() {
+//		System.out.println(followReporitory.findFollowMentors(1L));
+//	}
 //	@Test
 //	void test2() {
 //		System.out.println(followReporitory.findFollowedMentorsWithGraph(1L));
 //	}
 	
 	@Test
-	void test3() {
-		categoryRepository.deleteById(1L);
+	void test4() {
+		System.out.println(followReporitory.existsByMenteeMember_MemberNoAndMentorMember_MemberNo(1L, 6L));
 	}
 	
 }

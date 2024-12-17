@@ -2,10 +2,7 @@ package com.itwill.jpa.dto.bulletin_board;
 
 import java.time.LocalDateTime;
 
-import com.itwill.jpa.dto.member_information.MemberDto;
 import com.itwill.jpa.entity.bullentin_board.Answer;
-import com.itwill.jpa.entity.bullentin_board.Inquiry;
-import com.itwill.jpa.entity.member_information.Member;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -37,8 +34,8 @@ public class AnswerDto {
                 .answerDate(answerEntity.getAnswerDate())
                 .answerAccept(answerEntity.getAnswerAccept())
                 .answerStatus(answerEntity.getAnswerStatus())
-                .memberNo(answerEntity.getMember().getMemberNo())  
                 .inquiryNo(answerEntity.getInquiry().getInquiryNo())
+                .memberNo(answerEntity.getMember().getMemberNo())  
                 .memberName(answerEntity.getMember().getMemberName())
                 .build();
     }
