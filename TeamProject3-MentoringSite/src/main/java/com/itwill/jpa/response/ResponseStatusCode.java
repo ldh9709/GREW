@@ -3,7 +3,7 @@ package com.itwill.jpa.response;
 public class ResponseStatusCode {
 	
 	/******************* MEMBER 메시지 ************************/
-	 // 성공 코드
+	 //성공 코드(2000 ~ 2049)
     public static final int CREATED_MEMBER_SUCCESS = 2000; // 회원 생성 성공
     public static final int READ_MEMBER_SUCCESS = 2001;    // 회원 조회 성공
     public static final int READ_MEMBER_LIST_SUCCESS = 2002; // 회원 목록 조회 성공
@@ -15,8 +15,9 @@ public class ResponseStatusCode {
     public static final int DEACTIVATE_MEMBER_SUCCESS = 2008; // 회원 비활성화 성공
     public static final int PASSWORD_RESET_SUCCESS = 2009; // 비밀번호 재설정 성공
     public static final int EMAIL_SEND_SUCCESS = 2010;     // 이메일 발송 성공
+    public static final int INPUTCODE_CONFIRM_SUCCESS = 2011;     // 이메일 발송 성공
 
-    // 실패 코드 (2050번대)
+    // 실패 코드 (2050번대 ~ )
     public static final int CREATED_MEMBER_FAIL = 2050;    // 회원 생성 실패
     public static final int INVALID_AUTH_CODE = 2051;      // 인증 코드 불일치
     public static final int READ_MEMBER_FAIL = 2052;       // 특정 회원 조회 실패
@@ -26,6 +27,8 @@ public class ResponseStatusCode {
     public static final int LOGIN_MEMBER_FAIL = 2056;      // 회원 로그인 실패
     public static final int PASSWORD_RESET_FAIL = 2057;    // 비밀번호 재설정 실패
     public static final int EMAIL_SEND_FAIL = 2058;        // 이메일 발송 실패
+    public static final int INPUTCODE_CONFIRM_FAIL = 2059;        // 이메일 발송 실패
+    public static final int MEMBER_IS_NOT_EMAIL = 2060;        // 이메일로 가입한 회원이 아님
 	
 	/******************* MEMBER 메시지 ************************/
 	

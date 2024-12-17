@@ -27,7 +27,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.itwill.jpa.auth.PrincipalDetails;
 import com.itwill.jpa.dto.member_information.MemberDto;
-import com.itwill.jpa.dto.member_information.MemberJoinDto;
+import com.itwill.jpa.dto.member_information.MemberDtoAndTempCode;
 import com.itwill.jpa.entity.member_information.Member;
 import com.itwill.jpa.response.Response;
 import com.itwill.jpa.response.ResponseMessage;
@@ -77,7 +77,7 @@ public class MemberRestController {
 	/* 회원 저장 */
 	@Operation(summary = "회원가입/관심사 입력")
 	@PostMapping("/createMember")
-	public ResponseEntity<Response> createMember(@RequestBody MemberJoinDto memberJoinDto) {
+	public ResponseEntity<Response> createMember(@RequestBody MemberDtoAndTempCode memberJoinDto) {
 		
 		MemberDto memberDto = memberJoinDto.getMemberDto();
 		System.out.println("MEMBERDTO : >>> " + memberDto);
@@ -332,12 +332,94 @@ public class MemberRestController {
 		return responseEntity;
 	}
 	
-	/***** 이메일 발송 *****/
+	/***** 아이디 찾기: 인증번호 발송 *****/
+	@Operation(summary = "1. 아이디 찾기 : 이메일 발송")
+	@PostMapping("/findId/sendEmail")
+	public ResponseEntity<Response> findId(@RequestBody MemberDto.findId memberDto) {
+	    
+		Response response = new Response();
+	    
+	    try {
+	    	memberService.findId(memberDto);
+	        response.setStatus(ResponseStatusCode.EMAIL_SEND_SUCCESS);
+	        response.setMessage(ResponseMessage.EMAIL_SEND_SUCCESS);
+	    } catch (Exception e) {
+	        response.setStatus(ResponseStatusCode.EMAIL_SEND_FAIL);
+	        response.setMessage(ResponseMessage.EMAIL_SEND_FAIL);
+	    }
+	    
+	    return ResponseEntity.ok(response);
+	}
+	
+	/***** 아이디 찾기: 인증번호 확인 후 아이디 반환 *****/
+	@Operation(summary = "2. 아이디 찾기 : 인증번호 확인 후 아이디 반환 ")
+	@PostMapping("/findId/certificationCode")
+	public ResponseEntity<Response> certificationFindId(@RequestParam(name = "memberEmail") String memberEmail, @RequestParam(name = "inputCode") Integer inputCode) {
+	    
+		Boolean isChecked =	memberService.certificationCodeByFindId(memberEmail, inputCode);
+		
+		Response response = new Response();
+	    
+		HttpHeaders httpHeaders=new HttpHeaders();
+		httpHeaders.setContentType(new MediaType(MediaType.APPLICATION_JSON,Charset.forName("UTF-8")));
+		
+		
+	    //인증번호가 틀리면 실패 반환
+		if(!isChecked) {
+			response.setStatus(ResponseStatusCode.INPUTCODE_CONFIRM_FAIL);
+			response.setMessage(ResponseMessage.INPUTCODE_CONFIRM_FAIL);
+			ResponseEntity<Response> responseEntity = 
+					new ResponseEntity<Response>(response, httpHeaders, HttpStatus.OK);
+			return responseEntity;
+		}
+		
+		//인증 제공자가 Email이 아니면
+		if(!memberService.getMemberByMemberEmail(memberEmail).getMemberProvider().equals("Email")) {
+			response.setStatus(ResponseStatusCode.MEMBER_IS_NOT_EMAIL);
+			response.setMessage(ResponseMessage.MEMBER_IS_NOT_EMAIL);
+			ResponseEntity<Response> responseEntity = 
+					new ResponseEntity<Response>(response, httpHeaders, HttpStatus.OK);
+			return responseEntity;
+		}
+		
+		String memberId = memberService.getMemberByMemberEmail(memberEmail).getMemberId();
+		response.setStatus(ResponseStatusCode.INPUTCODE_CONFIRM_SUCCESS);
+		response.setMessage(ResponseMessage.INPUTCODE_CONFIRM_SUCCESS);
+		response.setData(memberId);
+		
+		ResponseEntity<Response> responseEntity = 
+				new ResponseEntity<Response>(response, httpHeaders, HttpStatus.OK);
+		
+	    return responseEntity;
+	}
+	
+	/***** 비밀번호 찾기 : 이메일 발송 *****/
 	@Operation(summary = "비밀번호 찾기")
 	@PostMapping("/findPassword")
 	public ResponseEntity findPassword(@RequestBody MemberDto.findPassword memberDto) {
+		
+		Response response = new Response();
+	    
+		HttpHeaders httpHeaders=new HttpHeaders();
+		httpHeaders.setContentType(new MediaType(MediaType.APPLICATION_JSON,Charset.forName("UTF-8")));
+		
+		if(memberDto == null) {
+			response.setStatus(ResponseStatusCode.PASSWORD_RESET_FAIL);
+			response.setMessage(ResponseMessage.PASSWORD_RESET_FAIL);
+			ResponseEntity<Response> responseEntity = 
+					new ResponseEntity<Response>(response, httpHeaders, HttpStatus.OK);
+			
+		    return responseEntity;
+		}
+		
 		memberService.findPassword(memberDto);
-		return ResponseEntity.status(HttpStatus.OK).body("ok");
+		
+		response.setStatus(ResponseStatusCode.PASSWORD_RESET_SUCCESS);
+		response.setMessage(ResponseMessage.PASSWORD_RESET_SUCCESS);
+		ResponseEntity<Response> responseEntity = 
+				new ResponseEntity<Response>(response, httpHeaders, HttpStatus.OK);
+		
+	    return responseEntity;
 	}
 	
 	

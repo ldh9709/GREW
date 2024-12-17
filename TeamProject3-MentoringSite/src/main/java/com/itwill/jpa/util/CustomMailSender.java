@@ -73,13 +73,27 @@ public class CustomMailSender {
 		Mail mail = new Mail();
 		
 		mail.setAddress(joinFormDto.getEmail());
-		mail.setTitle("[MentorMentee] 인증 번호 안내 메일입니다");
+		mail.setTitle("[Grew] 인증 번호 안내 메일입니다");
 		mail.setMessage(htmlMessage);
 		
 		this.mimeMailSend(mail);
 		
 	}
+	
+	//아이디 찾기 시 인증번호 발송
+	public void sendFindIdMail(MemberDto.findId memberDto, Integer tempNo) {
+		/***** 임시 인증번호를 포함한 HTML 형식의 메시지를 생성 *****/
+		String htmlMessage = "인증 번호 : " + tempNo;
 		
+		Mail mail = new Mail();
+		
+		mail.setAddress(memberDto.getEmail());
+		mail.setTitle("[Grew] 인증 번호 안내 메일입니다");
+		mail.setMessage(htmlMessage);
+		
+		this.mimeMailSend(mail);
+		
+	}
 		
 	//임시비밀번호 메일 발송
 	public void sendFindPasswordMail(MemberDto.findPassword memberDto, String tempPassword) {

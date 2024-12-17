@@ -92,6 +92,17 @@ public class MemberDto {
 	            .build();
 	}
 	
+	@Builder
+	@Data
+	@NoArgsConstructor
+	@AllArgsConstructor
+	//아이디 찾기 시 사용
+	public static class findId {
+		
+		private String name;
+		@Email
+		private String email;
+	}
 	
 	
 	@Builder
@@ -115,7 +126,7 @@ public class MemberDto {
 	@AllArgsConstructor
 	@Builder
     public static class JoinFormDto {
-		
+		@Email
         private String email;
         
     }

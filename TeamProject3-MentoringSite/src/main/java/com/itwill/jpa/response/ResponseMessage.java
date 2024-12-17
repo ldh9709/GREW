@@ -15,7 +15,9 @@ public class ResponseMessage {
 	public static final String DEACTIVATE_MEMBER_SUCCESS = "회원 비활성화 성공";
 	public static final String PASSWORD_RESET_SUCCESS = "비밀번호 재설정 성공";
 	public static final String EMAIL_SEND_SUCCESS = "이메일 발송 성공";
-
+	public static final String INPUTCODE_CONFIRM_SUCCESS = "인증번호 인증 성공";
+	
+	
 	// 실패 메시지
 	public static final String CREATED_MEMBER_FAIL = "회원 가입 실패";
 	public static final String INVALID_AUTH_CODE = "인증 코드가 일치하지 않습니다";
@@ -26,7 +28,8 @@ public class ResponseMessage {
 	public static final String LOGIN_MEMBER_FAIL = "회원 로그인 실패";
 	public static final String PASSWORD_RESET_FAIL = "비밀번호 재설정 실패";
 	public static final String EMAIL_SEND_FAIL = "이메일 발송 실패";
-
+	public static final String INPUTCODE_CONFIRM_FAIL = "인증번호 인증 실패";
+	public static final String MEMBER_IS_NOT_EMAIL = "SNS로 가입한 사용자입니다.";        // 이메일로 가입한 회원이 아님
     
     /******************* MENTOR BOARD 메시지 ************************/
     public static final String CREATED_MENTOR_BOARD_SUCCESS = "멘토 보드 등록 성공";

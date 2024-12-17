@@ -158,7 +158,6 @@ public class SecurityConfig {
 		httpSecurity.authorizeHttpRequests((authorizeHttpRequestsConfig) -> {
 		      // swagger설정
 		      authorizeHttpRequestsConfig
-			      //.requestMatchers(SwaggerPatterns).permitAll()
 		      	  .requestMatchers("/profile").authenticated()//끝이 profile인 URL은 인증된 사용자만 접근 가능
 		      	  //.requestMatchers("/profile").hasRole("MENTEE")//끝이 profile인 URL은 MENTEE만 접근 가능
 			      .requestMatchers("/**","/login","/oauth2/**").permitAll()

@@ -192,6 +192,60 @@ public class MemberServiceImpl implements MemberService {
 		//이메일에 해당하는 인증번호 가져오기
 		return tempCode.get(email);
 	}
+	/***** 아이디 찾기 *****/
+	@Override
+	//아이디 찾기 시 사용
+	public void findId(MemberDto.findId memberDto) {
+		Member member = memberRepository.findByMemberEmail(memberDto.getEmail());
+		
+		if(member == null) {
+			System.out.println("존재하지 않는 계정입니다.");
+		}
+		
+		if(!member.getMemberName().equals(memberDto.getName())) {
+			System.out.println("성함이 일치하지 않습니다.");
+		}
+		
+		//랜덤 숫자 객체 생성
+		Random random = new Random();
+		
+		//6자리 숫자 임시번호 발급
+		Integer tempNo = random.nextInt(900000) + 100000;
+		
+		//인증번호 저장
+		tempCode.put(memberDto.getEmail(), tempNo);
+		
+		//메일 발송
+		customMailSender.sendFindIdMail(memberDto, tempNo);
+	}
+	
+	//아이디 찾기 인증번호 확인
+	@Override
+	public boolean certificationCodeByFindId(String email, Integer inputCode) {
+		//입력받은 이메일로 저장된 인증번호 반환
+		Integer storedCode = tempCode.get(email);
+		
+		System.out.println("storedCode : <<<" + storedCode);
+		System.out.println("email : <<<" + email);
+		System.out.println("inputCode : <<<" + inputCode);
+		//유효성 검사 후 안맞으면 false 반환
+		if(storedCode == null || !storedCode.equals(inputCode)) {
+			return false;
+		}
+		
+		//맞으면 데이터 삭제 후 true 반환
+		tempCode.remove(email);
+		
+		return true;
+		
+	}
+	
+	//이메일로 멤버 찾기
+	@Override
+	public Member getMemberByMemberEmail(String memberEmail) {
+		return memberRepository.findByMemberEmail(memberEmail);
+	}
+    /**************************************************************************************/
 	
 	@Override
 	//비밀번호 찾기 이메일 전송
@@ -207,6 +261,8 @@ public class MemberServiceImpl implements MemberService {
 		member.changePassword(tempPassword);
 		
 	}
+
+	
 	
 	
 	

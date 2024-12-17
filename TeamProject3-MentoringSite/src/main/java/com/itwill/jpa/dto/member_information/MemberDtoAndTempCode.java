@@ -22,7 +22,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 
-public class MemberJoinDto {
+public class MemberDtoAndTempCode {
 	
 	private MemberDto memberDto;
 	

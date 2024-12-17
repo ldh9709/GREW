@@ -49,7 +49,7 @@ public class JWTCheckFilter extends OncePerRequestFilter {
       return true;
     }
 
-    if (path.startsWith("/api/products/view/")) {
+    if (path.startsWith("/api/member/findId")) {
       return true;
     }
     
