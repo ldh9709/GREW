@@ -15,7 +15,7 @@ const ChatAlarim = () => {
         setRoomId(roomId); // 선택된 roomId 설정
         setActivePanel('ChattingMessage');
     };
-
+ 
     return (
         <div>
             {/* Panel */}
