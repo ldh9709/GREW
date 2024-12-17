@@ -181,9 +181,9 @@ public class Member {
 	
 	//흥미 추가
 	public void addInterests(Interest interest) {
-        if (interests.size() ==  3) {
-            throw new IllegalStateException("3개의 관심사를 설정해야합니다.");
-        }
+//        if (interests.size() < 3) {
+//            throw new IllegalStateException("3개의 관심사를 설정해야합니다.");
+//        }
 		interests.add(interest);
 		interest.setMember(this);
 	}

@@ -65,8 +65,6 @@ public class MentorBoardServiceImpl implements MentorBoardService {
 	            MentorBoard mentorBoard = MentorBoard.toEntity(mentorBoardDto);
 	            MentorBoard savedBoard = mentorBoardRepository.save(mentorBoard);
 	            return MentorBoardDto.toDto(savedBoard);
-	        } catch (CustomException e) {
-	            throw e; // 커스텀 예외 재발생
 	        } catch (Exception e) {
 	            throw new CustomException(ResponseStatusCode.CREATED_MENTOR_BOARD_FAIL, ResponseMessage.CREATED_MENTOR_BOARD_FAIL, e);
 	        }
@@ -96,8 +94,6 @@ public class MentorBoardServiceImpl implements MentorBoardService {
 	            // 변경 사항 저장
 	            MentorBoard updatedBoard = mentorBoardRepository.save(existingBoard);
 	            return MentorBoardDto.toDto(updatedBoard);
-	        } catch (CustomException e) {
-	            throw e; // 커스텀 예외 재발생
 	        } catch (Exception e) {
 	            throw new CustomException(ResponseStatusCode.UPDATE_MENTOR_BOARD_FAIL, ResponseMessage.UPDATE_MENTOR_BOARD_FAIL, e);
 	        }
@@ -119,8 +115,6 @@ public class MentorBoardServiceImpl implements MentorBoardService {
 	            // 상태를 삭제 상태로 변경
 	            mentorBoard.setMentorBoardStatus(2); 
 	            return MentorBoardDto.toDto(mentorBoardRepository.save(mentorBoard));
-	        } catch (CustomException e) {
-	            throw e; // 커스텀 예외 재발생
 	        } catch (Exception e) {
 	            throw new CustomException(ResponseStatusCode.DELETE_MENTOR_BOARD_FAIL, ResponseMessage.DELETE_MENTOR_BOARD_FAIL, e);
 	        }
@@ -140,8 +134,6 @@ public class MentorBoardServiceImpl implements MentorBoardService {
 	            }
 
 	            return MentorBoardDto.toDto(mentorBoard);
-	        } catch (CustomException e) {
-	            throw e;
 	        } catch (Exception e) {
 	            throw new CustomException(ResponseStatusCode.MENTOR_BOARD_NOT_FOUND, ResponseMessage.MENTOR_BOARD_NOT_FOUND, e);
 	        }
@@ -163,8 +155,6 @@ public class MentorBoardServiceImpl implements MentorBoardService {
 	            // 조회수 증가
 	            mentorBoard.setMentorBoardViews(mentorBoard.getMentorBoardViews() + 1);
 	            return MentorBoardDto.toDto(mentorBoardRepository.save(mentorBoard));
-	        } catch (CustomException e) {
-	            throw e;
 	        } catch (Exception e) {
 	            throw new CustomException(ResponseStatusCode.UPDATE_MENTOR_BOARD_FAIL, ResponseMessage.UPDATE_MENTOR_BOARD_FAIL, e);
 	        }

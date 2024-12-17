@@ -45,5 +45,6 @@ public interface InquiryService {
 	
 	//내가 작성한 질문내역
 	Page<InquiryDto> getInquiryByMember(Long memberNo, int pageNumber, int pageSize);
-	
-}
+	//번호로 질문객체찾기
+	InquiryDto getInquiryByInquiryNo(Long inquiryNo);
+	}

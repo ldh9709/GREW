@@ -110,6 +110,13 @@ function InquiryView() {
           <input type="hidden" name="inquiryNo" value={inquiry.inquiryNo} />
 
           <div className="inquiry-container">
+            {/* 카테고리에 맞는 멘토만 보이는조건 */}
+            <div className="answer-write">
+            <Link to={`/answer/answerWrite/${inquiryNo}`}>
+              <button>답변하기</button>
+            </Link>
+            </div>
+            {/* 카테고리에 맞는 멘토만 보이는조건 */}
             <div>
               <div className="inquiry-title">{inquiry.inquiryTitle}</div>
             </div>

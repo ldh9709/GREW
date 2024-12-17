@@ -7,6 +7,8 @@ import com.itwill.jpa.entity.member_information.Interest;
 import com.itwill.jpa.entity.member_information.Member;
 import com.itwill.jpa.entity.role.Role;
 
+import io.swagger.v3.oas.annotations.media.ArraySchema;
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -32,7 +34,6 @@ public class MemberDto {
 	private String memberProvider;
 	
 	private List<InterestDto> interests;
-	
 	
 	 /* Entitiy -> DTO*/
 	public static MemberDto toDto(Member memberEntity) {

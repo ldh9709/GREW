@@ -313,5 +313,11 @@ public class InquiryServiceImpl implements InquiryService {
 			throw new CustomException(ResponseStatusCode.READ_INQUIRY_LIST_FAIL, ResponseMessage.READ_INQUIRY_LIST_FAIL, e);
 		}
 	}
+	//번호로 질문 DTO 찾기
+	@Override
+	public InquiryDto getInquiryByInquiryNo(Long inquiryNo) {
+		InquiryDto inquiryDto = InquiryDto.toDto(inquiryRepository.findById(inquiryNo).get()); 
+		return inquiryDto;
+	}
 
 }
