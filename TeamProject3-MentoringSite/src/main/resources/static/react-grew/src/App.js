@@ -8,6 +8,9 @@ import InquiryModifyFormpage from "./component/AnswerInquiry/InquiryModifyFormPa
 import InqiuryList from "./component/AnswerInquiry/InqiuryList";
 import InqiuryView from "./component/AnswerInquiry/InquiryView";
 import ChatAlarim from "./component/Chatting/ChatAlarim";
+import Admin from "./component/admin/admin";
+import AdminReport from "./component/admin/adminReport";
+import AdminReport2 from "./component/admin/adminReport2";
 
 
 function App() {
@@ -25,6 +28,10 @@ function App() {
             <Route path="/inquiry/inquiryWrite" element={<InquiryWriteFormpage/>}/>
             <Route path="/inquiry/:inquiryNo" element={<InqiuryView/>}/>
             <Route path="/inquiry/modify/:inquiryNo" element={<InquiryModifyFormpage/>}/>
+            <Route path="/adim" element={<Admin/>}/>
+            <Route path="/adminReport" element={<AdminReport/>}/>
+            <Route path="/adminReport2" element={<AdminReport2/>}/>
+            
           </Routes>
         </div>
       </div>
