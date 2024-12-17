@@ -114,7 +114,6 @@ function InquiryView() {
             <div>
               <div className="inquiry-title">{inquiry.inquiryTitle}</div>
             </div>
-            <br />
             <div className="inquiry-desc">
               <div>
                 {inquiry.memberName.slice(0, 1) +
@@ -123,6 +122,8 @@ function InquiryView() {
                 | 조회수 {inquiry.inquiryViews} |{" "}
                 {inquiry.inquiryDate.substring(0, 10)}
               </div>
+              <br/>
+                  <div>{inquiry.categoryName}</div>
             </div>
             <br />
             <br />

@@ -160,7 +160,11 @@ function InqiuryList() {
               <button
                 key={category.categoryNo}
                 onClick={() => handleCategoryClick(category.categoryNo)} // 클릭 시 카테고리 선택
-                style={{ margin: "5px" }}
+                style={{
+                  margin: '5px',
+                  backgroundColor: selectedCategory === category.categoryNo ? '#4CAF50' : '', // 선택된 카테고리는 색상 변경
+                  color: selectedCategory === category.categoryNo ? 'white' : '', // 선택된 카테고리 글자 색상 변경
+                }}
               >
                 {category.categoryName}
               </button>
@@ -174,7 +178,11 @@ function InqiuryList() {
               <button
                 key={child.categoryNo}
                 onClick={() => handleCategoryClick(child.categoryNo)} // 하위 카테고리 선택
-                style={{ margin: "5px" }}
+                style={{
+                  margin: '5px',
+                  backgroundColor: selectedCategory === child.categoryNo ? '#4CAF50' : '', // 선택된 카테고리는 색상 변경
+                  color: selectedCategory === child.categoryNo ? 'white' : '', // 선택된 카테고리 글자 색상 변경
+                }}
               >
                 {child.categoryName}
               </button>
@@ -217,13 +225,9 @@ function InqiuryList() {
         </div>
 
         {/* 문의 목록 테이블 */}
-        <table border="0" cellPadding="0" cellSpacing="0">
-          <tbody>
             {inquirys.map((inquiry) => (
               <InquiryItem key={inquiry.inquiryNo} inquiry={inquiry} />
             ))}
-          </tbody>
-        </table>
 
         {/* 페이지네이션 버튼 */}
         <div className="pagenation">
