@@ -1,6 +1,6 @@
 import { Route, Routes } from "react-router-dom";
 import "./css/styles.css";
-import HeaderMenu from "./layout/Header";
+import Header from "./layout/Header";
 import { MainPage } from "./component/MainPage";
 import Navigate from "./layout/navigate";
 import InquiryWriteFormpage from "./component/AnswerInquiry/InqiuryWriteFormPage";
@@ -8,12 +8,12 @@ import InquiryModifyFormpage from "./component/AnswerInquiry/InquiryModifyFormPa
 import InqiuryList from "./component/AnswerInquiry/InqiuryList";
 import InqiuryView from "./component/AnswerInquiry/InquiryView";
 import ChatAlarim from "./component/Chatting/ChatAlarim";
-
+import Footer from "./layout/Footer"
 
 function App() {
   return (
     <>
-      <HeaderMenu />
+      <Header />
       <Navigate/>
       <ChatAlarim/>
       <div id="wrapper">
@@ -26,6 +26,7 @@ function App() {
             <Route path="/inquiry/:inquiryNo" element={<InqiuryView/>}/>
             <Route path="/inquiry/modify/:inquiryNo" element={<InquiryModifyFormpage/>}/>
           </Routes>
+          <Footer/>
         </div>
       </div>
     </>
