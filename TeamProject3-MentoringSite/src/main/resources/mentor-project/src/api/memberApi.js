@@ -1,4 +1,5 @@
 import axios from "axios"
+import { getCookie } from "../util/cookieUtil";
 
 const BACKEND_SERVER='http://localhost:8080';
 
@@ -58,3 +59,21 @@ export const sendJoinCode = async (sendJsonObject) => {
     return resultJsonObject;
 }
 
+export const memberProfile = async (sendJsonObject) => {
+    // 저장된 토큰 가져오기
+    const memberCookie = getCookie("member");
+    
+    const token = memberCookie.accessToken;
+
+    const response = await fetch(`${BACKEND_SERVER}/api/member/profile`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}` // Authorization 헤더에 JWT 토큰 추가
+      },
+    });
+    
+    // 서버 응답 처리
+    const resultJsonObject = await response.json();
+    return resultJsonObject;
+  };

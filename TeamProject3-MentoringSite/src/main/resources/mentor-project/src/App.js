@@ -1,9 +1,10 @@
 import './App.css';
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import LoginFormPage from './page/LoginFormPage';
 import MainFormPage from './page/MainFormPage';
 import JoinFormPage from './page/JoinFormPage';
+import ProfileFormPage from './page/ProfileFormPage';
 
 export const MemberContext = React.createContext({});
 
@@ -27,6 +28,7 @@ function App() {
             <Route path="/main" element={<MainFormPage/>} />
             <Route path="/login" element={<LoginFormPage/>} />
             <Route path="/Join" element={<JoinFormPage/>} />
+            <Route path="/profile" element={<ProfileFormPage/>}/>
           </Routes>
         </header>
       </div>
