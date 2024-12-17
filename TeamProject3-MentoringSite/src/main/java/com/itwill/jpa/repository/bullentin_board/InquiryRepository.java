@@ -1,7 +1,5 @@
 package com.itwill.jpa.repository.bullentin_board;
 
-import java.util.List;
-
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -17,46 +15,57 @@ public interface InquiryRepository extends JpaRepository<Inquiry, Long> {
 	/** 카테고리별 질문 **/
 	// 조회수순
 	@Query("SELECT i FROM Inquiry i " + 
-			"WHERE i.category.categoryNo = :categoryNo " + 
+			"WHERE i.category.categoryNo = :categoryNo "
+			+ "AND i.inquiryStatus = 1" + 
 			"ORDER BY i.inquiryViews DESC")
 	Page<Inquiry> findByCategoryInquiryOrderByView(@Param("categoryNo") Long categoryNo,Pageable pageable);
 	// 조회수순(대분류)
 	@Query("SELECT i FROM Inquiry i " + 
-			"WHERE i.category.parentCategory.categoryNo = :categoryNo " + 
+			"WHERE i.category.parentCategory.categoryNo = :categoryNo "
+			+ "AND i.inquiryStatus = 1" + 
 			"ORDER BY i.inquiryViews DESC")
 	Page<Inquiry> findByParentCategoryInquiryOrderByView(@Param("categoryNo") Long categoryNo,Pageable pageable);
 	// 최신순
 	@Query("SELECT i FROM Inquiry i " + 
-			"WHERE i.category.categoryNo = :categoryNo " + 
+			"WHERE i.category.categoryNo = :categoryNo "
+			+ "AND i.inquiryStatus = 1" + 
 			"ORDER BY i.inquiryDate DESC")
 	Page<Inquiry> findByCategoryInquiryOrderByDate(@Param("categoryNo") Long categoryNo,Pageable pageable);
 	// 최신순(대분류)
 	@Query("SELECT i FROM Inquiry i " + 
-			"WHERE i.category.parentCategory.categoryNo = :categoryNo " + 
+			"WHERE i.category.parentCategory.categoryNo = :categoryNo "
+			+ "AND i.inquiryStatus = 1" + 
 			"ORDER BY i.inquiryDate DESC")
 	Page<Inquiry> findByParentCategoryInquiryOrderByDate(@Param("categoryNo") Long categoryNo,Pageable pageable);
 
 	// 답변갯수순
 	@Query("SELECT i FROM Inquiry i " + 
 			"WHERE i.category.categoryNo = :categoryNo "
+			+ "AND i.inquiryStatus = 1"
 			+ "ORDER BY (SELECT COUNT(a) FROM Answer a WHERE a.inquiry = i) DESC")
 	Page<Inquiry> findByCategoryInquiryOrderByAnswer(@Param("categoryNo") Long categoryNo,Pageable pageable);
 	// 답변갯수순
 	@Query("SELECT i FROM Inquiry i " + 
 			"WHERE i.category.parentCategory.categoryNo = :categoryNo "
+			+ "AND i.inquiryStatus = 1"
 			+ "ORDER BY (SELECT COUNT(a) FROM Answer a WHERE a.inquiry = i) DESC")
 	Page<Inquiry> findByParentCategoryInquiryOrderByAnswer(@Param("categoryNo") Long categoryNo,Pageable pageable);
 
 	/** 전체질문 **/
 	// 조회수순
-	@Query("SELECT i FROM Inquiry i ORDER BY i.inquiryViews DESC")
+	@Query("SELECT i FROM Inquiry i "
+			+ "WHERE i.inquiryStatus = 1"
+			+ "ORDER BY i.inquiryViews DESC")
 	Page<Inquiry> findAllInquiryOrderByView(Pageable pageable);
 	//최신순
-	@Query("SELECT i FROM Inquiry i ORDER BY i.inquiryDate DESC")
+	@Query("SELECT i FROM Inquiry i "
+			+ "WHERE i.inquiryStatus = 1"
+			+ "ORDER BY i.inquiryDate DESC")
 	Page<Inquiry> findAllInquiryOrderByDate(Pageable pageable);
 
 	// 답변갯수순
-	@Query("SELECT i FROM Inquiry i " + 
+	@Query("SELECT i FROM Inquiry i "
+			+ "WHERE i.inquiryStatus = 1" + 
 			"ORDER BY (SELECT COUNT(a) FROM Answer a WHERE a.inquiry = i) DESC")
 	Page<Inquiry> findAllInquiriOrderByAnswer(Pageable pageable);
 	

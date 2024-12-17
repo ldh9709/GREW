@@ -4,9 +4,7 @@ package com.itwill.jpa.service.bullentin_board;
 import org.springframework.data.domain.Page;
 
 import com.itwill.jpa.dto.bulletin_board.InquiryDto;
-import com.itwill.jpa.util.ClientIp;
 
-import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 
 public interface InquiryService {
