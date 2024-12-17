@@ -27,9 +27,11 @@ public class AnswerServiceImpl implements AnswerService{
 
 	/*답변등록*/
 	@Override
-	public AnswerDto createAnswer(AnswerDto answerDto) {
+	public AnswerDto createAnswer(AnswerDto answerDto,Long inquiryNo) {
 		try {
+			answerDto.setInquiryNo(inquiryNo);
             Answer answer = Answer.toEntity(answerDto);
+            
             return AnswerDto.toDto(answerRepository.save(answer));
         } catch (Exception e) {
             throw new CustomException(ResponseStatusCode.CREATED_ANSWER_FAIL, ResponseMessage.CREATED_ANSWER_FAIL, e);
