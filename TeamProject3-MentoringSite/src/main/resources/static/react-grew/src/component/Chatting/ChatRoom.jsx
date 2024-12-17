@@ -1,17 +1,25 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import * as ChattingApi from '../../api/ChattingApi.js';
 
 const ChatRoom = ({ onRoomClick }) => {
-    const [isModalOpen, setIsModalOpen] = useState(false);  // 모달창의 열림/닫힘 상태를 관리하기 위한 state
     const memberNo = 1;
-    const [rooms, setRooms] = useState([
-        { id: 1, name: '채팅방 1' },
-        { id: 2, name: '채팅방 2' },
-        { id: 3, name: '채팅방 3' },
-    ]);
-    
+    const [isModalOpen, setIsModalOpen] = useState(false);  // 모달창의 열림/닫힘 상태를 관리하기 위한 state
+    const [rooms, setRooms] = useState([]);
     const [currentRoom, setCurrentRoom] = useState(null);   // 수정 중인 채팅방 정보를 담는 state
     const [newRoomName, setNewRoomName] = useState('');     // 수정할 채팅방 이름을 저장하는 state
+
+    useEffect(function(){
+        (async ()=>{
+            const responseJsonObject = await ChattingApi.listChatRoom(memberNo);
+            console.log(responseJsonObject);
+            if(responseJsonObject.status === 7010){
+                console.log(responseJsonObject.data[0]);
+                setRooms(responseJsonObject);
+            }else{
+                alert('채팅창 리스트를 받아오지 못했습니다.');
+            }
+        })();
+    },[]);
 
     const openEditModal = (room) => {                       // 특정 채팅방을 수정하기 위해 모달을 열고, 해당 채팅방의 정보를 저장하는 함수
         setCurrentRoom(room);                               // 현재 수정 중인 채팅방 정보를 저장
@@ -23,7 +31,7 @@ const ChatRoom = ({ onRoomClick }) => {
         if (currentRoom && newRoomName.trim()) {
             setRooms((prevRooms) =>                         // 이전 rooms 리스트를 가져와서 수정
                 prevRooms.map((room) =>                     // 모든 채팅방을 순회하며 수정할 채팅방만 이름을 변경
-                    room.id === currentRoom.id
+                    room.chatRoomNo === currentRoom.chatRoomNo
                         ? { ...room, name: newRoomName.trim() } // 현재 수정 중인 채팅방의 이름만 변경
                         : room
                 )
@@ -61,18 +69,18 @@ const ChatRoom = ({ onRoomClick }) => {
                 </ul>
             </div>
 
-            {/* Modal for Editing Room Name */}
+            {/* 채팅방 이름 수정 panel */}
             {isModalOpen && (
                 <div className={`modal ${isModalOpen ? 'active' : ''}`}>
                     <div
                         className="modal-content"
-                        onClick={(e) => e.stopPropagation()}
+                        onClick={(e) => e.stopPropagation()}  // 클릭 이벤트 전파 방지
                     >
                         <div className="modal-header">채팅방 이름 변경</div>
                         <input
                             type="text"
                             value={newRoomName}
-                            onChange={(e) => setNewRoomName(e.target.value)}
+                            onChange={(e) => setNewRoomName(e.target.value)} // 입력된 값을 newRoomName에 저장
                             placeholder="새 채팅방 이름"
                         />
                         <button onClick={saveRoomName}>저장</button>

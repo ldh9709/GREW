@@ -1,6 +1,14 @@
 const BACKEND_SERVER='';
-export const listChatRoom=async (memberNo)=>{
-   const response=await fetch(`${BACKEND_SERVER}/${memberNo}`,{
+export const listChatRoom=async ()=>{
+   const response=await fetch(`${BACKEND_SERVER}/chatroom`,{
+      method:'GET'
+   });
+   const responseJsonObject= await response.json();
+   return responseJsonObject;
+}
+
+export const getChatRoomName=async (chatRoomNo, memberNo)=>{
+   const response=await fetch(`${BACKEND_SERVER}/chatroom/name/${chatRoomNo}, ${memberNo}`,{
       method:'GET'
    });
    const responseJsonObject= await response.json();
@@ -8,7 +16,7 @@ export const listChatRoom=async (memberNo)=>{
 }
 
 export const changeChatRoomName=async (chatRoomNo, sendJsonObject)=>{
-   const response=await fetch(`${BACKEND_SERVER}/name/${chatRoomNo}`,{
+   const response=await fetch(`${BACKEND_SERVER}/chatroom/name/${chatRoomNo}`,{
       method:'PUT',
       headers:{
          'Content-Type':'application/json'
@@ -20,7 +28,7 @@ export const changeChatRoomName=async (chatRoomNo, sendJsonObject)=>{
 }
 
 export const viewChatMessage=async (chatRoomNo)=>{
-    const response=await fetch(`${BACKEND_SERVER}/messages/${chatRoomNo}`,{
+    const response=await fetch(`${BACKEND_SERVER}/chatroom/messages/${chatRoomNo}`,{
        method:'GET'
     });
     const responseJsonObject= await response.json();
