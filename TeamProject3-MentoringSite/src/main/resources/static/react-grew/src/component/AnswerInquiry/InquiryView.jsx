@@ -184,6 +184,7 @@ function InquiryView() {
           </tbody>
         </table>
       </form>
+      
       <br />
       <table width="590" border="0" cellPadding="0" cellSpacing="0">
         <tbody>
@@ -235,8 +236,7 @@ function InquiryView() {
           추천순
         </label>
       </div>
-              <form name="answerForm" method="post">
-              
+             
                     {answer.map((answer) => (
                       <AnswerItem
                         key={answer.answerNo}
@@ -244,7 +244,7 @@ function InquiryView() {
                       /> //한 질문에 대한 답변(조회수 정렬)
                     ))}
                   
-              </form>
+             
             </td>
           </tr>
         </tbody>
