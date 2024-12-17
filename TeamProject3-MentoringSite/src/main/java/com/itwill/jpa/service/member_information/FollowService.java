@@ -8,8 +8,12 @@ import com.itwill.jpa.dto.member_information.FollowRequestDto;
 import com.itwill.jpa.dto.member_information.FollowResponseDto;
 
 public interface FollowService {
+	//팔로우 등록
 	FollowRequestDto createFollow(FollowRequestDto followDto);
+	//팔로우 삭제
 	Long deleteFollow(Long followNo);
+	//팔로우 멘토 리스트
 	Page<FollowResponseDto> getMentorList(Long menteeMemberNo, int pageNumber, int pageSize);
+	//팔로워 수
 	Integer countFollower(Long mentorMemberNo);
 }

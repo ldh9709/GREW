@@ -85,6 +85,9 @@ public interface MentorProfileRepository extends JpaRepository<MentorProfile, Lo
              Long categoryNo
      );
      
+     //멘토 프로필 전체 조회
+     Page<MentorProfile> findAll(Pageable pageable);
+     
      // 멘토 프로필의 멘토링 횟수 조회
      @Query("SELECT mp.mentorMentoringCount FROM MentorProfile mp WHERE mp.mentorProfileNo = :mentorProfileNo")
      Integer findMentorMentoringCountByProfileNo(@Param("mentorProfileNo") Long mentorProfileNo);

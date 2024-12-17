@@ -24,5 +24,4 @@ public interface ReviewService {
 	public List<ReviewDto> getReviewByMemberNo(Long memberNo);
 	//모든 리뷰리스트
 	public List<ReviewDto> getReviewAll();
-
 }
