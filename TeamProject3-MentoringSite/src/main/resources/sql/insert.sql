@@ -111,6 +111,10 @@ VALUES (mentor_board_no_SEQ.nextval, '제목은 없습니다', '더미데이터�
 INSERT INTO follow(follow_no,mentee_member_no,mentor_member_no)
 VALUES(follow_no_SEQ.nextval,1,6);
 INSERT INTO follow(follow_no,mentee_member_no,mentor_member_no)
+VALUES(follow_no_SEQ.nextval,1,7);
+INSERT INTO follow(follow_no,mentee_member_no,mentor_member_no)
+VALUES(follow_no_SEQ.nextval,1,8);
+INSERT INTO follow(follow_no,mentee_member_no,mentor_member_no)
 VALUES(follow_no_SEQ.nextval,2,6);
 INSERT INTO follow(follow_no,mentee_member_no,mentor_member_no)
 VALUES(follow_no_SEQ.nextval,3,6);
@@ -118,8 +122,6 @@ INSERT INTO follow(follow_no,mentee_member_no,mentor_member_no)
 VALUES(follow_no_SEQ.nextval,4,7);
 INSERT INTO follow(follow_no,mentee_member_no,mentor_member_no)
 VALUES(follow_no_SEQ.nextval,5,7);
-INSERT INTO follow(follow_no,mentee_member_no,mentor_member_no)
-VALUES(follow_no_SEQ.nextval,1,8);
 
 /* 신고 등록 */
 INSERT INTO report(report_no,  report_type, report_target,report_reason, report_content, report_date, report_status, resolved_date, member_no) 
