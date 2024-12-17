@@ -9,6 +9,8 @@ import InqiuryList from "./component/AnswerInquiry/InqiuryList";
 import InqiuryView from "./component/AnswerInquiry/InquiryView";
 import ChatAlarim from "./component/Chatting/ChatAlarim";
 import Footer from "./layout/Footer"
+import AdminReport2 from "./component/admin/adminReport2"
+import Admin from "./component/admin/admin"
 
 function App() {
   return (
@@ -25,6 +27,8 @@ function App() {
             <Route path="/inquiry/inquiryWrite" element={<InquiryWriteFormpage/>}/>
             <Route path="/inquiry/:inquiryNo" element={<InqiuryView/>}/>
             <Route path="/inquiry/modify/:inquiryNo" element={<InquiryModifyFormpage/>}/>
+            <Route path="/adminReport2" element={<AdminReport2/>}/>
+            <Route path="/admin" element={<Admin/>}/>
           </Routes>
           <Footer/>
         </div>
