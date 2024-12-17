@@ -238,12 +238,29 @@ public class MentorBoardController {
     
  // **이미지 업로드 엔드포인트**
     @PostMapping("/{mentorBoardNo}/upload-image")
-    public ResponseEntity<String> uploadImage( @PathVariable("mentorBoardNo") Long mentorBoardNo, @RequestParam("file") MultipartFile file) {
+    public ResponseEntity<Response> uploadImage(
+        @PathVariable("mentorBoardNo") Long mentorBoardNo, 
+        @RequestParam("file") MultipartFile file) {
         try {
-            mentorBoardService.uploadImage(mentorBoardNo, file);
-            return ResponseEntity.ok("이미지 업로드 성공");
+            // 📢 서비스 호출 후, 이미지 URL 받기
+            String imageUrl = mentorBoardService.uploadImage(mentorBoardNo, file);
+            
+            // 📢 클라이언트에 반환할 응답 생성
+            Response response = new Response();
+            response.setStatus(ResponseStatusCode.IMAGE_UPLOAD_SUCCESS);
+            response.setMessage(ResponseMessage.IMAGE_UPLOAD_SUCCESS);
+            response.setData(imageUrl); // **업로드된 이미지 URL 반환**
+            
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(new MediaType(MediaType.APPLICATION_JSON, Charset.forName("UTF-8")));
+
+            return new ResponseEntity<>(response, headers, HttpStatus.OK);
         } catch (Exception e) {
-            return ResponseEntity.status(500).body("이미지 업로드 실패: " + e.getMessage());
+            Response response = new Response();
+            response.setStatus(ResponseStatusCode.IMAGE_UPLOAD_FAIL);
+            response.setMessage("이미지 업로드 실패: " + e.getMessage());
+
+            return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 

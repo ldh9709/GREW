@@ -59,7 +59,7 @@ public interface MentorBoardService {
     /**
      * 멘토 보드에 이미지를 업로드
      */
-    void uploadImage(Long mentorBoardNo, MultipartFile file) throws Exception;
+    String uploadImage(Long mentorBoardNo, MultipartFile file) throws Exception;
 
     /**
      * 멘토 보드의 이미지 URL을 가져오기
