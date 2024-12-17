@@ -138,11 +138,16 @@ function InqiuryList() {
       ></link>
       <div>
         <h1>질문게시판</h1>
-        <div>
-          <a
-            href="/inquiry/inquiryWrite"
-            style={{ textAlign: "right", display: "block" }}
-          >
+        <div className="btn-inquiry-write-div">
+          <a className="btn-inquiry-write" href="/inquiry/inquiryWrite">
+            <img src="https://img.icons8.com/?size=100&id=P1bJzKUoOQYz&format=png&color=000000" 
+             style={{
+              width: "20px",
+              height: "20px",
+              marginRight: "5px",
+              marginLeft: "-5px",
+              marginBottom: "-3px",
+            }}/>
             질문등록
           </a>
         </div>
