@@ -32,26 +32,28 @@ export default function InqiuryWriteFormPage() {
   }
   return (
     <div>
-      <form ref={writeFormRef} method="POST">
+      <form ref={writeFormRef} method="POST" className='inquiry-form'>
     <div>
-      제목:
+      <div>
+        질문등록
+      </div>
       <input
         type="text"
         name="inquiryTitle" 
         onChange={onChangeInquiryForm}
         value={inquiry.inquiryTitle}
+        placeholder="제목을 입력하세요"
         required/>
     </div>
     <div>
-      내용:
-      <input 
-        type="text" 
+      <textarea 
         name="inquiryContent" 
         onChange={onChangeInquiryForm}
         value={inquiry.inquiryContent}
+        placeholder="내용을 입력하세요"
         required/>
     </div>
-    <div>
+    <div className='inquiry-write-btn'>
       <input
       type='button'
       value='질문등록'

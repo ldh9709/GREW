@@ -1,7 +1,9 @@
 import React from "react";
 import * as inquiryApi from "../../api/inquiryApi";
 import "../../css/styles.css";
+
 export default function InquiryItem({ inquiry }) {
+  
   return (
     <a
       className="inquiry-container"
@@ -13,6 +15,7 @@ export default function InquiryItem({ inquiry }) {
       <br/>
       <div className="inquiry-content">{inquiry.inquiryContent}</div>
       <br/>
+      <div className=""></div>
       <br/>
       <div className="inquiry-desc">
         {inquiry.memberName.slice(0, 1) + "*" + inquiry.memberName.slice(2)} |
