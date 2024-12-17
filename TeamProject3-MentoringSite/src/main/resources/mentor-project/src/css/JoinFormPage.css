@@ -1,88 +1,57 @@
-/* SignUpForm.css */
 .signup-container {
-    width: 400px;
-    margin: 0 auto;
-    padding: 20px;
-    border: 1px solid #ccc;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    background-color: #f9f9f9;
-    margin-top: 10px;
-  }
-  
-  .signup-title {
-    text-align: center;
-    margin-bottom: 20px;
-    color: #333;
-  }
+  width: 500px;
+  margin: 50px auto;
+  padding: 20px;
+  background-color: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
 
-  .signup-sub-title {
-    text-align: center;
-    margin-bottom: 20px;
-    color: #333;
-  }
-  
-  .signup-form .form-group {
-    margin-top: 20px;
-    margin-bottom: 15px;
-    display: flex;
-    
-  }
-  
-  .form-join-group {
-    color: #333;
-    margin-top: 10px;
-  }
-  .form-interest-group {
-    color: #333;
-    margin-top: 10px;
-    font-size: 10px;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px; /* 항목 간 간격 */
-  }
+.signup-title {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #333;
+  font-size: 24px;
+}
 
-  .member-join-button {
-    margin-top: 10px;
-    background-color: #45a049;
-    color: #f9f9f9;
-    
-  }
+.form-join-group {
+  margin-bottom: 15px;
+}
 
-  .form-sns-group {
-    margin-top: 30px;
-  }
-  
-  .signup-form label {
-    
-    display: block;
-    margin-bottom: 5px;
-    font-weight: bold;
-  }
-  
-  .signup-form input {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    box-sizing: border-box;
-    
-  }
-  
-  .signup-button {
-    width: 100%;
-    padding: 10px;
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    font-size: 16px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-    margin-top: 20px;
-  }
-  
-  .signup-button:hover {
-    background-color: #45a049;
-  }
-  
+.signup-form input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-sizing: border-box;
+}
+
+.member-join-button {
+  width: 100%;
+  padding: 10px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.member-join-button:hover {
+  background-color: #45a049;
+}
+
+.form-interest-group {
+  margin-top: 20px;
+  font-size: 14px;
+  color: #555;
+}
+
+.form-interest-group legend {
+  font-weight: bold;
+}
+
+.form-interest-group label {
+  display: block;
+  margin: 5px 0;
+}

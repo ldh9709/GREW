@@ -21,7 +21,6 @@ import lombok.Setter;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-
 public class MemberDtoAndTempCode {
 	
 	private MemberDto memberDto;

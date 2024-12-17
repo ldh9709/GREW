@@ -2,9 +2,9 @@ import React, { useState } from "react";
 import "../css/LoginFormPage.css";
 import { Link, useNavigate } from "react-router-dom";
 import * as memberApi from "../api/memberApi";
+import { setCookie, getCookie } from "../util/cookieUtil";
 
-
-function LoginFormPage() {
+const LoginFormPage = () => {
   const navigate = useNavigate();
 
   const [member, setMember] = useState({
@@ -13,109 +13,73 @@ function LoginFormPage() {
   });
 
   const handleChangeLoginForm = (e) => {
-    setMember({
-      ...member,
-      [e.target.name]: e.target.value
-    });
-    console.log(e.target.name);
-    console.log(e.target.value);
+    setMember({ ...member, [e.target.name]: e.target.value });
   };
 
   const loginAction = async (e) => {
-    e.preventDefault()//새로고침을 방지
-
+    e.preventDefault();
     const responseJsonObject = await memberApi.loginAction(member);
-    
-    console.log(member);
-    console.log(responseJsonObject);
+    console.log("responseJsonObject.memberId : ", responseJsonObject.memberId);
 
-    switch (responseJsonObject.status) {
 
-      case 1:
-        // 로그인 성공 처리
-        navigate("/main");
-        console.log("성공 : ", responseJsonObject)
-        break;
-      default:
-        console.log("실패 : ", responseJsonObject)
-        
-        break;
+    if (responseJsonObject.accessToken) {
+      /* 쿠키 설정 */
+      setCookie("member", JSON.stringify(responseJsonObject), 1);
+      console.log("getCookies : " , getCookie("member"));
+      console.log("getCookies.accessToken : " , getCookie("member").accessToken);
+      /* 로그인 성공 시 이동 */
+      navigate("/main");
+    } else {
+      console.log("responseJsonObject.status : ", responseJsonObject.status);
+      alert("로그인 실패");
     }
   };
 
   return (
-    <div className="signup-container">
-      <h2 className="signup-title">로그인</h2>
-
-      <form className="signup-form" onSubmit={loginAction}>
-        <div>
-          <label htmlFor="id">아이디</label>
+    <div className="login-container">
+      <h2 className="login-title">로그인</h2>
+      <form className="login-form" onSubmit={loginAction}>
+        <div className="login-input">
           <input
             type="text"
-            id="memberId"
             name="memberId"
-            placeholder="아이디를 입력하세요"
+            placeholder="아이디"
             value={member.memberId}
             onChange={handleChangeLoginForm}
             required
           />
         </div>
-
-        <div>
-          <label htmlFor="password">비밀번호</label>
+        <div className="login-input">
           <input
             type="password"
-            id="password"
             name="memberPassword"
-            placeholder="비밀번호를 입력하세요"
+            placeholder="비밀번호"
             value={member.memberPassword}
             onChange={handleChangeLoginForm}
             required
           />
         </div>
-
-        <button type="submit" className="signup-button" onClick={loginAction}>
+        <button type="submit" className="login-button">
           로그인
         </button>
-
-        <button
-          type="button"
-          className="signup-button"
-          onClick={() => navigate("/join")}
-        >
-          회원가입
-        </button>
-
-        <h3 className="signup-sub-title">SNS 로그인</h3>
-
-        <div className="form-sns-group">
-          <Link to={"http://localhost:8080/oauth2/authorization/google"}>
-          <img
-            src="google_icon.svg"
-            alt="google"
-            style={{ height: "50px", marginRight: "50px" }}
-          />
+        <Link to="/join" className="join-link">
+          <p>회원이 아니신가요? 회원가입</p>
+        </Link>
+        <h3 className="login-sub-title">SNS 로그인</h3>
+        <div className="sns-login-group">
+          <Link to="http://localhost:8080/oauth2/authorization/google">
+            <img src="google_icon.svg" alt="Google" className="sns-icon" />
           </Link>
-
-          <Link to={"http://localhost:8080/oauth2/authorization/naver"}>
-          <img
-            src="naver_icon.png"
-            alt="naver"
-            style={{ height: "50px", marginRight: "50px" }}
-          />
+          <Link to="http://localhost:8080/oauth2/authorization/naver">
+            <img src="naver_icon.png" alt="Naver" className="sns-icon" />
           </Link>
-
-          <Link to={"http://localhost:8080/oauth2/authorization/kakao"}>
-          <img
-            src="kakao_icon.svg"
-            alt="Kakao"
-            style={{ height: "50px", marginRight: "50px" }}
-          />
+          <Link to="http://localhost:8080/oauth2/authorization/kakao">
+            <img src="kakao_icon.svg" alt="Kakao" className="sns-icon" />
           </Link>
         </div>
       </form>
     </div>
   );
-}
+};
 
 export default LoginFormPage;

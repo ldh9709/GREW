@@ -147,38 +147,14 @@ public class MemberRestController {
 		
 		System.out.println("isChecked : " + isChecked);
 		if(!isChecked) {
-			response.setMessage("인증번호가 일치하지 않습니다.");
-		}
-			//인코딩 타입 설정
-			HttpHeaders httpHeaders = new HttpHeaders();
-			httpHeaders.setContentType(new MediaType(MediaType.APPLICATION_JSON, Charset.forName("UTF-8")));
-			
-			//반환할 응답Entity 생성
-			ResponseEntity<Response> responseEntity =
-					 new ResponseEntity<Response>(response, httpHeaders, HttpStatus.OK);
-			
-			return responseEntity;
+			response.setStatus(ResponseStatusCode.CREATED_MEMBER_FAIL);
+			response.setMessage(ResponseMessage.CREATED_MEMBER_FAIL);
 		}
 		
-	/* 회원 가입(멘티) */
-	@Operation(summary = "회원가입(멘티)")
-	@PostMapping
-	public ResponseEntity<Response> saveMember(@RequestBody MemberDto memberDto) {
+		memberService.saveMember(memberDto);
 		
-		//저장메소드 실행
-		Member saveMember = memberService.saveMember(memberDto);
-		
-		MemberDto saveMemberDto = MemberDto.toDto(saveMember);
-		
-		//응답 객체 생성
-		Response response = new Response();
-		
-		if(saveMemberDto != null) {
-			//응답객체에 코드, 메시지, 객체 설정
-			response.setStatus(ResponseStatusCode.CREATED_MEMBER_SUCCESS);
-			response.setMessage(ResponseMessage.CREATED_MEMBER_SUCCESS);
-			response.setData(saveMemberDto);
-		}
+		response.setStatus(ResponseStatusCode.CREATED_MEMBER_SUCCESS);
+		response.setMessage(ResponseMessage.CREATED_MEMBER_SUCCESS);
 		
 		//인코딩 타입 설정
 		HttpHeaders httpHeaders = new HttpHeaders();
@@ -187,10 +163,41 @@ public class MemberRestController {
 		//반환할 응답Entity 생성
 		ResponseEntity<Response> responseEntity =
 				 new ResponseEntity<Response>(response, httpHeaders, HttpStatus.OK);
+			
+			return responseEntity;
+		}
 		
-		//반환
-		return responseEntity;
-	}
+//	/* 회원 가입(멘티) */
+//	@Operation(summary = "회원가입(멘티)")
+//	@PostMapping("/createMentee")
+//	public ResponseEntity<Response> saveMember(@RequestBody MemberDto memberDto) {
+//		
+//		//저장메소드 실행
+//		Member saveMember = memberService.saveMember(memberDto);
+//		
+//		MemberDto saveMemberDto = MemberDto.toDto(saveMember);
+//		
+//		//응답 객체 생성
+//		Response response = new Response();
+//		
+//		if(saveMemberDto != null) {
+//			//응답객체에 코드, 메시지, 객체 설정
+//			response.setStatus(ResponseStatusCode.CREATED_MEMBER_SUCCESS);
+//			response.setMessage(ResponseMessage.CREATED_MEMBER_SUCCESS);
+//			response.setData(saveMemberDto);
+//		}
+//		
+//		//인코딩 타입 설정
+//		HttpHeaders httpHeaders = new HttpHeaders();
+//		httpHeaders.setContentType(new MediaType(MediaType.APPLICATION_JSON, Charset.forName("UTF-8")));
+//		
+//		//반환할 응답Entity 생성
+//		ResponseEntity<Response> responseEntity =
+//				 new ResponseEntity<Response>(response, httpHeaders, HttpStatus.OK);
+//		
+//		//반환
+//		return responseEntity;
+//	}
 	
 	/* 회원 로그인
 	@Operation(summary = "회원 로그인")
@@ -482,34 +489,35 @@ public class MemberRestController {
 		
 	    return responseEntity;
 	}
-	/* 회원 정보 보기 */
-	@Operation(summary = "회원 정보 상세보기")
-	@GetMapping("/{memberNo}")
-	public ResponseEntity<Response> getMember(@PathVariable(name = "memberNo") Long memberNo) {
-		
-		//번호로 멤버 객체 찾기
-		Member loginMember = memberService.getMember(memberNo);
-		
-		//DTO객체로 변환
-		MemberDto loginMemberDto = MemberDto.toDto(loginMember);
-		
-		Response response = new Response();
-		
-		if(loginMemberDto != null) {
-			//응답객체에 코드, 메시지, 객체 설정
-			response.setStatus(ResponseStatusCode.READ_MEMBER_SUCCESS);
-			response.setMessage(ResponseMessage.READ_MEMBER_SUCCESS);
-			response.setData(loginMemberDto);
-		}
-		
-		HttpHeaders httpHeaders=new HttpHeaders();
-		httpHeaders.setContentType(new MediaType(MediaType.APPLICATION_JSON,Charset.forName("UTF-8")));
-		
-		ResponseEntity<Response> responseEntity = 
-				new ResponseEntity<Response>(response, httpHeaders, HttpStatus.OK);
-		
-		return responseEntity;
-	}
+	
+//	/* 회원 정보 보기 */
+//	@Operation(summary = "회원 정보 상세보기")
+//	@GetMapping("/{memberNo}")
+//	public ResponseEntity<Response> getMember(@PathVariable(name = "memberNo") Long memberNo) {
+//		
+//		//번호로 멤버 객체 찾기
+//		Member loginMember = memberService.getMember(memberNo);
+//		
+//		//DTO객체로 변환
+//		MemberDto loginMemberDto = MemberDto.toDto(loginMember);
+//		
+//		Response response = new Response();
+//		
+//		if(loginMemberDto != null) {
+//			//응답객체에 코드, 메시지, 객체 설정
+//			response.setStatus(ResponseStatusCode.READ_MEMBER_SUCCESS);
+//			response.setMessage(ResponseMessage.READ_MEMBER_SUCCESS);
+//			response.setData(loginMemberDto);
+//		}
+//		
+//		HttpHeaders httpHeaders=new HttpHeaders();
+//		httpHeaders.setContentType(new MediaType(MediaType.APPLICATION_JSON,Charset.forName("UTF-8")));
+//		
+//		ResponseEntity<Response> responseEntity = 
+//				new ResponseEntity<Response>(response, httpHeaders, HttpStatus.OK);
+//		
+//		return responseEntity;
+//	}
 	
 	/* 멘티 회원 활동 요약 */
 	@Operation(summary = "멘티 활동 내역 요약")
