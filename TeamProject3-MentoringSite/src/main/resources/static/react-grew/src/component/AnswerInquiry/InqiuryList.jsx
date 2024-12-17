@@ -13,7 +13,6 @@ function InqiuryList() {
   const [categories, setCategories] = useState([]); // 카테고리 리스트
   const [selectedCategory, setSelectedCategory] = useState(null); // 선택된 카테고리
   const [childCategories, setChildCategories] = useState([]); // 하위 카테고리 상태
-  const [selectedChildCategory, setSelectedChildCategory] = useState(null); // 선택된 하위 카테고리
   // 카테고리 목록을 가져오는 함수
   const fetchCategories = async () => {
     try {
@@ -122,14 +121,8 @@ function InqiuryList() {
 
   // 페이지 로드 시 데이터 가져오기
   useEffect(() => {
-    fetchInquiries(
-      currentPage - 1,
-      itemsPerPage,
-      sortType,
-      selectedCategory,
-      selectedChildCategory
-    );
-  }, [currentPage, sortType, selectedCategory, selectedChildCategory]);
+    fetchInquiries(currentPage - 1, itemsPerPage, sortType, selectedCategory);
+  }, [currentPage, sortType, selectedCategory, childCategories]);
 
   // 페이지 번호 버튼 표시
   const pageNumbers = [];
@@ -139,13 +132,22 @@ function InqiuryList() {
 
   return (
     <>
+      <link
+        href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap"
+        rel="stylesheet"
+      ></link>
       <div>
         <h1>질문게시판</h1>
-        <div>
-          <a
-            href="/inquiry/inquiryWrite"
-            style={{ textAlign: "right", display: "block" }}
-          >
+        <div className="btn-inquiry-write-div">
+          <a className="btn-inquiry-write" href="/inquiry/inquiryWrite">
+            <img src="https://img.icons8.com/?size=100&id=P1bJzKUoOQYz&format=png&color=000000" 
+             style={{
+              width: "20px",
+              height: "20px",
+              marginRight: "5px",
+              marginLeft: "-5px",
+              marginBottom: "-3px",
+            }}/>
             질문등록
           </a>
         </div>
