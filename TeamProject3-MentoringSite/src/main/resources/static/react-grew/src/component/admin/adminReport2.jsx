@@ -12,7 +12,7 @@ export const UserPage = () => {
     <div style={styles.page}>
       {/* 사이드바 */}
       <div style={styles.sidebar}>
-        <h2 style={styles.logo}>관리자자</h2>
+        <h2 style={styles.logo}>관리자페이지</h2>
         <ul style={styles.menu}>
           
           <li>게시판관리</li>
@@ -37,6 +37,9 @@ export const UserPage = () => {
             <div style={styles.item}>
               <span style={styles.icon}>🆔</span> 아이디: {user.userId}
             </div>
+            <div style={styles.buttonContainer}>
+              <button style={styles.button}>처리</button>
+            </div>
           </div>
         ))}
       </div>
@@ -54,7 +57,7 @@ const styles = {
   },
   sidebar: {
     width: '220px',
-    backgroundColor: '002468',
+    backgroundColor: 'ffffff',
     color: '000000',
     padding: '20px',
     boxShadow: '2px 0 5px rgba(0,0,0,0.1)',
@@ -71,6 +74,7 @@ const styles = {
     padding: 0,
     fontSize: '16px',
     textAlign: 'center',
+    alignItems:'space-around'
   },
   content: {
     flex: 1,
@@ -88,6 +92,9 @@ const styles = {
     boxShadow: '0 4px 8px rgba(0,0,0,0.1)',
     padding: '15px',
     marginBottom: '15px',
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'space-between',
   },
   item: {
     display: 'flex',
@@ -98,6 +105,22 @@ const styles = {
   icon: {
     marginRight: '10px',
     filter: 'grayscale(100%)', // 흑백 이모티콘
+  },
+  buttonContainer: {
+    display: 'flex',
+    justifyContent: 'flex-end', // 버튼을 우측 정렬
+    alignItems: 'center',
+    marginTop: '10px',
+  },
+  button: {
+    padding: '8px 16px',
+    fontSize: '14px',
+    backgroundColor: '#002468', // 버튼 배경 색상
+    color: '#fff', // 버튼 텍스트 색상
+    border: 'none',
+    borderRadius: '4px',
+    cursor: 'pointer',
+    transition: 'background-color 0.3s',
   },
 };
 
