@@ -1,8 +1,6 @@
 package com.itwill.jpa.controller.bullentin_board;
 
 import java.nio.charset.Charset;
-import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -17,22 +15,16 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.server.ResponseStatusException;
 
 import com.itwill.jpa.dto.alarm.AlarmDto;
 import com.itwill.jpa.dto.bulletin_board.AnswerDto;
-import com.itwill.jpa.entity.bullentin_board.Answer;
-import com.itwill.jpa.entity.bullentin_board.Inquiry;
-import com.itwill.jpa.repository.bullentin_board.InquiryRepository;
 import com.itwill.jpa.response.Response;
 import com.itwill.jpa.response.ResponseMessage;
 import com.itwill.jpa.response.ResponseStatusCode;
 import com.itwill.jpa.service.alarm.AlarmService;
 import com.itwill.jpa.service.bullentin_board.AnswerService;
-import com.itwill.jpa.service.bullentin_board.InquiryService;
 
 import io.swagger.v3.oas.annotations.Operation;
-import jakarta.transaction.Transactional;
 
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -49,11 +41,12 @@ public class AnswerRestController {
 	private AlarmService alarmService;
 	/* 답변 등록 */
 	@Operation(summary = "답변 등록")
-	@PostMapping
+	@PostMapping("{inquiryNo}")
 	//@Transactional
-	public ResponseEntity<Response> createAnswer(@RequestBody AnswerDto answerDto){
+	public ResponseEntity<Response> createAnswer(@RequestBody AnswerDto answerDto,
+			@PathVariable("inquiryNo")Long inquiryNo){
 		// 1. 서비스 호출 : 답변 데이터 저장
-		AnswerDto createAnswerDto = answerService.createAnswer(answerDto);
+		AnswerDto createAnswerDto = answerService.createAnswer(answerDto,inquiryNo);
 		AlarmDto alarmDto = alarmService.createAlarmByAnswerToInquiry(createAnswerDto);
 		// 2. 응답 데이터(Response 객체) 생성
 		// - 응답객체에 코드, 메시지, 객체 설정
@@ -193,7 +186,7 @@ public class AnswerRestController {
 	    ResponseEntity<Response> responseEntity = 
 				new ResponseEntity<Response>(response, httpHeaders, HttpStatus.OK);
 		
-	    return responseEntity;
+	    return responseEntity; 
 		
 		
 	}
@@ -202,7 +195,7 @@ public class AnswerRestController {
 	/* 질문 하나에 달린 답변 */
 	/* 최신순 */
 	@Operation(summary = "질문에 작성된답변조회(최신순)")
-	@GetMapping("/{inquiryNo}/inquiry-date")
+	@GetMapping("/{inquiryNo}/answer-date")
 	public ResponseEntity<Response> getByInquiryAnswerOrderByDate(@PathVariable(name = "inquiryNo") Long inquiryNo,
 			@RequestParam(name = "page",defaultValue = "0") int page,  // 기본값은 0 페이지
             @RequestParam(name = "size",defaultValue = "10") int size) {
@@ -226,7 +219,7 @@ public class AnswerRestController {
 	/* 카테고리별 답변 리스트 */
 	/* 추천순 */
 	@Operation(summary = "카테고리별 답변조회(추천순)")
-	@GetMapping("/{categoryNo}/answer-vote")
+	@GetMapping("/{categoryNo}/category-vote")
 	public ResponseEntity<Response> getByCategoryAnswerOrderByVotes(@PathVariable(name = "categoryNo") Long categoryNo,
 			@RequestParam(name = "page",defaultValue = "0") int page,  // 기본값은 0 페이지
             @RequestParam(name = "size",defaultValue = "10") int size){

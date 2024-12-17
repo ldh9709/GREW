@@ -1,13 +1,11 @@
 package com.itwill.jpa.controller.bullentin_board;
 
 import java.nio.charset.Charset;
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -352,4 +350,20 @@ public class InquiryRestController {
 		
 		return responseEntity;
 	}
+	@Operation(summary = "질문 번호로 객체가져오기")
+	@GetMapping("/find/{inquiryNo}")
+	public ResponseEntity<Response> getInquiry(@PathVariable(name = "inquiryNo") Long inquiryNo) {
+        // inquiryNo를 이용해 데이터베이스에서 해당 문의를 찾는 로직
+        InquiryDto inquiryDto = inquiryService.getInquiryByInquiryNo(inquiryNo);
+        Response response = new Response();
+        response.setData(inquiryDto);
+        HttpHeaders httpHeaders = new HttpHeaders();
+		httpHeaders.setContentType(new MediaType(MediaType.APPLICATION_JSON,Charset.forName("UTF-8")));
+		
+	    ResponseEntity<Response> responseEntity = 
+				new ResponseEntity<Response>(response, httpHeaders, HttpStatus.OK);
+        // 찾은 문의를 응답으로 반환
+        return responseEntity;
+        
+    }
 }

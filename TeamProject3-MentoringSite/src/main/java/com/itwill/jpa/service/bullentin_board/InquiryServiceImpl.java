@@ -3,9 +3,7 @@ package com.itwill.jpa.service.bullentin_board;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -16,14 +14,11 @@ import org.springframework.stereotype.Service;
 
 import com.itwill.jpa.dto.bulletin_board.InquiryDto;
 import com.itwill.jpa.dto.bulletin_board.InquiryIpViewDto;
-import com.itwill.jpa.dto.member_information.CategoryRequestDto;
 import com.itwill.jpa.entity.bullentin_board.Inquiry;
 import com.itwill.jpa.entity.bullentin_board.InquiryIpView;
-import com.itwill.jpa.entity.member_information.Category;
 import com.itwill.jpa.exception.CustomException;
 import com.itwill.jpa.repository.bullentin_board.InquiryIpViewRepository;
 import com.itwill.jpa.repository.bullentin_board.InquiryRepository;
-import com.itwill.jpa.repository.member_information.CategoryRepository;
 import com.itwill.jpa.response.ResponseMessage;
 import com.itwill.jpa.response.ResponseStatusCode;
 import com.itwill.jpa.util.ClientIp;
@@ -317,6 +312,12 @@ public class InquiryServiceImpl implements InquiryService {
 		}catch (Exception e) {
 			throw new CustomException(ResponseStatusCode.READ_INQUIRY_LIST_FAIL, ResponseMessage.READ_INQUIRY_LIST_FAIL, e);
 		}
+	}
+	//번호로 질문 DTO 찾기
+	@Override
+	public InquiryDto getInquiryByInquiryNo(Long inquiryNo) {
+		InquiryDto inquiryDto = InquiryDto.toDto(inquiryRepository.findById(inquiryNo).get()); 
+		return inquiryDto;
 	}
 
 }

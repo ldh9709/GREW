@@ -2,11 +2,7 @@ package com.itwill.jpa.dto.bulletin_board;
 
 import java.time.LocalDateTime;
 
-import com.itwill.jpa.dto.member_information.CategoryRequestDto;
-import com.itwill.jpa.dto.member_information.CategoryResponseDto;
-import com.itwill.jpa.dto.member_information.MemberDto;
 import com.itwill.jpa.entity.bullentin_board.Inquiry;
-import com.itwill.jpa.entity.member_information.Category;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -27,6 +23,7 @@ public class InquiryDto {
     private Integer inquiryViews;
     private Long parentsCategoryNo;
     private Long categoryNo;
+    private String categoryName;
     private Long memberNo;
     private String memberName;
     /*
@@ -43,6 +40,7 @@ public class InquiryDto {
                 .inquiryViews(inquiryEntity.getInquiryViews())
                 .parentsCategoryNo(inquiryEntity.getCategory().getParentCategory().getCategoryNo())
                 .categoryNo(inquiryEntity.getCategory().getCategoryNo())
+                .categoryName(inquiryEntity.getCategory().getCategoryName())
                 .memberNo(inquiryEntity.getMember().getMemberNo())
                 .memberName(inquiryEntity.getMember().getMemberName())
                 .build();

@@ -1,14 +1,12 @@
 package com.itwill.jpa.service.bullentin_board;
 
-import java.util.List;
-
 import org.springframework.data.domain.Page;
 
 import com.itwill.jpa.dto.bulletin_board.AnswerDto;
 
 public interface AnswerService {
 	//답변작성
-	AnswerDto createAnswer(AnswerDto answerDto);
+	AnswerDto createAnswer(AnswerDto answerDto,Long inquiryNo);
 	//답변수정
 	AnswerDto updateAnswer(AnswerDto answerDto) throws Exception;
 	//답변삭제
