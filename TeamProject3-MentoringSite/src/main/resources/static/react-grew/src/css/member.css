@@ -161,7 +161,7 @@ body {
 
 .heart {
     position:relative;
-    top: -30px; right: 0px;
+    top: -40px; right: 15px;
     color: red;
     font-size: 1.3rem;
     cursor: pointer;

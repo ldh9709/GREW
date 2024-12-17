@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import image from '../../image/images.jpeg'
-// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faHeart } from '@fortawesome/free-solid-svg-icons';
 import * as memberApi from "../../api/memberApi"
 
 export default function MemberTabs({memberNo}) {
@@ -64,7 +65,7 @@ export default function MemberTabs({memberNo}) {
                             <p>{follow.subCategory}</p>
                         </div>
                         <div class="heart">
-                            <i class="fa-solid fa-heart"></i>
+                            <FontAwesomeIcon icon={faHeart} />
                         </div>
                     </li>
                 ))}
