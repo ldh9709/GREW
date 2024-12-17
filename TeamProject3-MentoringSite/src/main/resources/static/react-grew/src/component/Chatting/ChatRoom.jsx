@@ -1,27 +1,30 @@
 import React, { useState } from 'react';
+import * as ChattingApi from '../../api/ChattingApi.js';
 
 const ChatRoom = ({ onRoomClick }) => {
-    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [isModalOpen, setIsModalOpen] = useState(false);  // 모달창의 열림/닫힘 상태를 관리하기 위한 state
+    const memberNo = 1;
     const [rooms, setRooms] = useState([
         { id: 1, name: '채팅방 1' },
         { id: 2, name: '채팅방 2' },
         { id: 3, name: '채팅방 3' },
     ]);
     
-    const [currentRoom, setCurrentRoom] = useState(null);
-    const [newRoomName, setNewRoomName] = useState('');
-    const openEditModal = (room) => {
-        setCurrentRoom(room);
-        setNewRoomName(room.name);
-        setIsModalOpen(true);
+    const [currentRoom, setCurrentRoom] = useState(null);   // 수정 중인 채팅방 정보를 담는 state
+    const [newRoomName, setNewRoomName] = useState('');     // 수정할 채팅방 이름을 저장하는 state
+
+    const openEditModal = (room) => {                       // 특정 채팅방을 수정하기 위해 모달을 열고, 해당 채팅방의 정보를 저장하는 함수
+        setCurrentRoom(room);                               // 현재 수정 중인 채팅방 정보를 저장
+        setNewRoomName(room.name);                          // 수정할 채팅방 이름을 입력창에 보여줌
+        setIsModalOpen(true);                               // 모달창 열기
     };
 
-    const saveRoomName = () => {
+    const saveRoomName = () => {                            // 채팅방 이름을 저장하는 함수 (모달창에서 이름 수정 후 저장 버튼 클릭 시 호출됨)
         if (currentRoom && newRoomName.trim()) {
-            setRooms((prevRooms) =>
-                prevRooms.map((room) =>
+            setRooms((prevRooms) =>                         // 이전 rooms 리스트를 가져와서 수정
+                prevRooms.map((room) =>                     // 모든 채팅방을 순회하며 수정할 채팅방만 이름을 변경
                     room.id === currentRoom.id
-                        ? { ...room, name: newRoomName.trim() }
+                        ? { ...room, name: newRoomName.trim() } // 현재 수정 중인 채팅방의 이름만 변경
                         : room
                 )
             );
@@ -36,18 +39,19 @@ const ChatRoom = ({ onRoomClick }) => {
             <div>
                 <div className="chat-header">채팅방 목록</div>
                 <ul className="chat-room-list">
+                    {/* 채팅방 목록을 화면에 출력 */}
                     {rooms.map((room) => (
                         <li
-                            key={room.id}
+                            key={room.id} // 고유 키 설정 (React에서 반복문에 필수)
                             className="chat-room-item"
-                            onClick={() => onRoomClick(room.id)}
+                            onClick={() => onRoomClick(room.id)} // 채팅방 클릭 시 부모 컴포넌트에 해당 채팅방 id 전달
                         >
                             <span className="room-name">{room.name}</span>
                             <button
                                 className="edit-button"
                                 onClick={(e) => {
-                                    e.stopPropagation();
-                                    openEditModal(room);
+                                    e.stopPropagation(); // 부모 이벤트 (채팅방 클릭) 전파 방지
+                                    openEditModal(room); // 채팅방 이름 수정 모달 열기
                                 }}
                             >
                                 수정
@@ -74,7 +78,7 @@ const ChatRoom = ({ onRoomClick }) => {
                         <button onClick={saveRoomName}>저장</button>
                         <button
                             className="close-button"
-                            onClick={() => setIsModalOpen(false)} // 닫기 버튼 추가
+                            onClick={() => setIsModalOpen(false)} // 닫기 버튼
                         >
                             닫기
                         </button>
