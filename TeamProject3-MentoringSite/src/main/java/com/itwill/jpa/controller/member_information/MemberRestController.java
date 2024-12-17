@@ -224,8 +224,8 @@ public class MemberRestController {
 	
 	/***** 회원 정보 보기(토큰) *****/
 	@Operation(summary = "회원 정보 보기(토큰)")
-	@SecurityRequirement(name = "BearerAuth")
-	@PreAuthorize("hasRole('MENTEE')")
+	@SecurityRequirement(name = "BearerAuth")//API 엔드포인트가 인증을 요구한다는 것을 문서화(Swagger에서 JWT인증을 명시
+	@PreAuthorize("hasRole('MENTEE')")//ROLE이 MENTEE인 사람만 접근 가능
 	@GetMapping("/profile")
 	public ResponseEntity<Response> getMember(Authentication authentication) {
 		
@@ -234,7 +234,7 @@ public class MemberRestController {
 		Long memberNo = principalDetails.getMemberNo();
 		
 		System.out.println(">>>>> getAuthorities : " + authentication.getAuthorities());
-		System.out.println(">>>>> authentication : " + authentication);
+		System.out.println(">>>>> authentica  tion : " + authentication);
 		System.out.println(">>>>> authentication.getName() : " + authentication.getName());
 		System.out.println(">>> Granted Authorities: " + authentication.getAuthorities());
 		System.out.println(">>> PrincipalDetails Authorities: " + principalDetails.getAuthorities());
