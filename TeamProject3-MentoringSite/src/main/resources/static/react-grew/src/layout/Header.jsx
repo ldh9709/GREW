@@ -21,6 +21,9 @@ export default function HeaderMenu() {
         <a href="로그인폼" className="login">
           로그인
         </a>
+        <a href="/member/mypage/1" className="mypage">
+          마이페이지
+        </a>
         <a href="회원가입폼" className="signup">
           회원가입
         </a>

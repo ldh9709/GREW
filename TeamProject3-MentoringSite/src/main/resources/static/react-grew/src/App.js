@@ -11,6 +11,7 @@ import InqiuryList from "./component/AnswerInquiry/InqiuryList";
 import InqiuryView from "./component/AnswerInquiry/InquiryView";
 import ChatAlarim from "./component/Chatting/ChatAlarim";
 import Footer from "./layout/Footer"
+import MemberMypage from "./component/Member/MemberMypage";
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
           <Routes>
             <Route path="/" exact element={<MainPage />} />
             <Route path="/main" element={<MainPage />} />
+            <Route path="/member/mypage/:memberNo" element={<MemberMypage />} />
             <Route path="/inquiry" element={<InqiuryList/>}/>
             <Route path="/inquiry/:inquiryNo" element={<InqiuryView/>}/>
             <Route path="/inquiry/inquiryWrite" element={<InquiryWriteFormpage/>}/>
