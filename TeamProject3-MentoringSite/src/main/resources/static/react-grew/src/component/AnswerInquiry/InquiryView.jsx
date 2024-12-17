@@ -62,7 +62,6 @@ function InquiryView() {
   //질문삭제
   const inquiryRemoveAction = async () => {
     const responseJsonObject = await inquiryApi.deleteInquiry(inquiryNo);
-    console.log(responseJsonObject);
     if (responseJsonObject.status === 5200) {
       navigate("/inquiry");
     } else {
@@ -122,8 +121,8 @@ function InquiryView() {
                 | 조회수 {inquiry.inquiryViews} |{" "}
                 {inquiry.inquiryDate.substring(0, 10)}
               </div>
-              <br/>
-                  <div>{inquiry.categoryName}</div>
+              <br />
+              <div>{inquiry.categoryName}</div>
             </div>
             <br />
             <br />
@@ -137,7 +136,14 @@ function InquiryView() {
                 <button>수정</button>
               </Link>
 
-              <button onClick={inquiryRemoveAction}>삭제</button>
+              <button
+                onClick={(e) => {
+                  e.preventDefault(); // 폼 제출 방지
+                  inquiryRemoveAction(); // 삭제 액션 실행
+                }}
+              >
+                삭제
+              </button>
             </div>
           </div>
         </form>
