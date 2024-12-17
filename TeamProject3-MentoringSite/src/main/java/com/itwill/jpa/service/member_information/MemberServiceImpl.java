@@ -202,9 +202,9 @@ public class MemberServiceImpl implements MemberService {
 		String tempPassword = uid.toString().substring(0, 10) + "p2$";
 		customMailSender.sendFindPasswordMail(memberDto, tempPassword);
 		
-		//tempPassword = bCryptPasswordEncoder.encode(tempPassword);
+		tempPassword = passwordEncoder.encode(tempPassword);
 		
-		//member.changePassword(tempPassword);
+		member.changePassword(tempPassword);
 		
 	}
 	

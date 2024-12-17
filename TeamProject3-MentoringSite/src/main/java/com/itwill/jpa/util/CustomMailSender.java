@@ -3,6 +3,7 @@ package com.itwill.jpa.util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Component;
 
 import com.itwill.jpa.dto.member_information.MemberDto;
@@ -83,17 +84,39 @@ public class CustomMailSender {
 	//임시비밀번호 메일 발송
 	public void sendFindPasswordMail(MemberDto.findPassword memberDto, String tempPassword) {
 		/***** 사용자의 닉네임과 임시 비밀번호를 포함한 HTML 형식의 메시지를 생성 *****/
-		String htmlMessage = "<div>" + memberDto.getMemberId() + "님의 임시 비밀번호는 <span style='font-weight:bold; color:blue;'> " + tempPassword + "</span> 입니다." + "</div>";
+		 // HTML 메시지 생성
+        String htmlMessage = "<div style='font-family: 'NanumSquare'; line-height: 1.6; color: #000; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #ddd; border-radius: 8px;'>"
+                + "<h2 style='color: #333;'>[Grew]에서 임시 비밀번호 안내드립니다.</h2>"
+                + "<p>요청하신 임시 비밀번호는 아래와 같습니다:</p>"
+                + "<div style='margin: 20px 0; padding: 15px; background-color: #f9f9f9; border: 1px solid #eee; border-radius: 5px;'>"
+                + "<span style='font-weight: bold; font-size: 18px; color: #007BFF;'>" + tempPassword + "</span>"
+                + "</div>"
+                + "<p style='margin: 0;'>보안을 위해 로그인 후 반드시 비밀번호를 변경해 주세요.</p>"
+                + "<p>감사합니다. [Grew] 팀 드림</p>"
+                + "<hr style='border: 0; height: 1px; background: #ddd; margin: 20px 0;'>"
+                + "<footer style='text-align: center; font-size: 12px; color: #999;'>"
+                + "<p>&copy; 2024 Grew. All rights reserved.</p>"
+                + "</footer>"
+                + "</div>";
+		try {
+			
+			MimeMessage mimeMessage = javaMailSender.createMimeMessage();
+			MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true, "UTF-8");
+			
+			helper.setTo(memberDto.getEmail());
+            helper.setSubject("[Grew] 임시 비밀번호 안내 메일입니다.");
+            helper.setText(htmlMessage, true); // true는 HTML 형식
+//			mail.setAddress(memberDto.getEmail());
+//			System.out.println(">>>>>>>>이메일 검증 : " + memberDto.getEmail());
+//			mail.setTitle("[Grew] 임시 비밀번호 안내 메일입니다.");
+//			mail.setMessage(htmlMessage);
+            //메일 발송
+            javaMailSender.send(mimeMessage);
+            
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		
-		Mail mail = new Mail();
-		
-		mail.setAddress(memberDto.getEmail());
-		System.out.println(">>>>>>>>이메일 검증 : " + memberDto.getEmail());
-		mail.setTitle("[used book] 임시 비밀번호 안내 메일입니다.");
-		mail.setMessage(htmlMessage);
-		
-		//메일 발송
-		this.mimeMailSend(mail);
 	}
 	
 	

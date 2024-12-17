@@ -266,56 +266,17 @@ public class MemberRestController {
 	
 	/* 회원 수정 */
 	@Operation(summary = "회원 정보 수정")
+	//@PreAuthorize("hasRole('MENTEE')")
 	@PutMapping
 	public ResponseEntity<Response> updateMember(@RequestBody MemberDto memberDto) {
 		
-//		Authentication authentication =	SecurityContextHolder.getContext().getAuthentication();
-//		PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
-//		
-//		Long memberNo = principalDetails.getMemberNo();
-//		
-//		//클라이언트에서 보낸 데이터 무시하고 인증된 사용자 정보로 덮어씀(생략가능, 명시적으로 입력)
-//		memberDto.setMemberNo(memberNo);
+		//Authentication authentication =	SecurityContextHolder.getContext().getAuthentication();
+		//PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
 		
-		//업데이트 메소드 실행
-		Member updateMember = memberService.updateMember(memberDto);
-		 
-		MemberDto updateMemberDto = MemberDto.toDto(updateMember);
-		
-		Response response = new Response();
-		
-		if(updateMemberDto != null) {
-			//응답객체에 코드, 메시지, 객체 설정
-			response.setStatus(ResponseStatusCode.UPDATE_MEMBER_SUCCESS);
-			response.setMessage(ResponseMessage.UPDATE_MEMBER_SUCCESS);
-			response.setData(updateMemberDto);
-		}
-		
-		HttpHeaders httpHeaders=new HttpHeaders();
-		httpHeaders.setContentType(new MediaType(MediaType.APPLICATION_JSON,Charset.forName("UTF-8")));
-		
-		ResponseEntity<Response> responseEntity = 
-				new ResponseEntity<Response>(response, httpHeaders, HttpStatus.OK);
-		
-		return responseEntity;
-	}
-	
-	/***** 회원 수정(토큰) *****/
-	@Operation(summary = "회원 정보 수정(토큰)")
-	@SecurityRequirement(name = "BearerAuth")
-	@PutMapping("/modify")
-	public ResponseEntity<Response> updateMemberByToken(@RequestBody MemberDto memberDto) {
-		
-		//인증객체 가져옴
-		Authentication authentication =	SecurityContextHolder.getContext().getAuthentication();
-		System.out.println(">>>>> updateMemberByToken authentication : " + authentication);
-		PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
-		System.out.println(">>>>> updateMemberByToken principalDetails : " + principalDetails);
-		
-		Long memberNo = principalDetails.getMemberNo();
+		//Long memberNo = principalDetails.getMemberNo();
 		
 		//클라이언트에서 보낸 데이터 무시하고 인증된 사용자 정보로 덮어씀(생략가능, 명시적으로 입력)
-		memberDto.setMemberNo(memberNo);
+		//memberDto.setMemberNo(memberNo);
 		
 		//업데이트 메소드 실행
 		Member updateMember = memberService.updateMember(memberDto);
@@ -341,6 +302,7 @@ public class MemberRestController {
 	}
 	
 	/* 회원 수정 */
+	//@PreAuthorize("hasRole('ADMIN')")
 	@Operation(summary = "회원 상태 수정")
 	@PutMapping("/{memberNo}/status/{statusNo}")
 	public ResponseEntity<Response> updateMemberStatus(
@@ -370,7 +332,7 @@ public class MemberRestController {
 		return responseEntity;
 	}
 	
-	/***** 이메일 발송 (테스트) *****/
+	/***** 이메일 발송 *****/
 	@Operation(summary = "비밀번호 찾기")
 	@PostMapping("/findPassword")
 	public ResponseEntity findPassword(@RequestBody MemberDto.findPassword memberDto) {
