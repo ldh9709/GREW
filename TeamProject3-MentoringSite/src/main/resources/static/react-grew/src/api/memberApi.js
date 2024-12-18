@@ -14,24 +14,7 @@ GET  /member/mentor-summary/{memberNo}      :멘토 회원 활동정보 요약 �
 
 */
 
-
-//멘티 회원 활동정보 요약
-export const memberCountSummary = async(memberNo) => {
-    const response = await fetch(`${BACKEND_SERVER}/member/mentee-summary/${memberNo}`,{
-        method: 'GET',
-    });
-    const responseJsonObject = await response.json();
-    return responseJsonObject;
-}
-
-//멘토 회원 활동정보 요약
-export const memberInfoSummary = async(memberNo) => {
-    const response = await fetch(`${BACKEND_SERVER}/member/${memberNo}`,{
-        method: 'GET'
-    });
-    const responseJsonObject = await response.json();
-    return responseJsonObject;
-}
+//아이디 중복 체크
 
 //팔로잉 리스트 조회
 export const followList = async(memberNo)=>{
@@ -62,12 +45,13 @@ export const loginAction = async (sendJsonObject) => {
     return response.data;
 }
 
-//회원가입입
+
+//회원가입
 export const joinAction = async (member, tempCode) => {
     console.log("Request Data: ", member);
     console.log("Request Data: ", tempCode);
 
-    const response = await fetch(`${BACKEND_SERVER}/api/member/createMember`, {
+    const response = await fetch(`${BACKEND_SERVER}/member/createMember`, {
         method:'POST', 
         headers:{
             'Content-type':'application/json'
@@ -84,11 +68,38 @@ export const joinAction = async (member, tempCode) => {
 
 }
 
+//회원 정보 수정
+
+//회원 상태 변경
+
+//회원 전체 조회
+
+//멤버 프로필 조회
+export const memberProfile = async () => {
+    // 저장된 토큰 가져오기
+    const memberCookie = getCookie("member");
+    
+    const token = memberCookie.accessToken;
+
+    const response = await fetch(`${BACKEND_SERVER}/member/profile`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}` // Authorization 헤더에 JWT 토큰 추가
+      },
+    });
+    
+    // 서버 응답 처리
+    const resultJsonObject = await response.json();
+    return resultJsonObject;
+  };
+
+
 //인증코드 메일 발송
 export const sendJoinCode = async (sendJsonObject) => {
     console.log("Request Data : ", sendJsonObject);
 
-    const response = await fetch(`${BACKEND_SERVER}/api/member/sendJoinCode`, {
+    const response = await fetch(`${BACKEND_SERVER}/member/sendJoinCode`, {
         method:'POST',
         headers:{
             'Content-type':'application/json'
@@ -101,22 +112,21 @@ export const sendJoinCode = async (sendJsonObject) => {
     return resultJsonObject;
 }
 
-//멤버 프로필 조회
-export const memberProfile = async () => {
-    // 저장된 토큰 가져오기
-    const memberCookie = getCookie("member");
-    
-    const token = memberCookie.accessToken;
-
-    const response = await fetch(`${BACKEND_SERVER}/api/member/profile`, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}` // Authorization 헤더에 JWT 토큰 추가
-      },
+  
+//멘티 회원 활동정보 요약
+export const memberCountSummary = async(memberNo) => {
+    const response = await fetch(`${BACKEND_SERVER}/member/mentee-summary/${memberNo}`,{
+        method: 'GET',
     });
-    
-    // 서버 응답 처리
-    const resultJsonObject = await response.json();
-    return resultJsonObject;
-  };
+    const responseJsonObject = await response.json();
+    return responseJsonObject;
+}
+
+//멘토 회원 활동정보 요약
+export const memberInfoSummary = async(memberNo) => {
+    const response = await fetch(`${BACKEND_SERVER}/member/${memberNo}`,{
+        method: 'GET'
+    });
+    const responseJsonObject = await response.json();
+    return responseJsonObject;
+}

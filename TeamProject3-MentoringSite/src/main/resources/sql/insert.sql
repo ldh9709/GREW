@@ -61,7 +61,6 @@ INSERT INTO category(category_no, category_name, category_depth, parent_category
 VALUES(category_no_SEQ.nextval, '관심사를 선택해주세요', 3, null);
 INSERT INTO category(category_no, category_name, category_depth, parent_category_no)
 VALUES(category_no_SEQ.nextval, '관심사를 선택해주세요', 3, null);
->>>>>>> refs/heads/master
 
 
 /* 멘티 등록 */
