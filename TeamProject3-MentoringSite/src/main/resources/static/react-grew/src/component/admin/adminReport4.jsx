@@ -128,8 +128,8 @@ const styles = {
     },
     icon: {
     marginRight: '10px',
-    fontSize: '18px',
-    //filter: 'grayscale(100%)', // 흑백 이모티콘
+    //fontSize: '18px',
+    filter: 'grayscale(100%)', // 흑백 이모티콘
     },
     buttonContainer: {
     display: 'flex',
