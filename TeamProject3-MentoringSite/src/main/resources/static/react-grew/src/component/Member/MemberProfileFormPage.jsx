@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
-import "../css/ProfileFormPage.css";
-import { memberProfile } from "../api/memberApi";
+import { memberProfile } from "../../api/memberApi";
 
-const ProfileFormPage = () => {
+const MemberProfileFormPage = () => {
     
     
 
@@ -156,4 +155,4 @@ const ProfileFormPage = () => {
   );
 };
 
-export default ProfileFormPage;
+export default MemberProfileFormPage;
