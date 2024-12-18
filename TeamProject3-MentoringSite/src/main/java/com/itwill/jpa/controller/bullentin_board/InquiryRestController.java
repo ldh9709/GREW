@@ -27,6 +27,7 @@ import com.itwill.jpa.service.bullentin_board.InquiryService;
 import com.itwill.jpa.util.ClientIp;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.servlet.http.HttpServletRequest;
 
 @RestController
@@ -333,6 +334,7 @@ public class InquiryRestController {
 	}
 	
 	@Operation(summary = "내가 작성한 질문내역")
+	@SecurityRequirement(name = "BearerAuth")//API 엔드포인트가 인증을 요구한다는 것을 문서화(Swagger에서 JWT인증을 명시
 	@GetMapping
 	public ResponseEntity<Response> getInquiryByMember(
 			Authentication authentication,

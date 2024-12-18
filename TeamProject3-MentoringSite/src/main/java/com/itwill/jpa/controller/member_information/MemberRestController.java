@@ -211,7 +211,7 @@ public class MemberRestController {
 		
 		System.out.println(">>>>> getAuthorities : " + authentication.getAuthorities());
 		System.out.println(">>>>> authentica  tion : " + authentication);
-		System.out.println(">>>>> authentication.getName() : " + authentication.getName());
+		System.out.println(">>>>> au	thentication.getName() : " + authentication.getName());
 		System.out.println(">>> Granted Authorities: " + authentication.getAuthorities());
 		System.out.println(">>> PrincipalDetails Authorities: " + principalDetails.getAuthorities());
 		

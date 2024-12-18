@@ -146,13 +146,14 @@ export const searchInquiry = async(search,page,size)=>{
 export const listInquiryBymemberNo = async (page) => {
    const memberCookie = getCookie("member");
    const token = memberCookie.accessToken;
-
-   const response = await fetch(`${BACKEND_SERVER}/inquiry?page=${page}&$size=10`, {
+   
+   const response = await fetch(`${BACKEND_SERVER}/inquiry?page=${page}&size=10`, {
       method: 'GET',
       headers: {
          'Content-Type': 'application/json',
          'Authorization': `Bearer ${token}` // Authorization 헤더에 JWT 토큰 추가
-       }
+      }
    });
-
+   const responseJsonObject = await response.json();
+   return responseJsonObject;
 }
