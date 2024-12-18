@@ -11,6 +11,7 @@ import ChatAlarim from "./component/Chatting/ChatAlarim";
 import Footer from "./layout/Footer"
 import AdminReport2 from "./component/admin/adminReport2"
 import Admin from "./component/admin/admin"
+import AdminReport4 from "./component/admin/adminReport4"
 
 function App() {
   return (
@@ -27,8 +28,9 @@ function App() {
             <Route path="/inquiry/inquiryWrite" element={<InquiryWriteFormpage/>}/>
             <Route path="/inquiry/:inquiryNo" element={<InqiuryView/>}/>
             <Route path="/inquiry/modify/:inquiryNo" element={<InquiryModifyFormpage/>}/>
-            <Route path="/adminReport2" element={<AdminReport2/>}/>
+            <Route path="/admin/reports" element={<AdminReport2/>}/>
             <Route path="/admin" element={<Admin/>}/>
+            <Route path="/adminReport4" element={<AdminReport4/>}/>
           </Routes>
           <Footer/>
         </div>
