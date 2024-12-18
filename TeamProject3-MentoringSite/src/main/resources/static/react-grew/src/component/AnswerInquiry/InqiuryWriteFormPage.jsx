@@ -66,7 +66,15 @@ export default function InqiuryWriteFormPage() {
   };
 
   const inquiryWriteAction = async (e) => {
-    if (inquiry.categoryNo && !childCategories.some(child => child.categoryNo === inquiry.categoryNo)) {
+    // 상위 카테고리 선택 여부 확인
+    if (!inquiry.categoryNo) {
+      alert("카테고리를 선택해야 합니다.");
+      return; // 상위 카테고리가 선택되지 않으면 폼 제출을 막음
+    }
+    if (
+      inquiry.categoryNo &&
+      !childCategories.some((child) => child.categoryNo === inquiry.categoryNo)
+    ) {
       alert("하위 카테고리를 선택해야 합니다.");
       return; // 하위 카테고리가 선택되지 않으면 폼 제출을 막음
     }
@@ -87,11 +95,14 @@ export default function InqiuryWriteFormPage() {
                   key={category.categoryNo}
                   onClick={(e) => {
                     e.preventDefault();
-                    handleCategoryClick(category.categoryNo)}} // 클릭 시 카테고리 선택
+                    handleCategoryClick(category.categoryNo);
+                  }} // 클릭 시 카테고리 선택
                   style={{
-                    margin: '5px',
-                    backgroundColor: selectedCategory === category.categoryNo ? '#4CAF50' : '', // 선택된 카테고리는 색상 변경
-                    color: selectedCategory === category.categoryNo ? 'white' : '', // 선택된 카테고리 글자 색상 변경
+                    margin: "5px",
+                    backgroundColor:
+                      selectedCategory === category.categoryNo ? "#4CAF50" : "", // 선택된 카테고리는 색상 변경
+                    color:
+                      selectedCategory === category.categoryNo ? "white" : "", // 선택된 카테고리 글자 색상 변경
                   }}
                 >
                   {category.categoryName}
@@ -107,11 +118,13 @@ export default function InqiuryWriteFormPage() {
                   key={child.categoryNo}
                   onClick={(e) => {
                     e.preventDefault();
-                    handleCategoryClick(child.categoryNo)}} // 하위 카테고리 선택
+                    handleCategoryClick(child.categoryNo);
+                  }} // 하위 카테고리 선택
                   style={{
-                    margin: '5px',
-                    backgroundColor: selectedCategory === child.categoryNo ? '#4CAF50' : '', // 선택된 카테고리는 색상 변경
-                    color: selectedCategory === child.categoryNo ? 'white' : '', // 선택된 카테고리 글자 색상 변경
+                    margin: "5px",
+                    backgroundColor:
+                      selectedCategory === child.categoryNo ? "#4CAF50" : "", // 선택된 카테고리는 색상 변경
+                    color: selectedCategory === child.categoryNo ? "white" : "", // 선택된 카테고리 글자 색상 변경
                   }}
                 >
                   {child.categoryName}

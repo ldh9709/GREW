@@ -80,9 +80,13 @@ export const deleteAnswer = async (answerNo) => {
   return responseJsonObject;
 };
 //답변수정
-export const updateAnswer = async (answerNo) => {
-  const response = await fetch(`${BACKEND_SERVER}/answer/update/${answerNo}`, {
+export const updateAnswer = async (sendJsonObject) => {
+  const response = await fetch(`${BACKEND_SERVER}/answer/update/${sendJsonObject.answerNo}`, {
     method: "PUT",
+    headers: {
+      "Content-Type": "application/json;charset=UTF-8", // 요청 헤더 설정
+    },
+    body: JSON.stringify(sendJsonObject), // 요청 본문에 JSON 객체 전달
   });
   const responseJsonObject = await response.json();
   return responseJsonObject;

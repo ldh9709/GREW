@@ -5,7 +5,7 @@ export default function AnswerModifyFormPage() {
   const modifyFormRef = useRef();
   const navigate = useNavigate();
   const initAnswer = {
-    answerNo: 0,
+    answerNo: 1,
     answerContent: "",
     answerDate: "",
     answerStatus: 1,
@@ -46,6 +46,7 @@ export default function AnswerModifyFormPage() {
   useEffect(() => {
     const a = async () => {
       const responseJsonObject = await answerApi.viewAnswer(answerNo);
+      console.log(responseJsonObject.data);
       setAnswer(responseJsonObject.data);
     };
     a();
@@ -102,8 +103,8 @@ export default function AnswerModifyFormPage() {
               type="button"
               value="수정"
               onClick={answerModifyAction}
-              id="btn_inquiry_write_action"
-            />
+              id="btn_answer_modify_action"
+              />
           </div>
         </form>
       </div>
