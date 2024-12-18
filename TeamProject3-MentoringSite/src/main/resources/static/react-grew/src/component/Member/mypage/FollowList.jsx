@@ -27,13 +27,16 @@ export default function FollowList({ memberNo }) {
         }
     }    
 
-    const fetchFollowDelete = async () => {
+    //팔로우 취소 버튼
+    const onClickHeartBtn = async (followNo) => {
         try {
-            
+            await followApi.deleteFollow(followNo);
+            fetchFollowList(currentPage - 1, itemsPerPage);
         } catch (error) {
-            console.log('팔로우 취소 실패', error);
+            alert('팔로우 취소 실패');
         }
     }
+
     // 페이지 변경 시 데이터 갱신
     const paginate = (pageNumber) => {
         setCurrentPage(pageNumber);
@@ -58,8 +61,8 @@ export default function FollowList({ memberNo }) {
             <ul className="follow-list">
 
                 {/* 팔로우 리스트 map으로 반복*/}
-                {followList.map((follow)=>(
-                    <li className="follow-card">
+                {followList.map((follow,index)=>(
+                    <li className="follow-card" key={index}>
                         <div className="profile">
                             <img src={image} alt="프로필 이미지" />
                         </div>
@@ -68,7 +71,10 @@ export default function FollowList({ memberNo }) {
                             <p>{follow.primaryCategory}</p>
                             <p>{follow.subCategory}</p>
                         </div>
-                        <div className="heart">
+                        <div
+                            className="heart"
+                            onClick={() => onClickHeartBtn(follow.followNo)}
+                        >
                             <FontAwesomeIcon icon={faHeart} />
                         </div>
                     </li>

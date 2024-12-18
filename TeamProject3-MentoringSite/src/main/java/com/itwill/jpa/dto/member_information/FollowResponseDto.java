@@ -14,7 +14,9 @@ import lombok.NoArgsConstructor;
 @Builder
 public class FollowResponseDto {
 	/*출력 데이터 : 멘토이름, 대분류 카테고리이름, 소분류 카테고리이름 */
+	private Long followNo;
 	private String mentorName;
+	private String mentorImage;
 	private String primaryCategory;
 	private String subCategory;
 	

@@ -21,7 +21,9 @@ public interface FollowReporitory extends JpaRepository<Follow, Long>{
 	 
 	/* FollowResponseDto 활용하여 원하는 데이터만 출력 */
 	@Query("SELECT new com.itwill.jpa.dto.member_information.FollowResponseDto("
-			+ "m.memberName"
+			+ "f.followNo "
+			+ ",m.memberName "
+			+ ",mp.mentorImage "
 			+ ",c2.categoryName"
 			+ ",c1.categoryName) "
 			+ "FROM Follow f "
