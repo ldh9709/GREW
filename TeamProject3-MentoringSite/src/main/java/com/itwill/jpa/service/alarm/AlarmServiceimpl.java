@@ -133,6 +133,17 @@ public class AlarmServiceimpl implements AlarmService {
 			alarmDto.setReferenceType("question");
 			return AlarmDto.toDto(alarmRepository.save(Alarm.toEntity(alarmDto)));
 	}
+	//멤버한명의 알림 출력
+	@Override
+	public List<AlarmDto> findAlarmByMember(Long memberNo) {
+		
+		List<AlarmDto> alarmDtoList = new ArrayList<>();
+		List<Alarm> alarmList = alarmRepository.findByMember_MemberNo(memberNo);
+		for (Alarm alarm : alarmList) {
+	        alarmDtoList.add(AlarmDto.toDto(alarm));
+	    }
+		return alarmDtoList;
+	}
 	// 알림 클릭시 URl전송
 	@Override
 	public String alarmRedirectURL(AlarmDto alarmDto) {
@@ -148,6 +159,7 @@ public class AlarmServiceimpl implements AlarmService {
 			throw new IllegalArgumentException("Unknown reference type");
 		}
 	}
+
 
 	
 
