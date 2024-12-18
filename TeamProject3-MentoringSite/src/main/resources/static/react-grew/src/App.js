@@ -15,7 +15,7 @@ import InqiuryList from "./component/AnswerInquiry/InqiuryList";
 import InqiuryView from "./component/AnswerInquiry/InquiryView";
 import ChatAlarim from "./component/Chatting/ChatAlarim";
 import Footer from "./layout/Footer"
-import MemberMypage from "./component/Member/MemberMypage";
+import MemberMypage from "./component/Member/mypage/MemberMypage";
 import SearchList from "./component/SearchList";
 function App() {
   return (
