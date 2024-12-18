@@ -14,7 +14,7 @@ const ProfileFormPage = () => {
     });
 
     const fetchProfileData = async () => {
-
+        
         const response = await memberProfile();
         console.log("프로필response : ", response)
         console.log("프로필response.data : ", response.data)

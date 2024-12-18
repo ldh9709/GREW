@@ -59,10 +59,11 @@ export const sendJoinCode = async (sendJsonObject) => {
     return resultJsonObject;
 }
 
-export const memberProfile = async (sendJsonObject) => {
+export const memberProfile = async () => {
     // 저장된 토큰 가져오기
     const memberCookie = getCookie("member");
-    
+    console.log("memberCookie : ", memberCookie);
+
     const token = memberCookie.accessToken;
 
     const response = await fetch(`${BACKEND_SERVER}/api/member/profile`, {
