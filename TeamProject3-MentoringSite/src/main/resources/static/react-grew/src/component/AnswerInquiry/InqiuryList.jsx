@@ -107,7 +107,7 @@ function InqiuryList() {
         }
       }
 
-      setInquiry(responseJsonObject.data.content); // 'content' 안에 데이터가 있다고 가정
+      setInquiry(responseJsonObject.data.content);
       setTotalPages(responseJsonObject.data.totalPages); // 전체 페이지 수 설정
     } catch (error) {
       console.error("API 호출 실패:", error);
@@ -124,9 +124,14 @@ function InqiuryList() {
     fetchInquiries(currentPage - 1, itemsPerPage, sortType, selectedCategory);
   }, [currentPage, sortType, selectedCategory, childCategories]);
 
-  // 페이지 번호 버튼 표시
+  // 페이지네이션 버튼 표시 (10개씩 끊어서 표시)
   const pageNumbers = [];
-  for (let i = 1; i <= totalPages; i++) {
+  const pagesToShow = 10; // 한 번에 보여줄 페이지 수
+  const startPage =
+    Math.floor((currentPage - 1) / pagesToShow) * pagesToShow + 1;
+  const endPage = Math.min(startPage + pagesToShow - 1, totalPages);
+
+  for (let i = startPage; i <= endPage; i++) {
     pageNumbers.push(i);
   }
 
@@ -162,6 +167,7 @@ function InqiuryList() {
               <button
                 key={category.categoryNo}
                 onClick={() => handleCategoryClick(category.categoryNo)} // 클릭 시 카테고리 선택
+                className="category-button"
                 style={{
                   margin: "5px",
                   backgroundColor:
@@ -182,6 +188,7 @@ function InqiuryList() {
               <button
                 key={child.categoryNo}
                 onClick={() => handleCategoryClick(child.categoryNo)} // 하위 카테고리 선택
+                className="category-button"
                 style={{
                   margin: "5px",
                   backgroundColor:
@@ -242,11 +249,25 @@ function InqiuryList() {
 
         {/* 페이지네이션 버튼 */}
         <div className="pagenation">
+          {startPage > 1 && (
+            <button onClick={() => paginate(startPage - 1)}>이전</button>
+          )}{" "}
+          {/* 이전 그룹 */}
           {pageNumbers.map((number) => (
-            <button key={number} onClick={() => paginate(number)}>
+            <button
+              key={number}
+              onClick={() => paginate(number)}
+              style={{
+                backgroundColor: number === currentPage ? "#4CAF50" : "",
+                color: number === currentPage ? "white" : "",
+              }}
+            >
               {number}
             </button>
           ))}
+          {endPage < totalPages && (
+            <button onClick={() => paginate(endPage + 1)}>다음</button> // 다음 그룹
+          )}
         </div>
       </div>
     </>
