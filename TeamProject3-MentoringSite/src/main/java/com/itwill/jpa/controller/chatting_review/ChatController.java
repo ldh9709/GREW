@@ -24,8 +24,8 @@ public class ChatController {
 	        // 실제로 메시지가 들어왔을 때 확인
 	    	System.out.println(message);
 	        System.out.println("memberName : " + message.getMemberName());
-	        System.out.println("ChatContent : " + message.getChatContent());
-	        chatMessageService.saveChatMessage(message);
+	        System.out.println("ChatContent : " + message.getChatMessageContent());
+	        chatMessageService.createChatMessage(message);
 	    }
 	    return message;
 	}
