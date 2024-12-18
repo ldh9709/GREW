@@ -79,11 +79,10 @@ public class SecurityConfig {
 	//@Autowired
 	//private FormLoginFailureHandler formLoginFailureHandler;
 	
-	public static final String contextPattern = "/api/member/context";
-	public static final String apiMemberPattern = "/api/member/**";
+	public static final String apiMemberPattern = "/member/**";
 	  
 	public static final String[] 
-			SwaggerPatterns = {"/swagger-resources/**", "/swagger-ui/**", "/v3/api-docs/**","/v3/api-docs", "/swagger-ui.html", "/login", contextPattern, apiMemberPattern };
+			SwaggerPatterns = {"/swagger-resources/**", "/swagger-ui/**", "/v3/api-docs/**","/v3/api-docs", "/swagger-ui.html", "/login", apiMemberPattern };
 	
 	//인증 없이 접근 가능한 경로 정의
 	private final String[] whitelist = { };
