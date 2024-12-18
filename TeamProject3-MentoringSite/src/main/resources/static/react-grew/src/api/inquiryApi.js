@@ -1,3 +1,5 @@
+import { getCookie } from "../util/cookieUtil";
+
 const BACKEND_SERVER = "";
 /*
 POST /inquiry                         :질문쓰기
@@ -10,6 +12,7 @@ GET  /inquiry/viewCount/{categoryNo}  :조회수 순으로 카테고리별 질�
 GET  /inquiry/answerCount             :답변수 순으로 전체 질문출력
 GET  /inquiry/answerCount/{categoryNo}:답변수 순으로 카테고리별 질문출력
 GET  /inquiry/search/{search}         :질문 검색
+GET  /inquiry                         :내가 작성한 질문 전체 출력
 
 */
 //질문수정
@@ -137,4 +140,19 @@ export const searchInquiry = async(search,page,size)=>{
    });
    const responseJsonObject = await response.json();
    return responseJsonObject;
+}
+
+//내가 쓴 질문 
+export const listInquiryBymemberNo = async (page) => {
+   const memberCookie = getCookie("member");
+   const token = memberCookie.accessToken;
+
+   const response = await fetch(`${BACKEND_SERVER}/inquiry?page=${page}&$size=10`, {
+      method: 'GET',
+      headers: {
+         'Content-Type': 'application/json',
+         'Authorization': `Bearer ${token}` // Authorization 헤더에 JWT 토큰 추가
+       }
+   });
+
 }

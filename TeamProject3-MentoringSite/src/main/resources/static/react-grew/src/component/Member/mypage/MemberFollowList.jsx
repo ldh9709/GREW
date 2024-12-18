@@ -4,22 +4,24 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHeart } from '@fortawesome/free-solid-svg-icons';
 import * as followApi from "../../../api/followApi"
 
-export default function FollowList({ memberNo }) {
+export default function FollowList() {
     const [followList, setFollowList] = useState([{
+            no: 0,
             name: '',
+            image: '',
             primaryCategory: '',
             subCategory:''
     }])
     const [currentPage, setCurrentPage] = useState(1); // 현재 페이지 번호
     const [totalPages, setTotalPages] = useState(0); // 전체 페이지 수
-    const [itemsPerPage] = useState(6); // 페이지당 항목 수 (예: 한 페이지에 6개 항목)
+    // const [itemsPerPage] = useState(6); // 페이지당 항목 수 (예: 한 페이지에 6개 항목)
 
 
 
-    const fetchFollowList = async (page, size) => {
+    const fetchFollowList = async (page) => {
         try {
-            const response = await followApi.followList(memberNo, page, size);
-            const data = response.data;
+            const response = await followApi.followList(page);
+            const { data } = response;
             setFollowList(data.content);
             setTotalPages(data.totalPages);
         } catch (error) {
@@ -30,8 +32,9 @@ export default function FollowList({ memberNo }) {
     //팔로우 취소 버튼
     const onClickHeartBtn = async (followNo) => {
         try {
+            console.log(followNo);
             await followApi.deleteFollow(followNo);
-            fetchFollowList(currentPage - 1, itemsPerPage);
+            fetchFollowList(currentPage - 1);
         } catch (error) {
             alert('팔로우 취소 실패');
         }
@@ -44,7 +47,7 @@ export default function FollowList({ memberNo }) {
 
     // 페이지 로드 시 데이터 가져오기
     useEffect(() => {
-           fetchFollowList(currentPage - 1, itemsPerPage);
+           fetchFollowList(currentPage - 1);
     }, [currentPage])
     
 

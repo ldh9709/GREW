@@ -16,12 +16,12 @@ body {
 }
 
 .summary-box h1 {
-    font-size: 30px;
+    font-size: 27   px;
     margin-bottom: 10px;
 }
 
 .summary-box h1 a {
-    font-size: 16px;
+    font-size: 15px;
 }
 .summary-stats {
     display: flex;
@@ -84,34 +84,58 @@ body {
 
 .tab-content {
     display: block;
-    padding: 20px;
+    padding: 20px 0;
     text-align: center;
-    background: #fff;
 }
 
-.hidden {
-    display: none;
-}
 
 /* 콘텐츠 리스트 */
+
 /* 질문내역 리스트 */
-.list {
-    list-style: none; /* 점 제거 */
-    padding: 0;
-}
+.list-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-size: 14px;
+    text-align: center;
+  }
+  
+  /* 너비 다르게 주기*/
+  .col-no {
+    width: 5%;
+  }
+  .col-views{
+    width: 7%;
+  }
+  .col-likes{
+    width: 7%;
+  }
 
-.list li {
+  .list-table th, .list-table td {
     padding: 10px;
-    border-bottom: 1px solid #ddd;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.list li strong {
+    border: 1px solid #ddd;
+  }
+  
+  .list-table th {
+    background-color: #f4f4f4;
     font-weight: bold;
-    color: #333;
-}
+  }
+
+  .list-table td {
+    font-size: 14px;
+  }
+  .list-table tbody td:nth-child(3){
+    text-align: left;
+  }
+  
+  .list-table tr:nth-child(even) {
+    background-color: #f9f9f9;
+  }
+  
+  .list-table tr:hover {
+    background-color: #f1f1f1;
+  }
+
 
 /* 팔로우 리스트 */
 
@@ -160,9 +184,14 @@ body {
 }
 
 .heart {
+    transition: transform 0.3s ease, color 0.3s ease; /* 부드러운 애니메이션 */
     position:relative;
     top: -40px; right: 15px;
     color: red;
     font-size: 1.3rem;
     cursor: pointer;
+}
+.heart:hover {
+    color: rgb(216, 0, 0); /* 마우스 올리면 색상을 변경 */
+    transform: scale(1.1); /* 하트를 살짝 확대 */
 }

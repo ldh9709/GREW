@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGear } from '@fortawesome/free-solid-svg-icons';
 import * as memberApi from "../../../api/memberApi"
 
-export default function MemberSummary({ memberNo }) {
+export default function MemberSummary() {
 
     // State로 회원정보를 저장
     const [summary, setSummary] = useState({
@@ -19,7 +19,6 @@ export default function MemberSummary({ memberNo }) {
         try {
             const response = await memberApi.memberCountSummary();
             const { data } = await response;
-            console.log("1>>>>>>>>>>>>>", data);
 
             setSummary((prevState) => ({
                 ...prevState,
@@ -36,7 +35,6 @@ export default function MemberSummary({ memberNo }) {
         try {
             const response = await memberApi.memberProfile();
             const { data } = await response;
-            console.log("2>>>>>>>>>>>>>", data);
 
             setSummary((prevState)=>({
                 ...prevState,

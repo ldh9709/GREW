@@ -78,7 +78,6 @@ export const joinAction = async (member, tempCode) => {
 export const memberProfile = async () => {
     // 저장된 토큰 가져오기
     const memberCookie = getCookie("member");
-    
     const token = memberCookie.accessToken;
 
     const response = await fetch(`${BACKEND_SERVER}/member/profile`, {
@@ -130,9 +129,16 @@ export const memberCountSummary = async () => {
 }
 
 //멘토 회원 활동정보 요약
-export const memberInfoSummary = async(memberNo) => {
-    const response = await fetch(`${BACKEND_SERVER}/member/${memberNo}`,{
-        method: 'GET'
+export const memberInfoSummary = async () => {
+    const memberCookie = getCookie("member");
+    const token = memberCookie.accessToken;
+
+    const response = await fetch(`${BACKEND_SERVER}/member/`,{
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}` // Authorization 헤더에 JWT 토큰 추가
+          },
     });
     const responseJsonObject = await response.json();
     return responseJsonObject;

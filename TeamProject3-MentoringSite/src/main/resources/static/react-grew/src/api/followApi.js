@@ -1,8 +1,10 @@
+import { getCookie } from "../util/cookieUtil";
+
 const BACKEND_SERVER = "";
 /*
 POST    /follow                                :팔로우 신청
 GET     /follow/mentor/{mentorNo}/follower-count:멘토 팔로워 수 출력
-GET     /follow/mentee/{menteeNo}              :멘티가 팔로잉한 멘토 리스트 출력
+GET     /followList            :멘티가 팔로잉한 멘토 리스트 출력
 DELETE  /follow/{followNo}                     :팔로윙 취소
 */
 
@@ -20,25 +22,40 @@ export const addfollow = async(sendJsonObject)=>{
     return responseJsonObject;
 }
 //멘토 팔로워 수 출력
-export const followerCount = async(mentorNo)=>{
-    const response = await fetch(`${BACKEND_SERVER}/follow/mentor/${mentorNo}/follower-count`,{
-        method:'GET'
-    })
-    const responseJsonObject = await response.json();
-    return responseJsonObject;
-}
+// export const followerCount = async()=>{
+//     const response = await fetch(`${BACKEND_SERVER}/follow/mentor/follower-count`,{
+//         method:'GET'
+//     })
+//     const responseJsonObject = await response.json();
+//     return responseJsonObject;
+// }
 //팔로잉 리스트 조회
-export const followList = async(menteeNo, page, size)=>{
-    const response = await fetch(`${BACKEND_SERVER}/follow/mentee/${menteeNo}?page=${page}&size=${size}`,{
-        method:'GET'
+export const followList = async (page) => {
+    // 저장된 토큰 가져오기
+    const memberCookie = getCookie("member");
+    const token = memberCookie.accessToken;
+
+    const response = await fetch(`${BACKEND_SERVER}/follow/followList?page=${page}&size=6`,{
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}` // Authorization 헤더에 JWT 토큰 추가
+        }
     })
     const responseJsonObject = await response.json();
     return responseJsonObject;
 }
 //팔로잉 취소
-export const deleteFollow = async(followNo)=>{
+export const deleteFollow = async (followNo) => {
+    const memberCookie = getCookie("member");
+    const token = memberCookie.accessToken;
+
     const response = await fetch(`${BACKEND_SERVER}/follow/${followNo}`,{
-        method:'DELETE'
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}` // Authorization 헤더에 JWT 토큰 추가
+        }
     })
     const responseJsonObject = await response.json();
     return responseJsonObject;
