@@ -33,7 +33,7 @@ function App() {
             <Route path="/member/join" element={<MemberJoinFormPage/>} />
             <Route path="/member/login" element={<MemberLoginFormPage/>} />
             <Route path="/member/profile" element={<MemberProfileFormPage/>}/>
-
+          
             <Route path="/inquiry" element={<InqiuryList/>}/>
             <Route path="/inquiry/:inquiryNo" element={<InqiuryView/>}/>
             <Route path="/inquiry/inquiryWrite" element={<InquiryWriteFormpage/>}/>
