@@ -118,7 +118,7 @@ export const MemberJoinFormPage = () => {
             />
         </div>
         <div className="member-form-interest-group">
-            <label>관심사</label>
+            <p>관심사</p>
             <fieldset>
                 <legend>직무상담</legend>
                 <label>
