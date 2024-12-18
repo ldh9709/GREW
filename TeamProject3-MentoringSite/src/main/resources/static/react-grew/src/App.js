@@ -42,16 +42,13 @@ function App() {
             <Route path="/inquiry/:inquiryNo" element={<InqiuryView/>}/>
             <Route path="/inquiry/inquiryWrite" element={<InquiryWriteFormpage/>}/>
             <Route path="/inquiry/modify/:inquiryNo" element={<InquiryModifyFormpage/>}/>
-<<<<<<< HEAD
             <Route path="/answer/answerWrite/:inquiryNo" element={<AnswerWriteFormpage/>}/>
             <Route path="/answer/modify/:answerNo" element={<AnswerModifyFormpage/>}/>
             <Route path="/searchList" element={<SearchList/>}/>
             <Route path="/inquirySearchList" element={<InquirySearchList/>}/>
-=======
             <Route path="/admin/reports" element={<AdminReport2/>}/>
             <Route path="/admin" element={<Admin/>}/>
             <Route path="/adminReport4" element={<AdminReport4/>}/>
->>>>>>> refs/heads/eun-mee
           </Routes>
           <Footer/>
         </div>
