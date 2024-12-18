@@ -74,10 +74,10 @@ public class FollowServiceImpl implements FollowService{
 	public Page<FollowResponseDto> getMentorList(Long menteeMemberNo, int pageNumber, int pageSize){
 		try {
 			Pageable pageable = PageRequest.of(pageNumber, pageSize);
-			List<FollowResponseDto> followList = followReporitory.findFollowMentors(menteeMemberNo, pageable);
-			long totalCount = followList.size(); 
+			Page<FollowResponseDto> followList = followReporitory.findFollowMentors(menteeMemberNo, pageable);
+			long totalCount = followList.getTotalElements(); 
 			
-			return new PageImpl<>(followList, pageable, totalCount);
+			return followList;
 		} catch (Exception e) {
 			throw new CustomException(ResponseStatusCode.READ_MENTORLIST_FAIL, ResponseMessage.READ_MENTORLIST_FAIL, e);
 		}

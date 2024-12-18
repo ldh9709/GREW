@@ -22,8 +22,8 @@ public interface FollowReporitory extends JpaRepository<Follow, Long>{
 	/* FollowResponseDto 활용하여 원하는 데이터만 출력 */
 	@Query("SELECT new com.itwill.jpa.dto.member_information.FollowResponseDto("
 			+ "m.memberName"
-			+ ",c1.categoryName"
-			+ ",c2.categoryName) "
+			+ ",c2.categoryName"
+			+ ",c1.categoryName) "
 			+ "FROM Follow f "
 			+ "JOIN f.mentorMember m "
 			+ "JOIN m.mentorProfile mp "
@@ -32,7 +32,7 @@ public interface FollowReporitory extends JpaRepository<Follow, Long>{
 			+ "WHERE f.menteeMember.memberNo = :menteeMemberNo "
 			+ "ORDER BY m.memberName ASC"
 			)
-	public List<FollowResponseDto> findFollowMentors(@Param("menteeMemberNo") Long menteeMemberNo, Pageable pageable);
+	public Page<FollowResponseDto> findFollowMentors(@Param("menteeMemberNo") Long menteeMemberNo, Pageable pageable);
 	
 	/* 팔로워 멘티 수 찾기 */
 	public Integer countBymentorMember_MemberNo(Long mentorMemberNo);
