@@ -17,9 +17,9 @@ export default function MemberSummary({ memberNo }) {
     //회원 요약정보 count 가져옴
     const fetchCountSummary = async () => {
         try {
-            const response = await memberApi.memberCountSummary(memberNo);
-            const data = await response.data;
-            console.log(data);
+            const response = await memberApi.memberCountSummary();
+            const { data } = await response;
+            console.log("1>>>>>>>>>>>>>", data);
 
             setSummary((prevState) => ({
                 ...prevState,
@@ -34,9 +34,9 @@ export default function MemberSummary({ memberNo }) {
 
     const fetchMemberSummary = async () => {
         try {
-            const response = await memberApi.memberInfoSummary(memberNo);
-            const data = await response.data;
-            console.log(data);
+            const response = await memberApi.memberProfile();
+            const { data } = await response;
+            console.log("2>>>>>>>>>>>>>", data);
 
             setSummary((prevState)=>({
                 ...prevState,
@@ -58,7 +58,7 @@ export default function MemberSummary({ memberNo }) {
     return (
     <section className="summary">
         <div className="summary-box">
-            <h1>{summary.name}님 안녕하세요 <a href="/profile/edit"><FontAwesomeIcon icon={faGear} /> 개인정보 변경</a></h1>
+            <h1>{summary.name}님 안녕하세요 <a href="/member/profile/edit"><FontAwesomeIcon icon={faGear} /> 개인정보 변경</a></h1>
             <p>적립금 <span>{summary.points}자루</span></p>
             <div className="summary-stats">
                 <div>

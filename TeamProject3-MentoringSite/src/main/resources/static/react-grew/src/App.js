@@ -29,10 +29,10 @@ function App() {
             <Route path="/" exact element={<MainPage />} />
             <Route path="/main" element={<MainPage />} />
             {/* Member페이지 */}
-            <Route path="/member/mypage/:memberNo" element={<MemberMypage />} />
+            <Route path="/member/profile" element={<MemberMypage />} />
             <Route path="/member/join" element={<MemberJoinFormPage/>} />
             <Route path="/member/login" element={<MemberLoginFormPage/>} />
-            <Route path="/member/profile" element={<MemberProfileFormPage/>}/>
+            <Route path="/member/profile/edit" element={<MemberProfileFormPage/>}/>
 
             <Route path="/inquiry" element={<InqiuryList/>}/>
             <Route path="/inquiry/:inquiryNo" element={<InqiuryView/>}/>
