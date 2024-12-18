@@ -39,26 +39,25 @@ export default function InqiuryModifyFormPage() {
   }
   return (
     <div>
-      <form ref={modifyFormRef} method="POST">
+      <form ref={modifyFormRef} method="POST" className='inquiry-form'>
     <div>
-      제목:
       <input
         type="text"
         name="inquiryTitle" 
         onChange={onChangeInquiryForm}
         value={inquiry.inquiryTitle}
+        placeholder="내용을 입력하세요"
         required/>
     </div>
     <div>
-      내용:
-      <input 
-        type="text" 
+      <textarea
         name="inquiryContent" 
         onChange={onChangeInquiryForm}
         value={inquiry.inquiryContent}
+        placeholder="내용을 입력하세요"
         required/>
     </div>
-    <div>
+    <div className="inquiry-write-btn">
       <input
       type='button'
       value='수정'

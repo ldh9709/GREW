@@ -103,6 +103,13 @@ body {
 .chat-message {
     margin: 5px 0;
 }
+/* 채팅방 없으면 나오는 출력문 */
+.no-rooms-message {
+    text-align: center;
+    color: gray;
+    font-size: 16px;
+    margin-top: 20px;
+}
 /* 내가 보낸 메시지 스타일 */
 .sent {
     color: blue;

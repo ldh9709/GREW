@@ -1,6 +1,9 @@
 package com.itwill.jpa.service.member_information;
 
+import com.itwill.jpa.dto.chatting_review.ChatRoomDto;
+import com.itwill.jpa.dto.chatting_review.ReviewDto;
 import com.itwill.jpa.dto.member_information.MentorProfileDto;
+import com.itwill.jpa.entity.chatting_review.ChatRoom;
 import com.itwill.jpa.entity.member_information.Category;
 import com.itwill.jpa.entity.member_information.Member;
 import com.itwill.jpa.entity.member_information.MentorProfile;
@@ -10,8 +13,12 @@ import com.itwill.jpa.repository.member_information.MemberRepository;
 import com.itwill.jpa.repository.member_information.MentorProfileRepository;
 import com.itwill.jpa.response.ResponseMessage;
 import com.itwill.jpa.response.ResponseStatusCode;
+import com.itwill.jpa.service.chatting_review.ChatRoomService;
+import com.itwill.jpa.service.chatting_review.ReviewService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -20,25 +27,22 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
-@Service
 @Transactional
+@Service
 public class MentorProfileServiceImpl implements MentorProfileService {
 
     private static final String IMAGE_PATH = "C:/mentor-profile-images/";
-    private final MentorProfileRepository mentorProfileRepository;
-
+    
+    @Autowired
+    private MentorProfileRepository mentorProfileRepository;
     @Autowired
     private MemberRepository memberRepository;
     @Autowired
     private CategoryRepository categoryRepository;
-
-    @Autowired
-    public MentorProfileServiceImpl(MentorProfileRepository mentorProfileRepository,CategoryRepository categoryRepository) {
-        this.mentorProfileRepository = mentorProfileRepository;
-        this.categoryRepository = categoryRepository;
-    }
 
     /**
      * 멘토 상태를 변경하는 메서드
@@ -83,6 +87,27 @@ public class MentorProfileServiceImpl implements MentorProfileService {
             throw new CustomException(ResponseStatusCode.CREATED_MENTOR_PROFILE_FAIL, ResponseMessage.CREATED_MENTOR_PROFILE_FAIL, e);
         }
     }
+    /* 멘토링 전체활동 수 업데이트 */
+    public Integer updateMentoringCount(Long memberNo) {
+    	MentorProfile mentorProfile = mentorProfileRepository.findByMember_MemberNo(memberNo);
+    	Integer mentoringCount = mentorProfile.getMentorMentoringCount();
+    	
+    	mentorProfile.setMentorMentoringCount(mentoringCount+1);
+    	mentorProfileRepository.save(mentorProfile);
+    	
+    	return mentoringCount+1;
+    }
+    
+    /* 멘토링 완료 활동 수 업데이트 */
+    public Integer updateAcitityCount(Long memberNo) {
+    	MentorProfile mentorProfile = mentorProfileRepository.findByMember_MemberNo(memberNo);
+    	Integer mentorActivityCount = mentorProfile.getMentorActivityCount();
+    	
+    	mentorProfile.setMentorActivityCount(mentorActivityCount+1);
+    	mentorProfileRepository.save(mentorProfile);
+    	
+    	return mentorActivityCount+1;
+    }
 
     /**
      * 멘토의 평균 점수를 반환하는 메서드
@@ -101,7 +126,8 @@ public class MentorProfileServiceImpl implements MentorProfileService {
             throw new CustomException(ResponseStatusCode.MENTOR_PROFILE_NOT_FOUND_CODE, ResponseMessage.MENTOR_PROFILE_NOT_FOUND, e);
         }
     }
-
+    
+    
     /**
      * 멘토의 mentor_rating 업데이트
      */
@@ -114,6 +140,26 @@ public class MentorProfileServiceImpl implements MentorProfileService {
         }
     }
 
+    /**
+     * 멘토 프로필 전체 조회
+     */
+    @Override
+    public Page<MentorProfileDto> getMentorAll(int page, int size) {
+    	try {
+    		Pageable pageable = PageRequest.of(page, size);
+    		Page<MentorProfile> mentorProfiles = mentorProfileRepository.findAll(pageable);
+    		List<MentorProfileDto> mentorProfileDtos = new ArrayList<>();
+    		
+    		for (MentorProfile mentorProfile : mentorProfiles) {
+    			mentorProfileDtos.add(MentorProfileDto.toDto(mentorProfile));
+			}
+    		
+    		return new PageImpl<>(mentorProfileDtos, pageable, mentorProfiles.getTotalElements());
+    	} catch (Exception e) {
+    		throw new CustomException(ResponseStatusCode.MENTOR_PROFILE_NOT_FOUND_CODE, ResponseMessage.MENTOR_PROFILE_NOT_FOUND, e);
+    	}
+    }
+    
     /**
      * 멘토 프로필 상태별 조회
      */
@@ -156,6 +202,8 @@ public class MentorProfileServiceImpl implements MentorProfileService {
         }
     }
 
+    
+    
     /**
      * 프로필 이미지 업로드 메서드
      */

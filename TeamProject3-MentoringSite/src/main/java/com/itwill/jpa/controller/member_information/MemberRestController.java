@@ -335,9 +335,13 @@ public class MemberRestController {
 	
 	/* 회원 정보 수정 */
 	@Operation(summary = "회원 정보 수정")
-	//@PreAuthorize("hasRole('MENTEE')")
-	@PutMapping
-	public ResponseEntity<Response> updateMember(@RequestBody MemberDto memberDto) {
+	@PutMapping("/{memberNo}")
+	public ResponseEntity<Response> updateMember(
+			@RequestBody MemberDto memberDto,
+			@PathVariable("memberNo") Long memberNo
+			) {
+		
+		System.out.println(memberDto);
 		
 		//Authentication authentication =	SecurityContextHolder.getContext().getAuthentication();
 		//PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
@@ -388,7 +392,7 @@ public class MemberRestController {
 			//응답객체에 코드, 메시지, 객체 설정
 			response.setStatus(ResponseStatusCode.UPDATE_MEMBER_SUCCESS);
 			response.setMessage(ResponseMessage.UPDATE_MEMBER_SUCCESS);
-			response.setData(updateMemberDto);
+			response.setData(updateMember);
 		}
 		
 		HttpHeaders httpHeaders=new HttpHeaders();

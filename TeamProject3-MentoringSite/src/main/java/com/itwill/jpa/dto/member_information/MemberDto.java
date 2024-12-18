@@ -60,7 +60,6 @@ public class MemberDto {
 	    )
 	    private List<InterestDto> interests;
 	
-	
 	 /* Entitiy -> DTO*/
 	public static MemberDto toDto(Member memberEntity) {
 		return MemberDto.builder()
