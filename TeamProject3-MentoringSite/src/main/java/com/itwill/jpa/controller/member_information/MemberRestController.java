@@ -404,9 +404,11 @@ public class MemberRestController {
 	
 	/* 멘티 회원 활동 요약 */
 	@Operation(summary = "멘티 활동 내역 요약")
-	@GetMapping("/mentee-summary/{menteeNo}")
-	public ResponseEntity<Response> getMenteeSummary(
-			@PathVariable(name ="menteeNo") Long menteeNo){
+	@GetMapping("/mentee-summary")
+	public ResponseEntity<Response> getMenteeSummary(Authentication authentication){
+		
+		PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
+		Long menteeNo = principalDetails.getMemberNo(); 
 		
 		Integer inquiryCount = (int)inquiryService.getInquiryByMember(menteeNo, 0, 10).getTotalElements();
 		Integer counselCount = (int)chatRoomService.selectChatRoomAll(menteeNo).size();
