@@ -260,13 +260,13 @@ values(chat_room_no_SEQ.nextval, 7500, sysdate, null, 2, 5);
 
 /* 채팅방 활성화 등록 */
 insert into chat_room_status (chat_room_no, chat_room_name, chat_room_status, member_no, chat_room_status_no) 
-values (3, '양한수님과 문준형님의 채팅방', 7600, 4, chat_room_status_no_SEQ.nextval);
+values (6, '양한수님과 문준형님의 채팅방', 7600, 4, chat_room_status_no_SEQ.nextval);
 insert into chat_room_status (chat_room_no, chat_room_name, chat_room_status, member_no, chat_room_status_no) 
-values (3, '양한수님과 문준형님의 채팅방', 7600, 7, chat_room_status_no_SEQ.nextval);
+values (6, '양한수님과 문준형님의 채팅방', 7600, 7, chat_room_status_no_SEQ.nextval);
 insert into chat_room_status (chat_room_no, chat_room_name, chat_room_status, member_no, chat_room_status_no) 
-values (4, '이도현님과 김찬영님의 채팅방', 7600, 2, chat_room_status_no_SEQ.nextval);
+values (7, '이도현님과 김찬영님의 채팅방', 7600, 2, chat_room_status_no_SEQ.nextval);
 insert into chat_room_status (chat_room_no, chat_room_name, chat_room_status, member_no, chat_room_status_no) 
-values (4, '이도현님과 김찬영님의 채팅방', 7600, 8, chat_room_status_no_SEQ.nextval);
+values (7, '이도현님과 김찬영님의 채팅방', 7600, 8, chat_room_status_no_SEQ.nextval);
 
 /* 채팅방 내용 등록 */
 insert into chat_message (chat_message_no, chat_message_check, chat_message_date, chat_room_no, member_no, chat_message_content) 

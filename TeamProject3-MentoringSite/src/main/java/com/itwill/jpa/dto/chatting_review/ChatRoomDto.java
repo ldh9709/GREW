@@ -30,7 +30,7 @@ public class ChatRoomDto {
 		return ChatRoomDto.builder()
 				.chatRoomNo(mentoringRequestEntity.getChatRoomNo())
 				.chatRoomStatus(mentoringRequestEntity.getChatRoomStatus())
-				.chatRoomStartDate(mentoringRequestEntity.getChatRoomEndDate())
+				.chatRoomStartDate(mentoringRequestEntity.getChatRoomStartDate())
 				.chatRoomEndDate(mentoringRequestEntity.getChatRoomEndDate())
 				.menteeNo(mentoringRequestEntity.getMentee().getMemberNo())
                 .mentorNo(mentoringRequestEntity.getMentor().getMemberNo())
