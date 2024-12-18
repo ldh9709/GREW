@@ -23,6 +23,8 @@ public class ChatRoomDto {
 	
 	private Long menteeNo;
 	private Long mentorNo;
+	private String chatRoomName;
+	private int chatRoomLeaveStatus;
 	
 	public static ChatRoomDto toDto(ChatRoom mentoringRequestEntity) {
 		return ChatRoomDto.builder()

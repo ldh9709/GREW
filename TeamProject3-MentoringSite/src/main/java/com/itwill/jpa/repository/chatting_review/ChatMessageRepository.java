@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.itwill.jpa.dto.chatting_review.ChatMessageDto;
 import com.itwill.jpa.entity.chatting_review.ChatMessage;
 
 public interface ChatMessageRepository extends JpaRepository<ChatMessage, Long>{
