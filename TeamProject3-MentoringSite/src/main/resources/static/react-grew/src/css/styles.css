@@ -325,3 +325,7 @@ button {
   margin-top: 0px;
   border-radius: 5px;
 }
+.view-more{
+  display: flex;
+  justify-content: right;
+}

@@ -17,6 +17,7 @@ import ChatAlarim from "./component/Chatting/ChatAlarim";
 import Footer from "./layout/Footer"
 import MemberMypage from "./component/Member/mypage/MemberMypage";
 import SearchList from "./component/SearchList";
+import InquirySearchList from "./component/AnswerInquiry/InquirySearchList";
 function App() {
   return (
     <>
@@ -40,7 +41,8 @@ function App() {
             <Route path="/inquiry/modify/:inquiryNo" element={<InquiryModifyFormpage/>}/>
             <Route path="/answer/answerWrite/:inquiryNo" element={<AnswerWriteFormpage/>}/>
             <Route path="/answer/modify/:answerNo" element={<AnswerModifyFormpage/>}/>
-            <Route path="/search/:searchContent" element={<SearchList/>}/>
+            <Route path="/searchList" element={<SearchList/>}/>
+            <Route path="/inquirySearchList" element={<InquirySearchList/>}/>
           </Routes>
           <Footer/>
         </div>

@@ -128,10 +128,7 @@ function InquiryView() {
             </div>
             <div className="inquiry-desc">
               <div>
-                {inquiry.memberName.slice(0, 1) +
-                  "*" +
-                  inquiry.memberName.slice(2)}{" "}
-                | 조회수 {inquiry.inquiryViews} |{" "}
+                {inquiry.memberName} | 조회수 {inquiry.inquiryViews} |{" "}
                 {inquiry.inquiryDate.substring(0, 10)}
               </div>
               <br />
@@ -190,35 +187,35 @@ function InquiryView() {
             <AnswerItem key={answer.answerNo} answer={answer} /> // 한 질문에 대한 답변(조회수 정렬)
           ))
         ) : (
-            <div className="inquiry-write-btn">
-              <div>아직 등록된 답변이 없습니다.</div>
-            </div>
+          <div className="inquiry-write-btn">
+            <div>아직 등록된 답변이 없습니다.</div>
+          </div>
         )}
       </div>
 
       {/* 페이지네이션 버튼 */}
       {/* 페이지네이션 버튼 */}
       <div className="pagenation">
-          {startPage > 1 && (
-            <button onClick={() => paginate(startPage - 1)}>이전</button>
-          )}{" "}
-          {/* 이전 그룹 */}
-          {pageNumbers.map((number) => (
-            <button
-              key={number}
-              onClick={() => paginate(number)}
-              style={{
-                backgroundColor: number === currentPage ? "#4CAF50" : "",
-                color: number === currentPage ? "white" : "",
-              }}
-            >
-              {number}
-            </button>
-          ))}
-          {endPage < totalPages && (
-            <button onClick={() => paginate(endPage + 1)}>다음</button> // 다음 그룹
-          )}
-        </div>
+        {startPage > 1 && (
+          <button onClick={() => paginate(startPage - 1)}>이전</button>
+        )}{" "}
+        {/* 이전 그룹 */}
+        {pageNumbers.map((number) => (
+          <button
+            key={number}
+            onClick={() => paginate(number)}
+            style={{
+              backgroundColor: number === currentPage ? "#4CAF50" : "",
+              color: number === currentPage ? "white" : "",
+            }}
+          >
+            {number}
+          </button>
+        ))}
+        {endPage < totalPages && (
+          <button onClick={() => paginate(endPage + 1)}>다음</button> // 다음 그룹
+        )}
+      </div>
     </>
   );
 }

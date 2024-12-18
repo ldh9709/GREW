@@ -27,7 +27,7 @@ export default function Navigate() {
   const handleSearchClick = () => {
     // 검색어가 있을 경우, searchList 페이지로 이동하면서 검색어를 전달
     if (searchTerm.trim() !== "") {
-      navigate(`/searchList?query=${searchTerm}`);
+      navigate(`/searchList?query=${searchTerm}`); // 검색어를 쿼리 파라미터로 전달
     }
   };
   // Enter 키 입력 시 버튼 클릭처럼 동작하도록 처리

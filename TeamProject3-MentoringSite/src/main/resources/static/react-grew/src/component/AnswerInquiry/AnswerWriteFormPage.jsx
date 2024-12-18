@@ -23,7 +23,7 @@ export default function AnswerWriteFormPage() {
     inquiryViews: 0,
     categoryNo: 0,
     memberNo: 1,
-    memberName:""
+    memberName: "",
   };
   const [answer, setAnswer] = useState(initAnswer);
   const [inquiry, setInquiry] = useState(initInquiry); // inquiry 데이터를 저장할 상태
@@ -39,10 +39,10 @@ export default function AnswerWriteFormPage() {
         console.error("Error fetching inquiry data", error);
       }
     };
-    
+
     fetchInquiryData();
   }, [inquiryNo]); // inquiryNo가 변경될 때마다 실행
-  
+
   const onChangeAnswerForm = (e) => {
     setAnswer({
       ...answer,
@@ -57,57 +57,57 @@ export default function AnswerWriteFormPage() {
     navigate(`/inquiry/${inquiryNo}`);
   };
   return (
-<>
-   <div className="inquiry-container">
-                <div>
-                  <div className="inquiry-title">{inquiry.inquiryTitle}</div>
-                </div>
-                <div className="inquiry-desc">
-                  <div>
-                    {inquiry.memberName.slice(0, 1) +
-                      "*" +
-                      inquiry.memberName.slice(2)}{" "}
-                    | 조회수 {inquiry.inquiryViews} |{" "}
-                    {inquiry.inquiryDate.substring(0, 10)}
-                  </div>
-                  <br />
-                  <div>{inquiry.categoryName}</div>
-                </div>
-                <br />
-                <br />
-                <div className="inquiry-content">
-                  <div>{inquiry.inquiryContent}</div>
-                </div>
-    
-                <br />
-              </div>
-
-
-
-    <div>
-      <form ref={writeFormRef} method="POST" className="inquiry-form">
+    <>
+      <link
+        href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap"
+        rel="stylesheet"
+      ></link>
+      <div className="inquiry-container">
         <div>
-          <div>답변등록</div>
+          <div className="inquiry-title">{inquiry.inquiryTitle}</div>
         </div>
-        <div>
-          <textarea
-            name="answerContent"
-            onChange={onChangeAnswerForm}
-            value={answer.answerContent}
-            placeholder="내용을 입력하세요"
-            required
-          />
+        <div className="inquiry-desc">
+          <div>
+            {inquiry.memberName.slice(0, 1) + "*" + inquiry.memberName.slice(2)}{" "}
+            | 조회수 {inquiry.inquiryViews} |{" "}
+            {inquiry.inquiryDate.substring(0, 10)}
+          </div>
+          <br />
+          <div>{inquiry.categoryName}</div>
         </div>
-        <div className="inquiry-write-btn">
-          <input
-            type="button"
-            value="답변등록"
-            onClick={answerWriteAction}
-            id="btn_inquiry_write_action"
-          />
+        <br />
+        <br />
+        <div className="inquiry-content">
+          <div>{inquiry.inquiryContent}</div>
         </div>
-      </form>
-    </div>
+
+        <br />
+      </div>
+
+      <div>
+        <form ref={writeFormRef} method="POST" className="inquiry-form">
+          <div>
+            <div>답변등록</div>
+          </div>
+          <div>
+            <textarea
+              name="answerContent"
+              onChange={onChangeAnswerForm}
+              value={answer.answerContent}
+              placeholder="내용을 입력하세요"
+              required
+            />
+          </div>
+          <div className="inquiry-write-btn">
+            <input
+              type="button"
+              value="답변등록"
+              onClick={answerWriteAction}
+              id="btn_inquiry_write_action"
+            />
+          </div>
+        </form>
+      </div>
     </>
   );
 }
