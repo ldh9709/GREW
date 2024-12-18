@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import FollowList from './MemberFollowList'
 import InquiryList from './MemberInquiryList'
+import MemberCounselList from './MemberCounselList';
 
 export default function MemberTabs() {
     //활성화 된 탭 상태를 저장하는 state
@@ -45,7 +46,7 @@ export default function MemberTabs() {
             )}
             {activeTab === "counseling" && (
             <div id="counseling">
-                <p>상담내역이 여기에 표시됩니다.</p>
+                <MemberCounselList/>
             </div>
             )}
             {activeTab === "following" && (

@@ -88,9 +88,6 @@ body {
     text-align: center;
 }
 
-
-/* 콘텐츠 리스트 */
-
 /* 질문내역 리스트 */
 .list-table {
     width: 100%;
@@ -142,7 +139,52 @@ body {
     background-color: #f1f1f1;
   }
 
+/* 상담내역 리스트 */
+.mentor-list {
+  display: flex;
+  gap: 20px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
 
+.mentor-item {
+  text-align: center;
+  margin: 10px 30px;
+}
+
+.mentor-item img {
+  width: 170px;
+  height: 170px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.mentor-name {
+  font-weight: bold;
+  margin-top: 20px;
+  font-size: 20px;
+}
+
+.mentor-status {
+  color: #555;
+  margin: 5px 0;
+}
+
+.review-button {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 10px;
+  font-size: 14px;
+}
+
+.review-button:hover {
+  background-color: #0060c7;
+}
 /* 팔로우 리스트 */
 
 .follow-list {
