@@ -38,6 +38,15 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
 	//PK로 멤버 조회
 	public Member findByMemberNo(Long memberNo);
 	
+	//이메일로 멤버 조회
+	Member findByMemberEmail(String email);
+	
+	//신고 카운트 증가
+	@Modifying
+	@Query("UPDATE Member m SET m.memberReportCount =  m.memberReportCount + 1 "
+			+ "WHERE m.memberNo = :memberNo")
+	public void incrementReportCount(@Param("memberNo") Long memberNo);
+	
 	// 멤버의 역할(Role)로 필터링 및 정렬
     List<Member> findByMemberRoleOrderByMemberJoinDateAsc(Role memberRole); // 가입 순 정렬
     

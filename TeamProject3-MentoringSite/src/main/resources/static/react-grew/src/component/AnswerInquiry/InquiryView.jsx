@@ -82,11 +82,17 @@ function InquiryView() {
   const handleRadioChange = (e) => {
     setSortType(e.target.value); //버튼 밸류로 sorttype변경
   };
-  // 페이지 번호 버튼 표시
+  // 페이지네이션 버튼 표시 (10개씩 끊어서 표시)
   const pageNumbers = [];
-  for (let i = 1; i <= totalPages; i++) {
+  const pagesToShow = 5; // 한 번에 보여줄 페이지 수
+  const startPage =
+    Math.floor((currentPage - 1) / pagesToShow) * pagesToShow + 1;
+  const endPage = Math.min(startPage + pagesToShow - 1, totalPages);
+
+  for (let i = startPage; i <= endPage; i++) {
     pageNumbers.push(i);
   }
+
   return (
     <>
       <link
@@ -94,29 +100,29 @@ function InquiryView() {
         rel="stylesheet"
       ></link>
       <div style={{ paddingLeft: 10 }}>
-        <div
-          style={{
-            backgroundColor: "#f4f4f4",
-            padding: "10px",
-            marginBottom: "10px",
-            borderRadius: "5px",
-            fontWeight: "bold",
-          }}
-        >
-          질문
-        </div>
-
         <form name="f" method="post">
           <input type="hidden" name="inquiryNo" value={inquiry.inquiryNo} />
 
-          <div className="inquiry-container">
-            {/* 카테고리에 맞는 멘토만 보이는조건 */}
-            <div className="answer-write">
+          {/* 카테고리에 맞는 멘토만 보이는조건 */}
+          <div className="answer-write">
             <Link to={`/answer/answerWrite/${inquiryNo}`}>
-              <button>답변하기</button>
+              <button className="answer-notify-btn">
+                <img
+                  src="https://img.icons8.com/?size=100&id=P1bJzKUoOQYz&format=png&color=000000"
+                  style={{
+                    width: "20px",
+                    height: "20px",
+                    marginRight: "5px",
+                    marginLeft: "-5px",
+                    marginBottom: "-3px",
+                  }}
+                />
+                답변하기
+              </button>
             </Link>
-            </div>
-            {/* 카테고리에 맞는 멘토만 보이는조건 */}
+          </div>
+          {/* 카테고리에 맞는 멘토만 보이는조건 */}
+          <div className="inquiry-container">
             <div>
               <div className="inquiry-title">{inquiry.inquiryTitle}</div>
             </div>
@@ -179,20 +185,40 @@ function InquiryView() {
             추천순
           </label>
         </div>
-
-        {answer.map((answer) => (
-          <AnswerItem key={answer.answerNo} answer={answer} /> // 한 질문에 대한 답변(조회수 정렬)
-        ))}
+        {answer && answer.length > 0 ? (
+          answer.map((answer) => (
+            <AnswerItem key={answer.answerNo} answer={answer} /> // 한 질문에 대한 답변(조회수 정렬)
+          ))
+        ) : (
+            <div className="inquiry-write-btn">
+              <div>아직 등록된 답변이 없습니다.</div>
+            </div>
+        )}
       </div>
 
       {/* 페이지네이션 버튼 */}
+      {/* 페이지네이션 버튼 */}
       <div className="pagenation">
-        {pageNumbers.map((number) => (
-          <button key={number} onClick={() => paginate(number)}>
-            {number}
-          </button>
-        ))}
-      </div>
+          {startPage > 1 && (
+            <button onClick={() => paginate(startPage - 1)}>이전</button>
+          )}{" "}
+          {/* 이전 그룹 */}
+          {pageNumbers.map((number) => (
+            <button
+              key={number}
+              onClick={() => paginate(number)}
+              style={{
+                backgroundColor: number === currentPage ? "#4CAF50" : "",
+                color: number === currentPage ? "white" : "",
+              }}
+            >
+              {number}
+            </button>
+          ))}
+          {endPage < totalPages && (
+            <button onClick={() => paginate(endPage + 1)}>다음</button> // 다음 그룹
+          )}
+        </div>
     </>
   );
 }
