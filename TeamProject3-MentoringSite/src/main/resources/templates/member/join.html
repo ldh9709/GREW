@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<head>
+    <th:block th:replace="fragments/head.html :: head"></th:block>
+    <title>회원가입</title>
+    <style>
+        #registerForm{ 
+            width: 550px; height: 400px;
+            margin:150px auto; 
+            border: 1px solid #ccc;}
+        #registerForm h1{ 
+            text-align:center; 
+            font-weight:bold; 
+            margin-top:40px; 
+        }
+    </style>
+</head>
+<body>
+<div th:replace="fragments/navbar.html :: navbar"></div>
+<div class="container">
+    <form id="registerForm" class="needs-validation" >
+        <h1>회원가입</h1><br>
+
+        <!--/* is-invalid : input 붉은테두리, 느낌표 표시
+         invalid-feedback : 오류메시지 붉게 표시 */-->
+         <!-- 아이디 입력 -->
+        <div class="mb-3 has-validation">
+            <label for="name" class="form-label">이름</label>
+            <input type="text" class="form-control " id="name" name="name" aria-describedby="nameHelp"  value="김철수">
+            <div id="nameHelp" style="display:none;">아이디를 확인해주세요</div>
+        </div>
+         <!-- 아이디 입력 -->
+        <div class="mb-3 has-validation">
+            <label for="id" class="form-label">아이디</label>
+            <input type="text" class="form-control " id="id" name="id" aria-describedby="idHelp"  value="test">
+            <div id="idHelp" style="display:none;">아이디를 확인해주세요</div>
+        </div>
+        <!-- 비밀번호 입력 -->
+        <div class="mb-3">
+            <label for="password" class="form-label">비밀번호[a123$]</label>
+            <input type="password" class="form-control" id="password" name="password" aria-describedby="passwordHelp" value="a123$">
+            <div id="passwordHelp" style="display:none;">비밀번호를 확인해주세요</div>
+        </div>
+        <!-- 비밀번호확인 -->
+        <div class="mb-3">
+            <label for="passwordConfirm" class="form-label">비밀번호 확인</label>
+            <input type="password" class="form-control" id="passwordConfirm" name="passwordConfirm" aria-describedby="passwordConfirmHelp" value="a123$">
+            <div id="passwordConfirmHelp" style="display:none;">비밀번호가 일치하지 않습니다</div>
+        </div>
+        <!-- 이메일 입력 -->
+        <div class="mb-3 has-validation">
+            <label for="email" class="form-label">이메일</label>
+            <input type="email" class="form-control " id="email" name="email" aria-describedby="emailHelp"  value="test">
+            <input type="button" value="인증번호">
+            <div id="emailHelp" style="display:none;">이메일을 확인해주세요</div>
+        </div>
+        <!-- 이메일 인증번호확인-->
+        <div class="mb-3 has-validation">
+            <label for="email-check" class="form-label">인증번호</label>
+            <input type="email-check" class="form-control " id="email-check" name="email-check" aria-describedby="emailHelp"  value="test">
+            <input type="button" value="확인">
+            <div id="email-checkHelp" style="display:none;">인증번호를 확인해주세요</div>
+        </div>
+
+        <!-- 관심사 선택 -->
+<label for="interest" style="margin-right:20px">관심사</label>
+
+<div class="checkbox-group">
+
+  <!-- 직무상담 -->
+  <fieldset style="margin-bottom: 10px;">
+    <legend>직무상담</legend>
+    <label for="interests1">인사/총무/노무</label>
+    <input type="checkbox" id="interests1" name="interests" value="2" checked>
+
+    <label for="interests2">영업/영업관리</label>
+    <input type="checkbox" id="interests2" name="interests" value="3">
+
+    <label for="interests3">IT개발/데이터</label>
+    <input type="checkbox" id="interests3" name="interests" value="4" >
+  </fieldset>
+
+  <!-- 학습/교육 -->
+  <fieldset style="margin-bottom: 10px;">
+    <legend>학습/교육</legend>
+    <label for="interests4">중학생</label>
+    <input type="checkbox" id="interests4" name="interests" value="6" >
+
+    <label for="interests5">고등학생</label>
+    <input type="checkbox" id="interests5" name="interests" value="7" checked>
+
+    <label for="interests6">대학입시상담</label>
+    <input type="checkbox" id="interests6" name="interests" value="8" >
+  </fieldset>
+
+  <!-- 예술/창작 -->
+  <fieldset style="margin-bottom: 10px;">
+    <legend>예술/창작</legend>
+    <label for="interests7">음악</label>
+    <input type="checkbox" id="interests7" name="interests" value="10" >
+
+    <label for="interests8">글쓰기</label>
+    <input type="checkbox" id="interests8" name="interests" value="11" >
+
+    <label for="interests9">미술</label>
+    <input type="checkbox" id="interests9" name="interests" value="12" checked>
+  </fieldset>
+
+</div>
+
+        <button class="w-100 mt-4 btn btn-lg rounded-4 btn-primary" type="button" disabled="true" onclick="registerSubmit()">회원가입</button>
+    </form>
+</div>
+
+<!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script> -->
+<script src="./bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+<script src="../js/validutil.js"></script>
+<script src="../js/member/join.js"></script>
+</body>
+</html>

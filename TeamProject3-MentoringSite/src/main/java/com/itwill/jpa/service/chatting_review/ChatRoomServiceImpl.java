@@ -16,6 +16,7 @@ import com.itwill.jpa.entity.chatting_review.ChatRoomStatus;
 import com.itwill.jpa.entity.member_information.Member;
 import com.itwill.jpa.repository.chatting_review.ChatRoomRepository;
 import com.itwill.jpa.repository.chatting_review.ChatRoomStatusRepository;
+import com.itwill.jpa.service.member_information.MentorProfileService;
 
 @Service
 public class ChatRoomServiceImpl implements ChatRoomService {
@@ -23,6 +24,8 @@ public class ChatRoomServiceImpl implements ChatRoomService {
 	private ChatRoomRepository chatRoomRepository;
 	@Autowired
 	private ChatRoomStatusService chatRoomStatusService;
+	@Autowired
+	private MentorProfileService mentorProfileService;
 	
 	/*활동 상태 확인*/
 	@Override
@@ -59,6 +62,8 @@ public class ChatRoomServiceImpl implements ChatRoomService {
 				    .build();
 			chatRoomStatusService.saveFirstChatRoomStatus(mentorChatRoomStatus, menteeChatRoomStatus);
 			ChatRoom ChatRoom = chatRoomRepository.save(chatRoom);
+			/* 멘토 멘토링 수 업데이트 */
+			mentorProfileService.updateMentoringCount(mentor.getMemberNo());
 			return ChatRoomDto.toDto(ChatRoom);
 		}
 		return new ChatRoomDto();
@@ -71,6 +76,8 @@ public class ChatRoomServiceImpl implements ChatRoomService {
 			chatRoom.setChatRoomStatus(7200);
 			chatRoom.setChatRoomEndDate(LocalDateTime.now());
 			ChatRoom ChatRoom = chatRoomRepository.save(chatRoom);
+			/* 멘토 멘토링 완료 수 업데이트 */
+			mentorProfileService.updateAcitityCount(chatRoom.getMentor().getMemberNo());
 			return ChatRoomDto.toDto(ChatRoom);
 		}
 		return new ChatRoomDto();

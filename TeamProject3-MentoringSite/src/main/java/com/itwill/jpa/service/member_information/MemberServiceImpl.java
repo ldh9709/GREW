@@ -3,25 +3,47 @@ package com.itwill.jpa.service.member_information;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.Random;
+import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.itwill.jpa.dto.member_information.InterestDto;
 import com.itwill.jpa.dto.member_information.MemberDto;
+import com.itwill.jpa.dto.member_information.MemberDto.JoinFormDto;
 import com.itwill.jpa.entity.member_information.Category;
 import com.itwill.jpa.entity.member_information.Interest;
 import com.itwill.jpa.entity.member_information.Member;
+import com.itwill.jpa.repository.member_information.InterestRepository;
 import com.itwill.jpa.entity.role.Role;
 import com.itwill.jpa.repository.member_information.MemberRepository;
+import com.itwill.jpa.util.CustomMailSender;
 
 @Service
 public class MemberServiceImpl implements MemberService {
 	
 	@Autowired
 	MemberRepository memberRepository;
-//    @Autowired
-//    private PasswordEncoder passwordEncoder;
+	
+	@Autowired
+	private PasswordEncoder passwordEncoder;
+	
+	@Autowired
+	InterestRepository interestRepository;
+	@Autowired
+	//메일 발송을 위한 메소드 의존성 주입
+	CustomMailSender customMailSender;
+	
+	
+	
+	//이메일별 인증번호 저장
+	private final Map<String, Integer> tempCode = new ConcurrentHashMap<>();
 	
 	/*****************회원가입******************
 	 - 아이디 : 중복 확인 / 3 ~ 15글자 /  영문자, 숫자, '-' 만 허용 (공백 금지)
@@ -110,6 +132,7 @@ public class MemberServiceImpl implements MemberService {
 			Interest interestEntity = Interest.toEntity(interest);
 			saveMember.addInterests(interestEntity);
 		}
+		saveMember.setMemberPassword(passwordEncoder.encode(memberDto.getMemberPassword()));
 		
 		return memberRepository.save(saveMember);
 	}
@@ -147,15 +170,15 @@ public class MemberServiceImpl implements MemberService {
 		//아이디와 비밀번호로 멤버 객체 찾기
 		Member member = memberRepository.findMemberByMemberIdAndMemberPassword(memberId, memberPassword);
 		
-		//member가 존재하지 않을 시
-		if(member == null) {
-			String msg = "존재하지 않는 아이디입니다.";
-		}
-		
-		//member의 비밀번호가 일치하지 않을 시
-		if(!member.getMemberPassword().equals(memberPassword)) {
-			String msg = "비밀번호가 일치하지 않습니다.";
-		}
+//		//member가 존재하지 않을 시
+//		if(member == null) {
+//			String msg = "존재하지 않는 아이디입니다.";
+//		}
+//		
+//		//member의 비밀번호가 일치하지 않을 시
+//		if(!member.getMemberPassword().equals(memberPassword)) {
+//			String msg = "비밀번호가 일치하지 않습니다.";
+//		}
 		
 		//다 통과하면 member반환
 		return member;
@@ -168,10 +191,11 @@ public class MemberServiceImpl implements MemberService {
 		
 		List<Interest> interests = new ArrayList<>(); 
 		
-		for (InterestDto interestDto : memberDto.getInterests()) {
-			Interest interest = Interest.toEntity(interestDto);
-			member.addInterests(interest);
-		}
+	 	// 관심사 업데이트
+        for (InterestDto interestDto : memberDto.getInterests()) {
+            Interest interest = Interest.toEntity(interestDto);
+            member.addInterests(interest);
+	    }
 		
 		member.setMemberName(memberDto.getMemberName());
 		member.setMemberPassword(memberDto.getMemberPassword());
@@ -205,6 +229,7 @@ public class MemberServiceImpl implements MemberService {
 		return memberRepository.findByMemberNo(memberNo);
 	}
 
+	/********************************* Interest CRUD **************************************/
 	/***** 회원 전체 출력 ****
 	 * 필터 : 멘티, 멘토 
 	 * 정렬 : 1(초기) - 가입 순, 2-이름 순 
@@ -246,4 +271,129 @@ public class MemberServiceImpl implements MemberService {
 		return memberRepository.save(member);
 	}
 
+	/********************************* 이메일 발송 **************************************/
+	//회원가입 시 인증번호 메일 전송
+	@Override
+	public Integer sendJoinCode(MemberDto.JoinFormDto joinForm) {
+		//랜덤 숫자 객체 생성
+		Random random = new Random();
+		
+		//6자리 숫자 임시번호 발급
+		Integer tempNo = random.nextInt(900000) + 100000;
+		
+		//메일 발송
+		customMailSender.sendJoinMaill(joinForm, tempNo);
+		
+		//인증번호 저장
+		tempCode.put(joinForm.getEmail(), tempNo);
+		
+		System.out.println("저장된 인증번호: " + tempNo + ", 이메일: " + joinForm.getEmail());
+		
+		return tempNo;
+	}
+	
+	//인증번호 확인
+	@Override
+	public boolean certificationCode(String email, Integer inputCode) {
+		//입력받은 이메일로 저장된 인증번호 반환
+		Integer storedCode = tempCode.get(email);
+		
+		System.out.println("storedCode : <<<" + storedCode);
+		System.out.println("email : <<<" + email);
+		System.out.println("inputCode : <<<" + inputCode);
+		//유효성 검사 후 안맞으면 false 반환
+		if(storedCode == null || !storedCode.equals(inputCode)) {
+			return false;
+		}
+		
+		//맞으면 데이터 삭제 후 true 반환
+		tempCode.remove(email);
+		return true;
+		
+	}
+	
+	@Override
+	public Integer getTempCode(String email) {
+		//이메일에 해당하는 인증번호 가져오기
+		return tempCode.get(email);
+	}
+	/***** 아이디 찾기 *****/
+	@Override
+	//아이디 찾기 시 사용
+	public void findId(MemberDto.findId memberDto) {
+		Member member = memberRepository.findByMemberEmail(memberDto.getEmail());
+		
+		if(member == null) {
+			System.out.println("존재하지 않는 계정입니다.");
+		}
+		
+		if(!member.getMemberName().equals(memberDto.getName())) {
+			System.out.println("성함이 일치하지 않습니다.");
+		}
+		
+		//랜덤 숫자 객체 생성
+		Random random = new Random();
+		
+		//6자리 숫자 임시번호 발급
+		Integer tempNo = random.nextInt(900000) + 100000;
+		
+		//인증번호 저장
+		tempCode.put(memberDto.getEmail(), tempNo);
+		
+		//메일 발송
+		customMailSender.sendFindIdMail(memberDto, tempNo);
+	}
+	
+	//아이디 찾기 인증번호 확인
+	@Override
+	public boolean certificationCodeByFindId(String email, Integer inputCode) {
+		//입력받은 이메일로 저장된 인증번호 반환
+		Integer storedCode = tempCode.get(email);
+		
+		System.out.println("storedCode : <<<" + storedCode);
+		System.out.println("email : <<<" + email);
+		System.out.println("inputCode : <<<" + inputCode);
+		//유효성 검사 후 안맞으면 false 반환
+		if(storedCode == null || !storedCode.equals(inputCode)) {
+			return false;
+		}
+		
+		//맞으면 데이터 삭제 후 true 반환
+		tempCode.remove(email);
+		
+		return true;
+		
+	}
+	
+	//이메일로 멤버 찾기
+	@Override
+	public Member getMemberByMemberEmail(String memberEmail) {
+		return memberRepository.findByMemberEmail(memberEmail);
+	}
+    /**************************************************************************************/
+	
+	@Override
+	//비밀번호 찾기 이메일 전송
+	public void findPassword(MemberDto.findPassword memberDto) {
+		Member member = memberRepository.findByMemberEmail(memberDto.getEmail());
+		
+		UUID uid = UUID.randomUUID();
+		String tempPassword = uid.toString().substring(0, 10) + "p2$";
+		customMailSender.sendFindPasswordMail(memberDto, tempPassword);
+		
+		tempPassword = passwordEncoder.encode(tempPassword);
+		
+		member.changePassword(tempPassword);
+		
+	}
+
+	@Override
+	public Member updateMemberStatus(MemberDto memberDto, Integer statusNo) {
+		return null;
+	}
+
+	
+	
+	
+	
 }

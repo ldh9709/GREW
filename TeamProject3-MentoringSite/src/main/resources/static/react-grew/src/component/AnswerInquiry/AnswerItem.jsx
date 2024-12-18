@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "../../css/styles.css";
 import * as answerApi from "../../api/answerApi";
+import { Link } from "react-router-dom";
 export default function AnswerItem({ answer }) {
   const [voteCount, setVoteCount] = useState(null);
   async function fetchData() {
@@ -14,7 +15,7 @@ export default function AnswerItem({ answer }) {
   }
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [voteCount]);
 
   const handleUpvote = async () => {
     try {
@@ -46,16 +47,40 @@ export default function AnswerItem({ answer }) {
   };
   return (
     <>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap" rel="stylesheet"></link>
+      <link
+        href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap"
+        rel="stylesheet"
+      ></link>
       <div className="answer-container">
+        {/* 질문작성자만 보이는조건 */}
+        <div className="answer-accept">
+          <button>채택하기</button>
+        </div>
+        {/* 질문작성자만 보이는조건 */}
+
         <div className="answer-member">{answer.memberName}</div>
         <div className="answer-content">{answer.answerContent}</div>
         <div className="answer-date">{answer.answerDate.substring(0, 10)}</div>
         <div className="answer-vote">
-        <button onClick={handleUpvote}>추천</button>
-        {voteCount}
-        <button onClick={handleDownvote}>비추천</button>
+          <button onClick={handleUpvote}>추천</button>
+          {voteCount}
+          <button onClick={handleDownvote}>비추천</button>
         </div>
+        {/* 답변작성자에게만 보이는조건 */}
+        <div>
+          <Link to={`/answer/modify/${answer.answerNo}`}>
+            <button>수정</button>
+          </Link>
+
+          <button
+            onClick={(e) => {
+              e.preventDefault(); // 폼 제출 방지
+            }}
+            >
+            삭제
+          </button>
+        </div>
+            {/* 답변작성자에게만 보이는조건 */}
       </div>
     </>
   );

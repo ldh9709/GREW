@@ -1,0 +1,168 @@
+/* 기본 스타일 */
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    color: #333;
+    background-color: #f9f9f9;
+}
+
+/* 상단 요약 정보 */
+.summary {
+    position: relative;
+    background-color: #f4f4f4;
+    padding: 20px;
+    border-bottom: 1px solid #ddd;
+    text-align: left;
+}
+
+.summary-box h1 {
+    font-size: 30px;
+    margin-bottom: 10px;
+}
+
+.summary-box h1 a {
+    font-size: 16px;
+}
+.summary-stats {
+    display: flex;
+    justify-content: center;
+    margin: 20px 0;
+}
+
+.summary-stats div {
+    margin: 0 40px;
+    text-align: center;
+}
+
+.summary-stats h2 {
+    color: #444;
+    font-size:70px;
+    margin: 0;
+}
+
+.summary p {
+    font-weight: bold;
+    font-size: 17px;
+}
+
+.mentor-btn {
+    position: absolute;
+    top: 30px; right: 20px;
+    background-color: #666;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 20px;
+    cursor: pointer;
+}
+
+/* 탭 메뉴 스타일 */
+.tab-container {
+    width: 90%;
+    margin: 20px auto;
+}
+
+.tabs {
+    display: flex;
+    list-style: none;
+    padding: 0;
+    justify-content: center;
+    border-bottom: 2px solid #ddd;
+}
+
+.tab {
+    padding: 10px 80px;
+    cursor: pointer;
+    font-size: 20px;
+}
+
+.tab.active {
+    border-bottom: 3px solid green;
+    font-weight: bold;
+    color: green;
+}
+
+.tab-content {
+    display: block;
+    padding: 20px;
+    text-align: center;
+    background: #fff;
+}
+
+.hidden {
+    display: none;
+}
+
+/* 콘텐츠 리스트 */
+/* 질문내역 리스트 */
+.list {
+    list-style: none; /* 점 제거 */
+    padding: 0;
+}
+
+.list li {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.list li strong {
+    font-weight: bold;
+    color: #333;
+}
+
+/* 팔로우 리스트 */
+
+.follow-list {
+    width: 880px;
+    list-style: none;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 35px;
+    padding: 0;
+    margin: 0 auto;
+}
+
+.follow-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    width: 380px;
+    padding: 20px 0 20px 40px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+}
+
+.profile img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.info {
+    flex: 1;
+    margin-left: 50px;
+    text-align: left;
+}
+.info p:first-child{
+    font-size: 17px;
+}
+.info p {
+    margin: 5px 0;
+    font-size: 15px;
+}
+
+.heart {
+    position:relative;
+    top: -40px; right: 15px;
+    color: red;
+    font-size: 1.3rem;
+    cursor: pointer;
+}

@@ -25,6 +25,7 @@ export default function navigate() {
       <a href="/main" className="logo">
         <img
           src="/logo.png"
+          alt=""
           style={{ width: "100px", height: "30px", marginBottom: "-10px" }}
         />
       </a>
@@ -32,6 +33,7 @@ export default function navigate() {
         <img
           className="gnb_menu_img"
           src="https://img.icons8.com/?size=100&id=EtlPmfgnN7sW&format=png&color=000000"
+          alt=""
           style={{
             width: "20px",
             height: "20px",
@@ -45,6 +47,7 @@ export default function navigate() {
         <img
           className="gnb_menu_img"
           src="https://img.icons8.com/?size=100&id=p3miLroKw4iR&format=png&color=000000"
+          alt=""
           style={{
             width: "20px",
             height: "20px",
@@ -58,6 +61,7 @@ export default function navigate() {
         <img
           className="gnb_menu_img"
           src="https://img.icons8.com/?size=100&id=94504&format=png&color=000000"
+          alt=""
           style={{
             width: "20px",
             height: "20px",

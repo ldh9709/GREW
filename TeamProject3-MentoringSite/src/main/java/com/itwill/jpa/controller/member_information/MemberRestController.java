@@ -1,6 +1,7 @@
 package com.itwill.jpa.controller.member_information;
 
 import java.nio.charset.Charset;
+import java.security.Principal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -10,6 +11,12 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,11 +27,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.itwill.jpa.auth.PrincipalDetails;
 import com.itwill.jpa.dto.member_information.MemberDto;
+import com.itwill.jpa.dto.member_information.MemberDtoAndTempCode;
 import com.itwill.jpa.entity.member_information.Member;
 import com.itwill.jpa.response.Response;
 import com.itwill.jpa.response.ResponseMessage;
 import com.itwill.jpa.response.ResponseStatusCode;
+import com.itwill.jpa.service.member_information.EmailService;
 import com.itwill.jpa.service.bullentin_board.AnswerService;
 import com.itwill.jpa.service.bullentin_board.InquiryService;
 import com.itwill.jpa.service.chatting_review.ChatRoomService;
@@ -34,13 +44,14 @@ import com.itwill.jpa.service.member_information.MemberService;
 import com.itwill.jpa.service.member_information.MentorBoardService;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.Parameter;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 
 @CrossOrigin(origins = "*")
 @RestController
-@RequestMapping("/member")
+@RequestMapping("/api/member")
 public class MemberRestController {
 	
 	@Autowired
@@ -57,6 +68,8 @@ public class MemberRestController {
 	private ChatRoomService chatRoomService;
 	@Autowired
 	private ReviewService reviewService;
+	
+	
 	
 	/* 아이디 중복 */
 	@Operation(summary = "아이디 중복 검사")
@@ -89,27 +102,21 @@ public class MemberRestController {
 				
 	}
 	
+	@Autowired
+	private EmailService emailService;
 	
-	/* 회원 가입(멘티) */
-	@Operation(summary = "회원가입(멘티)")
-	@PostMapping
-	public ResponseEntity<Response> saveMember(@RequestBody MemberDto memberDto) {
+	
+	@Operation(summary = "인증번호 발송")
+	@PostMapping("/sendJoinCode")
+	public ResponseEntity<Response> sendJoinCode(@RequestBody MemberDto.JoinFormDto joinFormDto) {
 		
-		//저장메소드 실행
-		Member saveMember = memberService.saveMember(memberDto);
+		Integer tempNo = memberService.sendJoinCode(joinFormDto);
 		
-		MemberDto saveMemberDto = MemberDto.toDto(saveMember);
-		
-		//응답 객체 생성
 		Response response = new Response();
 		
-		if(saveMemberDto != null) {
-			//응답객체에 코드, 메시지, 객체 설정
-			response.setStatus(ResponseStatusCode.CREATED_MEMBER_SUCCESS);
-			response.setMessage(ResponseMessage.CREATED_MEMBER_SUCCESS);
-			response.setData(saveMemberDto);
-		}
-		
+		response.setStatus(ResponseStatusCode.EMAIL_SEND_SUCCESS);
+		response.setMessage(ResponseMessage.EMAIL_SEND_SUCCESS);
+		response.setData(tempNo);
 		//인코딩 타입 설정
 		HttpHeaders httpHeaders = new HttpHeaders();
 		httpHeaders.setContentType(new MediaType(MediaType.APPLICATION_JSON, Charset.forName("UTF-8")));
@@ -118,9 +125,79 @@ public class MemberRestController {
 		ResponseEntity<Response> responseEntity =
 				 new ResponseEntity<Response>(response, httpHeaders, HttpStatus.OK);
 		
-		//반환
 		return responseEntity;
 	}
+	
+	
+	/* 회원 저장 */
+	@Operation(summary = "회원가입/관심사 입력")
+	@PostMapping("/createMember")
+	public ResponseEntity<Response> createMember(@RequestBody MemberDtoAndTempCode memberJoinDto) {
+		
+		MemberDto memberDto = memberJoinDto.getMemberDto();
+		System.out.println("MEMBERDTO : >>> " + memberDto);
+		Integer tempCode = memberJoinDto.getTempCode();
+		System.out.println("TEMPCODE : >>>" + tempCode);
+		
+		Response response = new Response();
+		
+		
+		//인증번호가 맞는지 확인
+		boolean isChecked = memberService.certificationCode(memberDto.getMemberEmail(), tempCode);
+		
+		System.out.println("isChecked : " + isChecked);
+		if(!isChecked) {
+			response.setStatus(ResponseStatusCode.CREATED_MEMBER_FAIL);
+			response.setMessage(ResponseMessage.CREATED_MEMBER_FAIL);
+		}
+		
+		memberService.saveMember(memberDto);
+		
+		response.setStatus(ResponseStatusCode.CREATED_MEMBER_SUCCESS);
+		response.setMessage(ResponseMessage.CREATED_MEMBER_SUCCESS);
+		
+		//인코딩 타입 설정
+		HttpHeaders httpHeaders = new HttpHeaders();
+		httpHeaders.setContentType(new MediaType(MediaType.APPLICATION_JSON, Charset.forName("UTF-8")));
+		
+		//반환할 응답Entity 생성
+		ResponseEntity<Response> responseEntity =
+				 new ResponseEntity<Response>(response, httpHeaders, HttpStatus.OK);
+			
+			return responseEntity;
+		}
+		
+//	/* 회원 가입(멘티) */
+//	@Operation(summary = "회원가입(멘티)")
+//	@PostMapping("/createMentee")
+//	public ResponseEntity<Response> saveMember(@RequestBody MemberDto memberDto) {
+//		
+//		//저장메소드 실행
+//		Member saveMember = memberService.saveMember(memberDto);
+//		
+//		MemberDto saveMemberDto = MemberDto.toDto(saveMember);
+//		
+//		//응답 객체 생성
+//		Response response = new Response();
+//		
+//		if(saveMemberDto != null) {
+//			//응답객체에 코드, 메시지, 객체 설정
+//			response.setStatus(ResponseStatusCode.CREATED_MEMBER_SUCCESS);
+//			response.setMessage(ResponseMessage.CREATED_MEMBER_SUCCESS);
+//			response.setData(saveMemberDto);
+//		}
+//		
+//		//인코딩 타입 설정
+//		HttpHeaders httpHeaders = new HttpHeaders();
+//		httpHeaders.setContentType(new MediaType(MediaType.APPLICATION_JSON, Charset.forName("UTF-8")));
+//		
+//		//반환할 응답Entity 생성
+//		ResponseEntity<Response> responseEntity =
+//				 new ResponseEntity<Response>(response, httpHeaders, HttpStatus.OK);
+//		
+//		//반환
+//		return responseEntity;
+//	}
 	
 	/* 회원 로그인
 	@Operation(summary = "회원 로그인")
@@ -140,6 +217,8 @@ public class MemberRestController {
 		
 		//응답 객체 생성
 		Response response = new Response();
+		
+		System.out.println("로그인 시도 : " + response);
 		
 		if(loginMemberDto != null) {
 			//응답객체에 코드, 메시지, 객체 설정
@@ -183,14 +262,98 @@ public class MemberRestController {
 	}
 	*/
 	
+	/* 회원 정보 보기 */
+	@Operation(summary = "회원 정보 보기")
+	@GetMapping("/{memberNo}")
+	public ResponseEntity<Response> getMember(@PathVariable(name = "memberNo") Long memberNo, HttpSession session) {
+		
+		//번호로 멤버 객체 찾기
+		Member loginMember = memberService.getMember(memberNo);
+		
+		//DTO객체로 변환
+		MemberDto loginMemberDto = MemberDto.toDto(loginMember);
+		
+		Response response = new Response();
+		
+		if(loginMemberDto != null) {
+			//응답객체에 코드, 메시지, 객체 설정
+			response.setStatus(ResponseStatusCode.READ_MEMBER_SUCCESS);
+			response.setMessage(ResponseMessage.READ_MEMBER_SUCCESS);
+			response.setData(loginMemberDto);
+		}
+		
+		HttpHeaders httpHeaders=new HttpHeaders();
+		httpHeaders.setContentType(new MediaType(MediaType.APPLICATION_JSON,Charset.forName("UTF-8")));
+		
+		ResponseEntity<Response> responseEntity = 
+				new ResponseEntity<Response>(response, httpHeaders, HttpStatus.OK);
+		
+		return responseEntity;
+	}
+	
+	/***** 회원 정보 보기(토큰) *****/
+	@Operation(summary = "회원 정보 보기(토큰)")
+	@SecurityRequirement(name = "BearerAuth")//API 엔드포인트가 인증을 요구한다는 것을 문서화(Swagger에서 JWT인증을 명시
+	@PreAuthorize("hasRole('MENTEE')")//ROLE이 MENTEE인 사람만 접근 가능
+	@GetMapping("/profile")
+	public ResponseEntity<Response> getMember(Authentication authentication) {
+		
+		//PrincipalDetails에서 memberNo를 가져옴
+		PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
+		Long memberNo = principalDetails.getMemberNo();
+		
+		System.out.println(">>>>> getAuthorities : " + authentication.getAuthorities());
+		System.out.println(">>>>> authentica  tion : " + authentication);
+		System.out.println(">>>>> authentication.getName() : " + authentication.getName());
+		System.out.println(">>> Granted Authorities: " + authentication.getAuthorities());
+		System.out.println(">>> PrincipalDetails Authorities: " + principalDetails.getAuthorities());
+		
+		// 번호로 멤버 객체 찾기
+        Member loginMember = memberService.getMember(memberNo);
+        
+		//DTO객체로 변환
+		MemberDto loginMemberDto = MemberDto.toDto(loginMember);
+		
+		Response response = new Response();
+		
+		if(loginMemberDto != null) {
+			//응답객체에 코드, 메시지, 객체 설정
+			response.setStatus(ResponseStatusCode.READ_MEMBER_SUCCESS);
+			response.setMessage(ResponseMessage.READ_MEMBER_SUCCESS);
+			response.setData(loginMemberDto);
+		}
+		
+		HttpHeaders httpHeaders=new HttpHeaders();
+		httpHeaders.setContentType(new MediaType(MediaType.APPLICATION_JSON,Charset.forName("UTF-8")));
+		
+		ResponseEntity<Response> responseEntity = 
+				new ResponseEntity<Response>(response, httpHeaders, HttpStatus.OK);
+		
+		return responseEntity;
+	}
+	
+	
 	/* 회원 정보 수정 */
 	@Operation(summary = "회원 정보 수정")
 	@PutMapping("/{memberNo}")
-	public ResponseEntity<Response> updateMember(@RequestBody MemberDto memberDto) {
+	public ResponseEntity<Response> updateMember(
+			@RequestBody MemberDto memberDto,
+			@PathVariable("memberNo") Long memberNo
+			) {
+		
+		System.out.println(memberDto);
+		
+		//Authentication authentication =	SecurityContextHolder.getContext().getAuthentication();
+		//PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
+		
+		//Long memberNo = principalDetails.getMemberNo();
+		
+		//클라이언트에서 보낸 데이터 무시하고 인증된 사용자 정보로 덮어씀(생략가능, 명시적으로 입력)
+		//memberDto.setMemberNo(memberNo);
 		
 		//업데이트 메소드 실행
 		Member updateMember = memberService.updateMember(memberDto);
-		
+		 
 		MemberDto updateMemberDto = MemberDto.toDto(updateMember);
 		
 		Response response = new Response();
@@ -229,7 +392,7 @@ public class MemberRestController {
 			//응답객체에 코드, 메시지, 객체 설정
 			response.setStatus(ResponseStatusCode.UPDATE_MEMBER_SUCCESS);
 			response.setMessage(ResponseMessage.UPDATE_MEMBER_SUCCESS);
-			response.setData(updateMemberDto);
+			response.setData(updateMember);
 		}
 		
 		HttpHeaders httpHeaders=new HttpHeaders();
@@ -241,34 +404,124 @@ public class MemberRestController {
 		return responseEntity;
 	}
 	
-	/* 회원 정보 보기 */
-	@Operation(summary = "회원 정보 상세보기")
-	@GetMapping("/{memberNo}")
-	public ResponseEntity<Response> getMember(@PathVariable(name = "memberNo") Long memberNo) {
-		
-		//번호로 멤버 객체 찾기
-		Member loginMember = memberService.getMember(memberNo);
-		
-		//DTO객체로 변환
-		MemberDto loginMemberDto = MemberDto.toDto(loginMember);
+	/***** 아이디 찾기: 인증번호 발송 *****/
+	@Operation(summary = "1. 아이디 찾기 : 이메일 발송")
+	@PostMapping("/findId/sendEmail")
+	public ResponseEntity<Response> findId(@RequestBody MemberDto.findId memberDto) {
+	    
+		Response response = new Response();
+	    
+	    try {
+	    	memberService.findId(memberDto);
+	        response.setStatus(ResponseStatusCode.EMAIL_SEND_SUCCESS);
+	        response.setMessage(ResponseMessage.EMAIL_SEND_SUCCESS);
+	    } catch (Exception e) {
+	        response.setStatus(ResponseStatusCode.EMAIL_SEND_FAIL);
+	        response.setMessage(ResponseMessage.EMAIL_SEND_FAIL);
+	    }
+	    
+	    return ResponseEntity.ok(response);
+	}
+	
+	/***** 아이디 찾기: 인증번호 확인 후 아이디 반환 *****/
+	@Operation(summary = "2. 아이디 찾기 : 인증번호 확인 후 아이디 반환 ")
+	@PostMapping("/findId/certificationCode")
+	public ResponseEntity<Response> certificationFindId(@RequestParam(name = "memberEmail") String memberEmail, @RequestParam(name = "inputCode") Integer inputCode) {
+	    
+		Boolean isChecked =	memberService.certificationCodeByFindId(memberEmail, inputCode);
 		
 		Response response = new Response();
-		
-		if(loginMemberDto != null) {
-			//응답객체에 코드, 메시지, 객체 설정
-			response.setStatus(ResponseStatusCode.READ_MEMBER_SUCCESS);
-			response.setMessage(ResponseMessage.READ_MEMBER_SUCCESS);
-			response.setData(loginMemberDto);
-		}
-		
+	    
 		HttpHeaders httpHeaders=new HttpHeaders();
 		httpHeaders.setContentType(new MediaType(MediaType.APPLICATION_JSON,Charset.forName("UTF-8")));
+		
+		
+	    //인증번호가 틀리면 실패 반환
+		if(!isChecked) {
+			response.setStatus(ResponseStatusCode.INPUTCODE_CONFIRM_FAIL);
+			response.setMessage(ResponseMessage.INPUTCODE_CONFIRM_FAIL);
+			ResponseEntity<Response> responseEntity = 
+					new ResponseEntity<Response>(response, httpHeaders, HttpStatus.OK);
+			return responseEntity;
+		}
+		
+		//인증 제공자가 Email이 아니면
+		if(!memberService.getMemberByMemberEmail(memberEmail).getMemberProvider().equals("Email")) {
+			response.setStatus(ResponseStatusCode.MEMBER_IS_NOT_EMAIL);
+			response.setMessage(ResponseMessage.MEMBER_IS_NOT_EMAIL);
+			ResponseEntity<Response> responseEntity = 
+					new ResponseEntity<Response>(response, httpHeaders, HttpStatus.OK);
+			return responseEntity;
+		}
+		
+		String memberId = memberService.getMemberByMemberEmail(memberEmail).getMemberId();
+		response.setStatus(ResponseStatusCode.INPUTCODE_CONFIRM_SUCCESS);
+		response.setMessage(ResponseMessage.INPUTCODE_CONFIRM_SUCCESS);
+		response.setData(memberId);
 		
 		ResponseEntity<Response> responseEntity = 
 				new ResponseEntity<Response>(response, httpHeaders, HttpStatus.OK);
 		
-		return responseEntity;
+	    return responseEntity;
 	}
+	
+	/***** 비밀번호 찾기 : 이메일 발송 *****/
+	@Operation(summary = "비밀번호 찾기")
+	@PostMapping("/findPassword")
+	public ResponseEntity findPassword(@RequestBody MemberDto.findPassword memberDto) {
+		
+		Response response = new Response();
+	    
+		HttpHeaders httpHeaders=new HttpHeaders();
+		httpHeaders.setContentType(new MediaType(MediaType.APPLICATION_JSON,Charset.forName("UTF-8")));
+		
+		if(memberDto == null) {
+			response.setStatus(ResponseStatusCode.PASSWORD_RESET_FAIL);
+			response.setMessage(ResponseMessage.PASSWORD_RESET_FAIL);
+			ResponseEntity<Response> responseEntity = 
+					new ResponseEntity<Response>(response, httpHeaders, HttpStatus.OK);
+			
+		    return responseEntity;
+		}
+		
+		memberService.findPassword(memberDto);
+		
+		response.setStatus(ResponseStatusCode.PASSWORD_RESET_SUCCESS);
+		response.setMessage(ResponseMessage.PASSWORD_RESET_SUCCESS);
+		ResponseEntity<Response> responseEntity = 
+				new ResponseEntity<Response>(response, httpHeaders, HttpStatus.OK);
+		
+	    return responseEntity;
+	}
+	
+//	/* 회원 정보 보기 */
+//	@Operation(summary = "회원 정보 상세보기")
+//	@GetMapping("/{memberNo}")
+//	public ResponseEntity<Response> getMember(@PathVariable(name = "memberNo") Long memberNo) {
+//		
+//		//번호로 멤버 객체 찾기
+//		Member loginMember = memberService.getMember(memberNo);
+//		
+//		//DTO객체로 변환
+//		MemberDto loginMemberDto = MemberDto.toDto(loginMember);
+//		
+//		Response response = new Response();
+//		
+//		if(loginMemberDto != null) {
+//			//응답객체에 코드, 메시지, 객체 설정
+//			response.setStatus(ResponseStatusCode.READ_MEMBER_SUCCESS);
+//			response.setMessage(ResponseMessage.READ_MEMBER_SUCCESS);
+//			response.setData(loginMemberDto);
+//		}
+//		
+//		HttpHeaders httpHeaders=new HttpHeaders();
+//		httpHeaders.setContentType(new MediaType(MediaType.APPLICATION_JSON,Charset.forName("UTF-8")));
+//		
+//		ResponseEntity<Response> responseEntity = 
+//				new ResponseEntity<Response>(response, httpHeaders, HttpStatus.OK);
+//		
+//		return responseEntity;
+//	}
 	
 	/* 멘티 회원 활동 요약 */
 	@Operation(summary = "멘티 활동 내역 요약")
@@ -364,8 +617,6 @@ public class MemberRestController {
 		
 		
 	}
-	
-	
 	
 	
 }

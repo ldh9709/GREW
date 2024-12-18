@@ -140,14 +140,16 @@ function InqiuryList() {
         <h1>질문게시판</h1>
         <div className="btn-inquiry-write-div">
           <a className="btn-inquiry-write" href="/inquiry/inquiryWrite">
-            <img src="https://img.icons8.com/?size=100&id=P1bJzKUoOQYz&format=png&color=000000" 
-             style={{
-              width: "20px",
-              height: "20px",
-              marginRight: "5px",
-              marginLeft: "-5px",
-              marginBottom: "-3px",
-            }}/>
+            <img
+              src="https://img.icons8.com/?size=100&id=98973&format=png&color=000000"
+              style={{
+                width: "20px",
+                height: "20px",
+                marginRight: "5px",
+                marginLeft: "-5px",
+                marginBottom: "-3px",
+              }}
+            />
             질문등록
           </a>
         </div>
@@ -160,7 +162,13 @@ function InqiuryList() {
               <button
                 key={category.categoryNo}
                 onClick={() => handleCategoryClick(category.categoryNo)} // 클릭 시 카테고리 선택
-                style={{ margin: "5px" }}
+                style={{
+                  margin: "5px",
+                  backgroundColor:
+                    selectedCategory === category.categoryNo ? "#4CAF50" : "", // 선택된 카테고리는 색상 변경
+                  color:
+                    selectedCategory === category.categoryNo ? "white" : "", // 선택된 카테고리 글자 색상 변경
+                }}
               >
                 {category.categoryName}
               </button>
@@ -174,7 +182,12 @@ function InqiuryList() {
               <button
                 key={child.categoryNo}
                 onClick={() => handleCategoryClick(child.categoryNo)} // 하위 카테고리 선택
-                style={{ margin: "5px" }}
+                style={{
+                  margin: "5px",
+                  backgroundColor:
+                    selectedCategory === child.categoryNo ? "#4CAF50" : "", // 선택된 카테고리는 색상 변경
+                  color: selectedCategory === child.categoryNo ? "white" : "", // 선택된 카테고리 글자 색상 변경
+                }}
               >
                 {child.categoryName}
               </button>
@@ -217,13 +230,15 @@ function InqiuryList() {
         </div>
 
         {/* 문의 목록 테이블 */}
-        <table border="0" cellPadding="0" cellSpacing="0">
-          <tbody>
-            {inquirys.map((inquiry) => (
-              <InquiryItem key={inquiry.inquiryNo} inquiry={inquiry} />
-            ))}
-          </tbody>
-        </table>
+        {inquirys && inquirys.length > 0 ? (
+          inquirys.map((inquiry) => (
+            <InquiryItem key={inquiry.inquiryNo} inquiry={inquiry} />
+          ))
+        ) : (
+          <div className="inquiry-write-btn">
+            <div>아직 등록된 질문이 없습니다.</div>
+          </div>
+        )}
 
         {/* 페이지네이션 버튼 */}
         <div className="pagenation">

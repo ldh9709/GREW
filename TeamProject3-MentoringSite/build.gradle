@@ -32,6 +32,31 @@ dependencies {
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	
+	
+	/***** Security *****/
+	/* Spring Security의 기본 의존성. 인증 및 권한 부여를 위한 핵심 기능 포함. */
+	implementation 'org.springframework.boot:spring-boot-starter-security'
+	
+	/* Spring Security의 테스트 기능을 제공. 인증, 권한 부여 테스트 시 유용. */
+	testImplementation 'org.springframework.security:spring-security-test'
+	
+	/* OAuth2 클라이언트 지원을 위한 의존성. */
+	implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
+	
+	/* 이메일 인증, 알림 구현을 위한 Spring Mail 의존성 */
+	implementation 'org.springframework.boot:spring-boot-starter-mail'
+	
+	/* 사용자 입력 데이터의 유효성을 검증할 때 필요. */
+	implementation 'org.springframework.boot:spring-boot-starter-validation'
+	
+	/* 어노테이션 */
+	implementation 'jakarta.annotation:jakarta.annotation-api:2.1.1'
+	
+	/* 토큰 */
+	implementation 'io.jsonwebtoken:jjwt-api:0.11.5'
+	runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.11.5'
+	runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.11.5'
+	
 }
 tasks.named('test') {
 	useJUnitPlatform()
