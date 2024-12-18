@@ -29,12 +29,3 @@ export const memberInfoSummary = async(memberNo) => {
     const responseJsonObject = await response.json();
     return responseJsonObject;
 }
-
-//팔로잉 리스트 조회
-export const followList = async(memberNo)=>{
-    const response = await fetch(`${BACKEND_SERVER}/follow/mentee/${memberNo}`,{
-        method:'GET'
-    })
-    const responseJsonObject = await response.json();
-    return responseJsonObject;
-}

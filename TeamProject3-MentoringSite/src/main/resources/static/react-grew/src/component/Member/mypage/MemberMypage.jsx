@@ -1,6 +1,6 @@
 import React from 'react'
 import { useParams } from "react-router-dom";
-import "../../css/member.css";
+import "../../../css/member.css";
 import MemberTabs from './MemberTabs'
 import MemberSummary from './MemberSummary'
 
