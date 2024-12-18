@@ -11,13 +11,9 @@ import InqiuryList from "./component/AnswerInquiry/InqiuryList";
 import InqiuryView from "./component/AnswerInquiry/InquiryView";
 import ChatAlarim from "./component/Chatting/ChatAlarim";
 import Footer from "./layout/Footer"
-<<<<<<< HEAD
 import MemberMypage from "./component/Member/mypage/MemberMypage";
-
-=======
 import MemberMypage from "./component/Member/MemberMypage";
 import SearchList from "./component/SearchList";
->>>>>>> refs/heads/master
 function App() {
   return (
     <>
