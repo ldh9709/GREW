@@ -93,6 +93,7 @@ export default function InqiuryWriteFormPage() {
               .map((category) => (
                 <button
                   key={category.categoryNo}
+                  className="category-button"
                   onClick={(e) => {
                     e.preventDefault();
                     handleCategoryClick(category.categoryNo);
@@ -116,6 +117,7 @@ export default function InqiuryWriteFormPage() {
               {childCategories.map((child) => (
                 <button
                   key={child.categoryNo}
+                  className="category-button"
                   onClick={(e) => {
                     e.preventDefault();
                     handleCategoryClick(child.categoryNo);
