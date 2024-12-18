@@ -82,11 +82,17 @@ function InquiryView() {
   const handleRadioChange = (e) => {
     setSortType(e.target.value); //버튼 밸류로 sorttype변경
   };
-  // 페이지 번호 버튼 표시
+  // 페이지네이션 버튼 표시 (10개씩 끊어서 표시)
   const pageNumbers = [];
-  for (let i = 1; i <= totalPages; i++) {
+  const pagesToShow = 5; // 한 번에 보여줄 페이지 수
+  const startPage =
+    Math.floor((currentPage - 1) / pagesToShow) * pagesToShow + 1;
+  const endPage = Math.min(startPage + pagesToShow - 1, totalPages);
+
+  for (let i = startPage; i <= endPage; i++) {
     pageNumbers.push(i);
   }
+
   return (
     <>
       <link
@@ -191,13 +197,28 @@ function InquiryView() {
       </div>
 
       {/* 페이지네이션 버튼 */}
+      {/* 페이지네이션 버튼 */}
       <div className="pagenation">
-        {pageNumbers.map((number) => (
-          <button key={number} onClick={() => paginate(number)}>
-            {number}
-          </button>
-        ))}
-      </div>
+          {startPage > 1 && (
+            <button onClick={() => paginate(startPage - 1)}>이전</button>
+          )}{" "}
+          {/* 이전 그룹 */}
+          {pageNumbers.map((number) => (
+            <button
+              key={number}
+              onClick={() => paginate(number)}
+              style={{
+                backgroundColor: number === currentPage ? "#4CAF50" : "",
+                color: number === currentPage ? "white" : "",
+              }}
+            >
+              {number}
+            </button>
+          ))}
+          {endPage < totalPages && (
+            <button onClick={() => paginate(endPage + 1)}>다음</button> // 다음 그룹
+          )}
+        </div>
     </>
   );
 }

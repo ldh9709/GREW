@@ -116,7 +116,7 @@ body {
 /* 팔로우 리스트 */
 
 .follow-list {
-    width: 880px;
+    width: 880px; height: 500px;
     list-style: none;
     display: flex;
     justify-content: flex-start;

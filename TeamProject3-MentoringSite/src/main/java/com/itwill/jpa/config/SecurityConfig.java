@@ -35,9 +35,6 @@ import com.itwill.jpa.security.handler.APILoginSuccessHandler;
 @EnableWebSecurity(debug = true)//Spring Security의 설정을 활성화
 @EnableMethodSecurity
 public class SecurityConfig {
-	/***** 구현 안 된 부분
-	 * .failureForwardUrl(formLoginFailureHandler); 로그인 실패 시 동작처리 : 아직 메소드 구현X
-	 */
 	/*
 	 * Spring Security가 제공하는 OAuth2 Provider의 기본 설정값을 제공하는 유틸리티 클래스
 	 * Google, Facebook, GitHub 등 기본적으로 지원되는 OAuth2 제공자들의 ClientRegistration 정보를 간단히 생성가능
