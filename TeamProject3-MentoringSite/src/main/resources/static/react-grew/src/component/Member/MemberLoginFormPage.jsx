@@ -3,9 +3,9 @@ import { Link, useNavigate } from "react-router-dom";
 import * as memberApi from "../../api/memberApi";
 import { setCookie, getCookie } from "../../util/cookieUtil"
 import "../../css/memberPage.css"
-import googleIcon from '../../image/google_icon.svg';
-import naverIcon from '../../image/naver_icon.png';
-import kakaoIcon from '../../image/kakao_icon.svg';
+import google from '../../image/google.png';
+import naver from '../../image/naver.png';
+import kakao from '../../image/kakao.png';
 
 const MemberLoginFormPage = () => {
   const navigate = useNavigate();
@@ -60,13 +60,13 @@ const MemberLoginFormPage = () => {
         <h3 className="member-login-sub-title">SNS 로그인</h3>
         <div className="member-sns-login-group">
             <Link to="http://localhost:8080/oauth2/authorization/google">
-                <img src={googleIcon} alt="Google" className="member-sns-icon" />
+                <img src={google} alt="Google" className="member-sns-icon" />
             </Link>
             <Link to="http://localhost:8080/oauth2/authorization/naver">
-                <img src={naverIcon} alt="Naver" className="member-sns-icon" />
+                <img src={naver} alt="Naver" className="member-sns-icon" />
             </Link>
             <Link to="http://localhost:8080/oauth2/authorization/kakao">
-                <img src={kakaoIcon} alt="Kakao" className="member-sns-icon" />
+                <img src={kakao} alt="Kakao" className="member-sns-icon" />
             </Link>
           </div>
       </form>

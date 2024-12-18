@@ -66,8 +66,12 @@ export const MemberJoinFormPage = () => {
   return (
     <div className="member-signup-container">
     <h2 className="member-signup-title">회원가입</h2>
+    <h3 className="member-signup-subtitle">멘티 가입을 환영합니다!</h3>
     <form className="member-signup-form">
         <div className="member-form-join-group">
+        <p className="member-form-join-p">
+        아이디<span className="red-star">*</span>
+        </p>
             <input
                 type="text"
                 name="memberId"
@@ -77,6 +81,9 @@ export const MemberJoinFormPage = () => {
             />
         </div>
         <div className="member-form-join-group">
+        <p className="member-form-join-p">
+        비밀번호<span className="red-star">*</span>
+        </p>
             <input
                 type="password"
                 name="memberPassword"
@@ -86,6 +93,9 @@ export const MemberJoinFormPage = () => {
             />
         </div>
         <div className="member-form-join-group">
+        <p className="member-form-join-p">
+        이름<span className="red-star">*</span>
+        </p>
             <input
                 type="text"
                 name="memberName"
@@ -95,6 +105,9 @@ export const MemberJoinFormPage = () => {
             />
         </div>
         <div className="member-form-join-group">
+        <p className="member-form-join-p">
+        이메일<span className="red-star">*</span>
+        </p>
             <input
                 type="email"
                 name="memberEmail"
@@ -119,117 +132,22 @@ export const MemberJoinFormPage = () => {
         </div>
         <div className="member-form-interest-group">
             <p>관심사</p>
-            <fieldset>
-                <legend>직무상담</legend>
-                <label>
-                    <input
-                        type="checkbox"
-                        value={2}
-                        onChange={handleChangeCheckBox}
-                    />
-                    인사/총무/노무
-                </label>
-                <label>
-                    <input
-                        type="checkbox"
-                        value={3}
-                        onChange={handleChangeCheckBox}
-                    />
-                    영업/영업관리
-                </label>
-                <label>
-                    <input
-                        type="checkbox"
-                        value={4}
-                        onChange={handleChangeCheckBox}
-                    />
-                    IT개발/데이터
-                </label>
-            </fieldset>
+        <div className="interest-item">인사/총무/노무</div>
+        <div className="interest-item">영업/영업관리</div>
+        <div className="interest-item">IT개발/데이터</div>
 
-            <fieldset>
-                <legend>학습/교육</legend>
-                <label>
-                    <input
-                        type="checkbox"
-                        value={6}
-                        onChange={handleChangeCheckBox}
-                    />
-                    중학생
-                </label>
-                <label>
-                    <input
-                        type="checkbox"
-                        value={7}
-                        onChange={handleChangeCheckBox}
-                    />
-                    고등학생
-                </label>
-                <label>
-                    <input
-                        type="checkbox"
-                        value={8}
-                        onChange={handleChangeCheckBox}
-                    />
-                    대학입시상담
-                </label>
-            </fieldset>
+        <div className="interest-item">중학생</div>
+        <div className="interest-item">고등학생</div>
+        <div className="interest-item">대학입시상담</div>
 
-            <fieldset>
-                <legend>예술/창작</legend>
-                <label>
-                    <input
-                        type="checkbox"
-                        value={10}
-                        onChange={handleChangeCheckBox}
-                    />
-                    음악
-                </label>
-                <label>
-                    <input
-                        type="checkbox"
-                        value={11}
-                        onChange={handleChangeCheckBox}
-                    />
-                    글쓰기
-                </label>
-                <label>
-                    <input
-                        type="checkbox"
-                        value={12}
-                        onChange={handleChangeCheckBox}
-                    />
-                    미술
-                </label>
-            </fieldset>
+        <div className="interest-item">음악</div>
+        <div className="interest-item">글쓰기</div>
+        <div className="interest-item">미술</div>
+        
+        <div className="interest-item">스타트업 아이디어</div>
+        <div className="interest-item">마케팅 전략</div>
+        <div className="interest-item">법률 특허 상담</div>
 
-            <fieldset>
-                <legend>창업/비즈니스</legend>
-                <label>
-                    <input
-                        type="checkbox"
-                        value={16}
-                        onChange={handleChangeCheckBox}
-                    />
-                    스타트업 아이디어
-                </label>
-                <label>
-                    <input
-                        type="checkbox"
-                        value={17}
-                        onChange={handleChangeCheckBox}
-                    />
-                    마케팅 전략
-                </label>
-                <label>
-                    <input
-                        type="checkbox"
-                        value={18}
-                        onChange={handleChangeCheckBox}
-                    />
-                    법률 특허 상담
-                </label>
-            </fieldset>
         </div>
         <input
             type="button"
