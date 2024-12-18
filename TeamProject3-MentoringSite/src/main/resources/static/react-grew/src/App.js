@@ -3,6 +3,10 @@ import "./css/styles.css";
 import Header from "./layout/Header";
 import { MainPage } from "./component/MainPage";
 import Navigate from "./layout/Navigate";
+import MemberJoinFormPage from "./component/Member/MemberJoinFormPage";
+import MemberLoginFormPage from "./component/Member/MemberLoginFormPage";
+import MemberProfileFormPage  from "./component/Member/MemberProfileFormPage";
+
 import InquiryWriteFormpage from "./component/AnswerInquiry/InqiuryWriteFormPage";
 import InquiryModifyFormpage from "./component/AnswerInquiry/InquiryModifyFormPage";
 import AnswerWriteFormpage from "./component/AnswerInquiry/AnswerWriteFormPage";
@@ -24,7 +28,12 @@ function App() {
           <Routes>
             <Route path="/" exact element={<MainPage />} />
             <Route path="/main" element={<MainPage />} />
+            {/* Member페이지 */}
             <Route path="/member/mypage/:memberNo" element={<MemberMypage />} />
+            <Route path="/member/join" element={<MemberJoinFormPage/>} />
+            <Route path="/member/login" element={<MemberLoginFormPage/>} />
+            <Route path="/member/profile" element={<MemberProfileFormPage/>}/>
+
             <Route path="/inquiry" element={<InqiuryList/>}/>
             <Route path="/inquiry/:inquiryNo" element={<InqiuryView/>}/>
             <Route path="/inquiry/inquiryWrite" element={<InquiryWriteFormpage/>}/>

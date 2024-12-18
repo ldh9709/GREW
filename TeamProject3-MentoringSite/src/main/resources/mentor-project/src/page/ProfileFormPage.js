@@ -30,7 +30,6 @@ const ProfileFormPage = () => {
         console.log("setMember : ", setMember);
 
         
-        console.log("member : ", member.memberId);
     }    
 
     /* 컴포넌트 마운트 시 프로필 데이터 호출 */
