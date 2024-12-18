@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHeart } from '@fortawesome/free-solid-svg-icons';
 import * as followApi from "../../../api/followApi"
 
-export default function FollowList({memberNo}) {
+export default function FollowList({ memberNo }) {
     const [followList, setFollowList] = useState([{
             name: '',
             primaryCategory: '',
@@ -13,12 +13,13 @@ export default function FollowList({memberNo}) {
     const [currentPage, setCurrentPage] = useState(1); // 현재 페이지 번호
     const [totalPages, setTotalPages] = useState(0); // 전체 페이지 수
     const [itemsPerPage] = useState(6); // 페이지당 항목 수 (예: 한 페이지에 6개 항목)
-    
+
+
+
     const fetchFollowList = async (page, size) => {
         try {
             const response = await followApi.followList(memberNo, page, size);
             const data = response.data;
-            console.log(data);
             setFollowList(data.content);
             setTotalPages(data.totalPages);
         } catch (error) {
@@ -39,8 +40,8 @@ export default function FollowList({memberNo}) {
     };
 
     // 페이지 로드 시 데이터 가져오기
-    useEffect(()=>{
-        fetchFollowList(currentPage - 1, itemsPerPage);
+    useEffect(() => {
+           fetchFollowList(currentPage - 1, itemsPerPage);
     }, [currentPage])
     
 

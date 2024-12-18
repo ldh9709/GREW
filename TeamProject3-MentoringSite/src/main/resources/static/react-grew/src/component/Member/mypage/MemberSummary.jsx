@@ -5,8 +5,6 @@ import * as memberApi from "../../../api/memberApi"
 
 export default function MemberSummary({ memberNo }) {
 
-    const [loading, setLoading] = useState(true); // 로딩 상태 추가
-
     // State로 회원정보를 저장
     const [summary, setSummary] = useState({
         name: "테스트",
@@ -43,7 +41,7 @@ export default function MemberSummary({ memberNo }) {
             setSummary((prevState)=>({
                 ...prevState,
                 name: data.memberName,
-                points:data.mamberPoints,
+                points:data.memberPoint,
             }));
         } catch (error) {
             console.error('멘티 요약정보 조회 실패:', error);
@@ -52,19 +50,10 @@ export default function MemberSummary({ memberNo }) {
 
 
     useEffect(() => {
-        const fetchData = async () => {
-            setLoading(true); // 로딩 시작
-            await Promise.all([fetchCountSummary(), fetchMemberSummary()]);
-            setLoading(false); // 로딩 완료
-        };
+        fetchMemberSummary();
+        fetchCountSummary();
+    }, []);
 
-        fetchData();
-    }, [memberNo]);
-
-    // 로딩 상태 처리
-    if (loading) {
-        return <div>로딩 중...</div>;
-    }
 
     return (
     <section className="summary">
