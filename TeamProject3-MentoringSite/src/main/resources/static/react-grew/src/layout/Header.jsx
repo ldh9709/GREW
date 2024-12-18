@@ -15,13 +15,13 @@ export default function HeaderMenu() {
   return (
     <div className="header" style={navStyle}>
       <div className="rightMenu" style={rightMenuBarStyle}>
-        <a href="로그인폼" className="login">
+        <a href="/member/login" className="login">
           로그인
         </a>
-        <a href="/member/mypage/1" className="mypage">
+        <a href="/member/profile" className="mypage">
           마이페이지
         </a>
-        <a href="회원가입폼" className="signup">
+        <a href="/member/join" className="signup">
           회원가입
         </a>
       </div>
