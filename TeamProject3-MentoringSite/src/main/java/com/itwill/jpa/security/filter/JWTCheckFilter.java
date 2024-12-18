@@ -32,23 +32,28 @@ public class JWTCheckFilter extends OncePerRequestFilter {
   @Override
   protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
 	 
+	  
     // Preflight요청은 체크하지 않음
     if (request.getMethod().equals("OPTIONS")) {
       return true;
     }
    
     String path = request.getRequestURI();
-
+    
     log.info("check uri.............." + path);
     // swagger 경로의 호출은 체크하지 않음
-    if (path.startsWith("/")//모든 경로 체크 안함 
-    	|| path.startsWith("/swagger-ui") 
+    if (path.startsWith("/swagger-ui") 
+		|| path.startsWith("/category") 
+		|| path.startsWith("/inquiry") 
+		|| path.startsWith("/answer") 
+		|| path.startsWith("/chat") 
+		|| path.startsWith("/member/sendJoinCode")
+		|| path.startsWith("/member/createMember")
+		|| path.startsWith("/member/findId")
+		|| path.startsWith("/login")
     	|| path.startsWith("/v3/api-docs") 
     	|| path.startsWith("/favicon.ico")
-    	|| path.startsWith("/api/member/sendJoinCode")
-    	|| path.startsWith("/api/member/createMember")
-    	|| path.startsWith("/login")
-    	|| path.startsWith("/api/member/findId")) {
+    	) {
       return true;
     }
     
