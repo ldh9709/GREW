@@ -106,12 +106,8 @@ function InqiuryList() {
           );
         }
       }
-<<<<<<< HEAD
-      setInquiry(responseJsonObject.data.content); // 'content' 안에 데이터가 있다고 가정
-=======
 
       setInquiry(responseJsonObject.data.content);
->>>>>>> refs/heads/master
       setTotalPages(responseJsonObject.data.totalPages); // 전체 페이지 수 설정
     } catch (error) {
       console.error("API 호출 실패:", error);
