@@ -40,7 +40,7 @@ const ProfileFormPage = () => {
 
   return (
     <div className="profile-container">
-      <p className="profile-header">홍길동 님 안녕하세요</p>
+      <p className="profile-header">{member.memberName} 님 안녕하세요</p>
       <div className="profile-form">
         <form>
           <h3>회원정보</h3>

@@ -1,0 +1,299 @@
+/* 공통 컨테이너 스타일 */
+.member-container {
+  width: 500px;
+  margin: 50px auto;
+  padding: 20px;
+  background-color: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  font-family: 'nanumsquare';
+}
+
+/* 로그인 페이지 */
+.member-login-container {
+  width: 500px;
+  margin: auto; /* 수평 중앙 정렬 */
+  margin-top: 50px;
+  top: 50%;
+  left: 50%;
+  background-color: #fff; /* 필요에 따라 배경색 지정 */
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* 옵션: 그림자 추가 */
+  font-family: 'nanumsquare';
+}
+
+.member-login-title {
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 24px;
+  color: #333;
+}
+
+.member-login-form {
+  margin: 20px 0;
+}
+
+.member-login-input {
+  margin-bottom: 15px;
+  
+}
+
+.member-login-input input {
+  width: 60%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 14px;
+  margin: 0 auto; /* 수평 가운데 정렬 */
+  display: flex; /* Flexbox 활성화 */
+  font-family: 'nanumsquare';
+}
+
+.member-login-button {
+  width: 65%;
+  padding: 10px;
+  background-color: #4CAF50;
+  color: white;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  display: block;
+  margin: auto;
+  font-family: 'nanumsquare';
+}
+
+.member-login-button:hover {
+  background-color: #0daa0d;
+}
+
+.member-join-link {
+  text-align: center;
+  margin-top: 10px;
+  font-size: 14px;
+  color: #555;
+  text-decoration: none;
+}
+
+.member-join-link:hover {
+  text-decoration: underline;
+}
+
+.member-findPassword-link {
+  text-align: right;
+  font-size: 12px;
+  color: #555;
+  display: block;
+  margin-top: -10px;
+  margin-right: 80px;
+
+}
+
+.member-login-sub-title {
+  text-align: center;
+  margin: 20px 0 10px;
+  font-size: 18px;
+  color: #333;
+  display: block;
+  margin-top: -10px;
+}
+
+.member-sns-login-group {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+}
+
+.member-sns-icon {
+  width: 50px;
+  height: 50px;
+  cursor: pointer;
+  transition: transform 0.2s ease-in-out;
+}
+
+.member-sns-icon:hover {
+  transform: scale(1.1);
+}
+
+/* 회원가입 페이지 */
+.member-signup-container {
+  width: 500px;
+  margin: 50px auto;
+  padding: 20px;
+  background-color: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  font-family: 'nanumsquare';
+}
+
+.member-signup-title {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #333;
+  font-size: 24px;
+  
+}
+
+.member-signup-form {
+  margin: 20px 0;
+  
+}
+
+.member-form-join-group {
+  margin-bottom: 15px;
+  
+}
+
+.member-signup-form input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-sizing: border-box;
+  font-family: 'nanumsquare';
+  font-size: 15px;
+}
+
+.member-join-button {
+  width: 100%;
+  padding: 10px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.member-join-button:hover {
+  background-color: #45a049;
+}
+
+.member-form-interest-group {
+  margin-top: 20px;
+  font-size: 14px;
+  color: #555;
+}
+
+.member-form-interest-group legend {
+  font-weight: bold;
+}
+
+
+/* 프로필 페이지 */
+.member-profile-container {
+  font-family: 'nanumsquare';
+  background-color: #ffffff;
+}
+
+.member-profile-header {
+  text-align: left;
+  font-size: 40px;
+  font-weight: bold;
+  margin-top: 15px;
+  
+}
+
+.member-profile-form h3 {
+  width: 100%;
+  font-size: 30px;
+  text-align: center;
+  margin-top: 100px;
+  margin-bottom: 15px;
+  padding: 30px;
+  font-family: 'nanumsquare';
+}
+
+.member-form-group {
+  display: flex;
+  align-items: center;
+  margin-left: 100px;
+  margin-bottom: 15px;
+  font-family: 'nanumsquare';
+  padding: 5px;
+}
+
+.member-form-password {
+  width: 300px;
+  height: 30px;
+  display: flex;
+  font-family: 'nanumsquare';
+  font-size: 15px;
+  padding: 5px;
+}
+
+.member-form-email {
+  width: 300px;
+  height: 30px;
+  display: flex;
+  font-family: 'nanumsquare';
+  font-size: 15px;
+  padding: 5px;
+}
+
+.member-form-group label {
+  font-weight: bold;
+  margin-right: 50px;
+  width: 120px;
+  text-align: left;
+  font-size: 20px;
+  margin-left: 200px;
+}
+
+.member-form-group span {
+  font-size: 20px;
+  padding: 5px;
+}
+
+.email-group {
+  display: flex;
+  align-items: center;
+}
+
+.email-group span {
+  margin: 0 5px;
+}
+
+.member-checkbox-group label {
+  display: inline-block;
+  margin-right: 10px;
+}
+
+fieldset {
+  border: 1px solid #ddd;
+  margin-bottom: 15px;
+  border-radius: 5px;
+  font-family: 'nanumsquare';
+  display: flex; /* Flexbox 활성화 */
+  
+}
+
+legend {
+  font-weight: bold;
+  margin-bottom: 10px;
+  width: 40%; /* 가로 정렬을 위해 */
+}
+
+.member-button-group {
+  display: flex;
+  justify-content: space-around;
+}
+
+.member-profile-checkbox {
+  display: flex; /* 버튼들을 가로로 정렬 */
+  justify-content: center; /* 중앙 정렬 */
+  gap: 10px; /* 버튼 사이 간격 조정 */
+}
+.member-submit-button,
+.member-delete-button {
+  padding: 10px 20px;
+  font-size: 1em;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  width: 300px;
+  margin-bottom: 50px;
+  background-color: #007bff; 
+}
+
