@@ -45,6 +45,11 @@ export default function AnswerItem({ answer }) {
       console.error("API 호출 중 오류 발생:", error); // 오류 처리
     }
   };
+  //답변채택
+  const handleAccept = async () => {
+    const response = await answerApi.acceptAnswer(answer.answerNo);
+    console.log(response);
+  };
   return (
     <>
       <link
@@ -54,7 +59,7 @@ export default function AnswerItem({ answer }) {
       <div className="answer-container">
         {/* 질문작성자만 보이는조건 */}
         <div className="answer-accept">
-          <button>채택하기</button>
+          <button onClick={handleAccept}>채택하기</button>
         </div>
         {/* 질문작성자만 보이는조건 */}
 
@@ -76,11 +81,11 @@ export default function AnswerItem({ answer }) {
             onClick={(e) => {
               e.preventDefault(); // 폼 제출 방지
             }}
-            >
+          >
             삭제
           </button>
         </div>
-            {/* 답변작성자에게만 보이는조건 */}
+        {/* 답변작성자에게만 보이는조건 */}
       </div>
     </>
   );
