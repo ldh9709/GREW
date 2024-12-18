@@ -1,8 +1,8 @@
 const BACKEND_SERVER = " ";
 
-export const AnswerByDate = async (inquiryNo, page, size) => {
+export const findByMemberNo = async (memberNo) => {
   const response = await fetch(
-    `${BACKEND_SERVER}/answer/${inquiryNo}/answer-date?page=${page}&size=${size}`,
+    `${BACKEND_SERVER}/alarm/${memberNo}`,
     {
       method: "GET",
     }
