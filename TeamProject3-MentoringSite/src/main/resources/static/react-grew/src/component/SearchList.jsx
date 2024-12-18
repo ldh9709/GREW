@@ -18,7 +18,7 @@ function SearchList() {
       const fetchSearchResults = async () => {
         setLoading(true);
         try {
-          const response = await inquiryApi.searchInquiry(query,1,3); // API 호출
+          const response = await inquiryApi.searchInquiry(query, 1, 3); // API 호출
           console.log(response);
           console.log(query);
           setSearchResults(response.data.content); // 검색 결과 저장
@@ -37,29 +37,35 @@ function SearchList() {
     navigate(`/inquirySearchList?query=${query}`); // 쿼리 파라미터를 그대로 전달하여 이동
   };
   return (
-    <div>
-      <h1>검색 결과</h1>
+    <>
+      <link
+        href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap"
+        rel="stylesheet"
+      ></link>
+      <div>
+        <h1>검색 결과</h1>
 
-      {loading && <div>로딩 중...</div>}
-      {error && <div>{error}</div>}
+        {loading && <div>로딩 중...</div>}
+        {error && <div>{error}</div>}
 
-      {searchResults.length > 0 ? (
-        <div>
-          {searchResults.slice(0, 3).map(
-            (
-              inquiry //슬라이스로 3개만 표출
-            ) => (
-              <InquiryItem key={inquiry.inquiryNo} inquiry={inquiry} />
-            )
-          )}
-          <div className="view-more">
-            <button onClick={handleViewMore}>더보기</button>
+        {searchResults.length > 0 ? (
+          <div>
+            {searchResults.slice(0, 3).map(
+              (
+                inquiry //슬라이스로 3개만 표출
+              ) => (
+                <InquiryItem key={inquiry.inquiryNo} inquiry={inquiry} />
+              )
+            )}
+            <div className="view-more">
+              <button onClick={handleViewMore}>더보기</button>
+            </div>
           </div>
-        </div>
-      ) : (
-        <div>검색 결과가 없습니다.</div>
-      )}
-    </div>
+        ) : (
+          <div>검색 결과가 없습니다.</div>
+        )}
+      </div>
+    </>
   );
 }
 

@@ -83,84 +83,93 @@ export default function InqiuryWriteFormPage() {
     navigate(`/inquiry/${responseJsonObject.data.inquiryNo}`);
   };
   return (
-    <div>
-      <form ref={writeFormRef} method="POST" className="inquiry-form">
-        <div>
-          <div>질문등록</div>
+    <>
+      <link
+        href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap"
+        rel="stylesheet"
+      ></link>
+      <div>
+        <form ref={writeFormRef} method="POST" className="inquiry-form">
           <div>
-            {categories
-              .filter((category) => category.categoryDepth === 1) // categoryDepth가 1인 카테고리만 필터링
-              .map((category) => (
-                <button
-                  key={category.categoryNo}
-                  className="category-button"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    handleCategoryClick(category.categoryNo);
-                  }} // 클릭 시 카테고리 선택
-                  style={{
-                    margin: "5px",
-                    backgroundColor:
-                      selectedCategory === category.categoryNo ? "#4CAF50" : "", // 선택된 카테고리는 색상 변경
-                    color:
-                      selectedCategory === category.categoryNo ? "white" : "", // 선택된 카테고리 글자 색상 변경
-                  }}
-                >
-                  {category.categoryName}
-                </button>
-              ))}
-          </div>
-
-          {/* 하위 카테고리 버튼 렌더링 */}
-          {childCategories.length > 0 && (
+            <div>질문등록</div>
             <div>
-              {childCategories.map((child) => (
-                <button
-                  key={child.categoryNo}
-                  className="category-button"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    handleCategoryClick(child.categoryNo);
-                  }} // 하위 카테고리 선택
-                  style={{
-                    margin: "5px",
-                    backgroundColor:
-                      selectedCategory === child.categoryNo ? "#4CAF50" : "", // 선택된 카테고리는 색상 변경
-                    color: selectedCategory === child.categoryNo ? "white" : "", // 선택된 카테고리 글자 색상 변경
-                  }}
-                >
-                  {child.categoryName}
-                </button>
-              ))}
+              {categories
+                .filter((category) => category.categoryDepth === 1) // categoryDepth가 1인 카테고리만 필터링
+                .map((category) => (
+                  <button
+                    key={category.categoryNo}
+                    className="category-button"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      handleCategoryClick(category.categoryNo);
+                    }} // 클릭 시 카테고리 선택
+                    style={{
+                      margin: "5px",
+                      backgroundColor:
+                        selectedCategory === category.categoryNo
+                          ? "#4CAF50"
+                          : "", // 선택된 카테고리는 색상 변경
+                      color:
+                        selectedCategory === category.categoryNo ? "white" : "", // 선택된 카테고리 글자 색상 변경
+                    }}
+                  >
+                    {category.categoryName}
+                  </button>
+                ))}
             </div>
-          )}
-          <input
-            type="text"
-            name="inquiryTitle"
-            onChange={onChangeInquiryForm}
-            value={inquiry.inquiryTitle}
-            placeholder="제목을 입력하세요"
-            required
-          />
-        </div>
-        <div>
-          <textarea
-            name="inquiryContent"
-            onChange={onChangeInquiryForm}
-            value={inquiry.inquiryContent}
-            placeholder="내용을 입력하세요"
-            required
-          />
-        </div>
-        <div className="inquiry-write-btn">
-          <input
-            type="button"
-            value="질문등록"
-            onClick={inquiryWriteAction}
-            id="btn_inquiry_write_action"
-          />
-        </div>
-      </form>
-    </div>
+
+            {/* 하위 카테고리 버튼 렌더링 */}
+            {childCategories.length > 0 && (
+              <div>
+                {childCategories.map((child) => (
+                  <button
+                    key={child.categoryNo}
+                    className="category-button"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      handleCategoryClick(child.categoryNo);
+                    }} // 하위 카테고리 선택
+                    style={{
+                      margin: "5px",
+                      backgroundColor:
+                        selectedCategory === child.categoryNo ? "#4CAF50" : "", // 선택된 카테고리는 색상 변경
+                      color:
+                        selectedCategory === child.categoryNo ? "white" : "", // 선택된 카테고리 글자 색상 변경
+                    }}
+                  >
+                    {child.categoryName}
+                  </button>
+                ))}
+              </div>
+            )}
+            <input
+              type="text"
+              name="inquiryTitle"
+              onChange={onChangeInquiryForm}
+              value={inquiry.inquiryTitle}
+              placeholder="제목을 입력하세요"
+              required
+            />
+          </div>
+          <div>
+            <textarea
+              name="inquiryContent"
+              onChange={onChangeInquiryForm}
+              value={inquiry.inquiryContent}
+              placeholder="내용을 입력하세요"
+              required
+            />
+          </div>
+          <div className="inquiry-write-btn">
+            <input
+              type="button"
+              value="질문등록"
+              onClick={inquiryWriteAction}
+              id="btn_inquiry_write_action"
+            />
+          </div>
+        </form>
+      </div>
+    </>
   );
 }
