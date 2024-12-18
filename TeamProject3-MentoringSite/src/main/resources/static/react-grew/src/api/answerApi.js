@@ -107,3 +107,11 @@ export const findInquiry = async (inquiryNo) => {
     const responseJsonObject = await response.json();
     return responseJsonObject;
   };
+//답변 하나보기
+export const viewAnswer = async (answerNo) => {
+    const response = await fetch(`${BACKEND_SERVER}/answer/view/${answerNo}`, {
+      method: "GET",
+    });
+    const responseJsonObject = await response.json();
+    return responseJsonObject;
+  };

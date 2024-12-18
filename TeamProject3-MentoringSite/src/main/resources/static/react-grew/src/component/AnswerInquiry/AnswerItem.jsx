@@ -68,7 +68,7 @@ export default function AnswerItem({ answer }) {
         </div>
         {/* 답변작성자에게만 보이는조건 */}
         <div>
-          <Link to={`/inquiry/modify/`}>
+          <Link to={`/answer/modify/${answer.answerNo}`}>
             <button>수정</button>
           </Link>
 
