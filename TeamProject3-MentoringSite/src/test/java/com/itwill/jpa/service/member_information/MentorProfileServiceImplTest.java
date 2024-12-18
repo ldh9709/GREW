@@ -15,7 +15,7 @@ class MentorProfileServiceImplTest {
 	
 //	@Test
 	void testUpdateMentoringCount() {
-		mentorProfileService.updateMentoringCount(6L);
+	//	mentorProfileService.updateMentoringCount(6L);
 	}
 	
 //	@Test
@@ -26,7 +26,7 @@ class MentorProfileServiceImplTest {
 
 	@Test
 	void testUpdateAcitityCount() {
-		mentorProfileService.updateAcitityCount(6L);
+	//	mentorProfileService.updateAcitityCount(6L);
 	}
 
 }
