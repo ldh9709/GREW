@@ -2,16 +2,16 @@ import FollowList from './FollowList'
 
 export default function MemberTabs({memberNo}) {
   return (
-    <section class="tab-container">
+    <section className="tab-container">
         <nav>
-            <ul class="tabs">
-                <li class="tab" data-tab="questions">질문내역</li>
-                <li class="tab" data-tab="counseling">상담내역</li>
-                <li class="tab active" data-tab="following">팔로잉</li>
+            <ul className="tabs">
+                <li className="tab" data-tab="questions">질문내역</li>
+                <li className="tab" data-tab="counseling">상담내역</li>
+                <li className="tab active" data-tab="following">팔로잉</li>
             </ul>
         </nav>
-        <div class="tab-content hidden" id="questions">
-            <ul class="list">
+        <div className="tab-content hidden" id="questions">
+            <ul className="list">
                 <li>
                     <strong>질문 제목</strong> - 10월 25일 질문 신간 리스트
                     <span>조회수: 32 | 좋아요: 1</span>
@@ -22,7 +22,7 @@ export default function MemberTabs({memberNo}) {
                 </li>
             </ul>
         </div>
-        <div class="tab-content hidden" id="counseling">
+        <div className="tab-content hidden" id="counseling">
             <p>상담내역이 여기에 표시됩니다.</p>
         </div>
         <div>

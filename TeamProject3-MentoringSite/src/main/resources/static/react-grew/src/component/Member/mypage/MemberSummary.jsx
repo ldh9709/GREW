@@ -67,11 +67,11 @@ export default function MemberSummary({ memberNo }) {
     }
 
     return (
-    <section class="summary">
-        <div class="summary-box">
+    <section className="summary">
+        <div className="summary-box">
             <h1>{summary.name}님 안녕하세요 <a href="/profile/edit"><FontAwesomeIcon icon={faGear} /> 개인정보 변경</a></h1>
             <p>적립금 <span>{summary.points}자루</span></p>
-            <div class="summary-stats">
+            <div className="summary-stats">
                 <div>
                     <h2>{summary.inquiryCount}</h2>
                     <p>질문 수</p>
@@ -85,7 +85,7 @@ export default function MemberSummary({ memberNo }) {
                     <p>팔로잉</p>
                 </div>
             </div>
-            <button class="mentor-btn">멘토전환</button>
+            <button className="mentor-btn">멘토전환</button>
         </div>
     </section>
   )

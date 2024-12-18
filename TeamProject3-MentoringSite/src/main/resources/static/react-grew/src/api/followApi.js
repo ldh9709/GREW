@@ -28,8 +28,8 @@ export const followerCount = async(mentorNo)=>{
     return responseJsonObject;
 }
 //팔로잉 리스트 조회
-export const followList = async(menteeNo)=>{
-    const response = await fetch(`${BACKEND_SERVER}/follow/mentee/${menteeNo}`,{
+export const followList = async(menteeNo, page, size)=>{
+    const response = await fetch(`${BACKEND_SERVER}/follow/mentee/${menteeNo}?page=${page}&size=${size}`,{
         method:'GET'
     })
     const responseJsonObject = await response.json();

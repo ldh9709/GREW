@@ -106,7 +106,6 @@ function InqiuryList() {
           );
         }
       }
-
       setInquiry(responseJsonObject.data.content); // 'content' 안에 데이터가 있다고 가정
       setTotalPages(responseJsonObject.data.totalPages); // 전체 페이지 수 설정
     } catch (error) {
