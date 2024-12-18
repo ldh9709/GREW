@@ -167,10 +167,6 @@
   font-weight: bold;
 }
 
-.member-form-interest-group label {
-  display: block;
-  margin: 5px 0;
-}
 
 /* 프로필 페이지 */
 .member-profile-container {
@@ -202,6 +198,25 @@
   margin-left: 100px;
   margin-bottom: 15px;
   font-family: 'nanumsquare';
+  padding: 5px;
+}
+
+.member-form-password {
+  width: 300px;
+  height: 30px;
+  display: flex;
+  font-family: 'nanumsquare';
+  font-size: 15px;
+  padding: 5px;
+}
+
+.member-form-email {
+  width: 300px;
+  height: 30px;
+  display: flex;
+  font-family: 'nanumsquare';
+  font-size: 15px;
+  padding: 5px;
 }
 
 .member-form-group label {
@@ -244,7 +259,7 @@ fieldset {
 legend {
   font-weight: bold;
   margin-bottom: 10px;
-  width: 10%; /* 가로 정렬을 위해 */
+  width: 40%; /* 가로 정렬을 위해 */
 }
 
 .member-button-group {
@@ -253,8 +268,9 @@ legend {
 }
 
 .member-profile-checkbox {
-  display: flex;
-  font-size: 100px;
+  display: flex; /* 버튼들을 가로로 정렬 */
+  justify-content: center; /* 중앙 정렬 */
+  gap: 10px; /* 버튼 사이 간격 조정 */
 }
 .member-submit-button,
 .member-delete-button {
@@ -264,12 +280,8 @@ legend {
   border: none;
   border-radius: 5px;
   cursor: pointer;
+  width: 300px;
+  margin-bottom: 50px;
+  background-color: #007bff; 
 }
 
-.member-submit-button {
-  background-color: #007bff;
-}
-
-.member-delete-button {
-  background-color: #dc3545;
-}
