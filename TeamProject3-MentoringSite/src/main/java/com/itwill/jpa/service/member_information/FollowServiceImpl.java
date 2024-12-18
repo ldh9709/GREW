@@ -71,10 +71,10 @@ public class FollowServiceImpl implements FollowService{
 	}
 	
 	/*팔로잉 리스트 출력(멘토리스트, 이름 순서)*/
-	public Page<FollowResponseDto> getMentorList(Long menteeMemberNo, int pageNumber, int pageSize){
+	public Page<FollowResponseDto> getMentorList(Long memberNo, int pageNumber, int pageSize){
 		try {
 			Pageable pageable = PageRequest.of(pageNumber, pageSize);
-			Page<FollowResponseDto> followList = followReporitory.findFollowMentors(menteeMemberNo, pageable);
+			Page<FollowResponseDto> followList = followReporitory.findFollowMentors(memberNo, pageable);
 			long totalCount = followList.getTotalElements(); 
 			
 			return followList;

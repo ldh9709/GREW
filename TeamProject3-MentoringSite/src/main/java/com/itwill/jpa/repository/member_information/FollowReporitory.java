@@ -31,10 +31,10 @@ public interface FollowReporitory extends JpaRepository<Follow, Long>{
 			+ "JOIN m.mentorProfile mp "
 			+ "JOIN mp.category c1 "
 			+ "JOIN c1.parentCategory c2 "
-			+ "WHERE f.menteeMember.memberNo = :menteeMemberNo "
+			+ "WHERE f.menteeMember.memberNo = :memberNo "
 			+ "ORDER BY m.memberName ASC"
 			)
-	public Page<FollowResponseDto> findFollowMentors(@Param("menteeMemberNo") Long menteeMemberNo, Pageable pageable);
+	public Page<FollowResponseDto> findFollowMentors(@Param("memberNo") Long memberNo, Pageable pageable);
 	
 	/* 팔로워 멘티 수 찾기 */
 	public Integer countBymentorMember_MemberNo(Long mentorMemberNo);

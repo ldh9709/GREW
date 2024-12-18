@@ -8,6 +8,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.itwill.jpa.auth.PrincipalDetails;
 import com.itwill.jpa.dto.bulletin_board.InquiryDto;
 import com.itwill.jpa.response.Response;
 import com.itwill.jpa.response.ResponseMessage;
@@ -331,10 +333,15 @@ public class InquiryRestController {
 	}
 	
 	@Operation(summary = "내가 작성한 질문내역")
-	@GetMapping("/{memberNo}")
-	public ResponseEntity<Response> getInquiryByMember(@PathVariable(name = "memberNo") Long memberNo
-			,@RequestParam(name = "page",defaultValue = "0") int page,  // 기본값은 0 페이지
+	@GetMapping
+	public ResponseEntity<Response> getInquiryByMember(
+			Authentication authentication,
+			@RequestParam(name = "page",defaultValue = "0") int page,  // 기본값은 0 페이지
             @RequestParam(name = "size",defaultValue = "10") int size) {
+		
+		PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
+		Long memberNo = principalDetails.getMemberNo();
+		
 		Page<InquiryDto> inquiryDtos = inquiryService.getInquiryByMember(memberNo, page, size);
 		
 		Response response = new Response();
