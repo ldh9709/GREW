@@ -39,7 +39,7 @@ public class AlarmRestController {
         return ResponseEntity.ok(redirectUrl);
     }
     @Operation(summary = "멤버한명의 알림 출력")
-    @GetMapping("/alarm/{memberNo}")
+    @GetMapping("/alarms")
     public ResponseEntity<Response> findByAlarmByMember(@RequestParam(name="memberNo")Long memberNo){
 		
     	List<AlarmDto> alarmDtoList= alarmService.findAlarmByMember(memberNo);
