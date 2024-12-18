@@ -1,6 +1,8 @@
 package com.itwill.jpa.repository.alarm;
 
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -18,6 +20,7 @@ public interface AlarmRepository extends JpaRepository<Alarm, Long>{
 	@Modifying
     @Transactional
     @Query("DELETE FROM Alarm a WHERE a.member.id = :memberId")
-    void deleteAlarmsByMemberId(@Param("memberId") Long memberId);
+    void deleteAlarmsByMemberId(Long memberId);
 	
+	List<Alarm> findByMember_MemberNo(Long memberNo);
 }

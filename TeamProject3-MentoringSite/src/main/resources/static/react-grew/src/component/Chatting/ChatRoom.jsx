@@ -65,24 +65,26 @@ const ChatRoom = ({ onRoomClick }) => {
                             onClick={() => onRoomClick(room.chatRoomNo)} // 채팅방 클릭 시 부모 컴포넌트에 해당 채팅방 id 전달
                         >
                             <span className="room-name">{room.chatRoomName}</span>
-                            <button
-                                className="edit-button"
-                                onClick={(e) => {
-                                    e.stopPropagation(); // 부모 이벤트 (채팅방 클릭) 전파 방지
-                                    openEditModal(room); // 채팅방 이름 수정 모달 열기
-                                }}
-                            >
-                                수정
-                            </button>
-                            <button
-                                className="leave-button" // 나가기 버튼
-                                onClick={(e) => {
-                                    e.stopPropagation(); // 부모 이벤트 전파 방지
-                                    leaveRoom(room.chatRoomNo); // 나가기 기능 호출
-                                }}
-                            >
-                                나가기
-                            </button>
+                            <div className="button-container">
+                                <button
+                                    className="edit-button"
+                                    onClick={(e) => {
+                                        e.stopPropagation(); // 부모 이벤트 (채팅방 클릭) 전파 방지
+                                        openEditModal(room); // 채팅방 이름 수정 모달 열기
+                                    }}
+                                >
+                                    수정
+                                </button>
+                                <button
+                                    className="leave-button" // 나가기 버튼
+                                    onClick={(e) => {
+                                        e.stopPropagation(); // 부모 이벤트 전파 방지
+                                        leaveRoom(room.chatRoomNo); // 나가기 기능 호출
+                                    }}
+                                >
+                                    나가기
+                                </button>
+                            </div>
                         </li>
                     ))
                     ) : (
