@@ -21,32 +21,10 @@ export default function MemberInquiryList() {
         }
     }
 
-    const fetchCategoryName = async (categoryNo) => {
-        try {
-            const response = await categoryApi.childCategory(categoryNo);
-            const { data } = response;
-            setcategoryMap((prev) => ({
-                ...prev,
-                [categoryNo]: data.categoryName
-            }));
-        } catch (error) {
-            console.log('카테고리 출력 실패');
-        }
-
-    }
-
-
-    
     useEffect(() => {
         fetchInquiryList(currentPage - 1);
     },[currentPage])
     
-    useEffect(() => {
-        inquiryList.forEach((inquiry) => {
-            fetchCategoryName(inquiry.parentsCategoryNo);
-        })
-    }, [inquiryList]);
-
     // 페이지 변경 시 데이터 갱신
     const paginate = (pageNumber) => {
         setCurrentPage(pageNumber);
@@ -77,7 +55,7 @@ export default function MemberInquiryList() {
                     navigate(`/inquiry/${inquiry.inquiryNo}`)
                 }}>
                     <td className="col-no">{index+1}</td>
-                    <td className="col-category">{categoryMap[inquiry.parentsCategoryNo]?.categoryName || "로딩 중..."}</td>
+                    <td className="col-category">{inquiry.parentsCategoryName}</td>
                     <td className="col-title">{inquiry.inquiryTitle}</td>
                     <td className="col-date">{inquiry.inquiryDate.substring(0,10)}</td>
                     <td className="col-views">{inquiry.inquiryViews}</td>
