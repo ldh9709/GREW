@@ -20,7 +20,6 @@ const ProfileFormPage = () => {
         console.log("프로필response.data : ", response.data)
 
         const { data } = response;
-        const{memberName, memberId, memberEmail, interests} = response;
 
         setMember({
             memberName: data.memberName,
@@ -30,11 +29,12 @@ const ProfileFormPage = () => {
         });
         console.log("setMember : ", setMember);
 
-        /* 컴포넌트 마운트 시 프로필 데이터 호출 */
-        /* 최초 화면 로딩 시 한 번만 실행 */
+        
         console.log("member : ", member.memberId);
     }    
 
+    /* 컴포넌트 마운트 시 프로필 데이터 호출 */
+    /* 최초 화면 로딩 시 한 번만 실행 */
     useEffect(() => {
         fetchProfileData();
     }, []);

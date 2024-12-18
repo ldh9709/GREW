@@ -21,12 +21,14 @@ const LoginFormPage = () => {
     const responseJsonObject = await memberApi.loginAction(member);
     console.log("responseJsonObject.memberId : ", responseJsonObject.memberId);
 
-
+    /* 로그인 성공해서 토큰이 있을 때 */
     if (responseJsonObject.accessToken) {
+
       /* 쿠키 설정 */
       setCookie("member", JSON.stringify(responseJsonObject), 1);
       console.log("getCookies : " , getCookie("member"));
       console.log("getCookies.accessToken : " , getCookie("member").accessToken);
+
       /* 로그인 성공 시 이동 */
       navigate("/main");
     } else {
