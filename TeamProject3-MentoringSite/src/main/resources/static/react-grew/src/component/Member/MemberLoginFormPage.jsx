@@ -2,6 +2,10 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import * as memberApi from "../../api/memberApi";
 import { setCookie, getCookie } from "../../util/cookieUtil"
+import "../../css/memberPage.css"
+import googleIcon from '../../image/google_icon.svg';
+import naverIcon from '../../image/naver_icon.png';
+import kakaoIcon from '../../image/kakao_icon.svg';
 
 const MemberLoginFormPage = () => {
   const navigate = useNavigate();
@@ -37,49 +41,37 @@ const MemberLoginFormPage = () => {
   };
 
   return (
-    <div className="login-container">
-      <h2 className="login-title">로그인</h2>
-      <form className="login-form" onSubmit={loginAction}>
-        <div className="login-input">
-          <input
-            type="text"
-            name="memberId"
-            placeholder="아이디"
-            value={member.memberId}
-            onChange={handleChangeLoginForm}
-            required
-          />
+    <div className="member-login-container">
+    <h2 className="member-login-title">로그인</h2>
+    <form className="member-login-form" onSubmit={loginAction}>
+        <div className="member-login-input">
+            <input type="text" name="memberId" placeholder="아이디" value={member.memberId} onChange={handleChangeLoginForm} required />
         </div>
-        <div className="login-input">
-          <input
-            type="password"
-            name="memberPassword"
-            placeholder="비밀번호"
-            value={member.memberPassword}
-            onChange={handleChangeLoginForm}
-            required
-          />
+        <div className="member-login-input">
+            <input type="password" name="memberPassword" placeholder="비밀번호" value={member.memberPassword} onChange={handleChangeLoginForm} required />
         </div>
-        <button type="submit" className="login-button">
-          로그인
-        </button>
-        <Link to="/join" className="join-link">
-          <p>회원이 아니신가요? 회원가입</p>
+        <Link to="/join" className="member-findPassword-link">
+            <p>비밀번호를 잊으셨나요?</p>
         </Link>
-        <h3 className="login-sub-title">SNS 로그인</h3>
-        <div className="sns-login-group">
-          <Link to="http://localhost:8080/oauth2/authorization/google">
-            <img src="google_icon.svg" alt="Google" className="sns-icon" />
-          </Link>
-          <Link to="http://localhost:8080/oauth2/authorization/naver">
-            <img src="naver_icon.png" alt="Naver" className="sns-icon" />
-          </Link>
-          <Link to="http://localhost:8080/oauth2/authorization/kakao">
-            <img src="kakao_icon.svg" alt="Kakao" className="sns-icon" />
-          </Link>
-        </div>
+        <button type="submit" className="member-login-button">로그인</button>
+        <Link to="/join" className="member-join-link">
+            <p>회원이 아니신가요? 회원가입</p>
+        </Link>
+        <h3 className="member-login-sub-title">SNS 로그인</h3>
+        <div className="member-sns-login-group">
+            <Link to="http://localhost:8080/oauth2/authorization/google">
+                <img src={googleIcon} alt="Google" className="member-sns-icon" />
+            </Link>
+            <Link to="http://localhost:8080/oauth2/authorization/naver">
+                <img src={naverIcon} alt="Naver" className="member-sns-icon" />
+            </Link>
+            <Link to="http://localhost:8080/oauth2/authorization/kakao">
+                <img src={kakaoIcon} alt="Kakao" className="member-sns-icon" />
+            </Link>
+          </div>
       </form>
-    </div>
+      </div>
+
   );
 };
 
