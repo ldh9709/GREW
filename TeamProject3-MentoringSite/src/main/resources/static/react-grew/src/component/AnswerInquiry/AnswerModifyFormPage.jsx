@@ -11,7 +11,7 @@ export default function AnswerModifyFormPage() {
     answerStatus: 1,
     answerAccept: 1,
     memberNo: 1,
-    inquiryNo: 1
+    inquiryNo: 1,
   };
   const initInquiry = {
     inquiryNo: 0,
@@ -20,7 +20,7 @@ export default function AnswerModifyFormPage() {
     inquiryDate: "",
     inquiryState: 1,
     inquiryViews: 0,
-    categoryName:"",
+    categoryName: "",
     categoryNo: 0,
     memberNo: 1,
     memberName: "",
@@ -66,6 +66,10 @@ export default function AnswerModifyFormPage() {
   };
   return (
     <>
+      <link
+        href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap"
+        rel="stylesheet"
+      ></link>
       <div className="inquiry-container">
         <div>
           <div className="inquiry-title">{inquiry.inquiryTitle}</div>
@@ -104,7 +108,7 @@ export default function AnswerModifyFormPage() {
               value="수정"
               onClick={answerModifyAction}
               id="btn_answer_modify_action"
-              />
+            />
           </div>
         </form>
       </div>

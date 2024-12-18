@@ -17,6 +17,10 @@ import ChatAlarim from "./component/Chatting/ChatAlarim";
 import Footer from "./layout/Footer"
 import MemberMypage from "./component/Member/mypage/MemberMypage";
 import SearchList from "./component/SearchList";
+import InquirySearchList from "./component/AnswerInquiry/InquirySearchList";
+import AdminReport2 from "./component/admin/adminReport2"
+import Admin from "./component/admin/admin"
+import AdminReport4 from "./component/admin/adminReport4"
 function App() {
   return (
     <>
@@ -29,18 +33,22 @@ function App() {
             <Route path="/" exact element={<MainPage />} />
             <Route path="/main" element={<MainPage />} />
             {/* Member페이지 */}
-            <Route path="/member/mypage/:memberNo" element={<MemberMypage />} />
+            <Route path="/member/profile" element={<MemberMypage />} />
             <Route path="/member/join" element={<MemberJoinFormPage/>} />
             <Route path="/member/login" element={<MemberLoginFormPage/>} />
-            <Route path="/member/profile" element={<MemberProfileFormPage/>}/>
-          
+            <Route path="/member/profile/edit" element={<MemberProfileFormPage/>}/>
+
             <Route path="/inquiry" element={<InqiuryList/>}/>
             <Route path="/inquiry/:inquiryNo" element={<InqiuryView/>}/>
             <Route path="/inquiry/inquiryWrite" element={<InquiryWriteFormpage/>}/>
             <Route path="/inquiry/modify/:inquiryNo" element={<InquiryModifyFormpage/>}/>
             <Route path="/answer/answerWrite/:inquiryNo" element={<AnswerWriteFormpage/>}/>
             <Route path="/answer/modify/:answerNo" element={<AnswerModifyFormpage/>}/>
-            <Route path="/search/:searchContent" element={<SearchList/>}/>
+            <Route path="/searchList" element={<SearchList/>}/>
+            <Route path="/inquirySearchList" element={<InquirySearchList/>}/>
+            <Route path="/admin/reports" element={<AdminReport2/>}/>
+            <Route path="/admin" element={<Admin/>}/>
+            <Route path="/adminReport4" element={<AdminReport4/>}/>
           </Routes>
           <Footer/>
         </div>

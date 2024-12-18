@@ -17,8 +17,8 @@ GET  /member/mentor-summary/{memberNo}      :멘토 회원 활동정보 요약 �
 //아이디 중복 체크
 
 //팔로잉 리스트 조회
-export const followList = async(memberNo)=>{
-    const response = await fetch(`${BACKEND_SERVER}/follow/mentee/${memberNo}`,{
+export const followList = async()=>{
+    const response = await fetch(`${BACKEND_SERVER}/follow/mentee`,{
         method:'GET'
     })
     const responseJsonObject = await response.json();
@@ -114,9 +114,16 @@ export const sendJoinCode = async (sendJsonObject) => {
 
   
 //멘티 회원 활동정보 요약
-export const memberCountSummary = async(memberNo) => {
-    const response = await fetch(`${BACKEND_SERVER}/member/mentee-summary/${memberNo}`,{
+export const memberCountSummary = async () => {
+    const memberCookie = getCookie("member");
+    const token = memberCookie.accessToken;
+
+    const response = await fetch(`${BACKEND_SERVER}/member/mentee-summary`,{
         method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}` // Authorization 헤더에 JWT 토큰 추가
+          },
     });
     const responseJsonObject = await response.json();
     return responseJsonObject;
