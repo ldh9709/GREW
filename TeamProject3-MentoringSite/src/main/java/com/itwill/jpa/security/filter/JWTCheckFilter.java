@@ -44,6 +44,7 @@ public class JWTCheckFilter extends OncePerRequestFilter {
     // swagger 경로의 호출은 체크하지 않음
     if (path.startsWith("/swagger-ui") 
 		|| path.startsWith("/category") 
+		|| path.startsWith("/alarm") 
 		|| path.startsWith("/inquiry") 
 		|| path.startsWith("/answer") 
 		|| path.startsWith("/chat") 
