@@ -104,10 +104,13 @@ body {
   .col-no {
     width: 5%;
   }
-  .col-views{
-    width: 7%;
+  .col-title {
+    width: 55%;
   }
-  .col-likes{
+  .col-date {
+    width: 15%;
+  }
+  .col-views{
     width: 7%;
   }
 
@@ -123,6 +126,9 @@ body {
 
   .list-table td {
     font-size: 14px;
+  }
+  .list-table tbody tr{
+    cursor: pointer;
   }
   .list-table tbody td:nth-child(3){
     text-align: left;

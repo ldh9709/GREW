@@ -1,34 +1,62 @@
 import React, { useEffect, useState } from 'react'
 import * as inquiryApi from "../../../api/inquiryApi"
+import * as categoryApi from "../../../api/categoryApi"
+import { useNavigate } from 'react-router-dom';
 
 export default function MemberInquiryList() {
-    const [inquiryList, setInquiryList] = useState([{
-        no: 1,
-        category: '',
-        title: '',
-        date: '',
-        views: '',
-        likse: ''
-    }]);
+    const [inquiryList, setInquiryList] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(0);
+    const [categoryMap, setcategoryMap] = useState({});
+    const navigate = useNavigate();
 
-    const fetchInquiryList = async(page) => {
+    const fetchInquiryList = async (page) => {
         try {
             const response = await inquiryApi.listInquiryBymemberNo(page);
             const { data } = response;
-            console.log(response);
             setInquiryList(data.content);
             setTotalPages(data.totalPages);
         } catch (error) {
-            console.log('내가 쓴 질문 리스트 조회 실패');
+            console.log('내가 쓴 질문 리스트 조회 실패',error);
         }
     }
 
-    useEffect(() => {
-        fetchInquiryList(currentPage -1)
-    },[currentPage])
+    const fetchCategoryName = async (categoryNo) => {
+        try {
+            const response = await categoryApi.childCategory(categoryNo);
+            const { data } = response;
+            setcategoryMap((prev) => ({
+                ...prev,
+                [categoryNo]: data.categoryName
+            }));
+        } catch (error) {
+            console.log('카테고리 출력 실패');
+        }
 
+    }
+
+
+    
+    useEffect(() => {
+        fetchInquiryList(currentPage - 1);
+    },[currentPage])
+    
+    useEffect(() => {
+        inquiryList.forEach((inquiry) => {
+            fetchCategoryName(inquiry.parentsCategoryNo);
+        })
+    }, [inquiryList]);
+
+    // 페이지 변경 시 데이터 갱신
+    const paginate = (pageNumber) => {
+        setCurrentPage(pageNumber);
+    };
+
+    // 페이지 번호 버튼 표시
+    const pageNumbers = [];
+    for (let i = 1; i <= totalPages; i++) {
+        pageNumbers.push(i);
+    }
 
   return (
     <div className="" id="inquiry">
@@ -40,21 +68,31 @@ export default function MemberInquiryList() {
             <th className="col-title">제목</th>
             <th className="col-date">작성일자</th>
             <th className="col-views">조회수</th>
-            <th className="col-likes">좋아요</th>
             </tr>
         </thead>
         <tbody>
-            <tr>
-            <td className="col-no">1</td>
-            <td className="col-category"><a href="#">카테고리</a></td>
-            <td className="col-title">10월 25일 경제경영 신간 리스트</td>
-            <td className="col-date">yyyy-mm-dd</td>
-            <td className="col-views">100</td>
-            <td className="col-likes">10</td>
-            </tr>
+            {/* 질문 리스트 map으로 반복 */}          
+            {inquiryList.map((inquiry,index) => (
+                <tr key={index} onClick={() => {
+                    navigate(`/inquiry/${inquiry.inquiryNo}`)
+                }}>
+                    <td className="col-no">{index+1}</td>
+                    <td className="col-category">{categoryMap[inquiry.parentsCategoryNo]?.categoryName || "로딩 중..."}</td>
+                    <td className="col-title">{inquiry.inquiryTitle}</td>
+                    <td className="col-date">{inquiry.inquiryDate.substring(0,10)}</td>
+                    <td className="col-views">{inquiry.inquiryViews}</td>
+                </tr>
+            ))} 
         </tbody>
-          </table>
-          
+        </table>
+        {/* 페이지네이션 버튼 */}
+        <div className="pagenation">
+            {pageNumbers.map((number) => (
+                <button key={number} onClick={() => paginate(number)}>
+                    {number}
+                </button>
+            ))}
+        </div>   
     </div>
   )
 }
