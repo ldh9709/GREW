@@ -9,7 +9,7 @@ export const AdminReportPage = () => {
   // 신고 목록을 API에서 가져오는 함수
   const fetchReports = async () => {
     try {
-      const response = await fetch('/admin/reports?filter=0&page=0&size=10');
+      const response = await fetch('/admin/reports?filter=1&page=0&size=10');
       if (!response.ok) {
         throw new Error('신고 목록을 가져오는 데 실패했습니다.');
       }

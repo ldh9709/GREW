@@ -106,7 +106,7 @@ public class ReportRestController {
 	@Operation(summary = "신고 상태 '무고처리'로 변경")
 	@PutMapping("{report_no}/false-report")
 	public ResponseEntity<Response> updateReportStatusToFalseReport(@PathVariable (value="report_no") Long reportNo) {
-		reportService.updateReportStatusToResolved(reportNo);
+		reportService.updateReportStatusToFalseReport(reportNo);
 		
 		Response response = new Response();
 		response.setStatus(ResponseStatusCode.UPDATE_REPORT_SUCCESS);
