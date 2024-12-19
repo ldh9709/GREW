@@ -22,20 +22,6 @@ export const MemberJoinFormPage = () => {
     setMember({ ...member, [e.target.name]: e.target.value });
   };
 
-  // 체크박스 변경 핸들러
-  const handleChangeCheckBox = (e) => {
-    const { value, checked } = e.target;
-    console.log(e.target);
-    console.log(e.target.value);
-    setMember((prevState) => {
-      const updatedInterests = checked
-        ? [...prevState.interests, { categoryNo: parseInt(value, 10) }]
-        : prevState.interests.filter(
-            (interest) => interest.categoryNo !== parseInt(value, 10)
-          );
-      return { ...prevState, interests: updatedInterests };
-    });
-  };
 
   // 인증번호 발송
   const sendJoinCode = async () => {
@@ -57,6 +43,7 @@ export const MemberJoinFormPage = () => {
         : [...prevState.interests, value]; 
         return { ...prevState, interests: updatedInterests }; // 새 배열로 업데이트
       });
+      console.log(value);
   };
 
   // 회원가입 액션
@@ -65,7 +52,7 @@ export const MemberJoinFormPage = () => {
       alert("아이디를 입력하세요.");
       return;
     }
-
+    console.log(member);
     const responseJsonObject = await memberApi.joinAction(member, tempCode);
     console.log(responseJsonObject);
     switch (responseJsonObject.status) {
