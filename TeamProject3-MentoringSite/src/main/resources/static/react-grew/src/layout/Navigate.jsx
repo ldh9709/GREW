@@ -17,7 +17,6 @@ export default function Navigate() {
     transition: "color 0.3s",
     fontWeight: "800",
   };
-
   // 검색어에 따라 목록 필터링
   const handleSearchChange = (e) => {
     const searchTerm = e.target.value;

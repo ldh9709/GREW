@@ -1,7 +1,11 @@
 const BACKEND_SERVER='';
-export const listChatRoom=async (memberNo)=>{
-   const response=await fetch(`${BACKEND_SERVER}/chatroom/${memberNo}`,{
-      method:'GET'
+export const listChatRoom = async (token) => {
+   const response = await fetch(`${BACKEND_SERVER}/chatroom/list`, {
+      method: 'GET',
+      headers: {
+         'Authorization': `Bearer ${token}`, // 전달받은 JWT 토큰 사용
+         'Content-Type': 'application/json'
+      }
    });
    const responseJsonObject= await response.json();
    return responseJsonObject;
