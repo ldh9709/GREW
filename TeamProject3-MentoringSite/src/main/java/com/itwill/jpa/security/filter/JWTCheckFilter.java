@@ -68,6 +68,7 @@ public class JWTCheckFilter extends OncePerRequestFilter {
 		|| path.startsWith("/member/sendJoinCode")
 		|| path.startsWith("/member/createMember")
 		|| path.startsWith("/member/findId")
+		|| path.startsWith("/member/profile/edit")
 		|| path.startsWith("/login")
     	|| path.startsWith("/v3/api-docs") 
     	|| path.startsWith("/favicon.ico")
@@ -83,11 +84,7 @@ public class JWTCheckFilter extends OncePerRequestFilter {
   protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
       throws ServletException, IOException {
 	  
-	  log.error("Authorization header is missing or invalid");
-	   response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-	   response.getWriter().write("Authorization header is required");
-	   
-	  	// 요청 헤더에서 Authorization 추출
+	  // 요청 헤더에서 Authorization 추출
 	  System.out.println(">>>>>>>>>>>>request : " + request);
 	  System.out.println(">>>>>>>>>>>>response : " + response);
 	  System.out.println(">>>>>>>>>>>>filterChain : " + filterChain);

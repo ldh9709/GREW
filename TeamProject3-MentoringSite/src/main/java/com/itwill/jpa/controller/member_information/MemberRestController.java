@@ -48,7 +48,8 @@ import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.Parameter;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
-
+import lombok.extern.slf4j.Slf4j;
+@Slf4j
 @CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/member")
@@ -235,45 +236,41 @@ public class MemberRestController {
 	
 	
 	/* 회원 정보 수정 */
+	
 	@Operation(summary = "회원 정보 수정")
-	@SecurityRequirement(name = "BearerAuth")
-	@PutMapping("/profile/update")
-	public ResponseEntity<Response> updateMember(@RequestBody MemberDto memberDto, Authentication authentication) {
+	@PutMapping("/profile/edit/{memberNo}")
+	public ResponseEntity<Response> updateMember(
+			@RequestBody MemberDto memberDto,
+			@PathVariable("memberNo") Long memberNo
+			) {
+		System.out.println("회원 정보 수정 : >>>>>" + memberDto);
+		System.out.println("회원 정보 수정 : >>>>>" + memberNo);
+		log.info(">>>>> 컨트롤러에 요청 도달: memberNo={}", memberNo);
+	    log.info(">>>>> 수정 요청 데이터: {}", memberDto);
+		//Authentication authentication =	SecurityContextHolder.getContext().getAuthentication();
+		//PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
 		
-		//PrincipalDetails에서 memberNo를 가져옴
-		PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
-		Long memberNo = principalDetails.getMemberNo();
-		Member findMember = memberService.getMember(memberNo);
-		System.out.println("memberNo : >>>>>>>>>>>>" + memberNo);
+		//Long memberNo = principalDetails.getMemberNo();
 		
-		Response response = new Response();
-		
-		HttpHeaders httpHeaders=new HttpHeaders();
-		httpHeaders.setContentType(new MediaType(MediaType.APPLICATION_JSON,Charset.forName("UTF-8")));
-		
-		
-		/***** 토큰번호와 MemberDto번호가 불일치하면 에러 반환*****/
-		if(findMember.getMemberNo() != memberDto.getMemberNo()) {
-			response.setStatus(ResponseStatusCode.AUTHENTICATION_FAILED);
-			response.setMessage(ResponseMessage.AUTHENTICATION_FAILED);
-			ResponseEntity<Response> responseEntity = 
-					new ResponseEntity<Response>(response, httpHeaders, HttpStatus.OK);
-			return responseEntity;
-		}
+		//클라이언트에서 보낸 데이터 무시하고 인증된 사용자 정보로 덮어씀(생략가능, 명시적으로 입력)
+		//memberDto.setMemberNo(memberNo);
 		
 		//업데이트 메소드 실행
 		Member updateMember = memberService.updateMember(memberDto);
 		 
 		MemberDto updateMemberDto = MemberDto.toDto(updateMember);
 		
-		/***** 정상적인 흐름으로 진행됐을 시 *****/
+		Response response = new Response();
+		
 		if(updateMemberDto != null) {
 			//응답객체에 코드, 메시지, 객체 설정
 			response.setStatus(ResponseStatusCode.UPDATE_MEMBER_SUCCESS);
 			response.setMessage(ResponseMessage.UPDATE_MEMBER_SUCCESS);
 			response.setData(updateMemberDto);
-			
 		}
+		System.out.println("반환 객체 : " + response.getData());
+		HttpHeaders httpHeaders=new HttpHeaders();
+		httpHeaders.setContentType(new MediaType(MediaType.APPLICATION_JSON,Charset.forName("UTF-8")));
 		
 		ResponseEntity<Response> responseEntity = 
 				new ResponseEntity<Response>(response, httpHeaders, HttpStatus.OK);

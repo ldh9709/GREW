@@ -194,7 +194,6 @@ public class MemberServiceImpl implements MemberService {
 		Member member = memberRepository.findByMemberNo(memberDto.getMemberNo());
 		
 		List<Interest> interests = new ArrayList<>(); 
-		
 	 	// 관심사 업데이트
         for (InterestDto interestDto : memberDto.getInterests()) {
             Interest interest = Interest.toEntity(interestDto);

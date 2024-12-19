@@ -69,14 +69,12 @@ export const joinAction = async (member, tempCode) => {
 }
 
 //회원 정보 수정
-export const updateAction = async (sendJsonObject, token) => {
+export const updateAction = async (sendJsonObject) => {
     console.log("updateMember : ", sendJsonObject);
-    console.log("token : ", token);
 
-    const response = await fetch(`${BACKEND_SERVER}/member/profile/update`, {
+    const response = await fetch(`${BACKEND_SERVER}/member/profile/edit/${sendJsonObject.memberNo}`, {
         method: 'PUT',
         headers: {
-          'Authorization': `Bearer ${token}`, // Authorization 헤더에 JWT 토큰 추가
           'Content-Type': 'application/json'
         },
         body:JSON.stringify(sendJsonObject)
