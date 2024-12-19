@@ -21,6 +21,7 @@ import InquirySearchList from "./component/AnswerInquiry/InquirySearchList";
 import AdminReport2 from "./component/admin/adminReport2"
 import Admin from "./component/admin/admin"
 import AdminReport4 from "./component/admin/adminReport4"
+import ForbiddenPage from "./component/ForbiddenPage";
 function App() {
   return (
     <>
@@ -32,6 +33,7 @@ function App() {
           <Routes>
             <Route path="/" exact element={<MainPage />} />
             <Route path="/main" element={<MainPage />} />
+            <Route path="/403" element={<ForbiddenPage />} />
             {/* Member페이지 */}
             <Route path="/member/profile" element={<MemberMypage />} />
             <Route path="/member/join" element={<MemberJoinFormPage/>} />

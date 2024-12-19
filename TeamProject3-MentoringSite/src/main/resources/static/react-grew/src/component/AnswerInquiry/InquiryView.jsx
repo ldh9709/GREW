@@ -22,6 +22,7 @@ function InquiryView() {
     (async () => {
       const responseJsonObject = await inquiryApi.viewInquiry(inquiryNo);
       console.log(responseJsonObject);
+      
       if (
         responseJsonObject.status === 5500 &&
         responseJsonObject.data.inquiryStatus === 1

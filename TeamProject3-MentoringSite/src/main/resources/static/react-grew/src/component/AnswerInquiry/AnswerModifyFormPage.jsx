@@ -1,7 +1,9 @@
 import React, { useEffect, useRef, useState } from "react";
 import * as answerApi from "../../api/answerApi";
 import { useNavigate, useParams } from "react-router-dom";
+import { getCookie } from "../../util/cookieUtil";
 export default function AnswerModifyFormPage() {
+  const memberCookie = getCookie("member");
   const modifyFormRef = useRef();
   const navigate = useNavigate();
   const initAnswer = {
@@ -35,6 +37,7 @@ export default function AnswerModifyFormPage() {
       try {
         const response = await answerApi.findInquiry(answer.inquiryNo);
         console.log(response.data);
+
         setInquiry(response.data); // 받아온 데이터를 상태로 설정
       } catch (error) {
         console.error("Error fetching inquiry data", error);
@@ -47,6 +50,9 @@ export default function AnswerModifyFormPage() {
     const a = async () => {
       const responseJsonObject = await answerApi.viewAnswer(answerNo);
       console.log(responseJsonObject.data);
+      if (memberCookie.memberNo != responseJsonObject.data.memberNo) {
+        navigate("/403");
+      }
       setAnswer(responseJsonObject.data);
     };
     a();
