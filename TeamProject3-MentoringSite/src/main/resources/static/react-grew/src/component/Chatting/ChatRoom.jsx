@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from 'react';
+import { getCookie } from "../../util/cookieUtil.js";
 import * as ChattingApi from '../../api/ChattingApi.js';
 
 const ChatRoom = ({ onRoomClick }) => {
-    const memberNo = 1;
     const [isModalOpen, setIsModalOpen] = useState(false);  // 모달창의 열림/닫힘 상태를 관리하기 위한 state
     const [rooms, setRooms] = useState([]);
     const [currentRoom, setCurrentRoom] = useState(null);   // 수정 중인 채팅방 정보를 담는 state
     const [newRoomName, setNewRoomName] = useState('');     // 수정할 채팅방 이름을 저장하는 state
-    const token = JSON.parse(document.cookie.split('; ').find(row => row.startsWith('member=')).split('=')[1]).token; //토큰 내용을 담음
+    const memberCookie = getCookie("member");
+    const token = memberCookie.accessToken;
     
 
     useEffect(function(){
@@ -36,7 +37,7 @@ const ChatRoom = ({ onRoomClick }) => {
 
     const saveRoomName = async ()=>{                            // 채팅방 이름을 저장하는 함수 (모달창에서 이름 수정 후 저장 버튼 클릭 시 호출됨)
         if (currentRoom && newRoomName.trim()) {
-                const responseJsonObject = await ChattingApi.changeChatRoomName(currentRoom.chatRoomNo, memberNo, newRoomName.trim());
+                const responseJsonObject = await ChattingApi.changeChatRoomName(currentRoom.chatRoomNo, token, newRoomName.trim());
                 console.log(responseJsonObject.data);
                 setRooms((prevRooms) =>
                     prevRooms.map((room) =>                                 //맵으로 동일한 번호를 찾아서 바뀐 정보를 새로고침없이 바로 반영
@@ -50,8 +51,9 @@ const ChatRoom = ({ onRoomClick }) => {
     };
     
     const leaveRoom = async (roomNo) => {
-        const responseJsonObject = await ChattingApi.leaveChatRoom(roomNo, memberNo);
+        const responseJsonObject = await ChattingApi.leaveChatRoom(roomNo, token);
         console.log(responseJsonObject);
+
     }
 
     return (
