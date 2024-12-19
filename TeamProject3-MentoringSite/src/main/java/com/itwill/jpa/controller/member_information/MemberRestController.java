@@ -150,7 +150,7 @@ public class MemberRestController {
 			response.setStatus(ResponseStatusCode.CREATED_MEMBER_FAIL);
 			response.setMessage(ResponseMessage.CREATED_MEMBER_FAIL);
 		}
-		
+		System.out.println(">>>>>saveMember memberDto : " + memberDto);
 		memberService.saveMember(memberDto);
 		
 		response.setStatus(ResponseStatusCode.CREATED_MEMBER_SUCCESS);
