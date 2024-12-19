@@ -413,12 +413,12 @@ public class MemberRestController {
 		Long menteeNo = principalDetails.getMemberNo(); 
 		
 		Integer inquiryCount = (int)inquiryService.getInquiryByMember(menteeNo, 0, 10).getTotalElements();
-//		Integer counselCount = (int)chatRoomService.selectChatRoomAll(menteeNo).size();
+		Integer counselCount = (int)chatRoomService.selectChatRoomAll(menteeNo).size();
 		Integer followCount = (int)followService.getMentorList(menteeNo, 0, 10).getTotalElements();
 		
 		Map<String, Integer> dataMap = new HashMap<>();
 		dataMap.put("inquiryCount", inquiryCount);
-//		dataMap.put("counselCount", counselCount);
+		dataMap.put("counselCount", counselCount);
 		dataMap.put("followCount", followCount);
 		
 		Response response = new Response();

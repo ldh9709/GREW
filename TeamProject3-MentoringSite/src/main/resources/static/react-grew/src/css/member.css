@@ -238,19 +238,25 @@ body {
 }
 
 .mentor-status {
+  font-size: 15px;
   color: #555;
   margin: 5px 0;
 }
 
 .review-button {
+  display: none;
   background-color: #007bff;
   color: #fff;
   border: none;
-  padding: 10px 20px;
+  padding: 10px 25px;
   border-radius: 5px;
   cursor: pointer;
   margin-top: 10px;
   font-size: 14px;
+}
+
+.review-button.active {
+  display: inline-block;
 }
 
 .review-button:hover {
