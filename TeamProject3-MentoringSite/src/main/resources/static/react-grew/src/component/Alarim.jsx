@@ -14,6 +14,7 @@ const Alarim = () => {
 
   const deleteNotification = async (alarmNo) => {
     await alarmApi.deleteAlarm(alarmNo);
+    
     fetchNotifications();
   };
   const deleteNotificationByMember = async (memberNo) => {
