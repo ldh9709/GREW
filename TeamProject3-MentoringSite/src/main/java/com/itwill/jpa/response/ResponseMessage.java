@@ -3,13 +3,33 @@ package com.itwill.jpa.response;
 public class ResponseMessage {
 	
 	/******************* MEMBER 메시지 ************************/
+	// 성공 메시지
 	public static final String CREATED_MEMBER_SUCCESS = "회원 가입 성공";
 	public static final String READ_MEMBER_SUCCESS = "회원 정보 조회 성공";
 	public static final String READ_MEMBER_LIST_SUCCESS = "회원 리스트 정보 조회 성공";
 	public static final String UPDATE_MEMBER_SUCCESS = "회원 정보 수정 성공";
 	public static final String DELETE_MEMBER_SUCCESS = "회원 탈퇴 성공";
-    public static final String LOGIN_MEMBER_SUCCESS = "회원 로그인 성공";
-    public static final String LOGOUT_MEMBER_SUCCESS = "회원 로그 아웃";
+	public static final String LOGIN_MEMBER_SUCCESS = "회원 로그인 성공";
+	public static final String LOGOUT_MEMBER_SUCCESS = "회원 로그아웃 성공";
+	public static final String ACTIVATE_MEMBER_SUCCESS = "회원 활성화 성공";
+	public static final String DEACTIVATE_MEMBER_SUCCESS = "회원 비활성화 성공";
+	public static final String PASSWORD_RESET_SUCCESS = "비밀번호 재설정 성공";
+	public static final String EMAIL_SEND_SUCCESS = "이메일 발송 성공";
+	public static final String INPUTCODE_CONFIRM_SUCCESS = "인증번호 인증 성공";
+	
+	
+	// 실패 메시지
+	public static final String CREATED_MEMBER_FAIL = "회원 가입 실패";
+	public static final String INVALID_AUTH_CODE = "인증 코드가 일치하지 않습니다";
+	public static final String READ_MEMBER_FAIL = "회원 정보 조회 실패";
+	public static final String READ_MEMBER_LIST_FAIL = "회원 리스트 정보 조회 실패";
+	public static final String UPDATE_MEMBER_FAIL = "회원 정보 수정 실패";
+	public static final String DELETE_MEMBER_FAIL = "회원 탈퇴 실패";
+	public static final String LOGIN_MEMBER_FAIL = "회원 로그인 실패";
+	public static final String PASSWORD_RESET_FAIL = "비밀번호 재설정 실패";
+	public static final String EMAIL_SEND_FAIL = "이메일 발송 실패";
+	public static final String INPUTCODE_CONFIRM_FAIL = "인증번호 인증 실패";
+	public static final String MEMBER_IS_NOT_EMAIL = "SNS로 가입한 사용자입니다.";        // 이메일로 가입한 회원이 아님
     
     /******************* MENTOR BOARD 메시지 ************************/
     public static final String CREATED_MENTOR_BOARD_SUCCESS = "멘토 보드 등록 성공";
@@ -125,9 +145,10 @@ public class ResponseMessage {
 	public static final String SEND_CHATTING_SUCCESS = "채팅방 요청 전송 완료";
 	public static final String SEND_CHATTING_FAIL = "채팅방 요청 전송 실패";
 	public static final String CHATTING_LIST_SUCCESS = "채팅방 리스트 출력";
+	public static final String CHATTING_NAME = "채팅방 제목 출력 성공";
 	public static final String CHATTING_NAME_CHANGE = "채팅방 제목 변경 성공";
 	public static final String CHATTING_MESSAGE = "채팅방 대화 목록 출력";
-	public static final String READ_MESSAGE = "채팅 읽음";
+	public static final String READ_MESSAGE = "채팅방 대화 목록 출력";
 	
 	/******************* REVIEW 메시지 **********************/
 	public static final String CREATED_REVIEW_SUCCESS = "리뷰 등록 성공.";

@@ -6,7 +6,7 @@ import com.itwill.jpa.dto.bulletin_board.AnswerDto;
 
 public interface AnswerService {
 	//답변작성
-	AnswerDto createAnswer(AnswerDto answerDto);
+	AnswerDto createAnswer(AnswerDto answerDto,Long inquiryNo);
 	//답변수정
 	AnswerDto updateAnswer(AnswerDto answerDto) throws Exception;
 	//답변삭제

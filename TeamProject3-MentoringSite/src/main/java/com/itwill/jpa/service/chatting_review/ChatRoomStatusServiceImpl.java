@@ -9,6 +9,7 @@ import com.itwill.jpa.entity.chatting_review.ChatRoom;
 import com.itwill.jpa.entity.chatting_review.ChatRoomStatus;
 import com.itwill.jpa.repository.chatting_review.ChatRoomRepository;
 import com.itwill.jpa.repository.chatting_review.ChatRoomStatusRepository;
+import com.itwill.jpa.service.member_information.MentorProfileService;
 
 @Service
 public class ChatRoomStatusServiceImpl implements ChatRoomStatusService{
@@ -16,12 +17,25 @@ public class ChatRoomStatusServiceImpl implements ChatRoomStatusService{
 	private ChatRoomStatusRepository chatRoomStatusRepository;
 	@Autowired
 	private ChatRoomRepository chatRoomRepository;
+	@Autowired
+	private MentorProfileService mentorProfileService;
 	
 	@Override
 	public ChatRoomStatusDto getChatRoomStatus(Long chatRoomStatusNo) {
 		ChatRoomStatus chatRoomStatus = chatRoomStatusRepository.findById(chatRoomStatusNo).get();
 		ChatRoomStatusDto chatRoomStatusDto = ChatRoomStatusDto.toDto(chatRoomStatus);
 		return chatRoomStatusDto;
+	}
+	@Override
+	public ChatRoomStatusDto getChatRoomStatus(Long chatRoomNo, Long memberNo) {
+		ChatRoomStatus chatRoomStatus = chatRoomStatusRepository.findByChatRoom_ChatRoomNoAndMember_MemberNo(chatRoomNo, memberNo);
+		ChatRoomStatusDto chatRoomStatusDto = new ChatRoomStatusDto();
+		if (chatRoomStatus == null) {
+			return chatRoomStatusDto;
+		}else {
+			chatRoomStatusDto = ChatRoomStatusDto.toDto(chatRoomStatus);
+			return chatRoomStatusDto;
+		}
 	}
 	@Override
 	public void saveFirstChatRoomStatus(ChatRoomStatus mentorChatRoomStatus, ChatRoomStatus menteeChatRoomStatus) {

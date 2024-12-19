@@ -8,6 +8,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @Entity
 @Builder
@@ -23,11 +24,13 @@ public class Interest {
    
     @Column(name = "interest_no" )
     private Long interestNo;
-
+    
+    @ToString.Exclude
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_no")
     private Member member;
 
+    
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category_no")
     private Category category;

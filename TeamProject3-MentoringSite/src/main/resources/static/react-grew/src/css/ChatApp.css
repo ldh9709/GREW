@@ -39,27 +39,48 @@ body {
 
 .chat-room-item {
     display: flex;
-    align-items: center;
+    flex-direction: column; /* 세로 배치 */
+    align-items: flex-start; /* 왼쪽 정렬 */
     justify-content: space-between;
+    border: 1px solid #ddd;
     padding: 10px;
-    border-bottom: 1px solid #ddd;
-    cursor: pointer;
+    margin-bottom: 10px; /* 아이템 사이 간격 */
+    border-radius: 8px;
+    background-color: #f9f9f9; /* 배경색 */
+}
+
+.room-name {
+    font-size: 16px;
+    font-weight: bold;
+    color: #333;
+    word-break: keep-all; /* 단어 단위로 줄바꿈 */
+    white-space: normal;
+    line-height: 1.4; /* 줄 간격 */
+    margin-bottom: 8px; /* 버튼과 간격 */
 }
 
 .chat-room-item:hover {
     background-color: #f1f1f1;
 }
 
-.edit-button {
+.button-container {
+    display: flex;
+    gap: 10px; /* 버튼 사이 여백 */
+}
+
+.edit-button,
+.leave-button {
     background-color: #007bff;
     color: white;
     border: none;
     border-radius: 4px;
-    padding: 5px;
+    padding: 5px 10px;
     cursor: pointer;
+    font-size: 14px;
 }
 
-.edit-button:hover {
+.edit-button:hover,
+.leave-button:hover {
     background-color: #0056b3;
 }
 
@@ -102,6 +123,13 @@ body {
 /* 메시지 기본 스타일 */
 .chat-message {
     margin: 5px 0;
+}
+/* 채팅방 없으면 나오는 출력문 */
+.no-rooms-message {
+    text-align: center;
+    color: gray;
+    font-size: 16px;
+    margin-top: 20px;
 }
 /* 내가 보낸 메시지 스타일 */
 .sent {

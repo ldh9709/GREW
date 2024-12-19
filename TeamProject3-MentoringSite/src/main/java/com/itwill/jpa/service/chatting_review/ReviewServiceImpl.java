@@ -7,6 +7,7 @@ import com.itwill.jpa.repository.chatting_review.ChatRoomRepository;
 import com.itwill.jpa.repository.chatting_review.ReviewRepository;
 import com.itwill.jpa.response.ResponseMessage;
 import com.itwill.jpa.response.ResponseStatusCode;
+import com.itwill.jpa.service.member_information.MentorProfileService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,7 +16,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 
 @Service
@@ -23,11 +23,13 @@ public class ReviewServiceImpl implements ReviewService {
 
     private final ReviewRepository reviewRepository;
     private final ChatRoomRepository chatRoomRepository;
+    private final MentorProfileService mentorProfileService;
 
     @Autowired
-    public ReviewServiceImpl(ReviewRepository reviewRepository, ChatRoomRepository chatRoomRepository) {
+    public ReviewServiceImpl(ReviewRepository reviewRepository, ChatRoomRepository chatRoomRepository, MentorProfileService mentorProfileService) {
         this.reviewRepository = reviewRepository;
         this.chatRoomRepository = chatRoomRepository;
+		this.mentorProfileService = mentorProfileService;
     }
 
     /* 리뷰 생성 */
@@ -36,6 +38,7 @@ public class ReviewServiceImpl implements ReviewService {
     	try {
         // DTO를 엔티티로 변환
         Review review = Review.toEntity(reviewDto);
+
         // 리뷰 저장
         return reviewRepository.save(review);
     	}catch (Exception e) {
@@ -146,4 +149,5 @@ public class ReviewServiceImpl implements ReviewService {
     		throw new CustomException(ResponseStatusCode.READ_REVIEW_LIST_FAIL, ResponseMessage.READ_REVIEW_LIST_FAIL, e);
 		}
     }
+    
 }

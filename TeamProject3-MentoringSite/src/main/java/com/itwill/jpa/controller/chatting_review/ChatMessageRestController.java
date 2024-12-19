@@ -57,8 +57,8 @@ public class ChatMessageRestController {
 	public ResponseEntity<Response> updateChatMessageCheck(@RequestBody ChatMessageDto chatMessageDto){
 		Response response = new Response();
 		ChatMessageDto chatMessage =  ChatMessageDto.toDto(chatMessageService.updateChatMessageCheck(chatMessageDto.getChatMessageNo()));
-		response.setStatus(ResponseStatusCode.READ_MESSAGE);
-		response.setMessage(ResponseMessage.READ_MESSAGE);
+		//response.setStatus(ResponseStatusCode.READ_MESSAGE);
+		//response.setMessage(ResponseMessage.READ_MESSAGE);
 		response.setData(chatMessage);
 		
 		HttpHeaders httpHeaders = new HttpHeaders();

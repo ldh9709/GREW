@@ -30,6 +30,9 @@ public interface AlarmService{
 	AlarmDto createAlarmByFollowByMentor(Long MentorMemberNo);
 	//추천시 답글 작성자에게 추천 증가 알림
 	AlarmDto createAlarmByVoteByMentor(Long answerNo);
+	//멤버한명의 알림 리스트
+	List<AlarmDto> findAlarmByMember(Long memberNo);
+	
 	//알림 클릭시 URl전송
 	String alarmRedirectURL(AlarmDto alarmDto);
 }

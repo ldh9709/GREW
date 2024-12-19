@@ -33,45 +33,42 @@ function InquiryView() {
       }
     })();
   }, [inquiryNo, navigate]);
-  
-    const fetchAnswers = async (inquiryNo,page, size, sortButton) => {
-      try {
-        let responseJsonObject;
-        if(sortButton==="latest"){
+
+  const fetchAnswers = async (inquiryNo, page, size, sortButton) => {
+    try {
+      let responseJsonObject;
+      if (sortButton === "latest") {
         responseJsonObject = await answerApi.AnswerByDate(
           inquiryNo,
           page,
-          size,
-        )}else if(sortButton==="vote"){
-          responseJsonObject =await answerApi.AnswerByVote(
-            inquiryNo,
-            page,
-            size,
-          )
-        }
-        console.log(responseJsonObject.data);
-        setAnswer(responseJsonObject.data.content); // 답변 목록 상태에 저장
-        setTotalPages(responseJsonObject.data.totalPages);
-      } // 새로운 API로 답변 목록 가져오기
-       catch (error) {
-        console.error("답변 목록 가져오기 실패:", error);
+          size
+        );
+      } else if (sortButton === "vote") {
+        responseJsonObject = await answerApi.AnswerByVote(
+          inquiryNo,
+          page,
+          size
+        );
       }
-    };
-  
+      console.log(responseJsonObject.data);
+      setAnswer(responseJsonObject.data.content); // 답변 목록 상태에 저장
+      setTotalPages(responseJsonObject.data.totalPages);
+    } catch (error) {
+      // 새로운 API로 답변 목록 가져오기
+      console.error("답변 목록 가져오기 실패:", error);
+    }
+  };
 
-  
   //질문삭제
   const inquiryRemoveAction = async () => {
     const responseJsonObject = await inquiryApi.deleteInquiry(inquiryNo);
-    console.log(responseJsonObject);
     if (responseJsonObject.status === 5200) {
       navigate("/inquiry");
     } else {
       alert("실패");
     }
   };
-  
-  
+
   // 페이지 변경 시 데이터 갱신
   const paginate = (pageNumber) => {
     setCurrentPage(pageNumber);
@@ -79,183 +76,145 @@ function InquiryView() {
 
   // 페이지 로드 시 데이터 가져오기
   useEffect(() => {
-    fetchAnswers(inquiryNo,currentPage - 1, itemsPerPage, sortType);
+    fetchAnswers(inquiryNo, currentPage - 1, itemsPerPage, sortType);
   }, [currentPage, sortType]);
   // 버튼 클릭시 호출 함수
   const handleRadioChange = (e) => {
     setSortType(e.target.value); //버튼 밸류로 sorttype변경
   };
-  // 페이지 번호 버튼 표시
+  // 페이지네이션 버튼 표시 (10개씩 끊어서 표시)
   const pageNumbers = [];
-  for (let i = 1; i <= totalPages; i++) {
+  const pagesToShow = 5; // 한 번에 보여줄 페이지 수
+  const startPage =
+    Math.floor((currentPage - 1) / pagesToShow) * pagesToShow + 1;
+  const endPage = Math.min(startPage + pagesToShow - 1, totalPages);
+
+  for (let i = startPage; i <= endPage; i++) {
     pageNumbers.push(i);
   }
+
   return (
     <>
-      <table
-        style={{ paddingLeft: 10 }}
-        border="0"
-        cellPadding="0"
-        cellSpacing="0"
-      >
-        <tbody>
-          <tr>
-            <td bgcolor="f4f4f4" height="22">
-              &nbsp;&nbsp;<b>질문</b>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-      <form name="f" method="post">
-        <input type="hidden" name="inquiryNo" value={inquiry.inquiryNo} />
-        <table
-          border="0"
-          cellPadding="0"
-          cellSpacing="1"
-          width="300"
-          bgcolor="BBBBBB"
-        >
-          <tbody>
-            <tr>
-              <td width="100" align="center" bgcolor="white" height="22">
-                번호
-              </td>
-              <td
-                width="490"
-                bgcolor="ffffff"
-                align="left"
-                style={{ paddingLeft: 10 }}
-              >
-                {inquiry.inquiryNo}
-              </td>
-            </tr>
-            <tr>
-              <td width="100" align="center" bgcolor="white" height="22">
-                이름
-              </td>
-              <td
-                width="490"
-                bgcolor="ffffff"
-                align="left"
-                style={{ paddingLeft: 10 }}
-              >
-                {inquiry.memberName}
-              </td>
-            </tr>
-            <tr>
-              <td width="100" align="center" bgcolor="white" height="22">
-                날짜
-              </td>
-              <td
-                width="490"
-                bgcolor="ffffff"
-                align="left"
-                style={{ paddingLeft: 10 }}
-              >
+      <link
+        href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap"
+        rel="stylesheet"
+      ></link>
+      <div style={{ paddingLeft: 10 }}>
+        <form name="f" method="post">
+          <input type="hidden" name="inquiryNo" value={inquiry.inquiryNo} />
+
+          {/* 카테고리에 맞는 멘토만 보이는조건 */}
+          <div className="answer-write">
+            <Link to={`/answer/answerWrite/${inquiryNo}`}>
+              <button className="answer-notify-btn">
+                <img
+                  src="https://img.icons8.com/?size=100&id=P1bJzKUoOQYz&format=png&color=000000"
+                  style={{
+                    width: "20px",
+                    height: "20px",
+                    marginRight: "5px",
+                    marginLeft: "-5px",
+                    marginBottom: "-3px",
+                  }}
+                />
+                답변하기
+              </button>
+            </Link>
+          </div>
+          {/* 카테고리에 맞는 멘토만 보이는조건 */}
+          <div className="inquiry-container">
+            <div>
+              <div className="inquiry-title">{inquiry.inquiryTitle}</div>
+            </div>
+            <div className="inquiry-desc">
+              <div>
+                {inquiry.memberName} | 조회수 {inquiry.inquiryViews} |{" "}
                 {inquiry.inquiryDate.substring(0, 10)}
-              </td>
-            </tr>
-            <tr>
-              <td width="100" align="center" bgcolor="white" height="22">
-                제목
-              </td>
-              <td
-                width="490"
-                bgcolor="ffffff"
-                align="left"
-                style={{ paddingLeft: 10 }}
-              >
-                {inquiry.inquiryTitle}
-              </td>
-            </tr>
-            <tr>
-              <td width="100" align="center" bgcolor="ffffff" height="110">
-                내용
-              </td>
-              <td
-                width="490"
-                bgcolor="ffffff"
-                align="left"
-                style={{ paddingLeft: 10 }}
-              >
-                {inquiry.inquiryContent}
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </form>
-      
-      <br />
-      <table width="590" border="0" cellPadding="0" cellSpacing="0">
-        <tbody>
-          <tr>
-            <td align="center">
-              <Link to={`/inquiry/modify/${inquiryNo}`}>
-                <input type="button" value="수정" />
-              </Link>
-              &nbsp;
-              <input type="button" value="삭제" onClick={inquiryRemoveAction} />
-              &nbsp;{" "}
-              <Link to={"/inquiry"}>
-                <input type="button" value="목록" />
-              </Link>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-      <table
-        border="0"
-        cellPadding="0"
-        cellSpacing="0"
-        style={{ marginTop: "20px" }}
-      >
-        <tbody>
-          <tr>
-            <td>
+              </div>
               <br />
-              <div className="radio-container">
-        {/* 라디오 버튼 */}
-        <label>
-          <input
-            type="radio"
-            name="sortType"
-            value="latest"
-            checked={sortType === "latest"}
-            onChange={handleRadioChange}
-          />
-          최신순
-        </label>
-        <label>
-          <input
-            type="radio"
-            name="sortType"
-            value="vote"
-            checked={sortType === "vote"}
-            onChange={handleRadioChange}
-          />
-          추천순
-        </label>
+              <div>{inquiry.categoryName}</div>
+            </div>
+            <br />
+            <br />
+            <div className="inquiry-content">
+              <div>{inquiry.inquiryContent}</div>
+            </div>
+
+            <br />
+            <div>
+              <Link to={`/inquiry/modify/${inquiryNo}`}>
+                <button>수정</button>
+              </Link>
+
+              <button
+                onClick={(e) => {
+                  e.preventDefault(); // 폼 제출 방지
+                  inquiryRemoveAction(); // 삭제 액션 실행
+                }}
+              >
+                삭제
+              </button>
+            </div>
+          </div>
+        </form>
       </div>
-             
-                    {answer.map((answer) => (
-                      <AnswerItem
-                        key={answer.answerNo}
-                        answer={answer}
-                      /> //한 질문에 대한 답변(조회수 정렬)
-                    ))}
-                  
-             
-            </td>
-          </tr>
-        </tbody>
-      </table>
+      <div style={{ marginTop: "20px" }}>
+        <div className="radio-container">
+          {/* 라디오 버튼 */}
+          <label style={{ marginRight: "10px" }}>
+            <input
+              type="radio"
+              name="sortType"
+              value="latest"
+              checked={sortType === "latest"}
+              onChange={handleRadioChange}
+            />
+            최신순
+          </label>
+          <label>
+            <input
+              type="radio"
+              name="sortType"
+              value="vote"
+              checked={sortType === "vote"}
+              onChange={handleRadioChange}
+            />
+            추천순
+          </label>
+        </div>
+        {answer && answer.length > 0 ? (
+          answer.map((answer) => (
+            <AnswerItem key={answer.answerNo} answer={answer} /> // 한 질문에 대한 답변(조회수 정렬)
+          ))
+        ) : (
+          <div className="inquiry-write-btn">
+            <div>아직 등록된 답변이 없습니다.</div>
+          </div>
+        )}
+      </div>
+
+      {/* 페이지네이션 버튼 */}
       {/* 페이지네이션 버튼 */}
       <div className="pagenation">
+        {startPage > 1 && (
+          <button onClick={() => paginate(startPage - 1)}>이전</button>
+        )}{" "}
+        {/* 이전 그룹 */}
         {pageNumbers.map((number) => (
-          <button key={number} onClick={() => paginate(number)}>
+          <button
+            key={number}
+            onClick={() => paginate(number)}
+            style={{
+              backgroundColor: number === currentPage ? "#4CAF50" : "",
+              color: number === currentPage ? "white" : "",
+            }}
+          >
             {number}
           </button>
         ))}
+        {endPage < totalPages && (
+          <button onClick={() => paginate(endPage + 1)}>다음</button> // 다음 그룹
+        )}
       </div>
     </>
   );

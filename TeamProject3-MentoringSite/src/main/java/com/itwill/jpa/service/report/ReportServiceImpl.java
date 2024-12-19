@@ -168,7 +168,17 @@ public class ReportServiceImpl implements ReportService {
 				break;
 			}
 			case 2: {
-				/* 신고접수출력 출력 */
+				/* 신고 접수 출력 */
+				reports = reportRepository.findByReportStatusOrderByReportDateDesc(1, pageable);
+				break;
+			}
+			case 3: {
+				/* 검토중인 신고 출력 */
+				reports = reportRepository.findByReportStatusOrderByReportDateDesc(2, pageable);
+				break;
+			}
+			case 4: {
+				/* 처리완료 신고 출력 */
 				reports = reportRepository.findByReportStatusOrderByReportDateDesc(3, pageable);
 				break;
 			}
