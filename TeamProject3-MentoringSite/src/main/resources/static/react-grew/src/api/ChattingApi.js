@@ -1,6 +1,6 @@
 const BACKEND_SERVER='';
-export const listChatRoom = async (token) => {
-   const response = await fetch(`${BACKEND_SERVER}/chatroom/list`, {
+export const listChatRoom = async (token,page,size) => {
+   const response = await fetch(`${BACKEND_SERVER}/chatroom/list?page=${page}&size=${size}`, {
       method: 'GET',
       headers: {
          'Authorization': `Bearer ${token}`, // 전달받은 JWT 토큰 사용

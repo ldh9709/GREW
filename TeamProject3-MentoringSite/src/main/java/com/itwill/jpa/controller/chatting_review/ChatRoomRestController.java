@@ -179,12 +179,12 @@ public class ChatRoomRestController {
 	}
 	@Operation(summary = "채팅방 리스트(토큰)")
 	@SecurityRequirement(name = "BearerAuth")//API 엔드포인트가 인증을 요구한다는 것을 문서화(Swagger에서 JWT인증을 명시
-	@PreAuthorize("hasRole('ROLE_MENTEE') or hasRole('ROLE_MENTOR')")//ROLE이 MENTEE인 사람만 접근 가능
+	@PreAuthorize("hasRole('MENTEE') or hasRole('MENTOR')")//ROLE이 MENTEE인 사람만 접근 가능
 	@GetMapping("/list")
 	public ResponseEntity<Response> selectChatRoomList(
 			Authentication authentication,
 			@RequestParam(name = "page", defaultValue = "0") int page,
-			@RequestParam(name = "size", defaultValue = "100" ) int size
+			@RequestParam(name = "size", defaultValue = "10") int size
 			){
 		//PrincipalDetails에서 memberNo를 가져옴
 		PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();

@@ -128,7 +128,7 @@ public class ChatRoomServiceImpl implements ChatRoomService {
 		Pageable pageable = PageRequest.of(pageNumber, pageSize);
 		Page<ChatRoom> chatRooms = chatRoomRepository.findAll(pageable);
 		List<ChatRoomDto> chatRoomDtos = new ArrayList<ChatRoomDto>();
-		for (int i = 0; i <chatRooms.getTotalElements(); i++) {
+		for (int i = 0; i <chatRooms.getContent().size(); i++) {
 			if (chatRooms.getContent().get(i).getMentee().getMemberNo() == MemberNo || chatRooms.getContent().get(i).getMentor().getMemberNo() == MemberNo) {
 				Long chatRoomNo = chatRooms.getContent().get(i).getChatRoomNo();
 				String chatRoomName = null;

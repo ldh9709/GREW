@@ -406,17 +406,18 @@ public class MemberRestController {
 	/* 멘티 회원 활동 요약 */
 	@Operation(summary = "멘티 활동 내역 요약")
 	@SecurityRequirement(name = "BearerAuth")//API 엔드포인트가 인증을 요구한다는 것을 문서화(Swagger에서 JWT인증을 명시
+	@PreAuthorize("hasRole('MENTEE')")//ROLE이 MENTEE인 사람만 접근 가능
 	@GetMapping("/mentee-summary")
 	public ResponseEntity<Response> getMenteeSummary(Authentication authentication){
 		
 		PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
 		Long menteeNo = principalDetails.getMemberNo(); 
 		
-		Integer inquiryCount = (int)inquiryService.getInquiryByMember(menteeNo, 0, 10).getTotalElements();
-		Integer counselCount = (int)chatRoomService.selectChatRoomAll(menteeNo,0, 10).getTotalElements();
-		Integer followCount = (int)followService.getMentorList(menteeNo, 0, 10).getTotalElements();
+		Long inquiryCount =  inquiryService.getInquiryByMember(menteeNo, 0, 10).getTotalElements();
+		Long counselCount = chatRoomService.selectChatRoomAll(menteeNo, 0, 10).getTotalElements();
+		Long followCount = followService.getMentorList(menteeNo, 0, 10).getTotalElements();
 		
-		Map<String, Integer> dataMap = new HashMap<>();
+		Map<String, Long> dataMap = new HashMap<>();
 		dataMap.put("inquiryCount", inquiryCount);
 		dataMap.put("counselCount", counselCount);
 		dataMap.put("followCount", followCount);
