@@ -153,7 +153,7 @@ const styles = {
   sidebar: {
     width: '220px',
     backgroundColor: '#002468',
-    color: '#000000',
+    color: '#ffffff',
     padding: '20px',
     boxShadow: '2px 0 5px rgba(0,0,0,0.1)',
   },
