@@ -2,8 +2,11 @@ import React, { useEffect, useState } from "react";
 import "../../css/styles.css";
 import * as answerApi from "../../api/answerApi";
 import { Link } from "react-router-dom";
+import { getCookie } from "../../util/cookieUtil";
 export default function AnswerItem({ answer }) {
   const [voteCount, setVoteCount] = useState(null);
+   const memberCookie = getCookie("member");
+    const token = memberCookie.accessToken;
   async function fetchData() {
     try {
       // 비동기 호출
@@ -19,7 +22,7 @@ export default function AnswerItem({ answer }) {
 
   const handleUpvote = async () => {
     try {
-      const response = await answerApi.upVote(answer.answerNo, 1); // API 호출
+      const response = await answerApi.upVote(answer.answerNo, 1,token); // API 호출
       if (response.status === 6000) {
         fetchData(); // 추천 성공 상태 확인
       } else {
@@ -35,7 +38,7 @@ export default function AnswerItem({ answer }) {
   };
   const handleDownvote = async () => {
     try {
-      const response = await answerApi.downVote(answer.answerNo, 1); // API 호출
+      const response = await answerApi.downVote(answer.answerNo, 1,token); // API 호출
       if (response.status === 6000) {
         fetchData(); // 추천 성공 상태 확인
       } else {

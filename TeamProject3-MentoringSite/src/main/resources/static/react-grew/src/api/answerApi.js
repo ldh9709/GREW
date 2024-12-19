@@ -42,22 +42,24 @@ export const countVote = async (answerNo) => {
   return responseJsonObject;
 };
 //답변 추천
-export const upVote = async (answerNo, memberNo) => {
+export const upVote = async (answerNo, memberNo,token) => {
   const response = await fetch(
     `${BACKEND_SERVER}/vote/${answerNo}/upvote?memberNo=${memberNo}`,
     {
       method: "POST",
+      'Authorization': `Bearer ${token}`, // Authorization 헤더에 JWT 토큰 추가
     }
   );
   const responseJsonObject = await response.json();
   return responseJsonObject;
 };
 //답변 비추천
-export const downVote = async (answerNo, memberNo) => {
+export const downVote = async (answerNo, memberNo,token) => {
   const response = await fetch(
     `${BACKEND_SERVER}/vote/${answerNo}/downvote?memberNo=${memberNo}`,
     {
       method: "POST",
+      'Authorization': `Bearer ${token}`, // Authorization 헤더에 JWT 토큰 추가
     }
   );
   const responseJsonObject = await response.json();
