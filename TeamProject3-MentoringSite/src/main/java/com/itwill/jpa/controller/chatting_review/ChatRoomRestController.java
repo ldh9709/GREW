@@ -8,6 +8,8 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.itwill.jpa.auth.PrincipalDetails;
 import com.itwill.jpa.dto.chatting_review.ChatMessageDto;
 import com.itwill.jpa.dto.chatting_review.ChatRoomDto;
 import com.itwill.jpa.dto.chatting_review.ChatRoomStatusDto;
@@ -26,6 +29,7 @@ import com.itwill.jpa.service.chatting_review.ChatRoomService;
 import com.itwill.jpa.service.chatting_review.ChatRoomStatusService;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 
 @RestController
 @RequestMapping("/chatroom/")
@@ -165,7 +169,7 @@ public class ChatRoomRestController {
 		
 		return responseEntity;
 	}
-	
+	/*
 	@Operation(summary = "채팅방 리스트")
 	@GetMapping("/{member_no}")
 	public ResponseEntity<Response> selectChatRoomList(@PathVariable (value = "member_no") Long memberNo){
@@ -184,7 +188,31 @@ public class ChatRoomRestController {
 		
 		return responseEntity;
 	}
-	
+	*/
+	@Operation(summary = "채팅방 리스트(토큰)")
+	@SecurityRequirement(name = "BearerAuth")//API 엔드포인트가 인증을 요구한다는 것을 문서화(Swagger에서 JWT인증을 명시
+	@PreAuthorize("hasRole('MENTEE') or hasRole('MENTOR')")//ROLE이 MENTEE인 사람만 접근 가능
+	@GetMapping("/list")
+	public ResponseEntity<Response> selectChatRoomList(Authentication authentication){
+		//PrincipalDetails에서 memberNo를 가져옴
+		PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
+		Long memberNo = principalDetails.getMemberNo();
+		
+		List<ChatRoomDto> chatRoomDtos = chatRoomService.selectChatRoomAll(memberNo);
+		
+		Response response = new Response();
+		response.setStatus(ResponseStatusCode.CHATTING_LIST_SUCCESS);
+		response.setMessage(ResponseMessage.CHATTING_LIST_SUCCESS);
+		response.setData(chatRoomDtos);
+		
+		HttpHeaders httpHeaders = new HttpHeaders();
+		httpHeaders.setContentType(new MediaType(MediaType.APPLICATION_JSON, Charset.forName("UTF-8")));
+		
+		ResponseEntity<Response> responseEntity = 
+				new ResponseEntity<Response>(response,httpHeaders, HttpStatus.OK);
+		
+		return responseEntity;
+	}
 	@Operation(summary = "채팅방 대화 목록")
 	@GetMapping("/messages/{chat_room_no}")
 	public ResponseEntity<Response> selectChatMessagesList(@PathVariable (value = "chat_room_no") Long chatRoomNo){
