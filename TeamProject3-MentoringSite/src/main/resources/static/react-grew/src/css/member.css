@@ -12,6 +12,9 @@ body {
   transform: translateX(-50%);
 }
 
+.red {
+  color: red;
+}
 /* 상단 요약 정보 */
 .summary {
   position: relative;
@@ -56,7 +59,7 @@ body {
   color: #333333;
 }
 
-/* 통계 스타일 */
+/* 요약 스타일 */
 .summary-stats {
   display: flex;
   justify-content: center;
@@ -82,7 +85,7 @@ body {
   color: #777777;
 }
 
-.mentor-btn {
+.role-change {
   position: absolute; 
   top: 10px; 
   right: 15px;
@@ -95,11 +98,22 @@ body {
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-.mentor-btn:hover {
+.role-change:hover {
   color: #fff;
   background-color: #666;
 }
 
+.summary_image_container img {
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+  object-fit: cover; 
+}
+
+.summary_image_container div{
+  margin-top: 10px;
+  font-size: 18px;
+}
 /* 탭 컨테이너 스타일 */
 .tabs {
   display: flex;
@@ -125,12 +139,12 @@ body {
 
 .tab:hover {
   background-color: #f9f9f9; /* 호버 시 배경색 */
-  border-bottom: 2px solid #5cb85c; /* 호버 시 경계선 */
+  border-bottom: 2px solid #28a745; /* 호버 시 경계선 */
 }
 
 /* 활성화된 탭 스타일 */
 .tab.active {
-  color: #5cb85c; /* 활성화된 탭 텍스트 색상 */
+  color: #008b62; /* 활성화된 탭 텍스트 색상 */
   font-weight: bold; /* 활성화된 텍스트 굵기 */
   border-bottom: 2px solid #5cb85c; /* 하단 경계선 강조 */
 }
@@ -211,6 +225,12 @@ body {
   }
 
 /* 상담내역 리스트 */
+.tab-counsel.tab-content {
+  height: 400px;
+}
+.tab-counsel{
+  margin: 40px auto;
+}
 .mentor-list {
   display: flex;
   gap: 20px;
@@ -267,58 +287,58 @@ body {
   margin-top: 25%;
 }
 .follow-list {
-    width: 880px;
-    list-style: none;
-    display: flex;
-    justify-content: flex-start;
-    align-items: flex-start;
-    flex-wrap: wrap;
-    gap: 35px;
-    padding: 0;
-    margin: 0 auto;
+  width: 880px;
+  list-style: none;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 35px;
+  padding: 0;
+  margin: 0 auto;
 }
 
 .follow-card {
-    display: flex;
-    align-items: center;
-    justify-content: space-evenly;
-    width: 380px;
-    padding: 20px 0 20px 40px;
-    border: 1px solid #ddd;
-    border-radius: 10px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    background-color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  width: 380px;
+  padding: 20px 0 20px 40px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  background-color: #fff;
 }
 
 .profile img {
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-    object-fit: cover;
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
 }
 
 .info {
-    flex: 1;
-    margin-left: 50px;
-    text-align: left;
+  flex: 1;
+  margin-left: 50px;
+  text-align: left;
 }
 .info p:first-child{
-    font-size: 17px;
+  font-size: 17px;
 }
 .info p {
-    margin: 5px 0;
-    font-size: 15px;
+  margin: 5px 0;
+  font-size: 15px;
 }
 
 .heart {
-    transition: transform 0.3s ease, color 0.3s ease; /* 부드러운 애니메이션 */
-    position:relative;
-    top: -40px; right: 15px;
-    color: red;
-    font-size: 1.3rem;
-    cursor: pointer;
+  transition: transform 0.3s ease, color 0.3s ease; /* 부드러운 애니메이션 */
+  position:relative;
+  top: -40px; right: 15px;
+  color: red;
+  font-size: 1.3rem;
+  cursor: pointer;
 }
 .heart:hover {
-    color: rgb(216, 0, 0); /* 마우스 올리면 색상을 변경 */
-    transform: scale(1.1); /* 하트를 살짝 확대 */
+  color: rgb(216, 0, 0); /* 마우스 올리면 색상을 변경 */
+  transform: scale(1.1); /* 하트를 살짝 확대 */
 }

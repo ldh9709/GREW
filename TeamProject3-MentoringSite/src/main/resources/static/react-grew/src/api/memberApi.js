@@ -74,7 +74,7 @@ export const joinAction = async (member, tempCode) => {
 //회원 전체 조회
 
 //특정 회원 조회
-export const memeberInfo = async (token,memberNo) => {
+export const memberInfo = async (token,memberNo) => {
     const response = await fetch(`${BACKEND_SERVER}/member/member-info?memberNo=${memberNo}`, {
         method: 'GET',
         headers: {
@@ -122,7 +122,7 @@ export const sendJoinCode = async (sendJsonObject) => {
 
   
 //멘티 회원 활동정보 요약
-export const memberCountSummary = async (token) => {
+export const menteeSummary = async (token) => {
 
     const response = await fetch(`${BACKEND_SERVER}/member/mentee-summary`,{
         method: 'GET',
@@ -136,9 +136,9 @@ export const memberCountSummary = async (token) => {
 }
 
 //멘토 회원 활동정보 요약
-export const memberInfoSummary = async (token) => {
+export const mentorSummary = async (token) => {
 
-    const response = await fetch(`${BACKEND_SERVER}/member/`,{
+    const response = await fetch(`${BACKEND_SERVER}/member/mentor-summary`,{
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
