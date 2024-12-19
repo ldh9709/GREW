@@ -61,6 +61,9 @@ public class AnswerServiceImpl implements AnswerService{
 			
 			//이미 채택된 답변이 있는지 확인
 		    Answer acceptedAnswer = answerRepository.findAcceptedAnswerByInquiry(answer.getInquiry().getInquiryNo());
+		    if(acceptedAnswer!=null) {
+		    	throw new CustomException(ResponseStatusCode.ACCEPT_ANSWER_FAIL,ResponseMessage.ACCEPT_ANSWER_FAIL,new Throwable("이미 채택된 답변이 존재합니다."));
+		    }
 		    
 		    answer.setAnswerAccept(2);
 			return AnswerDto.toDto(answerRepository.save(answer));

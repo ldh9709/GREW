@@ -125,7 +125,17 @@ public class ChatRoomServiceImpl implements ChatRoomService {
 		List<ChatRoomDto> chatRoomDtos = new ArrayList<ChatRoomDto>();
 		for (int i = 0; i <chatRooms.size(); i++) {
 			if (chatRooms.get(i).getMentee().getMemberNo() == MemberNo || chatRooms.get(i).getMentor().getMemberNo() == MemberNo) {
-				chatRoomDtos.add(ChatRoomDto.toDto(chatRooms.get(i)));	
+				Long chatRoomNo = chatRooms.get(i).getChatRoomNo();
+				String chatRoomName = null;
+				int chatRoomLeaveStatus = 0;
+				if (chatRoomStatusService.getChatRoomStatus(chatRoomNo, MemberNo) != null) {
+					chatRoomName = chatRoomStatusService.getChatRoomStatus(chatRoomNo, MemberNo).getChatRoomName();
+					chatRoomLeaveStatus = chatRoomStatusService.getChatRoomStatus(chatRoomNo, MemberNo).getChatRoomStatus();
+				}
+				ChatRoomDto chatRoomDto = ChatRoomDto.toDto(chatRooms.get(i));
+				chatRoomDto.setChatRoomName(chatRoomName);
+				chatRoomDto.setChatRoomLeaveStatus(chatRoomLeaveStatus);
+				chatRoomDtos.add(chatRoomDto);	
 			}
 		}
 		return chatRoomDtos;

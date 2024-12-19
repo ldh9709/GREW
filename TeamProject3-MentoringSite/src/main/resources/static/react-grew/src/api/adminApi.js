@@ -1,6 +1,41 @@
 // 백엔드 서버 URL 정의
 const BACKEND_SERVER = " "; // 실제 백엔드 URL로 교체해주세요
 
+
+const fetchReports = async () => {
+  try {
+    const token = "사용자가 로그인한 후 받은 액세스 토큰";  // 로그인 후 받은 토큰을 여기 넣어야 합니다.
+    const response = await fetch('/admin/reports?filter=1&page=0&size=10', {
+      method: 'GET', // GET 요청
+      headers: {
+        "Authorization": `Bearer ${token}`,  // 토큰을 헤더에 포함
+        "Content-Type": "application/json;charset=UTF-8",
+      },
+    });
+    
+    if (!response.ok) {
+      throw new Error('신고 목록을 가져오는 데 실패했습니다.');
+    }
+
+    const data = await response.json();
+    if (data && Array.isArray(data.data)) {
+      setReports(data.data); // 정상적인 배열이라면 상태에 저장
+    } else {
+      setReports([]);  // 빈 배열로 설정
+      setError('유효하지 않은 데이터 형식입니다.'); // 에러 처리
+    }
+    console.log("response : ", data);
+  } catch (err) {
+    console.log("ERR : ", err);
+    setError('신고 목록을 가져오는 데 실패했습니다.'); // 에러 처리
+  } finally {
+    setLoading(false); // 로딩 종료
+  }
+};
+
+
+
+
 // 관리자 - 신고 목록 조회 (Admin - 전체 신고 목록 조회)
 export const getAdminReportList = async (filter, page = 0, size = 10) => {
   const response = await fetch(`${BACKEND_SERVER}/admin/reports?filter=${filter}&page=${page}&size=${size}`, {

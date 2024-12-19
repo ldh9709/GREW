@@ -1,28 +1,32 @@
 import React, { useEffect, useState } from 'react';
-import * as ChattingApi from '../../api/ChattingApi.js';
+import { getCookie } from "../../util/cookieUtil.js";
+import * as ChattingApi from '../../api/chattingApi.js';
 
 const ChatRoom = ({ onRoomClick }) => {
-    const memberNo = 1;
-    const [isModalOpen, setIsModalOpen] = useState(false);  // 모달창의 열림/닫힘 상태를 관리하기 위한 state
+    const [isModalOpen, setIsModalOpen] = useState(false);  //tate
+    const [newRoomName, setNewRoomName] = useState('');     // 수정할 채팅방 이름을 저장 모달창의 열림/닫힘 상태를 관리하기 위한 state
     const [rooms, setRooms] = useState([]);
-    const [currentRoom, setCurrentRoom] = useState(null);   // 수정 중인 채팅방 정보를 담는 state
-    const [newRoomName, setNewRoomName] = useState('');     // 수정할 채팅방 이름을 저장하는 state
+    const [currentRoom, setCurrentRoom] = useState(null);   // 수정 중인 채팅방 정보를 담는 s하는 state
+    const memberCookie = getCookie("member");
+    const token = memberCookie.accessToken;
 
-    useEffect(function(){
-        (async ()=>{
-            const responseJsonObject = await ChattingApi.listChatRoom(memberNo);
-            console.log(responseJsonObject);
-            if (responseJsonObject.status === 7010 && Array.isArray(responseJsonObject.data)) {
-                // 각 채팅방 상태를 개별적으로 비교하여 필터링
-                const activeRooms = responseJsonObject.data.filter((room) => { // filter()는 배열의 각 항목을 하나씩 검사하며, 주어진 콜백 함수에서 true를 반환하는 항목만 새로운 배열에 포함
-                    return (
-                        (room.chatRoomStatus === 7100 && room.chatRoomLeaveStatus === 7600) || (room.chatRoomStatus === 7200 && room.chatRoomLeaveStatus === 7600)
-                    );
-                });
-                console.log(activeRooms);  // 필터링된 유효한 채팅방만 출력
-                setRooms(activeRooms);  // 필터링된 채팅방만 setRooms에 설정
-            }
-        })();
+    const chatRoomList = async () => {
+        const responseJsonObject = await ChattingApi.listChatRoom(token);
+        console.log(responseJsonObject);
+        if (responseJsonObject.status === 7010 && Array.isArray(responseJsonObject.data)) {
+            // 각 채팅방 상태를 개별적으로 비교하여 필터링
+            const activeRooms = responseJsonObject.data.filter((room) => { // filter()는 배열의 각 항목을 하나씩 검사하며, 주어진 콜백 함수에서 true를 반환하는 항목만 새로운 배열에 포함
+                return (
+                    (room.chatRoomStatus === 7100 && room.chatRoomLeaveStatus === 7600) || (room.chatRoomStatus === 7200 && room.chatRoomLeaveStatus === 7600)
+                );
+            });
+            console.log(activeRooms);  // 필터링된 유효한 채팅방만 출력
+            setRooms(activeRooms);  // 필터링된 채팅방만 setRooms에 설정
+        }
+    }
+
+    useEffect(()=>{
+        chatRoomList();
     },[]);
 
     const openEditModal = (room) => {                       // 특정 채팅방을 수정하기 위해 모달을 열고, 해당 채팅방의 정보를 저장하는 함수
@@ -33,22 +37,18 @@ const ChatRoom = ({ onRoomClick }) => {
 
     const saveRoomName = async ()=>{                            // 채팅방 이름을 저장하는 함수 (모달창에서 이름 수정 후 저장 버튼 클릭 시 호출됨)
         if (currentRoom && newRoomName.trim()) {
-                const responseJsonObject = await ChattingApi.changeChatRoomName(currentRoom.chatRoomNo, memberNo, newRoomName.trim());
-                console.log(responseJsonObject.data);
-                setRooms((prevRooms) =>
-                    prevRooms.map((room) =>                                 //맵으로 동일한 번호를 찾아서 바뀐 정보를 새로고침없이 바로 반영
-                        room.chatRoomNo === currentRoom.chatRoomNo
-                            ? { ...room, chatRoomName: newRoomName.trim() } // 변경된 채팅방 정보로 교체
-                            : room
-                    )
-                );
-                setIsModalOpen(false); // 닫기
+            const responseJsonObject = await ChattingApi.changeChatRoomName(currentRoom.chatRoomNo, token, newRoomName.trim());
+            console.log(responseJsonObject.data);
+            await chatRoomList();
+            setIsModalOpen(false); // 닫기
         }
     };
     
     const leaveRoom = async (roomNo) => {
-        const responseJsonObject = await ChattingApi.leaveChatRoom(roomNo, memberNo);
+        const responseJsonObject = await ChattingApi.leaveChatRoom(roomNo, token);
         console.log(responseJsonObject);
+        await chatRoomList();
+
     }
 
     return (
@@ -65,24 +65,26 @@ const ChatRoom = ({ onRoomClick }) => {
                             onClick={() => onRoomClick(room.chatRoomNo)} // 채팅방 클릭 시 부모 컴포넌트에 해당 채팅방 id 전달
                         >
                             <span className="room-name">{room.chatRoomName}</span>
-                            <button
-                                className="edit-button"
-                                onClick={(e) => {
-                                    e.stopPropagation(); // 부모 이벤트 (채팅방 클릭) 전파 방지
-                                    openEditModal(room); // 채팅방 이름 수정 모달 열기
-                                }}
-                            >
-                                수정
-                            </button>
-                            <button
-                                className="leave-button" // 나가기 버튼
-                                onClick={(e) => {
-                                    e.stopPropagation(); // 부모 이벤트 전파 방지
-                                    leaveRoom(room.chatRoomNo); // 나가기 기능 호출
-                                }}
-                            >
-                                나가기
-                            </button>
+                            <div className="button-container">
+                                <button
+                                    className="edit-button"
+                                    onClick={(e) => {
+                                        e.stopPropagation(); // 부모 이벤트 (채팅방 클릭) 전파 방지
+                                        openEditModal(room); // 채팅방 이름 수정 모달 열기
+                                    }}
+                                >
+                                    수정
+                                </button>
+                                <button
+                                    className="leave-button" // 나가기 버튼
+                                    onClick={(e) => {
+                                        e.stopPropagation(); // 부모 이벤트 전파 방지
+                                        leaveRoom(room.chatRoomNo); // 나가기 기능 호출
+                                    }}
+                                >
+                                    나가기
+                                </button>
+                            </div>
                         </li>
                     ))
                     ) : (

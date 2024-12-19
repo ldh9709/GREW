@@ -1,8 +1,6 @@
 package com.itwill.jpa.dto.chatting_review;
 
-import com.itwill.jpa.dto.member_information.MemberDto;
 import com.itwill.jpa.entity.chatting_review.ChatRoomStatus;
-import com.itwill.jpa.entity.member_information.Member;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -19,6 +17,7 @@ public class ChatRoomStatusDto {
 	private Integer chatRoomStatus;
 	
 	private Long memberNo;
+	private String memberName;
 	
 	public static ChatRoomStatusDto toDto(ChatRoomStatus chatRoomStatusEntity) {
         return ChatRoomStatusDto.builder()
@@ -26,6 +25,7 @@ public class ChatRoomStatusDto {
                 .chatRoomName(chatRoomStatusEntity.getChatRoomName())
                 .chatRoomStatus(chatRoomStatusEntity.getChatRoomStatus())
                 .memberNo(chatRoomStatusEntity.getMember().getMemberNo())
+                .memberName(chatRoomStatusEntity.getMember().getMemberName())
                 .build();
     }
 }

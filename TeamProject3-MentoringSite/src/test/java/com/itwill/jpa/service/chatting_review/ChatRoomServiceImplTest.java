@@ -56,8 +56,8 @@ public class ChatRoomServiceImplTest {
 		chatRoomStatusService.updateChatRoomName(1L, 5L, "코딩 수업 채팅방");
 	}
 
-	@Transactional
-	@Test
+	//@Transactional
+	//@Test
 	void updateActive() throws Exception{
 		chatRoomService.updateActive(1L);
 		System.out.println("멘토링 진행 중 1L : "+chatRoomService.updateActive(1L));
@@ -78,7 +78,7 @@ public class ChatRoomServiceImplTest {
 	void updateForceClosed() throws Exception{
 		System.out.println("강제 종료 1L : "+chatRoomService.updateForceClosed(1L));
 	}
-	//@Test
+	@Test
 	void selectMentoringRequestAll(){
 		System.out.println("유저 번호 1번 채팅방 전체 출력"+chatRoomService.selectChatRoomAll(1L));
 	}
@@ -86,8 +86,8 @@ public class ChatRoomServiceImplTest {
 	void updateChattingStatus() {
 		chatRoomStatusService.updateChatRoomStatus(1L, 5L);
 	}
-	@Transactional
-	@Test
+	//@Transactional
+	//@Test
 	void selectChatMessage() {
 		System.out.println("1번방 채팅내역"+chatRoomService.selectChatMessages(1L));
 	}

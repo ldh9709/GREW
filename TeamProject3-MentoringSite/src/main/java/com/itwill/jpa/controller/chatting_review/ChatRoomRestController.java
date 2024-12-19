@@ -8,6 +8,8 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.itwill.jpa.auth.PrincipalDetails;
 import com.itwill.jpa.dto.chatting_review.ChatMessageDto;
 import com.itwill.jpa.dto.chatting_review.ChatRoomDto;
 import com.itwill.jpa.dto.chatting_review.ChatRoomStatusDto;
@@ -26,9 +29,10 @@ import com.itwill.jpa.service.chatting_review.ChatRoomService;
 import com.itwill.jpa.service.chatting_review.ChatRoomStatusService;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 
 @RestController
-@RequestMapping("/chatroom")
+@RequestMapping("/chatroom/")
 public class ChatRoomRestController {
 	@Autowired
 	private ChatRoomService chatRoomService;
@@ -147,9 +151,15 @@ public class ChatRoomRestController {
 		
 		return responseEntity;
 	}
-	@Operation(summary = "채팅방을 나감")
-	@PutMapping("{chat_room_no}/leave/{member_no}")
-	public ResponseEntity<Response> updateChatRoomStatusLEAVE(@PathVariable (value = "chat_room_no") Long chatRoomNo, @PathVariable (value = "member_no") Long memberNo) throws Exception{
+	@Operation(summary = "채팅방을 나감(토큰)")
+	@SecurityRequirement(name = "BearerAuth")//API 엔드포인트가 인증을 요구한다는 것을 문서화(Swagger에서 JWT인증을 명시
+	@PreAuthorize("hasRole('MENTEE') or hasRole('MENTOR')")//ROLE이 MENTEE인 사람만 접근 가능
+	@PutMapping("{chat_room_no}/leave")
+	public ResponseEntity<Response> updateChatRoomStatusLEAVE(@PathVariable (value = "chat_room_no") Long chatRoomNo, Authentication authentication) throws Exception{
+		//PrincipalDetails에서 memberNo를 가져옴
+		PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
+		Long memberNo = principalDetails.getMemberNo();
+			
 		ChatRoomStatusDto chatRoomStatusDto = chatRoomStatusService.updateChatRoomStatus(chatRoomNo, memberNo);
 		
 		Response response = new Response();
@@ -165,10 +175,15 @@ public class ChatRoomRestController {
 		
 		return responseEntity;
 	}
-	
-	@Operation(summary = "채팅방 리스트")
-	@GetMapping("/{member_no}")
-	public ResponseEntity<Response> selectChatRoomList(@PathVariable (value = "member_no") Long memberNo){
+	@Operation(summary = "채팅방 리스트(토큰)")
+	@SecurityRequirement(name = "BearerAuth")//API 엔드포인트가 인증을 요구한다는 것을 문서화(Swagger에서 JWT인증을 명시
+	@PreAuthorize("hasRole('MENTEE') or hasRole('MENTOR')")//ROLE이 MENTEE인 사람만 접근 가능
+	@GetMapping("/list")
+	public ResponseEntity<Response> selectChatRoomList(Authentication authentication){
+		//PrincipalDetails에서 memberNo를 가져옴
+		PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
+		Long memberNo = principalDetails.getMemberNo();
+		
 		List<ChatRoomDto> chatRoomDtos = chatRoomService.selectChatRoomAll(memberNo);
 		
 		Response response = new Response();
@@ -184,7 +199,6 @@ public class ChatRoomRestController {
 		
 		return responseEntity;
 	}
-	
 	@Operation(summary = "채팅방 대화 목록")
 	@GetMapping("/messages/{chat_room_no}")
 	public ResponseEntity<Response> selectChatMessagesList(@PathVariable (value = "chat_room_no") Long chatRoomNo){
@@ -204,10 +218,16 @@ public class ChatRoomRestController {
 		return responseEntity;
 	}
 	
-	@Operation(summary = "채팅방 제목 변경")
-	@PutMapping("/name/{chat_room_no}")
-	public ResponseEntity<Response> updateChatRoomName(@PathVariable (value = "chat_room_no") Long chatRoomNo, @RequestBody ChatRoomStatusDto chatRoomStatusDto){
-		ChatRoomStatusDto chatRoomStatusDto2 = chatRoomStatusService.updateChatRoomName(chatRoomNo, chatRoomStatusDto.getMemberNo(), chatRoomStatusDto.getChatRoomName());
+	@Operation(summary = "채팅방 제목 변경(토큰)")
+	@SecurityRequirement(name = "BearerAuth")//API 엔드포인트가 인증을 요구한다는 것을 문서화(Swagger에서 JWT인증을 명시
+	@PreAuthorize("hasRole('MENTEE') or hasRole('MENTOR')")//ROLE이 MENTEE인 사람만 접근 가능
+	@PutMapping("/name/{chat_room_no}, {chat_room_name}")
+	public ResponseEntity<Response> updateChatRoomName(@PathVariable (value = "chat_room_no") Long chatRoomNo, Authentication authentication, @PathVariable (value = "chat_room_name") String chatRoomName){
+		//PrincipalDetails에서 memberNo를 가져옴
+		PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
+		Long memberNo = principalDetails.getMemberNo();
+		
+		ChatRoomStatusDto chatRoomStatusDto2 = chatRoomStatusService.updateChatRoomName(chatRoomNo, memberNo, chatRoomName);
 		
 		Response response = new Response();
 		response.setStatus(ResponseStatusCode.CHATTING_NAME_CHANGE);

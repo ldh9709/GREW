@@ -9,7 +9,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.itwill.jpa.dto.chatting_review.ChatMessageDto;
 import com.itwill.jpa.entity.chatting_review.ChatMessage;
+import com.itwill.jpa.exception.CustomException;
 import com.itwill.jpa.repository.chatting_review.ChatMessageRepository;
+import com.itwill.jpa.response.ResponseMessage;
+import com.itwill.jpa.response.ResponseStatusCode;
 
 @Service
 public class ChatMessageServiceImpl implements ChatMessageService {
@@ -20,10 +23,14 @@ public class ChatMessageServiceImpl implements ChatMessageService {
 	/*메시지 저장*/
 	@Override
 	public ChatMessage createChatMessage(ChatMessageDto chatMessageDto) {
+		try {
 		ChatMessage message = ChatMessage.toEntity(chatMessageDto);
 		
 		
 		return chatMessageRepository.save(message);
+		}catch (Exception e) {
+			throw new CustomException(ResponseStatusCode.SEND_CHATTING_FAIL, ResponseMessage.SEND_CHATTING_FAIL, e);
+		}
 	}
 	
 	/*읽음상태 업데이트*/
@@ -34,6 +41,7 @@ public class ChatMessageServiceImpl implements ChatMessageService {
 		
 		chatMessage.setChatMessageCheck(0);
 		return chatMessageRepository.save(chatMessage);
+		
 	}
 
 	/*특정 메시지 조회(신고위해필요)*/

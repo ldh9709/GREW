@@ -27,38 +27,19 @@ import lombok.Setter;
 @AllArgsConstructor
 public class MemberDto {
 	
-	@Schema(description = "멤버 번호", example = "1")
 	private Long memberNo;
-	
-	@Schema(description = "멤버 ID", example = "aaa")
 	private String memberId;
-	
-	@Schema(description = "멤버 PASSWORD", example = "aaa")
 	private String memberPassword;
-	
-	@Schema(description = "멤버 EMAIL", example = "aaa@naver.com")
 	private String memberEmail;
-	
-	@Schema(description = "멤버 NAME", example = "김진영")
 	private String memberName;
-	
-	@Schema(description = "멤버 STATUS", example = "1")
-	private Integer memberStatus;	
-	
-	@Schema(description = "멤버 ROLE", example = "ROLE_MENTEE")
+	private Integer memberStatus;
+	private Integer memberPoint;
+	private LocalDateTime memberJoinDate;
+	private Integer memberReportCount;
 	private Role memberRole;
-	
-	@Schema(description = "멤버 PROVIDER", example = "NULL")
 	private String memberProvider;
 	
-	@ArraySchema(
-	        schema = @Schema(description = "멤버 관심사 리스트", example = "[\n" +
-	                "  {\"interestNo\": null, \"memberNo\": 1, \"categoryNo\": 19},\n" +
-	                "  {\"interestNo\": null, \"memberNo\": 1, \"categoryNo\": 20},\n" +
-	                "  {\"interestNo\": null, \"memberNo\": 1, \"categoryNo\": 21}\n" +
-	                "]")
-	    )
-	    private List<InterestDto> interests;
+	private List<InterestDto> interests;
 	
 	 /* Entitiy -> DTO*/
 	public static MemberDto toDto(Member memberEntity) {
@@ -69,9 +50,9 @@ public class MemberDto {
 	            .memberEmail(memberEntity.getMemberEmail())
 	            .memberName(memberEntity.getMemberName())
 	            .memberStatus(memberEntity.getMemberStatus())
-	            //.memberPoint(memberEntity.getMemberPoints())
-	            //.memberJoinDate(memberEntity.getMemberJoinDate())
-	            //.memberReportCount(memberEntity.getMemberReportCount())
+	            .memberPoint(memberEntity.getMemberPoints())
+	            .memberJoinDate(memberEntity.getMemberJoinDate())
+	            .memberReportCount(memberEntity.getMemberReportCount())
 	            .memberRole(memberEntity.getMemberRole())
 	            .memberProvider(memberEntity.getMemberProvider())
 	            .interests(memberEntity.getInterests().stream()
@@ -81,7 +62,7 @@ public class MemberDto {
 	}
 	
 	
-	public static MemberDto toSecurityDto(Member memberEntity) {
+	public static MemberDto toBasicDto(Member memberEntity) {
 		return MemberDto.builder()
 				.memberNo(memberEntity.getMemberNo())
 	            .memberId(memberEntity.getMemberId())
@@ -89,11 +70,16 @@ public class MemberDto {
 	            .memberEmail(memberEntity.getMemberEmail())
 	            .memberName(memberEntity.getMemberName())
 	            .memberStatus(memberEntity.getMemberStatus())
+	            .memberPoint(memberEntity.getMemberPoints())
+	            .memberJoinDate(memberEntity.getMemberJoinDate())
+	            .memberReportCount(memberEntity.getMemberReportCount())
 	            .memberRole(memberEntity.getMemberRole())
 	            .memberProvider(memberEntity.getMemberProvider())
 	            .build();
 	}
 	
+	
+
 	@Builder
 	@Data
 	@NoArgsConstructor
@@ -105,7 +91,6 @@ public class MemberDto {
 		@Email
 		private String email;
 	}
-	
 	
 	@Builder
 	@Data
@@ -133,23 +118,6 @@ public class MemberDto {
         
     }
 	
-	
-	
-	public static MemberDto toBasicDto(Member memberEntity) {
-		return MemberDto.builder()
-				.memberNo(memberEntity.getMemberNo())
-	            .memberId(memberEntity.getMemberId())
-	            .memberPassword(memberEntity.getMemberPassword())
-	            .memberEmail(memberEntity.getMemberEmail())
-	            .memberName(memberEntity.getMemberName())
-	            .memberStatus(memberEntity.getMemberStatus())
-	            //.memberPoint(memberEntity.getMemberPoints())
-	            //.memberJoinDate(memberEntity.getMemberJoinDate())
-	            //.memberReportCount(memberEntity.getMemberReportCount())
-	            .memberRole(memberEntity.getMemberRole())
-	            .memberProvider(memberEntity.getMemberProvider())
-	            .build();
-	}
-	
+
 	
 }

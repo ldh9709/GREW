@@ -27,6 +27,17 @@ public class ChatRoomStatusServiceImpl implements ChatRoomStatusService{
 		return chatRoomStatusDto;
 	}
 	@Override
+	public ChatRoomStatusDto getChatRoomStatus(Long chatRoomNo, Long memberNo) {
+		ChatRoomStatus chatRoomStatus = chatRoomStatusRepository.findByChatRoom_ChatRoomNoAndMember_MemberNo(chatRoomNo, memberNo);
+		ChatRoomStatusDto chatRoomStatusDto = new ChatRoomStatusDto();
+		if (chatRoomStatus == null) {
+			return null;
+		}else {
+			chatRoomStatusDto = ChatRoomStatusDto.toDto(chatRoomStatus);
+			return chatRoomStatusDto;
+		}
+	}
+	@Override
 	public void saveFirstChatRoomStatus(ChatRoomStatus mentorChatRoomStatus, ChatRoomStatus menteeChatRoomStatus) {
 			chatRoomStatusRepository.save(mentorChatRoomStatus);
 			chatRoomStatusRepository.save(menteeChatRoomStatus);	

@@ -4,27 +4,30 @@ import "../../css/styles.css";
 
 export default function InquiryItem({ inquiry }) {
   return (
-        <a
-          className="inquiry-container"
-          href={`inquiry/${inquiry.inquiryNo}`}
-          inquiry_no={inquiry.inquiryNo}
-          onClick={() => inquiryApi.increaseView(inquiry.inquiryNo)}
-        >
-          <div className="inquiry-title">{inquiry.inquiryTitle}</div>
+    <>
+      <link
+        href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap"
+        rel="stylesheet"
+      ></link>
+      <a
+        className="inquiry-container"
+        href={`inquiry/${inquiry.inquiryNo}`}
+        inquiry_no={inquiry.inquiryNo}
+        onClick={() => inquiryApi.increaseView(inquiry.inquiryNo)}
+      >
+        <div className="inquiry-title">{inquiry.inquiryTitle}</div>
+        <br />
+        <div className="inquiry-content">{inquiry.inquiryContent}</div>
+        <br />
+        <br />
+        <div className="inquiry-desc">
           <br />
-          <div className="inquiry-content">{inquiry.inquiryContent}</div>
+          <div>{inquiry.categoryName}</div>
           <br />
-          <br />
-          <div className="inquiry-desc">
-            <br />
-            <div>{inquiry.categoryName}</div>
-            <br />
-            {inquiry.memberName.slice(0, 1) +
-              "*" +
-              inquiry.memberName.slice(2)}{" "}
-            | 조회수 {inquiry.inquiryViews} |{" "}
-            {inquiry.inquiryDate.substring(0, 10)}
-          </div>
-        </a>
+          {inquiry.memberName} | 조회수 {inquiry.inquiryViews} |{" "}
+          {inquiry.inquiryDate.substring(0, 10)}
+        </div>
+      </a>
+    </>
   );
 }

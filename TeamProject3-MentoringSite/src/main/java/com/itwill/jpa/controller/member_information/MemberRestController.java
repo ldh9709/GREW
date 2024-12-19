@@ -51,7 +51,7 @@ import jakarta.validation.Valid;
 
 @CrossOrigin(origins = "*")
 @RestController
-@RequestMapping("/api/member")
+@RequestMapping("/member")
 public class MemberRestController {
 	
 	@Autowired
@@ -150,7 +150,7 @@ public class MemberRestController {
 			response.setStatus(ResponseStatusCode.CREATED_MEMBER_FAIL);
 			response.setMessage(ResponseMessage.CREATED_MEMBER_FAIL);
 		}
-		
+		System.out.println(">>>>>saveMember memberDto : " + memberDto);
 		memberService.saveMember(memberDto);
 		
 		response.setStatus(ResponseStatusCode.CREATED_MEMBER_SUCCESS);
@@ -167,102 +167,8 @@ public class MemberRestController {
 			return responseEntity;
 		}
 		
-//	/* 회원 가입(멘티) */
-//	@Operation(summary = "회원가입(멘티)")
-//	@PostMapping("/createMentee")
-//	public ResponseEntity<Response> saveMember(@RequestBody MemberDto memberDto) {
-//		
-//		//저장메소드 실행
-//		Member saveMember = memberService.saveMember(memberDto);
-//		
-//		MemberDto saveMemberDto = MemberDto.toDto(saveMember);
-//		
-//		//응답 객체 생성
-//		Response response = new Response();
-//		
-//		if(saveMemberDto != null) {
-//			//응답객체에 코드, 메시지, 객체 설정
-//			response.setStatus(ResponseStatusCode.CREATED_MEMBER_SUCCESS);
-//			response.setMessage(ResponseMessage.CREATED_MEMBER_SUCCESS);
-//			response.setData(saveMemberDto);
-//		}
-//		
-//		//인코딩 타입 설정
-//		HttpHeaders httpHeaders = new HttpHeaders();
-//		httpHeaders.setContentType(new MediaType(MediaType.APPLICATION_JSON, Charset.forName("UTF-8")));
-//		
-//		//반환할 응답Entity 생성
-//		ResponseEntity<Response> responseEntity =
-//				 new ResponseEntity<Response>(response, httpHeaders, HttpStatus.OK);
-//		
-//		//반환
-//		return responseEntity;
-//	}
 	
-	/* 회원 로그인
-	@Operation(summary = "회원 로그인")
-	@PostMapping("/login")
-	public ResponseEntity<Response> loginMember(
-			@RequestBody MemberDto memberDto
-			, HttpSession session) {
-		
-		//로그인 메소드 실행
-		Member loginMember = memberService.loginMember(memberDto.getMemberId(), memberDto.getMemberPassword());
-		
-		//DTO로 변경
-		MemberDto loginMemberDto = MemberDto.toDto(loginMember);
-		
-		//(임시) 세션에 등록 => 추후 토큰으로 변경 예정
-		session.setAttribute("loginMember", loginMemberDto);
-		
-		//응답 객체 생성
-		Response response = new Response();
-		
-		System.out.println("로그인 시도 : " + response);
-		
-		if(loginMemberDto != null) {
-			//응답객체에 코드, 메시지, 객체 설정
-			response.setStatus(ResponseStatusCode.LOGIN_MEMBER_SUCCESS);
-			response.setMessage(ResponseMessage.LOGIN_MEMBER_SUCCESS);
-			response.setData(loginMemberDto);
-		}
-		
-		//인코딩 타입 설정
-		HttpHeaders httpHeaders = new HttpHeaders();
-		httpHeaders.setContentType(new MediaType(MediaType.APPLICATION_JSON, Charset.forName("UTF-8")));
-		
-		//반환할 응답Entity 생성
-		ResponseEntity<Response> responseEntity =
-				 new ResponseEntity<Response>(response, httpHeaders, HttpStatus.OK);
-		
-		//반환
-		return responseEntity;
-	}
-	 */
-	
-	/* 회원 로그아웃 
-	@Operation(summary = "회원 로그아웃")
-	@GetMapping("/logout")
-	public ResponseEntity<Response> logoutMember(HttpSession session) {
-		
-		//세션 제거
-		session.invalidate();
-		
-		Response response = new Response();
-		response.setStatus(ResponseStatusCode.LOGOUT_MEMBER_SUCCESS);
-		response.setMessage(ResponseMessage.LOGOUT_MEMBER_SUCCESS);
-		
-		HttpHeaders httpHeaders=new HttpHeaders();
-		httpHeaders.setContentType(new MediaType(MediaType.APPLICATION_JSON,Charset.forName("UTF-8")));
-		
-		ResponseEntity<Response> responseEntity = 
-				new ResponseEntity<Response>(response, httpHeaders, HttpStatus.OK);
-		
-		return responseEntity;
-	}
-	*/
-	
-	/* 회원 정보 보기 */
+	/* 회원 정보 보기 
 	@Operation(summary = "회원 정보 보기")
 	@GetMapping("/{memberNo}")
 	public ResponseEntity<Response> getMember(@PathVariable(name = "memberNo") Long memberNo, HttpSession session) {
@@ -290,6 +196,7 @@ public class MemberRestController {
 		
 		return responseEntity;
 	}
+	*/
 	
 	/***** 회원 정보 보기(토큰) *****/
 	@Operation(summary = "회원 정보 보기(토큰)")
@@ -494,40 +401,14 @@ public class MemberRestController {
 	    return responseEntity;
 	}
 	
-//	/* 회원 정보 보기 */
-//	@Operation(summary = "회원 정보 상세보기")
-//	@GetMapping("/{memberNo}")
-//	public ResponseEntity<Response> getMember(@PathVariable(name = "memberNo") Long memberNo) {
-//		
-//		//번호로 멤버 객체 찾기
-//		Member loginMember = memberService.getMember(memberNo);
-//		
-//		//DTO객체로 변환
-//		MemberDto loginMemberDto = MemberDto.toDto(loginMember);
-//		
-//		Response response = new Response();
-//		
-//		if(loginMemberDto != null) {
-//			//응답객체에 코드, 메시지, 객체 설정
-//			response.setStatus(ResponseStatusCode.READ_MEMBER_SUCCESS);
-//			response.setMessage(ResponseMessage.READ_MEMBER_SUCCESS);
-//			response.setData(loginMemberDto);
-//		}
-//		
-//		HttpHeaders httpHeaders=new HttpHeaders();
-//		httpHeaders.setContentType(new MediaType(MediaType.APPLICATION_JSON,Charset.forName("UTF-8")));
-//		
-//		ResponseEntity<Response> responseEntity = 
-//				new ResponseEntity<Response>(response, httpHeaders, HttpStatus.OK);
-//		
-//		return responseEntity;
-//	}
 	
 	/* 멘티 회원 활동 요약 */
 	@Operation(summary = "멘티 활동 내역 요약")
-	@GetMapping("/mentee-summary/{menteeNo}")
-	public ResponseEntity<Response> getMenteeSummary(
-			@PathVariable(name ="menteeNo") Long menteeNo){
+	@GetMapping("/mentee-summary")
+	public ResponseEntity<Response> getMenteeSummary(Authentication authentication){
+		
+		PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
+		Long menteeNo = principalDetails.getMemberNo(); 
 		
 		Integer inquiryCount = (int)inquiryService.getInquiryByMember(menteeNo, 0, 10).getTotalElements();
 		Integer counselCount = (int)chatRoomService.selectChatRoomAll(menteeNo).size();

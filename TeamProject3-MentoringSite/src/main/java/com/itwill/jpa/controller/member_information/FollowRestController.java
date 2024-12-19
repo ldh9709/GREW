@@ -99,7 +99,7 @@ public class FollowRestController {
 	}
 	/*팔로워 수(멘티 수)*/
 	@Operation(summary = "멘토 팔로워 수 출력")
-	@GetMapping("/mentor/{mentorNo}/follower/count")
+	@GetMapping("/mentor/{mentorNo}/follower-count")
 	public ResponseEntity<Response> getFollowerCount(@PathVariable(name="mentorNo") Long mentorNo){
 		Integer followerCount = followService.countFollower(mentorNo);
 		
