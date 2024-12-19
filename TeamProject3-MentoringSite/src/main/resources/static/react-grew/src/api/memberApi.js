@@ -69,18 +69,32 @@ export const joinAction = async (member, tempCode) => {
 }
 
 //회원 정보 수정
+export const updateAction = async (sendJsonObject, token) => {
+    console.log("updateMember : ", sendJsonObject);
+    console.log("token : ", token);
 
+    const response = await fetch(`${BACKEND_SERVER}/member/profile/update`, {
+        method: 'PUT',
+        headers: {
+          'Authorization': `Bearer ${token}`, // Authorization 헤더에 JWT 토큰 추가
+          'Content-Type': 'application/json'
+        },
+        body:JSON.stringify(sendJsonObject)
+      });
+      const resultJsonObject = await response.json();
+
+      console.log("resultJsonObject : ", resultJsonObject);
+
+      return resultJsonObject;
+    
+}
 //회원 상태 변경
 
 //회원 전체 조회
 
 //멤버 프로필 조회
-export const memberProfile = async () => {
+export const memberProfile = async (token) => {
     // 저장된 토큰 가져오기
-    const memberCookie = getCookie("member");
-    
-    const token = memberCookie.accessToken;
-
     const response = await fetch(`${BACKEND_SERVER}/member/profile`, {
       method: 'GET',
       headers: {

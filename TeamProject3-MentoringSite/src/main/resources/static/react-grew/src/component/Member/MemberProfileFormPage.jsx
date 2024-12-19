@@ -1,9 +1,18 @@
 import React, { useEffect, useState } from "react";
-import { memberProfile } from "../../api/memberApi";
+import { getCookie } from "../../util/cookieUtil";
+import { memberProfile, updateAction } from "../../api/memberApi";
+import * as responseStatus from "../../api/responseStatusCode";
 import "../../css/memberPage.css";
+import { useNavigate } from "react-router-dom";
 
 const MemberProfileFormPage = () => {
+  
+  const navigate = useNavigate();
+  const memberCookie = getCookie("member");
+  const token = memberCookie.accessToken;
+
   const [member, setMember] = useState({
+    memberNo: "",
     memberName: "",
     memberId: "",
     memberEmail: "",
@@ -11,13 +20,14 @@ const MemberProfileFormPage = () => {
   });
 
   const fetchProfileData = async () => {
-    const response = await memberProfile();
+    const response = await memberProfile(token);
     console.log("프로필response : ", response);
     console.log("프로필response.data : ", response.data);
 
     const { data } = response;
 
     setMember({
+      memberNo: data.memberNo,
       memberName: data.memberName,
       memberId: data.memberId,
       memberEmail: data.memberEmail,
@@ -27,27 +37,27 @@ const MemberProfileFormPage = () => {
   };
 
   // 관심사를 클릭하여 선택하거나 해제
-  const handleInterestClick = (interestId) => {
+  const handleInterestClick = (categoryNo) => {
     setMember((prevState) => {
-      const alreadySelected = prevState.interests.some(
-        (interest) => interest.categoryNo === parseInt(interestId)
-      );
+        const alreadySelected = prevState.interests.some(
+            (interest) => interest.categoryNo === parseInt(categoryNo)
+        );
 
-      const updatedInterests = alreadySelected
-        ? prevState.interests.filter(
-            (interest) => interest.categoryNo !== parseInt(interestId)
-          )
-        : [
-            ...prevState.interests,
-            { interestNo: 0, memberNo: prevState.memberId, categoryNo: parseInt(interestId) },
-          ];
+        const updatedInterests = alreadySelected
+            ? prevState.interests.filter(
+                (interest) => interest.categoryNo !== parseInt(categoryNo)
+              )
+            : [
+                ...prevState.interests,
+                { categoryNo: parseInt(categoryNo) } // 객체 형태로 추가
+              ];
 
-      return { ...prevState, interests: updatedInterests };
+        return { ...prevState, interests: updatedInterests };
     });
-  };
+};
 
-  const isInterestSelected = (interestId) => {
-    return member.interests.some((interest) => interest.categoryNo === parseInt(interestId));
+  const isInterestSelected = (categoryNo) => {
+    return member.interests.some((interest) => interest.categoryNo === parseInt(categoryNo));
   };
 
   const onChangeMemberModifyForm = (e) => {
@@ -58,7 +68,25 @@ const MemberProfileFormPage = () => {
     console.log(e.target.value);
   };
 
-  
+  const updateMember = () => {
+    updateAction(member, token).then((responseJsonObject => {
+      console.log("Server response:", responseJsonObject);
+      switch(responseJsonObject.status) {
+        case responseStatus.UPDATE_MEMBER_SUCCESS:
+          navigate('/profile/edit');
+          alert("회원 정보가 수정되었습니다.");
+          break;
+        case responseStatus.AUTHENTICATION_FAILED:
+          navigate('/main');
+          alert("잘못된 사용자입니다.");
+          break;
+          case responseStatus.UPDATE_MEMBER_FAIL:
+            navigate('/main');
+            alert("회원 정보 수정이 정상적으로 이루어지지 않았습니다..");
+            break;
+      }
+    }))
+  }
 
   useEffect(() => {
     fetchProfileData();
@@ -86,6 +114,7 @@ const MemberProfileFormPage = () => {
             <input
               type="password"
               placeholder="비밀번호 입력"
+              name="memberPassword"
               className="member-form-password"
               onChange={onChangeMemberModifyForm}
             />
@@ -96,6 +125,7 @@ const MemberProfileFormPage = () => {
             <input
               type="password"
               placeholder="비밀번호 확인"
+              name="memberPassword"
               className="member-form-password"
               onChange={onChangeMemberModifyForm}
             />
@@ -107,8 +137,9 @@ const MemberProfileFormPage = () => {
               <input
                 type="text"
                 placeholder="이메일"
+                name="memberEmail"
+                value={member.memberEmail}
                 className="member-form-email"
-                defaultValue={member.memberEmail}
               />
             </div>
           </div>
@@ -228,9 +259,7 @@ const MemberProfileFormPage = () => {
           </div>
 
           <div className="member-button-group">
-            <button type="submit" className="member-submit-button">
-              수정완료
-            </button>
+            <input type="button" className="member-submit-button" onClick={updateMember} value="수정완료"/>
             <button type="button" className="member-delete-button">
               계정탈퇴
             </button>
