@@ -42,7 +42,7 @@ public class ChatRoomRestController {
 	private ChatRoomStatusService chatRoomStatusService;
 	
 	@Operation(summary = "채팅방 신청")
-	@PostMapping
+	@PostMapping("create")
 	public ResponseEntity<Response> createInitialChatRoom(@RequestBody ChatRoomDto chatRoomDto){
 		chatRoomService.saveChatRoom(chatRoomDto);
 		
@@ -61,7 +61,7 @@ public class ChatRoomRestController {
 	}
 	
 	@Operation(summary = "채팅방 활성화")
-	@PutMapping("{chat_room_no}/active")
+	@PutMapping("active/{chat_room_no}")
 	public ResponseEntity<Response> updateChatRoomStatusACTIVE(@PathVariable (value = "chat_room_no") Long chatRoomNo) throws Exception{
 		ChatRoomDto chatRoomDto = chatRoomService.updateActive(chatRoomNo);
 		
@@ -80,7 +80,7 @@ public class ChatRoomRestController {
 	}
 	
 	@Operation(summary = "활동 종료")
-	@PutMapping("{chat_room_no}/completed")
+	@PutMapping("completed/{chat_room_no}")
 	public ResponseEntity<Response> updateChatRoomStatusCOMPLETED(@PathVariable (value = "chat_room_no") Long chatRoomNo) throws Exception{
 		ChatRoomDto chatRoomDto = chatRoomService.updateCompleted(chatRoomNo);
 		
@@ -99,7 +99,7 @@ public class ChatRoomRestController {
 	}
 	
 	@Operation(summary = "멘토가 요청을 수락하지 않음")
-	@PutMapping("{chat_room_no}/rejected")
+	@PutMapping("rejected/{chat_room_no}")
 	public ResponseEntity<Response> updateChatRoomStatusREJECTED(@PathVariable (value = "chat_room_no") Long chatRoomNo) throws Exception{
 		ChatRoomDto chatRoomDto = chatRoomService.updateRejected(chatRoomNo);
 		
@@ -118,7 +118,7 @@ public class ChatRoomRestController {
 	}
 	
 	@Operation(summary = "멘티가 요청을 철회함")
-	@PutMapping("{chat_room_no}/canceled")
+	@PutMapping("canceled/{chat_room_no}")
 	public ResponseEntity<Response> updateChatRoomStatusCANCELED(@PathVariable (value = "chat_room_no") Long chatRoomNo) throws Exception{
 		ChatRoomDto chatRoomDto = chatRoomService.updateCanceled(chatRoomNo);
 		
@@ -136,7 +136,7 @@ public class ChatRoomRestController {
 		return responseEntity;
 	}
 	@Operation(summary = "관리자가 비정상적인 요청을 종료함")
-	@PutMapping("{chat_room_no}/closed")
+	@PutMapping("closed/{chat_room_no}")
 	public ResponseEntity<Response> updateChatRoomStatusCLOSED(@PathVariable (value = "chat_room_no") Long chatRoomNo) throws Exception{
 		ChatRoomDto chatRoomDto = chatRoomService.updateForceClosed(chatRoomNo);
 		
@@ -156,7 +156,7 @@ public class ChatRoomRestController {
 	@Operation(summary = "채팅방을 나감(토큰)")
 	@SecurityRequirement(name = "BearerAuth")//API 엔드포인트가 인증을 요구한다는 것을 문서화(Swagger에서 JWT인증을 명시
 	@PreAuthorize("hasRole('MENTEE') or hasRole('MENTOR')")//ROLE이 MENTEE인 사람만 접근 가능
-	@PutMapping("{chat_room_no}/leave")
+	@PutMapping("leave/{chat_room_no}")
 	public ResponseEntity<Response> updateChatRoomStatusLEAVE(@PathVariable (value = "chat_room_no") Long chatRoomNo, Authentication authentication) throws Exception{
 		//PrincipalDetails에서 memberNo를 가져옴
 		PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();

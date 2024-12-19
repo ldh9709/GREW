@@ -29,7 +29,7 @@ export const viewChatMessage=async (chatRoomNo)=>{
     return responseJsonObject;
  }
  export const leaveChatRoom=async (chatRoomNo, token)=>{
-   const response=await fetch(`${BACKEND_SERVER}/chatroom/${chatRoomNo}/leave`,{
+   const response=await fetch(`${BACKEND_SERVER}/chatroom/leave/${chatRoomNo}`,{
       method:'PUT',
       headers: {
          'Authorization': `Bearer ${token}`, // 전달받은 JWT 토큰 사용
