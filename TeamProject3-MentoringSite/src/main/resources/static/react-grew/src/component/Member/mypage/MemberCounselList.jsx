@@ -1,7 +1,7 @@
 import { getCookie } from "../../../util/cookieUtil"
 import React, { useEffect, useState } from 'react'
 import image from '../../../image/images.jpeg'
-import * as chattingApi from '../../../api/ChattingApi'
+import * as chattingApi from '../../../api/chattingApi'
 
 export default function MemberCounselList() {
   const memberCookie = getCookie("member");
