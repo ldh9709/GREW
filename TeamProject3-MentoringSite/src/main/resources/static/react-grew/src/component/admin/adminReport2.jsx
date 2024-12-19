@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { getAdminReportList, updateReportStatusForAdmin } from "../../api/adminApi"; // api.js에서 import
+import { getAdminReportList, updateReportStatusForAdmin, adminReport } from "../../api/adminApi"; // api.js에서 import
 
 // 신고 처리 페이지
 export const AdminReportPage = () => {
@@ -10,8 +10,7 @@ export const AdminReportPage = () => {
   // 신고 목록을 API에서 가져오는 함수
   const fetchReports = async () => {
     try {
-      {/*const token = "로그인 후 받은 액세스 토큰";  // 실제 로그인 후 받은 토큰을 사용
-      
+      {/*
           "Content-Type": "application/json",
         },
       });
@@ -21,13 +20,27 @@ export const AdminReportPage = () => {
       const data = await response.json();
       setReports(data.data); // 신고 목록을 상태에 저장
       console.log("response : ", data);*/}
-      
+      // 1. 로컬 스토리지에서 액세스 토큰을 가져옴
+      const token = localStorage.getItem("accessToken");  // 실제 로그인 후 받은 토큰을 사용  
+
+      if (!token) {
+        setError("액세스 토큰이 없습니다. 로그인 후 다시 시도해주세요.");
+        return; // 토큰이 없다면 더 이상 진행하지 않음
+      }
+       // 2. 페이지, 사이즈 값 설정
       const filter = 1;  // 필터값 (전체)
       const page = 0;    // 페이지 번호
       const size = 10;   // 페이지 당 항목 수
+      // 3. adminReport 함수 호출하여 데이터 가져오기
       const data = await getAdminReportList(filter, page, size);
-      setReports(data.data); // 신고 목록을 상태에 저장
+      
       console.log("data : ", data);
+      // 4. 데이터가 잘 왔으면 상태에 저장
+      if (data && data.data) {
+        setReports(data.data); // 신고 목록을 상태에 저장
+      } else {
+        setError('데이터 형식에 문제가 있습니다.');
+      }
     } catch (err) {
       console.log("ERR : ", err);
       setError('신고 목록을 가져오는 데 실패했습니다.'); // 에러 처리

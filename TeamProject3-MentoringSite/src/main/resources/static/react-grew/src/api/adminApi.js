@@ -1,6 +1,18 @@
 // 백엔드 서버 URL 정의
 const BACKEND_SERVER = ""; // 실제 백엔드 URL로 교체해주세요
 
+export const adminReport = async (token,page,size) => {
+   const response = await fetch(`${BACKEND_SERVER}/chatroom/list?page=${page}&size=${size}`, {
+      method: 'GET',
+      headers: {
+         'Authorization': `Bearer ${token}`, // 전달받은 JWT 토큰 사용
+         'Content-Type': 'application/json'
+      }
+   });
+   const responseJsonObject= await response.json();
+   return responseJsonObject;
+}
+
 // 관리자 - 신고 목록 조회
 export const getAdminReportList = async (filter, page = 0, size = 10) => {
   try {
@@ -11,6 +23,11 @@ export const getAdminReportList = async (filter, page = 0, size = 10) => {
     },
   });
 
+  // 응답 상태 코드 확인
+  if (!response.ok) {
+    throw new Error('신고 목록을 가져오는 데 실패했습니다.');
+  }
+
   const responseJson = await response.json();
   // 응답 데이터 콘솔에 출력
   console.log("Response Data:", responseJson);
@@ -18,6 +35,7 @@ export const getAdminReportList = async (filter, page = 0, size = 10) => {
   } catch (error) {
     // 오류가 발생한 경우 콘솔에 출력
     console.error("Error fetching reports:", error);
+    throw error; // 에러를 다시 던져서 React에서 처리하도록 함
   }
 };
 
