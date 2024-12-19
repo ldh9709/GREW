@@ -40,6 +40,12 @@ INSERT INTO category(category_no, category_name, category_depth, parent_category
 VALUES(category_no_SEQ.nextval,'법률 특허 상담',2,15);
 
 INSERT INTO category(category_no, category_name, category_depth, parent_category_no)
+VALUES(category_no_SEQ.nextval,'관심사를 선택해주세요 (1)',3, null);
+INSERT INTO category(category_no, category_name, category_depth, parent_category_no)
+VALUES(category_no_SEQ.nextval,'관심사를 선택해주세요 (2)',3, null);
+INSERT INTO category(category_no, category_name, category_depth, parent_category_no)
+VALUES(category_no_SEQ.nextval,'관심사를 선택해주세요 (3)',3, null);
+
 VALUES(category_no_SEQ.nextval, '건강/운동', 1, null);
 INSERT INTO category(category_no, category_name, category_depth, parent_category_no)
 VALUES(category_no_SEQ.nextval, '피트니스', 2, 19);
@@ -60,6 +66,14 @@ VALUES(category_no_SEQ.nextval, '관심사를 선택해주세요', 3, null);
 /* 멘티 등록 */
 INSERT INTO member(member_no,member_id,member_password,member_email,member_name,member_points,member_status,member_join_date,member_report_count,member_role,member_provider)
 VALUES(member_no_SEQ.nextval,'aaa','aaa','aaa@naver.com','김진영',12000,1,sysdate,0,'ROLE_MENTEE','');
+/* 관심사 등록 */
+insert into interest (interest_no, member_no, category_no) 
+values(interest_no_SEQ.nextval, 1, 2);
+insert into interest (interest_no, member_no, category_no) 
+values(interest_no_SEQ.nextval, 1, 3);
+insert into interest (interest_no, member_no, category_no) 
+values(interest_no_SEQ.nextval, 1, 4);
+
 INSERT INTO member(member_no,member_id,member_password,member_email,member_name,member_points,member_status,member_join_date,member_report_count,member_role,member_provider)
 VALUES(member_no_SEQ.nextval,'bbb','bbb','bbb@naver.com','김찬영',500,1,sysdate,0,'ROLE_MENTEE','');
 INSERT INTO member(member_no,member_id,member_password,member_email,member_name,member_points,member_status,member_join_date,member_report_count,member_role,member_provider)
@@ -68,6 +82,13 @@ INSERT INTO member(member_no,member_id,member_password,member_email,member_name,
 VALUES(member_no_SEQ.nextval,'ddd','ddd','ddd@naver.com','문준형',700,1,sysdate,0,'ROLE_MENTEE','');
 INSERT INTO member(member_no,member_id,member_password,member_email,member_name,member_points,member_status,member_join_date,member_report_count,member_role,member_provider)
 VALUES(member_no_SEQ.nextval,'eee','eee','eee@naver.com','박은미',9000,1,sysdate,0,'ROLE_MENTEE','');
+
+
+/***** 테스트용 아이디 등록 *****/
+INSERT INTO member (member_no,member_id,member_password,member_email,member_name,member_points,member_status,member_join_date,member_report_count,member_role,member_provider) 
+VALUES (member_no_SEQ.nextval, 'qwer1234', '{bcrypt}$2a$10$2Vj/MwAon9U1UFSHcF8DSe9VtT86qtIFmWo2.tocHk1Px1NAXFU3K', 'zszz5434@gmail.com', '이도현', 500, 1, sysdate, 0, 'ROLE_MENTEE', 'Email');
+INSERT INTO mentor_profile(mentor_profile_no, mentor_introduce, mentor_career, mentor_rating, mentor_mentoring_count, mentor_image, mentor_activity_count, mentor_follow_count, mentor_status, category_no, member_no)
+VALUES (mentor_profile_no_SEQ.NEXTVAL, '안녕하세요, 이도현 멘토입니다.', '경력자입니다', 5, 10, 'profile1.jpg', 100, 50, 1, 2, member_no_SEQ.CURRVAL);
 
 
 /* 멘토 등록 */
@@ -86,6 +107,47 @@ VALUES(member_no_SEQ.nextval,'hhh','hhh','hhh@naver.com','이도현',4000,1,sysd
 INSERT INTO mentor_profile(mentor_profile_no, mentor_introduce, mentor_career, mentor_rating, mentor_mentoring_count, mentor_image, mentor_activity_count, mentor_follow_count, mentor_status, category_no, member_no)
 VALUES (mentor_profile_no_SEQ.NEXTVAL, '안녕하세요, 이도현 멘토입니다.', '경력자입니다', 5, 10, 'profile1.jpg', 100, 50, 1, 12, member_no_SEQ.CURRVAL);
 
+INSERT INTO member(member_no, member_id, member_password, member_email, member_name, member_points, member_status, member_join_date, member_report_count, member_role, member_provider)
+VALUES(member_no_SEQ.nextval, 'mentor01', 'pass01', 'mentor01@naver.com', '김민수', 3000, 1, SYSDATE, 0, 'ROLE_MENTOR', '');
+
+INSERT INTO mentor_profile(mentor_profile_no, mentor_introduce, mentor_career, mentor_rating, mentor_mentoring_count, mentor_image, mentor_activity_count, mentor_follow_count, mentor_status, category_no, member_no)
+VALUES(mentor_profile_no_SEQ.nextval, '안녕하세요, 김민수 멘토입니다.', '10년 경력', 5, 25, 'profile1.jpg', 150, 75, 1, 2, member_no_SEQ.currval);
+
+INSERT INTO member(member_no, member_id, member_password, member_email, member_name, member_points, member_status, member_join_date, member_report_count, member_role, member_provider)
+VALUES(member_no_SEQ.nextval, 'mentor02', 'pass02', 'mentor02@naver.com', '이서준', 4000, 1, SYSDATE, 0, 'ROLE_MENTOR', '');
+
+INSERT INTO mentor_profile(mentor_profile_no, mentor_introduce, mentor_career, mentor_rating, mentor_mentoring_count, mentor_image, mentor_activity_count, mentor_follow_count, mentor_status, category_no, member_no)
+VALUES(mentor_profile_no_SEQ.nextval, '안녕하세요, 이서준 멘토입니다.', '8년 경력', 4.8, 20, 'profile2.jpg', 120, 60, 1, 3, member_no_SEQ.currval);
+
+INSERT INTO member(member_no, member_id, member_password, member_email, member_name, member_points, member_status, member_join_date, member_report_count, member_role, member_provider)
+VALUES(member_no_SEQ.nextval, 'mentor03', 'pass03', 'mentor03@naver.com', '박지우', 3500, 1, SYSDATE, 0, 'ROLE_MENTOR', '');
+
+INSERT INTO mentor_profile(mentor_profile_no, mentor_introduce, mentor_career, mentor_rating, mentor_mentoring_count, mentor_image, mentor_activity_count, mentor_follow_count, mentor_status, category_no, member_no)
+VALUES(mentor_profile_no_SEQ.nextval, '안녕하세요, 박지우 멘토입니다.', '6년 경력', 4.5, 15, 'profile3.jpg', 110, 50, 1, 4, member_no_SEQ.currval);
+
+INSERT INTO member(member_no, member_id, member_password, member_email, member_name, member_points, member_status, member_join_date, member_report_count, member_role, member_provider)
+VALUES(member_no_SEQ.nextval, 'mentor04', 'pass04', 'mentor04@naver.com', '정하늘', 3200, 1, SYSDATE, 0, 'ROLE_MENTOR', '');
+
+INSERT INTO mentor_profile(mentor_profile_no, mentor_introduce, mentor_career, mentor_rating, mentor_mentoring_count, mentor_image, mentor_activity_count, mentor_follow_count, mentor_status, category_no, member_no)
+VALUES(mentor_profile_no_SEQ.nextval, '안녕하세요, 정하늘 멘토입니다.', '7년 경력', 4.7, 18, 'profile4.jpg', 130, 65, 1, 8, member_no_SEQ.currval);
+
+INSERT INTO member(member_no, member_id, member_password, member_email, member_name, member_points, member_status, member_join_date, member_report_count, member_role, member_provider)
+VALUES(member_no_SEQ.nextval, 'mentor05', 'pass05', 'mentor05@naver.com', '최예진', 5000, 1, SYSDATE, 0, 'ROLE_MENTOR', '');
+
+INSERT INTO mentor_profile(mentor_profile_no, mentor_introduce, mentor_career, mentor_rating, mentor_mentoring_count, mentor_image, mentor_activity_count, mentor_follow_count, mentor_status, category_no, member_no)
+VALUES(mentor_profile_no_SEQ.nextval, '안녕하세요, 최예진 멘토입니다.', '5년 경력', 4.6, 22, 'profile5.jpg', 140, 70, 1, 9, member_no_SEQ.currval);
+
+INSERT INTO member(member_no, member_id, member_password, member_email, member_name, member_points, member_status, member_join_date, member_report_count, member_role, member_provider)
+VALUES(member_no_SEQ.nextval, 'mentor06', 'pass06', 'mentor06@naver.com', '홍서연', 4800, 1, SYSDATE, 0, 'ROLE_MENTOR', '');
+
+INSERT INTO mentor_profile(mentor_profile_no, mentor_introduce, mentor_career, mentor_rating, mentor_mentoring_count, mentor_image, mentor_activity_count, mentor_follow_count, mentor_status, category_no, member_no)
+VALUES(mentor_profile_no_SEQ.nextval, '안녕하세요, 홍서연 멘토입니다.', '9년 경력', 4.9, 30, 'profile6.jpg', 160, 80, 1, 12, member_no_SEQ.currval);
+
+INSERT INTO member(member_no, member_id, member_password, member_email, member_name, member_points, member_status, member_join_date, member_report_count, member_role, member_provider)
+VALUES(member_no_SEQ.nextval, 'mentor07', 'pass07', 'mentor07@naver.com', '김도윤', 4500, 1, SYSDATE, 0, 'ROLE_MENTOR', '');
+
+INSERT INTO mentor_profile(mentor_profile_no, mentor_introduce, mentor_career, mentor_rating, mentor_mentoring_count, mentor_image, mentor_activity_count, mentor_follow_count, mentor_status, category_no, member_no)
+VALUES(mentor_profile_no_SEQ.nextval, '안녕하세요, 김도윤 멘토입니다.', '12년 경력', 5, 40, 'profile7.jpg', 170, 90, 1, 15, member_no_SEQ.currval);
 
 
 /*멘토 보드 등록*/
@@ -103,6 +165,22 @@ VALUES (mentor_board_no_SEQ.nextval, '제목은 없습니다', '더미데이터�
 INSERT INTO follow(follow_no,mentee_member_no,mentor_member_no)
 VALUES(follow_no_SEQ.nextval,1,6);
 INSERT INTO follow(follow_no,mentee_member_no,mentor_member_no)
+VALUES(follow_no_SEQ.nextval,1,7);
+INSERT INTO follow(follow_no,mentee_member_no,mentor_member_no)
+VALUES(follow_no_SEQ.nextval,1,8);
+INSERT INTO follow(follow_no,mentee_member_no,mentor_member_no)
+VALUES(follow_no_SEQ.nextval,1,9);
+INSERT INTO follow(follow_no,mentee_member_no,mentor_member_no)
+VALUES(follow_no_SEQ.nextval,1,10);
+INSERT INTO follow(follow_no,mentee_member_no,mentor_member_no)
+VALUES(follow_no_SEQ.nextval,1,11);
+INSERT INTO follow(follow_no,mentee_member_no,mentor_member_no)
+VALUES(follow_no_SEQ.nextval,1,12);
+INSERT INTO follow(follow_no,mentee_member_no,mentor_member_no)
+VALUES(follow_no_SEQ.nextval,1,13);
+INSERT INTO follow(follow_no,mentee_member_no,mentor_member_no)
+VALUES(follow_no_SEQ.nextval,1,14);
+INSERT INTO follow(follow_no,mentee_member_no,mentor_member_no)
 VALUES(follow_no_SEQ.nextval,2,6);
 INSERT INTO follow(follow_no,mentee_member_no,mentor_member_no)
 VALUES(follow_no_SEQ.nextval,3,6);
@@ -110,8 +188,6 @@ INSERT INTO follow(follow_no,mentee_member_no,mentor_member_no)
 VALUES(follow_no_SEQ.nextval,4,7);
 INSERT INTO follow(follow_no,mentee_member_no,mentor_member_no)
 VALUES(follow_no_SEQ.nextval,5,7);
-INSERT INTO follow(follow_no,mentee_member_no,mentor_member_no)
-VALUES(follow_no_SEQ.nextval,1,8);
 
 /* 신고 등록 */
 INSERT INTO report(report_no,  report_type, report_target,report_reason, report_content, report_date, report_status, resolved_date, member_no) 
@@ -128,54 +204,69 @@ INSERT INTO report(report_no,  report_type, report_target,report_reason, report_
 VALUES (report_no_SEQ.nextval, 'INQUIRY', 2, 4,'별로임', sysdate, 1, sysdate , 1);
 
 /* 질문 등록 */
---insert into inquiry(inquiry_no,inquiry_title, inquiry_content, inquiry_date, inquiry_status, inquiry_views, category_no, member_no)
---values(inquiry_no_SEQ.nextval, '부자가 되고 싶어요!', '부자가될려면 어떻게 해야하나요?',sysdate,1,0,2,1);
---insert into inquiry(inquiry_no,inquiry_title, inquiry_content, inquiry_date, inquiry_status, inquiry_views, category_no, member_no)
---values(inquiry_no_SEQ.nextval, '지식을 늘리고 싶어요', '지식을 늘리는 방법에는 무엇이 있나요?',sysdate,1,0,7,2);
---insert into inquiry(inquiry_no,inquiry_title, inquiry_content, inquiry_date, inquiry_status, inquiry_views, category_no, member_no)
---values(inquiry_no_SEQ.nextval, '웹개발자 관련 질물', '웹개발자가 되려면 어떤언어를 공부하면 될까요?',sysdate,1,0,16,1);
---insert into inquiry(inquiry_no,inquiry_title, inquiry_content, inquiry_date, inquiry_status, inquiry_views, category_no, member_no)
---values(inquiry_no_SEQ.nextval, '부자가 되고 싶어요!', '부자가될려면 어떻게 해야하나요?',sysdate,1,0,2,1);
---insert into inquiry(inquiry_no,inquiry_title, inquiry_content, inquiry_date, inquiry_status, inquiry_views, category_no, member_no)
---values(inquiry_no_SEQ.nextval, '지식을 늘리고 싶어요', '지식을 늘리는 방법에는 무엇이 있나요?',sysdate,1,0,7,2);
---insert into inquiry(inquiry_no,inquiry_title, inquiry_content, inquiry_date, inquiry_status, inquiry_views, category_no, member_no)
---values(inquiry_no_SEQ.nextval, '웹개발자 관련 질물', '웹개발자가 되려면 어떤언어를 공부하면 될까요?',sysdate,1,0,16,1);
---insert into inquiry(inquiry_no,inquiry_title, inquiry_content, inquiry_date, inquiry_status, inquiry_views, category_no, member_no)
---values(inquiry_no_SEQ.nextval, '부자가 되고 싶어요!', '부자가될려면 어떻게 해야하나요?',sysdate,1,0,2,1);
---insert into inquiry(inquiry_no,inquiry_title, inquiry_content, inquiry_date, inquiry_status, inquiry_views, category_no, member_no)
---values(inquiry_no_SEQ.nextval, '지식을 늘리고 싶어요', '지식을 늘리는 방법에는 무엇이 있나요?',sysdate,1,0,7,2);
---insert into inquiry(inquiry_no,inquiry_title, inquiry_content, inquiry_date, inquiry_status, inquiry_views, category_no, member_no)
---values(inquiry_no_SEQ.nextval, '웹개발자 관련 질물', '웹개발자가 되려면 어떤언어를 공부하면 될까요?',sysdate,1,0,16,1);
---insert into inquiry(inquiry_no,inquiry_title, inquiry_content, inquiry_date, inquiry_status, inquiry_views, category_no, member_no)
---values(inquiry_no_SEQ.nextval, '부자가 되고 싶어요!', '부자가될려면 어떻게 해야하나요?',sysdate,1,0,2,1);
---insert into inquiry(inquiry_no,inquiry_title, inquiry_content, inquiry_date, inquiry_status, inquiry_views, category_no, member_no)
---values(inquiry_no_SEQ.nextval, '지식을 늘리고 싶어요', '지식을 늘리는 방법에는 무엇이 있나요?',sysdate,1,0,7,2);
---insert into inquiry(inquiry_no,inquiry_title, inquiry_content, inquiry_date, inquiry_status, inquiry_views, category_no, member_no)
---values(inquiry_no_SEQ.nextval, '웹개발자 관련 질물', '웹개발자가 되려면 어떤언어를 공부하면 될까요?',sysdate,1,0,16,1);
---
---/* 답변 등록 */
---insert into answer(answer_no, answer_content, answer_date, answer_accept, answer_status, member_no, inquiry_no)
---values(answer_no_SEQ.nextval, '비트코인투자를 시작하세요!!',sysdate, 1, 1, 7, 1);
---insert into answer(answer_no, answer_content, answer_date, answer_accept, answer_status, member_no, inquiry_no)
---values(answer_no_SEQ.nextval, '은행적금을 활용해보세요',sysdate, 1, 1, 8, 1);
---insert into answer(answer_no, answer_content, answer_date, answer_accept, answer_status, member_no, inquiry_no)
---values(answer_no_SEQ.nextval, '독서와, 신문, 뉴스를 자주보세요',sysdate, 1, 1, 8, 2);
---insert into answer(answer_no, answer_content, answer_date, answer_accept, answer_status, member_no, inquiry_no)
---values(answer_no_SEQ.nextval, 'JAVA를 배우세요 추천합니다!',sysdate, 1, 1, 3, 3);
+insert into inquiry(inquiry_no,inquiry_title, inquiry_content, inquiry_date, inquiry_status, inquiry_views, category_no, member_no)
+values(inquiry_no_SEQ.nextval, '부자가 되고 싶어요!', '부자가될려면 어떻게 해야하나요?',sysdate,1,0,2,1);
+insert into inquiry(inquiry_no,inquiry_title, inquiry_content, inquiry_date, inquiry_status, inquiry_views, category_no, member_no)
+values(inquiry_no_SEQ.nextval, '지식을 늘리고 싶어요', '지식을 늘리는 방법에는 무엇이 있나요?',sysdate,1,0,7,2);
+insert into inquiry(inquiry_no,inquiry_title, inquiry_content, inquiry_date, inquiry_status, inquiry_views, category_no, member_no)
+values(inquiry_no_SEQ.nextval, '웹개발자 관련 질물', '웹개발자가 되려면 어떤언어를 공부하면 될까요?',sysdate,1,0,16,1);
+insert into inquiry(inquiry_no,inquiry_title, inquiry_content, inquiry_date, inquiry_status, inquiry_views, category_no, member_no)
+values(inquiry_no_SEQ.nextval, '부자가 되고 싶어요!', '부자가될려면 어떻게 해야하나요?',sysdate,1,0,2,1);
+insert into inquiry(inquiry_no,inquiry_title, inquiry_content, inquiry_date, inquiry_status, inquiry_views, category_no, member_no)
+values(inquiry_no_SEQ.nextval, '지식을 늘리고 싶어요', '지식을 늘리는 방법에는 무엇이 있나요?',sysdate,1,0,7,2);
+insert into inquiry(inquiry_no,inquiry_title, inquiry_content, inquiry_date, inquiry_status, inquiry_views, category_no, member_no)
+values(inquiry_no_SEQ.nextval, '웹개발자 관련 질물', '웹개발자가 되려면 어떤언어를 공부하면 될까요?',sysdate,1,0,16,1);
+insert into inquiry(inquiry_no,inquiry_title, inquiry_content, inquiry_date, inquiry_status, inquiry_views, category_no, member_no)
+values(inquiry_no_SEQ.nextval, '부자가 되고 싶어요!', '부자가될려면 어떻게 해야하나요?',sysdate,1,0,2,1);
+insert into inquiry(inquiry_no,inquiry_title, inquiry_content, inquiry_date, inquiry_status, inquiry_views, category_no, member_no)
+values(inquiry_no_SEQ.nextval, '지식을 늘리고 싶어요', '지식을 늘리는 방법에는 무엇이 있나요?',sysdate,1,0,7,2);
+insert into inquiry(inquiry_no,inquiry_title, inquiry_content, inquiry_date, inquiry_status, inquiry_views, category_no, member_no)
+values(inquiry_no_SEQ.nextval, '웹개발자 관련 질물', '웹개발자가 되려면 어떤언어를 공부하면 될까요?',sysdate,1,0,16,1);
+insert into inquiry(inquiry_no,inquiry_title, inquiry_content, inquiry_date, inquiry_status, inquiry_views, category_no, member_no)
+values(inquiry_no_SEQ.nextval, '부자가 되고 싶어요!', '부자가될려면 어떻게 해야하나요?',sysdate,1,0,2,1);
+insert into inquiry(inquiry_no,inquiry_title, inquiry_content, inquiry_date, inquiry_status, inquiry_views, category_no, member_no)
+values(inquiry_no_SEQ.nextval, '지식을 늘리고 싶어요', '지식을 늘리는 방법에는 무엇이 있나요?',sysdate,1,0,7,2);
+insert into inquiry(inquiry_no,inquiry_title, inquiry_content, inquiry_date, inquiry_status, inquiry_views, category_no, member_no)
+values(inquiry_no_SEQ.nextval, '웹개발자 관련 질물', '웹개발자가 되려면 어떤언어를 공부하면 될까요?',sysdate,1,0,16,1);
+
+
+/* 답변 등록 */
+insert into answer(answer_no, answer_content, answer_date, answer_accept, answer_status, member_no, inquiry_no)
+values(answer_no_SEQ.nextval, '비트코인투자를 시작하세요!!',sysdate, 1, 1, 7, 1);
+insert into answer(answer_no, answer_content, answer_date, answer_accept, answer_status, member_no, inquiry_no)
+values(answer_no_SEQ.nextval, '은행적금을 활용해보세요',sysdate, 1, 1, 8, 1);
+insert into answer(answer_no, answer_content, answer_date, answer_accept, answer_status, member_no, inquiry_no)
+values(answer_no_SEQ.nextval, '독서와, 신문, 뉴스를 자주보세요',sysdate, 1, 1, 8, 2);
+insert into answer(answer_no, answer_content, answer_date, answer_accept, answer_status, member_no, inquiry_no)
+values(answer_no_SEQ.nextval, 'JAVA를 배우세요 추천합니다!',sysdate, 1, 1, 3, 3);
 
 /* 채팅방 요정 등록 */
 insert into chat_room (chat_room_no, chat_room_status, chat_room_start_date, chat_room_end_date, mentee_no, mentor_no)
 values(chat_room_no_SEQ.nextval, 7000, sysdate, null, 1, 5);
 insert into chat_room (chat_room_no, chat_room_status, chat_room_start_date, chat_room_end_date, mentee_no, mentor_no)
+values(chat_room_no_SEQ.nextval, 7000, sysdate, null, 1, 6);
+insert into chat_room (chat_room_no, chat_room_status, chat_room_start_date, chat_room_end_date, mentee_no, mentor_no)
+values(chat_room_no_SEQ.nextval, 7000, sysdate, null, 1, 7);
+insert into chat_room (chat_room_no, chat_room_status, chat_room_start_date, chat_room_end_date, mentee_no, mentor_no)
+values(chat_room_no_SEQ.nextval, 7000, sysdate, null, 1, 8);
+insert into chat_room (chat_room_no, chat_room_status, chat_room_start_date, chat_room_end_date, mentee_no, mentor_no)
 values(chat_room_no_SEQ.nextval, 7100, sysdate, null, 3, 6);
 insert into chat_room (chat_room_no, chat_room_status, chat_room_start_date, chat_room_end_date, mentee_no, mentor_no)
 values(chat_room_no_SEQ.nextval, 7200, sysdate, null, 4, 7);
 insert into chat_room (chat_room_no, chat_room_status, chat_room_start_date, chat_room_end_date, mentee_no, mentor_no)
-values(chat_room_no_SEQ.nextval, 7300, sysdate, null, 2, 8);
-insert into chat_room (chat_room_no, chat_room_status, chat_room_start_date, chat_room_end_date, mentee_no, mentor_no)
-values(chat_room_no_SEQ.nextval, 7400, sysdate, null, 1, 7);
+values(chat_room_no_SEQ.nextval, 7200, sysdate, null, 2, 8);
 insert into chat_room (chat_room_no, chat_room_status, chat_room_start_date, chat_room_end_date, mentee_no, mentor_no)
 values(chat_room_no_SEQ.nextval, 7500, sysdate, null, 2, 5);
+
+/* 채팅방 활성화 등록 */
+insert into chat_room_status (chat_room_no, chat_room_name, chat_room_status, member_no, chat_room_status_no) 
+values (6, '양한수님과 문준형님의 채팅방', 7600, 4, chat_room_status_no_SEQ.nextval);
+insert into chat_room_status (chat_room_no, chat_room_name, chat_room_status, member_no, chat_room_status_no) 
+values (6, '양한수님과 문준형님의 채팅방', 7600, 7, chat_room_status_no_SEQ.nextval);
+insert into chat_room_status (chat_room_no, chat_room_name, chat_room_status, member_no, chat_room_status_no) 
+values (7, '이도현님과 김찬영님의 채팅방', 7600, 2, chat_room_status_no_SEQ.nextval);
+insert into chat_room_status (chat_room_no, chat_room_name, chat_room_status, member_no, chat_room_status_no) 
+values (7, '이도현님과 김찬영님의 채팅방', 7600, 8, chat_room_status_no_SEQ.nextval);
 
 /* 채팅방 내용 등록 */
 insert into chat_message (chat_message_no, chat_message_check, chat_message_date, chat_room_no, member_no, chat_message_content) 
@@ -225,5 +316,15 @@ insert into vote(vote_no, vote_type, vote_date, answer_no, member_no)
 values(vote_no_SEQ.nextval, 1, sysdate,1,4);
 insert into vote(vote_no, vote_type, vote_date, answer_no, member_no)
 values(vote_no_SEQ.nextval, 2, sysdate,1,5);
+
+
+
+/* 관심사 등록 */
+insert into interest (interest_no, member_no, category_no) 
+values(interest_no_SEQ.nextval, 1, 2);
+insert into interest (interest_no, member_no, category_no) 
+values(interest_no_SEQ.nextval, 1, 3);
+insert into interest (interest_no, member_no, category_no) 
+values(interest_no_SEQ.nextval, 1, 4);
 
 commit;

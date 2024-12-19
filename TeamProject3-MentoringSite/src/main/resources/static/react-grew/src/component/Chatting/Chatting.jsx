@@ -33,7 +33,7 @@ const ChattingMessage = ({ roomId }) => {
             setUsername(enteredUsername); // 이름 설정
         } else {
             alert('이름을 입력해야 합니다.');
-            navigate(`/chatting/`); // 이름을 입력하지 않으면 리다이렉트
+            navigate(`/`); // 이름을 입력하지 않으면 리다이렉트
         }
     }
   }, [roomId]);

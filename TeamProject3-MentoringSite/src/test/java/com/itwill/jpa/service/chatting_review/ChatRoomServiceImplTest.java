@@ -11,6 +11,7 @@ import com.itwill.jpa.dto.chatting_review.ChatRoomDto;
 import com.itwill.jpa.entity.chatting_review.ChatRoom;
 import com.itwill.jpa.entity.member_information.Member;
 import com.itwill.jpa.service.chatting_review.ChatRoomService;
+import com.itwill.jpa.service.member_information.MentorProfileService;
 
 import jakarta.transaction.Transactional;
 
@@ -20,6 +21,8 @@ public class ChatRoomServiceImplTest {
 	private ChatRoomService chatRoomService;
 	@Autowired
 	private ChatRoomStatusService chatRoomStatusService;
+	@Autowired
+	private MentorProfileService mentorProfileService;
 	
 	//@Test
 	void saveMentoringRequest() {
@@ -57,9 +60,9 @@ public class ChatRoomServiceImplTest {
 	//@Test
 	void updateActive() throws Exception{
 		chatRoomService.updateActive(1L);
-		System.out.println("멘토링 진행 중 1L : "+chatRoomService.getChatRoom(1L));
+		System.out.println("멘토링 진행 중 1L : "+chatRoomService.updateActive(1L));
 	}
-	//@Test
+//	@Test
 	void updateCompleted() throws Exception{
 		System.out.println("멘토링 완료 1L : "+chatRoomService.updateCompleted(1L));
 	}
@@ -75,16 +78,16 @@ public class ChatRoomServiceImplTest {
 	void updateForceClosed() throws Exception{
 		System.out.println("강제 종료 1L : "+chatRoomService.updateForceClosed(1L));
 	}
-	//@Test
+	@Test
 	void selectMentoringRequestAll(){
-		System.out.println("유저 번호 1번 채팅방 전체 출력"+chatRoomService.selectChatRoomAll(1L));
+		System.out.println("유저 번호 4번 채팅방 전체 출력"+chatRoomService.selectChatRoomAll(4L));
 	}
 	//@Test
 	void updateChattingStatus() {
 		chatRoomStatusService.updateChatRoomStatus(1L, 5L);
 	}
-	@Transactional
-	@Test
+	//@Transactional
+	//@Test
 	void selectChatMessage() {
 		System.out.println("1번방 채팅내역"+chatRoomService.selectChatMessages(1L));
 	}

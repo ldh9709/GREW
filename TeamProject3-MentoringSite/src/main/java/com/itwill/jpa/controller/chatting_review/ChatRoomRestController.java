@@ -28,7 +28,7 @@ import com.itwill.jpa.service.chatting_review.ChatRoomStatusService;
 import io.swagger.v3.oas.annotations.Operation;
 
 @RestController
-@RequestMapping("/chatroom")
+@RequestMapping("/chatroom/")
 public class ChatRoomRestController {
 	@Autowired
 	private ChatRoomService chatRoomService;
@@ -205,9 +205,9 @@ public class ChatRoomRestController {
 	}
 	
 	@Operation(summary = "채팅방 제목 변경")
-	@PutMapping("/name/{chat_room_no}")
-	public ResponseEntity<Response> updateChatRoomName(@PathVariable (value = "chat_room_no") Long chatRoomNo, @RequestBody ChatRoomStatusDto chatRoomStatusDto){
-		ChatRoomStatusDto chatRoomStatusDto2 = chatRoomStatusService.updateChatRoomName(chatRoomNo, chatRoomStatusDto.getMemberNo(), chatRoomStatusDto.getChatRoomName());
+	@PutMapping("/name/{chat_room_no}, {member_no}, {chat_room_name}")
+	public ResponseEntity<Response> updateChatRoomName(@PathVariable (value = "chat_room_no") Long chatRoomNo,@PathVariable (value = "member_no") Long memberNo,@PathVariable (value = "chat_room_name") String chatRoomName){
+		ChatRoomStatusDto chatRoomStatusDto2 = chatRoomStatusService.updateChatRoomName(chatRoomNo, memberNo, chatRoomName);
 		
 		Response response = new Response();
 		response.setStatus(ResponseStatusCode.CHATTING_NAME_CHANGE);

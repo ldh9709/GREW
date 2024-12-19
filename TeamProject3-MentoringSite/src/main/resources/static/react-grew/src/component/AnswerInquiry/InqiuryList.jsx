@@ -107,7 +107,7 @@ function InqiuryList() {
         }
       }
 
-      setInquiry(responseJsonObject.data.content); // 'content' 안에 데이터가 있다고 가정
+      setInquiry(responseJsonObject.data.content);
       setTotalPages(responseJsonObject.data.totalPages); // 전체 페이지 수 설정
     } catch (error) {
       console.error("API 호출 실패:", error);
@@ -124,9 +124,14 @@ function InqiuryList() {
     fetchInquiries(currentPage - 1, itemsPerPage, sortType, selectedCategory);
   }, [currentPage, sortType, selectedCategory, childCategories]);
 
-  // 페이지 번호 버튼 표시
+  // 페이지네이션 버튼 표시 (10개씩 끊어서 표시)
   const pageNumbers = [];
-  for (let i = 1; i <= totalPages; i++) {
+  const pagesToShow = 10; // 한 번에 보여줄 페이지 수
+  const startPage =
+    Math.floor((currentPage - 1) / pagesToShow) * pagesToShow + 1;
+  const endPage = Math.min(startPage + pagesToShow - 1, totalPages);
+
+  for (let i = startPage; i <= endPage; i++) {
     pageNumbers.push(i);
   }
 
@@ -140,14 +145,16 @@ function InqiuryList() {
         <h1>질문게시판</h1>
         <div className="btn-inquiry-write-div">
           <a className="btn-inquiry-write" href="/inquiry/inquiryWrite">
-            <img src="https://img.icons8.com/?size=100&id=P1bJzKUoOQYz&format=png&color=000000" 
-             style={{
-              width: "20px",
-              height: "20px",
-              marginRight: "5px",
-              marginLeft: "-5px",
-              marginBottom: "-3px",
-            }}/>
+            <img
+              src="https://img.icons8.com/?size=100&id=98973&format=png&color=000000"
+              style={{
+                width: "20px",
+                height: "20px",
+                marginRight: "5px",
+                marginLeft: "-5px",
+                marginBottom: "-3px",
+              }}
+            />
             질문등록
           </a>
         </div>
@@ -160,7 +167,14 @@ function InqiuryList() {
               <button
                 key={category.categoryNo}
                 onClick={() => handleCategoryClick(category.categoryNo)} // 클릭 시 카테고리 선택
-                style={{ margin: "5px" }}
+                className="category-button"
+                style={{
+                  margin: "5px",
+                  backgroundColor:
+                    selectedCategory === category.categoryNo ? "#4CAF50" : "", // 선택된 카테고리는 색상 변경
+                  color:
+                    selectedCategory === category.categoryNo ? "white" : "", // 선택된 카테고리 글자 색상 변경
+                }}
               >
                 {category.categoryName}
               </button>
@@ -174,7 +188,13 @@ function InqiuryList() {
               <button
                 key={child.categoryNo}
                 onClick={() => handleCategoryClick(child.categoryNo)} // 하위 카테고리 선택
-                style={{ margin: "5px" }}
+                className="category-button"
+                style={{
+                  margin: "5px",
+                  backgroundColor:
+                    selectedCategory === child.categoryNo ? "#4CAF50" : "", // 선택된 카테고리는 색상 변경
+                  color: selectedCategory === child.categoryNo ? "white" : "", // 선택된 카테고리 글자 색상 변경
+                }}
               >
                 {child.categoryName}
               </button>
@@ -217,21 +237,37 @@ function InqiuryList() {
         </div>
 
         {/* 문의 목록 테이블 */}
-        <table border="0" cellPadding="0" cellSpacing="0">
-          <tbody>
-            {inquirys.map((inquiry) => (
-              <InquiryItem key={inquiry.inquiryNo} inquiry={inquiry} />
-            ))}
-          </tbody>
-        </table>
+        {inquirys && inquirys.length > 0 ? (
+          inquirys.map((inquiry) => (
+            <InquiryItem key={inquiry.inquiryNo} inquiry={inquiry} />
+          ))
+        ) : (
+          <div className="inquiry-write-btn">
+            <div>아직 등록된 질문이 없습니다.</div>
+          </div>
+        )}
 
         {/* 페이지네이션 버튼 */}
         <div className="pagenation">
+          {startPage > 1 && (
+            <button onClick={() => paginate(startPage - 1)}>이전</button>
+          )}{" "}
+          {/* 이전 그룹 */}
           {pageNumbers.map((number) => (
-            <button key={number} onClick={() => paginate(number)}>
+            <button
+              key={number}
+              onClick={() => paginate(number)}
+              style={{
+                backgroundColor: number === currentPage ? "#4CAF50" : "",
+                color: number === currentPage ? "white" : "",
+              }}
+            >
               {number}
             </button>
           ))}
+          {endPage < totalPages && (
+            <button onClick={() => paginate(endPage + 1)}>다음</button> // 다음 그룹
+          )}
         </div>
       </div>
     </>

@@ -41,11 +41,12 @@ public class AnswerRestController {
 	private AlarmService alarmService;
 	/* 답변 등록 */
 	@Operation(summary = "답변 등록")
-	@PostMapping
+	@PostMapping("{inquiryNo}")
 	//@Transactional
-	public ResponseEntity<Response> createAnswer(@RequestBody AnswerDto answerDto){
+	public ResponseEntity<Response> createAnswer(@RequestBody AnswerDto answerDto,
+			@PathVariable("inquiryNo")Long inquiryNo){
 		// 1. 서비스 호출 : 답변 데이터 저장
-		AnswerDto createAnswerDto = answerService.createAnswer(answerDto);
+		AnswerDto createAnswerDto = answerService.createAnswer(answerDto,inquiryNo);
 		AlarmDto alarmDto = alarmService.createAlarmByAnswerToInquiry(createAnswerDto);
 		// 2. 응답 데이터(Response 객체) 생성
 		// - 응답객체에 코드, 메시지, 객체 설정

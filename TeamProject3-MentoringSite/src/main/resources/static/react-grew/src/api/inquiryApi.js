@@ -34,7 +34,7 @@ export const deleteInquiry = async(inquiryNo)=>{
 }
 //조회수증가
 export const increaseView = async(inquiryNo)=>{
-   const response = await fetch(`${BACKEND_SERVER}/inquiry/increase/${inquiryNo}`,{
+   await fetch(`${BACKEND_SERVER}/inquiry/increase/${inquiryNo}`,{
       method:'PUT'
    });
 }
@@ -128,5 +128,13 @@ export const listInquiryByParentCategoryView=async (categoryNo,page,size)=>{
       method:'GET'
    });
    const responseJsonObject= await response.json();
+   return responseJsonObject;
+}
+//질문 검색
+export const searchInquiry = async(search,page,size)=>{
+   const response = await fetch(`${BACKEND_SERVER}/inquiry/search/${search}?page=${page}&size=${size}`,{
+      method:'GET'
+   });
+   const responseJsonObject = await response.json();
    return responseJsonObject;
 }

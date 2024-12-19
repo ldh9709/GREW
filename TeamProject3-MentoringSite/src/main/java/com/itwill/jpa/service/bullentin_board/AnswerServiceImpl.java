@@ -27,9 +27,11 @@ public class AnswerServiceImpl implements AnswerService{
 
 	/*답변등록*/
 	@Override
-	public AnswerDto createAnswer(AnswerDto answerDto) {
+	public AnswerDto createAnswer(AnswerDto answerDto,Long inquiryNo) {
 		try {
+			answerDto.setInquiryNo(inquiryNo);
             Answer answer = Answer.toEntity(answerDto);
+            
             return AnswerDto.toDto(answerRepository.save(answer));
         } catch (Exception e) {
             throw new CustomException(ResponseStatusCode.CREATED_ANSWER_FAIL, ResponseMessage.CREATED_ANSWER_FAIL, e);
@@ -59,6 +61,9 @@ public class AnswerServiceImpl implements AnswerService{
 			
 			//이미 채택된 답변이 있는지 확인
 		    Answer acceptedAnswer = answerRepository.findAcceptedAnswerByInquiry(answer.getInquiry().getInquiryNo());
+		    if(acceptedAnswer!=null) {
+		    	throw new CustomException(ResponseStatusCode.ACCEPT_ANSWER_FAIL,ResponseMessage.ACCEPT_ANSWER_FAIL,new Throwable("이미 채택된 답변이 존재합니다."));
+		    }
 		    
 		    answer.setAnswerAccept(2);
 			return AnswerDto.toDto(answerRepository.save(answer));

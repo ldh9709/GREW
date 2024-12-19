@@ -7,6 +7,7 @@ import java.util.List;
 import org.hibernate.annotations.DynamicUpdate;
 
 import com.itwill.jpa.dto.member_information.MemberDto;
+import com.itwill.jpa.dto.member_information.MemberSecurityDto;
 import com.itwill.jpa.entity.alarm.Alarm;
 import com.itwill.jpa.entity.bullentin_board.Answer;
 import com.itwill.jpa.entity.bullentin_board.Inquiry;
@@ -105,7 +106,19 @@ public class Member {
 		if (this.memberStatus == null || this.memberStatus == 0) this.memberStatus = 1;
 		if (this.memberJoinDate == null) this.memberJoinDate = LocalDateTime.now();
 		if (this.memberReportCount == null) this.memberReportCount = 0;
-		
+		if (this.memberProvider == null) this.memberProvider = "Email";
+		if (this.interests == null || this.interests.isEmpty()) {
+		this.interests = new ArrayList<>();
+		this.addInterests(Interest.builder()
+				                .category(Category.builder().categoryNo(19L).build())
+				                .build());
+        this.addInterests(Interest.builder()
+				                .category(Category.builder().categoryNo(20L).build())
+				                .build());
+        this.addInterests(Interest.builder()
+				                .category(Category.builder().categoryNo(21L).build())
+				                .build());
+		 }
 	}
 	
 	/*
@@ -179,11 +192,26 @@ public class Member {
 	            .build();
 	}
 	
+	/*
+	 * SecurityDTO -> Entitiy
+	 */
+	public static Member toSecurityEntity(MemberSecurityDto memberDto) {
+		return Member.builder()
+				.memberId(memberDto.getMemberId())
+				.memberName(memberDto.getMemberName())
+				.memberEmail(memberDto.getMemberEmail())
+				.memberPassword(memberDto.getMemberPassword())
+				.memberProvider(memberDto.getMemberProvider())
+				.build();
+	}
+	
+	
+	
 	//흥미 추가
 	public void addInterests(Interest interest) {
-        if (interests.size() ==  3) {
-            throw new IllegalStateException("3개의 관심사를 설정해야합니다.");
-        }
+//        if (interests.size() < 3) {
+//            throw new IllegalStateException("3개의 관심사를 설정해야합니다.");
+//        }
 		interests.add(interest);
 		interest.setMember(this);
 	}

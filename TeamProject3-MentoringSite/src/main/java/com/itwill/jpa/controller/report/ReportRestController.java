@@ -27,6 +27,7 @@ import com.itwill.jpa.service.alarm.AlarmService;
 import com.itwill.jpa.service.report.ReportService;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 
 @RestController
 @RequestMapping("/report")
@@ -36,6 +37,7 @@ public class ReportRestController {
 	private ReportService reportService;
 	@Autowired
 	private AlarmService alarmService;
+	
 	/* 신고등록 */
 	@Operation(summary = "신고 등록")
 	@PostMapping
@@ -104,7 +106,7 @@ public class ReportRestController {
 	@Operation(summary = "신고 상태 '무고처리'로 변경")
 	@PutMapping("{report_no}/false-report")
 	public ResponseEntity<Response> updateReportStatusToFalseReport(@PathVariable (value="report_no") Long reportNo) {
-		reportService.updateReportStatusToResolved(reportNo);
+		reportService.updateReportStatusToFalseReport(reportNo);
 		
 		Response response = new Response();
 		response.setStatus(ResponseStatusCode.UPDATE_REPORT_SUCCESS);
@@ -143,6 +145,7 @@ public class ReportRestController {
 	@Operation(summary = "[어드민] 전체 신고 목록 조회")
 	@GetMapping()
 	public ResponseEntity<Response> getReportAll(
+			@Parameter(name = "filter", description = "필터링 역할(1: 전체, 2: 신고접수 순)", required = true, example = "1")
 			@RequestParam(name="filter") Integer filter,
 			@RequestParam(name = "page", defaultValue ="0") int page,
 			@RequestParam(name = "size", defaultValue ="10") int size){
