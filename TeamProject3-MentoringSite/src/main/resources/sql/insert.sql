@@ -277,6 +277,21 @@ values(chat_room_no_SEQ.nextval, 7200, sysdate, null, 2, 8);
 insert into chat_room (chat_room_no, chat_room_status, chat_room_start_date, chat_room_end_date, mentee_no, mentor_no)
 values(chat_room_no_SEQ.nextval, 7500, sysdate, null, 2, 5);
 
+insert into chat_room (chat_room_no, chat_room_status, chat_room_start_date, chat_room_end_date, mentee_no, mentor_no)
+values(chat_room_no_SEQ.nextval, 7000, sysdate, null, 6, 7);
+insert into chat_room (chat_room_no, chat_room_status, chat_room_start_date, chat_room_end_date, mentee_no, mentor_no)
+values(chat_room_no_SEQ.nextval, 7000, sysdate, null, 6, 8);
+insert into chat_room (chat_room_no, chat_room_status, chat_room_start_date, chat_room_end_date, mentee_no, mentor_no)
+values(chat_room_no_SEQ.nextval, 7000, sysdate, null, 6, 9);
+insert into chat_room (chat_room_no, chat_room_status, chat_room_start_date, chat_room_end_date, mentee_no, mentor_no)
+values(chat_room_no_SEQ.nextval, 7100, sysdate, null, 6, 10);
+insert into chat_room (chat_room_no, chat_room_status, chat_room_start_date, chat_room_end_date, mentee_no, mentor_no)
+values(chat_room_no_SEQ.nextval, 7200, sysdate, null, 6, 11);
+insert into chat_room (chat_room_no, chat_room_status, chat_room_start_date, chat_room_end_date, mentee_no, mentor_no)
+values(chat_room_no_SEQ.nextval, 7200, sysdate, null, 6, 12);
+insert into chat_room (chat_room_no, chat_room_status, chat_room_start_date, chat_room_end_date, mentee_no, mentor_no)
+values(chat_room_no_SEQ.nextval, 7500, sysdate, null, 6, 13);
+
 /* 채팅방 활성화 등록 */
 insert into chat_room_status (chat_room_no, chat_room_name, chat_room_status, member_no, chat_room_status_no) 
 values (6, '양한수님과 문준형님의 채팅방', 7600, 4, chat_room_status_no_SEQ.nextval);
