@@ -30,7 +30,8 @@ public class ResponseMessage {
 	public static final String EMAIL_SEND_FAIL = "이메일 발송 실패";
 	public static final String INPUTCODE_CONFIRM_FAIL = "인증번호 인증 실패";
 	public static final String MEMBER_IS_NOT_EMAIL = "SNS로 가입한 사용자입니다.";        // 이메일로 가입한 회원이 아님
-    
+	public static final String AUTHENTICATION_FAILED = "로그인 정보와 일치하지 않습니다."; // 토큰과 정보가 일치하지 않음
+	
     /******************* MENTOR BOARD 메시지 ************************/
     public static final String CREATED_MENTOR_BOARD_SUCCESS = "멘토 보드 등록 성공";
     public static final String READ_MENTOR_BOARD_SUCCESS = "멘토 보드 상세 조회 성공";
