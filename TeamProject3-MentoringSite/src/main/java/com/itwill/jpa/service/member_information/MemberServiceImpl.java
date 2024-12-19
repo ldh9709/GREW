@@ -43,6 +43,8 @@ public class MemberServiceImpl implements MemberService {
 	//메일 발송을 위한 메소드 의존성 주입
 	CustomMailSender customMailSender;
 	
+	@Autowired
+	EntityManager entityManager;
 	
 	
 	//이메일별 인증번호 저장
@@ -189,16 +191,52 @@ public class MemberServiceImpl implements MemberService {
 	}*/
 	
 	/***** 회원 수정 ****/
+//	@Override
+//	public Member updateMember(MemberDto memberDto) {
+//		Member member = memberRepository.findByMemberNo(memberDto.getMemberNo());
+//		
+//		List<Interest> interests = new ArrayList<>(); 
+//	 	// 관심사 업데이트
+//        for (InterestDto interestDto : memberDto.getInterests()) {
+//            Interest interest = Interest.toEntity(interestDto);
+//            member.addInterests(interest);
+//	    }
+//		
+//		member.setMemberName(memberDto.getMemberName());
+//		member.setMemberPassword(memberDto.getMemberPassword());
+//		member.setMemberEmail(memberDto.getMemberEmail());
+//		
+//		return memberRepository.save(member);
+//	}
+	
+	/***** 회원 수정 ****/
 	@Override
+	@Transactional
 	public Member updateMember(MemberDto memberDto) {
+		
 		Member member = memberRepository.findByMemberNo(memberDto.getMemberNo());
 		
+		
 		List<Interest> interests = new ArrayList<>(); 
-	 	// 관심사 업데이트
-        for (InterestDto interestDto : memberDto.getInterests()) {
-            Interest interest = Interest.toEntity(interestDto);
-            member.addInterests(interest);
+		 // 기존 관심사 관리
+	    List<Interest> existingInterests = member.getInterests();
+	    List<Long> updatedInterestNos = memberDto.getInterests()
+	            .stream()
+	            .map(InterestDto::getInterestNo)
+	            .toList();
+	    
+	    // 기존 관심사 삭제
+	    existingInterests.removeIf(interest -> !updatedInterestNos.contains(interest.getInterestNo()));
+
+	 // 새로운 관심사 추가
+	    for (InterestDto interestDto : memberDto.getInterests()) {
+	        Interest existingInterest = interestRepository.findByInterestNo(interestDto.getInterestNo());
+	        if (existingInterest == null) { 
+	            Interest newInterest = Interest.toEntity(interestDto);
+	            member.addInterests(newInterest);
+	        }
 	    }
+	    
 		
 		member.setMemberName(memberDto.getMemberName());
 		member.setMemberPassword(memberDto.getMemberPassword());
