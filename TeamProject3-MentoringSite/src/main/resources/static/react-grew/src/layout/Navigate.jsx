@@ -59,7 +59,7 @@ export default function Navigate() {
           />
           질문하기
         </a>
-        <a href="/멘토찾기페이지" className="findMentor" style={linkStyle}>
+        <a href="/MentorProfile/List" className="findMentor" style={linkStyle}>
           <img
             className="gnb_menu_img"
             src="https://img.icons8.com/?size=100&id=p3miLroKw4iR&format=png&color=000000"
@@ -73,7 +73,7 @@ export default function Navigate() {
           />
           멘토 찾기
         </a>
-        <a href="/멘토컨텐츠페이지" className="mentorContent" style={linkStyle}>
+        <a href="/멘토 컨텐츠" className="mentorContent" style={linkStyle}>
           <img
             className="gnb_menu_img"
             src="https://img.icons8.com/?size=100&id=94504&format=png&color=000000"

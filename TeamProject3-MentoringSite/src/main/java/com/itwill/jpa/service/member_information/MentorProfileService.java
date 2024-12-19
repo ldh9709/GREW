@@ -86,4 +86,7 @@ public interface MentorProfileService {
      * 멘토 프로필의 활동 수 조회
      */
     Integer getMentorActivityCount(Long mentorProfileNo);
+    
+    //상세보기 1명
+    MentorProfileDto getMentorProfileDetail(Long mentorProfileNo);
 }

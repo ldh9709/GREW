@@ -7,6 +7,10 @@ import MemberJoinFormPage from "./component/Member/MemberJoinFormPage";
 import MemberLoginFormPage from "./component/Member/MemberLoginFormPage";
 import MemberProfileFormPage  from "./component/Member/MemberProfileFormPage";
 
+import MentorProfileAdd  from "./component/MentorProfile/MentorProfileAdd";
+import MentorProfileList  from "./component/MentorProfile/MentorProfileList";
+import MentorProfileView  from "./component/MentorProfile/MentorProfileView";
+
 import InquiryWriteFormpage from "./component/AnswerInquiry/InqiuryWriteFormPage";
 import InquiryModifyFormpage from "./component/AnswerInquiry/InquiryModifyFormPage";
 import AnswerWriteFormpage from "./component/AnswerInquiry/AnswerWriteFormPage";
@@ -37,6 +41,11 @@ function App() {
             <Route path="/member/join" element={<MemberJoinFormPage/>} />
             <Route path="/member/login" element={<MemberLoginFormPage/>} />
             <Route path="/member/profile/edit" element={<MemberProfileFormPage/>}/>
+            {/*멘토페이지*/}
+            <Route path="/mentorprofile/list" element={<MentorProfileList/>}/>
+            <Route path="/mentorprofile/add" element={<MentorProfileAdd/>}/>
+            <Route path="/mentorprofile/view" element={<MentorProfileView/>}/>
+
 
             <Route path="/inquiry" element={<InqiuryList/>}/>
             <Route path="/inquiry/:inquiryNo" element={<InqiuryView/>}/>

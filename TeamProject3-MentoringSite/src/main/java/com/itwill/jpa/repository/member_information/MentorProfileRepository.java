@@ -100,7 +100,8 @@ public interface MentorProfileRepository extends JpaRepository<MentorProfile, Lo
      @Query("SELECT mp.mentorActivityCount FROM MentorProfile mp WHERE mp.mentorProfileNo = :mentorProfileNo")
      Integer findMentorActivityCountByProfileNo(@Param("mentorProfileNo") Long mentorProfileNo);
      
-     
+     @Query("SELECT mp FROM MentorProfile mp JOIN FETCH mp.member JOIN FETCH mp.category WHERE mp.mentorProfileNo = :mentorProfileNo")
+     MentorProfile findDetailedProfileByNo(@Param("mentorProfileNo") Long mentorProfileNo);
 }
 
 
