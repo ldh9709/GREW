@@ -15,6 +15,7 @@ public interface ChatRoomService {
 	ChatRoomDto updateRejected(Long chatRoomNo) throws Exception;
 	ChatRoomDto updateCanceled(Long chatRoomNo) throws Exception;
 	ChatRoomDto updateForceClosed(Long chatRoomNo) throws Exception;
-	Page<ChatRoomDto> selectChatRoomAll(Long MemberNo, int pageNumber, int pageSize);
+	Page<ChatRoomDto> selectChatRoomByMenteeNo(Long MemberNo, int pageNumber, int pageSize);
+	Page<ChatRoomDto> selectChatRoomByMentorNo(Long MemberNo, int pageNumber, int pageSize);
 	List<ChatMessageDto> selectChatMessages(Long chatRoomNo);
 }

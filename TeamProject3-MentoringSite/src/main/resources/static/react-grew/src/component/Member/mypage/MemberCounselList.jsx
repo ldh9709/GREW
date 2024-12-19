@@ -2,6 +2,7 @@ import { getCookie } from "../../../util/cookieUtil"
 import React, { useEffect, useState } from 'react'
 import image from '../../../image/images.jpeg'
 import * as chattingApi from '../../../api/chattingApi'
+import * as memberApi from '../../../api/memberApi'
 
 export default function MemberCounselList() {
   const memberCookie = getCookie("member");
@@ -9,22 +10,35 @@ export default function MemberCounselList() {
   const memberNo = memberCookie.memberNo;
   const memberRole = memberCookie.memberRole;
 
-  const [counselList, setCounselList] = useState([]);
+  const [counselList, setCounselList] = useState([{
+    chatRoomNo : 0,
+    chatRoomStartDate :'',
+    chatRoomStatus : 0,
+    menteeNo : 0,
+    mentorNo : 0,
+    mentorName : ''
+  }]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
+
+  const fetchMentorName = async (memberNo) => {
+    const response = await memberApi.memeberInfo(token, memberNo);
+    return response.data.memberName;
+  }
 
   const fetchCounselList = async(page) => {
     try {
       const response = await chattingApi.listChatRoom(token, page, 4);
-      if (memberRole === 'ROLE_MENTEE') {
-        const filteredCounselList = response.data.content.filter(item => item.menteeNo === memberNo);
-        console.log(filteredCounselList)
-        setCounselList(filteredCounselList);
-        setTotalPages(response.data.totalPages);
-      }
-      // else if (memberRole === 'ROLE_MENTOR') {
-      //   const filteredCounselList = response.data.filter(item => item.mentorNo === memberNo);
-      // }
+      setCounselList(response.data.content);
+
+      const mentorNames = response.data.content.filter((chat) => {
+        return (
+          fetchMentorName(chat.mentorNo)
+        );
+      });
+
+      console.log(mentorNames)
+      setTotalPages(response.data.totalPages);
       } catch (error) {
       console.log('상담내역 조회 실패', error);
     }
@@ -57,7 +71,7 @@ export default function MemberCounselList() {
 
   }
   useEffect(() => {
-    fetchCounselList(currentPage-1);
+    fetchCounselList(currentPage - 1);
   },[currentPage])
   
   // 페이지 변경 시 데이터 갱신
@@ -83,7 +97,7 @@ export default function MemberCounselList() {
                       <img src={image} alt="프로필 이미지" />
                   </div>
                   <div>
-                  <p className="mentor-name"> 멘토</p>
+                  <p className="mentor-name">{counselList.mentorName} 멘토</p>
                   <p className="mentor-status">
                   상담상태 : {counselStatus(counselList.chatRoomStatus)}
                   </p>

@@ -189,14 +189,20 @@ public class ChatRoomRestController {
 		//PrincipalDetails에서 memberNo를 가져옴
 		PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
 		Long memberNo = principalDetails.getMemberNo();
-		String memberRole = principalDetails.getAuthorities().toString();
-		
-		Page<ChatRoomDto> chatRoomDtos = chatRoomService.selectChatRoomAll(memberNo, page, size);
-		
+		String memberRole = principalDetails.getRole();
+
 		Response response = new Response();
+		
+		if(memberRole.equals("ROLE_MENTEE")) {
+			Page<ChatRoomDto> chatRoomDtos = chatRoomService.selectChatRoomByMenteeNo(memberNo, page, size);
+			response.setData(chatRoomDtos);
+		}else if(memberRole.equals("ROLE_MENTOR")) {
+			Page<ChatRoomDto> chatRoomDtos = chatRoomService.selectChatRoomByMentorNo(memberNo, page, size);
+			response.setData(chatRoomDtos);
+		}
+		
 		response.setStatus(ResponseStatusCode.CHATTING_LIST_SUCCESS);
 		response.setMessage(ResponseMessage.CHATTING_LIST_SUCCESS);
-		response.setData(chatRoomDtos);
 		
 		HttpHeaders httpHeaders = new HttpHeaders();
 		httpHeaders.setContentType(new MediaType(MediaType.APPLICATION_JSON, Charset.forName("UTF-8")));
