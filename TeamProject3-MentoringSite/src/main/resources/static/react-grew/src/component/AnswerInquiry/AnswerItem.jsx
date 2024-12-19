@@ -68,6 +68,18 @@ export default function AnswerItem({ answer }) {
         rel="stylesheet"
       ></link>
       <div className="answer-container">
+        {answer.answerAccept == 2 ? (
+          <div className="answer-accept-status">
+            <img
+              src="https://img.icons8.com/?size=100&id=Ri1uVwXhVKOJ&format=png&color=000000"
+              className="answer-accept-img"
+            />
+            채택된 답변
+          </div>
+        ) : (
+          <div></div>
+        )}
+
         {memberCookie.memberNo == inquiry.memberNo ? (
           <div className="answer-accept">
             <button onClick={handleAccept}>채택하기</button>

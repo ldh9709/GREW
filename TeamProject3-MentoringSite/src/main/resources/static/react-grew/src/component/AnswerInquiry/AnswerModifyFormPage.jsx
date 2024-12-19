@@ -7,12 +7,12 @@ export default function AnswerModifyFormPage() {
   const modifyFormRef = useRef();
   const navigate = useNavigate();
   const initAnswer = {
-    answerNo: 1,
+    answerNo: 0,
     answerContent: "",
     answerDate: "",
     answerStatus: 1,
     answerAccept: 1,
-    memberNo: 1,
+    memberNo: "",
     inquiryNo: 1,
   };
   const initInquiry = {
