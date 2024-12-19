@@ -1,10 +1,13 @@
 import React, { useEffect, useRef, useState } from "react";
 import * as answerApi from "../../api/answerApi";
 import { useNavigate, useParams } from "react-router-dom";
+import { getCookie } from "../../util/cookieUtil";
 export default function AnswerWriteFormPage() {
   const writeFormRef = useRef();
   const navigate = useNavigate();
   const { inquiryNo } = useParams();
+  const memberCookie = getCookie("member");
+  const token = memberCookie.accessToken;
   const initAnswer = {
     answerNo: 0,
     answerContent: "",
@@ -52,11 +55,15 @@ export default function AnswerWriteFormPage() {
 
   const answerWriteAction = async (e) => {
     // answerContent가 비어있는지 확인
-  if (!answer.answerContent.trim()) {
-    alert("답변 내용을 입력해주세요."); // 사용자에게 입력을 요구하는 알림을 띄움
-    return; // 폼 제출을 막음
-  }
-    const responseJsonObject = await answerApi.writeAnswer(answer, inquiryNo);
+    if (!answer.answerContent.trim()) {
+      alert("답변 내용을 입력해주세요."); // 사용자에게 입력을 요구하는 알림을 띄움
+      return; // 폼 제출을 막음
+    }
+    const responseJsonObject = await answerApi.writeAnswer(
+      answer,
+      inquiryNo,
+      token
+    );
     console.log(responseJsonObject);
     navigate(`/inquiry/${inquiryNo}`);
   };
@@ -72,8 +79,7 @@ export default function AnswerWriteFormPage() {
         </div>
         <div className="inquiry-desc">
           <div>
-            {inquiry.memberName}{" "}
-            | 조회수 {inquiry.inquiryViews} |{" "}
+            {inquiry.memberName} | 조회수 {inquiry.inquiryViews} |{" "}
             {inquiry.inquiryDate.substring(0, 10)}
           </div>
           <br />
