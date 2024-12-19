@@ -132,7 +132,7 @@ public class Member {
 	private MentorProfile mentorProfile;
 
 	/* 한 명의 유저가 관심사 여러개 보유 가능 */
-	@OneToMany(mappedBy = "member", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "member", fetch = FetchType.LAZY)
 	@Size(min = 3, max = 3, message = "3개의 관심사를 선택해야 합니다.")
 	@Builder.Default
 	private List<Interest> interests = new ArrayList<>();
@@ -211,6 +211,7 @@ public class Member {
 	public void addInterests(Interest interest) {
 		interests.add(interest);
 		interest.setMember(this);
+		System.out.println(">>>>>>>>>>addInterests : " + interest);
 	}
 	
 	//비밀번호 변경

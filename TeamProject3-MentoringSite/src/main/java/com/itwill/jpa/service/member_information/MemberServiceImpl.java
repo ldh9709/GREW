@@ -25,6 +25,7 @@ import com.itwill.jpa.entity.role.Role;
 import com.itwill.jpa.repository.member_information.MemberRepository;
 import com.itwill.jpa.util.CustomMailSender;
 
+import jakarta.persistence.EntityManager;
 import jakarta.transaction.Transactional;
 
 @Service
