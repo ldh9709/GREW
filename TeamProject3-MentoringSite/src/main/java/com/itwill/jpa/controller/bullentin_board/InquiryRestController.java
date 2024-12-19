@@ -347,9 +347,12 @@ public class InquiryRestController {
 	public ResponseEntity<Response> getInquiryByMember(Authentication authentication
 			,@RequestParam(name = "page",defaultValue = "0") int page,  // 기본값은 0 페이지
             @RequestParam(name = "size",defaultValue = "10") int size) {
+		
 		PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
-		Page<InquiryDto> inquiryDtos = inquiryService.getInquiryByMember(principalDetails.getMemberNo(), page, size);
-		System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"+principalDetails.getMemberNo());
+		Long memberNo = principalDetails.getMemberNo();
+		
+		Page<InquiryDto> inquiryDtos = inquiryService.getInquiryByMember(memberNo, page, size);
+		
 		Response response = new Response();
 		response.setStatus(ResponseStatusCode.READ_INQUIRY_LIST_SUCCESS);
 		response.setMessage(ResponseMessage.READ_INQUIRY_LIST_SUCCESS);

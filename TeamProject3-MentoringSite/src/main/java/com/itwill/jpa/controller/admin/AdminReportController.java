@@ -40,54 +40,6 @@ public class AdminReportController {
 
 	@Autowired
 	private ReportService reportService;
-	
-	/************* 답변 ***********
-	@Operation(summary = "답변 게시글 번호로 출력(최신순)")
-	@GetMapping("/answer/{inquiryNo}")
-	public ResponseEntity<Response> getAdminAnswersOrderByDate(@PathVariable(name = "inquiryNo") Long inquiryNo,
-	        @RequestParam(name = "page", defaultValue = "0") int page,  // 기본값은 0 페이지
-	        @RequestParam(name = "size", defaultValue = "10") int size) {
-
-	    // 전체 답변을 최신순으로 가져옴
-	    Page<AnswerDto> answerDtos = answerService.getByInquiryAnswerOrderByDate(inquiryNo, page, size);
-
-	    Response response = new Response();
-	    response.setStatus(ResponseStatusCode.READ_ANSWER_LIST_SUCCESS);  // 예시로 성공 코드 설정
-	    response.setMessage(ResponseMessage.READ_ANSWER_LIST_SUCCESS);     // 성공 메시지
-	    response.setData(answerDtos);  // 데이터를 Response에 세팅
-
-	    // HTTP 헤더 설정
-	    HttpHeaders httpHeaders = new HttpHeaders();
-	    httpHeaders.setContentType(new MediaType(MediaType.APPLICATION_JSON, Charset.forName("UTF-8")));
-
-	    // ResponseEntity로 반환
-	    ResponseEntity<Response> responseEntity = new ResponseEntity<>(response, httpHeaders, HttpStatus.OK);
-	    return responseEntity;
-	}*/
-	
-	/************* 질문 ************
-	 (멘토컨텐츠)게시글 번호로출력 수정 必
-	@Operation(summary = "멘토 게시글 번호로 출력(최신순) 관리자용")
-	@GetMapping("/admin/mentorBoards")
-	public ResponseEntity<Response> getAdminMentorBoardsOrderByDate(@PathVariable(name= "mentorBoardNo") Long mentorBoardNo) {
-        MentorBoardDto mentorBoard = mentorBoardService.getMemtorBoard(mentorBoardNo);
-
-	    // 응답 객체 생성
-	    Response response = new Response();
-	    response.setStatus(ResponseStatusCode.READ_MENTOR_BOARD_LIST_SUCCESS);
-	    response.setMessage(ResponseMessage.READ_MENTOR_BOARD_LIST_SUCCESS);
-	    response.setData(mentorBoard);
-
-	    // HTTP 헤더 설정
-	    HttpHeaders httpHeaders = new HttpHeaders();
-	    httpHeaders.setContentType(new MediaType(MediaType.APPLICATION_JSON, Charset.forName("UTF-8")));
-
-	    // ResponseEntity로 반환
-	    ResponseEntity<Response> responseEntity = new ResponseEntity<Response>(response, httpHeaders, HttpStatus.OK);
-	    return responseEntity;
-	}*/
-
-
 
 	/************************* 신고 *******************************/
 
@@ -162,6 +114,54 @@ public class AdminReportController {
 
 	    return responseEntity;
 	}
+
+	/************* 답변 ***********
+	@Operation(summary = "답변 게시글 번호로 출력(최신순)")
+	@GetMapping("/answer/{inquiryNo}")
+	public ResponseEntity<Response> getAdminAnswersOrderByDate(@PathVariable(name = "inquiryNo") Long inquiryNo,
+	        @RequestParam(name = "page", defaultValue = "0") int page,  // 기본값은 0 페이지
+	        @RequestParam(name = "size", defaultValue = "10") int size) {
+
+	    // 전체 답변을 최신순으로 가져옴
+	    Page<AnswerDto> answerDtos = answerService.getByInquiryAnswerOrderByDate(inquiryNo, page, size);
+
+	    Response response = new Response();
+	    response.setStatus(ResponseStatusCode.READ_ANSWER_LIST_SUCCESS);  // 예시로 성공 코드 설정
+	    response.setMessage(ResponseMessage.READ_ANSWER_LIST_SUCCESS);     // 성공 메시지
+	    response.setData(answerDtos);  // 데이터를 Response에 세팅
+
+	    // HTTP 헤더 설정
+	    HttpHeaders httpHeaders = new HttpHeaders();
+	    httpHeaders.setContentType(new MediaType(MediaType.APPLICATION_JSON, Charset.forName("UTF-8")));
+
+	    // ResponseEntity로 반환
+	    ResponseEntity<Response> responseEntity = new ResponseEntity<>(response, httpHeaders, HttpStatus.OK);
+	    return responseEntity;
+	}*/
+	
+	/************* 질문 ************
+	 (멘토컨텐츠)게시글 번호로출력 수정 必
+	@Operation(summary = "멘토 게시글 번호로 출력(최신순) 관리자용")
+	@GetMapping("/admin/mentorBoards")
+	public ResponseEntity<Response> getAdminMentorBoardsOrderByDate(@PathVariable(name= "mentorBoardNo") Long mentorBoardNo) {
+        MentorBoardDto mentorBoard = mentorBoardService.getMemtorBoard(mentorBoardNo);
+
+	    // 응답 객체 생성
+	    Response response = new Response();
+	    response.setStatus(ResponseStatusCode.READ_MENTOR_BOARD_LIST_SUCCESS);
+	    response.setMessage(ResponseMessage.READ_MENTOR_BOARD_LIST_SUCCESS);
+	    response.setData(mentorBoard);
+
+	    // HTTP 헤더 설정
+	    HttpHeaders httpHeaders = new HttpHeaders();
+	    httpHeaders.setContentType(new MediaType(MediaType.APPLICATION_JSON, Charset.forName("UTF-8")));
+
+	    // ResponseEntity로 반환
+	    ResponseEntity<Response> responseEntity = new ResponseEntity<Response>(response, httpHeaders, HttpStatus.OK);
+	    return responseEntity;
+	}*/
+
+
 
 	
 

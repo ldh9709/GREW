@@ -1,5 +1,4 @@
 import axios from "axios"
-import { getCookie } from "../util/cookieUtil";
 
 const BACKEND_SERVER = "";
 /*
@@ -75,11 +74,7 @@ export const joinAction = async (member, tempCode) => {
 //회원 전체 조회
 
 //멤버 프로필 조회
-export const memberProfile = async () => {
-    // 저장된 토큰 가져오기
-    const memberCookie = getCookie("member");
-    
-    const token = memberCookie.accessToken;
+export const memberProfile = async (token) => {
 
     const response = await fetch(`${BACKEND_SERVER}/member/profile`, {
       method: 'GET',
@@ -114,9 +109,7 @@ export const sendJoinCode = async (sendJsonObject) => {
 
   
 //멘티 회원 활동정보 요약
-export const memberCountSummary = async () => {
-    const memberCookie = getCookie("member");
-    const token = memberCookie.accessToken;
+export const memberCountSummary = async (token) => {
 
     const response = await fetch(`${BACKEND_SERVER}/member/mentee-summary`,{
         method: 'GET',
@@ -130,9 +123,14 @@ export const memberCountSummary = async () => {
 }
 
 //멘토 회원 활동정보 요약
-export const memberInfoSummary = async(memberNo) => {
-    const response = await fetch(`${BACKEND_SERVER}/member/${memberNo}`,{
-        method: 'GET'
+export const memberInfoSummary = async (token) => {
+
+    const response = await fetch(`${BACKEND_SERVER}/member/`,{
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}` // Authorization 헤더에 JWT 토큰 추가
+          },
     });
     const responseJsonObject = await response.json();
     return responseJsonObject;
