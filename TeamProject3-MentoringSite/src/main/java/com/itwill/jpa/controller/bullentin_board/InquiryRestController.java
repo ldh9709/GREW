@@ -341,12 +341,15 @@ public class InquiryRestController {
 	}
 	
 	@Operation(summary = "내가 작성한 질문내역")
-	@GetMapping("/{memberNo}")
-	public ResponseEntity<Response> getInquiryByMember(@PathVariable(name = "memberNo") Long memberNo
+	@SecurityRequirement(name = "BearerAuth")//API 엔드포인트가 인증을 요구한다는 것을 문서화(Swagger에서 JWT인증을 명시
+	@PreAuthorize("hasRole('MENTEE')")//ROLE이 MENTEE인 사람만 접근 가능
+	@GetMapping("/list/inquiry/member")
+	public ResponseEntity<Response> getInquiryByMember(Authentication authentication
 			,@RequestParam(name = "page",defaultValue = "0") int page,  // 기본값은 0 페이지
             @RequestParam(name = "size",defaultValue = "10") int size) {
-		Page<InquiryDto> inquiryDtos = inquiryService.getInquiryByMember(memberNo, page, size);
-		
+		PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
+		Page<InquiryDto> inquiryDtos = inquiryService.getInquiryByMember(principalDetails.getMemberNo(), page, size);
+		System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"+principalDetails.getMemberNo());
 		Response response = new Response();
 		response.setStatus(ResponseStatusCode.READ_INQUIRY_LIST_SUCCESS);
 		response.setMessage(ResponseMessage.READ_INQUIRY_LIST_SUCCESS);

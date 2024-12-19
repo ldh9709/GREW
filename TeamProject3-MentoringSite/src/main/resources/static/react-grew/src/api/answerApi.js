@@ -92,11 +92,12 @@ export const updateAnswer = async (sendJsonObject) => {
   return responseJsonObject;
 };
 //답변등록
-export const writeAnswer = async (sendJsonObject,inquiryNo) => {
+export const writeAnswer = async (sendJsonObject,inquiryNo,token) => {
   const response = await fetch(`${BACKEND_SERVER}/answer/${inquiryNo}`, {
     method: "POST", // HTTP 메서드
     headers: {
       "Content-Type": "application/json;charset=UTF-8", // 요청 헤더 설정
+      'Authorization': `Bearer ${token}`, // Authorization 헤더에 JWT 토큰 추가
     },
     body: JSON.stringify(sendJsonObject), // 요청 본문에 JSON 객체 전달
   });
