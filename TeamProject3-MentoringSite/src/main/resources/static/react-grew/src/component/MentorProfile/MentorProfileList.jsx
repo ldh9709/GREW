@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import '../../css/mentorProfile.css'; // ✅ CSS 경로
-import { listMentorProfiles, listMentorsByFollowCount, listMentorsByMentoringCount, listMentorsByActivityCount } from '../../api/MentorProfileApi.js'; // ✅ API 경로
+import { listMentorProfiles, listMentorsByFollowCount, listMentorsByMentoringCount, listMentorsByActivityCount } from '../../api/mentorProfileApi.js'; // ✅ API 경로
 
 const MentorProfileList = () => {
   const [mentorProfiles, setMentorProfiles] = useState([]);

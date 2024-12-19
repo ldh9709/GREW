@@ -50,7 +50,7 @@ public interface MentorProfileService {
     /**
      * 키워드를 기준으로 멘토 프로필을 검색
      */
-    Page<MentorProfileDto> getMentorProfiles(String keyword, int page, int size);
+    Page<MentorProfileDto> getMentorProfiles(String search, int page, int size);
 
     /**
      * 특정 카테고리에 속한 멘토 프로필을 페이지로 반환

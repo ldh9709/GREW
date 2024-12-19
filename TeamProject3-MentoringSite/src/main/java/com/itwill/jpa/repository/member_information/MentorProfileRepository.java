@@ -55,10 +55,10 @@ public interface MentorProfileRepository extends JpaRepository<MentorProfile, Lo
             "JOIN FETCH mp.member " +
             "JOIN FETCH mp.category " +
             "WHERE mp.mentorStatus = 3 AND " +
-            "(LOWER(mp.mentorIntroduce) LIKE LOWER(CONCAT('%', :keyword, '%')) " +
-            "OR LOWER(mp.mentorCareer) LIKE LOWER(CONCAT('%', :keyword, '%')) " +
-            "OR LOWER(mp.member.memberName) LIKE LOWER(CONCAT('%', :keyword, '%'))) ")
-     Page<MentorProfile> searchMentorProfiles(@Param("keyword") String keyword, Pageable pageable);
+            "(LOWER(mp.mentorIntroduce) LIKE LOWER(CONCAT('%', :search, '%')) " +
+            "OR LOWER(mp.mentorCareer) LIKE LOWER(CONCAT('%', :search, '%')) " +
+            "OR LOWER(mp.member.memberName) LIKE LOWER(CONCAT('%', :search, '%'))) ")
+     Page<MentorProfile> searchMentorProfiles(@Param("search") String search, Pageable pageable);
 
      @Query("SELECT mp FROM MentorProfile mp WHERE mp.category.categoryNo = :categoryNo")
      Page<MentorProfile> findByCategoryNo(@Param("categoryNo") Long categoryNo, Pageable pageable);

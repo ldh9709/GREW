@@ -166,11 +166,11 @@ public class MentorProfileController {
     @Operation(summary = "검색 기능 페이징")
     @GetMapping("/search")
     public ResponseEntity<Response> searchMentorProfiles(
-            @RequestParam(name = "keyword") String keyword,
+            @RequestParam(name = "search") String search,
             @RequestParam(name = "page", defaultValue = "0") int page,
             @RequestParam(name = "size", defaultValue = "10") int size
     ) {
-        Page<MentorProfileDto> mentors = mentorProfileService.getMentorProfiles(keyword, page, size);
+        Page<MentorProfileDto> mentors = mentorProfileService.getMentorProfiles(search, page, size);
 
         Response response = new Response();
         response.setStatus(ResponseStatusCode.READ_MENTOR_PROFILE_LIST_SUCCESS_CODE);

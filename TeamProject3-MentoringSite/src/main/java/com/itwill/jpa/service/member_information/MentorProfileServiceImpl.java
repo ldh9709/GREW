@@ -203,10 +203,10 @@ public class MentorProfileServiceImpl implements MentorProfileService {
      * 멘토 프로필 검색
      */
     @Override
-    public Page<MentorProfileDto> getMentorProfiles(String keyword, int page, int size) {
+    public Page<MentorProfileDto> getMentorProfiles(String search, int page, int size) {
         try {
             Pageable pageable = PageRequest.of(page, size);
-            Page<MentorProfile> mentorProfiles = mentorProfileRepository.searchMentorProfiles(keyword, pageable);
+            Page<MentorProfile> mentorProfiles = mentorProfileRepository.searchMentorProfiles(search, pageable);
             return mentorProfiles.map(MentorProfileDto::toDto);
         } catch (Exception e) {
             throw new CustomException(ResponseStatusCode.MENTOR_PROFILE_NOT_FOUND_CODE, ResponseMessage.MENTOR_PROFILE_NOT_FOUND, e);
