@@ -1,6 +1,7 @@
 package com.itwill.jpa.controller.bullentin_board;
 
 import java.nio.charset.Charset;
+import java.time.LocalDateTime;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -8,6 +9,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -38,11 +40,16 @@ public class InquiryRestController {
 
 	// 질문등록
 	@Operation(summary = "질문 등록")
+	@SecurityRequirement(name = "BearerAuth")//API 엔드포인트가 인증을 요구한다는 것을 문서화(Swagger에서 JWT인증을 명시
+	@PreAuthorize("hasRole('MENTEE')")//ROLE이 MENTEE인 사람만 접근 가능
 	@PostMapping
-	public ResponseEntity<Response> createInquiry(@RequestBody InquiryDto inquiryDto) {
+	public ResponseEntity<Response> createInquiry(Authentication authentication,@RequestBody InquiryDto inquiryDto) {
 		
 		Response response = new Response();
-		
+		PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
+		inquiryDto.setMemberNo(principalDetails.getMemberNo());
+		inquiryDto.setInquiryStatus(1);
+		inquiryDto.setInquiryDate(LocalDateTime.now());
 		InquiryDto createInguiryDto = inquiryService.createInquiry(inquiryDto);
 		response.setStatus(ResponseStatusCode.CREATED_INQUIRY_SUCCESS);
 		response.setMessage(ResponseMessage.CREATED_INQUIRY_SUCCESS);
@@ -335,10 +342,10 @@ public class InquiryRestController {
 	
 	@Operation(summary = "내가 작성한 질문내역")
 	@SecurityRequirement(name = "BearerAuth")//API 엔드포인트가 인증을 요구한다는 것을 문서화(Swagger에서 JWT인증을 명시
-	@GetMapping
-	public ResponseEntity<Response> getInquiryByMember(
-			Authentication authentication,
-			@RequestParam(name = "page",defaultValue = "0") int page,  // 기본값은 0 페이지
+	@PreAuthorize("hasRole('MENTEE')")//ROLE이 MENTEE인 사람만 접근 가능
+	@GetMapping("/list/inquiry/member")
+	public ResponseEntity<Response> getInquiryByMember(Authentication authentication
+			,@RequestParam(name = "page",defaultValue = "0") int page,  // 기본값은 0 페이지
             @RequestParam(name = "size",defaultValue = "10") int size) {
 		
 		PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
