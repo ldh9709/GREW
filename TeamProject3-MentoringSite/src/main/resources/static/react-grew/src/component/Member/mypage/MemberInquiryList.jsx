@@ -14,7 +14,7 @@ export default function MemberInquiryList() {
 
     const fetchInquiryList = async (page) => {
         try {
-            const response = await inquiryApi.listInquiryBymemberNo(page);
+            const response = await inquiryApi.listInquiryBymemberNo(token,page);
             const { data } = response;
             setInquiryList(data.content);
             setTotalPages(data.totalPages);
