@@ -34,6 +34,45 @@ public class MentorProfileController {
 	@Autowired
     private MentorProfileService mentorProfileService;
 
+	
+	
+	
+	 @Operation(summary = "멘토 프로필 상세보기")
+	    @GetMapping("/{mentorProfileNo}")
+	    public ResponseEntity<Response> getMentorProfileDetail(@PathVariable("mentorProfileNo") Long mentorProfileNo) {
+	        try {
+	            // 🔥 서비스 호출하여 DTO 반환
+	            MentorProfileDto mentorProfileDto = mentorProfileService.getMentorProfileDetail(mentorProfileNo);
+	            
+	            // 🔥 응답 생성
+	            Response response = new Response();
+	            response.setStatus(ResponseStatusCode.READ_MENTOR_PROFILE_SUCCESS_CODE);
+	            response.setMessage(ResponseMessage.READ_MENTOR_PROFILE_SUCCESS);
+	            response.setData(mentorProfileDto);
+	            
+	            return ResponseEntity.ok(response);
+	        } catch (CustomException e) {
+	            Response response = new Response();
+	            response.setStatus(e.getStatusCode());
+	            response.setMessage(e.getMessage());
+	            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+	        }
+	    }
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
     /**
      * 특정 멘토의 평균 점수를 조회합니다.
      */
