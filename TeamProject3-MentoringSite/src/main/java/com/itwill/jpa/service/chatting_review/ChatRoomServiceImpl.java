@@ -124,16 +124,21 @@ public class ChatRoomServiceImpl implements ChatRoomService {
 	}
 	/*본인 활동 리스트 출력*/
 	@Override
-	public Page<ChatRoomDto> selectChatRoomAll(Long MemberNo, int pageNumber, int pageSize) {
+	public Page<ChatRoomDto> selectChatRoomAll(Long memberNo, int pageNumber, int pageSize) {
 		Pageable pageable = PageRequest.of(pageNumber, pageSize);
-		Page<ChatRoom> chatRooms = chatRoomRepository.findByMemberNo(MemberNo, pageable);
-		List<ChatRoomDto> chatRoomDtos = new ArrayList<>();
+		List<ChatRoom> chatRooms = chatRoomRepository.findByMemberNo(memberNo);
+	    List<ChatRoomDto> menteeChatRoomDtos = new ArrayList<>();
+	    List<ChatRoomDto> mentorChatRoomDtos = new ArrayList<>();
 		
 		for (ChatRoom chatRoom : chatRooms) {
-			chatRoomDtos.add(ChatRoomDto.toDto(chatRoom));
+			if(chatRoom.getMentee().getMemberNo().equals(memberNo)) {
+				menteeChatRoomDtos.add(ChatRoomDto.toDto(chatRoom));
+			}else if (chatRoom.getMentor().getMemberNo().equals(memberNo)) {
+	            ChatRoomDto chatRoomDto = ChatRoomDto.toDto(chatRoom);
+	            mentorChatRoomDtos.add(chatRoomDto);
+	        }
 		}
-		
-		return new PageImpl<>(chatRoomDtos, pageable, chatRooms.getTotalElements());
+		return new PageImpl<>(menteeChatRoomDtos, pageable, chatRooms.size());
 	}
 	/*본인 활동 리스트 출력
 	@Override

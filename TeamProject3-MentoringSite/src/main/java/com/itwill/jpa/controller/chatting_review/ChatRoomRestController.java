@@ -189,6 +189,7 @@ public class ChatRoomRestController {
 		//PrincipalDetails에서 memberNo를 가져옴
 		PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
 		Long memberNo = principalDetails.getMemberNo();
+		String memberRole = principalDetails.getAuthorities().toString();
 		
 		Page<ChatRoomDto> chatRoomDtos = chatRoomService.selectChatRoomAll(memberNo, page, size);
 		

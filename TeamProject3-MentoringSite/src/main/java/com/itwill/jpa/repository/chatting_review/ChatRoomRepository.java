@@ -12,5 +12,5 @@ import com.itwill.jpa.entity.chatting_review.ChatRoom;
 
 public interface ChatRoomRepository extends JpaRepository<ChatRoom, Long>{
 	@Query("SELECT c FROM ChatRoom c WHERE c.mentee.memberNo = :memberNo OR c.mentor.memberNo = :memberNo")
-	Page<ChatRoom> findByMemberNo(@Param("memberNo") Long memberNo, Pageable pageable);
+	List<ChatRoom> findByMemberNo(@Param("memberNo") Long memberNo);
 }
