@@ -6,93 +6,164 @@ body {
     background-color: #f9f9f9;
 }
 
+.pagenation-bottom{
+  position: absolute;
+  left:50%; bottom: 20px;
+  transform: translateX(-50%);
+}
+
 /* 상단 요약 정보 */
 .summary {
-    position: relative;
-    background-color: #f4f4f4;
-    padding: 20px;
-    border-bottom: 1px solid #ddd;
-    text-align: left;
+  position: relative;
+  margin: 20px auto;
+  padding: 20px 0;
+  max-width: 90%;
+  border-radius: 10px;
+  background-color: #ffffff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  text-align: center;
 }
 
-.summary-box h1 {
-    font-size: 27   px;
-    margin-bottom: 10px;
+/* 제목 스타일 */
+.summary h1 {
+  font-size: 1.8rem;
+  font-weight: bold;
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-.summary-box h1 a {
-    font-size: 15px;
-}
-.summary-stats {
-    display: flex;
-    justify-content: center;
-    margin: 20px 0;
+.summary h1 a {
+  margin-left: 10px;
+  font-size: 0.9rem;
+  text-decoration: none;
 }
 
-.summary-stats div {
-    margin: 0 40px;
-    text-align: center;
+.summary h1 a:hover {
+  text-decoration: underline;
 }
 
-.summary-stats h2 {
-    color: #444;
-    font-size:70px;
-    margin: 0;
-}
-
+/* 적립금 스타일 */
 .summary p {
-    font-weight: bold;
-    font-size: 17px;
+  font-size: 1.1rem;
+  color: #333333;
+  margin-bottom: 20px;
+}
+
+.summary p span {
+  font-weight: bold;
+  color: #333333;
+}
+
+/* 통계 스타일 */
+.summary-stats {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+  padding: 10px 0;
+  border-top: 1px solid #eeeeee;
+}
+
+.summary-stats > div {
+  margin: 0 40px;
+  text-align: center;
+}
+
+.summary-stats > div h2 {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #333333;
+  margin-bottom: 5px;
+}
+
+.summary-stats > div p {
+  font-size: 1rem;
+  color: #777777;
 }
 
 .mentor-btn {
-    position: absolute;
-    top: 30px; right: 20px;
-    background-color: #666;
-    color: #fff;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 20px;
-    cursor: pointer;
+  position: absolute; 
+  top: 10px; 
+  right: 15px;
+  padding: 7px 12px;
+  font-size: 0.9rem;
+  color: #666;
+  background-color: #dddddd;
+  border-radius: 30px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-/* 탭 메뉴 스타일 */
-.tab-container {
-    width: 90%;
-    margin: 20px auto;
+.mentor-btn:hover {
+  color: #fff;
+  background-color: #666;
 }
 
+/* 탭 컨테이너 스타일 */
 .tabs {
-    display: flex;
-    list-style: none;
-    padding: 0;
-    justify-content: center;
-    border-bottom: 2px solid #ddd;
+  display: flex;
+  justify-content: center; /* 중앙 정렬 */
+  list-style: none;
+  padding: 0;
+  margin: 20px 0; /* 상단과 하단 여백 */
+  border-bottom: 2px solid #ddd; /* 아래 경계선 */
+  font-family: 'Roboto', sans-serif; /* 폰트 통일 */
 }
 
+/* 개별 탭 스타일 */
 .tab {
-    padding: 10px 80px;
-    cursor: pointer;
-    font-size: 20px;
+  font-size: 1.1rem; /* 글자 크기 */
+  font-weight: 500; /* 글자 두께 */
+  padding: 10px 30px; /* 내부 여백 */
+  cursor: pointer;
+  color: #555; /* 기본 텍스트 색상 */
+  text-align: center;
+  transition: all 0.3s ease; /* 부드러운 애니메이션 */
+  border-bottom: 2px solid transparent; /* 기본 하단 경계선 */
 }
 
-.tab.active {
-    border-bottom: 3px solid green;
-    font-weight: bold;
-    color: green;
+.tab:hover {
+  background-color: #f9f9f9; /* 호버 시 배경색 */
+  border-bottom: 2px solid #5cb85c; /* 호버 시 경계선 */
 }
+
+/* 활성화된 탭 스타일 */
+.tab.active {
+  color: #5cb85c; /* 활성화된 탭 텍스트 색상 */
+  font-weight: bold; /* 활성화된 텍스트 굵기 */
+  border-bottom: 2px solid #5cb85c; /* 하단 경계선 강조 */
+}
+
+/* 탭과 콘텐츠 컨테이너 연결 */
+.tab-container {
+  margin: 0 auto;
+  max-width: 90%; /* 너비 제한 */
+  text-align: center; /* 중앙 정렬 */
+  background-color: #fff; /* 배경색 */
+  border-radius: 10px; /* 둥근 모서리 */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* 부드러운 그림자 */
+  padding: 10px 0; /* 내부 여백 */
+}
+
 
 .tab-content {
-    display: block;
-    padding: 20px 0;
-    text-align: center;
+  position: relative;
+  height: 500px;
+  text-align: center;
+  font-size: 1.1rem;
+  margin: 5px 0px; 
+  padding: 0 30px;
 }
 
 /* 질문내역 리스트 */
+.tab-inquiry{
+  height: 800px;
+}
 .list-table {
-    width: 100%;
+    width: 100%; height: auto;
     border-collapse: collapse;
-    margin: 20px 0;
+    margin: 20px 0px;
     font-size: 14px;
     text-align: center;
   }
@@ -186,9 +257,11 @@ body {
   background-color: #0060c7;
 }
 /* 팔로우 리스트 */
-
+.no-follow{
+  margin-top: 25%;
+}
 .follow-list {
-    width: 880px; height: 500px;
+    width: 880px;
     list-style: none;
     display: flex;
     justify-content: flex-start;

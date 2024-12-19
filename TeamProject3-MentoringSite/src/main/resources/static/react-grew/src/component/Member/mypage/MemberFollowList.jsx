@@ -59,39 +59,44 @@ export default function FollowList() {
 
 
     return (
-    <>
-        <div className="tab-content" id="following">
-            <ul className="follow-list">
-
-                {/* 팔로우 리스트 map으로 반복*/}
-                {followList.map((follow,index)=>(
-                    <li className="follow-card" key={index}>
-                        <div className="profile">
-                            <img src={image} alt="프로필 이미지" />
+        <>
+            <div className="tab-content" id="following">
+              {/* 팔로우 리스트가 비어 있는 경우 */}
+              {followList.length === 0 ? (
+                    <p className="no-follow">팔로우 한 멘토가 없습니다.</p>
+                ) : (
+                    <>
+                        <ul className="follow-list">
+                            {followList.map((follow, index) => (
+                                <li className="follow-card" key={index}>
+                                    <div className="profile">
+                                        <img src={image} alt="프로필 이미지" />
+                                    </div>
+                                    <div className="info">
+                                        <p className="name"><strong>{follow.mentorName} 멘토</strong></p>
+                                        <p>{follow.primaryCategory}</p>
+                                        <p>{follow.subCategory}</p>
+                                    </div>
+                                    <div
+                                        className="heart"
+                                        onClick={() => onClickHeartBtn(follow.followNo)}
+                                    >
+                                        <FontAwesomeIcon icon={faHeart} />
+                                    </div>
+                                </li>
+                            ))}
+                        </ul>
+                        {/* 페이지네이션 버튼 */}
+                        <div className="pagenation pagenation-bottom">
+                            {pageNumbers.map((number) => (
+                                <button key={number} onClick={() => paginate(number)}>
+                                    {number}
+                                </button>
+                            ))}
                         </div>
-                        <div className="info">
-                            <p className="name"><strong>{follow.mentorName} 멘토</strong></p>
-                            <p>{follow.primaryCategory}</p>
-                            <p>{follow.subCategory}</p>
-                        </div>
-                        <div
-                            className="heart"
-                            onClick={() => onClickHeartBtn(follow.followNo)}
-                        >
-                            <FontAwesomeIcon icon={faHeart} />
-                        </div>
-                    </li>
-                ))}
-            </ul>
-            {/* 페이지네이션 버튼 */}
-            <div className="pagenation">
-            {pageNumbers.map((number) => (
-                <button key={number} onClick={() => paginate(number)}>
-                    {number}
-                </button>
-            ))}
-            </div>    
-        </div>
-    </>
-  )
+                    </>
+                )}
+            </div>
+        </>
+    );
 }

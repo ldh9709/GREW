@@ -14,7 +14,7 @@ export default function MemberTabs() {
 
   return (
     <section className="tab-container">
-        <nav   nav>
+        <nav>
             <ul className="tabs">
             <li 
                 className={`tab ${activeTab === "inquiry" ? "active" : ""}`} 

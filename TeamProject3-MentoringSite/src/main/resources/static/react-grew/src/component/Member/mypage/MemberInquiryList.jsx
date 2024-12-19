@@ -37,7 +37,7 @@ export default function MemberInquiryList() {
     }
 
   return (
-    <div className="" id="inquiry">
+    <div className="tab-content tab-inquiry" id="inquiry">
        <table className="list-table">
        <thead>
             <tr>
@@ -64,7 +64,7 @@ export default function MemberInquiryList() {
         </tbody>
         </table>
         {/* 페이지네이션 버튼 */}
-        <div className="pagenation">
+        <div className="pagenation pagenation-bottom">
             {pageNumbers.map((number) => (
                 <button key={number} onClick={() => paginate(number)}>
                     {number}
