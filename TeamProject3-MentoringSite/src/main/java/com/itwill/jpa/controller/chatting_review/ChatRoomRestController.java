@@ -169,7 +169,6 @@ public class ChatRoomRestController {
 		
 		return responseEntity;
 	}
-	/*
 	@Operation(summary = "채팅방 리스트")
 	@GetMapping("/{member_no}")
 	public ResponseEntity<Response> selectChatRoomList(@PathVariable (value = "member_no") Long memberNo){
@@ -188,7 +187,6 @@ public class ChatRoomRestController {
 		
 		return responseEntity;
 	}
-	*/
 	@Operation(summary = "채팅방 리스트(토큰)")
 	@SecurityRequirement(name = "BearerAuth")//API 엔드포인트가 인증을 요구한다는 것을 문서화(Swagger에서 JWT인증을 명시
 	@PreAuthorize("hasRole('MENTEE') or hasRole('MENTOR')")//ROLE이 MENTEE인 사람만 접근 가능
