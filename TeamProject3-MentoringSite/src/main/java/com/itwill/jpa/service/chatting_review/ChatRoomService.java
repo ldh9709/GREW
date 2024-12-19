@@ -4,7 +4,6 @@ import java.util.List;
 
 import com.itwill.jpa.dto.chatting_review.ChatMessageDto;
 import com.itwill.jpa.dto.chatting_review.ChatRoomDto;
-import com.itwill.jpa.entity.chatting_review.ChatRoom;
 
 public interface ChatRoomService {
 	ChatRoomDto getChatRoom(Long chatRoomNo);

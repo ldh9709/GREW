@@ -24,6 +24,7 @@ public class ChatMessageDto {
     private Integer chatMessageCheck;
 
     private long memberNo;
+    private String memberName;
     
     private long chatRoomNo;
     
@@ -35,6 +36,7 @@ public class ChatMessageDto {
             .chatMessageDate(chatMessageEntity.getChatMessageDate())
             .chatMessageCheck(chatMessageEntity.getChatMessageCheck())
             .memberNo(chatMessageEntity.getMember().getMemberNo())  
+            .memberName(chatMessageEntity.getMember().getMemberName())
             .chatRoomNo(chatMessageEntity.getChatRoom().getChatRoomNo())
             .build();
        

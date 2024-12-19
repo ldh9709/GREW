@@ -57,6 +57,11 @@ dependencies {
 	runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.11.5'
 	runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.11.5'
 	
+	/* 웹소켓 추가 */
+	implementation 'com.h2database:h2'
+	implementation 'org.springframework.boot:spring-boot-starter-websocket'  // WebSocket 지원
+    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'  // Thymeleaf 지원 (HTML 템플릿)
+	
 }
 tasks.named('test') {
 	useJUnitPlatform()

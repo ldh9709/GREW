@@ -18,6 +18,9 @@ import Footer from "./layout/Footer"
 import MemberMypage from "./component/Member/mypage/MemberMypage";
 import SearchList from "./component/SearchList";
 import InquirySearchList from "./component/AnswerInquiry/InquirySearchList";
+import AdminReport2 from "./component/admin/adminReport2"
+import Admin from "./component/admin/admin"
+import AdminReport4 from "./component/admin/adminReport4"
 function App() {
   return (
     <>
@@ -43,6 +46,9 @@ function App() {
             <Route path="/answer/modify/:answerNo" element={<AnswerModifyFormpage/>}/>
             <Route path="/searchList" element={<SearchList/>}/>
             <Route path="/inquirySearchList" element={<InquirySearchList/>}/>
+            <Route path="/admin/reports" element={<AdminReport2/>}/>
+            <Route path="/admin" element={<Admin/>}/>
+            <Route path="/adminReport4" element={<AdminReport4/>}/>
           </Routes>
           <Footer/>
         </div>

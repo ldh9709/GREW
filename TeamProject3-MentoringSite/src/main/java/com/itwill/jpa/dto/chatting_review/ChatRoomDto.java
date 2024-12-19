@@ -23,12 +23,14 @@ public class ChatRoomDto {
 	
 	private Long menteeNo;
 	private Long mentorNo;
+	private String chatRoomName;
+	private int chatRoomLeaveStatus;
 	
 	public static ChatRoomDto toDto(ChatRoom mentoringRequestEntity) {
 		return ChatRoomDto.builder()
 				.chatRoomNo(mentoringRequestEntity.getChatRoomNo())
 				.chatRoomStatus(mentoringRequestEntity.getChatRoomStatus())
-				.chatRoomStartDate(mentoringRequestEntity.getChatRoomEndDate())
+				.chatRoomStartDate(mentoringRequestEntity.getChatRoomStartDate())
 				.chatRoomEndDate(mentoringRequestEntity.getChatRoomEndDate())
 				.menteeNo(mentoringRequestEntity.getMentee().getMemberNo())
                 .mentorNo(mentoringRequestEntity.getMentor().getMemberNo())

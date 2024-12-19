@@ -9,7 +9,14 @@ export const AdminReportPage = () => {
   // 신고 목록을 API에서 가져오는 함수
   const fetchReports = async () => {
     try {
-      const response = await fetch('/admin/reports?filter=0&page=0&size=10');
+      const token = "로그인 후 받은 액세스 토큰";  // 실제 로그인 후 받은 토큰을 사용
+      const response = await fetch('/admin/reports?filter=1&page=0&size=10', {
+        method: 'GET',
+        headers: {
+          "Authorization": `Bearer ${token}`,  // 헤더에 토큰 포함
+          "Content-Type": "application/json",
+        },
+      });
       if (!response.ok) {
         throw new Error('신고 목록을 가져오는 데 실패했습니다.');
       }
@@ -64,54 +71,61 @@ export const AdminReportPage = () => {
           <li>신고 관리</li>
         </ul>
       </div>
-
+  
       <div style={styles.content}>
         <h2 style={styles.title}>신고 내역</h2>
-
+  
         {loading && <p>로딩 중...</p>}
         {error && <p style={{ color: 'red' }}>{error}</p>}
-
-        {reports.map((report) => (
-          <div key={report.reportNo} style={styles.card}>
-            <div style={styles.item}>
-              <span style={styles.icon}>🔖</span> 번호: {report.reportNo}
-            </div>
-            <div style={styles.item}>
-              <span style={styles.icon}>👤</span> 신고자: {report.reporterName}
-            </div>
-            <div style={styles.item}>
-              <span style={styles.icon}>🆔</span> 신고 대상: {report.targetName}
-            </div>
-            <div style={styles.item}>
-              <span style={styles.icon}>📅</span> 신고 날짜: {new Date(report.reportDate).toLocaleDateString()}
-            </div>
-
-            <div style={styles.buttonContainer}>
-              {/* 상태 변경 버튼 */}
-              <button
-                style={styles.button}
-                onClick={() => updateReportStatus(report.reportNo, 'IN_PROGRESS')}
-              >
-                접수중
-              </button>
-              <button
-                style={styles.button}
-                onClick={() => updateReportStatus(report.reportNo, 'RESOLVED')}
-              >
-                처리완료
-              </button>
-              <button
-                style={styles.button}
-                onClick={() => updateReportStatus(report.reportNo, 'FALSE_REPORT')}
-              >
-                무고처리
-              </button>
-            </div>
-          </div>
-        ))}
+  
+        {reports && reports.length > 0 ? (
+          <ul style={styles.reportList}> {/* <ul>로 변경 */}
+            {reports.map((report) => (
+              <li key={report.reportNo} style={styles.card}>  {/* <li>로 변경 */}
+                <div style={styles.item}>
+                  <span style={styles.icon}>🔖</span> 번호: {report.reportNo}
+                </div>
+                <div style={styles.item}>
+                  <span style={styles.icon}>👤</span> 신고자: {report.reporterName}
+                </div>
+                <div style={styles.item}>
+                  <span style={styles.icon}>🆔</span> 신고 대상: {report.targetName}
+                </div>
+                <div style={styles.item}>
+                  <span style={styles.icon}>📅</span> 신고 날짜: {new Date(report.reportDate).toLocaleDateString()}
+                </div>
+  
+                <div style={styles.buttonContainer}>
+                  {/* 상태 변경 버튼 */}
+                  <button
+                    style={styles.button}
+                    onClick={() => updateReportStatus(report.reportNo, 'IN_PROGRESS')}
+                  >
+                    접수중
+                  </button>
+                  <button
+                    style={styles.button}
+                    onClick={() => updateReportStatus(report.reportNo, 'RESOLVED')}
+                  >
+                    처리완료
+                  </button>
+                  <button
+                    style={styles.button}
+                    onClick={() => updateReportStatus(report.reportNo, 'FALSE_REPORT')}
+                  >
+                    무고처리
+                  </button>
+                </div>
+              </li> // 각 신고 항목을 <li>로 감쌈
+            ))}
+          </ul> // 목록을 <ul>로 감쌈
+        ) : (
+          <p>신고 목록이 없습니다.</p> // reports가 없거나 빈 배열일 때 대체할 메시지
+        )}
       </div>
     </div>
   );
+  
 };
 
 // 스타일 정의

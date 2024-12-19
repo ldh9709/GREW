@@ -42,8 +42,8 @@ public class JWTUtil {
                 .setClaims(valueMap)
                 //현재 시간을 발급 시간으로 설정
                 .setIssuedAt(Date.from(ZonedDateTime.now().toInstant()))
-                //만료 시간을 현재 시간 + min 분으로 설정
-                .setExpiration(Date.from(ZonedDateTime.now().plusMinutes(min).toInstant()))
+                //만료 시간을 현재 시간 + min 분으로 설정(임시로 120분 설정)
+                .setExpiration(Date.from(ZonedDateTime.now().plusMinutes(120).toInstant()))
                 //비밀 키를 사용해 서명을 추가
                 .signWith(key)
                 //JWT 문자열을 생성
