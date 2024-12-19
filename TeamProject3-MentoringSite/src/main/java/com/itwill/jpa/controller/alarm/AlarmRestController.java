@@ -8,6 +8,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -52,5 +53,16 @@ public class AlarmRestController {
 				HttpStatus.CREATED);
 		return responseEntity;
     	
+    }
+    @Operation(summary = "선택 알림 삭제")
+    @DeleteMapping("/delete")
+    public void deleteAlarm(@RequestParam(name = "alarmNo") Long AlarmNo) {
+    	alarmService.deleteAlarm(AlarmNo);
+    }
+    
+    @Operation(summary = "멤버의 알림 전체삭제")
+    @DeleteMapping("/delete/all")
+    public void deleteAlarmByMemberNo(@RequestParam(name = "memberNo")Long memberNo) {
+    	alarmService.deleteAlarmByMemberNo(memberNo);
     }
 }
