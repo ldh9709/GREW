@@ -131,13 +131,13 @@ public class ReviewRestController {
 		response.setMessage(ResponseMessage.VIEW_REVIEW_SUCCESS);
 		response.setData(review);
 		
-//		HttpHeaders httpHeaders = new HttpHeaders();
-//		httpHeaders.setContentType(new MediaType(MediaType.APPLICATION_JSON, Charset.forName("UTF-8")));
-//		
-//		ResponseEntity<Response> responseEntity = new ResponseEntity<Response>(response, httpHeaders,
-//				HttpStatus.OK);
+		HttpHeaders httpHeaders = new HttpHeaders();
+		httpHeaders.setContentType(new MediaType(MediaType.APPLICATION_JSON, Charset.forName("UTF-8")));
 		
-		return new ResponseEntity<>(response, HttpStatus.OK);
+		ResponseEntity<Response> responseEntity = new ResponseEntity<Response>(response, httpHeaders,
+				HttpStatus.OK);
+		
+		return responseEntity;
 	}
 	@Operation(summary = "특정 요청 리뷰 목록 출력")
 	@GetMapping("/ChatRoom/{chatRoomNo}")
