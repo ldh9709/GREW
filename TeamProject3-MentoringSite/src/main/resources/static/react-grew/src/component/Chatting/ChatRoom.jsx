@@ -7,10 +7,13 @@ const ChatRoom = ({ onRoomClick }) => {
     const [rooms, setRooms] = useState([]);
     const [currentRoom, setCurrentRoom] = useState(null);   // 수정 중인 채팅방 정보를 담는 state
     const [newRoomName, setNewRoomName] = useState('');     // 수정할 채팅방 이름을 저장하는 state
+    const token = JSON.parse(document.cookie.split('; ').find(row => row.startsWith('member=')).split('=')[1]).token; //토큰 내용을 담음
+    
 
     useEffect(function(){
         (async ()=>{
-            const responseJsonObject = await ChattingApi.listChatRoom(memberNo);
+            console.log(token);
+            const responseJsonObject = await ChattingApi.listChatRoom(token);
             console.log(responseJsonObject);
             if (responseJsonObject.status === 7010 && Array.isArray(responseJsonObject.data)) {
                 // 각 채팅방 상태를 개별적으로 비교하여 필터링
