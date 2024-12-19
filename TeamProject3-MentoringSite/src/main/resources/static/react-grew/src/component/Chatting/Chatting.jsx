@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import SockJS from 'sockjs-client';
 import { Client as StompClient } from '@stomp/stompjs';
 import { useNavigate } from 'react-router-dom';
+import { getCookie } from "../../util/cookieUtil.js";
 
 const ChattingMessage = ({ roomId }) => {
   const navigate = useNavigate(); // 리다이렉트를 위해 사용
@@ -9,6 +10,8 @@ const ChattingMessage = ({ roomId }) => {
   const [messageContent, setMessageContent] = useState('');
   const [messages, setMessages] = useState([]);
   const chatContainerRef = useRef(null);
+  const memberCookie = getCookie("member");
+  const token = memberCookie.accessToken;
   let stompClient = useRef(null);
 
   useEffect(() => {
