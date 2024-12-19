@@ -1,0 +1,30 @@
+.mentor-profile-container {
+    display: flex;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+  }
+  
+  .mentor-image img {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 1px solid #ccc;
+  }
+  
+  .mentor-details {
+    margin-left: 20px;
+    flex: 1;
+  }
+  
+  .mentor-details h2 {
+    margin-bottom: 10px;
+  }
+  
+  .mentor-stats div,
+  .mentor-career {
+    margin-bottom: 8px;
+  }
+  
