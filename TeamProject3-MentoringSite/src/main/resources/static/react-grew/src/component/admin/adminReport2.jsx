@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { getAdminReportList, updateReportStatusForAdmin } from "./api"; // api.js에서 import
+import { getAdminReportList, updateReportStatusForAdmin } from "../../api/adminApi"; // api.js에서 import
 
 // 신고 처리 페이지
 export const AdminReportPage = () => {
@@ -153,7 +153,7 @@ const styles = {
   sidebar: {
     width: '220px',
     backgroundColor: '#002468',
-    color: '#000000',
+    color: '#ffffff',
     padding: '20px',
     boxShadow: '2px 0 5px rgba(0,0,0,0.1)',
   },
