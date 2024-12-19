@@ -191,11 +191,9 @@ export const searchInquiry = async(search,page,size)=>{
 }
 
 //내가 쓴 질문 
-export const listInquiryBymemberNo = async (page) => {
-   const memberCookie = getCookie("member");
-   const token = memberCookie.accessToken;
+export const listInquiryBymemberNo = async (token,page) => {
    
-   const response = await fetch(`${BACKEND_SERVER}/inquiry?page=${page}&size=10`, {
+   const response = await fetch(`${BACKEND_SERVER}/inquiry/list/member?page=${page}&size=10`, {
       method: 'GET',
       headers: {
          'Content-Type': 'application/json',
