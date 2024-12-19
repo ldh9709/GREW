@@ -80,7 +80,7 @@ public class ChatRoomServiceImplTest {
 	}
 	@Test
 	void selectMentoringRequestAll(){
-		System.out.println("유저 번호 4번 채팅방 전체 출력"+chatRoomService.selectChatRoomAll(4L));
+		System.out.println("유저 번호 1번 채팅방 전체 출력"+chatRoomService.selectChatRoomAll(1L));
 	}
 	//@Test
 	void updateChattingStatus() {

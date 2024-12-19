@@ -1,15 +1,23 @@
 const BACKEND_SERVER='';
-export const listChatRoom=async (memberNo)=>{
-   const response=await fetch(`${BACKEND_SERVER}/chatroom/${memberNo}`,{
-      method:'GET'
+export const listChatRoom = async (token) => {
+   const response = await fetch(`${BACKEND_SERVER}/chatroom/list`, {
+      method: 'GET',
+      headers: {
+         'Authorization': `Bearer ${token}`, // 전달받은 JWT 토큰 사용
+         'Content-Type': 'application/json'
+      }
    });
    const responseJsonObject= await response.json();
    return responseJsonObject;
 }
 
-export const changeChatRoomName=async (chatRoomNo, memberNo, chatRoomName)=>{
-   const response=await fetch(`${BACKEND_SERVER}/chatroom/name/${chatRoomNo}, ${memberNo}, ${chatRoomName}`,{
-      method:'PUT'
+export const changeChatRoomName=async (chatRoomNo, token, chatRoomName)=>{
+   const response=await fetch(`${BACKEND_SERVER}/chatroom/name/${chatRoomNo}, ${chatRoomName}`,{
+      method:'PUT',
+      headers: {
+         'Authorization': `Bearer ${token}`, // 전달받은 JWT 토큰 사용
+         'Content-Type': 'application/json'
+      }
    });
    const responseJsonObject= await response.json();
    return responseJsonObject;
@@ -23,9 +31,13 @@ export const viewChatMessage=async (chatRoomNo)=>{
     return responseJsonObject;
  }
 
- export const leaveChatRoom=async (chatRoomNo, memberNo)=>{
-   const response=await fetch(`${BACKEND_SERVER}/chatroom/${chatRoomNo}/leave/${memberNo}`,{
-      method:'PUT'
+ export const leaveChatRoom=async (chatRoomNo, token)=>{
+   const response=await fetch(`${BACKEND_SERVER}/chatroom/${chatRoomNo}/leave`,{
+      method:'PUT',
+      headers: {
+         'Authorization': `Bearer ${token}`, // 전달받은 JWT 토큰 사용
+         'Content-Type': 'application/json'
+      }
    });
    const responseJsonObject= await response.json();
    return responseJsonObject;

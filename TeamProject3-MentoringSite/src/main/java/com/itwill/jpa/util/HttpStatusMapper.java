@@ -62,6 +62,14 @@ public class HttpStatusMapper {
         statusCodeMap.put(ResponseStatusCode.ACCEPT_ANSWER_FAIL, HttpStatus.BAD_REQUEST);
         statusCodeMap.put(ResponseStatusCode.READ_ANSWER_LIST_FAIL, HttpStatus.NOT_FOUND);
         statusCodeMap.put(ResponseStatusCode.READ_ANSWER_FAIL, HttpStatus.NOT_FOUND);
+        
+        // REVIEW 관련 상태 코드 매핑
+        statusCodeMap.put(ResponseStatusCode.CREATED_REVIEW_FAIL, HttpStatus.BAD_REQUEST);
+        statusCodeMap.put(ResponseStatusCode.UPDATE_REVIEW_FAIL, HttpStatus.BAD_REQUEST);
+        statusCodeMap.put(ResponseStatusCode.DELETE_REVIEW_FAIL, HttpStatus.BAD_REQUEST);
+        statusCodeMap.put(ResponseStatusCode.VIEW_REVIEW_FAIL, HttpStatus.NOT_FOUND);
+        statusCodeMap.put(ResponseStatusCode.READ_REVIEW_LIST_FAIL, HttpStatus.NOT_FOUND);
+        
     }
 
     public static HttpStatus getHttpStatus(int statusCode) {

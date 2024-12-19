@@ -25,6 +25,9 @@ import com.itwill.jpa.entity.role.Role;
 import com.itwill.jpa.repository.member_information.MemberRepository;
 import com.itwill.jpa.util.CustomMailSender;
 
+import jakarta.persistence.EntityManager;
+import jakarta.transaction.Transactional;
+
 @Service
 public class MemberServiceImpl implements MemberService {
 	
@@ -115,13 +118,14 @@ public class MemberServiceImpl implements MemberService {
 	
 	/* 회원가입 */
 	@Override
+	@Transactional
 	public Member saveMember(MemberDto memberDto) {
-		String id = memberDto.getMemberId();
-		String pw = memberDto.getMemberPassword();
-		String email = memberDto.getMemberEmail();
+		String memberId = memberDto.getMemberId();
+		String memberPassword = memberDto.getMemberPassword();
+		String memberEmail = memberDto.getMemberEmail();
 		
-		checkIdDupl(id);
-		checkEmailDupl(email);
+		checkIdDupl(memberId);
+		checkEmailDupl(memberEmail);
 		
 		Member saveMember = Member.toEntity(memberDto);
 		
@@ -132,8 +136,8 @@ public class MemberServiceImpl implements MemberService {
 			Interest interestEntity = Interest.toEntity(interest);
 			saveMember.addInterests(interestEntity);
 		}
-		saveMember.setMemberPassword(passwordEncoder.encode(memberDto.getMemberPassword()));
-		
+		saveMember.setMemberPassword(passwordEncoder.encode(memberPassword));
+		System.out.println(">>>>>saveMember : " + saveMember);
 		return memberRepository.save(saveMember);
 	}
 	
@@ -294,12 +298,12 @@ public class MemberServiceImpl implements MemberService {
 	
 	//인증번호 확인
 	@Override
-	public boolean certificationCode(String email, Integer inputCode) {
+	public boolean certificationCode(String memberEmail, Integer inputCode) {
 		//입력받은 이메일로 저장된 인증번호 반환
-		Integer storedCode = tempCode.get(email);
+		Integer storedCode = tempCode.get(memberEmail);
 		
 		System.out.println("storedCode : <<<" + storedCode);
-		System.out.println("email : <<<" + email);
+		System.out.println("email : <<<" + memberEmail);
 		System.out.println("inputCode : <<<" + inputCode);
 		//유효성 검사 후 안맞으면 false 반환
 		if(storedCode == null || !storedCode.equals(inputCode)) {
@@ -307,7 +311,7 @@ public class MemberServiceImpl implements MemberService {
 		}
 		
 		//맞으면 데이터 삭제 후 true 반환
-		tempCode.remove(email);
+		tempCode.remove(memberEmail);
 		return true;
 		
 	}

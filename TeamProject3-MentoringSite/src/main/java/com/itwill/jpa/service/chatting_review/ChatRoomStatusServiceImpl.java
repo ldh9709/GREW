@@ -31,7 +31,7 @@ public class ChatRoomStatusServiceImpl implements ChatRoomStatusService{
 		ChatRoomStatus chatRoomStatus = chatRoomStatusRepository.findByChatRoom_ChatRoomNoAndMember_MemberNo(chatRoomNo, memberNo);
 		ChatRoomStatusDto chatRoomStatusDto = new ChatRoomStatusDto();
 		if (chatRoomStatus == null) {
-			return chatRoomStatusDto;
+			return null;
 		}else {
 			chatRoomStatusDto = ChatRoomStatusDto.toDto(chatRoomStatus);
 			return chatRoomStatusDto;
