@@ -8,8 +8,10 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -20,7 +22,7 @@ import com.itwill.jpa.response.Response;
 import com.itwill.jpa.service.alarm.AlarmService;
 
 import io.swagger.v3.oas.annotations.Operation;
-
+@RequestMapping("/alarms")
 @RestController
 public class AlarmRestController {
 
@@ -30,7 +32,7 @@ public class AlarmRestController {
     private AlarmRepository alarmRepository;
     //알림으로 페이지이동
     @Operation(summary = "알림 URL")
-    @GetMapping("/alarms/{alarmId}/redirect")
+    @GetMapping("/{alarmId}/redirect")
     public ResponseEntity<String> redirectToPage(@PathVariable(name = "alarmId") Long alarmId) {
         AlarmDto alarmDto = AlarmDto.toDto(alarmRepository.findById(alarmId).get());
 
@@ -52,5 +54,16 @@ public class AlarmRestController {
 				HttpStatus.CREATED);
 		return responseEntity;
     	
+    }
+    @Operation(summary = "선택 알림 삭제")
+    @DeleteMapping("/delete")
+    public void deleteAlarm(@RequestParam(name = "alarmNo") Long AlarmNo) {
+    	alarmService.deleteAlarm(AlarmNo);
+    }
+    
+    @Operation(summary = "멤버의 알림 전체삭제")
+    @DeleteMapping("/delete/all")
+    public void deleteAlarmByMemberNo(@RequestParam(name = "memberNo") Long memberNo) {
+    	alarmService.deleteAlarmByMemberNo(memberNo);
     }
 }
