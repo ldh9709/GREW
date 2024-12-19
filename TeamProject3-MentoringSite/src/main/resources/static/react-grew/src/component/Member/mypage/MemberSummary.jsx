@@ -38,7 +38,7 @@ export default function MemberSummary() {
         try {
             const response = await memberApi.memberProfile(token);
             const { data } = await response;
-
+            console.log(data);
             setSummary((prevState)=>({
                 ...prevState,
                 name: data.memberName,

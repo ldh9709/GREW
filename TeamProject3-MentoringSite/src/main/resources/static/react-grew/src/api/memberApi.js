@@ -73,6 +73,19 @@ export const joinAction = async (member, tempCode) => {
 
 //회원 전체 조회
 
+//특정 회원 조회
+export const memeberInfo = async (token,memberNo) => {
+    const response = await fetch(`${BACKEND_SERVER}/member/member-info?memberNo=${memberNo}`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+        }
+    });
+    const responseJsonObject = await response.json();
+    return responseJsonObject;
+}
+
 //멤버 프로필 조회
 export const memberProfile = async (token) => {
 
