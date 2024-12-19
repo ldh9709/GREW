@@ -28,22 +28,22 @@ export default function MemberCounselList() {
   const counselStatus = (status) => {
     switch (status) {
       case 7000:
-        return "상담 대기 중";
+        return "대기 중";
         break;
       case 7100:
-        return "상담 진행 중";
+        return "진행 중";
         break;
       case 7200:
-        return "상담 완료";
+        return "완료";
         break;
       case 7300:
-        return "상담 거절";
+        return "멘토 거절";
         break;
       case 7400:
-        return "상담 취소";
+        return "취소";
         break;
       case 7500:
-        return "강제 종료";
+        return "관리자 종료";
         break;
     }
   }

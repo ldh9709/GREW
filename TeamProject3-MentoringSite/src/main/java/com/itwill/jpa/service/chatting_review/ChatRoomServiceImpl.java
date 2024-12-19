@@ -6,6 +6,10 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.itwill.jpa.dto.chatting_review.ChatMessageDto;
@@ -120,25 +124,26 @@ public class ChatRoomServiceImpl implements ChatRoomService {
 	}
 	/*본인 활동 리스트 출력*/
 	@Override
-	public List<ChatRoomDto> selectChatRoomAll(Long MemberNo) {
-		List<ChatRoom> chatRooms = chatRoomRepository.findAll();
+	public Page<ChatRoomDto> selectChatRoomAll(Long MemberNo, int pageNumber, int pageSize) {
+		Pageable pageable = PageRequest.of(pageNumber, pageSize);
+		Page<ChatRoom> chatRooms = chatRoomRepository.findAll(pageable);
 		List<ChatRoomDto> chatRoomDtos = new ArrayList<ChatRoomDto>();
-		for (int i = 0; i <chatRooms.size(); i++) {
-			if (chatRooms.get(i).getMentee().getMemberNo() == MemberNo || chatRooms.get(i).getMentor().getMemberNo() == MemberNo) {
-				Long chatRoomNo = chatRooms.get(i).getChatRoomNo();
+		for (int i = 0; i <chatRooms.getTotalElements(); i++) {
+			if (chatRooms.getContent().get(i).getMentee().getMemberNo() == MemberNo || chatRooms.getContent().get(i).getMentor().getMemberNo() == MemberNo) {
+				Long chatRoomNo = chatRooms.getContent().get(i).getChatRoomNo();
 				String chatRoomName = null;
 				int chatRoomLeaveStatus = 0;
 				if (chatRoomStatusService.getChatRoomStatus(chatRoomNo, MemberNo) != null) {
 					chatRoomName = chatRoomStatusService.getChatRoomStatus(chatRoomNo, MemberNo).getChatRoomName();
 					chatRoomLeaveStatus = chatRoomStatusService.getChatRoomStatus(chatRoomNo, MemberNo).getChatRoomStatus();
 				}
-				ChatRoomDto chatRoomDto = ChatRoomDto.toDto(chatRooms.get(i));
+				ChatRoomDto chatRoomDto = ChatRoomDto.toDto(chatRooms.getContent().get(i));
 				chatRoomDto.setChatRoomName(chatRoomName);
 				chatRoomDto.setChatRoomLeaveStatus(chatRoomLeaveStatus);
 				chatRoomDtos.add(chatRoomDto);	
 			}
 		}
-		return chatRoomDtos;
+		return new PageImpl<>(chatRoomDtos, pageable, chatRooms.getTotalElements());
 	}
 	
 	@Override

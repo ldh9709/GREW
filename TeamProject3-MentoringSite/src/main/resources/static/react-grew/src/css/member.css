@@ -71,7 +71,7 @@ body {
 }
 
 .summary-stats > div h2 {
-  font-size: 2rem;
+  font-size: 3rem;
   font-weight: bold;
   color: #333333;
   margin-bottom: 5px;
@@ -170,7 +170,7 @@ body {
   
   /* 너비 다르게 주기*/
   .col-no {
-    width: 5%;
+    width: 7%;
   }
   .col-title {
     width: 55%;
