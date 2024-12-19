@@ -50,7 +50,7 @@ public class AlarmServiceimpl implements AlarmService {
 	// 유저의 알림 전체삭제
 	@Override
 	public void deleteAlarmByMemberNo(Long memberNo) {
-		alarmRepository.deleteAlarmsByMemberId(memberNo);
+		alarmRepository.deleteByMember_MemberNo(memberNo);
 	}
 
 	// 알림 읽음표시
