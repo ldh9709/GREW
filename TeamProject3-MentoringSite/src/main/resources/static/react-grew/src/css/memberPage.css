@@ -155,3 +155,110 @@ legend {
 .member-sns-icon:hover {
   transform: scale(1.1);
 }
+
+.member-form-password {
+  width: 300px;
+  height: 30px;
+  display: flex;
+  font-family: 'nanumsquare';
+  font-size: 15px;
+  padding: 5px;
+}
+.member-form-email {
+  width: 300px;
+  height: 30px;
+  display: flex;
+  font-family: 'nanumsquare';
+  font-size: 15px;
+  padding: 5px;
+}
+
+.member-submit-button,
+.member-delete-button {
+  padding: 10px 20px;
+  font-size: 1em;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+}
+
+/* 프로필 페이지 */
+.member-profile-container {
+  font-family: 'nanumsquare';
+  background-color: #ffffff;
+}
+.member-profile-header {
+  text-align: left;
+  font-size: 40px;
+  font-weight: bold;
+  margin-top: 15px;
+  
+}
+.member-profile-form h3 {
+  width: 100%;
+  font-size: 30px;
+  text-align: center;
+  margin-top: 100px;
+  margin-bottom: 15px;
+  padding: 30px;
+  font-family: 'nanumsquare';
+}
+.member-form-group {
+  display: flex;
+  align-items: center;
+  margin-left: 100px;
+  margin-bottom: 15px;
+  font-family: 'nanumsquare';
+  padding: 5px;
+}
+.member-form-password {
+  width: 300px;
+  height: 30px;
+  display: flex;
+  font-family: 'nanumsquare';
+  font-size: 15px;
+  padding: 5px;
+}
+
+.member-profile-checkbox {
+  display: flex; /* 버튼들을 가로로 정렬 */
+  justify-content: center; /* 중앙 정렬 */
+  gap: 10px; /* 버튼 사이 간격 조정 */
+}
+
+.member-button-group {
+  display: flex;
+  justify-content: space-around;
+}
+
+.member-form-email {
+  width: 300px;
+  height: 30px;
+  display: flex;
+  font-family: 'nanumsquare';
+  font-size: 15px;
+  padding: 5px;
+}
+
+.email-group {
+  display: flex;
+  align-items: center;
+}
+
+.email-group span {
+  margin: 0 5px;
+}
+
+.member-form-group span {
+  font-size: 20px;
+  padding: 5px;
+}
+
+.member-form-group label {
+  font-weight: bold;
+  margin-right: 50px;
+  width: 200px;
+  text-align: left;
+  font-size: 20px;
+  margin-left: 200px;
+}
