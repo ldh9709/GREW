@@ -3,7 +3,9 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import * as inquiryApi from "../../api/inquiryApi";
 import * as answerApi from "../../api/answerApi";
 import AnswerItem from "./AnswerItem";
+import { getCookie } from "../../util/cookieUtil";
 function InquiryView() {
+  const memberCookie = getCookie("member");
   const navigate = useNavigate();
   const { inquiryNo } = useParams(); //path에서 받아오는거임! app.js의 경로와 관련있음
   const [inquiry, setInquiry] = useState({
@@ -22,7 +24,7 @@ function InquiryView() {
     (async () => {
       const responseJsonObject = await inquiryApi.viewInquiry(inquiryNo);
       console.log(responseJsonObject);
-      
+
       if (
         responseJsonObject.status === 5500 &&
         responseJsonObject.data.inquiryStatus === 1
@@ -142,20 +144,24 @@ function InquiryView() {
             </div>
 
             <br />
-            <div>
-              <Link to={`/inquiry/modify/${inquiryNo}`}>
-                <button>수정</button>
-              </Link>
+            {memberCookie.memberNo == inquiry.memberNo ? (
+              <div>
+                <Link to={`/inquiry/modify/${inquiryNo}`}>
+                  <button>수정</button>
+                </Link>
 
-              <button
-                onClick={(e) => {
-                  e.preventDefault(); // 폼 제출 방지
-                  inquiryRemoveAction(); // 삭제 액션 실행
-                }}
-              >
-                삭제
-              </button>
-            </div>
+                <button
+                  onClick={(e) => {
+                    e.preventDefault(); // 폼 제출 방지
+                    inquiryRemoveAction(); // 삭제 액션 실행
+                  }}
+                >
+                  삭제
+                </button>
+              </div>
+            ) : (
+              <div></div>
+            )}
           </div>
         </form>
       </div>

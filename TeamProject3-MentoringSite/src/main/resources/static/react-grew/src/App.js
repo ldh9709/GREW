@@ -22,6 +22,7 @@ import AdminReport2 from "./component/admin/adminReport2"
 import Admin from "./component/admin/admin"
 import AdminReport4 from "./component/admin/adminReport4"
 import ForbiddenPage from "./component/ForbiddenPage";
+
 function App() {
   return (
     <>
