@@ -50,6 +50,16 @@ const MemberProfileFormPage = () => {
     return member.interests.some((interest) => interest.categoryNo === parseInt(interestId));
   };
 
+  const onChangeMemberModifyForm = (e) => {
+    setMember({
+      ...member,
+      [e.target.name]:e.target.value
+    })
+    console.log(e.target.value);
+  };
+
+  
+
   useEffect(() => {
     fetchProfileData();
   }, []);
@@ -77,7 +87,7 @@ const MemberProfileFormPage = () => {
               type="password"
               placeholder="비밀번호 입력"
               className="member-form-password"
-              required
+              onChange={onChangeMemberModifyForm}
             />
           </div>
 
@@ -87,7 +97,7 @@ const MemberProfileFormPage = () => {
               type="password"
               placeholder="비밀번호 확인"
               className="member-form-password"
-              required
+              onChange={onChangeMemberModifyForm}
             />
           </div>
 
