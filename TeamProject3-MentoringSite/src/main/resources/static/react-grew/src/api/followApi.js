@@ -30,10 +30,7 @@ export const addfollow = async(sendJsonObject)=>{
 //     return responseJsonObject;
 // }
 //팔로잉 리스트 조회
-export const followList = async (page) => {
-    // 저장된 토큰 가져오기
-    const memberCookie = getCookie("member");
-    const token = memberCookie.accessToken;
+export const followList = async (token,page) => {
 
     const response = await fetch(`${BACKEND_SERVER}/follow/followList?page=${page}&size=6`,{
         method: 'GET',

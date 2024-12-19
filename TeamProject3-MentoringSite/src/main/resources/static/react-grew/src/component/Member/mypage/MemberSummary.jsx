@@ -1,13 +1,16 @@
+import { getCookie } from "../../../util/cookieUtil"
 import React, { useEffect, useState, useCallback } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGear } from '@fortawesome/free-solid-svg-icons';
 import * as memberApi from "../../../api/memberApi"
 
 export default function MemberSummary() {
+    const memberCookie = getCookie("member");
+    const token = memberCookie.accessToken;
 
     // State로 회원정보를 저장
     const [summary, setSummary] = useState({
-        name: "테스트",
+        name: "",
         points: 0,
         inquiryCount: 0,
         counselCount: 0,
@@ -17,7 +20,7 @@ export default function MemberSummary() {
     //회원 요약정보 count 가져옴
     const fetchCountSummary = async () => {
         try {
-            const response = await memberApi.memberCountSummary();
+            const response = await memberApi.memberCountSummary(token);
             const { data } = await response;
 
             setSummary((prevState) => ({
@@ -33,7 +36,7 @@ export default function MemberSummary() {
 
     const fetchMemberSummary = async () => {
         try {
-            const response = await memberApi.memberProfile();
+            const response = await memberApi.memberProfile(token);
             const { data } = await response;
 
             setSummary((prevState)=>({

@@ -1,3 +1,4 @@
+import { getCookie } from "../../../util/cookieUtil"
 import React, { useEffect, useState } from "react";
 import image from '../../../image/images.jpeg'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -5,6 +6,9 @@ import { faHeart } from '@fortawesome/free-solid-svg-icons';
 import * as followApi from "../../../api/followApi"
 
 export default function FollowList() {
+    const memberCookie = getCookie("member");
+    const token = memberCookie.accessToken;
+
     const [followList, setFollowList] = useState([{
             no: 0,
             name: '',
@@ -20,7 +24,7 @@ export default function FollowList() {
 
     const fetchFollowList = async (page) => {
         try {
-            const response = await followApi.followList(page);
+            const response = await followApi.followList(token,page);
             const { data } = response;
             setFollowList(data.content);
             setTotalPages(data.totalPages);

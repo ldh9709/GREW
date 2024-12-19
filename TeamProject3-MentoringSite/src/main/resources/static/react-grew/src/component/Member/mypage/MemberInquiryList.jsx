@@ -1,13 +1,15 @@
+import { getCookie } from "../../../util/cookieUtil"
 import React, { useEffect, useState } from 'react'
 import * as inquiryApi from "../../../api/inquiryApi"
-import * as categoryApi from "../../../api/categoryApi"
 import { useNavigate } from 'react-router-dom';
 
 export default function MemberInquiryList() {
+    const memberCookie = getCookie("member");
+    const token = memberCookie.accessToken;
+    
     const [inquiryList, setInquiryList] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(0);
-    const [categoryMap, setcategoryMap] = useState({});
     const navigate = useNavigate();
 
     const fetchInquiryList = async (page) => {

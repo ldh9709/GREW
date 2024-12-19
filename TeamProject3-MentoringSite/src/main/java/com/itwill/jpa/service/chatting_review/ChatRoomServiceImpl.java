@@ -126,25 +126,41 @@ public class ChatRoomServiceImpl implements ChatRoomService {
 	@Override
 	public Page<ChatRoomDto> selectChatRoomAll(Long MemberNo, int pageNumber, int pageSize) {
 		Pageable pageable = PageRequest.of(pageNumber, pageSize);
-		Page<ChatRoom> chatRooms = chatRoomRepository.findAll(pageable);
-		List<ChatRoomDto> chatRoomDtos = new ArrayList<ChatRoomDto>();
-		for (int i = 0; i <chatRooms.getContent().size(); i++) {
-			if (chatRooms.getContent().get(i).getMentee().getMemberNo() == MemberNo || chatRooms.getContent().get(i).getMentor().getMemberNo() == MemberNo) {
-				Long chatRoomNo = chatRooms.getContent().get(i).getChatRoomNo();
+		Page<ChatRoom> chatRooms = chatRoomRepository.findByMemberNo(MemberNo, pageable);
+		List<ChatRoomDto> chatRoomDtos = new ArrayList<>();
+		
+		for (ChatRoom chatRoom : chatRooms) {
+			chatRoomDtos.add(ChatRoomDto.toDto(chatRoom));
+		}
+		
+		return new PageImpl<>(chatRoomDtos, pageable, chatRooms.getTotalElements());
+	}
+	/*본인 활동 리스트 출력
+	@Override
+	public Page<ChatRoomDto> selectChatRoomAll(Long MemberNo, int pageNumber, int pageSize) {
+		Pageable pageable = PageRequest.of(pageNumber, pageSize);
+		List<ChatRoom> chatRooms = chatRoomRepository.findAll();
+		List<ChatRoomDto> chatRoomDtos = new ArrayList<>();
+		for (int i = 0; i <chatRooms.size(); i++) {
+			if (chatRooms.get(i).getMentee().getMemberNo() == MemberNo || chatRooms.get(i).getMentor().getMemberNo() == MemberNo) {
+				Long chatRoomNo = chatRooms.get(i).getChatRoomNo();
 				String chatRoomName = null;
 				int chatRoomLeaveStatus = 0;
 				if (chatRoomStatusService.getChatRoomStatus(chatRoomNo, MemberNo) != null) {
 					chatRoomName = chatRoomStatusService.getChatRoomStatus(chatRoomNo, MemberNo).getChatRoomName();
 					chatRoomLeaveStatus = chatRoomStatusService.getChatRoomStatus(chatRoomNo, MemberNo).getChatRoomStatus();
 				}
-				ChatRoomDto chatRoomDto = ChatRoomDto.toDto(chatRooms.getContent().get(i));
+				ChatRoomDto chatRoomDto = ChatRoomDto.toDto(chatRooms.get(i));
 				chatRoomDto.setChatRoomName(chatRoomName);
 				chatRoomDto.setChatRoomLeaveStatus(chatRoomLeaveStatus);
-				chatRoomDtos.add(chatRoomDto);	
+				chatRoomDtos.add(chatRoomDto);
+				if (chatRoomDtos.size() > pageSize-1) {
+					return new PageImpl<>(chatRoomDtos, pageable, chatRooms.size());
+				}
 			}
 		}
-		return new PageImpl<>(chatRoomDtos, pageable, chatRooms.getTotalElements());
-	}
+		return new PageImpl<>(chatRoomDtos, pageable, chatRooms.size());
+	}*/
 	
 	@Override
 	public List<ChatMessageDto> selectChatMessages(Long chatRoomNo) {
