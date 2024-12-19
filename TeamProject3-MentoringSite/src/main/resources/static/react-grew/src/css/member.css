@@ -20,7 +20,7 @@ body {
   position: relative;
   margin: 20px auto;
   padding: 20px 0;
-  max-width: 90%;
+  max-width: 100%;
   border-radius: 10px;
   background-color: #ffffff;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -61,11 +61,12 @@ body {
 
 /* 요약 스타일 */
 .summary-stats {
+  width: 85%; 
   display: flex;
   justify-content: center;
-  margin-top: 20px;
+  margin: 20px auto 0 auto;
   padding: 10px 0;
-  border-top: 1px solid #eeeeee;
+  border-top: 1.5px solid #eeeeee;
 }
 
 .summary-stats > div {
@@ -117,47 +118,47 @@ body {
 /* 탭 컨테이너 스타일 */
 .tabs {
   display: flex;
-  justify-content: center; /* 중앙 정렬 */
+  justify-content: center; 
   list-style: none;
   padding: 0;
-  margin: 20px 0; /* 상단과 하단 여백 */
-  border-bottom: 2px solid #ddd; /* 아래 경계선 */
-  font-family: 'Roboto', sans-serif; /* 폰트 통일 */
+  margin: 20px 0; 
+  border-bottom: 2px solid #ddd; 
+  font-family: 'Roboto', sans-serif;
 }
 
 /* 개별 탭 스타일 */
 .tab {
-  font-size: 1.1rem; /* 글자 크기 */
-  font-weight: 500; /* 글자 두께 */
-  padding: 10px 30px; /* 내부 여백 */
+  font-size: 1.1rem; 
+  font-weight: 500; 
+  padding: 10px 30px; 
   cursor: pointer;
-  color: #555; /* 기본 텍스트 색상 */
+  color: #555;
   text-align: center;
-  transition: all 0.3s ease; /* 부드러운 애니메이션 */
-  border-bottom: 2px solid transparent; /* 기본 하단 경계선 */
+  transition: all 0.3s ease;
+  border-bottom: 2px solid transparent; 
 }
 
 .tab:hover {
-  background-color: #f9f9f9; /* 호버 시 배경색 */
-  border-bottom: 2px solid #28a745; /* 호버 시 경계선 */
+  background-color: #f9f9f9; 
+  border-bottom: 2px solid #28a745; 
 }
 
 /* 활성화된 탭 스타일 */
 .tab.active {
-  color: #008b62; /* 활성화된 탭 텍스트 색상 */
-  font-weight: bold; /* 활성화된 텍스트 굵기 */
-  border-bottom: 2px solid #5cb85c; /* 하단 경계선 강조 */
+  color: #008b62; 
+  font-weight: bold; 
+  border-bottom: 2px solid #5cb85c; 
 }
 
 /* 탭과 콘텐츠 컨테이너 연결 */
 .tab-container {
   margin: 0 auto;
-  max-width: 90%; /* 너비 제한 */
-  text-align: center; /* 중앙 정렬 */
-  background-color: #fff; /* 배경색 */
-  border-radius: 10px; /* 둥근 모서리 */
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* 부드러운 그림자 */
-  padding: 10px 0; /* 내부 여백 */
+  max-width:100%; 
+  text-align: center; 
+  background-color: #fff; 
+  border-radius: 10px; 
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); 
+  padding: 10px 0;
 }
 
 
@@ -226,6 +227,7 @@ body {
 
 /* 상담내역 리스트 */
 .tab-counsel.tab-content {
+  width: 90%;
   height: 400px;
 }
 .tab-counsel{
