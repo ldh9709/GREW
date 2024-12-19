@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { getAdminReportList, updateReportStatusForAdmin } from "./api"; // api.js에서 import
+import { getAdminReportList, updateReportStatusForAdmin } from "../../api/adminApi"; // api.js에서 import
 
 // 신고 처리 페이지
 export const AdminReportPage = () => {
