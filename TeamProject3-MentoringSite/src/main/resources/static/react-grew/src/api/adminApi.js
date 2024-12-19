@@ -3,6 +3,7 @@ const BACKEND_SERVER = ""; // 실제 백엔드 URL로 교체해주세요
 
 // 관리자 - 신고 목록 조회
 export const getAdminReportList = async (filter, page = 0, size = 10) => {
+  try {
   const response = await fetch(`${BACKEND_SERVER}/admin/reports?filter=${filter}&page=${page}&size=${size}`, {
     method: 'GET', // HTTP 메서드
     headers: {
@@ -11,7 +12,13 @@ export const getAdminReportList = async (filter, page = 0, size = 10) => {
   });
 
   const responseJson = await response.json();
+  // 응답 데이터 콘솔에 출력
+  console.log("Response Data:", responseJson);
   return responseJson;  // 신고 목록 응답 반환
+  } catch (error) {
+    // 오류가 발생한 경우 콘솔에 출력
+    console.error("Error fetching reports:", error);
+  }
 };
 
 // 관리자 - 신고 상태 변경

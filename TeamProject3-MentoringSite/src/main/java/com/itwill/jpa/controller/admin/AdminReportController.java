@@ -9,6 +9,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -32,6 +33,7 @@ import com.itwill.jpa.service.report.ReportService;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 
 @RestController
 @RequestMapping("/admin/report")
@@ -44,6 +46,8 @@ public class AdminReportController {
 	/************************* 신고 *******************************/
 
 	/* 신고 출력(전체회원) */
+	@SecurityRequirement(name = "BearerAuth")
+	@PreAuthorize("hasRole('MENTEE')")
 	@Operation(summary = "전체 신고 목록 조회")
 	@GetMapping()
 	public ResponseEntity<Response> getAdminReportList(
@@ -73,6 +77,8 @@ public class AdminReportController {
 
 	
 	/* 신고 상태 변경 (검토중, 완료 등) */
+	@SecurityRequirement(name = "BearerAuth")
+	@PreAuthorize("hasRole('MENTEE')")
 	@Operation(summary = "신고상태 변경")
 	@PutMapping("{reportNo}/status")
 	public ResponseEntity<Response> updateReportStatusForAdmin(

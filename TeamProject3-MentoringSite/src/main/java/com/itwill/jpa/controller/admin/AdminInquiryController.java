@@ -8,6 +8,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -22,6 +23,7 @@ import com.itwill.jpa.response.ResponseStatusCode;
 import com.itwill.jpa.service.bullentin_board.InquiryService;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 
 @RestController
 @RequestMapping("/admin/inquiry")
@@ -33,6 +35,8 @@ public class AdminInquiryController {
 	/************************* 질문 *******************************/
 	
 	/* (질문)게시글 전체출력 * */
+	@SecurityRequirement(name = "BearerAuth")
+	@PreAuthorize("hasRole('MENTEE')")
 	@Operation(summary = "질문 게시글 전체 조회(최신순)")
 	@GetMapping()
 	public ResponseEntity<Response> getAdminInquiriesOrderByDate(
@@ -55,6 +59,8 @@ public class AdminInquiryController {
 	}
 	
 	/* 카테고리별 출력 */
+	@SecurityRequirement(name = "BearerAuth")
+	@PreAuthorize("hasRole('MENTEE')")
 	@Operation(summary = "질문 게시글 전체 조회 (카테고리별, 최신 순)")
 	@GetMapping("/category/{categoryNo}")
 	public ResponseEntity<Response> getAdminCategoryInquiriesSortedByDate(@PathVariable(name = "categoryNo") Long categoryNo,
@@ -77,6 +83,8 @@ public class AdminInquiryController {
 	}
 	
 	/* 검색 내용 별 출력*/
+	@SecurityRequirement(name = "BearerAuth")
+	@PreAuthorize("hasRole('MENTEE')")
 	@Operation(summary = "질문 게시글 조회(검색어)")
 	@GetMapping("/search/{search}")
 	public ResponseEntity<Response> searchInquiriesForAdmin(@PathVariable(name = "search")String search
@@ -101,6 +109,8 @@ public class AdminInquiryController {
 	}
 	
 	/* 삭제(상태변경) */
+	@SecurityRequirement(name = "BearerAuth")
+	@PreAuthorize("hasRole('MENTEE')")
 	@Operation(summary = "질문 삭제")
 	@PutMapping("/delete/{inquiryNo}")
 	public ResponseEntity<Response> deleteInquiryForAdmin(@PathVariable(name = "inquiryNo") Long inquiryNo) throws Exception {

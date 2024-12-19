@@ -11,10 +11,7 @@ export const AdminReportPage = () => {
   const fetchReports = async () => {
     try {
       {/*const token = "로그인 후 받은 액세스 토큰";  // 실제 로그인 후 받은 토큰을 사용
-      const response = await fetch('/admin/reports?filter=1&page=0&size=10', {
-        method: 'GET',
-        headers: {
-          "Authorization": `Bearer ${token}`,  // 헤더에 토큰 포함
+      
           "Content-Type": "application/json",
         },
       });
@@ -24,6 +21,7 @@ export const AdminReportPage = () => {
       const data = await response.json();
       setReports(data.data); // 신고 목록을 상태에 저장
       console.log("response : ", data);*/}
+      
       const filter = 1;  // 필터값 (전체)
       const page = 0;    // 페이지 번호
       const size = 10;   // 페이지 당 항목 수
