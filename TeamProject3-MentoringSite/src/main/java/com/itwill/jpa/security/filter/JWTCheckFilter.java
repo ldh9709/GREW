@@ -41,7 +41,9 @@ public class JWTCheckFilter extends OncePerRequestFilter {
     String path = request.getRequestURI();
     
     log.info("check uri.............." + path);
+   
     // swagger 경로의 호출은 체크하지 않음
+    if(path.equals("/mentorprofile")) return false;
     if(path.equals("/inquiry")) return false;
     if (path.startsWith("/swagger-ui") 
 		|| path.startsWith("/category") 
@@ -80,10 +82,17 @@ public class JWTCheckFilter extends OncePerRequestFilter {
 		|| path.startsWith("/login")
     	|| path.startsWith("/v3/api-docs") 
     	|| path.startsWith("/favicon.ico")
-    	|| path.startsWith("/mentor-profile")
-    	|| path.startsWith("/mentor-profile/category")
-    	|| path.startsWith("/mentor-profile/search")
-    	|| path.startsWith("/mentor-board")
+    	
+    	
+    	|| path.startsWith("/mentor-profile/follow-count") 
+    	|| path.startsWith("/mentor-profile/follow-count") 
+		|| path.startsWith("/mentor-profile/mentoring-count") 
+		|| path.startsWith("/mentor-profile/activity-count") 
+		|| path.startsWith("/mentor-profile/search") 
+		|| path.startsWith("/mentor-profile/category") 
+		|| path.startsWith("/mentor-profile/status") 
+		//|| path.startsWith("/mentor-board")
+
     	
     	
     	) {

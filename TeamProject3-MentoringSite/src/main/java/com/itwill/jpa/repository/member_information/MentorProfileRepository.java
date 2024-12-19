@@ -102,6 +102,11 @@ public interface MentorProfileRepository extends JpaRepository<MentorProfile, Lo
      
      @Query("SELECT mp FROM MentorProfile mp JOIN FETCH mp.member JOIN FETCH mp.category WHERE mp.mentorProfileNo = :mentorProfileNo")
      MentorProfile findDetailedProfileByNo(@Param("mentorProfileNo") Long mentorProfileNo);
+     
+     //조회 리스트
+     Page<MentorProfile> findByOrderByMentorFollowCountDesc(Pageable pageable);
+     Page<MentorProfile> findByOrderByMentorMentoringCountDesc(Pageable pageable);
+     Page<MentorProfile> findByOrderByMentorActivityCountDesc(Pageable pageable);
 }
 
 

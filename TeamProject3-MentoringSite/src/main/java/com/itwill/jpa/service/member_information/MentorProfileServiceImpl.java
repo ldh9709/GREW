@@ -370,6 +370,29 @@ public class MentorProfileServiceImpl implements MentorProfileService {
             throw new CustomException(ResponseStatusCode.READ_MENTOR_PROFILE_FAIL, ResponseMessage.READ_MENTOR_PROFILE_FAIL, e);
         }
     }
+    
+    @Override
+    public Page<MentorProfileDto> getMentorsByFollowCount(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        Page<MentorProfile> mentorProfiles = mentorProfileRepository.findByOrderByMentorFollowCountDesc(pageable);
+        return mentorProfiles.map(MentorProfileDto::toDto);
+    }
+
+    @Override
+    public Page<MentorProfileDto> getMentorsByMentoringCount(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        Page<MentorProfile> mentorProfiles = mentorProfileRepository.findByOrderByMentorMentoringCountDesc(pageable);
+        return mentorProfiles.map(MentorProfileDto::toDto);
+    }
+
+    @Override
+    public Page<MentorProfileDto> getMentorsByActivityCount(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        Page<MentorProfile> mentorProfiles = mentorProfileRepository.findByOrderByMentorActivityCountDesc(pageable);
+        return mentorProfiles.map(MentorProfileDto::toDto);
+    }
+
+    
 }
     
 

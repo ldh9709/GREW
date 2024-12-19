@@ -147,4 +147,42 @@ export const getMentorActivityCount = async (mentorProfileNo) => {
   const response = await fetch(`${BACKEND_SERVER}/mentor-profile/${mentorProfileNo}/activity-count`);
   const responseJsonObject = await response.json();
   return responseJsonObject;
+
+  
+};
+
+
+//멘토 활동수 ,팔로우순 , 멘토링수  
+export const listMentorsByFollowCount = async (page, size) => {
+  const response = await fetch(`${BACKEND_SERVER}/mentor-profile/follow-count?page=${page}&size=${size}`, {
+    method: 'GET',
+  });
+  const responseJsonObject = await response.json();
+  return responseJsonObject;
+};
+
+export const listMentorsByMentoringCount = async (page, size) => {
+  const response = await fetch(`${BACKEND_SERVER}/mentor-profile/mentoring-count?page=${page}&size=${size}`, {
+    method: 'GET',
+  });
+  const responseJsonObject = await response.json();
+  return responseJsonObject;
+};
+
+export const listMentorsByActivityCount = async (page, size) => {
+  const response = await fetch(`${BACKEND_SERVER}/mentor-profile/activity-count?page=${page}&size=${size}`, {
+    method: 'GET',
+  });
+  const responseJsonObject = await response.json();
+  return responseJsonObject;
+};
+
+
+//서치 검색 
+export const searchMentorProfile = async (search, page, size) => {
+  const response = await fetch(`${process.env.REACT_APP_BACKEND_SERVER}/mentor-profile/search?keyword=${search}&page=${page}&size=${size}`, {
+    method: 'GET',
+  });
+  const responseJsonObject = await response.json();
+  return responseJsonObject;
 };

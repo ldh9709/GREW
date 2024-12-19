@@ -89,4 +89,11 @@ public interface MentorProfileService {
     
     //상세보기 1명
     MentorProfileDto getMentorProfileDetail(Long mentorProfileNo);
+    
+    
+    //팔로우수 멘토링수 활동수 조회 리스트
+    Page<MentorProfileDto> getMentorsByFollowCount(int page, int size);
+    Page<MentorProfileDto> getMentorsByMentoringCount(int page, int size);
+    Page<MentorProfileDto> getMentorsByActivityCount(int page, int size);
+
 }

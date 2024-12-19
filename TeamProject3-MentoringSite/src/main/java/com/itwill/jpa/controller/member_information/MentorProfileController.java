@@ -34,9 +34,6 @@ public class MentorProfileController {
 	@Autowired
     private MentorProfileService mentorProfileService;
 
-	
-	
-	
 	 @Operation(summary = "멘토 프로필 상세보기")
 	    @GetMapping("/{mentorProfileNo}")
 	    public ResponseEntity<Response> getMentorProfileDetail(@PathVariable("mentorProfileNo") Long mentorProfileNo) {
@@ -59,20 +56,7 @@ public class MentorProfileController {
 	        }
 	    }
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
     /**
      * 특정 멘토의 평균 점수를 조회합니다.
      */
@@ -198,6 +182,7 @@ public class MentorProfileController {
 
         return new ResponseEntity<>(response, headers, HttpStatus.OK);
     }
+
 
     @Operation(summary = "카테고리 멘토리스트 페이징")
     @GetMapping("/category/{categoryNo}")
@@ -335,6 +320,48 @@ public class MentorProfileController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
         }
     }
+
+    @Operation(summary = "팔로우 수 순으로 멘토 목록 조회")
+    @GetMapping("/follow-count")
+    public ResponseEntity<Response> getMentorProfilesByFollowCount(
+        @RequestParam(name = "page", defaultValue = "0") int page,
+        @RequestParam(name = "size", defaultValue = "10") int size
+    ) {
+        Page<MentorProfileDto> mentors = mentorProfileService.getMentorsByFollowCount(page, size);
+        Response response = new Response();
+        response.setStatus(ResponseStatusCode.READ_MENTOR_PROFILE_LIST_SUCCESS_CODE);
+        response.setMessage(ResponseMessage.READ_MENTOR_PROFILE_LIST_SUCCESS);
+        response.setData(mentors);
+        return ResponseEntity.ok(response);
+    }
+
+    @Operation(summary = "멘토링 횟수 순으로 멘토 목록 조회")
+    @GetMapping("/mentoring-count")
+    public ResponseEntity<Response> getMentorProfilesByMentoringCount(
+        @RequestParam(name = "page", defaultValue = "0") int page,
+        @RequestParam(name = "size", defaultValue = "10") int size
+    ) {
+        Page<MentorProfileDto> mentors = mentorProfileService.getMentorsByMentoringCount(page, size);
+        Response response = new Response();
+        response.setStatus(ResponseStatusCode.READ_MENTOR_PROFILE_LIST_SUCCESS_CODE);
+        response.setMessage(ResponseMessage.READ_MENTOR_PROFILE_LIST_SUCCESS);
+        response.setData(mentors);
+        return ResponseEntity.ok(response);
+    }
+
+    @Operation(summary = "활동 수 순으로 멘토 목록 조회")
+    @GetMapping("/activity-count")
+    public ResponseEntity<Response> getMentorProfilesByActivityCount(
+        @RequestParam(name = "page", defaultValue = "0") int page,
+        @RequestParam(name = "size", defaultValue = "10") int size
+    ) {
+        Page<MentorProfileDto> mentors = mentorProfileService.getMentorsByActivityCount(page, size);
+        Response response = new Response();
+        response.setStatus(ResponseStatusCode.READ_MENTOR_PROFILE_LIST_SUCCESS_CODE);
+        response.setMessage(ResponseMessage.READ_MENTOR_PROFILE_LIST_SUCCESS);
+        response.setData(mentors);
+        return ResponseEntity.ok(response);
+    }   
 }
     
 

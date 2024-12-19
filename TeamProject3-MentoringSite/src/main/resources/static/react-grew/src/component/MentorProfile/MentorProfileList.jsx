@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import '../../css/mentorProfile.css'; // ✅ CSS 경로
-import { listMentorProfiles, getMentorProfile } from '../../api/MentorProfileApi.js'; // ✅ API 경로
+import { listMentorProfiles, listMentorsByFollowCount, listMentorsByMentoringCount, listMentorsByActivityCount } from '../../api/MentorProfileApi.js'; // ✅ API 경로
 
 const MentorProfileList = () => {
   const [mentorProfiles, setMentorProfiles] = useState([]);
@@ -8,16 +8,31 @@ const MentorProfileList = () => {
   const [error, setError] = useState(null);
   const [activePanel, setActivePanel] = useState('list');
   const [selectedMentor, setSelectedMentor] = useState(null);
+  const [sortType, setSortType] = useState('follow'); // 🔥 정렬 타입 추가
 
+  // 🔥 sortType이 변경될 때마다 fetchMentorProfiles()를 호출
   useEffect(() => {
     fetchMentorProfiles();
-  }, []);
+  }, [sortType]);
 
   const fetchMentorProfiles = async () => {
     try {
       setLoading(true);
       setError(null);
-      const response = await listMentorProfiles();
+
+      let response;
+
+      // 🔥 정렬 타입에 따라 API를 호출
+      if (sortType === 'follow') {
+        response = await listMentorsByFollowCount(0, 10); // 팔로우 순으로 정렬된 멘토 목록 가져오기
+      } else if (sortType === 'mentoring') {
+        response = await listMentorsByMentoringCount(0, 10); // 멘토링 횟수 순으로 정렬된 멘토 목록 가져오기
+      } else if (sortType === 'activity') {
+        response = await listMentorsByActivityCount(0, 10); // 활동 수 순으로 정렬된 멘토 목록 가져오기
+      } else {
+        response = await listMentorProfiles(); // 기본 목록 가져오기
+      }
+
       if (response?.data?.content) {
         setMentorProfiles(response.data.content);
       } else {
@@ -40,12 +55,57 @@ const MentorProfileList = () => {
     setSelectedMentor(null);
   };
 
+  // 🔥 라디오 버튼의 정렬 변경 이벤트 핸들러
+  const handleRadioChange = (e) => {
+    setSortType(e.target.value); // 정렬 기준을 업데이트하면 useEffect가 트리거됨
+  };
+
   return (
     <div>
       <div className={`mentor-profile-panel ${activePanel ? 'open' : ''}`}>
+        
         {activePanel === 'list' && (
           <div className="mentor-profile-list">
             <h2>멘토 프로필 목록</h2>
+
+            {/* 🔥 라디오 버튼 추가 영역 */}
+            <div style={{ marginTop: "20px", marginBottom: "20px" }}>
+              <div className="radio-container">
+                <label style={{ marginRight: "10px" }}>
+                  <input 
+                    type="radio" 
+                    name="sortType" 
+                    value="follow" 
+                    checked={sortType === 'follow'} 
+                    onChange={handleRadioChange} 
+                  />
+                  팔로우 순
+                </label>
+
+                <label style={{ marginRight: "10px" }}>
+                  <input 
+                    type="radio" 
+                    name="sortType" 
+                    value="mentoring" 
+                    checked={sortType === 'mentoring'} 
+                    onChange={handleRadioChange} 
+                  />
+                  멘토링 횟수 순
+                </label>
+
+                <label>
+                  <input 
+                    type="radio" 
+                    name="sortType" 
+                    value="activity" 
+                    checked={sortType === 'activity'} 
+                    onChange={handleRadioChange} 
+                  />
+                  활동 수 순
+                </label>
+              </div>
+            </div>
+            {/* 🔥 라디오 버튼 추가 영역 끝 */}
 
             {loading && <p>로딩 중...</p>}
             {error && <p className="error-message">에러 발생: {error}</p>}

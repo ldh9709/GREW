@@ -1,9 +1,13 @@
 import React, { useState } from "react";
 import "../css/styles.css";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
+
+
 export default function Navigate() {
   const [searchTerm, setSearchTerm] = useState(""); // 검색어 상태
   const navigate = useNavigate();
+  const location = useLocation();// 문 추가된메서드
+
   const menuBarStyle = {
     display: "flex",
     justifyContent: "left",
@@ -26,9 +30,18 @@ export default function Navigate() {
   const handleSearchClick = () => {
     // 검색어가 있을 경우, searchList 페이지로 이동하면서 검색어를 전달
     if (searchTerm.trim() !== "") {
-      navigate(`/searchList?query=${searchTerm}`); // 검색어를 쿼리 파라미터로 전달
+      if(location.pathname.replace(/\/$/, '') === "/mentor-profile/list") {   //추가된 메서드 문준형
+        //멘토리스트 레이지의 경우
+        navigate(`/mentorSearchList?query=${searchTerm}`); // 검색어를 쿼리 파라미터로 전달
+      }else{  //추가됨 문준형
+        // 디폴드 질문 검색으로 이동
+        navigate(`/searchList?query=${searchTerm}`); // 검색어를 쿼리 파라미터로 전달
+      
+      } //추가됨  문준형
     }
   };
+
+
   // Enter 키 입력 시 버튼 클릭처럼 동작하도록 처리
   const handleKeyPress = (e) => {
     if (e.key === "Enter") {
@@ -59,7 +72,7 @@ export default function Navigate() {
           />
           질문하기
         </a>
-        <a href="/MentorProfile/List" className="findMentor" style={linkStyle}>
+        <a href="/mentorprofile/list" className="findMentor" style={linkStyle}>
           <img
             className="gnb_menu_img"
             src="https://img.icons8.com/?size=100&id=p3miLroKw4iR&format=png&color=000000"
