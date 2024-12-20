@@ -48,7 +48,8 @@ import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.Parameter;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
-
+import lombok.extern.slf4j.Slf4j;
+@Slf4j
 @CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/member")
@@ -209,7 +210,6 @@ public class MemberRestController {
 		//PrincipalDetails에서 memberNo를 가져옴
 		PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
 		Long memberNo = principalDetails.getMemberNo();
-		
 		System.out.println(">>>>> getAuthorities : " + authentication.getAuthorities());
 		System.out.println(">>>>> authentica  tion : " + authentication);
 		System.out.println(">>>>> au	thentication.getName() : " + authentication.getName());
@@ -242,16 +242,18 @@ public class MemberRestController {
 	
 	
 	/* 회원 정보 수정 */
+	
 	@Operation(summary = "회원 정보 수정")
+	@PutMapping("/profile/edit/{memberNo}")
 	@SecurityRequirement(name = "BearerAuth")//API 엔드포인트가 인증을 요구한다는 것을 문서화(Swagger에서 JWT인증을 명시
-	@PutMapping("/{memberNo}")
 	public ResponseEntity<Response> updateMember(
 			@RequestBody MemberDto memberDto,
 			@PathVariable("memberNo") Long memberNo
 			) {
-		
-		System.out.println(memberDto);
-		
+		System.out.println("회원 정보 수정 : >>>>>" + memberDto);
+		System.out.println("회원 정보 수정 : >>>>>" + memberNo);
+		log.info(">>>>> 컨트롤러에 요청 도달: memberNo={}", memberNo);
+	    log.info(">>>>> 수정 요청 데이터: {}", memberDto);
 		//Authentication authentication =	SecurityContextHolder.getContext().getAuthentication();
 		//PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
 		
@@ -273,7 +275,7 @@ public class MemberRestController {
 			response.setMessage(ResponseMessage.UPDATE_MEMBER_SUCCESS);
 			response.setData(updateMemberDto);
 		}
-		
+		System.out.println("반환 객체 : " + response.getData());
 		HttpHeaders httpHeaders=new HttpHeaders();
 		httpHeaders.setContentType(new MediaType(MediaType.APPLICATION_JSON,Charset.forName("UTF-8")));
 		

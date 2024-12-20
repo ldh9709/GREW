@@ -46,6 +46,8 @@ public class JWTCheckFilter extends OncePerRequestFilter {
 		|| path.startsWith("/alarm") 
 //		|| path.startsWith("/review")
 
+//		|| path.equals("/inquiry") 
+//		|| path.startsWith("/inquiry/list")
 		|| path.startsWith("/inquiry/update")
 		|| path.startsWith("/inquiry/increase")
 		|| path.startsWith("/inquiry/delete")
@@ -76,7 +78,10 @@ public class JWTCheckFilter extends OncePerRequestFilter {
 		|| path.startsWith("/member/sendJoinCode")
 		|| path.startsWith("/member/createMember")
 		|| path.startsWith("/member/findId")
+		|| path.startsWith("/member/profile/edit")
 		|| path.startsWith("/login")
+		|| path.startsWith("/logout")
+		|| path.startsWith("/main")
     	|| path.startsWith("/v3/api-docs") 
     	|| path.startsWith("/favicon.ico")
     	) {
@@ -91,18 +96,19 @@ public class JWTCheckFilter extends OncePerRequestFilter {
   @Override
   protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
       throws ServletException, IOException {
-	  	// 요청 헤더에서 Authorization 추출
+	  
+	  // 요청 헤더에서 Authorization 추출
 	  System.out.println(">>>>>>>>>>>>request : " + request);
 	  System.out.println(">>>>>>>>>>>>response : " + response);
 	  System.out.println(">>>>>>>>>>>>filterChain : " + filterChain);
 	  
         String authHeaderStr = request.getHeader("Authorization");
+        
         System.out.println(">>>>>>>>>>>>authHeaderStr(JWT필터 적용되고 있음) : " + authHeaderStr);
         
         try {
           // Authorization 헤더에서 'Bearer ' 부분을 제외한 토큰만 추출
           String accessToken = authHeaderStr.substring(7);
-          
           // JWTUtil.validateToken() 메서드를 사용하여 토큰을 검증하고 클레임을 추출
           Map<String, Object> claims = JWTUtil.validateToken(accessToken);
           log.info("JWT claims: " + claims); // 토큰에서 추출한 클레임 로깅

@@ -9,16 +9,30 @@
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   font-family: "nanumsquare";
+  
 }
 
 /* 제목 스타일 */
 .member-signup-title,
 .member-login-title {
-  text-align: center;
-  margin-bottom: 20px;
-  font-size: 24px;
-  color: #333;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  color: #555;
+  position: relative;
 }
+
+.member-signup-title::before,
+.member-signup-title::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background-color: #ccc;
+    margin: 0 10px; /* 글자와 선 간격 */
+}
+
+
 
 .member-signup-subtitle,
 .member-login-sub-title {
@@ -26,6 +40,15 @@
   margin-bottom: 10px;
   font-size: 15px;
   color: #333;
+}
+
+.member-join-sub-title {
+  text-align: left;
+  margin-left: 45px;
+  margin-bottom: 10px;
+  font-size: 15px;
+  color: #333;
+  font-family: "nanumsquare";
 }
 
 /* 입력 폼 */
@@ -41,7 +64,6 @@
   border: 1px solid #ccc;
   border-radius: 5px;
   box-sizing: border-box;
-  font-family: "nanumsquare";
   font-size: 15px;
 }
 
@@ -65,6 +87,20 @@
 .member-login-button:hover {
   background-color: #45a049;
 }
+
+.logo-icon {
+  display: flex; /* 플렉스박스 활성화 */
+    font-family: "nanumsquare";
+    margin: 0 auto; /* 여백 자동으로 가운데 정렬 */
+    box-sizing: border-box; /* 패딩 포함 */
+
+}
+
+.logo-title{
+    font-family: "nanumsquare";
+    text-align: center;
+}
+
 
 .member-submit-button,
 .member-delete-button {
@@ -160,7 +196,6 @@ legend {
   width: 300px;
   height: 30px;
   display: flex;
-  font-family: 'nanumsquare';
   font-size: 15px;
   padding: 5px;
 }
@@ -215,7 +250,6 @@ legend {
   width: 300px;
   height: 30px;
   display: flex;
-  font-family: 'nanumsquare';
   font-size: 15px;
   padding: 5px;
 }
@@ -261,4 +295,66 @@ legend {
   text-align: left;
   font-size: 20px;
   margin-left: 200px;
+}
+
+
+/* MemberMainJoinFormCSS */
+/* 회원가입 유형 선택 컨테이너 */
+.signup-container {
+  width: 1000px;
+  height: 100vh; /* 페이지 전체 높이 */
+  margin: 50px auto;
+  padding: 20px;
+  background-color: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  font-family: "nanumsquare";
+  text-align: center;
+}
+
+/* 제목 스타일 */
+.signup-title {
+  font-size: 24px;
+  color: #333;
+  margin-top: 100px;
+  margin-bottom: 10px;
+}
+
+
+.signup-subtitle {
+  font-size: 15px;
+  color: #333;
+}
+
+/* 버튼 컨테이너 */
+.signup-button-container {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+}
+
+/* 버튼 스타일 */
+.signup-btn {
+  margin-top: 100px;
+  width: 300px;
+  height: 300px;
+  font-size: 50px;
+  font-family: 'nanumsquare';
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: transform 0.2s ease-in-out;
+}
+
+.signup-btn:hover {
+  transform: scale(1.05);
+}
+
+.signup-mentee {
+  background-color: #4caf50;
+}
+
+.signup-mentor {
+  background-color: #b0b0b0;
 }
