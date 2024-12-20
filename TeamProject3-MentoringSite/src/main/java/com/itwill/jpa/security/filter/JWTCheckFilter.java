@@ -46,6 +46,11 @@ public class JWTCheckFilter extends OncePerRequestFilter {
     if (path.startsWith("/swagger-ui") 
 		|| path.startsWith("/category") 
 		|| path.startsWith("/alarm") 
+		|| path.startsWith("/inquiry") 
+		|| path.startsWith("/answer") 
+		|| path.startsWith("/chat") 
+		|| path.startsWith("/review")
+
 //		|| path.equals("/inquiry") 
 		
 //		|| path.startsWith("/inquiry/list")
@@ -75,6 +80,7 @@ public class JWTCheckFilter extends OncePerRequestFilter {
 		|| path.startsWith("/chatroom/canceled")
 		|| path.startsWith("/chatroom/active")
 		|| path.startsWith("/chatroom/messages")
+
 		|| path.startsWith("/member/sendJoinCode")
 		|| path.startsWith("/member/createMember")
 		|| path.startsWith("/member/findId")
