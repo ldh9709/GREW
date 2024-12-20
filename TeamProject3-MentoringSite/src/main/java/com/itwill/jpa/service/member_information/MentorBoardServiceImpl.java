@@ -159,33 +159,42 @@ public class MentorBoardServiceImpl implements MentorBoardService {
 	            throw new CustomException(ResponseStatusCode.UPDATE_MENTOR_BOARD_FAIL, ResponseMessage.UPDATE_MENTOR_BOARD_FAIL, e);
 	        }
 	    }
-
-	    /**
-	     * 멘토 보드 이미지 업로드 메서드
+/*
+	    * 멘토 보드 이미지 업로드 메서드
 	     */
 	    @Override
-	    public void uploadImage(Long mentorBoardNo, MultipartFile file) {
+	    public String uploadImage(Long mentorBoardNo, MultipartFile file) {
 	        try {
+	            // 1️⃣ 멘토 보드 조회
 	            MentorBoard mentorBoard = mentorBoardRepository.findById(mentorBoardNo).orElse(null);
 
-	            // 멘토 보드를 찾을 수 없는 경우 예외 발생
+	            // 2️⃣ 멘토 보드를 찾을 수 없는 경우 예외 발생
 	            if (mentorBoard == null) {
 	                throw new CustomException(ResponseStatusCode.MENTOR_BOARD_NOT_FOUND, ResponseMessage.MENTOR_BOARD_NOT_FOUND, null);
 	            }
 
+	            // 3️⃣ 업로드할 파일 정보 설정
 	            String fileName = file.getOriginalFilename();
 	            String filePath = UPLOAD_DIR + mentorBoardNo + "/" + fileName;
 
+	            // 4️⃣ 디렉토리 생성 (존재하지 않으면)
 	            File directory = new File(UPLOAD_DIR + mentorBoardNo + "/");
 	            if (!directory.exists()) {
-	                directory.mkdirs(); // 디렉터리 생성
+	                directory.mkdirs();
 	            }
 
-	            file.transferTo(new File(filePath)); // 파일 저장
+	            // 5️⃣ 파일 저장
+	            file.transferTo(new File(filePath));
 
+	            // 6️⃣ 저장된 이미지 URL 생성
 	            String imageUrl = "/upload/mentor-board/" + mentorBoardNo + "/" + fileName;
-	            mentorBoard.setMentorBoardImage(imageUrl); // DB에 URL 저장
+	            
+	            // 7️⃣ 멘토 보드에 이미지 URL 저장
+	            mentorBoard.setMentorBoardImage(imageUrl);
 	            mentorBoardRepository.save(mentorBoard);
+	            
+	            // 8️⃣ 업로드된 이미지 URL 반환
+	            return imageUrl;
 	        } catch (IOException e) {
 	            throw new CustomException(ResponseStatusCode.IMAGE_UPLOAD_FAIL, ResponseMessage.IMAGE_UPLOAD_FAIL, e);
 	        }
