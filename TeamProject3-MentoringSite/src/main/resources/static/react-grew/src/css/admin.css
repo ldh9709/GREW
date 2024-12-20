@@ -1,0 +1,115 @@
+/* 사이드 바*/
+.sidebar {
+    position: fixed; /* 화면 왼쪽에 고정 */
+    top: 0;
+    left: 0;
+    width: 240px;
+    height: 100%; /* 화면 전체 높이 */
+    background-color: #333;
+    color: #fff;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.sidebar h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.sidebar ul {
+    list-style: none;
+    justify-content: space-between; /* 항목들 간에 균등한 간격을 추가 */
+    box-sizing: border-box;
+}
+
+.sidebar li {
+    padding: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.sidebar li:hover {
+    background-color: #444;
+}
+
+
+.admin-content{
+    margin-top: 130px;
+}
+
+/* Content 스타일 */
+.content {
+    margin-left: 240px; /* sidebar의 너비만큼 왼쪽 공간 확보 */
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.header {
+    background-color: #fff;
+    padding: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.header h1 {
+    font-size: 28px;
+}
+
+.section {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.section h2 {
+    margin-bottom: 20px;
+    font-size: 24px;
+}
+
+/*회원 관리*/
+
+.member-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+  }
+  
+  .member-table th,
+  .member-table td {
+    padding: 10px;
+    text-align: center;
+    border: 1px solid #ddd;
+  }
+  
+  .member-table th {
+    background-color: #444;
+    color: #fff;
+  }
+  
+  .member-table tr:nth-child(even) {
+    background-color: #f9f9f9;
+  }
+  
+  .member-table tr:hover {
+    background-color: #f1f1f1;
+  }
+  
+  .member-table td button {
+    padding: 5px 10px;
+    font-size: 14px;
+    color: #fff;
+    background-color: #dc3545;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .member-table td button:hover {
+    opacity: 0.8;
+  }
