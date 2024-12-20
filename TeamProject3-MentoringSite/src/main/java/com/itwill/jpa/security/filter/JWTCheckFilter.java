@@ -58,7 +58,7 @@ public class JWTCheckFilter extends OncePerRequestFilter {
 		|| path.startsWith("/inquiry/date")
 		|| path.startsWith("/inquiry/view")
 		|| path.endsWith("-count")
-		|| path.endsWith("-date")
+		|| path.endsWith("date")
 		|| path.endsWith("-vote")
 		|| path.endsWith("votes")
 		|| path.startsWith("/inquiry/answer-count")

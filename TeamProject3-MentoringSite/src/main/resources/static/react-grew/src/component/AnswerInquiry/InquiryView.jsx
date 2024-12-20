@@ -4,6 +4,7 @@ import * as inquiryApi from "../../api/inquiryApi";
 import * as answerApi from "../../api/answerApi";
 import AnswerItem from "./AnswerItem";
 import { getCookie } from "../../util/cookieUtil";
+import "../../css/styles.css";
 function InquiryView() {
   const memberCookie = getCookie("member");
   const navigate = useNavigate();
@@ -96,7 +97,15 @@ function InquiryView() {
   for (let i = startPage; i <= endPage; i++) {
     pageNumbers.push(i);
   }
-
+  const handleWriteButton = ()=>{
+    console.log(memberCookie)
+    if(memberCookie){
+      navigate(`/answer/answerWrite/${inquiryNo}`);
+    }else{
+      alert('로그인이 필요한 서비스입니다.');
+      return;
+    }
+  }
   return (
     <>
       <link
@@ -111,8 +120,7 @@ function InquiryView() {
 
           {/* {memberCookie.memberRole == "ROLE_MENTOR" ? ( */}
             <div className="answer-write">
-              <Link to={`/answer/answerWrite/${inquiryNo}`}>
-                <button className="answer-notify-btn">
+                <button className="answer-notify-btn" onClick={handleWriteButton}>
                   <img
                     src="https://img.icons8.com/?size=100&id=P1bJzKUoOQYz&format=png&color=000000"
                     style={{
@@ -125,26 +133,22 @@ function InquiryView() {
                   />
                   답변하기
                 </button>
-              </Link>
             </div>
           {/* // ) : (
           //   <div style={{ marginBottom: "50px" }}></div>
           // )} */}
           {/* 카테고리에 맞는 멘토만 보이는조건 */}
-          <div className="inquiry-container">
+          <div className="inquiry-container-inview">
             <div>
               <div className="inquiry-title">{inquiry.inquiryTitle}</div>
             </div>
             <div className="inquiry-desc">
+              <div>{inquiry.categoryName}</div>
               <div>
                 {inquiry.memberName} | 조회수 {inquiry.inquiryViews} |{" "}
                 {inquiry.inquiryDate.substring(0, 10)}
               </div>
-              <br />
-              <div>{inquiry.categoryName}</div>
             </div>
-            <br />
-            <br />
             <div className="inquiry-content">
               <div>{inquiry.inquiryContent}</div>
             </div>
