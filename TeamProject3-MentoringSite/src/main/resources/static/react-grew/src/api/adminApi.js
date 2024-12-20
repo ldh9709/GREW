@@ -1,5 +1,19 @@
-// 백엔드 서버 URL 정의
-const BACKEND_SERVER = ""; // 실제 백엔드 URL로 교체해주세요
+const BACKEND_SERVER = ""; // 백엔드 서버 URL 정의
+
+
+//회원 목록 조회
+export const adminMember = async(token,role,order) =>{
+  const response = await fetch(`${BACKEND_SERVER}/admin/member?role=${role}&order=${order}`, {
+  method: 'GET',
+  headers: {
+    'Authorization': `Bearer ${token}`, // 전달받은 JWT 토큰 사용
+    'Content-Type': 'application/json'
+  }
+  });
+  const responseJsonObject= await response.json();
+  return responseJsonObject;
+}
+
 
 export const adminReport = async (token,page,size) => {
    const response = await fetch(`${BACKEND_SERVER}/chatroom/list?page=${page}&size=${size}`, {
