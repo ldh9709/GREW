@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.itwill.jpa.dto.member_information.InterestDto;
 import com.itwill.jpa.dto.member_information.MemberDto;
@@ -26,7 +27,6 @@ import com.itwill.jpa.repository.member_information.MemberRepository;
 import com.itwill.jpa.util.CustomMailSender;
 
 import jakarta.persistence.EntityManager;
-import jakarta.transaction.Transactional;
 
 @Service
 public class MemberServiceImpl implements MemberService {
@@ -209,34 +209,20 @@ public class MemberServiceImpl implements MemberService {
 //		return memberRepository.save(member);
 //	}
 	
+	
 	/***** 회원 수정 ****/
 	@Override
 	@Transactional
 	public Member updateMember(MemberDto memberDto) {
-		
 		Member member = memberRepository.findByMemberNo(memberDto.getMemberNo());
 		
+		member.getInterests().clear();
 		
-		List<Interest> interests = new ArrayList<>(); 
-		 // 기존 관심사 관리
-	    List<Interest> existingInterests = member.getInterests();
-	    List<Long> updatedInterestNos = memberDto.getInterests()
-	            .stream()
-	            .map(InterestDto::getInterestNo)
-	            .toList();
-	    
-	    // 기존 관심사 삭제
-	    existingInterests.removeIf(interest -> !updatedInterestNos.contains(interest.getInterestNo()));
-
-	 // 새로운 관심사 추가
-	    for (InterestDto interestDto : memberDto.getInterests()) {
-	        Interest existingInterest = interestRepository.findByInterestNo(interestDto.getInterestNo());
-	        if (existingInterest == null) { 
-	            Interest newInterest = Interest.toEntity(interestDto);
-	            member.addInterests(newInterest);
-	        }
+	 	// 관심사 업데이트
+        for (InterestDto interestDto : memberDto.getInterests()) {
+            Interest interest = Interest.toEntity(interestDto);
+            member.addInterests(interest);
 	    }
-	    
 		
 		member.setMemberName(memberDto.getMemberName());
 		member.setMemberPassword(memberDto.getMemberPassword());
