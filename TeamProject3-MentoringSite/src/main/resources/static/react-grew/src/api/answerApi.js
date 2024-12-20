@@ -132,7 +132,7 @@ export const viewAnswer = async (answerNo) => {
 
 //내가 작성한 답변 내역
 export const listAnswerByMemberNo = async (token,page) => {
-  const response = await fetch(`${BACKEND_SERVER}/answer`, {
+  const response = await fetch(`${BACKEND_SERVER}/answer?page=${page}&size=10`, {
     method: 'GET',
     headers: {
       "Content-Type": "application/json;charset=UTF-8", // 요청 헤더 설정

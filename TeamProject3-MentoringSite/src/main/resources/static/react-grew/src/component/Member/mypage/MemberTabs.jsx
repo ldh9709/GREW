@@ -12,8 +12,10 @@ export default function MemberTabs() {
     const role = memberCookie.memberRole;
 
     //활성화 된 탭 상태를 저장하는 state
-    const [activeTab, setActiveTab] = useState("inquiry");
-    
+    const [activeTab, setActiveTab] = useState(
+        role==='ROLE_MENTEE' ?
+            "inquiry" : "answer"
+    )
     //탭 클릭시 실행되는 함수
     const handleTabClick = (tab) => {
         setActiveTab(tab);

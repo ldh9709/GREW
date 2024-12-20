@@ -27,7 +27,6 @@ export default function MemberSummary() {
                     counselCount: data.counselCount,
                     followCount: data.followCount,
                 }));
-                console.log("memberSummary",response);
             }else if(role==='ROLE_MENTOR'){
                 const response = await memberApi.mentorSummary(token);
                 const { data } = await response;
@@ -38,7 +37,6 @@ export default function MemberSummary() {
                     followCount: data.followCount,
                     boardCount: data.boardCount
                 }));
-                console.log("memberSummary",response);
             }
         } catch (error) {
             console.error('요약정보 조회 실패:', error);

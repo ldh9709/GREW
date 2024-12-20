@@ -241,10 +241,11 @@ body {
 }
 .mentor-list {
   display: flex;
+  justify-content: center;
   gap: 20px;
   list-style: none;
   padding: 0;
-  margin: 0;
+  margin: 0 auto;
 }
 
 .mentor-counsel-item {

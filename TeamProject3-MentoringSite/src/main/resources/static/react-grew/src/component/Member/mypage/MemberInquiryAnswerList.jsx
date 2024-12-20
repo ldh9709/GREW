@@ -12,9 +12,11 @@ export default function MemberInquiryList() {
     const [datayList, setdataList] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(0);
-    const navigate = useNavigate();
+    const navigate = useNavigate(); 
 
-    const fetchInquiryList = async (page) => {
+    
+
+    const fetchInquiryAnswerList = async (page) => {
         try {
             if (role === 'ROLE_MENTEE') {
                 const response = await inquiryApi.listInquiryByMemberNo(token, page);
@@ -24,6 +26,7 @@ export default function MemberInquiryList() {
             } else if (role === 'ROLE_MENTOR') {
                 const response = await answerApi.listAnswerByMemberNo(token,page);
                 const { data } = response;
+                console.log(response);
                 setdataList(data.content);
                 setTotalPages(data.totalPages);
             }
@@ -35,7 +38,7 @@ export default function MemberInquiryList() {
     }
 
     useEffect(() => {
-        fetchInquiryList(currentPage - 1);
+        fetchInquiryAnswerList(currentPage - 1);
     },[currentPage])
     
     // 페이지 변경 시 데이터 갱신

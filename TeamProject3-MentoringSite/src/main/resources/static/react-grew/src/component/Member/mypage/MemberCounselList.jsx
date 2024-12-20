@@ -110,7 +110,7 @@ export default function MemberCounselList() {
               {counselList.map((counsel, index) => (
                 <li className="mentor-counsel-item" key={index}>
                   <div>
-                    <img src={counsel.image || "default-image-url"} alt="프로필 이미지" />
+                    <img src={image} alt="프로필 이미지" />
                   </div>
                   <div>
                     <p className="mentor-name">{counsel.searchName} 멘토</p>
