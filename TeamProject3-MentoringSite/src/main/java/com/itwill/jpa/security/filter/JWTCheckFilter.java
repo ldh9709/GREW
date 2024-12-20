@@ -83,6 +83,7 @@ public class JWTCheckFilter extends OncePerRequestFilter {
     	|| path.startsWith("/favicon.ico")
     	|| path.startsWith("/mentor-profile")
     	|| path.startsWith("/mentor-board")
+    	|| path.startsWith("/mentorprofile")
     	) {
       return true;
     }
