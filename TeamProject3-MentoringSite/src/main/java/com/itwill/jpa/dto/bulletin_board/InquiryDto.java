@@ -22,6 +22,7 @@ public class InquiryDto {
     private Integer inquiryStatus;
     private Integer inquiryViews;
     private Long parentsCategoryNo;
+    private String parentsCategoryName;
     private Long categoryNo;
     private String categoryName;
     private Long memberNo;
@@ -39,6 +40,7 @@ public class InquiryDto {
                 .inquiryStatus(inquiryEntity.getInquiryStatus())
                 .inquiryViews(inquiryEntity.getInquiryViews())
                 .parentsCategoryNo(inquiryEntity.getCategory().getParentCategory().getCategoryNo())
+                .parentsCategoryName(inquiryEntity.getCategory().getParentCategory().getCategoryName())
                 .categoryNo(inquiryEntity.getCategory().getCategoryNo())
                 .categoryName(inquiryEntity.getCategory().getCategoryName())
                 .memberNo(inquiryEntity.getMember().getMemberNo())

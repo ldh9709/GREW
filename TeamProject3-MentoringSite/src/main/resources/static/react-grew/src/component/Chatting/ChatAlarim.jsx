@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import '../../css/ChatApp.css'; // CSS를 별도 파일로 분리
+import '../../css/chatApp.css'; // CSS를 별도 파일로 분리
 import ChattingMessage from './Chatting.jsx';
 import ChatRoom from './ChatRoom.jsx';
 import Alarim from '../Alarim.jsx';

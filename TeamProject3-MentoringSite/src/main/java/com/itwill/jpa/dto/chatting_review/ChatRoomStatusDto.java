@@ -17,6 +17,7 @@ public class ChatRoomStatusDto {
 	private Integer chatRoomStatus;
 	
 	private Long memberNo;
+	private String memberName;
 	
 	public static ChatRoomStatusDto toDto(ChatRoomStatus chatRoomStatusEntity) {
         return ChatRoomStatusDto.builder()
@@ -24,6 +25,7 @@ public class ChatRoomStatusDto {
                 .chatRoomName(chatRoomStatusEntity.getChatRoomName())
                 .chatRoomStatus(chatRoomStatusEntity.getChatRoomStatus())
                 .memberNo(chatRoomStatusEntity.getMember().getMemberNo())
+                .memberName(chatRoomStatusEntity.getMember().getMemberName())
                 .build();
     }
 }

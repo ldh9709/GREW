@@ -79,9 +79,14 @@ public class ChatRoomServiceImplTest {
 		System.out.println("강제 종료 1L : "+chatRoomService.updateForceClosed(1L));
 	}
 	@Test
-	void selectMentoringRequestAll(){
-		System.out.println("유저 번호 4번 채팅방 전체 출력"+chatRoomService.selectChatRoomAll(4L));
+	void selectChatRoomByMenteeNo(){
+		System.out.println("유저 번호 6번 멘티 채팅방 전체 출력"+chatRoomService.selectChatRoomByMenteeNo(6L,0,10).getContent());
 	}
+	@Test
+	void selectChatRoomByMentorNo(){
+		System.out.println("유저 번호 6번 멘토 채팅방 전체 출력"+chatRoomService.selectChatRoomByMentorNo(6L,0,10).getContent());
+	}
+	
 	//@Test
 	void updateChattingStatus() {
 		chatRoomStatusService.updateChatRoomStatus(1L, 5L);

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { getAdminReportList, updateReportStatusForAdmin, adminReport } from "../../api/adminApi"; // api.js에서 import
 
 // 신고 처리 페이지
 export const AdminReportPage = () => {
@@ -9,11 +10,7 @@ export const AdminReportPage = () => {
   // 신고 목록을 API에서 가져오는 함수
   const fetchReports = async () => {
     try {
-      const token = "로그인 후 받은 액세스 토큰";  // 실제 로그인 후 받은 토큰을 사용
-      const response = await fetch('/admin/reports?filter=1&page=0&size=10', {
-        method: 'GET',
-        headers: {
-          "Authorization": `Bearer ${token}`,  // 헤더에 토큰 포함
+      {/*
           "Content-Type": "application/json",
         },
       });
@@ -22,7 +19,28 @@ export const AdminReportPage = () => {
       }
       const data = await response.json();
       setReports(data.data); // 신고 목록을 상태에 저장
-      console.log("response : ", data);
+      console.log("response : ", data);*/}
+      // 1. 로컬 스토리지에서 액세스 토큰을 가져옴
+      const token = localStorage.getItem("accessToken");  // 실제 로그인 후 받은 토큰을 사용  
+
+      if (!token) {
+        setError("액세스 토큰이 없습니다. 로그인 후 다시 시도해주세요.");
+        return; // 토큰이 없다면 더 이상 진행하지 않음
+      }
+       // 2. 페이지, 사이즈 값 설정
+      const filter = 1;  // 필터값 (전체)
+      const page = 0;    // 페이지 번호
+      const size = 10;   // 페이지 당 항목 수
+      // 3. adminReport 함수 호출하여 데이터 가져오기
+      const data = await getAdminReportList(filter, page, size);
+      
+      console.log("data : ", data);
+      // 4. 데이터가 잘 왔으면 상태에 저장
+      if (data && data.data) {
+        setReports(data.data); // 신고 목록을 상태에 저장
+      } else {
+        setError('데이터 형식에 문제가 있습니다.');
+      }
     } catch (err) {
       console.log("ERR : ", err);
       setError('신고 목록을 가져오는 데 실패했습니다.'); // 에러 처리
@@ -34,7 +52,7 @@ export const AdminReportPage = () => {
   // 신고 상태 업데이트 함수
   const updateReportStatus = async (reportNo, status) => {
     try {
-      const response = await fetch(`/admin/report/${reportNo}/status?status=${status}`, {
+      {/*const response = await fetch(`/admin/report/${reportNo}/status?status=${status}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -45,11 +63,10 @@ export const AdminReportPage = () => {
         throw new Error('신고 상태 변경에 실패했습니다.');
       }
 
-      const data = await response.json();
-      console.log("status update response: ", data);
-
-      // 상태 변경 후 신고 목록을 다시 불러옴
-      fetchReports();
+      const data = await response.json();*/}
+      await updateReportStatusForAdmin(reportNo, status);
+      fetchReports();  // 상태 변경 후 신고 목록을 다시 불러옴
+      console.log("status update response: ", fetchReports);
     } catch (err) {
       console.log("ERR : ", err);
       setError('신고 상태 변경에 실패했습니다.');
@@ -83,7 +100,7 @@ export const AdminReportPage = () => {
             {reports.map((report) => (
               <li key={report.reportNo} style={styles.card}>  {/* <li>로 변경 */}
                 <div style={styles.item}>
-                  <span style={styles.icon}>🔖</span> 번호: {report.reportNo}
+                  <span style={styles.icon}>🔖</span> 신고 번호: {report.reportNo}
                 </div>
                 <div style={styles.item}>
                   <span style={styles.icon}>👤</span> 신고자: {report.reporterName}
@@ -94,9 +111,17 @@ export const AdminReportPage = () => {
                 <div style={styles.item}>
                   <span style={styles.icon}>📅</span> 신고 날짜: {new Date(report.reportDate).toLocaleDateString()}
                 </div>
-  
+                <div style={styles.item}>
+                  <span style={styles.icon}>📧</span> 이메일: {report.reporterEmail}
+                </div>
+                <div style={styles.item}>
+                  <span style={styles.icon}>📅</span> 가입일: {new Date(report.reporterJoinDate).toLocaleDateString()}
+                </div>
+                <div style={styles.item}>
+                  <span style={styles.icon}>🔵</span> 회원 상태: {report.reporterStatus}
+                </div>
                 <div style={styles.buttonContainer}>
-                  {/* 상태 변경 버튼 */}
+                  {/* 상태 변경 버튼 
                   <button
                     style={styles.button}
                     onClick={() => updateReportStatus(report.reportNo, 'IN_PROGRESS')}
@@ -114,7 +139,7 @@ export const AdminReportPage = () => {
                     onClick={() => updateReportStatus(report.reportNo, 'FALSE_REPORT')}
                   >
                     무고처리
-                  </button>
+                  </button>*/}
                 </div>
               </li> // 각 신고 항목을 <li>로 감쌈
             ))}
@@ -138,8 +163,8 @@ const styles = {
   },
   sidebar: {
     width: '220px',
-    backgroundColor: '#ffffff',
-    color: '#000000',
+    backgroundColor: '#002468',
+    color: '#ffffff',
     padding: '20px',
     boxShadow: '2px 0 5px rgba(0,0,0,0.1)',
   },

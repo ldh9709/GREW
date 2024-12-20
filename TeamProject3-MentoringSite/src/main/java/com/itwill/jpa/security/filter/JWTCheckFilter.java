@@ -42,13 +42,42 @@ public class JWTCheckFilter extends OncePerRequestFilter {
     
     log.info("check uri.............." + path);
     // swagger 경로의 호출은 체크하지 않음
+    if(path.equals("/inquiry")) return false;
     if (path.startsWith("/swagger-ui") 
 		|| path.startsWith("/category") 
 		|| path.startsWith("/alarm") 
-		|| path.startsWith("/inquiry") 
-		|| path.startsWith("/answer") 
-		|| path.startsWith("/chat") 
 		|| path.startsWith("/review")
+
+//		|| path.equals("/inquiry") 
+		
+//		|| path.startsWith("/inquiry/list")
+		|| path.startsWith("/inquiry/update")
+		|| path.startsWith("/inquiry/increase")
+		|| path.startsWith("/inquiry/delete")
+		|| path.startsWith("/inquiry/view-count")
+		|| path.startsWith("/inquiry/search")
+		|| path.startsWith("/inquiry/find")
+		|| path.startsWith("/inquiry/date")
+		|| path.startsWith("/inquiry/view")
+		|| path.endsWith("-count")
+		|| path.endsWith("date")
+		|| path.endsWith("-vote")
+		|| path.endsWith("votes")
+		|| path.startsWith("/inquiry/answer-count")
+		|| path.startsWith("/answer/delete") 
+		|| path.startsWith("/answer/accept") 
+		|| path.startsWith("/answer/update") 
+		|| path.startsWith("/answer/view") 
+		|| path.startsWith("/answer/re") 
+		//|| path.startsWith("/chat") 
+		
+		|| path.startsWith("/chatroom/rejected")
+		|| path.startsWith("/chatroom/completed")
+		|| path.startsWith("/chatroom/closed")
+		|| path.startsWith("/chatroom/canceled")
+		|| path.startsWith("/chatroom/active")
+		|| path.startsWith("/chatroom/messages")
+
 		|| path.startsWith("/member/sendJoinCode")
 		|| path.startsWith("/member/createMember")
 		|| path.startsWith("/member/findId")
@@ -58,6 +87,7 @@ public class JWTCheckFilter extends OncePerRequestFilter {
     	) {
       return true;
     }
+    
     
     //나머지 경로는 필터 적용됨
     return false;

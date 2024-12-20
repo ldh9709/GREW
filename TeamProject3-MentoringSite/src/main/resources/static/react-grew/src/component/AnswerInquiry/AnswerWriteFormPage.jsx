@@ -1,11 +1,13 @@
 import React, { useEffect, useRef, useState } from "react";
 import * as answerApi from "../../api/answerApi";
 import { useNavigate, useParams } from "react-router-dom";
-import axios from "axios"; // axios를 사용하여 API 호출
+import { getCookie } from "../../util/cookieUtil";
 export default function AnswerWriteFormPage() {
   const writeFormRef = useRef();
   const navigate = useNavigate();
   const { inquiryNo } = useParams();
+  const memberCookie = getCookie("member");
+  const token = memberCookie.accessToken;
   const initAnswer = {
     answerNo: 0,
     answerContent: "",
@@ -52,7 +54,16 @@ export default function AnswerWriteFormPage() {
   };
 
   const answerWriteAction = async (e) => {
-    const responseJsonObject = await answerApi.writeAnswer(answer, inquiryNo);
+    // answerContent가 비어있는지 확인
+    if (!answer.answerContent.trim()) {
+      alert("답변 내용을 입력해주세요."); // 사용자에게 입력을 요구하는 알림을 띄움
+      return; // 폼 제출을 막음
+    }
+    const responseJsonObject = await answerApi.writeAnswer(
+      answer,
+      inquiryNo,
+      token
+    );
     console.log(responseJsonObject);
     navigate(`/inquiry/${inquiryNo}`);
   };
@@ -62,21 +73,17 @@ export default function AnswerWriteFormPage() {
         href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap"
         rel="stylesheet"
       ></link>
-      <div className="inquiry-container">
+      <div className="inquiry-container-inview">
         <div>
           <div className="inquiry-title">{inquiry.inquiryTitle}</div>
         </div>
         <div className="inquiry-desc">
           <div>
-            {inquiry.memberName.slice(0, 1) + "*" + inquiry.memberName.slice(2)}{" "}
-            | 조회수 {inquiry.inquiryViews} |{" "}
+            {inquiry.memberName} | 조회수 {inquiry.inquiryViews} |{" "}
             {inquiry.inquiryDate.substring(0, 10)}
           </div>
-          <br />
           <div>{inquiry.categoryName}</div>
         </div>
-        <br />
-        <br />
         <div className="inquiry-content">
           <div>{inquiry.inquiryContent}</div>
         </div>
@@ -85,7 +92,7 @@ export default function AnswerWriteFormPage() {
       </div>
 
       <div>
-        <form ref={writeFormRef} method="POST" className="inquiry-form">
+        <form ref={writeFormRef}  className="inquiry-form">
           <div>
             <div>답변등록</div>
           </div>
