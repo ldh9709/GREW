@@ -4,6 +4,8 @@ const BACKEND_SERVER = "";
 /*
 GET  /member/check-memberId                 :아이디 중복 체크
 POST /member                                :회원 가입
+AXIOS/login                                 :로그인
+POST /logout                                :로그아웃
 PUT  /member/{memberNo}                     :회원 정보 수정
 PUT  /member/{memberNo}/status/{statusNo}   :회원 상태 변경
 GET  /member                                :회원 전체 조회
@@ -44,6 +46,22 @@ export const loginAction = async (sendJsonObject) => {
     return response.data;
 }
 
+export const logout = async (token) => {
+    const response = await fetch(`${BACKEND_SERVER}/logout`, {
+        method: 'POST',
+        credentials: 'include',// 브라우저가 자동으로 쿠키를 포함하도록 설정
+        headers: {
+            'Content-Type': 'application/json'
+        },
+    });
+    console.log("로그아웃 시 반환객체 : ",response);
+    if(response.ok) {
+        return true;
+    } else {
+        return false;
+    }
+};
+  
 
 //회원가입
 export const joinAction = async (member, tempCode) => {
