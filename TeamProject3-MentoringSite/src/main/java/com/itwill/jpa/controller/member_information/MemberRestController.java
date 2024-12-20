@@ -453,6 +453,7 @@ public class MemberRestController {
 		Integer counselCount = (int)chatRoomService.selectChatRoomByMentorNo(mentorNo,0,10).getTotalElements();
 		Integer followCount = (int)followService.countFollower(mentorNo);
 		Integer boardCount = (int)boardService.findByMember(mentorNo, 0, 10).getTotalElements();
+		Integer reviewCount = (int)boardService.findByMember(mentorNo, 0, 10).getTotalElements();
 		
 		Map<String, Integer> dataMap = new HashMap<>();
 		dataMap.put("answerCount", answerCount);

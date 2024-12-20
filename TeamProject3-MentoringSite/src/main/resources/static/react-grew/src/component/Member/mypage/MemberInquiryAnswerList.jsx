@@ -17,17 +17,18 @@ export default function MemberInquiryList() {
     const fetchInquiryList = async (page) => {
         try {
             if (role === 'ROLE_MENTEE') {
-                const response = await inquiryApi.listInquiryBymemberNo(token,page);
+                const response = await inquiryApi.listInquiryByMemberNo(token, page);
                 const { data } = response;
                 setdataList(data.content);
+                setTotalPages(data.totalPages);
             } else if (role === 'ROLE_MENTOR') {
-                const response = await inquiryApi.listInquiryBymemberNo(token,page);
+                const response = await answerApi.listAnswerByMemberNo(token,page);
                 const { data } = response;
                 setdataList(data.content);
+                setTotalPages(data.totalPages);
             }
 
 
-            setTotalPages(data.totalPages);
         } catch (error) {
             console.log('내가 쓴 질문 리스트 조회 실패',error);
         }

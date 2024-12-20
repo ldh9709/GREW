@@ -1,8 +1,9 @@
 import { getCookie } from "../../../util/cookieUtil"
 import { useState } from 'react'
 import FollowList from './MemberFollowList'
-import InquiryList from './MemberInquiryList'
-import MemberCounselList from './MemberCounselList';
+import InquiryList from './MemberInquiryAnswerList'
+import CounselList from './MemberCounselList';
+import ReviewList from './MemberReviewList';
 
 export default function MemberTabs() {
     //쿠키에 저장된 인증 유저 정보
@@ -59,7 +60,7 @@ export default function MemberTabs() {
                     </li>
                     <li 
                         className={`tab ${activeTab === "review" ? "active" : ""}`} 
-                        onClick={() => handleTabClick("following")}
+                        onClick={() => handleTabClick("review")}
                     >
                         리뷰내역
                     </li>
@@ -82,12 +83,17 @@ export default function MemberTabs() {
             )}
             {activeTab === "counseling" && (
             <div id="counseling">
-                <MemberCounselList/>
+                <CounselList/>
             </div>
             )}
             {activeTab === "following" && (
             <div id="following">
                 <FollowList />
+            </div>
+            )}
+            {activeTab === "review" && (
+            <div id="review">
+                <ReviewList />
             </div>
             )}
         </div>
