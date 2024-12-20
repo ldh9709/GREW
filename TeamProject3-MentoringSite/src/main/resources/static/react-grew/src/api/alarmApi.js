@@ -22,3 +22,17 @@ export const deleteAlarmByMember = async (memberNo) => {
     method: "DELETE",
   });
 };
+//알림 url
+export const urlAlarm = async (alarmNo) => {
+  const response = await fetch(`${BACKEND_SERVER}/alarms/${alarmNo}/redirect`, {
+    method: "GET",
+  });
+  const responseJsonObject = await response.json();
+  return responseJsonObject;
+};
+//알림 읽음표시
+export const isReadAlarm = async (alarmNo) => {
+  await fetch(`${BACKEND_SERVER}/alarms/is-read/${alarmNo}`, {
+    method: "PUT",
+  });
+};
