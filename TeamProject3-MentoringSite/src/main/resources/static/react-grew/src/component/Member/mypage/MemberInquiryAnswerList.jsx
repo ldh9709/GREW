@@ -1,22 +1,32 @@
 import { getCookie } from "../../../util/cookieUtil"
 import React, { useEffect, useState } from 'react'
 import * as inquiryApi from "../../../api/inquiryApi"
+import * as answerApi from "../../../api/answerApi"
 import { useNavigate } from 'react-router-dom';
 
 export default function MemberInquiryList() {
     const memberCookie = getCookie("member");
     const token = memberCookie.accessToken;
+    const role = memberCookie.memberRole;
     
-    const [inquiryList, setInquiryList] = useState([]);
+    const [datayList, setdataList] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(0);
     const navigate = useNavigate();
 
     const fetchInquiryList = async (page) => {
         try {
-            const response = await inquiryApi.listInquiryBymemberNo(token,page);
-            const { data } = response;
-            setInquiryList(data.content);
+            if (role === 'ROLE_MENTEE') {
+                const response = await inquiryApi.listInquiryBymemberNo(token,page);
+                const { data } = response;
+                setdataList(data.content);
+            } else if (role === 'ROLE_MENTOR') {
+                const response = await inquiryApi.listInquiryBymemberNo(token,page);
+                const { data } = response;
+                setdataList(data.content);
+            }
+
+
             setTotalPages(data.totalPages);
         } catch (error) {
             console.log('내가 쓴 질문 리스트 조회 실패',error);
@@ -52,7 +62,7 @@ export default function MemberInquiryList() {
         </thead>
         <tbody>
             {/* 질문 리스트 map으로 반복 */}          
-            {inquiryList.map((inquiry,index) => (
+            {datayList.map((inquiry,index) => (
                 <tr key={index} onClick={() => {
                     navigate(`/inquiry/${inquiry.inquiryNo}`)
                 }}>
