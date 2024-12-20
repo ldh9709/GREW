@@ -6,6 +6,10 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.itwill.jpa.dto.chatting_review.ChatMessageDto;
@@ -118,11 +122,41 @@ public class ChatRoomServiceImpl implements ChatRoomService {
 		}
 		return new ChatRoomDto();
 	}
-	/*본인 활동 리스트 출력*/
+	/*본인 활동 리스트 출력(멘티)*/
 	@Override
-	public List<ChatRoomDto> selectChatRoomAll(Long MemberNo) {
+	public Page<ChatRoomDto> selectChatRoomByMenteeNo(Long memberNo, int pageNumber, int pageSize) {
+		Pageable pageable = PageRequest.of(pageNumber, pageSize);
+		Page<ChatRoom> chatRooms = chatRoomRepository.findByMenteeNo(memberNo,pageable);
+	    List<ChatRoomDto> menteeChatRoomDtos = new ArrayList<>();
+		
+		for (ChatRoom chatRoom : chatRooms) {
+			if(chatRoom.getMentee().getMemberNo().equals(memberNo)) {
+				menteeChatRoomDtos.add(ChatRoomDto.toDto(chatRoom));
+			}
+		}
+		return new PageImpl<>(menteeChatRoomDtos, pageable, chatRooms.getTotalElements());
+	}
+		
+	/*본인 활동 리스트 출력(멘토)*/
+	@Override
+	public Page<ChatRoomDto> selectChatRoomByMentorNo(Long memberNo, int pageNumber, int pageSize) {
+		Pageable pageable = PageRequest.of(pageNumber, pageSize);
+		Page<ChatRoom> chatRooms = chatRoomRepository.findByMentorNo(memberNo,pageable);
+		List<ChatRoomDto> mentorChatRoomDtos = new ArrayList<>();
+		
+		for (ChatRoom chatRoom : chatRooms) {
+			if(chatRoom.getMentor().getMemberNo().equals(memberNo)) {
+				mentorChatRoomDtos.add(ChatRoomDto.toDto(chatRoom));
+			}
+		}
+		return new PageImpl<>(mentorChatRoomDtos, pageable, chatRooms.getTotalElements());
+	}
+	/*본인 활동 리스트 출력
+	@Override
+	public Page<ChatRoomDto> selectChatRoomAll(Long MemberNo, int pageNumber, int pageSize) {
+		Pageable pageable = PageRequest.of(pageNumber, pageSize);
 		List<ChatRoom> chatRooms = chatRoomRepository.findAll();
-		List<ChatRoomDto> chatRoomDtos = new ArrayList<ChatRoomDto>();
+		List<ChatRoomDto> chatRoomDtos = new ArrayList<>();
 		for (int i = 0; i <chatRooms.size(); i++) {
 			if (chatRooms.get(i).getMentee().getMemberNo() == MemberNo || chatRooms.get(i).getMentor().getMemberNo() == MemberNo) {
 				Long chatRoomNo = chatRooms.get(i).getChatRoomNo();
@@ -135,11 +169,14 @@ public class ChatRoomServiceImpl implements ChatRoomService {
 				ChatRoomDto chatRoomDto = ChatRoomDto.toDto(chatRooms.get(i));
 				chatRoomDto.setChatRoomName(chatRoomName);
 				chatRoomDto.setChatRoomLeaveStatus(chatRoomLeaveStatus);
-				chatRoomDtos.add(chatRoomDto);	
+				chatRoomDtos.add(chatRoomDto);
+				if (chatRoomDtos.size() > pageSize-1) {
+					return new PageImpl<>(chatRoomDtos, pageable, chatRooms.size());
+				}
 			}
 		}
-		return chatRoomDtos;
-	}
+		return new PageImpl<>(chatRoomDtos, pageable, chatRooms.size());
+	}*/
 	
 	@Override
 	public List<ChatMessageDto> selectChatMessages(Long chatRoomNo) {

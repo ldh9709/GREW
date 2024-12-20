@@ -1,4 +1,5 @@
 const BACKEND_SERVER = "";
+
 //전체 카테고리 출력
 export const ListCategory=async()=>{
     const response=await fetch(`${BACKEND_SERVER}/category`,{

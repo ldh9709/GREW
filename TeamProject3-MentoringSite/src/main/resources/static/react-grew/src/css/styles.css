@@ -185,18 +185,18 @@ button {
 }
 /* 마우스 올렸을 때 배경색 변경 */
 .btn-inquiry-write:hover {
-	background-color: #0056b3; /* 마우스 올렸을 때 배경색 */
-  }
-  
-  /* 클릭 시 효과 */
+  background-color: #0056b3; /* 마우스 올렸을 때 배경색 */
+}
+
+/* 클릭 시 효과 */
 .btn-inquiry-write.button:active {
-	background-color: #004085; /* 클릭 시 배경색 */
-  }
-  .btn-inquiry-write-div{
-	display: flex;
-	justify-content: right;
-  }
-  .inquiry-form {
+  background-color: #004085; /* 클릭 시 배경색 */
+}
+.btn-inquiry-write-div {
+  display: flex;
+  justify-content: right;
+}
+.inquiry-form {
   width: 1080px;
   height: 100%;
   margin: 0 auto; /* 중앙 정렬 */
@@ -244,31 +244,30 @@ button {
   transition: background-color 0.3s ease; /* 배경색 변화 효과 */
 }
 .inquiry-form textarea {
-	width: 100%; /* 부모 요소에 맞춰 가로 크기 설정 */
-	height: 500px; /* 고정된 높이 설정 */
-	padding: 12px 16px; /* 내부 여백 */
-	font-size: 18px; /* 글자 크기 */
-	border: 1px solid #ccc; /* 테두리 색상 */
-	border-radius: 4px; /* 둥근 모서리 */
-	margin-bottom: 15px; /* 아래쪽 여백 */
-	box-sizing: border-box; /* 패딩을 포함하여 너비 계산 */
-	resize: none; /* 사용자가 크기를 조정하지 못하게 함 */
-	
-  }
+  width: 100%; /* 부모 요소에 맞춰 가로 크기 설정 */
+  height: 500px; /* 고정된 높이 설정 */
+  padding: 12px 16px; /* 내부 여백 */
+  font-size: 18px; /* 글자 크기 */
+  border: 1px solid #ccc; /* 테두리 색상 */
+  border-radius: 4px; /* 둥근 모서리 */
+  margin-bottom: 15px; /* 아래쪽 여백 */
+  box-sizing: border-box; /* 패딩을 포함하여 너비 계산 */
+  resize: none; /* 사용자가 크기를 조정하지 못하게 함 */
+}
 /* 버튼에 마우스를 올리면 배경색 변화 */
 .inquiry-form input[type="button"]:hover {
   background-color: #0056b3; /* 버튼 위에 마우스를 올리면 어두운 파란색 */
 }
-.inquiry-write-btn{
-	display: flex;
-	justify-content: center;
+.inquiry-write-btn {
+  display: flex;
+  justify-content: center;
 }
 .answer-write,
-.answer-accept{
+.answer-accept {
   display: flex;
   justify-content: right;
 }
-.answer-notify-btn{
+.answer-notify-btn {
   display: flex; /* 인라인 블록으로 설정하여 버튼처럼 보이게 */
   padding: 10px 20px; /* 버튼 내부 여백 */
   background-color: #12b12d; /* 버튼 배경색 */
@@ -281,9 +280,9 @@ button {
 .category-button {
   display: inline-block; /* 버튼을 인라인 블록으로 만들어 좌우로 길게 */
   padding: 8px 15px; /* 상하 여백은 12px, 좌우 여백은 30px로 설정하여 길이를 조절 */
-  border: 2px solid #4CAF50; /* 테두리를 추가하여 스타일링 */
+  border: 2px solid #4caf50; /* 테두리를 추가하여 스타일링 */
   background-color: #fff; /* 배경 색은 흰색 */
-  color: #4CAF50; /* 텍스트 색상은 상위 카테고리 색과 동일 */
+  color: #4caf50; /* 텍스트 색상은 상위 카테고리 색과 동일 */
   font-size: 14px; /* 텍스트 크기 */
   font-weight: bold; /* 글씨 굵게 */
   border-radius: 30px; /* 끝을 둥글게 만듦 */
@@ -293,7 +292,7 @@ button {
 }
 
 .category-button:hover {
-  background-color: #4CAF50; /* 호버 시 배경색을 상위 카테고리 색상으로 변경 */
+  background-color: #4caf50; /* 호버 시 배경색을 상위 카테고리 색상으로 변경 */
   color: white; /* 텍스트 색상 변경 */
 }
 /* 검색창 컨테이너 */
@@ -316,41 +315,41 @@ button {
 }
 
 .search-input:focus {
-  border-color: #4CAF50;
+  border-color: #4caf50;
 }
-.search-button{
+.search-button {
   width: 50px;
   height: 40px;
-  background-color: #4CAF50;
+  background-color: #4caf50;
   margin-top: 0px;
   border-radius: 5px;
 }
-.view-more{
+.view-more {
   display: flex;
   justify-content: right;
 }
-.notification{
-   margin-bottom: 10px;  /* 각 알림 사이 간격을 추가 */
+.notification {
+  margin-bottom: 10px; /* 각 알림 사이 간격을 추가 */
   height: 80px;
-  display: flex;         /* flexbox를 사용하여 자식 요소들을 가로로 배치 */
-  align-items: center;   /* 세로로 가운데 정렬 */
+  display: flex; /* flexbox를 사용하여 자식 요소들을 가로로 배치 */
+  align-items: center; /* 세로로 가운데 정렬 */
   justify-content: space-between; /* 자식 요소들 사이에 공간을 균등하게 배치 */
 }
-.notification-close-btn{
+.notification-close-btn {
   padding: 2px;
   font-size: 15px;
   height: 17px;
   color: #000000;
-  background: #ffffff;  /* 배경을 투명으로 설정 */
-  border: 1px solid #000000;  /* 테두리 추가 */
-  border-radius: 5px;         /* 테두리를 둥글게 설정 */
-  cursor: pointer;          /* 마우스 커서를 pointer로 설정 */
+  background: #ffffff; /* 배경을 투명으로 설정 */
+  border: 1px solid #000000; /* 테두리 추가 */
+  border-radius: 5px; /* 테두리를 둥글게 설정 */
+  cursor: pointer; /* 마우스 커서를 pointer로 설정 */
   padding: 1px 2px 5px 2px; /* 상좌하우와 각 패딩 값 설정 */
 }
 .notification-close-btn:hover {
-  background-color: #ff0000;  /* 빨간 배경으로 변경 */
-  color: #ffffff;             /* 글자 색을 흰색으로 변경 */
-  border-color: #ff0000;      /* 테두리 색을 빨간색으로 변경 */
+  background-color: #ff0000; /* 빨간 배경으로 변경 */
+  color: #ffffff; /* 글자 색을 흰색으로 변경 */
+  border-color: #ff0000; /* 테두리 색을 빨간색으로 변경 */
 }
 .notification-header {
   padding: 10px;
@@ -360,20 +359,27 @@ button {
   text-align: center;
   margin-bottom: 10px;
 }
-.notification-main-btn{
-  width: 100%;  /* 버튼을 부모의 너비에 맞게 설정 */
+.notification-main-btn {
+  width: 100%; /* 버튼을 부모의 너비에 맞게 설정 */
   height: 80px;
   background-color: #ffffff;
   color: #000000;
-  border: 1px solid #ddd;  /* 버튼의 테두리 추가 */
-  display: flex;           /* flexbox를 사용하여 알림 내용과 클로즈 버튼을 배치 */
-  justify-content: space-between;  /* 알림 내용과 클로즈 버튼을 양쪽 끝으로 정렬 */
-  align-items: center;     /* 세로로 가운데 정렬 */
+  border: 1px solid #ddd; /* 버튼의 테두리 추가 */
+  display: flex; /* flexbox를 사용하여 알림 내용과 클로즈 버튼을 배치 */
+  justify-content: space-between; /* 알림 내용과 클로즈 버튼을 양쪽 끝으로 정렬 */
+  align-items: center; /* 세로로 가운데 정렬 */
   font-size: 13px;
 }
 .notification-main-btn:hover {
   background-color: #adadad; /* 호버 시 배경색 변화 */
 }
-.notification-icon{
+.notification-icon {
   font-size: 18px;
 }
+.answer-accept-status {
+  font-size: 25px;
+}
+.answer-accept-img {
+  width: 40px;
+  height: 40px;
+} 

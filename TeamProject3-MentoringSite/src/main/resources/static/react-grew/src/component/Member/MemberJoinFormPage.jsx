@@ -27,7 +27,6 @@ export const MemberJoinFormPage = () => {
     setMember({ ...member, [e.target.name]: e.target.value });
   };
 
-
   // 인증번호 발송
   const sendJoinCode = async () => {
     const response = await memberApi.sendJoinCode(member.memberEmail);

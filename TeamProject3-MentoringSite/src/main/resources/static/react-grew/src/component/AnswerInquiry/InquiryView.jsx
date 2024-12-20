@@ -3,7 +3,9 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import * as inquiryApi from "../../api/inquiryApi";
 import * as answerApi from "../../api/answerApi";
 import AnswerItem from "./AnswerItem";
+import { getCookie } from "../../util/cookieUtil";
 function InquiryView() {
+  const memberCookie = getCookie("member");
   const navigate = useNavigate();
   const { inquiryNo } = useParams(); //path에서 받아오는거임! app.js의 경로와 관련있음
   const [inquiry, setInquiry] = useState({
@@ -18,10 +20,12 @@ function InquiryView() {
   const [totalPages, setTotalPages] = useState(0); // 전체 페이지 수
   const [itemsPerPage] = useState(5); // 페이지당 항목 수 (예: 한 페이지에 5개 항목)
   const [sortType, setSortType] = useState("latest"); // 기본적으로 'latest'로 설정
+  console.log(memberCookie.memberRole);
   useEffect(() => {
     (async () => {
       const responseJsonObject = await inquiryApi.viewInquiry(inquiryNo);
       console.log(responseJsonObject);
+
       if (
         responseJsonObject.status === 5500 &&
         responseJsonObject.data.inquiryStatus === 1
@@ -104,23 +108,28 @@ function InquiryView() {
           <input type="hidden" name="inquiryNo" value={inquiry.inquiryNo} />
 
           {/* 카테고리에 맞는 멘토만 보이는조건 */}
-          <div className="answer-write">
-            <Link to={`/answer/answerWrite/${inquiryNo}`}>
-              <button className="answer-notify-btn">
-                <img
-                  src="https://img.icons8.com/?size=100&id=P1bJzKUoOQYz&format=png&color=000000"
-                  style={{
-                    width: "20px",
-                    height: "20px",
-                    marginRight: "5px",
-                    marginLeft: "-5px",
-                    marginBottom: "-3px",
-                  }}
-                />
-                답변하기
-              </button>
-            </Link>
-          </div>
+
+          {/* {memberCookie.memberRole == "ROLE_MENTOR" ? ( */}
+            <div className="answer-write">
+              <Link to={`/answer/answerWrite/${inquiryNo}`}>
+                <button className="answer-notify-btn">
+                  <img
+                    src="https://img.icons8.com/?size=100&id=P1bJzKUoOQYz&format=png&color=000000"
+                    style={{
+                      width: "20px",
+                      height: "20px",
+                      marginRight: "5px",
+                      marginLeft: "-5px",
+                      marginBottom: "-3px",
+                    }}
+                  />
+                  답변하기
+                </button>
+              </Link>
+            </div>
+          {/* // ) : (
+          //   <div style={{ marginBottom: "50px" }}></div>
+          // )} */}
           {/* 카테고리에 맞는 멘토만 보이는조건 */}
           <div className="inquiry-container">
             <div>
@@ -141,20 +150,24 @@ function InquiryView() {
             </div>
 
             <br />
-            <div>
-              <Link to={`/inquiry/modify/${inquiryNo}`}>
-                <button>수정</button>
-              </Link>
+            {memberCookie.memberNo == inquiry.memberNo ? (
+              <div>
+                <Link to={`/inquiry/modify/${inquiryNo}`}>
+                  <button>수정</button>
+                </Link>
 
-              <button
-                onClick={(e) => {
-                  e.preventDefault(); // 폼 제출 방지
-                  inquiryRemoveAction(); // 삭제 액션 실행
-                }}
-              >
-                삭제
-              </button>
-            </div>
+                <button
+                  onClick={(e) => {
+                    e.preventDefault(); // 폼 제출 방지
+                    inquiryRemoveAction(); // 삭제 액션 실행
+                  }}
+                >
+                  삭제
+                </button>
+              </div>
+            ) : (
+              <div></div>
+            )}
           </div>
         </form>
       </div>

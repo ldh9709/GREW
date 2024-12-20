@@ -169,24 +169,25 @@ public class MemberRestController {
 		}
 		
 	
-	/* 회원 정보 보기 
+	/* 회원 정보 보기 */
+	@SecurityRequirement(name = "BearerAuth")//API 엔드포인트가 인증을 요구한다는 것을 문서화(Swagger에서 JWT인증을 명시
 	@Operation(summary = "회원 정보 보기")
-	@GetMapping("/{memberNo}")
-	public ResponseEntity<Response> getMember(@PathVariable(name = "memberNo") Long memberNo, HttpSession session) {
+	@GetMapping("/member-info")
+	public ResponseEntity<Response> getMember(@RequestParam(name = "memberNo") Long memberNo) {
 		
 		//번호로 멤버 객체 찾기
-		Member loginMember = memberService.getMember(memberNo);
+		Member member = memberService.getMember(memberNo);
 		
 		//DTO객체로 변환
-		MemberDto loginMemberDto = MemberDto.toDto(loginMember);
+		MemberDto memberDto = MemberDto.tofindDto(member);
 		
 		Response response = new Response();
 		
-		if(loginMemberDto != null) {
+		if(memberDto != null) {
 			//응답객체에 코드, 메시지, 객체 설정
 			response.setStatus(ResponseStatusCode.READ_MEMBER_SUCCESS);
 			response.setMessage(ResponseMessage.READ_MEMBER_SUCCESS);
-			response.setData(loginMemberDto);
+			response.setData(memberDto);
 		}
 		
 		HttpHeaders httpHeaders=new HttpHeaders();
@@ -197,18 +198,23 @@ public class MemberRestController {
 		
 		return responseEntity;
 	}
-	*/
+	
 	
 	/***** 회원 정보 보기(토큰) *****/
 	@Operation(summary = "회원 정보 보기(토큰)")
 	@SecurityRequirement(name = "BearerAuth")//API 엔드포인트가 인증을 요구한다는 것을 문서화(Swagger에서 JWT인증을 명시
-	//@PreAuthorize("hasRole('MENTEE')")//ROLE이 MENTEE인 사람만 접근 가능
+	@PreAuthorize("hasRole('MENTEE') or hasRole('MENTOR') ")//ROLE이 MENTEE인 사람만 접근 가능
 	@GetMapping("/profile")
 	public ResponseEntity<Response> getMember(Authentication authentication) {
 		
 		//PrincipalDetails에서 memberNo를 가져옴
 		PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
 		Long memberNo = principalDetails.getMemberNo();
+		System.out.println(">>>>> getAuthorities : " + authentication.getAuthorities());
+		System.out.println(">>>>> authentica  tion : " + authentication);
+		System.out.println(">>>>> au	thentication.getName() : " + authentication.getName());
+		System.out.println(">>> Granted Authorities: " + authentication.getAuthorities());
+		System.out.println(">>> PrincipalDetails Authorities: " + principalDetails.getAuthorities());
 		
 		// 번호로 멤버 객체 찾기
         Member loginMember = memberService.getMember(memberNo);
@@ -239,6 +245,7 @@ public class MemberRestController {
 	
 	@Operation(summary = "회원 정보 수정")
 	@PutMapping("/profile/edit/{memberNo}")
+	@SecurityRequirement(name = "BearerAuth")//API 엔드포인트가 인증을 요구한다는 것을 문서화(Swagger에서 JWT인증을 명시
 	public ResponseEntity<Response> updateMember(
 			@RequestBody MemberDto memberDto,
 			@PathVariable("memberNo") Long memberNo
@@ -401,17 +408,19 @@ public class MemberRestController {
 	
 	/* 멘티 회원 활동 요약 */
 	@Operation(summary = "멘티 활동 내역 요약")
+	@SecurityRequirement(name = "BearerAuth")//API 엔드포인트가 인증을 요구한다는 것을 문서화(Swagger에서 JWT인증을 명시
+	@PreAuthorize("hasRole('MENTEE')")//ROLE이 MENTEE인 사람만 접근 가능
 	@GetMapping("/mentee-summary")
 	public ResponseEntity<Response> getMenteeSummary(Authentication authentication){
 		
 		PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
 		Long menteeNo = principalDetails.getMemberNo(); 
 		
-		Integer inquiryCount = (int)inquiryService.getInquiryByMember(menteeNo, 0, 10).getTotalElements();
-		Integer counselCount = (int)chatRoomService.selectChatRoomAll(menteeNo).size();
-		Integer followCount = (int)followService.getMentorList(menteeNo, 0, 10).getTotalElements();
+		Long inquiryCount =  inquiryService.getInquiryByMember(menteeNo, 0, 10).getTotalElements();
+		Long counselCount = chatRoomService.selectChatRoomByMenteeNo(menteeNo, 0, 10).getTotalElements();
+		Long followCount = followService.getMentorList(menteeNo, 0, 10).getTotalElements();
 		
-		Map<String, Integer> dataMap = new HashMap<>();
+		Map<String, Long> dataMap = new HashMap<>();
 		dataMap.put("inquiryCount", inquiryCount);
 		dataMap.put("counselCount", counselCount);
 		dataMap.put("followCount", followCount);
@@ -434,20 +443,24 @@ public class MemberRestController {
 	
 	/* 멘토 회원 활동 요약 */
 	@Operation(summary = "멘토 활동 내역 요약")
-	@GetMapping("/mentor-summary/{mentorNo}")
+	@SecurityRequirement(name = "BearerAuth")//API 엔드포인트가 인증을 요구한다는 것을 문서화(Swagger에서 JWT인증을 명시
+	@GetMapping("/mentor-summary")
 	public ResponseEntity<Response> getMentorSummary(
-			@PathVariable(name ="mentorNo") Long mentorNo){
+			Authentication authentication){
+		
+		PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
+		Long mentorNo = principalDetails.getMemberNo();
 		
 		Integer answerCount = (int)answerService.getAnswerByMember(mentorNo, 0, 10).getTotalElements();
-		Integer counselCount = (int)chatRoomService.selectChatRoomAll(mentorNo).size();
+		Integer counselCount = (int)chatRoomService.selectChatRoomByMentorNo(mentorNo,0,10).getTotalElements();
 		Integer followCount = (int)followService.countFollower(mentorNo);
-		Integer borardCount = (int)boardService.findByMember(mentorNo, 0, 10).getTotalElements();
+		Integer boardCount = (int)boardService.findByMember(mentorNo, 0, 10).getTotalElements();
 		
 		Map<String, Integer> dataMap = new HashMap<>();
 		dataMap.put("answerCount", answerCount);
 		dataMap.put("counselCount", counselCount);
 		dataMap.put("followCount", followCount);
-		dataMap.put("borardCount", borardCount);
+		dataMap.put("boardCount", boardCount);
 		
 		Response response = new Response();
 		

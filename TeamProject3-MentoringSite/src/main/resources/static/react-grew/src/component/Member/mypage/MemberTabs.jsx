@@ -1,32 +1,59 @@
-import FollowList from './FollowList'
+import { useState } from 'react'
+import FollowList from './MemberFollowList'
+import InquiryList from './MemberInquiryList'
+import MemberCounselList from './MemberCounselList';
 
-export default function MemberTabs({memberNo}) {
+export default function MemberTabs() {
+    //활성화 된 탭 상태를 저장하는 state
+    const [activeTab, setActiveTab] = useState("inquiry");
+    
+    //탭 클릭시 실행되는 함수
+    const handleTabClick = (tab) => {
+        setActiveTab(tab);
+    }
+
   return (
     <section className="tab-container">
         <nav>
             <ul className="tabs">
-                <li className="tab" data-tab="questions">질문내역</li>
-                <li className="tab" data-tab="counseling">상담내역</li>
-                <li className="tab active" data-tab="following">팔로잉</li>
+            <li 
+                className={`tab ${activeTab === "inquiry" ? "active" : ""}`} 
+                onClick={() => handleTabClick("inquiry")}
+            >
+                질문내역
+            </li>
+            <li 
+                className={`tab ${activeTab === "counseling" ? "active" : ""}`} 
+                onClick={() => handleTabClick("counseling")}
+            >
+                상담내역
+            </li>
+            <li 
+                className={`tab ${activeTab === "following" ? "active" : ""}`} 
+                onClick={() => handleTabClick("following")}
+            >
+                팔로잉
+            </li>
             </ul>
         </nav>
-        <div className="tab-content hidden" id="questions">
-            <ul className="list">
-                <li>
-                    <strong>질문 제목</strong> - 10월 25일 질문 신간 리스트
-                    <span>조회수: 32 | 좋아요: 1</span>
-                </li>
-                <li>
-                    <strong>질문 제목</strong> - 10월 20일 질문 리스트
-                    <span>조회수: 25 | 좋아요: 3</span>
-                </li>
-            </ul>
-        </div>
-        <div className="tab-content hidden" id="counseling">
-            <p>상담내역이 여기에 표시됩니다.</p>
-        </div>
+          
+        {/* 탭별 콘텐츠 */}
         <div>
-              <FollowList memberNo={ memberNo } />      
+            {activeTab === "inquiry" && (
+            <div id="inquiry">
+                <InquiryList />
+            </div>
+            )}
+            {activeTab === "counseling" && (
+            <div id="counseling">
+                <MemberCounselList/>
+            </div>
+            )}
+            {activeTab === "following" && (
+            <div id="following">
+                <FollowList />
+            </div>
+            )}
         </div>
     </section>
   )

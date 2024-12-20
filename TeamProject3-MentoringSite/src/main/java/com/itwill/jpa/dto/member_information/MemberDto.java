@@ -78,6 +78,13 @@ public class MemberDto {
 	            .build();
 	}
 	
+	public static MemberDto tofindDto(Member memberEntity) {
+		return MemberDto.builder()
+				.memberNo(memberEntity.getMemberNo())
+	            .memberEmail(memberEntity.getMemberEmail())
+	            .memberName(memberEntity.getMemberName())
+	            .build();
+	}
 	
 
 	@Builder

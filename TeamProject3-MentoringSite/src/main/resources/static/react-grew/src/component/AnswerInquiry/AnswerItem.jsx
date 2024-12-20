@@ -2,11 +2,17 @@ import React, { useEffect, useState } from "react";
 import "../../css/styles.css";
 import * as answerApi from "../../api/answerApi";
 import { Link } from "react-router-dom";
+import { getCookie } from "../../util/cookieUtil";
 export default function AnswerItem({ answer }) {
-  const [voteCount, setVoteCount] = useState(null);
+  const [inquiry, setInquiry] = useState(0);
+  const [voteCount, setVoteCount] = useState(0);
+  const memberCookie = getCookie("member");
+  const token = memberCookie.accessToken;
   async function fetchData() {
     try {
-      // 비동기 호출
+      const response = await answerApi.findInquiry(answer.inquiryNo);
+      console.log(response.data);
+      setInquiry(response.data);
       const responseJsonObject = await answerApi.countVote(answer.answerNo);
       setVoteCount(responseJsonObject.data);
     } catch (error) {
@@ -19,7 +25,7 @@ export default function AnswerItem({ answer }) {
 
   const handleUpvote = async () => {
     try {
-      const response = await answerApi.upVote(answer.answerNo, 1); // API 호출
+      const response = await answerApi.upVote(answer.answerNo, token); // API 호출
       if (response.status === 6000) {
         fetchData(); // 추천 성공 상태 확인
       } else {
@@ -35,7 +41,7 @@ export default function AnswerItem({ answer }) {
   };
   const handleDownvote = async () => {
     try {
-      const response = await answerApi.downVote(answer.answerNo, 1); // API 호출
+      const response = await answerApi.downVote(answer.answerNo, token); // API 호출
       if (response.status === 6000) {
         fetchData(); // 추천 성공 상태 확인
       } else {
@@ -48,6 +54,11 @@ export default function AnswerItem({ answer }) {
   //답변채택
   const handleAccept = async () => {
     const response = await answerApi.acceptAnswer(answer.answerNo);
+    if (response.status === 6400) {
+      alert("채택이 완료되었습니다.");
+    } else {
+      alert("이미 다른 답변을 채택하였습니다.");
+    }
     console.log(response);
   };
   return (
@@ -57,11 +68,25 @@ export default function AnswerItem({ answer }) {
         rel="stylesheet"
       ></link>
       <div className="answer-container">
-        {/* 질문작성자만 보이는조건 */}
-        <div className="answer-accept">
-          <button onClick={handleAccept}>채택하기</button>
-        </div>
-        {/* 질문작성자만 보이는조건 */}
+        {answer.answerAccept == 2 ? (
+          <div className="answer-accept-status">
+            <img
+              src="https://img.icons8.com/?size=100&id=Ri1uVwXhVKOJ&format=png&color=000000"
+              className="answer-accept-img"
+            />
+            채택된 답변
+          </div>
+        ) : (
+          <div></div>
+        )}
+
+        {memberCookie.memberNo == inquiry.memberNo ? (
+          <div className="answer-accept">
+            <button onClick={handleAccept}>채택하기</button>
+          </div>
+        ) : (
+          <div></div>
+        )}
 
         <div className="answer-member">{answer.memberName}</div>
         <div className="answer-content">{answer.answerContent}</div>
@@ -71,21 +96,23 @@ export default function AnswerItem({ answer }) {
           {voteCount}
           <button onClick={handleDownvote}>비추천</button>
         </div>
-        {/* 답변작성자에게만 보이는조건 */}
-        <div>
-          <Link to={`/answer/modify/${answer.answerNo}`}>
-            <button>수정</button>
-          </Link>
+        {memberCookie.memberNo == answer.memberNo ? (
+          <div>
+            <Link to={`/answer/modify/${answer.answerNo}`}>
+              <button>수정</button>
+            </Link>
 
-          <button
-            onClick={(e) => {
-              e.preventDefault(); // 폼 제출 방지
-            }}
-          >
-            삭제
-          </button>
-        </div>
-        {/* 답변작성자에게만 보이는조건 */}
+            <button
+              onClick={(e) => {
+                e.preventDefault(); // 폼 제출 방지
+              }}
+            >
+              삭제
+            </button>
+          </div>
+        ) : (
+          <div></div>
+        )}
       </div>
     </>
   );

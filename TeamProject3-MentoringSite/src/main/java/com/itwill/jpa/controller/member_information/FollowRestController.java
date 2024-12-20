@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.itwill.jpa.auth.PrincipalDetails;
 import com.itwill.jpa.dto.alarm.AlarmDto;
 import com.itwill.jpa.dto.member_information.FollowRequestDto;
 import com.itwill.jpa.dto.member_information.FollowResponseDto;
@@ -77,12 +79,16 @@ public class FollowRestController {
 	}
 	/*팔로잉 리스트 출력(멘토리스트)*/
 	@Operation(summary = "멘티 팔로잉 리스트 출력")
-	@GetMapping("/mentee/{menteeNo}")
+	@GetMapping("/followList")
 	public ResponseEntity<Response> getFollowingMentorList(
-			@PathVariable(name = "menteeNo") Long menteeNo,
+			Authentication authentication,
 			@RequestParam(name = "page", defaultValue ="0") int page,
 			@RequestParam(name = "size", defaultValue ="6") int size){
-		Page<FollowResponseDto> followMentorList = followService.getMentorList(menteeNo, page, size);
+		
+		PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
+		Long memberNo = principalDetails.getMemberNo();
+		
+		Page<FollowResponseDto> followMentorList = followService.getMentorList(memberNo, page, size);
 		
 		Response response = new Response();
 		response.setStatus(ResponseStatusCode.READ_MENTORLIST_SUCCESS);

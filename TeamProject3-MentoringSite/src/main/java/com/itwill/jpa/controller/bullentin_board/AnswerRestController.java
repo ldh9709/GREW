@@ -81,11 +81,11 @@ public class AnswerRestController {
 	
 	/* 답변 수정 */
 	@Operation(summary = "답변 수정")
-	@PutMapping("update/{answerNo}")
-	public ResponseEntity<Response> updateAnswer(@PathVariable(name = "answerNo") Long answerNo, @RequestBody AnswerDto answerDto) throws Exception {
+	@PutMapping("update")
+	public ResponseEntity<Response> updateAnswer(@RequestBody AnswerDto answerDto) throws Exception {
 		
 		// 1. 서비스 호출 : 답변 업데이트 메소드 실행
-		answerDto.setAnswerNo(answerNo);
+		answerDto.setAnswerNo(answerDto.getAnswerNo());
 		AnswerDto saveAnswerDto = answerService.updateAnswer(answerDto);
 		
 		// 2. 응답 데이터(Response 객체) 생성
