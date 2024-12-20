@@ -8,6 +8,8 @@ const Alarim = () => {
   const [notifications, setNotifications] = useState([]);
   const navigate = useNavigate();
   useEffect(() => {
+    // 폴링을 위해 setInterval 사용 (5초마다 알림을 가져옴)
+    setInterval(fetchNotifications, 5000);  // 5초마다 폴링
     fetchNotifications();
   }, []); // 빈 배열을 넣으면 컴포넌트가 마운트될 때만 실행됨
   const fetchNotifications = async () => {
