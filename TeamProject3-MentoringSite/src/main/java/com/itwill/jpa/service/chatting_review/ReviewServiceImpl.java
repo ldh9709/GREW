@@ -122,7 +122,7 @@ public class ReviewServiceImpl implements ReviewService {
             Pageable pageable = PageRequest.of(pageNumber, pageSize); // Pageable 객체 생성
 
             // 멘티 번호로 리뷰 조회 (페이징 처리)
-            Page<Review> menteeReviews = reviewRepository.findReviewByChatRoom_Mentee_MemberNoAndReviewStatus(memberNo, 1,pageable);
+            Page<Review> menteeReviews = reviewRepository.findReviewByChatRoom_Mentee_MemberNoAndReviewStatus(memberNo, 1, pageable);
 
             // 멘토 번호로 리뷰 조회 (페이징 처리)
             Page<Review> mentorReviews = reviewRepository.findReviewByChatRoom_Mentor_MemberNoAndReviewStatus(memberNo, 1,pageable);
