@@ -62,11 +62,11 @@ export const MemberJoinFormPage = () => {
     console.log(responseJsonObject);
     switch (responseJsonObject.status) {
       case responseStatus.CREATED_MEMBER_SUCCESS:
-        /* if(role === 'mentor') {
+        if(role === 'mentor') {
           navigate('/main');
         } else if(role ==='mentee') {
           navigate('/member/login');
-        } */
+        }
         break;
       case responseStatus.CREATED_MEMBER_FAIL:
         alert("가입 실패");
