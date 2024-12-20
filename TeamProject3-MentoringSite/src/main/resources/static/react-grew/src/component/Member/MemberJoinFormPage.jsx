@@ -1,8 +1,12 @@
 import React, { useState } from "react";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import * as memberApi from "../../api/memberApi";
 import * as responseStatus from "../../api/responseStatusCode";
 import "../../css/memberPage.css"
+import google from '../../image/google.png';
+import naver from '../../image/naver.png';
+import kakao from '../../image/kakao.png';
+import dhlogo from '../../image/dhlogo.png';
 
 export const MemberJoinFormPage = () => {
   const navigate = useNavigate();
@@ -63,7 +67,7 @@ export const MemberJoinFormPage = () => {
     switch (responseJsonObject.status) {
       case responseStatus.CREATED_MEMBER_SUCCESS:
         if(role === 'mentor') {
-          navigate('/main');
+          navigate('/mentor/join');
         } else if(role ==='mentee') {
           navigate('/member/login');
         }
@@ -79,8 +83,24 @@ export const MemberJoinFormPage = () => {
 
   return (
     <div className="member-signup-container">
+      
+      <img src={dhlogo} alt="logo" className="logo-icon"/>
+      <h2 className="logo-title">멘토멘티 매칭 플랫폼 No.1!</h2>
+      <h3 className="logo-title">그루에 오신 것을 환영합니다</h3>
+
+      <h3 className="member-join-sub-title">SNS 회원가입</h3>
+        <div className="member-sns-login-group">
+            <Link to="http://localhost:8080/oauth2/authorization/google">
+                <img src={google} alt="Google" className="member-sns-icon" />
+            </Link>
+            <Link to="http://localhost:8080/oauth2/authorization/naver">
+                <img src={naver} alt="Naver" className="member-sns-icon" />
+            </Link>
+            <Link to="http://localhost:8080/oauth2/authorization/kakao">
+                <img src={kakao} alt="Kakao" className="member-sns-icon" />
+            </Link>
+          </div>
     <h2 className="member-signup-title">회원가입</h2>
-    <h3 className="member-signup-subtitle">멘티 가입을 환영합니다!</h3>
     <form className="member-signup-form">
         <div className="member-form-join-group">
         <p className="member-form-join-p">
