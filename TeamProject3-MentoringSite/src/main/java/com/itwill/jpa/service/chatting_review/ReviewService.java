@@ -2,6 +2,7 @@ package com.itwill.jpa.service.chatting_review;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
@@ -19,9 +20,9 @@ public interface ReviewService {
 	//리뷰 선택(특정리뷰 수정?삭제?할때 필요할듯)
 	public ReviewDto getReviewByReviewNo(Long reviewNo);
 	//요청번호에 따른 리뷰 리스트
-	public List<ReviewDto> getReviewByChatRoomNo(Long chatRoomNo);
+	public Page<ReviewDto> getReviewByChatRoomNo(Long chatRoomNo,int pageNumber, int pageSize);
 	//멤버 번호의 리뷰 리스트
-	public List<ReviewDto> getReviewByMemberNo(Long memberNo);
+	public Page<ReviewDto> getReviewByMemberNo(Long memberNo,int pageNumber, int pageSize);
 	//모든 리뷰리스트
-	public List<ReviewDto> getReviewAll();
+	public Page<ReviewDto> getReviewAll(int pageNumber, int pageSize);
 }

@@ -16,15 +16,10 @@ export default function InquiryItem({ inquiry }) {
         onClick={() => inquiryApi.increaseView(inquiry.inquiryNo)}
       >
         <div className="inquiry-title">{inquiry.inquiryTitle}</div>
-        <br />
         <div className="inquiry-content">{inquiry.inquiryContent}</div>
-        <br />
-        <br />
         <div className="inquiry-desc">
-          <br />
-          <div>{inquiry.categoryName}</div>
-          <br />
-          {inquiry.memberName} | 조회수 {inquiry.inquiryViews} |{" "}
+          {/* <div>{inquiry.memberName}</div> */}
+          {inquiry.categoryName} | 조회수 {inquiry.inquiryViews} |{" "}
           {inquiry.inquiryDate.substring(0, 10)}
         </div>
       </a>

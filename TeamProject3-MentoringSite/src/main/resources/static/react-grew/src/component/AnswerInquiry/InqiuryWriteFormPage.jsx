@@ -26,6 +26,8 @@ export default function InqiuryWriteFormPage() {
   const [childCategories, setChildCategories] = useState([]); // 하위 카테고리 상태
 
   // 카테고리 목록을 가져오는 함수
+
+  
   const fetchCategories = async () => {
     try {
       const response = await categoryApi.ListCategory();
@@ -81,6 +83,14 @@ export default function InqiuryWriteFormPage() {
     ) {
       alert("하위 카테고리를 선택해야 합니다.");
       return; // 하위 카테고리가 선택되지 않으면 폼 제출을 막음
+    }
+    if (!inquiry.inquiryTitle.trim()) {
+      alert("제목을 입력해주세요."); // 사용자에게 입력을 요구하는 알림을 띄움
+      return; // 폼 제출을 막음
+    }
+    if (!inquiry.inquiryContent.trim()) {
+      alert("내용을 입력해주세요."); // 사용자에게 입력을 요구하는 알림을 띄움
+      return; // 폼 제출을 막음
     }
     const responseJsonObject = await inquiryApi.writeInquiry(inquiry, token);
     console.log(token);

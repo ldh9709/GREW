@@ -55,8 +55,8 @@ public class AlarmServiceimpl implements AlarmService {
 
 	// 알림 읽음표시
 	@Override
-	public AlarmDto isReadAlarm(AlarmDto alarmDto) {
-		Alarm alarm = alarmRepository.findById(alarmDto.getAlarmNo()).get();
+	public AlarmDto isReadAlarm(Long alarmNo) {
+		Alarm alarm = alarmRepository.findById(alarmNo).get();
 		alarm.setIsRead(2);
 		return AlarmDto.toDto(alarmRepository.save(alarm));
 	}
@@ -150,7 +150,7 @@ public class AlarmServiceimpl implements AlarmService {
 		// 프론트엔드 제작 시 경로 수정 必
 		switch (alarmDto.getReferenceType()) {
 		case "question":
-			return "/question/" + alarmDto.getReferenceNo();
+			return "/inquiry/" + alarmDto.getReferenceNo();
 		case "mentorBoard":
 			return "/mentorBoard/" + alarmDto.getReferenceNo();
 		case "review":
