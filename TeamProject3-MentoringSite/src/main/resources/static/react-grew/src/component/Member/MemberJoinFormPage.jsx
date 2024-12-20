@@ -60,6 +60,27 @@ export const MemberJoinFormPage = () => {
       alert("아이디를 입력하세요.");
       return;
     }
+
+    if(!member.memberPassword) {
+      alert("비밀번호를 입력하세요.");
+      return;
+    }
+
+    if(!member.memberNamer) {
+      alert("이름을 입력하세요.");
+      return;
+    }
+
+    if(!member.memberEmail) {
+      alert("이메일을 입력하세요.");
+      return;
+    }
+
+    if(!member.interests) {
+      alert("3개의 관심사를 선택하세요.");
+      return;
+    }
+
     console.log(member);
 
     const responseJsonObject = await memberApi.joinAction(member, tempCode);
