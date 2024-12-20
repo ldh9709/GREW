@@ -1,11 +1,16 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import * as memberApi from "../../api/memberApi";
 import * as responseStatus from "../../api/responseStatusCode";
 import "../../css/memberPage.css"
 
 export const MemberJoinFormPage = () => {
   const navigate = useNavigate();
+
+  //뒤에 붙은 URL을 추적하기 위한 선언
+  const [searchParams] = useSearchParams();
+  //뒤에 붙은 역할을 가져옴
+  const role = searchParams.get('role');
 
   const [member, setMember] = useState({
     memberId: "",
@@ -53,11 +58,16 @@ export const MemberJoinFormPage = () => {
       return;
     }
     console.log(member);
+
     const responseJsonObject = await memberApi.joinAction(member, tempCode);
     console.log(responseJsonObject);
     switch (responseJsonObject.status) {
       case responseStatus.CREATED_MEMBER_SUCCESS:
-        navigate("/main");
+        if(role === 'mentor') {
+          navigate('/main');
+        } else if(role ==='mentee') {
+          navigate('/member/login');
+        }
         break;
       case responseStatus.CREATED_MEMBER_FAIL:
         alert("가입 실패");

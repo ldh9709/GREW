@@ -3,6 +3,8 @@ import "./css/styles.css";
 import Header from "./layout/Header";
 import { MainPage } from "./component/MainPage";
 import Navigate from "./layout/Navigate";
+
+import MemberMainJoinFormPage from "./component/Member/MemberMainJoinFormPage";
 import MemberJoinFormPage from "./component/Member/MemberJoinFormPage";
 import MemberLoginFormPage from "./component/Member/MemberLoginFormPage";
 import MemberProfileFormPage  from "./component/Member/MemberProfileFormPage";
@@ -34,7 +36,8 @@ function App() {
             <Route path="/main" element={<MainPage />} />
             {/* Member페이지 */}
             <Route path="/member/profile" element={<MemberMypage />} />
-            <Route path="/member/join" element={<MemberJoinFormPage/>} />
+            <Route path="/member/join" element={<MemberMainJoinFormPage/>} />
+            <Route path="/member/join/form" element={<MemberJoinFormPage/>} />
             <Route path="/member/login" element={<MemberLoginFormPage/>} />
             <Route path="/member/profile/edit" element={<MemberProfileFormPage/>}/>
 
