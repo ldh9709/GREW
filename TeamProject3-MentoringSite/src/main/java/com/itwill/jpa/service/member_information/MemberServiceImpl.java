@@ -191,26 +191,6 @@ public class MemberServiceImpl implements MemberService {
 	}*/
 	
 	/***** 회원 수정 ****/
-//	@Override
-//	public Member updateMember(MemberDto memberDto) {
-//		Member member = memberRepository.findByMemberNo(memberDto.getMemberNo());
-//		
-//		List<Interest> interests = new ArrayList<>(); 
-//	 	// 관심사 업데이트
-//        for (InterestDto interestDto : memberDto.getInterests()) {
-//            Interest interest = Interest.toEntity(interestDto);
-//            member.addInterests(interest);
-//	    }
-//		
-//		member.setMemberName(memberDto.getMemberName());
-//		member.setMemberPassword(memberDto.getMemberPassword());
-//		member.setMemberEmail(memberDto.getMemberEmail());
-//		
-//		return memberRepository.save(member);
-//	}
-	
-	
-	/***** 회원 수정 ****/
 	@Override
 	@Transactional
 	public Member updateMember(MemberDto memberDto) {
