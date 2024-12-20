@@ -10,7 +10,6 @@ import MemberLoginFormPage from "./component/Member/MemberLoginFormPage";
 import MemberProfileFormPage  from "./component/Member/MemberProfileFormPage";
 /* 멘토 페이지 임포트 */
 import MentorJoinFormPage from "./component/Member/MentorJoinFormPage";
-import MemberProfileFormPage from "./component/Member/MemberProfileFormPage";
 
 import InquiryWriteFormpage from "./component/AnswerInquiry/InqiuryWriteFormPage";
 import InquiryModifyFormpage from "./component/AnswerInquiry/InquiryModifyFormPage";
