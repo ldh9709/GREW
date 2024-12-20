@@ -32,7 +32,7 @@ export default function Navigate() {
     if (searchTerm.trim() !== "") {
       if(location.pathname.includes("/mentorprofile/list")) {    //추가된 메서드 문준형
         //멘토리스트 레이지의 경우
-        navigate(`/mentorSearchList?search=${searchTerm}`); // 검색어를 쿼리 파라미터로 전달
+        navigate(`/mentorprofile/search?query=${searchTerm}`); // 검색어를 쿼리 파라미터로 전달
       }else{  //추가됨 문준형
         // 디폴드 질문 검색으로 이동
         navigate(`/searchList?query=${searchTerm}`); // 검색어를 쿼리 파라미터로 전달

@@ -63,8 +63,7 @@ export default function MentorProfileAdd() {
 
   return (
     <>
-      <Header />
-      <Navigate />
+    
       <div className="container">
         <h2>멘토 프로필 생성</h2>
         <form onSubmit={handleSubmit} encType="multipart/form-data">
@@ -127,7 +126,7 @@ export default function MentorProfileAdd() {
           <button type="submit" className="btn-submit">프로필 생성</button>
         </form>
       </div>
-      <Footer />
+      
     </>
   );
 }

@@ -155,3 +155,10 @@ font-size: 16px;
 font-weight: bold;
 margin: 10px 0;
 }
+
+.mentor-profile img {
+  width: 150px; /* 이미지 너비 조절 */
+  height: 150px; /* 이미지 높이 조절 */
+  object-fit: cover; /* 이미지가 비율에 맞게 잘림 */
+  border-radius: 50%; /* 원형 이미지로 변경 (선택 사항) */
+}

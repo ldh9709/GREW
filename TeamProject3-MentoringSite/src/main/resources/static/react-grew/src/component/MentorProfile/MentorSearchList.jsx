@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import "../../css/styles.css"; 
 import { useLocation } from "react-router-dom"; 
-import { searchMentorProfile } from "../../api/mentorProfileApi"; 
+import * as mentorProfileApi from "../../api/mentorProfileApi"; 
+import MentorProfileItem from './MentorProfileItem'; // 🔥 MentorProfileItem import 추가
 
 const MentorSearchList = () => {
   const [searchResults, setSearchResults] = useState([]); 
@@ -12,20 +13,21 @@ const MentorSearchList = () => {
   const location = useLocation(); 
   const queryParams = new URLSearchParams(location.search); 
   const search = queryParams.get("query"); // ✅ query로 수정
-
+  
   const fetchMentorProfiles = async (query, page, size) => {
     try {
       setError(null); 
-      const response = await searchMentorProfile(query, page, size); 
-      console.log("API 응답 데이터:", response.data); 
+      const response = await mentorProfileApi.searchMentorProfiles(query, page, size); 
+      console.log("API 응답 데이터:", response); 
       setSearchResults(response.data.content || response.data); 
       setTotalPages(response.data.totalPages); 
+      console.log(response);
     } catch (error) {
       console.error("검색 중 오류가 발생했습니다.", error);
       setError("검색 중 오류가 발생했습니다."); 
     }
   };
-
+  
   const paginate = (pageNumber) => {
     setCurrentPage(pageNumber);
   };
@@ -56,16 +58,10 @@ const MentorSearchList = () => {
         {searchResults.length > 0 ? (
           <div>
             {searchResults.map((mentor) => (
-              <div key={mentor.mentorProfileNo} className="mentor-card">
-                <img 
-                  src={mentor.mentorImage || '/default-profile.png'} 
-                  alt="멘토 이미지" 
-                  className="mentor-profile-image" 
-                />
-                <h3>{mentor.mentorCareer}</h3>
-                <p>{mentor.mentorIntroduce}</p>
-                <p>평점: {mentor.mentorRating ?? '평점 없음'}</p>
-              </div>
+              <MentorProfileItem 
+                key={mentor} 
+                mentor={mentor} 
+              />
             ))}
           </div>
         ) : (
@@ -74,7 +70,14 @@ const MentorSearchList = () => {
 
         <div className="pagination">
           {pageNumbers.map((number) => (
-            <button key={number} onClick={() => paginate(number)}>
+            <button 
+              key={number} 
+              onClick={() => paginate(number)}
+              style={{ 
+                backgroundColor: number === currentPage ? '#4CAF50' : '', 
+                color: number === currentPage ? 'white' : '' 
+              }}
+            >
               {number}
             </button>
           ))}

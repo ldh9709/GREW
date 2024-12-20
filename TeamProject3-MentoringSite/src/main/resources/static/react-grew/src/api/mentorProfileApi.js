@@ -1,4 +1,22 @@
 const BACKEND_SERVER = ''; // 🛠️ 서버 주소를 지정하세요
+const BASE_URL = '/mentor-profile';
+
+
+
+
+
+
+// 🔥 멘토 프로필 번호로 특정 멘토의 프로필 정보를 가져오는 함수
+export const getMentorProfileByNo = async (mentorProfileNo) => {
+  const response = await fetch(`${BASE_URL}/${mentorProfileNo}`);
+  const data = await response.json();
+  return data;
+};
+
+
+
+
+
 
 /**
  * 🔥 특정 상태의 멘토 프로필 리스트를 조회합니다.
@@ -82,9 +100,10 @@ export const getMentorProfilesByCategoryNo = async (categoryNo, page = 0, size =
  * @param {number} size - 페이지 크기
  * @returns {Promise} - 검색된 멘토 목록을 포함하는 프로미스
  */
-export const searchMentorProfiles = async (keyword, page = 0, size = 10) => {
-  const response = await fetch(`${BACKEND_SERVER}/mentor-profile/search?keyword=${keyword}&page=${page}&size=${size}`);
+export const searchMentorProfiles = async (search, page = 0, size = 10) => {
+  const response = await fetch(`${BACKEND_SERVER}/mentor-profile/search/${search}?page=${page}&size=${size}`);
   const responseJsonObject = await response.json();
+  console.log(responseJsonObject);
   return responseJsonObject;
 };
 
@@ -178,11 +197,3 @@ export const listMentorsByActivityCount = async (page, size) => {
 };
 
 
-//서치 검색 
-export const searchMentorProfile = async (search, page, size) => {
-  const response = await fetch(`${process.env.REACT_APP_BACKEND_SERVER}/mentor-profile/search?keyword=${search}&page=${page}&size=${size}`, {
-    method: 'GET',
-  });
-  const responseJsonObject = await response.json();
-  return responseJsonObject;
-};
