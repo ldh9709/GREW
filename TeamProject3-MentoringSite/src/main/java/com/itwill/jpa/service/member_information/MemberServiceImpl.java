@@ -136,6 +136,7 @@ public class MemberServiceImpl implements MemberService {
 		
 		for (InterestDto interest : memberDto.getInterests()) {
 			Interest interestEntity = Interest.toEntity(interest);
+			System.out.println("회원가입 interestEntity : " + interestEntity);
 			saveMember.addInterests(interestEntity);
 		}
 		saveMember.setMemberPassword(passwordEncoder.encode(memberPassword));
