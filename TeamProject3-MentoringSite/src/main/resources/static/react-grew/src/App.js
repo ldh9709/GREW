@@ -36,8 +36,8 @@ function App() {
             <Route path="/main" element={<MainPage />} />
             {/* Member페이지 */}
             <Route path="/member/profile" element={<MemberMypage />} />
-            <Route path="/member/join" element={<MemberMainJoinFormPage/>} />
-            <Route path="/member/join/form" element={<MemberJoinFormPage/>} />
+            {/* <Route path="/member/join" element={<MemberMainJoinFormPage/>} /> */}
+            <Route path="/member/join" element={<MemberJoinFormPage/>} />
             <Route path="/member/login" element={<MemberLoginFormPage/>} />
             <Route path="/member/profile/edit" element={<MemberProfileFormPage/>}/>
 
