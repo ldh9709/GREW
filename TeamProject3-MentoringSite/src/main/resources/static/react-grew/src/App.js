@@ -3,11 +3,13 @@ import "./css/styles.css";
 import Header from "./layout/Header";
 import { MainPage } from "./component/MainPage";
 import Navigate from "./layout/Navigate";
-
+/* 멤버 페이지 임포트 */
 import MemberMainJoinFormPage from "./component/Member/MemberMainJoinFormPage";
 import MemberJoinFormPage from "./component/Member/MemberJoinFormPage";
 import MemberLoginFormPage from "./component/Member/MemberLoginFormPage";
 import MemberProfileFormPage  from "./component/Member/MemberProfileFormPage";
+/* 멘토 페이지 임포트 */
+import MentorJoinFormPage from "./component/Member/MentorJoinFormPage";
 
 import InquiryWriteFormpage from "./component/AnswerInquiry/InqiuryWriteFormPage";
 import InquiryModifyFormpage from "./component/AnswerInquiry/InquiryModifyFormPage";
@@ -44,7 +46,7 @@ function App() {
             <Route path="/member/login" element={<MemberLoginFormPage/>} />
             <Route path="/member/profile/edit" element={<MemberProfileFormPage/>}/>
             {/* Mentor페이지 */}
-            
+            <Route path="/mentor/join" element={<MentorJoinFormPage />} />
 
             <Route path="/inquiry" element={<InqiuryList/>}/>
             <Route path="/inquiry/:inquiryNo" element={<InqiuryView/>}/>
