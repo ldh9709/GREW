@@ -5,7 +5,7 @@ import { MainPage } from "./component/MainPage";
 import Navigate from "./layout/Navigate";
 import MemberJoinFormPage from "./component/Member/MemberJoinFormPage";
 import MemberLoginFormPage from "./component/Member/MemberLoginFormPage";
-import MemberProfileFormPage  from "./component/Member/MemberProfileFormPage";
+import MemberProfileFormPage from "./component/Member/MemberProfileFormPage";
 
 import InquiryWriteFormpage from "./component/AnswerInquiry/InqiuryWriteFormPage";
 import InquiryModifyFormpage from "./component/AnswerInquiry/InquiryModifyFormPage";
@@ -14,21 +14,27 @@ import AnswerModifyFormpage from "./component/AnswerInquiry/AnswerModifyFormPage
 import InqiuryList from "./component/AnswerInquiry/InqiuryList";
 import InqiuryView from "./component/AnswerInquiry/InquiryView";
 import ChatAlarim from "./component/Chatting/ChatAlarim";
-import Footer from "./layout/Footer"
+import Footer from "./layout/Footer";
 import MemberMypage from "./component/Member/mypage/MemberMypage";
 import SearchList from "./component/SearchList";
 import InquirySearchList from "./component/AnswerInquiry/InquirySearchList";
+
+import ReviewWriteFormPage from "./component/Review/ReviewWrithFormPage";
+import ReviewView from "./component/Review/ReviewView";
+import ReviewListPage from "./component/Review/ReviewList";
+
 import AdminReport2 from "./component/admin/adminReport2"
 import Admin from "./component/admin/admin"
 import AdminReport4 from "./component/admin/adminReport4"
 import ForbiddenPage from "./component/ForbiddenPage";
 
+
 function App() {
   return (
     <>
       <Header />
-      <Navigate/>
-      <ChatAlarim/>
+      <Navigate />
+      <ChatAlarim />
       <div id="wrapper">
         <div id="content">
           <Routes>
@@ -37,23 +43,44 @@ function App() {
             <Route path="/403" element={<ForbiddenPage />} />
             {/* Member페이지 */}
             <Route path="/member/profile" element={<MemberMypage />} />
-            <Route path="/member/join" element={<MemberJoinFormPage/>} />
-            <Route path="/member/login" element={<MemberLoginFormPage/>} />
-            <Route path="/member/profile/edit" element={<MemberProfileFormPage/>}/>
+            <Route path="/member/join" element={<MemberJoinFormPage />} />
+            <Route path="/member/login" element={<MemberLoginFormPage />} />
+            <Route
+              path="/member/profile/edit"
+              element={<MemberProfileFormPage />}
+            />
 
-            <Route path="/inquiry" element={<InqiuryList/>}/>
-            <Route path="/inquiry/:inquiryNo" element={<InqiuryView/>}/>
-            <Route path="/inquiry/inquiryWrite" element={<InquiryWriteFormpage/>}/>
-            <Route path="/inquiry/modify/:inquiryNo" element={<InquiryModifyFormpage/>}/>
-            <Route path="/answer/answerWrite/:inquiryNo" element={<AnswerWriteFormpage/>}/>
-            <Route path="/answer/modify/:answerNo" element={<AnswerModifyFormpage/>}/>
-            <Route path="/searchList" element={<SearchList/>}/>
-            <Route path="/inquirySearchList" element={<InquirySearchList/>}/>
-            <Route path="/admin/reports" element={<AdminReport2/>}/>
-            <Route path="/admin" element={<Admin/>}/>
-            <Route path="/adminReport4" element={<AdminReport4/>}/>
+            <Route path="/inquiry" element={<InqiuryList />} />
+            <Route path="/inquiry/:inquiryNo" element={<InqiuryView />} />
+            <Route
+              path="/inquiry/inquiryWrite"
+              element={<InquiryWriteFormpage />}
+            />
+            <Route
+              path="/inquiry/modify/:inquiryNo"
+              element={<InquiryModifyFormpage />}
+            />
+            <Route
+              path="/answer/answerWrite/:inquiryNo"
+              element={<AnswerWriteFormpage />}
+            />
+            <Route
+              path="/answer/modify/:answerNo"
+              element={<AnswerModifyFormpage />}
+            />
+            <Route path="/searchList" element={<SearchList />} />
+            <Route path="/inquirySearchList" element={<InquirySearchList />} />
+            <Route path="/admin/reports" element={<AdminReport2 />} />
+            <Route path="/admin" element={<Admin />} />
+            <Route path="/adminReport4" element={<AdminReport4 />} />
+            <Route
+              path="/review/reviewWrite"
+              element={<ReviewWriteFormPage />}
+            />
+            <Route path="/review/reviewView" element={<ReviewView />} />
+            <Route path="/review/reviewList" element={<ReviewListPage />} />
           </Routes>
-          <Footer/>
+          <Footer />
         </div>
       </div>
     </>

@@ -3,6 +3,8 @@ import React, { useEffect, useState } from "react";
 import * as inquiryApi from "../../api/inquiryApi";
 import InquiryItem from "./InquiryItem";
 import * as categoryApi from "../../api/categoryApi";
+import { useNavigate } from "react-router-dom";
+import { getCookie } from "../../util/cookieUtil";
 
 function InqiuryList() {
   const [inquirys, setInquiry] = useState([]);
@@ -13,6 +15,8 @@ function InqiuryList() {
   const [categories, setCategories] = useState([]); // 카테고리 리스트
   const [selectedCategory, setSelectedCategory] = useState(null); // 선택된 카테고리
   const [childCategories, setChildCategories] = useState([]); // 하위 카테고리 상태
+  const navigate = useNavigate();
+  const memberCookie = getCookie("member");
   // 카테고리 목록을 가져오는 함수
   const fetchCategories = async () => {
     try {
@@ -48,6 +52,7 @@ function InqiuryList() {
       }
     }
   };
+
   // 문의 목록을 페이지네이션과 함께 가져오는 함수
   const fetchInquiries = async (page, size, sortButton, selectedCategory) => {
     try {
@@ -135,6 +140,14 @@ function InqiuryList() {
     pageNumbers.push(i);
   }
 
+  const handleWriteButton = () => {
+    if (memberCookie != null) {
+      navigate("/inquiry/inquiryWrite");
+    } else {
+      alert("로그인이 필요한 서비스입니다");
+      return;
+    }
+  };
   return (
     <>
       <link
@@ -144,7 +157,7 @@ function InqiuryList() {
       <div>
         <h1>질문게시판</h1>
         <div className="btn-inquiry-write-div">
-          <a className="btn-inquiry-write" href="/inquiry/inquiryWrite">
+          <button className="btn-inquiry-write" onClick={handleWriteButton}>
             <img
               src="https://img.icons8.com/?size=100&id=98973&format=png&color=000000"
               style={{
@@ -156,9 +169,8 @@ function InqiuryList() {
               }}
             />
             질문등록
-          </a>
+          </button>
         </div>
-
         {/* 카테고리 버튼들 */}
         <div>
           {categories
@@ -201,7 +213,6 @@ function InqiuryList() {
             ))}
           </div>
         )}
-
         {/* 정렬 라디오 버튼 */}
         <div className="radio-container">
           <label>
@@ -235,7 +246,19 @@ function InqiuryList() {
             답변많은순
           </label>
         </div>
-
+        <div>
+          {/* 선택된 카테고리가 존재할 때만 카테고리 이름을 표시 */}
+          {selectedCategory != null && (
+            <div className="inquiry-category-name">
+              {
+                // 선택된 카테고리 객체가 존재할 때만 categoryName을 출력
+                categories.find(
+                  (category) => category.categoryNo === selectedCategory
+                )?.categoryName || "선택된 카테고리가 없습니다"
+              }
+            </div>
+          )}
+        </div>
         {/* 문의 목록 테이블 */}
         {inquirys && inquirys.length > 0 ? (
           inquirys.map((inquiry) => (

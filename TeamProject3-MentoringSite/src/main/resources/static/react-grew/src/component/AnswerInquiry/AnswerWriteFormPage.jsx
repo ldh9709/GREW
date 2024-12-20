@@ -73,7 +73,7 @@ export default function AnswerWriteFormPage() {
         href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap"
         rel="stylesheet"
       ></link>
-      <div className="inquiry-container">
+      <div className="inquiry-container-inview">
         <div>
           <div className="inquiry-title">{inquiry.inquiryTitle}</div>
         </div>
@@ -82,11 +82,8 @@ export default function AnswerWriteFormPage() {
             {inquiry.memberName} | 조회수 {inquiry.inquiryViews} |{" "}
             {inquiry.inquiryDate.substring(0, 10)}
           </div>
-          <br />
           <div>{inquiry.categoryName}</div>
         </div>
-        <br />
-        <br />
         <div className="inquiry-content">
           <div>{inquiry.inquiryContent}</div>
         </div>
@@ -95,7 +92,7 @@ export default function AnswerWriteFormPage() {
       </div>
 
       <div>
-        <form ref={writeFormRef} method="POST" className="inquiry-form">
+        <form ref={writeFormRef}  className="inquiry-form">
           <div>
             <div>답변등록</div>
           </div>

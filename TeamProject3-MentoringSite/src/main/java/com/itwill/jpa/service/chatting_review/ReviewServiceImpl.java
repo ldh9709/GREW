@@ -10,6 +10,10 @@ import com.itwill.jpa.response.ResponseStatusCode;
 import com.itwill.jpa.service.member_information.MentorProfileService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -97,14 +101,15 @@ public class ReviewServiceImpl implements ReviewService {
 
     /* 특정 요청 번호에 따른 리뷰 리스트 조회 */
     @Override
-    public List<ReviewDto> getReviewByChatRoomNo(Long chatRoomNo) {
+    public Page<ReviewDto> getReviewByChatRoomNo(Long chatRoomNo,int pageNumber, int pageSize) {
     	try {
-        List<Review> reviews = reviewRepository.findReviewByChatRoom_ChatRoomNoAndReviewStatus(chatRoomNo,1);
+    		Pageable pageable = PageRequest.of(pageNumber, pageSize);
+    	Page<Review> reviews = reviewRepository.findReviewByChatRoom_ChatRoomNoAndReviewStatus(chatRoomNo,1,pageable);
         List<ReviewDto> reviewDtolist = new ArrayList<>();
         for (Review review : reviews) {
             reviewDtolist.add(ReviewDto.toDto(review));
         }
-        return reviewDtolist;
+        return new PageImpl<>(reviewDtolist, pageable, reviews.getTotalElements());
     	}catch (Exception e) {
     		throw new CustomException(ResponseStatusCode.READ_REVIEW_LIST_FAIL, ResponseMessage.READ_REVIEW_LIST_FAIL, e);
     	}
@@ -112,42 +117,57 @@ public class ReviewServiceImpl implements ReviewService {
 
     /* 특정 멤버 번호에 따른 리뷰 리스트 조회 */
     @Override
-    public List<ReviewDto> getReviewByMemberNo(Long memberNo) {
-    	try {
-        Set<Review> reviews = new HashSet<>();
+    public Page<ReviewDto> getReviewByMemberNo(Long memberNo, int pageNumber, int pageSize) {
+        try {
+            Pageable pageable = PageRequest.of(pageNumber, pageSize); // Pageable 객체 생성
 
-        // 멘티 번호로 리뷰 조회
-        reviews.addAll(reviewRepository.findReviewByChatRoom_Mentee_MemberNoAndReviewStatus(memberNo,1));
+            // 멘티 번호로 리뷰 조회 (페이징 처리)
+            Page<Review> menteeReviews = reviewRepository.findReviewByChatRoom_Mentee_MemberNoAndReviewStatus(memberNo, 1, pageable);
 
-        // 멘토 번호로 리뷰 조회
-        reviews.addAll(reviewRepository.findReviewByChatRoom_Mentor_MemberNoAndReviewStatus(memberNo,1));
+            // 멘토 번호로 리뷰 조회 (페이징 처리)
+            Page<Review> mentorReviews = reviewRepository.findReviewByChatRoom_Mentor_MemberNoAndReviewStatus(memberNo, 1,pageable);
 
-        // 리뷰를 DTO로 변환
-        List<ReviewDto> reviewDtoList = new ArrayList<>();
-        for (Review review : reviews) {
-            reviewDtoList.add(ReviewDto.toDto(review));
+            // 멘티와 멘토의 리뷰를 합침 (합치기 전에 두 페이지를 병합할 필요가 있음)
+            List<Review> allReviews = new ArrayList<>();
+            allReviews.addAll(menteeReviews.getContent());
+            allReviews.addAll(mentorReviews.getContent());
+
+            // 리뷰를 DTO로 변환
+            List<ReviewDto> reviewDtoList = new ArrayList<>();
+            for (Review review : allReviews) {
+                reviewDtoList.add(ReviewDto.toDto(review));
+            }
+
+            // Page 객체로 반환 (totalElements는 두 페이지 합친 전체 리뷰 개수)
+            return new PageImpl<>(reviewDtoList, pageable, menteeReviews.getTotalElements() + mentorReviews.getTotalElements());
+        } catch (Exception e) {
+            throw new CustomException(ResponseStatusCode.READ_REVIEW_LIST_FAIL, ResponseMessage.READ_REVIEW_LIST_FAIL, e);
         }
-
-        return reviewDtoList;
-    	}catch (Exception e) {
-    		throw new CustomException(ResponseStatusCode.READ_REVIEW_LIST_FAIL, ResponseMessage.READ_REVIEW_LIST_FAIL, e);
-    	}
     }
 
 
     /* 모든 리뷰 리스트 조회 */
     @Override
-    public List<ReviewDto> getReviewAll() {
-    	try {
-        List<Review> reviews = reviewRepository.findAll();
-        List<ReviewDto> reviewDtoList = new ArrayList<>();
-        for (Review review : reviews) {
-            reviewDtoList.add(ReviewDto.toDto(review));
+    public Page<ReviewDto> getReviewAll(int pageNumber, int pageSize) {
+        try {
+            // Pageable 객체 생성 (pageNumber는 0부터 시작, pageSize는 한 페이지에 표시할 리뷰 개수)
+            Pageable pageable = PageRequest.of(pageNumber, pageSize);
+
+            // 리뷰를 페이징하여 조회
+            Page<Review> reviews = reviewRepository.findAll(pageable);
+
+            // 조회된 Review 객체를 DTO로 변환
+            List<ReviewDto> reviewDtoList = new ArrayList<>();
+            for (Review review : reviews) {
+                reviewDtoList.add(ReviewDto.toDto(review));
+            }
+
+            // PageImpl을 사용하여 Page<ReviewDto> 객체 반환
+            return new PageImpl<>(reviewDtoList, pageable, reviews.getTotalElements());
+        } catch (Exception e) {
+            throw new CustomException(ResponseStatusCode.READ_REVIEW_LIST_FAIL, ResponseMessage.READ_REVIEW_LIST_FAIL, e);
         }
-        return reviewDtoList;
-    	}catch (Exception e) {
-    		throw new CustomException(ResponseStatusCode.READ_REVIEW_LIST_FAIL, ResponseMessage.READ_REVIEW_LIST_FAIL, e);
-		}
     }
+
     
 }

@@ -13,7 +13,7 @@ public interface AlarmService{
 	//알림추가
 	AlarmDto createAlarm(AlarmDto alarmDto);
 	//알림읽음표시
-	AlarmDto isReadAlarm(AlarmDto alarmDto);
+	AlarmDto isReadAlarm(Long alarmNo);
 	//알림한개삭제
 	void deleteAlarm(Long AlarmNo);
 	//사용자의 모든 알림 삭제

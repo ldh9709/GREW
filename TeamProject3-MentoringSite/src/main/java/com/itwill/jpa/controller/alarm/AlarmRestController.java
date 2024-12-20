@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -32,13 +33,18 @@ public class AlarmRestController {
     private AlarmRepository alarmRepository;
     //알림으로 페이지이동
     @Operation(summary = "알림 URL")
-    @GetMapping("/{alarmId}/redirect")
-    public ResponseEntity<String> redirectToPage(@PathVariable(name = "alarmId") Long alarmId) {
-        AlarmDto alarmDto = AlarmDto.toDto(alarmRepository.findById(alarmId).get());
-
+    @GetMapping("/{alarmNo}/redirect")
+    public ResponseEntity<Response> redirectToPage(@PathVariable(name = "alarmNo") Long alarmNo) {
+        AlarmDto alarmDto = AlarmDto.toDto(alarmRepository.findById(alarmNo).get());
+        Response response = new Response();
+        
         String redirectUrl = alarmService.alarmRedirectURL(alarmDto);
-
-        return ResponseEntity.ok(redirectUrl);
+        response.setData(redirectUrl);
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.setContentType(new MediaType(MediaType.APPLICATION_JSON, Charset.forName("UTF-8")));
+        ResponseEntity<Response> responseEntity = new ResponseEntity<Response>(response, httpHeaders,
+				HttpStatus.OK);
+        return responseEntity;
     }
     @Operation(summary = "멤버한명의 알림 출력")
     @GetMapping("/alarms")
@@ -65,5 +71,10 @@ public class AlarmRestController {
     @DeleteMapping("/delete/all")
     public void deleteAlarmByMemberNo(@RequestParam(name = "memberNo") Long memberNo) {
     	alarmService.deleteAlarmByMemberNo(memberNo);
+    }
+    @Operation(summary = "알림 읽음표시")
+    @PutMapping("/is-read/{alarmNo}")
+    public void isReadAlarm(@PathVariable(name = "alarmNo") Long alarmNo) {
+    	alarmService.isReadAlarm(alarmNo);
     }
 }
