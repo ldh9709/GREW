@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.itwill.jpa.auth.PrincipalDetails;
 import com.itwill.jpa.dto.bulletin_board.AnswerDto;
 import com.itwill.jpa.dto.bulletin_board.InquiryDto;
 import com.itwill.jpa.dto.member_information.MentorBoardDto;
@@ -50,7 +52,7 @@ public class AdminReportController {
 	@PreAuthorize("hasRole('MENTEE')")
 	@Operation(summary = "전체 신고 목록 조회")
 	@GetMapping()
-	public ResponseEntity<Response> getAdminReportList(
+	public ResponseEntity<Response> getAdminReportList(Authentication authentication,
 			@Parameter(name = "filter", description = "필터링 역할(1: 전체, 2: 신고접수 순)", required = true, example = "1")
 	        @RequestParam(name = "filter") Integer filter,
 	        @RequestParam(name = "page", defaultValue = "0") int page,
@@ -63,6 +65,8 @@ public class AdminReportController {
 	    Response response = new Response();
 	    response.setStatus(ResponseStatusCode.READ_REPORT_LIST_SUCCESS);
 	    response.setMessage(ResponseMessage.READ_REPORT_LIST_SUCCESS);
+		PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
+
 	    response.setData(reports);
 
 	    // HTTP 헤더 설정
