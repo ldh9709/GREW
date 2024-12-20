@@ -4,6 +4,7 @@ import java.nio.charset.Charset;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.itwill.jpa.auth.PrincipalDetails;
@@ -40,7 +42,7 @@ public class ChatRoomRestController {
 	private ChatRoomStatusService chatRoomStatusService;
 	
 	@Operation(summary = "채팅방 신청")
-	@PostMapping
+	@PostMapping("create")
 	public ResponseEntity<Response> createInitialChatRoom(@RequestBody ChatRoomDto chatRoomDto){
 		chatRoomService.saveChatRoom(chatRoomDto);
 		
@@ -59,7 +61,7 @@ public class ChatRoomRestController {
 	}
 	
 	@Operation(summary = "채팅방 활성화")
-	@PutMapping("{chat_room_no}/active")
+	@PutMapping("active/{chat_room_no}")
 	public ResponseEntity<Response> updateChatRoomStatusACTIVE(@PathVariable (value = "chat_room_no") Long chatRoomNo) throws Exception{
 		ChatRoomDto chatRoomDto = chatRoomService.updateActive(chatRoomNo);
 		
@@ -78,7 +80,7 @@ public class ChatRoomRestController {
 	}
 	
 	@Operation(summary = "활동 종료")
-	@PutMapping("{chat_room_no}/completed")
+	@PutMapping("completed/{chat_room_no}")
 	public ResponseEntity<Response> updateChatRoomStatusCOMPLETED(@PathVariable (value = "chat_room_no") Long chatRoomNo) throws Exception{
 		ChatRoomDto chatRoomDto = chatRoomService.updateCompleted(chatRoomNo);
 		
@@ -97,7 +99,7 @@ public class ChatRoomRestController {
 	}
 	
 	@Operation(summary = "멘토가 요청을 수락하지 않음")
-	@PutMapping("{chat_room_no}/rejected")
+	@PutMapping("rejected/{chat_room_no}")
 	public ResponseEntity<Response> updateChatRoomStatusREJECTED(@PathVariable (value = "chat_room_no") Long chatRoomNo) throws Exception{
 		ChatRoomDto chatRoomDto = chatRoomService.updateRejected(chatRoomNo);
 		
@@ -116,7 +118,7 @@ public class ChatRoomRestController {
 	}
 	
 	@Operation(summary = "멘티가 요청을 철회함")
-	@PutMapping("{chat_room_no}/canceled")
+	@PutMapping("canceled/{chat_room_no}")
 	public ResponseEntity<Response> updateChatRoomStatusCANCELED(@PathVariable (value = "chat_room_no") Long chatRoomNo) throws Exception{
 		ChatRoomDto chatRoomDto = chatRoomService.updateCanceled(chatRoomNo);
 		
@@ -134,7 +136,7 @@ public class ChatRoomRestController {
 		return responseEntity;
 	}
 	@Operation(summary = "관리자가 비정상적인 요청을 종료함")
-	@PutMapping("{chat_room_no}/closed")
+	@PutMapping("closed/{chat_room_no}")
 	public ResponseEntity<Response> updateChatRoomStatusCLOSED(@PathVariable (value = "chat_room_no") Long chatRoomNo) throws Exception{
 		ChatRoomDto chatRoomDto = chatRoomService.updateForceClosed(chatRoomNo);
 		
@@ -154,7 +156,7 @@ public class ChatRoomRestController {
 	@Operation(summary = "채팅방을 나감(토큰)")
 	@SecurityRequirement(name = "BearerAuth")//API 엔드포인트가 인증을 요구한다는 것을 문서화(Swagger에서 JWT인증을 명시
 	@PreAuthorize("hasRole('MENTEE') or hasRole('MENTOR')")//ROLE이 MENTEE인 사람만 접근 가능
-	@PutMapping("{chat_room_no}/leave")
+	@PutMapping("leave/{chat_room_no}")
 	public ResponseEntity<Response> updateChatRoomStatusLEAVE(@PathVariable (value = "chat_room_no") Long chatRoomNo, Authentication authentication) throws Exception{
 		//PrincipalDetails에서 memberNo를 가져옴
 		PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
@@ -179,17 +181,28 @@ public class ChatRoomRestController {
 	@SecurityRequirement(name = "BearerAuth")//API 엔드포인트가 인증을 요구한다는 것을 문서화(Swagger에서 JWT인증을 명시
 	@PreAuthorize("hasRole('MENTEE') or hasRole('MENTOR')")//ROLE이 MENTEE인 사람만 접근 가능
 	@GetMapping("/list")
-	public ResponseEntity<Response> selectChatRoomList(Authentication authentication){
+	public ResponseEntity<Response> selectChatRoomList(
+			Authentication authentication,
+			@RequestParam(name = "page", defaultValue = "0") int page,
+			@RequestParam(name = "size", defaultValue = "10") int size
+			){
 		//PrincipalDetails에서 memberNo를 가져옴
 		PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
 		Long memberNo = principalDetails.getMemberNo();
-		
-		List<ChatRoomDto> chatRoomDtos = chatRoomService.selectChatRoomAll(memberNo);
-		
+		String memberRole = principalDetails.getRole();
+
 		Response response = new Response();
+		
+		if(memberRole.equals("ROLE_MENTEE")) {
+			Page<ChatRoomDto> chatRoomDtos = chatRoomService.selectChatRoomByMenteeNo(memberNo, page, size);
+			response.setData(chatRoomDtos);
+		}else if(memberRole.equals("ROLE_MENTOR")) {
+			Page<ChatRoomDto> chatRoomDtos = chatRoomService.selectChatRoomByMentorNo(memberNo, page, size);
+			response.setData(chatRoomDtos);
+		}
+		
 		response.setStatus(ResponseStatusCode.CHATTING_LIST_SUCCESS);
 		response.setMessage(ResponseMessage.CHATTING_LIST_SUCCESS);
-		response.setData(chatRoomDtos);
 		
 		HttpHeaders httpHeaders = new HttpHeaders();
 		httpHeaders.setContentType(new MediaType(MediaType.APPLICATION_JSON, Charset.forName("UTF-8")));

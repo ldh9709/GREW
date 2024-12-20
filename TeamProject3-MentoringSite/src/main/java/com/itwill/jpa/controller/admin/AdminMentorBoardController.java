@@ -8,6 +8,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -20,6 +21,7 @@ import com.itwill.jpa.response.ResponseStatusCode;
 import com.itwill.jpa.service.member_information.MentorBoardService;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 
 @RestController
 @RequestMapping("/admin/mentor-board")
@@ -31,6 +33,8 @@ public class AdminMentorBoardController {
 	/************************* 멘토 보드(컨텐츠) *******************************/
 
 	/* (멘토)게시글 전체출력 * */
+	@SecurityRequirement(name = "BearerAuth")
+	@PreAuthorize("hasRole('MENTEE')")
 	@Operation(summary = "멘토 게시글 전체 조회(최신순)")
 	@GetMapping()
 	public ResponseEntity<Response> getAdminMentorBoardsForAdmin(
@@ -54,6 +58,8 @@ public class AdminMentorBoardController {
 	    return new ResponseEntity<>(response, httpHeaders, HttpStatus.OK);
 	}
 	
+	@SecurityRequirement(name = "BearerAuth")
+	@PreAuthorize("hasRole('MENTEE')")
 	@Operation(summary = "멘토 게시글 조회(검색어)")
 	@GetMapping("/search/{search}")
 	public ResponseEntity<Response> getAdminMentorBoardsForAdminWithSearch(

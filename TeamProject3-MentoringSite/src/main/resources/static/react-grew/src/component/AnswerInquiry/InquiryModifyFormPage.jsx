@@ -1,7 +1,9 @@
 import React, { useEffect, useRef, useState } from "react";
 import * as inquiryApi from "../../api/inquiryApi";
 import { useNavigate, useParams } from "react-router-dom";
+import { getCookie } from "../../util/cookieUtil";
 export default function InqiuryModifyFormPage() {
+  const memberCookie = getCookie("member");
   const modifyFormRef = useRef();
   const navigate = useNavigate();
   const initInquiry = {
@@ -20,7 +22,11 @@ export default function InqiuryModifyFormPage() {
     const a = async () => {
       const responseJsonObject = await inquiryApi.viewInquiry(inquiryNo);
       setInquiry(responseJsonObject.data);
+      if(memberCookie.memberNo!=responseJsonObject.data.memberNo){
+        navigate('/403')
     };
+    }
+    console.log(memberCookie.memberNo)
     a();
   }, [inquiryNo]);
 

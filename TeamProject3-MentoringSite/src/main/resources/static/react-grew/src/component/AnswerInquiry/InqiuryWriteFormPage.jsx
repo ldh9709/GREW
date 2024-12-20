@@ -1,10 +1,14 @@
 import React, { useEffect, useRef, useState } from "react";
 import * as inquiryApi from "../../api/inquiryApi";
 import { useNavigate } from "react-router-dom";
+import { getCookie } from "../../util/cookieUtil";
 import * as categoryApi from "../../api/categoryApi";
 export default function InqiuryWriteFormPage() {
   const writeFormRef = useRef();
   const navigate = useNavigate();
+  const memberCookie = getCookie("member");
+  const token = memberCookie.accessToken;
+
   const initInquiry = {
     inquiryNo: 0,
     inquiryTitle: "",
@@ -13,7 +17,7 @@ export default function InqiuryWriteFormPage() {
     inquiryState: 1,
     inquiryViews: 0,
     categoryNo: 0,
-    memberNo: 1,
+    memberNo: 0,
   };
 
   const [inquiry, setInquiry] = useState(initInquiry);
@@ -78,8 +82,17 @@ export default function InqiuryWriteFormPage() {
       alert("하위 카테고리를 선택해야 합니다.");
       return; // 하위 카테고리가 선택되지 않으면 폼 제출을 막음
     }
-    const responseJsonObject = await inquiryApi.writeInquiry(inquiry);
-    console.log(responseJsonObject.data);
+    if (!inquiry.inquiryTitle.trim()) {
+      alert("제목을 입력해주세요."); // 사용자에게 입력을 요구하는 알림을 띄움
+      return; // 폼 제출을 막음
+    }
+    if (!inquiry.inquiryContent.trim()) {
+      alert("내용을 입력해주세요."); // 사용자에게 입력을 요구하는 알림을 띄움
+      return; // 폼 제출을 막음
+    }
+    const responseJsonObject = await inquiryApi.writeInquiry(inquiry, token);
+    console.log(token);
+    console.log(inquiry.inquiryNo)
     navigate(`/inquiry/${responseJsonObject.data.inquiryNo}`);
   };
   return (

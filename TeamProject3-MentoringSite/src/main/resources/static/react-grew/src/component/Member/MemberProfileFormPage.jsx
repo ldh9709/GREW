@@ -23,23 +23,38 @@ const MemberProfileFormPage = () => {
       memberEmail: data.memberEmail,
       interests: data.interests || [],
     });
-    console.log("setMember : ", setMember);
+    
   };
 
-  const handleInterestClick = (value) => {
+  // 관심사를 클릭하여 선택하거나 해제
+  const handleInterestClick = (interestId) => {
     setMember((prevState) => {
-      const alreadySelected = prevState.interests.includes(value);
+      const alreadySelected = prevState.interests.some(
+        (interest) => interest.categoryNo === parseInt(interestId)
+      );
+
       const updatedInterests = alreadySelected
-        ? prevState.interests.filter((interest) => interest !== value)
-        : [...prevState.interests, value];
+        ? prevState.interests.filter(
+            (interest) => interest.categoryNo !== parseInt(interestId)
+          )
+        : [
+            ...prevState.interests,
+            { interestNo: 0, memberNo: prevState.memberId, categoryNo: parseInt(interestId) },
+          ];
+
       return { ...prevState, interests: updatedInterests };
     });
+  };
+
+  const isInterestSelected = (interestId) => {
+    return member.interests.some((interest) => interest.categoryNo === parseInt(interestId));
   };
 
   useEffect(() => {
     fetchProfileData();
   }, []);
-
+  
+  console.log(member.interests);
   return (
     <div className="member-profile-container">
       <div className="member-profile-form">
@@ -92,128 +107,110 @@ const MemberProfileFormPage = () => {
             <label>관심사</label>
             <div className="member-form-interest-group">
               <div
-                className={`interest-item ${
-                  member.interests.includes("2") ? "selected" : ""
-                }`}
+                className={`interest-item ${isInterestSelected("2") ? "selected" : ""}`}
+                onClick={() => handleInterestClick("2")}
               >
                 인사/총무/노무
               </div>
               <div
-                className={`interest-item ${
-                  member.interests.includes("3") ? "selected" : ""
-                }`}
+                className={`interest-item ${isInterestSelected("3") ? "selected" : ""}`}
+                onClick={() => handleInterestClick("3")}
               >
                 영업/영업관리
               </div>
               <div
-                className={`interest-item ${
-                  member.interests.includes("4") ? "selected" : ""
-                }`}
+                className={`interest-item ${isInterestSelected("4") ? "selected" : ""}`}
+                onClick={() => handleInterestClick("4")}
               >
                 IT개발/데이터
               </div>
               <div
-                className={`interest-item ${
-                  member.interests.includes("6") ? "selected" : ""
-                }`}
+                className={`interest-item ${isInterestSelected("6") ? "selected" : ""}`}
+                onClick={() => handleInterestClick("6")}
               >
                 중학생
               </div>
               <div
-                className={`interest-item ${
-                  member.interests.includes("7") ? "selected" : ""
-                }`}
+                className={`interest-item ${isInterestSelected("7") ? "selected" : ""}`}
+                onClick={() => handleInterestClick("7")}
               >
                 고등학생
               </div>
               <div
-                className={`interest-item ${
-                  member.interests.includes("8") ? "selected" : ""
-                }`}
+                className={`interest-item ${isInterestSelected("8") ? "selected" : ""}`}
+                onClick={() => handleInterestClick("8")}
               >
                 대학입시상담
               </div>
               <div
-                className={`interest-item ${
-                  member.interests.includes("10") ? "selected" : ""
-                }`}
+                className={`interest-item ${isInterestSelected("10") ? "selected" : ""}`}
+                onClick={() => handleInterestClick("10")}
               >
                 음악
               </div>
               <div
-                className={`interest-item ${
-                  member.interests.includes("11") ? "selected" : ""
-                }`}
+                className={`interest-item ${isInterestSelected("11") ? "selected" : ""}`}
+                onClick={() => handleInterestClick("11")}
               >
                 글쓰기
               </div>
               <div
-                className={`interest-item ${
-                  member.interests.includes("12") ? "selected" : ""
-                }`}
+                className={`interest-item ${isInterestSelected("12") ? "selected" : ""}`}
+                onClick={() => handleInterestClick("12")}
               >
                 미술
               </div>
               <div
-                className={`interest-item ${
-                  member.interests.includes("13") ? "selected" : ""
-                }`}
+                className={`interest-item ${isInterestSelected("13") ? "selected" : ""}`}
+                onClick={() => handleInterestClick("13")}
               >
                 사진/영상 제작
               </div>
               <div
-                className={`interest-item ${
-                  member.interests.includes("14") ? "selected" : ""
-                }`}
+                className={`interest-item ${isInterestSelected("14") ? "selected" : ""}`}
+                onClick={() => handleInterestClick("14")}
               >
                 연기/연극
               </div>
               <div
-                className={`interest-item ${
-                  member.interests.includes("16") ? "selected" : ""
-                }`}
+                className={`interest-item ${isInterestSelected("16") ? "selected" : ""}`}
+                onClick={() => handleInterestClick("16")}
               >
                 스타트업 아이디어
               </div>
               <div
-                className={`interest-item ${
-                  member.interests.includes("17") ? "selected" : ""
-                }`}
+                className={`interest-item ${isInterestSelected("17") ? "selected" : ""}`}
+                onClick={() => handleInterestClick("17")}
               >
                 마케팅 전략
               </div>
               <div
-                className={`interest-item ${
-                  member.interests.includes("18") ? "selected" : ""
-                }`}
+                className={`interest-item ${isInterestSelected("18") ? "selected" : ""}`}
+                onClick={() => handleInterestClick("18")}
               >
                 법률 특허 상담
               </div>
               <div
-                className={`interest-item ${
-                  member.interests.includes("22") ? "selected" : ""
-                }`}
+                className={`interest-item ${isInterestSelected("22") ? "selected" : ""}`}
+                onClick={() => handleInterestClick("22")}
               >
                 피트니스
               </div>
               <div
-                className={`interest-item ${
-                  member.interests.includes("23") ? "selected" : ""
-                }`}
+                className={`interest-item ${isInterestSelected("23") ? "selected" : ""}`}
+                onClick={() => handleInterestClick("23")}
               >
                 요가/필라테스
               </div>
               <div
-                className={`interest-item ${
-                  member.interests.includes("24") ? "selected" : ""
-                }`}
+                className={`interest-item ${isInterestSelected("24") ? "selected" : ""}`}
+                onClick={() => handleInterestClick("24")}
               >
                 재활 운동
               </div>
               <div
-                className={`interest-item ${
-                  member.interests.includes("25") ? "selected" : ""
-                }`}
+                className={`interest-item ${isInterestSelected("25") ? "selected" : ""}`}
+                onClick={() => handleInterestClick("25")}
               >
                 식단/영양 상담
               </div>
