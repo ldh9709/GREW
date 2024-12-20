@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import * as reviewApi from "../../api/reviewApi"; // 리뷰 API
 
 export default function ReviewDetailPage() {
@@ -50,10 +50,16 @@ export default function ReviewDetailPage() {
           {/* 리뷰 상태 */}
         </div>
         <div>
-          <span>작성일: {review.reviewDate}</span> {/* 리뷰 작성일 */}
+          <span>
+            작성일: {new Date(review.reviewDate).toLocaleDateString()}
+          </span>{" "}
+          {/* 리뷰 작성일 */}
         </div>
         <div>
-          <span>작성자:</span>
+          <span>작성자 번호: {review.memberNo}</span> {/* 작성자 번호 */}
+        </div>
+        <div>
+          <span>멘티 이름: {review.menteeName}</span> {/* 멘티 이름 */}
         </div>
       </div>
     </div>

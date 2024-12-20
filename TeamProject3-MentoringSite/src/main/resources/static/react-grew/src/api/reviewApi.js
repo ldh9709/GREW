@@ -68,12 +68,9 @@ export const listReviewByChatRoom = async (chatRoomNo, page, size) => {
 
 // 특정 멤버 리뷰 목록 출력
 export const listReviewByMember = async (memberNo, page, size) => {
-  const response = await fetch(
-    `${BACKEND_SERVER}/review?page=${page}&size=${size}`,
-    {
-      method: "GET",
-    }
-  );
+  const response = await fetch(`${BACKEND_SERVER}/review${memberNo}`, {
+    method: "GET",
+  });
   const responseJsonObject = await response.json();
   return responseJsonObject;
 };

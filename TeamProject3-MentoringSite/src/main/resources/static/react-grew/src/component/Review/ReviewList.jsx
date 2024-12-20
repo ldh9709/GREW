@@ -49,6 +49,13 @@ export default function ReviewListPage() {
           <li key={review.reviewNo}>
             <h3>{review.reviewTitle}</h3>
             <p>{review.reviewContent}</p>
+            <p>{review.reviewScore}</p>
+            <p>
+              작성일: {new Date(review.reviewDate).toLocaleDateString()}
+            </p>{" "}
+            {/* 리뷰 작성일 */}
+            <p>작성자 번호: {review.memberNo}</p> {/* memberNo */}
+            <p>멘티 이름: {review.menteeName}</p> {/* menteeName */}
           </li>
         ))}
       </ul>
