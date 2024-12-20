@@ -20,7 +20,7 @@ class ReviewServiceImplTest {
 	
 //	@Test
 	void testReviewByMemberNo() {
-		System.out.println(reviewService.getReviewByMemberNo(5L));
+		System.out.println(reviewService.getReviewByMemberNo(5L,1,1));
 	}
 	
 
