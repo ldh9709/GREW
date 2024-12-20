@@ -1,5 +1,6 @@
 package com.itwill.jpa.service.member_information;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -71,17 +72,21 @@ public class FollowServiceImpl implements FollowService{
 	}
 	
 	/*팔로잉 리스트 출력(멘토리스트, 이름 순서)*/
-	public Page<FollowResponseDto> getMentorList(Long menteeMemberNo, int pageNumber, int pageSize){
+	public Page<FollowResponseDto> getMentorList(Long memberNo, int pageNumber, int pageSize){
 		try {
 			Pageable pageable = PageRequest.of(pageNumber, pageSize);
-			Page<FollowResponseDto> followList = followReporitory.findFollowMentors(menteeMemberNo, pageable);
-			long totalCount = followList.getTotalElements(); 
+			Page<Follow> follows = followReporitory.findByMentorMember_MemberNo(memberNo,pageable);
+			List<FollowResponseDto> followList = new ArrayList<>();
 			
-			return followList;
+			for (Follow follow : follows) {
+				followList.add(FollowResponseDto.toDto(follow));
+			}
+			
+			return new PageImpl<>(followList, pageable,follows.getTotalElements());
 		} catch (Exception e) {
 			throw new CustomException(ResponseStatusCode.READ_MENTORLIST_FAIL, ResponseMessage.READ_MENTORLIST_FAIL, e);
 		}
-	
+		
 	}
 	
 	/*팔로워 수(멘티 수)*/

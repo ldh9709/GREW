@@ -23,7 +23,6 @@ class FollowReporitoryTest {
 	@Test
 	void testFindFollowMentors() {
 		Pageable pageable = PageRequest.of(0, 1);
-		System.out.println(followReporitory.findFollowMentors(1L, pageable));
 	}
 
 //	@Test

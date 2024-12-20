@@ -20,4 +20,14 @@ public class FollowResponseDto {
 	private String primaryCategory;
 	private String subCategory;
 	
+	public static FollowResponseDto toDto(Follow entity) {
+		return FollowResponseDto.builder()
+				.followNo(entity.getFollowNo())
+				.mentorName(entity.getMentorMember().getMemberName())
+				.mentorImage(entity.getMentorMember().getMentorProfile().getMentorImage())
+				.primaryCategory(entity.getMentorMember().getMentorProfile().getCategory().getParentCategory().getCategoryName())
+				.subCategory(entity.getMentorMember().getMentorProfile().getCategory().getCategoryName())
+				.build();
+	}
+	
 }
