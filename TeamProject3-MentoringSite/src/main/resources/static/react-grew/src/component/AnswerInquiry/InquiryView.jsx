@@ -113,7 +113,6 @@ function InquiryView() {
         rel="stylesheet"
       ></link>
       <div style={{ paddingLeft: 10 }}>
-        <form name="f" method="post">
           <input type="hidden" name="inquiryNo" value={inquiry.inquiryNo} />
 
           {/* 카테고리에 맞는 멘토만 보이는조건 */}
@@ -173,7 +172,6 @@ function InquiryView() {
               <div></div>
             )}
           </div>
-        </form>
       </div>
       <div style={{ marginTop: "20px" }}>
         <div className="radio-container">
