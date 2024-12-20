@@ -9,6 +9,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -27,6 +28,7 @@ import com.itwill.jpa.service.member_information.MentorProfileService;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 
 @RestController
 @RequestMapping("/admin")
@@ -39,6 +41,8 @@ public class AdminMemberController {
 	private MentorProfileService mentorProfileService;
 	
 	/* 회원 전체 정보 */
+	@SecurityRequirement(name = "BearerAuth")
+	@PreAuthorize("hasRole('MENTEE')")
 	@Operation(summary = "회원 전체 출력")
 	@GetMapping("/member")
 	public ResponseEntity<Response> getMemberAll(
@@ -66,6 +70,8 @@ public class AdminMemberController {
 	}
 	
 	/* 멘토 전체 정보 */ 
+	@SecurityRequirement(name = "BearerAuth")
+	@PreAuthorize("hasRole('MENTEE')")
     @Operation(summary = "멘토 프로필 전체 리스트 조회")
     @GetMapping("/mentor")
     public ResponseEntity<Response> getMentorsByStatus(
@@ -85,6 +91,8 @@ public class AdminMemberController {
         return new ResponseEntity<>(response, headers, HttpStatus.OK);
     }
     
+	@SecurityRequirement(name = "BearerAuth")
+	@PreAuthorize("hasRole('MENTEE')")
     @Operation(summary = "멘토 프로필 리스트 출력(상태별)")
     @GetMapping("/mentor/status/{status}")
     public ResponseEntity<Response> getMentorsByStatus(
@@ -105,6 +113,8 @@ public class AdminMemberController {
         return new ResponseEntity<>(response, headers, HttpStatus.OK);
     }
 	
+	@SecurityRequirement(name = "BearerAuth")
+	@PreAuthorize("hasRole('MENTEE')")
     @Operation(summary = "멘토 프로필 리스트 출력(카테고리)")
     @GetMapping("/mentor/category/{categoryNo}")
     public ResponseEntity<Response> getMentorProfilesByCategoryNo(
@@ -127,6 +137,8 @@ public class AdminMemberController {
     
     
     /* 멘토 상태 변경 */
+	@SecurityRequirement(name = "BearerAuth")
+	@PreAuthorize("hasRole('MENTEE')")
     @Operation(summary = "멘토 프로필 상태변경")
     @PutMapping("/mentor/update-state/{memberNo}")
     public ResponseEntity<Response> setMentorStatus(
