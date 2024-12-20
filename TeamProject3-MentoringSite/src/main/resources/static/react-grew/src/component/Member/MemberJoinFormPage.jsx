@@ -84,6 +84,7 @@ export const MemberJoinFormPage = () => {
     console.log(member);
 
     const responseJsonObject = await memberApi.joinAction(member, tempCode);
+    
     console.log(responseJsonObject);
     switch (responseJsonObject.status) {
       case responseStatus.CREATED_MEMBER_SUCCESS:
