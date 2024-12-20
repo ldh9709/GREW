@@ -68,6 +68,7 @@ public class JWTCheckFilter extends OncePerRequestFilter {
 		|| path.startsWith("/answer/view") 
 		|| path.startsWith("/answer/re") 
 		//|| path.startsWith("/chat") 
+		
 		|| path.startsWith("/chatroom/rejected")
 		|| path.startsWith("/chatroom/completed")
 		|| path.startsWith("/chatroom/closed")
