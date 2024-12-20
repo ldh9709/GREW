@@ -4,7 +4,7 @@ import * as inquiryApi from "../../../api/inquiryApi"
 import * as answerApi from "../../../api/answerApi"
 import { useNavigate } from 'react-router-dom';
 
-export default function MemberInquiryList() {
+export default function MemberInquiryAnswerList() {
     const memberCookie = getCookie("member");
     const token = memberCookie.accessToken;
     const role = memberCookie.memberRole;
@@ -13,24 +13,21 @@ export default function MemberInquiryList() {
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(0);
     const navigate = useNavigate(); 
-
+    
+    console.log(memberCookie);
     
 
     const fetchInquiryAnswerList = async (page) => {
         try {
+            let response;
             if (role === 'ROLE_MENTEE') {
-                const response = await inquiryApi.listInquiryByMemberNo(token, page);
-                const { data } = response;
-                setdataList(data.content);
-                setTotalPages(data.totalPages);
+                response = await inquiryApi.listInquiryByMemberNo(token, page);
             } else if (role === 'ROLE_MENTOR') {
-                const response = await answerApi.listAnswerByMemberNo(token,page);
-                const { data } = response;
+                response = await answerApi.listAnswerByMemberNo(token,page);
                 console.log(response);
-                setdataList(data.content);
-                setTotalPages(data.totalPages);
             }
-
+            setdataList(response.data.content);
+            setTotalPages(response.data.totalPages);
 
         } catch (error) {
             console.log('내가 쓴 질문 리스트 조회 실패',error);

@@ -131,7 +131,7 @@ export const viewAnswer = async (answerNo) => {
   };
 
 //내가 작성한 답변 내역
-export const listAnswerByMemberNo = async (token,page) => {
+export const listAnswerByMemberNo = async (token, page) => {
   const response = await fetch(`${BACKEND_SERVER}/answer?page=${page}&size=10`, {
     method: 'GET',
     headers: {
@@ -139,4 +139,6 @@ export const listAnswerByMemberNo = async (token,page) => {
       'Authorization': `Bearer ${token}`, // Authorization 헤더에 JWT 토큰 추가     
     }
   })
-}
+  const responseJsonObject = await response.json();
+  return responseJsonObject;
+};

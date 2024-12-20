@@ -1,9 +1,9 @@
 import { getCookie } from "../../../util/cookieUtil"
 import { useState } from 'react'
 import FollowList from './MemberFollowList'
-import InquiryList from './MemberInquiryAnswerList'
 import CounselList from './MemberCounselList';
 import ReviewList from './MemberReviewList';
+import InquiryAnswerList from "./MemberInquiryAnswerList";
 
 export default function MemberTabs() {
     //쿠키에 저장된 인증 유저 정보
@@ -80,7 +80,7 @@ export default function MemberTabs() {
         <div>
             {activeTab === "inquiry" && (
             <div id="inquiry">
-                <InquiryList />
+                <InquiryAnswerList />
             </div>
             )}
             {activeTab === "counseling" && (
@@ -96,6 +96,10 @@ export default function MemberTabs() {
             {activeTab === "review" && (
             <div id="review">
                 <ReviewList />
+            </div>
+            )}
+            {activeTab === "contens" && (
+            <div id="review">
             </div>
             )}
         </div>

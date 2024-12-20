@@ -35,7 +35,8 @@ export default function MemberSummary() {
                     answerCount: data.answerCount,
                     counselCount: data.counselCount,
                     followCount: data.followCount,
-                    boardCount: data.boardCount
+                    boardCount: data.boardCount,
+                    reviewCount: data.reviewCount
                 }));
             }
         } catch (error) {

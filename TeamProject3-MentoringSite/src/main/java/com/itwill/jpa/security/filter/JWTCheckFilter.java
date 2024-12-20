@@ -44,7 +44,7 @@ public class JWTCheckFilter extends OncePerRequestFilter {
     if (path.startsWith("/swagger-ui") 
 		|| path.startsWith("/category") 
 		|| path.startsWith("/alarm") 
-		|| path.startsWith("/review")
+//		|| path.startsWith("/review")
 
 		|| path.startsWith("/inquiry/update")
 		|| path.startsWith("/inquiry/increase")

@@ -67,9 +67,13 @@ export const listReviewByChatRoom = async (chatRoomNo, page, size) => {
 };
 
 // 특정 멤버 리뷰 목록 출력
-export const listReviewByMember = async (memberNo, page, size) => {
-  const response = await fetch(`${BACKEND_SERVER}/review${memberNo}`, {
+export const listReviewByMember = async (token, page, size) => {
+  const response = await fetch(`${BACKEND_SERVER}/review/memberList?page=${page}&size=${size}`, {
     method: "GET",
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}` // Authorization 헤더에 JWT 토큰 추가
+   }
   });
   const responseJsonObject = await response.json();
   return responseJsonObject;
