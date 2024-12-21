@@ -7,11 +7,11 @@ export default function AnswerItem({ answer }) {
   const [inquiry, setInquiry] = useState(0);
   const [voteCount, setVoteCount] = useState(0);
   const memberCookie = getCookie("member");
-  const token = memberCookie.accessToken;
+  const token = memberCookie && memberCookie.accessToken ? memberCookie.accessToken : null;
+
   async function fetchData() {
     try {
       const response = await answerApi.findInquiry(answer.inquiryNo);
-      console.log(response.data);
       setInquiry(response.data);
       const responseJsonObject = await answerApi.countVote(answer.answerNo);
       setVoteCount(responseJsonObject.data);
@@ -28,6 +28,8 @@ export default function AnswerItem({ answer }) {
       const response = await answerApi.upVote(answer.answerNo, token); // API 호출
       if (response.status === 6000) {
         fetchData(); // 추천 성공 상태 확인
+      }else if(token==null){
+        alert('로그인이 필요한 서비스입니다')
       } else {
         alert("이미 추천 혹은 비추천을 누르셨습니다"); // 실패 시 에러 로그
       }
@@ -44,6 +46,8 @@ export default function AnswerItem({ answer }) {
       const response = await answerApi.downVote(answer.answerNo, token); // API 호출
       if (response.status === 6000) {
         fetchData(); // 추천 성공 상태 확인
+      }else if(token==null){
+        alert('로그인이 필요한 서비스입니다')
       } else {
         alert("이미 추천 혹은 비추천을 누르셨습니다"); // 실패 시 에러 로그
       }
@@ -80,7 +84,7 @@ export default function AnswerItem({ answer }) {
           <div></div>
         )}
 
-        {memberCookie.memberNo == inquiry.memberNo ? (
+        {memberCookie&&memberCookie.memberNo == inquiry.memberNo ? (
           <div className="answer-accept">
             <button onClick={handleAccept}>채택하기</button>
           </div>
@@ -96,7 +100,7 @@ export default function AnswerItem({ answer }) {
           {voteCount}
           <button onClick={handleDownvote}>비추천</button>
         </div>
-        {memberCookie.memberNo == answer.memberNo ? (
+        {memberCookie&&memberCookie.memberNo == answer.memberNo ? (
           <div>
             <Link to={`/answer/modify/${answer.answerNo}`}>
               <button>수정</button>
