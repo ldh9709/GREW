@@ -15,6 +15,7 @@ export default function MemberReviewList() {
     try {
       const response = await reviewApi.listReviewByMember(token, page, 5);
       setReviewList(response.data.content);
+      setTotalPages(response.data.totalPages);
     } catch (error) {
       console.log('리뷰 조회 실패', error);
     }
