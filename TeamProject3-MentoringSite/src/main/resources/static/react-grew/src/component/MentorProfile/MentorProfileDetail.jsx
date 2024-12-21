@@ -1,8 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from 'react-router-dom';
-import Header from "../../layout/Header";
-import Footer from "../../layout/Footer";
-import Navigate from "../../layout/Navigate";
 import '../../css/mentorProfile.css'; // 🔥 추가된 CSS 파일
 import { getMentorProfileByNo } from '../../api/mentorProfileApi.js';
 
@@ -28,25 +25,56 @@ export default function MentorProfileDetail() {
     fetchMentorProfile();
   }, [mentorProfileNo]);
 
-  if (loading) return <p>로딩 중...</p>;
+  
   if (error) return <p className="error-message">{error}</p>;
 
   return (
-    <>
-      <div className="container">
-        <section className="mentor-profile-info">
-          <h2>멘토 프로필 정보</h2>
-          <div className="mentor-profile">
-            {/* 🔥 이미지 크기 조절 및 스타일 추가 */}
-            <img src={mentorProfile?.mentorImage || '/default-profile.png'} alt="프로필 이미지" />
-            <div className="profile-details">
-              <h3>이름: {mentorProfile?.memberName}</h3>
-              <p>경력: {mentorProfile?.mentorCareer}</p>
-              <p>소개: {mentorProfile?.mentorIntroduce}</p>
+    <div className="mentor-profile-detail-container">
+      <div className="mentor-header">
+        {/* 좌측: 이미지와 기본 정보 */}
+        <div className="mentor-image-section">
+          <img
+            src={mentorProfile?.mentorImage || '/default-profile.png'}
+            alt="프로필 이미지"
+            className="mentor-profile-image-large"
+          />
+          <div className="mentor-basic-info">
+            <h2>{mentorProfile?.memberName || "멘토 이름"}</h2>
+            <p>{mentorProfile?.mentorCareer || "멘토 경력 정보 없음"}</p>
+            <div className="mentor-stats">
+              <span>멘토링 성공률: 72%</span>
+              <span>멘토링 횟수: {mentorProfile?.mentorMentoringCount || 0}</span>
+              <span>팔로워: {mentorProfile?.mentorFollowCount || 0}</span>
+            </div>
+                {/* 버튼 */}
+               <div className="mentor-actions">
+               <button className="follow-button">+ 팔로우</button>
+               <button className="question-button">멘토에게 질문하기</button>
             </div>
           </div>
-        </section>
+        </div>
+
+        {/* 우측: 상세 정보 */}
+        <div className="mentor-details-section">
+          <div className="mentor-section">
+            <h3>대표 멘토링 분야</h3>
+            <p>{mentorProfile?.mentorSpecialty || "대표 멘토링 분야 정보 없음"}</p>
+          </div>
+          <div className="mentor-section">
+            <h3>멘토 소개</h3>
+            <p>{mentorProfile?.mentorIntroduce || "멘토 소개 정보 없음"}</p>
+          </div>
+          <div className="mentor-section">
+            <h3>주요 경력</h3>
+            <p>{mentorProfile?.mentorCareerDetail || "주요 경력 정보 없음"}</p>
+          </div>
+          <div className="mentor-section">
+            <h3>기타 사항</h3>
+            <p>{mentorProfile?.mentorOtherInfo || "기타 사항 정보 없음"}</p>
+          </div>
+        </div>
       </div>
-    </>
+
+    </div>
   );
 }
