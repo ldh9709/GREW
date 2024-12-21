@@ -99,7 +99,7 @@ export default function MemberTabs() {
                 <ReviewList />
             </div>
             )}
-            {activeTab === "contens" && (
+            {activeTab === "contents" && (
             <div id="contents">
                 <MemberMentorContentList/>
             </div>
