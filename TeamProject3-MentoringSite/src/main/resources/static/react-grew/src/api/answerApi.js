@@ -4,6 +4,7 @@ POST /answer
 PUT  /answer/update/{answerNo}
 PUT  /answer/delete/{answerNo}
 PUT  /answer/accept
+GET  /answer
 GET  /answer/{answerNo}/answerDetail
 GET  /answer/answerList/{inquiryNo}/inquiryVote
 GET  /answer/answerList/{inquiryNo}/inquiryDate
@@ -128,3 +129,16 @@ export const viewAnswer = async (answerNo) => {
     const responseJsonObject = await response.json();
     return responseJsonObject;
   };
+
+//내가 작성한 답변 내역
+export const listAnswerByMemberNo = async (token, page) => {
+  const response = await fetch(`${BACKEND_SERVER}/answer?page=${page}&size=10`, {
+    method: 'GET',
+    headers: {
+      "Content-Type": "application/json;charset=UTF-8", // 요청 헤더 설정
+      'Authorization': `Bearer ${token}`, // Authorization 헤더에 JWT 토큰 추가     
+    }
+  })
+  const responseJsonObject = await response.json();
+  return responseJsonObject;
+};
