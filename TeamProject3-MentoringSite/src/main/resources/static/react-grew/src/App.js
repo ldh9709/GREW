@@ -27,7 +27,6 @@ import AdminReport2 from "./component/admin/adminReport2"
 import Admin from "./component/admin/admin"
 import AdminReport4 from "./component/admin/adminReport4"
 import ForbiddenPage from "./component/ForbiddenPage";
-import MentorProfile from "./component/MentorProfile/MentorProfile";
 import MentorBoardCreate from "./component/MentorBoard/MentorBoardCreate";
 
 function App() {
@@ -52,7 +51,6 @@ function App() {
             <Route path="/mentorprofile/add" element={<MentorProfileAdd/>}/>
             <Route path="/mentorprofile/view" element={<MentorProfileView/>}/>
             <Route path="/mentorprofile/search" element={<MentorSearchList />} />
-            <Route path="/mentorprofile/:mentorProfileNo" element={<MentorProfile />} />
             <Route path="/MentorBoardCreate/:mentorProfileNo" element={<MentorBoardCreate />} />
 
             <Route path="/inquiry" element={<InqiuryList/>}/>
