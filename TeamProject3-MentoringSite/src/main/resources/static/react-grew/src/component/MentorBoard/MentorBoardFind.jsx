@@ -1,6 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import api from './api';
+import api from '../../api/mentorBoardApi'; // 수정된 경로
+
+
+
+
 
 const MentorBoardDetail = () => {
     const { id } = useParams();

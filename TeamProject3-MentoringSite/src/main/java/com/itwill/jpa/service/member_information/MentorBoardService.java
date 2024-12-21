@@ -65,4 +65,9 @@ public interface MentorBoardService {
      * 멘토 보드의 이미지 URL을 가져오기
      */
     String getImageUrl(Long mentorBoardNo) throws Exception;
+    /**
+     * 멘토 보드 리스트 12/22 추가
+     */
+    Page<MentorBoardDto> getMentorBoardsSortedByDate(int status, int page, int size);
+    
 }

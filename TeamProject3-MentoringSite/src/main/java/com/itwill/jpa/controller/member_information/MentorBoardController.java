@@ -33,6 +33,32 @@ public class MentorBoardController {
     @Autowired
     private AlarmService alarmService;
     
+    
+    
+    
+    @Operation(summary = "멘토 보드 리스트")
+    @GetMapping("/sorted/{status}")
+    public ResponseEntity<Response> getMentorBoardList(
+            @PathVariable(name = "status") int status, // 경로 변수로 변경
+            @RequestParam(name = "page", defaultValue = "0") int page,
+            @RequestParam(name = "size", defaultValue = "10") int size
+    ) {
+        Page<MentorBoardDto> mentorBoards = mentorBoardService.getMentorBoardsSortedByDate(status, page, size);
+
+        Response response = new Response();
+        response.setStatus(ResponseStatusCode.READ_MEMBER_LIST_SUCCESS);
+        response.setMessage(ResponseMessage.READ_MEMBER_LIST_SUCCESS);
+        response.setData(mentorBoards);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(new MediaType(MediaType.APPLICATION_JSON, Charset.forName("UTF-8")));
+
+        return ResponseEntity.ok().headers(headers).body(response);
+    }
+
+    
+    
+    
     /* 멘토 보드 등록 */
     @Operation(summary = "멘토 보드 등록")
     @PostMapping
@@ -192,7 +218,7 @@ public class MentorBoardController {
     
     /* 날짜 기준 정렬 페이징 */
     @Operation(summary = "멘토 보드 날짜 기준 페이징")
-    @GetMapping("/sorted/date")
+    @GetMapping("/sorted/date/other")
     public ResponseEntity<Response> getMentorBoardsSortedByDate(
             @RequestParam(name = "page", defaultValue = "0") int page,
             @RequestParam(name = "size", defaultValue = "10") int size

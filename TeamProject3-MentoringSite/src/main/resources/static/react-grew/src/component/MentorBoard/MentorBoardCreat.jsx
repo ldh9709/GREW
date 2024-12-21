@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import api from './api';
-import './MentorBoardForm.css'; // 공통 CSS 파일
+import api from '../../api/mentorBoardApi'; // 수정된 경로
+import '../../css/mentorBoard.css'; // 수정된 경로
+
 
 const MentorBoardCreate = () => {
     const [formData, setFormData] = useState({

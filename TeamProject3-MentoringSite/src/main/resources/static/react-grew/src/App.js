@@ -14,6 +14,11 @@ import MentorProfileList  from "./component/MentorProfile/MentorProfileList";
 import MentorProfileDetail from "./component/MentorProfile/MentorProfileDetail";
 import MentorSearchList from "./component/MentorProfile/MentorSearchList"; // 🔥 정확한 경로로 추가
 
+import MentorBoardCreat from "./component/MentorBoard/MentorBoardCreat"; 
+import MentorBoardFind from "./component/MentorBoard/MentorBoardFind"; 
+import MentorBoardList from "./component/MentorBoard/MentorBoardList"; 
+import MentorBoardUpdate from "./component/MentorBoard/MentorBoardUpdate"; 
+
 
 
 import InquiryWriteFormpage from "./component/AnswerInquiry/InqiuryWriteFormPage";
@@ -49,13 +54,20 @@ function App() {
             <Route path="/member/join" element={<MemberJoinFormPage/>} />
             <Route path="/member/login" element={<MemberLoginFormPage/>} />
             <Route path="/member/profile/edit" element={<MemberProfileFormPage/>}/>
-            {/*멘토페이지*/}
+            {/*멘토프로필페이지*/}
             <Route path="/mentorprofile/list" element={<MentorProfileList/>}/>
             <Route path="/mentorprofile/add" element={<MentorProfileAdd/>}/>
             <Route path="/mentorprofile/detail/:mentorProfileNo" element={<MentorProfileDetail/>}/>
             <Route path="/mentorprofile/detail" element={<MentorProfileDetail/>}/>
             <Route path="/mentorprofile/search" element={<MentorSearchList/>} />
             <Route path="/mentor-profile/:mentorProfileNo" element={<MentorProfileDetail/>} />
+            {/*멘토보드드페이지*/}
+            <Route path="/mentorboard/creat" element={<MentorBoardCreat/>} />
+            <Route path="/mentorboard/find" element={<MentorBoardFind/>} />
+            <Route path="/mentorboard/list" element={<MentorBoardList/>} />
+            <Route path="/mentorboard/update" element={<MentorBoardUpdate/>} />
+
+
 
             <Route path="/inquiry" element={<InqiuryList/>}/>
             <Route path="/inquiry/:inquiryNo" element={<InqiuryView/>}/>

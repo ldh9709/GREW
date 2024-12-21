@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import api from './api';
-import './MentorBoardForm.css'; // 공통 CSS 파일
+import api from '../../api/mentorBoardApi'; // 수정된 경로
+import '../../css/mentorBoard.css'; // 수정된 경로
+
 
 const MentorBoardUpdate = () => {
     const { id } = useParams(); // URL의 파라미터로 멘토보드 ID 가져오기
