@@ -164,9 +164,9 @@ public class MentorProfileController {
     }
 
     @Operation(summary = "검색 기능 페이징")
-    @GetMapping("/search")
+    @GetMapping("/search/{search}")
     public ResponseEntity<Response> searchMentorProfiles(
-            @RequestParam(name = "search") String search,
+            @PathVariable(name = "search") String search,
             @RequestParam(name = "page", defaultValue = "0") int page,
             @RequestParam(name = "size", defaultValue = "10") int size
     ) {
