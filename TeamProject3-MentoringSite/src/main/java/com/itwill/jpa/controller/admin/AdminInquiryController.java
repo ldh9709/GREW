@@ -38,7 +38,7 @@ public class AdminInquiryController {
 	@SecurityRequirement(name = "BearerAuth")
 	@PreAuthorize("hasRole('MENTEE')")
 	@Operation(summary = "질문 게시글 전체 조회(최신순)")
-	@GetMapping()
+	@GetMapping("/board")
 	public ResponseEntity<Response> getAdminInquiriesOrderByDate(
 			@RequestParam(name = "page",defaultValue = "0") int page,  // 기본값은 0 페이지
 			@RequestParam(name = "size",defaultValue = "10") int size) {
