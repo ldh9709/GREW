@@ -173,6 +173,20 @@ INSERT INTO mentor_board (mentor_board_no, mentor_board_title, mentor_board_cont
 VALUES (mentor_board_no_SEQ.nextval, '제목은 없습니다', '더미데이터에요 헤헷.', 'image2.jpg', TO_DATE('2024-12-11 15:31:01', 'YYYY-MM-DD HH24:MI:SS'), 200, 1, 6);
 
 
+INSERT INTO mentor_board (mentor_board_no, mentor_board_title, mentor_board_content, mentor_board_image, mentor_board_date, mentor_board_views, mentor_board_status, member_no) 
+VALUES (mentor_board_no_SEQ.nextval, '멘토링 꿀팁 대방출!', '멘티분들을 위해 멘토링에 필요한 모든 팁을 공유합니다.', 'image1.jpg', TO_DATE('2024-12-10 12:00:00', 'YYYY-MM-DD HH24:MI:SS'), 105, 1, 6);
+INSERT INTO mentor_board (mentor_board_no, mentor_board_title, mentor_board_content, mentor_board_image, mentor_board_date, mentor_board_views, mentor_board_status, member_no) 
+VALUES (mentor_board_no_SEQ.nextval, '효율적인 코딩 학습법', '초보자를 위한 효율적인 코딩 학습 방법을 소개합니다.', 'image2.jpg', TO_DATE('2024-12-11 15:30:00', 'YYYY-MM-DD HH24:MI:SS'), 200, 2, 6);
+INSERT INTO mentor_board (mentor_board_no, mentor_board_title, mentor_board_content, mentor_board_image, mentor_board_date, mentor_board_views, mentor_board_status, member_no) 
+VALUES (mentor_board_no_SEQ.nextval, '제목은 없습니다', '더미데이터에요 헤헷.', 'image2.jpg', TO_DATE('2024-12-11 15:31:01', 'YYYY-MM-DD HH24:MI:SS'), 200, 1, 6);
+INSERT INTO mentor_board (mentor_board_no, mentor_board_title, mentor_board_content, mentor_board_image, mentor_board_date, mentor_board_views, mentor_board_status, member_no) 
+VALUES (mentor_board_no_SEQ.nextval, '멘토링 꿀팁 대방출!', '멘티분들을 위해 멘토링에 필요한 모든 팁을 공유합니다.', 'image1.jpg', TO_DATE('2024-12-10 12:00:00', 'YYYY-MM-DD HH24:MI:SS'), 105, 1, 6);
+INSERT INTO mentor_board (mentor_board_no, mentor_board_title, mentor_board_content, mentor_board_image, mentor_board_date, mentor_board_views, mentor_board_status, member_no) 
+VALUES (mentor_board_no_SEQ.nextval, '효율적인 코딩 학습법', '초보자를 위한 효율적인 코딩 학습 방법을 소개합니다.', 'image2.jpg', TO_DATE('2024-12-11 15:30:00', 'YYYY-MM-DD HH24:MI:SS'), 200, 2, 6);
+INSERT INTO mentor_board (mentor_board_no, mentor_board_title, mentor_board_content, mentor_board_image, mentor_board_date, mentor_board_views, mentor_board_status, member_no) 
+VALUES (mentor_board_no_SEQ.nextval, '제목은 없습니다', '더미데이터에요 헤헷.', 'image2.jpg', TO_DATE('2024-12-11 15:31:01', 'YYYY-MM-DD HH24:MI:SS'), 200, 1, 6);
+
+
 /* 팔로우 등록 */
 INSERT INTO follow(follow_no,mentee_member_no,mentor_member_no)
 VALUES(follow_no_SEQ.nextval,1,7);
