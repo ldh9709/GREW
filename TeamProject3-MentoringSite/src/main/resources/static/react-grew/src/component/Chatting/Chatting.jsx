@@ -5,27 +5,33 @@ import { getCookie } from "../../util/cookieUtil.js";
 import * as ChattingApi from '../../api/chattingApi.js';
 
 const ChattingMessage = ({ roomId, roomName }) => {
+  const memberCookie = getCookie("member");
   const [username, setUsername] = useState('');
   const [messageContent, setMessageContent] = useState('');
   const [messages, setMessages] = useState([]);
   const chatContainerRef = useRef(null);
-  const memberCookie = getCookie("member");
-  const token = memberCookie.accessToken;
+  const [imagePreview, setImagePreview] = useState(null);
   let stompClient = useRef(null);
   
-  const chatMessages = async () => {
+  const chatMessages = async (username) => {
     const responseJsonObject = await ChattingApi.viewChatMessage(roomId);
+    console.log(responseJsonObject);
+    console.log('username : '+username);
+      const backMessage = responseJsonObject.data.map((msg) => ({
+        memberName: msg.memberName,
+        chatMessageContent: msg.chatMessageContent,
+        type: msg.memberName === username ? 'sent' : 'received', // 메시지 유형 설정
+      }));
+      setMessages(backMessage);
   }
-
+  
   useEffect(() => {
-    console.log('등록된 roomId : '+roomId);
-    if (roomId) {
-      const username = memberCookie.memberName;
-      if (username) {
-        console.log('username : '+username);
-        setUsername(username); // 이름 설정
-      } 
-    }
+    const username = memberCookie.memberName;
+    if (username) {
+      console.log('username : '+username);
+      setUsername(username); // 이름 설정
+    } 
+    chatMessages(username);
   }, [roomId]);
 
   useEffect(() => {
@@ -50,8 +56,8 @@ const ChattingMessage = ({ roomId, roomName }) => {
                 console.log(message);
                 const messageType = message.memberName === username ? 'sent' : 'received';
                 setMessages((prevMessages) => [
-                    ...prevMessages,
-                    { memberName: message.memberName, chatMessageContent: message.chatMessageContent, type: messageType },
+                  ...prevMessages,
+                  { memberName: message.memberName, chatMessageContent: message.chatMessageContent, type: messageType },
                 ]);
               });
             },
@@ -79,6 +85,25 @@ const ChattingMessage = ({ roomId, roomName }) => {
     }
   }, [messages]);
 
+  const handleImageUpload = (e) => {
+    const file = e.target.files[0]; // 파일이 여러 개일 수 있지만, 여기서는 첫 번째 파일만 처리
+
+    if (file) {
+      const reader = new FileReader();
+      
+      reader.onloadend = () => {
+          // 여기서는 이미지를 미리보기 하기 위한 방법
+          const imagePreviewUrl = reader.result;
+          console.log("Selected image: ", imagePreviewUrl);
+          
+          // 이미지 미리보기 출력 (선택적으로 화면에 미리보기)
+          setImagePreview(imagePreviewUrl);
+      };
+
+      reader.readAsDataURL(file); // 파일을 데이터 URL로 읽기
+    }
+  };
+
   const handleSendMessage = (event) => {
     event.preventDefault();
     if (messageContent.trim() && stompClient.current) {
@@ -97,32 +122,46 @@ const ChattingMessage = ({ roomId, roomName }) => {
     }
   };
 
-  if (roomId || username) {
+  if (username && roomId){
     return (
         <div className="chat-app">
-        <h3>{roomName}</h3>
+          <div className="chat-header">{roomName}</div>
 
-        <div id="chat-container" ref={chatContainerRef} className="chat-container">
-            {messages.map((msg, index) => (
-            <div key={index} className={`chat-message ${msg.type}`}>
-                {msg.type === 'sent' ? `${msg.memberName}: ${msg.chatMessageContent}` : `${msg.memberName}: ${msg.chatMessageContent}`}
-            </div>
-            ))}
-        </div>
-        {/* 전송을 누르면 handleSendMessage를 호출 */}
-        <form id="message-form" className="message-form" onSubmit={handleSendMessage}> 
+          <div id="chat-container" ref={chatContainerRef} className="chat-container">
+            {messages.length === 0 ? (
+            <div className="no-messages">채팅을 시작해보세요</div>
+          ) : (
+            messages.map((msg, index) => (
+                <div key={index} className={`chat-message ${msg.type}`}>
+                    {msg.type === 'sent' ? `${msg.memberName}: ${msg.chatMessageContent}` : `${msg.memberName}: ${msg.chatMessageContent}`}
+                </div>
+            ))
+          )}
+          </div>
+          {/* 전송을 누르면 handleSendMessage를 호출 */}
+          <form id="message-form" className="message-form" onSubmit={handleSendMessage}> 
+            <label htmlFor="image-upload" className="image-upload-label">
+              <img src="https://cdn.icon-icons.com/icons2/2348/PNG/512/image_picture_icon_143003.png" className="image-icon" />
+            </label>
+            <input
+              type="file"
+              id="image-upload"
+              className="image-upload"
+              onChange={handleImageUpload}
+              accept="image/*"
+            />
             <input
             type="text"
             id="message"
             className="message-input"
-            placeholder="Type a message..."
+            placeholder="메시지를 입력하세요..."
             value={messageContent}
             onChange={(e) => setMessageContent(e.target.value)}
             />
             <button type="submit" id="send" className="send-button">
             전송
             </button>
-        </form>
+          </form>
         </div>
     );
   };
