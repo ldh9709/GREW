@@ -15,8 +15,11 @@ const MentorBoardList = () => {
         const fetchBoards = async () => {
             try {
                 setLoading(true); // 로딩 상태 시작
-                const data = await api.getMentorBoardsByStatus(status, page, 10); // 상태와 페이지에 따른 API 호출
+                const data = await api.getMentorBoardsByStatus(1, page, 10); // 상태와 페이지에 따른 API 호출
                 const boardList = Array.isArray(data.content) ? data.content : [];
+                console.log(data.content);
+                                     
+                
                 setBoards(boardList);
                 setTotalPages(data.totalPages); // 전체 페이지 수 설정
             } catch (err) {

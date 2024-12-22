@@ -1,26 +1,22 @@
 // mentor-board 관련 API 요청을 위한 파일
 
 // 기본 URL 설정
-const BASE_URL = '/mentor-board';
+const BASE_URL = '';
 
 // mentor-board와 관련된 모든 API 기능을 관리하는 객체
 const api = {
     /**
      * 멘토 보드 리스트를 상태별로 가져옵니다. (페이징)
-     * @param {number} status - 멘토 보드 상태 값 (예: 1, 0 등)
-     * @param {number} page - 가져올 페이지 번호 (기본값: 0)
-     * @param {number} size - 한 페이지에 포함할 항목 수 (기본값: 10)
-     * @returns {Promise} - 상태별 멘토 보드 목록
      */
     getMentorBoardsByStatus: async (status, page = 0, size = 10) => {
-        const url = `${BASE_URL}/sorted/${status}?page=${page}&size=${size}`;
-        console.log('API 요청 URL:', url); // 요청 URL을 콘솔에 출력
-        const response = await fetch(url);
-        if (!response.ok) throw new Error('Failed to fetch mentor boards by status');
+        const response =await fetch(`${BASE_URL}/mentor-board/sorted/${status}?page=${page}&size=${size}`,{
+            method: "GET" //HTTp메서드
+        })
+        console.log(response)
         return response.json();
     },
-    
-
+    //http://localhost:8080/mentor-board/sorted/1?page=0&size=10
+   // http://localhost:8080/mentor-board/sorted/1?page=0&size=10
     /**
      * 멘토 보드 목록을 날짜 기준으로 내림차순으로 가져옵니다. (페이징)
      * @param {number} page - 가져올 페이지 번호 (기본값: 0)
