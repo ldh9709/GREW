@@ -443,7 +443,8 @@ public class MemberRestController {
 	
 	/* 멘토 회원 활동 요약 */
 	@Operation(summary = "멘토 활동 내역 요약")
-	@SecurityRequirement(name = "BearerAuth")//API 엔드포인트가 인증을 요구한다는 것을 문서화(Swagger에서 JWT인증을 명시
+	@SecurityRequirement(name = "BearerAuth")
+	@PreAuthorize("hasRole('MENTOR')")
 	@GetMapping("/mentor-summary")
 	public ResponseEntity<Response> getMentorSummary(
 			Authentication authentication){

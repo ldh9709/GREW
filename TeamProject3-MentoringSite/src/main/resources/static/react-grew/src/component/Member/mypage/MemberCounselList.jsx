@@ -101,7 +101,7 @@ export default function MemberCounselList() {
     }
 
     return (
-      <div className='tab-content tab-counsel'>
+      <div className='tab-counsel'>
         {counselList.length === 0 ? (
           <p> 진행한 상담내역이 없습니다. </p>
         ) : (

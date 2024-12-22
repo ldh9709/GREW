@@ -30,6 +30,9 @@ export default function MemberSummary() {
             }else if(role==='ROLE_MENTOR'){
                 const response = await memberApi.mentorSummary(token);
                 const { data } = await response;
+
+                console.log(">>>>>>>>", response);
+
                 setSummary((prevState) => ({
                     ...prevState,
                     answerCount: data.answerCount,
