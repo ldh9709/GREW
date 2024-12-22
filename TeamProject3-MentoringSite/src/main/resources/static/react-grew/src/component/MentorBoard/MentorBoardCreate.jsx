@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import * as categoryApi from "../../api/categoryApi"; // 카테고리 데이터를 조회하는 API
 import * as mentorProfileApi from "../../api/mentorProfileApi";
 import * as mentorBoardApi from "../../api/mentorBoardApi"; // API 호출 부분
@@ -10,11 +10,10 @@ function MentorBoardCreate({ onSubmit }) {
   const [mentorBoardTitle, setMentorBoardTitle] = useState("");
   const [mentorBoardContent, setMentorBoardContent] = useState("");
   const [mentorBoardImage, setMentorBoardImage] = useState(null); // 이미지 파일
-  const [mentorBoardImageUrl, setMentorBoardImageUrl] = useState(""); // 이미지 URL 상태
+  const [imagePreview, setImagePreview] = useState(""); // 이미지 미리보기 URL
   const { mentorProfileNo } = useParams();  // URL에서 mentorProfileNo 가져오기
-  const [mentorBoardNo, setMentorBoardNo] = useState(null); // 등록된 mentorBoardNo 저장
+  const fileInputRef = useRef(null); // file input을 참조하기 위한 useRef 추가
 
-  
   useEffect(() => {
     const fetchCategory = async () => {
       try {
@@ -46,7 +45,6 @@ function MentorBoardCreate({ onSubmit }) {
     }
   }, [mentorProfileNo]);
 
-
   // 테스트용 임시 memberNo 설정
   const memberNo = 8; // 여기서 임시로 지정한 memberNo를 사용합니다.
 
@@ -60,7 +58,7 @@ function MentorBoardCreate({ onSubmit }) {
     const formData = {
       mentorBoardTitle,
       mentorBoardContent,
-      mentorBoardImage: "", // 이미지 URL은 빈 값으로 초기화
+      mentorBoardImage: "",
       memberNo: memberNo,
     };
   
@@ -68,18 +66,26 @@ function MentorBoardCreate({ onSubmit }) {
       // 게시글 등록 API 호출
       const response = await mentorBoardApi.createMentorBoard(formData);
       const mentorBoardNo = response.data.mentorBoardNo; // 응답에서 mentorBoardNo 추출
-      setMentorBoardNo(mentorBoardNo); // 등록된 mentorBoardNo 저장
       alert("게시글이 성공적으로 등록되었습니다!");
   
       // 이미지 업로드 처리
       if (mentorBoardNo && mentorBoardImage) {
         await handleImageUpload(mentorBoardNo); // 이미지 업로드 진행
+      } else {
+        alert("이미지가 선택되지 않았습니다.");
       }
   
       // 초기화
       setMentorBoardTitle("");
       setMentorBoardContent("");
-      setMentorBoardImage(null);
+      setMentorBoardImage(null); // 이미지 상태 초기화
+      setImagePreview(""); // 미리보기 초기화
+
+      // input[type="file"] 초기화
+      if (fileInputRef.current) {
+        fileInputRef.current.value = "";  // file input 초기화
+      }
+
     } catch (err) {
       console.error("게시글 등록 실패:", err);
       alert("게시글 등록에 실패했습니다.");
@@ -91,19 +97,15 @@ function MentorBoardCreate({ onSubmit }) {
       alert("이미지 파일을 선택해 주세요.");
       return;
     }
-  
+
+    // 사용자가 선택한 이미지(file객체)를 formData객체 추가
     const formData = new FormData();
     formData.append("file", mentorBoardImage);
-    console.log("업로드할 파일:", mentorBoardImage);  // 선택된 파일 확인
-  
+
     try {
       // 이미지 업로드 API 호출
       const response = await mentorBoardApi.uploadMentorBoardImage(mentorBoardNo, formData);
       console.log("업로드 응답:", response);  // 서버 응답 확인
-      const uploadedImageUrl = response.data; // 업로드된 이미지 URL
-  
-      // 이미지 URL 상태 업데이트
-      setMentorBoardImageUrl(uploadedImageUrl);
       alert("이미지 업로드가 완료되었습니다.");
   
     } catch (err) {
@@ -111,16 +113,26 @@ function MentorBoardCreate({ onSubmit }) {
       alert("이미지 업로드 실패!");
     }
   };
-  
 
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setMentorBoardImage(file);
+      const previewUrl = URL.createObjectURL(file);  // 파일 URL 생성
+      setImagePreview(previewUrl);  // 미리보기 URL 업데이트
+    }
+  };
 
   return (
     <div className="mentor-board-form-container">
+      {/* 상단 제목 추가 */}
+      <h1 className="form-title">멘토 콘텐츠 작성하기</h1>
+  
       <div className="field">
-        <label htmlFor="category">분야</label>
+        <label htmlFor="category">전문 분야</label>
         <span className="category">{category}</span>
       </div>
-
+  
       <div className="field">
         <label htmlFor="mentorBoardTitle">제목</label>
         <input
@@ -131,16 +143,22 @@ function MentorBoardCreate({ onSubmit }) {
           onChange={(e) => setMentorBoardTitle(e.target.value)}
         />
       </div>
-
+  
       <div className="field">
         <label htmlFor="mentorBoardImage">썸네일 이미지</label>
         <input
           type="file"
           id="mentorBoardImage"
-          onChange={(e) => setMentorBoardImage(e.target.files[0])}
+          ref={fileInputRef}  // file input을 ref로 연결
+          onChange={handleImageChange} // 이미지 선택 시 미리보기 함수 호출
         />
+        {imagePreview && (
+          <div className="image-preview">
+            <img src={imagePreview} alt="Preview" />
+          </div>
+        )}
       </div>
-
+  
       <div className="field">
         <label htmlFor="mentorBoardContent">본문</label>
         <textarea
@@ -150,7 +168,7 @@ function MentorBoardCreate({ onSubmit }) {
           onChange={(e) => setMentorBoardContent(e.target.value)}
         />
       </div>
-
+  
       <div className="button-group">
         <button className="submit-button" onClick={handleSubmit}>
           등록
