@@ -46,8 +46,8 @@ export default function MemberCounselList() {
           chatRooms.map(async (chat) => {
             const searchName = await fetchName(chat.menteeNo);
             const reviewList = await reviewApi.listReviewByMember(token,0,100);
-            const isReview = reviewList.data.content.some(
-              (review) => review.memberNo === chat.menteeNo
+            const isReview = reviewList.data.content.some((review) => 
+              review.memberNo === chat.menteeNo
             );
             console.log(isReview)
             return {
@@ -145,7 +145,7 @@ export default function MemberCounselList() {
                       {counsel.chatRoomEndDate ? counsel.chatRoomEndDate.substring(0, 10) : ""}
                     </p>
                     <p className="counsel-date">
-                      리뷰여부: {counsel.isReview === true ? "작성" : "미작성"}
+                      리뷰여부: {counsel.isReview === 1 ? "작성" : "미작성"}
                     </p>
                     <div className={`counsel-type ${counsel.chatRoomStatus === 7200 ? "green white" : "" }`}>
                       {counselStatus(counsel.chatRoomStatus)}

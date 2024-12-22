@@ -41,7 +41,7 @@ export default function MemberMentorContentList() {
       {boardList.map((board, index) => (
         <div className="board-card" key={index}>
           <div className="board-image-container">
-            <img src={imageSrc} alt="컨텐츠 이미지" className="board-image" />
+            <img src={imageSrc} alt="content-image" className="board-image" />
           </div>
           <div className="board-details">
             <h3 className="board-title">{board.mentorBoardTitle}</h3>

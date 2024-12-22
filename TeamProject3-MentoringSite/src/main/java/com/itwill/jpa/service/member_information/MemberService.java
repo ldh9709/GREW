@@ -39,7 +39,11 @@ public interface MemberService {
 	Member getMemberByMemberEmail(String memberEmail);
 		
 	//회원 상태 수정
-	Member updateMemberStatus(MemberDto memberDto, Integer statusNo);
+	Member updateMemberStatus(Long memberNo, Integer statusNo);
+	
+	//회원 권한 수정
+	Member updateMemberRole(Long memberNo, String role);
+	
 	//회원 전체 출력
 	List<MemberDto> getMemberAll(String roleStr, Integer order);
 	
@@ -61,9 +65,6 @@ public interface MemberService {
 	//비밀번호 찾기 시 임시 비밀번호 메일 발송
 	void findPassword(MemberDto.findPassword memberDto);
 
-	//회원 상태 수정
-	Member updateMemberStatus(Long memberNo, Integer statusNo);
-	
 	//회원 신고 카운트 증가
 	Member incrementReportCount(Long MemberNo);
 }

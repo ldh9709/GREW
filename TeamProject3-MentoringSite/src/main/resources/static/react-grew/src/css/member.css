@@ -98,16 +98,16 @@ body {
   right: 15px;
   padding: 7px 12px;
   font-size: 0.9rem;
-  color: #666;
-  background-color: #dddddd;
-  border-radius: 30px;
+  color: #fff;
+  background-color: #28a745;
+  border-radius: 10px;
   cursor: pointer;
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .role-change:hover {
   color: #fff;
-  background-color: #666;
+  background-color: #167a2e;
 }
 
 .summary_image_container img {

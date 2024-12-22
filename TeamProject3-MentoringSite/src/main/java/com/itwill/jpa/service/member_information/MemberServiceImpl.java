@@ -46,7 +46,6 @@ public class MemberServiceImpl implements MemberService {
 	@Autowired
 	EntityManager entityManager;
 	
-	
 	//이메일별 인증번호 저장
 	private final Map<String, Integer> tempCode = new ConcurrentHashMap<>();
 	
@@ -221,6 +220,17 @@ public class MemberServiceImpl implements MemberService {
 		return memberRepository.save(member);
 	}
 	
+	/***** 회원 권한 변경 *****/
+	public Member updateMemberRole(Long memberNo, String role) {
+		Member member = memberRepository.findByMemberNo(memberNo);
+		
+		if (role.equals("ROLE_MENTEE")) {
+		    member.setMemberRole(Role.ROLE_MENTEE);
+		} else {
+		    member.setMemberRole(Role.ROLE_MENTOR);
+		}
+		return memberRepository.save(member);
+	}
 	
 	/***** 회원 삭제 *****/
 	@Override
@@ -395,13 +405,6 @@ public class MemberServiceImpl implements MemberService {
 		
 	}
 
-	@Override
-	public Member updateMemberStatus(MemberDto memberDto, Integer statusNo) {
-		return null;
-	}
-
-	
-	
 	
 	
 }

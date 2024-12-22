@@ -20,15 +20,16 @@ export default function MemberInquiryAnswerList() {
             let response;
             if (role === 'ROLE_MENTEE') {
                 response = await inquiryApi.listInquiryByMemberNo(token, page);
+                console.log(response);
                 setdataList(response.data.content);
                 setTotalPages(response.data.totalPages);
             } else if (role === 'ROLE_MENTOR') {
                 response = await answerApi.listAnswerByMemberNo(token,page);
+                console.log(response);
                 const updateAnswers = await Promise.all(
                     response.data.content.map(async (answer)=>{
                         const inquiryResponse = await inquiryApi.viewInquiry(answer.inquiryNo);
                         const voteResponse = await answerApi.countVote(answer.answerNo);
-                        console.log(voteResponse);
                         return {
                             ...answer,
                             inquiryTitle: inquiryResponse.data.inquiryTitle,
@@ -39,9 +40,8 @@ export default function MemberInquiryAnswerList() {
                 
                 setdataList(updateAnswers)
                 setTotalPages(response.data.totalPages);
-                console.log(updateAnswers)
             }
-
+            
         } catch (error) {
             console.log('내가 쓴 질문 또는 답변 리스트 조회 실패',error);
         }

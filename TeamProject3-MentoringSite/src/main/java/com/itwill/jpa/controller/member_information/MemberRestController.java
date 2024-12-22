@@ -42,6 +42,8 @@ import com.itwill.jpa.service.chatting_review.ReviewService;
 import com.itwill.jpa.service.member_information.FollowService;
 import com.itwill.jpa.service.member_information.MemberService;
 import com.itwill.jpa.service.member_information.MentorBoardService;
+import com.itwill.jpa.util.JWTUtil;
+import com.nimbusds.jose.shaded.gson.Gson;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
@@ -287,10 +289,15 @@ public class MemberRestController {
 	
 	/* 회원 상태 수정 */
 	@Operation(summary = "회원 상태 수정")
-	@PutMapping("/{memberNo}/status/{statusNo}")
+	@SecurityRequirement(name = "BearerAuth")//API 엔드포인트가 인증을 요구한다는 것을 문서화(Swagger에서 JWT인증을 명시
+	@PreAuthorize("hasRole('MENTEE') or hasRole('MENTOR') or hasRole('ADMIN')")//ROLE이 MENTEE인 사람만 접근 가능
+	@PutMapping("/status/{statusNo}")
 	public ResponseEntity<Response> updateMemberStatus(
-			@PathVariable(name="memberNo") Long memberNo,
+			Authentication authentication,
 			@PathVariable(name = "statusNo") Integer statusNo) {
+		
+		PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
+		Long memberNo = principalDetails.getMemberNo();
 		
 		//업데이트 메소드 실행
 		Member updateMember = memberService.updateMemberStatus(memberNo, statusNo);
@@ -315,6 +322,54 @@ public class MemberRestController {
 		return responseEntity;
 	}
 	
+	/* 회원 권한 수정 */
+	@Operation(summary = "회원 권한 수정")
+	@SecurityRequirement(name = "BearerAuth")
+	@PreAuthorize("hasRole('MENTEE') or hasRole('MENTOR') or hasRole('ADMIN')")
+	@PutMapping("/update-role/{role}")
+	public ResponseEntity<Response> updateMemberRole(
+			Authentication authentication,
+			@PathVariable(name="role") String role
+			){
+		
+		PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
+		Long memberNo = principalDetails.getMemberNo();
+		
+		Response response = new Response();
+		
+		//권한 변경
+		Member member = memberService.updateMemberRole(memberNo, role);
+		
+		//토큰 재생성
+		Map<String, Object> claims = principalDetails.getClaims();
+		
+		String newAccessToken = JWTUtil.generateToken(claims, 60);
+		String newRefreshToken = JWTUtil.generateToken(claims, 60 * 24);
+		
+		claims.put("accessToken", newAccessToken);
+		claims.put("refreshToken", newRefreshToken);
+
+		//토큰 생성 후 http응답 헤더에 포함
+		HttpHeaders httpHeaders=new HttpHeaders();
+		httpHeaders.add("Authorization", "Bearer " + newAccessToken);
+		httpHeaders.add("Refresh-Token", newRefreshToken);
+		
+		// 응답 데이터에 토큰 추가
+	    Map<String, String> tokenData = new HashMap<>();
+	    tokenData.put("accessToken", newAccessToken);
+	    tokenData.put("refreshToken", newRefreshToken);
+		
+		response.setStatus(ResponseStatusCode.UPDATE_ROLE_SUCCESS);
+		response.setMessage(ResponseMessage.UPDATE_ROLE_SUCCESS);
+		response.setData(tokenData);
+		
+		
+		ResponseEntity<Response> responseEntity = 
+				new ResponseEntity<Response>(response, httpHeaders, HttpStatus.OK);
+		 
+		return responseEntity;
+	}
+	
 	/***** 아이디 찾기: 인증번호 발송 *****/
 	@Operation(summary = "1. 아이디 찾기 : 이메일 발송")
 	@PostMapping("/findId/sendEmail")
@@ -326,6 +381,7 @@ public class MemberRestController {
 	    	memberService.findId(memberDto);
 	        response.setStatus(ResponseStatusCode.EMAIL_SEND_SUCCESS);
 	        response.setMessage(ResponseMessage.EMAIL_SEND_SUCCESS);
+	        
 	    } catch (Exception e) {
 	        response.setStatus(ResponseStatusCode.EMAIL_SEND_FAIL);
 	        response.setMessage(ResponseMessage.EMAIL_SEND_FAIL);
@@ -511,6 +567,5 @@ public class MemberRestController {
 		
 		
 	}
-	
 	
 }

@@ -1,15 +1,16 @@
-import { getCookie } from "../../../util/cookieUtil"
+import { getCookie, setCookie } from "../../../util/cookieUtil"
 import image from '../../../image/images.jpeg'
 import React, { useEffect, useState, useCallback } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGear, faHeart } from '@fortawesome/free-solid-svg-icons';
 import * as memberApi from "../../../api/memberApi"
+import { useNavigate } from "react-router-dom";
 
 export default function MemberSummary() {
     const memberCookie = getCookie("member");
     const token = memberCookie.accessToken;
     const role = memberCookie.memberRole;
-
+    const navigate = useNavigate();
     // State로 회원정보를 저장
     const [summary, setSummary] = useState({
         name: "",
@@ -31,8 +32,6 @@ export default function MemberSummary() {
                 const response = await memberApi.mentorSummary(token);
                 const { data } = await response;
 
-                console.log(">>>>>>>>", response);
-
                 setSummary((prevState) => ({
                     ...prevState,
                     answerCount: data.answerCount,
@@ -45,8 +44,8 @@ export default function MemberSummary() {
         } catch (error) {
             console.error('요약정보 조회 실패:', error);
         }
-    }; // memberNo가 변경되면 함수 재생성
-
+    }; 
+    //회원 기본 정보
     const fetchMemberSummary = async () => {
         try {
             const response = await memberApi.memberProfile(token);
@@ -61,6 +60,38 @@ export default function MemberSummary() {
         }
     }
 
+    //회원 권한 변경
+    const handleUpdateRole = async(role)=>{
+        try {
+            const response = await memberApi.updateMemberRole(token,role);
+            if (response.status === 2012) {
+                //변경회원 정보
+                const updatedMember = {
+                    ...memberCookie,
+                    accessToken: response.data.accessToken,
+                    refreshToken: response.data.refreshToken,
+                    memberRole: role
+                }
+                console.log(response);
+                console.log(response.data);
+                console.log('권한 변경 성공:', response.message);
+
+
+                // 기존 쿠키 삭제
+                document.cookie = "member=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+
+                // 새로운 쿠키 생성
+                setCookie("member", JSON.stringify(updatedMember),1);
+                console.log("getCookies : " , getCookie("member"));
+                console.log("getCookies.accessToken : " , getCookie("member").accessToken);
+
+                //성공 후 메인으로 이동
+                navigate(`/main`);
+            }
+        } catch (error) {
+            console.error('회원 권한 변경 실패', error);
+        }
+    }
 
     useEffect(() => {
         fetchMemberSummary();
@@ -90,7 +121,7 @@ export default function MemberSummary() {
                         <p>팔로잉</p>
                     </div>
                 </div>
-                <button className="role-change">멘토전환</button>
+                <button className="role-change" onClick={()=>{ handleUpdateRole('ROLE_MENTOR')}}>멘토전환</button>
             </>
             ):
             (  
@@ -118,7 +149,7 @@ export default function MemberSummary() {
                         <p>컨텐츠</p>
                     </div>
                 </div>
-            <button className="role-change">멘티전환</button>
+            <button className="role-change"  onClick={()=>{handleUpdateRole('ROLE_MENTEE')}} >멘티전환</button>
             </>
             )}
         </div>
