@@ -257,7 +257,7 @@ export const MemberJoinFormPage = () => {
                 className="member-join-button"
             />
         </div>
-        <div className="member-form-join-group-">
+        <div className="member-form-join-group">
             <input
                 type="text"
                 placeholder="인증번호를 입력하세요"

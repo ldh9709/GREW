@@ -54,7 +54,7 @@
 /* 입력 폼 */
 .member-form-join-group,
 .member-login-input {
-  margin-bottom: 10px;
+  margin-top: 15px;
 }
 
 .member-form-join-group-input {
@@ -179,6 +179,11 @@ legend {
   text-decoration: underline;
 }
 
+.member-findPassword {
+  display: flex;
+  justify-content: right;
+  font-size: 13px;
+}
 .member-sns-login-group {
   display: flex;
   justify-content: center;

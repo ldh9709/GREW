@@ -45,13 +45,13 @@ const MemberLoginFormPage = () => {
     <h2 className="member-login-title">로그인</h2>
     <form className="member-login-form" onSubmit={loginAction}>
         <div className="member-login-input">
-            <input type="text" name="memberId" placeholder="아이디" value={member.memberId} onChange={handleChangeLoginForm} required />
+            <input type="text" name="memberId" className="member-login-input" placeholder="아이디" value={member.memberId} onChange={handleChangeLoginForm} required />
         </div>
         <div className="member-login-input">
-            <input type="password" name="memberPassword" placeholder="비밀번호" value={member.memberPassword} onChange={handleChangeLoginForm} required />
+            <input type="password" name="memberPassword" className="member-login-input" placeholder="비밀번호" value={member.memberPassword} onChange={handleChangeLoginForm} required />
         </div>
         <Link to="/join" className="member-findPassword-link">
-            <p>비밀번호를 잊으셨나요?</p>
+            <p className="member-findPassword">비밀번호를 잊으셨나요?</p>
         </Link>
         <button type="submit" className="member-login-button">로그인</button>
         <Link to="/join" className="member-join-link">
