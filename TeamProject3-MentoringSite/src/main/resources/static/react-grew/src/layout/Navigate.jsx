@@ -40,9 +40,9 @@ export default function Navigate() {
       <div className="headerMenuBar" style={menuBarStyle}>
         <a href="/main" className="logo">
           <img
-            src="/logo.png"
+            src="/logo_1.png"
             alt=""
-            style={{ width: "100px", height: "28px", marginBottom: "-10px" }}
+            style={{ width: "100px", height: "50px", marginBottom: "-10px" }}
           />
         </a>
         <a href="/inquiry" className="inquiry" style={linkStyle}>

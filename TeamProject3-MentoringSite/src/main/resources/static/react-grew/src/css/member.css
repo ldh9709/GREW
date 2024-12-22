@@ -239,19 +239,18 @@ body {
   }
 
 /* 상담내역 리스트 */
-.tab-counsel.tab-content {
-  width: 90%;
-}
 .tab-counsel{
   position: relative;
   margin: 40px auto;
+  padding-bottom: 100px;
 }
 .mentor-list {
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   gap: 20px;
   list-style: none;
   margin: 0 auto;
+  padding: 0px 85px;
 }
 
 .mentor-counsel-item {
@@ -405,6 +404,13 @@ body {
   border-radius: 10px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   background-color: #fff;
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+  cursor: pointer;
+}
+
+.follow-card:hover{
+  box-shadow: 0 8px 12px rgba(0, 0, 0, 0.15);
+  transform: translateY(-2px);
 }
 
 .profile img {

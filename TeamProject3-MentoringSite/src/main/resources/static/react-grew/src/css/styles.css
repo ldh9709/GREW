@@ -67,6 +67,12 @@ button {
   gap: 5px; /*버튼간거리*/
 }
 
+/*메뉴바*/
+.navbar-collapse {
+  height: 50px;
+  line-height: 50px;
+  align-items: center;
+}
 .answer-container {
   border: 1px solid #ccc; /* 테두리 설정 */
   padding: 30px; /* 내부 여백 */
@@ -358,6 +364,7 @@ button {
   display: flex;
   justify-content: right;
   height: 40px;
+  margin: auto 0;
 }
 
 /* 검색창 입력 필드 */
@@ -379,8 +386,8 @@ button {
   width: 50px;
   height: 40px;
   background-color: #4caf50;
-  margin-top: 0px;
   border-radius: 5px;
+  margin-top: 13px;
 }
 .view-more {
   display: flex;
