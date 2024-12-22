@@ -107,6 +107,28 @@ export const mentorJoinAction = async (member, tempCode) => {
 
 }
 
+//멘토 프로필 생성
+export const mentorProfileCreateAction = async (memberNo, mentor) => {
+    console.log("Request Data: ", memberNo);
+    console.log("Request Data: ", mentor);
+
+    const response = await fetch(`${BACKEND_SERVER}/mentor-profile/${memberNo}/create-profile`, {
+        method:'POST', 
+        headers:{
+            'Content-type':'application/json'
+        },
+        body:JSON.stringify({
+            memberNo : memberNo,
+            mentorProfileDto: mentor
+        })
+    });
+
+    const resultJsonObject = await response.json();
+    console.log("Response Data:", resultJsonObject);
+    return resultJsonObject;
+
+}
+
 //회원 정보 수정
 export const updateAction = async (sendJsonObject) => {
     console.log("updateMember : ", sendJsonObject);

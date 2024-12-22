@@ -1,12 +1,15 @@
 import React, { useState } from "react";
 import "../../css/mentor.css"
+import * as responseStatus from "../../api/responseStatusCode";
+import * as memberApi from "../../api/memberApi";
 import { useNavigate } from "react-router-dom";
-
-
+import { getCookie } from "../../util/cookieUtil";
 
 const MentorJoinForm = () => {
-
   const navigate = useNavigate();
+  //const memberCookie = getCookie("member");
+  //const token = memberCookie.accessToken;
+  //onst memberNo = memberCookie.memberNo;
 
   const [mentor, setMentor] = useState({
     mentorCategory: "",
@@ -15,15 +18,27 @@ const MentorJoinForm = () => {
     mentorImage: ""
   });
 
+//입력 업데이트 핸들러
+const handleChangeMentorJoinForm = (e) => {
+  setMentor({
+    ...setMentor,
+    [e.target.name]: e.target.value
+  });
+}  
   
+const mentorProfileCreateAction = async () => {
+  const responseJsonObject = await memberApi.mentorProfileCreateAction(1, mentor);
+  switch (responseJsonObject.status) {
+    //case responseStatus.CREATED_MENTOR_PROFILE_SUCCESS_CODE:
+    //alert("멘토 가입 성공");  
+    //navigate('/main');
+    //break;
 
-
-
-
-
-
-
-
+    default:
+    alert("가입 실패");
+      break;
+  }
+}
 
 
 
@@ -37,7 +52,9 @@ const MentorJoinForm = () => {
         <div className="form-group-profile horizontal-field">
         <label htmlFor="introduction">전문 분야</label>
 
-          <select id="field" name="field" required>
+          <select id="field" name="field" 
+          value={mentor.mentorCategory} 
+          onChange={handleChangeMentorJoinForm} required>
             <option value="">-- 선택하세요 --</option>
             <option value="2">인사/총무/노무</option>
             <option value="3">영업/영업관리</option>
@@ -69,6 +86,8 @@ const MentorJoinForm = () => {
               name="introduction"
               placeholder="자신을 소개해주세요."
               rows="3"
+              value={mentor.mentorIntroduct}
+              onChange={handleChangeMentorJoinForm}
               required
             ></textarea>
         </div>
@@ -82,6 +101,8 @@ const MentorJoinForm = () => {
             name="qualification"
             placeholder="자격증 또는 관련 자격을 입력하세요."
             rows="3"
+            /* value={} */
+            /* onChange={handleChangeMentorJoinForm} */
             required
           ></textarea>
         </div>
@@ -94,6 +115,8 @@ const MentorJoinForm = () => {
             name="experience"
             placeholder="경력을 입력하세요."
             rows="3"
+            value={mentor.mentorCareer}
+            onChange={handleChangeMentorJoinForm}
             required
           ></textarea>
         </div>
@@ -112,7 +135,7 @@ const MentorJoinForm = () => {
         </div>
 
         {/* 제출 버튼 */}
-        <button type="button" className="submit-button">
+        <button type="button" onClick={mentorProfileCreateAction} className="submit-button">
           회원가입
         </button>
       </form>
