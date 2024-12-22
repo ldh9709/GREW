@@ -68,7 +68,7 @@ export const joinAction = async (member, tempCode) => {
     console.log("Request Data: ", member);
     console.log("Request Data: ", tempCode);
 
-    const response = await fetch(`${BACKEND_SERVER}/member/createMember`, {
+    const response = await fetch(`${BACKEND_SERVER}/member/createMember/mentor`, {
         method:'POST', 
         headers:{
             'Content-type':'application/json'

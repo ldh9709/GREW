@@ -20,7 +20,7 @@ public interface MentorProfileService {
     /**
      * 멘토 더미 프로필 생성
      */
-    void saveMentorDummyProfile(Long memberNo);
+    MentorProfile saveMentorDummyProfile(Long memberNo);
     
 	// 멘토링 전체활동 수 업데이트
 	Integer updateMentoringCount(Long memberNo);

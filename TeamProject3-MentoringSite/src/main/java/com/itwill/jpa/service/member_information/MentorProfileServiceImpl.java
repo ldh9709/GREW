@@ -111,23 +111,34 @@ public class MentorProfileServiceImpl implements MentorProfileService {
     
     /*** 멘토 더미 프로필 생성 ***/
     @Override
-	public void saveMentorDummyProfile(Long memberNo) {
+	public MentorProfile saveMentorDummyProfile(Long memberNo) {
+    	//번호로 멤버 찾기
     	Member member = memberRepository.findByMemberNo(memberNo);
-		
-    	MentorProfile mentorProfile = MentorProfile.builder()
-                .member(member) // 멤버 정보 설정
-                .category(null) // 카테고리 정보 설정
-                .mentorCareer(null)
-                .mentorIntroduce(null)
-                .mentorImage(null)
-                .mentorStatus(0) // 초기 상태가 없으면 1로 설정
-                .mentorRating(0.0) // 초기 평점이 없으면 0.0으로 설정
-                .mentorMentoringCount(0)
-                .mentorFollowCount(0)
-                .mentorActivityCount(0)
-                .build();
     	
+    	//찾은 번호로 프로필 더미 데이터 작성
+    	MentorProfileDto mentorProfileDto =	
+    			MentorProfileDto.builder()
+				                .memberNo(memberNo) // 멤버 정보 설정
+				                .categoryNo(26L) // 카테고리 정보 설정
+				                .mentorCareer("경력을 입력해주세요.")
+				                .mentorIntroduce("소개글을 입력해주세요.")
+				                .mentorImage(null)
+				                .mentorStatus(0) // 초기 상태가 없으면 1로 설정
+				                .mentorRating(0.0) // 초기 평점이 없으면 0.0으로 설정
+				                .mentorMentoringCount(0)
+				                .mentorFollowCount(0)
+				                .mentorActivityCount(0)
+				                .build();
+    	//더미 데이터에 넣은 카테고리 번호로 객체 찾기
+    	Category findCategory = categoryRepository.findByCategoryNo(26L);
     	
+    	//Entity로 변환
+    	MentorProfile mentorProfile = MentorProfile.toEntity(mentorProfileDto, member, findCategory);
+    	
+    	//저장
+    	MentorProfile saveMentor = mentorProfileRepository.save(mentorProfile);
+    	
+    	return saveMentor;
 	}
     
     /**

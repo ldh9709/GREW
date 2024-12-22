@@ -12,7 +12,6 @@ const MentorJoinForm = () => {
     mentorCategory: "",
     mentorIntroduct: "",
     mentorCareer: "",
-
   })
 
 
