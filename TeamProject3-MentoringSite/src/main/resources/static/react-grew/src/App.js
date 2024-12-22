@@ -18,7 +18,7 @@ import MentorBoardCreat from "./component/MentorBoard/MentorBoardCreat";
 import MentorBoardFind from "./component/MentorBoard/MentorBoardFind"; 
 import MentorBoardList from "./component/MentorBoard/MentorBoardList"; 
 import MentorBoardUpdate from "./component/MentorBoard/MentorBoardUpdate"; 
-
+import MentorBoardDetail from './component/MentorBoard/MentorBoardDetail';
 
 
 import InquiryWriteFormpage from "./component/AnswerInquiry/InqiuryWriteFormPage";
@@ -66,7 +66,8 @@ function App() {
             <Route path="/mentorboard/find" element={<MentorBoardFind/>} />
             <Route path="/mentorboard/list" element={<MentorBoardList/>} />
             <Route path="/mentorboard/update" element={<MentorBoardUpdate/>} />
-
+            <Route path="/mentorboard/detail" element={<MentorBoardDetail/>}/>
+            <Route path="/mentor-board/detail/:mentorBoardNo" element={<MentorBoardDetail />} />
 
 
             <Route path="/inquiry" element={<InqiuryList/>}/>
