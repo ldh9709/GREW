@@ -94,6 +94,11 @@ export default function MemberTabs() {
                 <FollowList />
             </div>
             )}
+            {activeTab === "answer" && (
+                <div id="answer">
+                    <InquiryAnswerList />
+                </div>
+            )}
             {activeTab === "review" && (
             <div id="review">
                 <ReviewList />
