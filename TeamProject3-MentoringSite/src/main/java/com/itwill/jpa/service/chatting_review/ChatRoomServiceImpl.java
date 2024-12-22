@@ -151,7 +151,7 @@ public class ChatRoomServiceImpl implements ChatRoomService {
 		}
 		return new PageImpl<>(mentorChatRoomDtos, pageable, chatRooms.getTotalElements());
 	}
-	/*본인 활동 리스트 출력
+	/*본인 활동 리스트 출력 */
 	@Override
 	public Page<ChatRoomDto> selectChatRoomAll(Long MemberNo, int pageNumber, int pageSize) {
 		Pageable pageable = PageRequest.of(pageNumber, pageSize);
@@ -176,7 +176,7 @@ public class ChatRoomServiceImpl implements ChatRoomService {
 			}
 		}
 		return new PageImpl<>(chatRoomDtos, pageable, chatRooms.size());
-	}*/
+	}
 	
 	@Override
 	public List<ChatMessageDto> selectChatMessages(Long chatRoomNo) {
