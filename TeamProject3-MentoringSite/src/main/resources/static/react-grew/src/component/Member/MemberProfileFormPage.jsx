@@ -1,9 +1,17 @@
 import React, { useEffect, useState } from "react";
-import { memberProfile } from "../../api/memberApi";
+import { getCookie } from "../../util/cookieUtil";
+import { memberProfile, updateAction } from "../../api/memberApi";
+import * as responseStatus from "../../api/responseStatusCode";
 import "../../css/memberPage.css";
+import { useNavigate } from "react-router-dom";
 
 const MemberProfileFormPage = () => {
+  const navigate = useNavigate();
+  const memberCookie = getCookie("member");
+  const token = memberCookie.accessToken;
+
   const [member, setMember] = useState({
+    memberNo: "",
     memberName: "",
     memberId: "",
     memberEmail: "",
@@ -11,50 +19,99 @@ const MemberProfileFormPage = () => {
   });
 
   const fetchProfileData = async () => {
-    const response = await memberProfile();
+    const response = await memberProfile(token);
     console.log("프로필response : ", response);
     console.log("프로필response.data : ", response.data);
 
     const { data } = response;
 
     setMember({
+      memberNo: data.memberNo,
       memberName: data.memberName,
       memberId: data.memberId,
       memberEmail: data.memberEmail,
       interests: data.interests || [],
     });
-    
   };
 
-  // 관심사를 클릭하여 선택하거나 해제
-  const handleInterestClick = (interestId) => {
+  const handleInterestClick = (categoryNo) => {
     setMember((prevState) => {
+      const updatedInterests = prevState.interests.map((interest) => {
+        if (interest.categoryNo === parseInt(categoryNo)) {
+          // 이미 선택된 경우: 선택 해제
+          return null;
+        }
+        return interest;
+      }).filter(Boolean); // `null` 값을 필터링하여 제외
+  
+      // 선택되지 않은 경우 새로운 관심사 추가
       const alreadySelected = prevState.interests.some(
-        (interest) => interest.categoryNo === parseInt(interestId)
+        (interest) => interest.categoryNo === parseInt(categoryNo)
       );
-
-      const updatedInterests = alreadySelected
-        ? prevState.interests.filter(
-            (interest) => interest.categoryNo !== parseInt(interestId)
-          )
-        : [
-            ...prevState.interests,
-            { interestNo: 0, memberNo: prevState.memberId, categoryNo: parseInt(interestId) },
-          ];
-
+  
+      if (!alreadySelected) {
+        // 새로운 categoryNo 추가, interestNo는 기존과 동일하게 유지
+        const newInterestNo =
+          prevState.interests.length > 0
+            ? Math.max(...prevState.interests.map((i) => i.interestNo)) + 1
+            : 1;
+  
+        updatedInterests.push({
+          interestNo: newInterestNo, // 새 interestNo 생성
+          memberNo: prevState.memberNo,
+          categoryNo: parseInt(categoryNo),
+        });
+      }
+  
       return { ...prevState, interests: updatedInterests };
     });
   };
+  
 
-  const isInterestSelected = (interestId) => {
-    return member.interests.some((interest) => interest.categoryNo === parseInt(interestId));
+  const isInterestSelected = (categoryNo) => {
+    return member.interests.some(
+      (interest) => interest.categoryNo === parseInt(categoryNo)
+    );
+  };
+
+  const onChangeMemberModifyForm = (e) => {
+    setMember({
+      ...member,
+      [e.target.name]: e.target.value,
+    });
+    console.log(e.target.value);
+  };
+
+  const updateMember = () => {
+    console.log("업데이트 시 멤버 : ", member);
+    
+    updateAction(member, token).then((responseJsonObject) => {
+      console.log("Server response:", responseJsonObject);
+      switch (responseJsonObject.status) {
+        case responseStatus.UPDATE_MEMBER_SUCCESS:
+          navigate("/member/profile/edit");
+          alert("회원 정보가 수정되었습니다.");
+          break;
+        case responseStatus.AUTHENTICATION_FAILED:
+          navigate("/main");
+          alert("잘못된 사용자입니다.");
+          break;
+        case responseStatus.UPDATE_MEMBER_FAIL:
+          navigate("/main");
+          alert("회원 정보 수정이 정상적으로 이루어지지 않았습니다.");
+          break;
+        default:
+          alert("알 수 없는 오류가 발생했습니다.");
+      }
+    });
   };
 
   useEffect(() => {
     fetchProfileData();
   }, []);
-  
+
   console.log(member.interests);
+
   return (
     <div className="member-profile-container">
       <div className="member-profile-form">
@@ -76,8 +133,9 @@ const MemberProfileFormPage = () => {
             <input
               type="password"
               placeholder="비밀번호 입력"
+              name="memberPassword"
               className="member-form-password"
-              required
+              onChange={onChangeMemberModifyForm}
             />
           </div>
 
@@ -86,8 +144,9 @@ const MemberProfileFormPage = () => {
             <input
               type="password"
               placeholder="비밀번호 확인"
+              name="memberPassword"
               className="member-form-password"
-              required
+              onChange={onChangeMemberModifyForm}
             />
           </div>
 
@@ -97,8 +156,10 @@ const MemberProfileFormPage = () => {
               <input
                 type="text"
                 placeholder="이메일"
+                name="memberEmail"
+                value={member.memberEmail}
+                onChange={onChangeMemberModifyForm}
                 className="member-form-email"
-                defaultValue={member.memberEmail}
               />
             </div>
           </div>
@@ -218,9 +279,12 @@ const MemberProfileFormPage = () => {
           </div>
 
           <div className="member-button-group">
-            <button type="submit" className="member-submit-button">
-              수정완료
-            </button>
+            <input
+              type="button"
+              className="member-submit-button"
+              onClick={updateMember}
+              value="수정완료"
+            />
             <button type="button" className="member-delete-button">
               계정탈퇴
             </button>

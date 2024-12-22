@@ -17,6 +17,7 @@ body {
     background-color: #f8f9fa;
     box-shadow: -4px 0 6px rgba(0, 0, 0, 0.1);
     transition: right 0.3s ease;
+    z-index: 999; /* 항상 최상단에 표시되도록 설정 */
 }
 
 .chat-panel.open {
@@ -99,6 +100,7 @@ body {
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
     cursor: pointer;
     transition: right 0.3s ease;
+    z-index: 1000;
 }
 
 .chat-panel.open ~ .chat-button {
@@ -119,6 +121,37 @@ body {
     border: 1px solid #ccc;
     max-height: 680px;
     scroll-behavior: smooth;
+}
+.pagination {
+    position: absolute; /* 패널 내부에서 상대적인 위치 지정 */
+    bottom: 10px; /* 패널의 하단에서 10px 위로 */
+    left: 50%; /* 패널의 가로 중앙으로 이동 */
+    transform: translateX(-50%); /* 요소 너비의 절반만큼 왼쪽으로 이동해 중앙 정렬 */
+    width: fit-content; /* 버튼 크기에 맞게 너비 자동 설정 */
+    display: flex; /* 버튼들을 가로로 나열 */
+    justify-content: center; /* 버튼 내부 텍스트를 가운데 정렬 */
+    align-items: center; /* 세로 중앙 정렬 */
+    border-radius: 8px; /* 둥근 모서리 */
+}
+
+.pagination button {
+    margin: 0 8px;
+    padding: 8px 16px;
+    border-radius: 5px;
+}
+
+.pagination button:hover {
+background-color: #e0e0e0; /* 마우스를 올렸을 때 배경색 */
+}
+
+.pagination button:active {
+background-color: #d0d0d0; /* 클릭했을 때 배경색 */
+}
+
+.pagination button.disabled {
+background-color: #f9f9f9; /* 비활성화 버튼 배경색 */
+color: #aaa; /* 비활성화 버튼 텍스트 색상 */
+cursor: not-allowed; /* 비활성화 상태 포인터 */
 }
 /* 메시지 기본 스타일 */
 .chat-message {
@@ -251,6 +284,7 @@ body {
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
     cursor: pointer;
     transition: right 0.3s ease;
+    z-index: 1000;
 }
 
 .notification-button:hover {

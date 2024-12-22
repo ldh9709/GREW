@@ -92,7 +92,7 @@ export default function AnswerWriteFormPage() {
       </div>
 
       <div>
-        <form ref={writeFormRef} method="POST" className="inquiry-form">
+        <form ref={writeFormRef}  className="inquiry-form">
           <div>
             <div>답변등록</div>
           </div>

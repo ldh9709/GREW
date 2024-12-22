@@ -6,7 +6,7 @@ export const AdminReportPage = () => {
   const [reports, setReports] = useState([]); // 신고 목록 상태
   const [loading, setLoading] = useState(true); // 데이터 로딩 상태
   const [error, setError] = useState(null); // 에러 상태
-
+ 
   // 신고 목록을 API에서 가져오는 함수
   const fetchReports = async () => {
     try {
@@ -80,74 +80,7 @@ export const AdminReportPage = () => {
 
   return (
     <div style={styles.page}>
-      <div style={styles.sidebar}>
-        <h2 style={styles.logo}>관리자 페이지</h2>
-        <ul style={styles.menu}>
-          <li>게시판 관리</li>
-          <li>게시글 관리</li>
-          <li>신고 관리</li>
-        </ul>
-      </div>
-  
-      <div style={styles.content}>
-        <h2 style={styles.title}>신고 내역</h2>
-  
-        {loading && <p>로딩 중...</p>}
-        {error && <p style={{ color: 'red' }}>{error}</p>}
-  
-        {reports && reports.length > 0 ? (
-          <ul style={styles.reportList}> {/* <ul>로 변경 */}
-            {reports.map((report) => (
-              <li key={report.reportNo} style={styles.card}>  {/* <li>로 변경 */}
-                <div style={styles.item}>
-                  <span style={styles.icon}>🔖</span> 신고 번호: {report.reportNo}
-                </div>
-                <div style={styles.item}>
-                  <span style={styles.icon}>👤</span> 신고자: {report.reporterName}
-                </div>
-                <div style={styles.item}>
-                  <span style={styles.icon}>🆔</span> 신고 대상: {report.targetName}
-                </div>
-                <div style={styles.item}>
-                  <span style={styles.icon}>📅</span> 신고 날짜: {new Date(report.reportDate).toLocaleDateString()}
-                </div>
-                <div style={styles.item}>
-                  <span style={styles.icon}>📧</span> 이메일: {report.reporterEmail}
-                </div>
-                <div style={styles.item}>
-                  <span style={styles.icon}>📅</span> 가입일: {new Date(report.reporterJoinDate).toLocaleDateString()}
-                </div>
-                <div style={styles.item}>
-                  <span style={styles.icon}>🔵</span> 회원 상태: {report.reporterStatus}
-                </div>
-                <div style={styles.buttonContainer}>
-                  {/* 상태 변경 버튼 
-                  <button
-                    style={styles.button}
-                    onClick={() => updateReportStatus(report.reportNo, 'IN_PROGRESS')}
-                  >
-                    접수중
-                  </button>
-                  <button
-                    style={styles.button}
-                    onClick={() => updateReportStatus(report.reportNo, 'RESOLVED')}
-                  >
-                    처리완료
-                  </button>
-                  <button
-                    style={styles.button}
-                    onClick={() => updateReportStatus(report.reportNo, 'FALSE_REPORT')}
-                  >
-                    무고처리
-                  </button>*/}
-                </div>
-              </li> // 각 신고 항목을 <li>로 감쌈
-            ))}
-          </ul> // 목록을 <ul>로 감쌈
-        ) : (
-          <p>신고 목록이 없습니다.</p> // reports가 없거나 빈 배열일 때 대체할 메시지
-        )}
-      </div>
+      
     </div>
   );
   
@@ -228,4 +161,3 @@ const styles = {
   },
 };
 
-export default AdminReportPage;

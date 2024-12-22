@@ -26,6 +26,8 @@ export default function InqiuryWriteFormPage() {
   const [childCategories, setChildCategories] = useState([]); // 하위 카테고리 상태
 
   // 카테고리 목록을 가져오는 함수
+
+  
   const fetchCategories = async () => {
     try {
       const response = await categoryApi.ListCategory();

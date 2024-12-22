@@ -147,7 +147,10 @@ public class SecurityConfig {
 		//로그아웃
 		httpSecurity.logout((t) -> {
 			t.logoutUrl("/logout")//로그아웃
-			 .logoutSuccessUrl("/login");//성공 후 리다이렉트
+			.invalidateHttpSession(true)//세션 무효화
+			.deleteCookies("member")//쿠키삭제
+			.clearAuthentication(true)//인증 정보 삭제
+            .logoutSuccessUrl("/");//로그아웃 이후 리다이렉트
 		});
 
 		/***** 페이지 접근 경로 *****/

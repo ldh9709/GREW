@@ -177,7 +177,7 @@ public class ChatRoomRestController {
 		
 		return responseEntity;
 	}
-	@Operation(summary = "채팅방 리스트(토큰)")
+	@Operation(summary = "채팅방 리스트 멘토, 멘티 구분(토큰)")
 	@SecurityRequirement(name = "BearerAuth")//API 엔드포인트가 인증을 요구한다는 것을 문서화(Swagger에서 JWT인증을 명시
 	@PreAuthorize("hasRole('MENTEE') or hasRole('MENTOR')")//ROLE이 MENTEE인 사람만 접근 가능
 	@GetMapping("/list")
@@ -212,6 +212,33 @@ public class ChatRoomRestController {
 		
 		return responseEntity;
 	}
+	
+	@Operation(summary = "채팅방 리스트(토큰)")
+	@SecurityRequirement(name = "BearerAuth")//API 엔드포인트가 인증을 요구한다는 것을 문서화(Swagger에서 JWT인증을 명시
+	@PreAuthorize("hasRole('MENTEE') or hasRole('MENTOR')")//ROLE이 MENTEE인 사람만 접근 가능
+	@GetMapping("/memberList")
+	public ResponseEntity<Response> selectChatRoomMemberList(Authentication authentication, @RequestParam(name = "page") int page,
+			@RequestParam(name = "size", defaultValue = "8") int size){
+		//PrincipalDetails에서 memberNo를 가져옴
+		PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
+		Long memberNo = principalDetails.getMemberNo();
+		
+		Page<ChatRoomDto> chatRoomDtos = chatRoomService.selectChatRoomAll(memberNo, page, size);
+		
+		Response response = new Response();
+		response.setStatus(ResponseStatusCode.CHATTING_LIST_SUCCESS);
+		response.setMessage(ResponseMessage.CHATTING_LIST_SUCCESS);
+		response.setData(chatRoomDtos);
+		
+		HttpHeaders httpHeaders = new HttpHeaders();
+		httpHeaders.setContentType(new MediaType(MediaType.APPLICATION_JSON, Charset.forName("UTF-8")));
+		
+		ResponseEntity<Response> responseEntity = 
+				new ResponseEntity<Response>(response,httpHeaders, HttpStatus.OK);
+		
+		return responseEntity;
+	}
+	
 	@Operation(summary = "채팅방 대화 목록")
 	@GetMapping("/messages/{chat_room_no}")
 	public ResponseEntity<Response> selectChatMessagesList(@PathVariable (value = "chat_room_no") Long chatRoomNo){

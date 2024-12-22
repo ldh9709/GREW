@@ -15,6 +15,13 @@ body {
 .red {
   color: red;
 }
+
+.green{
+  background-color: #4CAF50 !important;
+}
+.white{
+  color: white !important;
+}
 /* 상단 요약 정보 */
 .summary {
   position: relative;
@@ -130,7 +137,7 @@ body {
 .tab {
   font-size: 1.1rem; 
   font-weight: 500; 
-  padding: 10px 30px; 
+  padding: 10px 50px; 
   cursor: pointer;
   color: #555;
   text-align: center;
@@ -228,25 +235,25 @@ body {
 /* 상담내역 리스트 */
 .tab-counsel.tab-content {
   width: 90%;
-  height: 400px;
 }
 .tab-counsel{
   margin: 40px auto;
 }
 .mentor-list {
   display: flex;
+  justify-content: center;
   gap: 20px;
   list-style: none;
   padding: 0;
-  margin: 0;
+  margin: 0 auto;
 }
 
-.mentor-item {
+.mentor-counsel-item {
   text-align: center;
   margin: 10px 30px;
 }
 
-.mentor-item img {
+.mentor-counsel-item img {
   width: 170px;
   height: 170px;
   border-radius: 50%;
@@ -284,6 +291,88 @@ body {
 .review-button:hover {
   background-color: #0060c7;
 }
+
+.mentee-list{
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  flex-wrap: wrap;
+}
+
+.mentee-counsel-item {
+  width: 400px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: left;
+  padding: 15px;
+  margin: 10px auto;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  background-color: #f9f9f9;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+.mentee-counsel-item:hover {
+  box-shadow: 0 8px 12px rgba(0, 0, 0, 0.15);
+  transform: translateY(-2px);
+}
+.mentee-counsel-item p{
+  padding: 0px;
+  margin: 5px 0px;
+}
+/* 왼쪽 내용 */
+.mentee-counsel-item div:first-child {
+  position: relative;
+  flex: 1;
+}
+
+/* 텍스트 스타일 */
+.mentee-name {
+  font-size: 1.05rem;
+  font-weight: 600;
+  margin-bottom: 5px;
+  color: #333;
+}
+
+.counsel-date {
+  font-size: 0.95rem;
+  color: #555;
+  margin: 5px 0;
+}
+
+/* 상태 타입 (오른쪽 버튼 형태) */
+.counsel-type {
+  position: absolute;
+  top: 5px; right: 10px;
+  display: inline-block;
+  padding: 5px 10px;
+  background-color: #e0e0e0;
+  color: #555;
+  font-size: 0.85rem;
+  font-weight: 600;
+  border-radius: 15px;
+  text-align: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.counsel-type.active {
+  background-color: #2a9d8f;
+  color: #fff;
+}
+
+.counsel-type.review {
+  background-color: #ffae42;
+  color: #fff;
+}
+
+/* 아이템 간 간격 */
+.mentee-counsel-item + .mentee-counsel-item {
+  margin-top: 15px;
+}
+
+
 /* 팔로우 리스트 */
 .no-follow{
   margin-top: 25%;
@@ -343,4 +432,50 @@ body {
 .heart:hover {
   color: rgb(216, 0, 0); /* 마우스 올리면 색상을 변경 */
   transform: scale(1.1); /* 하트를 살짝 확대 */
+}
+
+/* 프로필 리뷰 내역 */
+.review-list {
+  position: relative;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  padding: 30px 0 100px 0;
+  gap: 16px;
+}
+
+.review-item {
+  width: 70%;
+  background-color: #f9f9f9; 
+  border: 1px solid #ddd; 
+  border-radius: 8px;
+  padding: 16px; margin: 0 auto;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  font-family: 'Arial', sans-serif;
+  text-align: left;
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+.review-item:hover{
+  box-shadow: 0 8px 12px rgba(0, 0, 0, 0.15);
+  transform: translateY(-2px);
+}
+
+.review-name {
+  font-weight: bold;
+  margin-bottom: 8px; /* 아래 여백 */
+  font-size: 14px;
+}
+
+.review-date {
+  font-size: 12px;
+  color: #888; /* 회색 텍스트 */
+  margin-bottom: 12px;
+}
+
+.review-comment {
+  font-size: 17px;
+  line-height: 1.5; /* 줄 간격 */
+  color: #555; /* 중간 회색 텍스트 */
 }

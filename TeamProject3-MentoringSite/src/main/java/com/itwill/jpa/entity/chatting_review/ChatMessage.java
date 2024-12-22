@@ -39,29 +39,29 @@ public class ChatMessage {
     @Column(name="chat_message_no")
     private Long chatMessageNo;
 
-    @Column(name="chat_message_content",nullable = false)
+    @Column(name="chat_message_content")
     private String chatMessageContent;
 
-    @Column(name="chat_message_date",nullable = false)
+    @Column(name="chat_message_date")
     private LocalDateTime chatMessageDate;
 
-    @Column(name="chat_message_check",nullable = false)
+    @Column(name="chat_message_check")
     private Integer chatMessageCheck;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "member_no", nullable=false)
+    @JoinColumn(name = "member_no")
     @JsonBackReference
     private Member member;
     
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="chat_room_no",nullable=false)
+    @JoinColumn(name="chat_room_no")
     @JsonBackReference
     private ChatRoom chatRoom;
     
     
     @PrePersist
     public void setDefaultValues() {
-    	if (this.chatMessageCheck==0) this.chatMessageCheck = 1;
+    	if (this.chatMessageCheck == null || this.chatMessageCheck == 0) this.chatMessageCheck = 1;
         if (this.chatMessageDate == null) this.chatMessageDate = LocalDateTime.now();
     }
 

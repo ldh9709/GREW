@@ -9,6 +9,9 @@ export default function InquiryItem({ inquiry }) {
         href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap"
         rel="stylesheet"
       ></link>
+      <div className="inquiry-list-sort">
+
+      
       <a
         className="inquiry-container"
         href={`inquiry/${inquiry.inquiryNo}`}
@@ -23,6 +26,7 @@ export default function InquiryItem({ inquiry }) {
           {inquiry.inquiryDate.substring(0, 10)}
         </div>
       </a>
+        </div>
     </>
   );
 }

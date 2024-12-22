@@ -37,17 +37,15 @@ public class JWTCheckFilter extends OncePerRequestFilter {
     if (request.getMethod().equals("OPTIONS")) {
       return true;
     }
-   
+    
     String path = request.getRequestURI();
     
     log.info("check uri.............." + path);
-    // swagger 경로의 호출은 체크하지 않음
-    if(path.equals("/inquiry")) return false;
     if (path.startsWith("/swagger-ui") 
 		|| path.startsWith("/category") 
 		|| path.startsWith("/alarm") 
+//		|| path.startsWith("/review")
 //		|| path.equals("/inquiry") 
-		
 //		|| path.startsWith("/inquiry/list")
 		|| path.startsWith("/inquiry/update")
 		|| path.startsWith("/inquiry/increase")
@@ -78,10 +76,14 @@ public class JWTCheckFilter extends OncePerRequestFilter {
 		|| path.startsWith("/chatroom/canceled")
 		|| path.startsWith("/chatroom/active")
 		|| path.startsWith("/chatroom/messages")
+
 		|| path.startsWith("/member/sendJoinCode")
 		|| path.startsWith("/member/createMember")
 		|| path.startsWith("/member/findId")
+		|| path.startsWith("/member/profile/edit")
 		|| path.startsWith("/login")
+		|| path.startsWith("/logout")
+		|| path.startsWith("/main")
     	|| path.startsWith("/v3/api-docs") 
     	|| path.startsWith("/favicon.ico")
     	|| path.startsWith("/mentor-profile")
@@ -99,18 +101,25 @@ public class JWTCheckFilter extends OncePerRequestFilter {
   @Override
   protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
       throws ServletException, IOException {
-	  	// 요청 헤더에서 Authorization 추출
+	  
+	  // 요청 헤더에서 Authorization 추출
 	  System.out.println(">>>>>>>>>>>>request : " + request);
 	  System.out.println(">>>>>>>>>>>>response : " + response);
 	  System.out.println(">>>>>>>>>>>>filterChain : " + filterChain);
 	  
         String authHeaderStr = request.getHeader("Authorization");
+        
+        if (authHeaderStr == null || !authHeaderStr.startsWith("Bearer ")) {
+            // Authorization 헤더가 없거나 형식이 올바르지 않으면 필터 체인 진행
+            filterChain.doFilter(request, response);
+            return;
+        }
+        
         System.out.println(">>>>>>>>>>>>authHeaderStr(JWT필터 적용되고 있음) : " + authHeaderStr);
         
         try {
           // Authorization 헤더에서 'Bearer ' 부분을 제외한 토큰만 추출
           String accessToken = authHeaderStr.substring(7);
-          
           // JWTUtil.validateToken() 메서드를 사용하여 토큰을 검증하고 클레임을 추출
           Map<String, Object> claims = JWTUtil.validateToken(accessToken);
           log.info("JWT claims: " + claims); // 토큰에서 추출한 클레임 로깅

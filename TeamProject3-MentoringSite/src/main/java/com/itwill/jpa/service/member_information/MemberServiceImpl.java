@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.itwill.jpa.dto.member_information.InterestDto;
 import com.itwill.jpa.dto.member_information.MemberDto;
@@ -26,7 +27,6 @@ import com.itwill.jpa.repository.member_information.MemberRepository;
 import com.itwill.jpa.util.CustomMailSender;
 
 import jakarta.persistence.EntityManager;
-import jakarta.transaction.Transactional;
 
 @Service
 public class MemberServiceImpl implements MemberService {
@@ -43,6 +43,8 @@ public class MemberServiceImpl implements MemberService {
 	//메일 발송을 위한 메소드 의존성 주입
 	CustomMailSender customMailSender;
 	
+	@Autowired
+	EntityManager entityManager;
 	
 	
 	//이메일별 인증번호 저장
@@ -134,6 +136,7 @@ public class MemberServiceImpl implements MemberService {
 		
 		for (InterestDto interest : memberDto.getInterests()) {
 			Interest interestEntity = Interest.toEntity(interest);
+			System.out.println("회원가입 interestEntity : " + interestEntity);
 			saveMember.addInterests(interestEntity);
 		}
 		saveMember.setMemberPassword(passwordEncoder.encode(memberPassword));
@@ -190,6 +193,7 @@ public class MemberServiceImpl implements MemberService {
 	
 	/***** 회원 수정 ****/
 	@Override
+	@Transactional
 	public Member updateMember(MemberDto memberDto) {
 		Member member = memberRepository.findByMemberNo(memberDto.getMemberNo());
 		
