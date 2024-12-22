@@ -307,18 +307,4 @@ public class MentorBoardController {
     
     
     
-    
-
-//    @Operation(summary = "이미지 업로드")
-//    @PostMapping("/{mentorBoardNo}/upload-image")
-//    public String uploadMentorBoardImage(
-//            @PathVariable("mentorBoardNo") Long mentorBoardNo,
-//            @RequestParam("file") MultipartFile file) {
-//        try {
-//            mentorBoardService.updateMentorBoardImage(mentorBoardNo, file);
-//            return "이미지 업로드 성공";
-//        } catch (Exception e) {
-//            return "이미지 업로드 실패: " + e.getMessage();
-//        }
-//    }
-//    
+   

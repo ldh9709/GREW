@@ -4,7 +4,7 @@
 const BASE_URL = '';
 
 // mentor-board와 관련된 모든 API 기능을 관리하는 객체
-const api = {
+
     /**
      * 멘토 보드 리스트를 상태별로 가져옵니다. (페이징)
      */
@@ -14,7 +14,7 @@ const api = {
         })
         console.log(response)
         return response.json();
-    },
+    }
     //http://localhost:8080/mentor-board/sorted/1?page=0&size=10
    // http://localhost:8080/mentor-board/sorted/1?page=0&size=10
     /**
@@ -27,7 +27,7 @@ const api = {
         const response = await fetch(`${BASE_URL}/sorted/date/other?page=${page}&size=${size}`);
         if (!response.ok) throw new Error('Failed to fetch mentor boards');
         return response.json();
-    },
+    };
 
     /**
      * 멘토 보드를 조회수 기준으로 정렬해서 가져옵니다. (페이징)
@@ -39,7 +39,7 @@ const api = {
         const response = await fetch(`${BASE_URL}/sorted/views?page=${page}&size=${size}`);
         if (!response.ok) throw new Error('Failed to fetch mentor boards sorted by views');
         return response.json();
-    },
+    };
 
     /**
      * 특정 사용자가 작성한 멘토 보드 목록을 가져옵니다. (페이징)
@@ -52,7 +52,7 @@ const api = {
         const response = await fetch(`${BASE_URL}/member/${memberNo}?page=${page}&size=${size}`);
         if (!response.ok) throw new Error('Failed to fetch mentor boards by member');
         return response.json();
-    },
+    };
 
     /**
      * 멘토 보드를 검색합니다. (페이징)
@@ -65,7 +65,7 @@ const api = {
         const response = await fetch(`${BASE_URL}/search?query=${encodeURIComponent(query)}&page=${page}&size=${size}`);
         if (!response.ok) throw new Error('Failed to search mentor boards');
         return response.json();
-    },
+    };
 
     /**
      * 멘토 보드의 상세 정보를 가져옵니다.
@@ -76,7 +76,7 @@ const api = {
         const response = await fetch(`${BASE_URL}/${id}`);
         if (!response.ok) throw new Error('Failed to fetch mentor board detail');
         return response.json();
-    },
+    };
 
     /**
      * 멘토 보드의 조회수를 증가시킵니다.
@@ -89,7 +89,7 @@ const api = {
         });
         if (!response.ok) throw new Error('Failed to increase mentor board view count');
         return response.json();
-    },
+    };
 
     /**
      * 멘토 보드를 생성합니다.
@@ -104,7 +104,7 @@ const api = {
         });
         if (!response.ok) throw new Error('Failed to create mentor board');
         return response.json();
-    },
+    };
 
     /**
      * 멘토 보드를 수정합니다.
@@ -120,8 +120,7 @@ const api = {
         });
         if (!response.ok) throw new Error('Failed to update mentor board');
         return response.json();
-    },
-
+    };
     /**
      * 멘토 보드를 삭제(상태 변경)합니다.
      * @param {number} id - 삭제할 멘토 보드의 ID
@@ -133,7 +132,7 @@ const api = {
         });
         if (!response.ok) throw new Error('Failed to delete mentor board');
         return response.json();
-    },
+    };
 
     /**
      * 멘토 보드 이미지 업로드
@@ -151,7 +150,7 @@ const api = {
         });
         if (!response.ok) throw new Error('Failed to upload mentor board image');
         return response.text();
-    },
+    };
 
     /**
      * 멘토 보드의 이미지 URL 가져오기
@@ -162,7 +161,7 @@ const api = {
         const response = await fetch(`${BASE_URL}/${id}/image-url`);
         if (!response.ok) throw new Error('Failed to fetch mentor board image URL');
         return response.text();
-    },
-};
+    };
 
-export default api;
+
+
