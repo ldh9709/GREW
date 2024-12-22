@@ -9,6 +9,19 @@ const MentorBoardDetail = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
+  const calculateRelativeDate = (dateString) => {
+    const now = new Date();
+    const postDate = new Date(dateString);
+    const diffInSeconds = Math.floor((now - postDate) / 1000);
+
+    if (diffInSeconds < 60) return "방금 전";
+    if (diffInSeconds < 3600) return `${Math.floor(diffInSeconds / 60)}분 전`;
+    if (diffInSeconds < 86400) return `${Math.floor(diffInSeconds / 3600)}시간 전`;
+    if (diffInSeconds < 604800) return `${Math.floor(diffInSeconds / 86400)}일 전`;
+    if (diffInSeconds < 2419200) return `${Math.floor(diffInSeconds / 604800)}주 전`;
+    return `${Math.floor(diffInSeconds / 2419200)}개월 전`;
+  };
+
   useEffect(() => {
     const fetchBoardDetail = async () => {
       try {
@@ -40,7 +53,7 @@ const MentorBoardDetail = () => {
       <p>{board?.mentorBoardContent || "내용 없음"}</p>
       <div className="board-detail-meta">
         <span>조회수: {board?.mentorBoardViews}</span>
-        <span>작성일: {board?.mentorBoardDate}</span>
+        <span>작성일: {calculateRelativeDate(board.mentorBoardDate)}</span>
       </div>
     </div>
   );
