@@ -142,7 +142,6 @@ public class MemberRestController {
 		
 		Response response = new Response();
 		
-		
 		//인증번호가 맞는지 확인
 		boolean isChecked = memberService.certificationCode(memberDto.getMemberEmail(), tempCode);
 		

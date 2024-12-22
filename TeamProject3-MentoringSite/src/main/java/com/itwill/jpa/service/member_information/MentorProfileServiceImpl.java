@@ -108,7 +108,28 @@ public class MentorProfileServiceImpl implements MentorProfileService {
     	
     	return mentorActivityCount+1;
     }
-
+    
+    /*** 멘토 더미 프로필 생성 ***/
+    @Override
+	public void saveMentorDummyProfile(Long memberNo) {
+    	Member member = memberRepository.findByMemberNo(memberNo);
+		
+    	MentorProfile mentorProfile = MentorProfile.builder()
+                .member(member) // 멤버 정보 설정
+                .category(null) // 카테고리 정보 설정
+                .mentorCareer(null)
+                .mentorIntroduce(null)
+                .mentorImage(null)
+                .mentorStatus(0) // 초기 상태가 없으면 1로 설정
+                .mentorRating(0.0) // 초기 평점이 없으면 0.0으로 설정
+                .mentorMentoringCount(0)
+                .mentorFollowCount(0)
+                .mentorActivityCount(0)
+                .build();
+    	
+    	
+	}
+    
     /**
      * 멘토의 평균 점수를 반환하는 메서드
      */
@@ -345,6 +366,8 @@ public class MentorProfileServiceImpl implements MentorProfileService {
             throw new CustomException(ResponseStatusCode.READ_MENTOR_PROFILE_FAIL, ResponseMessage.READ_MENTOR_PROFILE_FAIL, e);
         }
     }
+
+	
 }
     
 

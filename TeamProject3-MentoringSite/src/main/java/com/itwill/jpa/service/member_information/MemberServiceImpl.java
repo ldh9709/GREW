@@ -204,9 +204,17 @@ public class MemberServiceImpl implements MemberService {
             Interest interest = Interest.toEntity(interestDto);
             member.addInterests(interest);
 	    }
+        
+		if(memberDto.getMemberName() != null) {
+			member.setMemberName(memberDto.getMemberName());
+		}
 		
-		member.setMemberName(memberDto.getMemberName());
-		member.setMemberPassword(memberDto.getMemberPassword());
+		if(memberDto.getMemberPassword() != null) {
+			member.setMemberPassword(memberDto.getMemberPassword());
+		} else {
+			member.setMemberPassword(member.getMemberPassword());
+		}
+		
 		member.setMemberEmail(memberDto.getMemberEmail());
 		
 		return memberRepository.save(member);
