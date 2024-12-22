@@ -191,7 +191,7 @@ export const searchInquiry = async(search,page,size)=>{
 }
 
 //내가 쓴 질문 
-export const listInquiryBymemberNo = async (token,page) => {
+export const listInquiryByMemberNo = async (token,page) => {
    
    const response = await fetch(`${BACKEND_SERVER}/inquiry/list/member?page=${page}&size=10`, {
       method: 'GET',

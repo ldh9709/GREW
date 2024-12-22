@@ -1,4 +1,4 @@
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useLocation } from "react-router-dom";
 import "./css/styles.css";
 import Header from "./layout/Header";
 import { MainPage } from "./component/MainPage";
@@ -26,19 +26,23 @@ import InquirySearchList from "./component/AnswerInquiry/InquirySearchList";
 import ReviewWriteFormPage from "./component/Review/ReviewWrithFormPage";
 import ReviewView from "./component/Review/ReviewView";
 import ReviewListPage from "./component/Review/ReviewList";
-
-import AdminReport2 from "./component/admin/adminReport2"
-import Admin from "./component/admin/admin"
-import AdminReport4 from "./component/admin/adminReport4"
 import ForbiddenPage from "./component/ForbiddenPage";
+import AdminRoutes from "./routes/AdminRoutes";
 
 
 function App() {
+  const location = useLocation(); // 현재 URL 경로를 가져옴
+
+  // 어드민 경로 여부를 확인
+  const isAdminRoute = location.pathname.startsWith("/admin");
+
   return (
     <>
-      <Header />
-      <Navigate />
-      <ChatAlarim />
+      {/* 어드민 경로가 아닌 경우에만 공통 레이아웃 표시 */}
+      {!isAdminRoute && <Header />}
+      {!isAdminRoute && <Navigate />}
+      {!isAdminRoute && <ChatAlarim />}
+
       <div id="wrapper">
         <div id="content">
           <Routes>
@@ -56,42 +60,32 @@ function App() {
             <Route path="/mentor/join" element={<MentorJoinFormPage />} />
             <Route path="/member/join" element={<MemberJoinFormPage />} />
             <Route path="/member/login" element={<MemberLoginFormPage />} />
+			
             <Route
               path="/member/profile/edit"
               element={<MemberProfileFormPage />}
             />
 
-            <Route path="/inquiry" element={<InqiuryList />} />
-            <Route path="/inquiry/:inquiryNo" element={<InqiuryView />} />
-            <Route
-              path="/inquiry/inquiryWrite"
-              element={<InquiryWriteFormpage />}
-            />
-            <Route
-              path="/inquiry/modify/:inquiryNo"
-              element={<InquiryModifyFormpage />}
-            />
-            <Route
-              path="/answer/answerWrite/:inquiryNo"
-              element={<AnswerWriteFormpage />}
-            />
-            <Route
-              path="/answer/modify/:answerNo"
-              element={<AnswerModifyFormpage />}
-            />
-            <Route path="/searchList" element={<SearchList />} />
-            <Route path="/inquirySearchList" element={<InquirySearchList />} />
-            <Route path="/admin/reports" element={<AdminReport2 />} />
-            <Route path="/admin" element={<Admin />} />
-            <Route path="/adminReport4" element={<AdminReport4 />} />
             <Route
               path="/review/reviewWrite"
               element={<ReviewWriteFormPage />}
             />
             <Route path="/review/reviewView" element={<ReviewView />} />
             <Route path="/review/reviewList" element={<ReviewListPage />} />
+            <Route path="/inquiry" element={<InqiuryList/>}/>
+            <Route path="/inquiry/:inquiryNo" element={<InqiuryView/>}/>
+            <Route path="/inquiry/inquiryWrite" element={<InquiryWriteFormpage/>}/>
+            <Route path="/inquiry/modify/:inquiryNo" element={<InquiryModifyFormpage/>}/>
+            <Route path="/answer/answerWrite/:inquiryNo" element={<AnswerWriteFormpage/>}/>
+            <Route path="/answer/modify/:answerNo" element={<AnswerModifyFormpage/>}/>
+            <Route path="/searchList" element={<SearchList/>}/>
+            <Route path="/inquirySearchList" element={<InquirySearchList/>}/>
+
+            {/* Admin페이지 */}
+            <Route path="/admin/*" element={<AdminRoutes />} />
           </Routes>
-          <Footer />
+          {/* 어드민 경로가 아닌 경우에만 Footer 표시 */}
+          {!isAdminRoute && <Footer />}
         </div>
       </div>
     </>

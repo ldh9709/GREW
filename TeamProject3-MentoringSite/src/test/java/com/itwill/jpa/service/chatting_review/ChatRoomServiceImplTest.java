@@ -78,13 +78,14 @@ public class ChatRoomServiceImplTest {
 	void updateForceClosed() throws Exception{
 		System.out.println("강제 종료 1L : "+chatRoomService.updateForceClosed(1L));
 	}
-	@Test
+	//@Test
 	void selectChatRoomByMenteeNo(){
 		System.out.println("유저 번호 6번 멘티 채팅방 전체 출력"+chatRoomService.selectChatRoomByMenteeNo(6L,0,10).getContent());
 	}
+	@Transactional
 	@Test
 	void selectChatRoomByMentorNo(){
-		System.out.println("유저 번호 6번 멘토 채팅방 전체 출력"+chatRoomService.selectChatRoomByMentorNo(6L,0,10).getContent());
+		System.out.println("유저 번호 6번 멘토 채팅방 전체 출력"+chatRoomService.selectChatRoomAll(6L,1,8).getContent());
 	}
 	
 	//@Test

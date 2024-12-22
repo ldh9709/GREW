@@ -9,6 +9,8 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.itwill.jpa.auth.PrincipalDetails;
 import com.itwill.jpa.dto.alarm.AlarmDto;
 import com.itwill.jpa.dto.chatting_review.ReviewDto;
 import com.itwill.jpa.dto.member_information.MentorProfileDto;
@@ -31,6 +34,7 @@ import com.itwill.jpa.service.chatting_review.ReviewService;
 import com.itwill.jpa.service.member_information.MentorProfileService;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 
 @RestController
 @RequestMapping("/review")
@@ -162,10 +166,16 @@ public class ReviewRestController {
 		return responseEntity;
 	}
 	@Operation(summary = "특정 멤버 리뷰 목록 출력")
-	@GetMapping("/member/{member_no}")
-	public ResponseEntity<Response> selectReviewByMemberNo(@PathVariable(name="member_no") Long memberNo,
+	@SecurityRequirement(name = "BearerAuth")//API 엔드포인트가 인증을 요구한다는 것을 문서화(Swagger에서 JWT인증을 명시
+	@PreAuthorize("hasRole('MENTEE') or hasRole('MENTOR')")//ROLE이 MENTEE인 사람만 접근 가능
+	@GetMapping("/memberList")
+	public ResponseEntity<Response> selectReviewByMemberNo(
+			Authentication authentication,
 			@RequestParam(name = "page",defaultValue = "0") int page,  // 기본값은 0 페이지
             @RequestParam(name = "size",defaultValue = "10") int size){
+		
+		PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
+		Long memberNo = principalDetails.getMemberNo();
 		
 		Response response = new Response();
 		Page<ReviewDto> reviews = reviewService.getReviewByMemberNo(memberNo,page,size);

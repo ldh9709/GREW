@@ -17,5 +17,6 @@ public interface ChatRoomService {
 	ChatRoomDto updateForceClosed(Long chatRoomNo) throws Exception;
 	Page<ChatRoomDto> selectChatRoomByMenteeNo(Long MemberNo, int pageNumber, int pageSize);
 	Page<ChatRoomDto> selectChatRoomByMentorNo(Long MemberNo, int pageNumber, int pageSize);
+	public Page<ChatRoomDto> selectChatRoomAll(Long MemberNo, int pageNumber, int pageSize);
 	List<ChatMessageDto> selectChatMessages(Long chatRoomNo);
 }

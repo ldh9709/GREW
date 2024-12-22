@@ -1,30 +1,41 @@
 import { getCookie } from "../../../util/cookieUtil"
 import React, { useEffect, useState } from 'react'
 import * as inquiryApi from "../../../api/inquiryApi"
+import * as answerApi from "../../../api/answerApi"
 import { useNavigate } from 'react-router-dom';
 
-export default function MemberInquiryList() {
+export default function MemberInquiryAnswerList() {
     const memberCookie = getCookie("member");
     const token = memberCookie.accessToken;
+    const role = memberCookie.memberRole;
     
-    const [inquiryList, setInquiryList] = useState([]);
+    const [datayList, setdataList] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(0);
-    const navigate = useNavigate();
+    const navigate = useNavigate(); 
+    
+    console.log(memberCookie);
+    
 
-    const fetchInquiryList = async (page) => {
+    const fetchInquiryAnswerList = async (page) => {
         try {
-            const response = await inquiryApi.listInquiryBymemberNo(token,page);
-            const { data } = response;
-            setInquiryList(data.content);
-            setTotalPages(data.totalPages);
+            let response;
+            if (role === 'ROLE_MENTEE') {
+                response = await inquiryApi.listInquiryByMemberNo(token, page);
+            } else if (role === 'ROLE_MENTOR') {
+                response = await answerApi.listAnswerByMemberNo(token,page);
+                console.log(response);
+            }
+            setdataList(response.data.content);
+            setTotalPages(response.data.totalPages);
+
         } catch (error) {
             console.log('내가 쓴 질문 리스트 조회 실패',error);
         }
     }
 
     useEffect(() => {
-        fetchInquiryList(currentPage - 1);
+        fetchInquiryAnswerList(currentPage - 1);
     },[currentPage])
     
     // 페이지 변경 시 데이터 갱신
@@ -52,7 +63,7 @@ export default function MemberInquiryList() {
         </thead>
         <tbody>
             {/* 질문 리스트 map으로 반복 */}          
-            {inquiryList.map((inquiry,index) => (
+            {datayList.map((inquiry,index) => (
                 <tr key={index} onClick={() => {
                     navigate(`/inquiry/${inquiry.inquiryNo}`)
                 }}>

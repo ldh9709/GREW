@@ -299,10 +299,16 @@ public class AnswerRestController {
 	
 	/* 내가 작성한 답변내역 */
 	@Operation(summary = "내가 작성한 답변내역")
-	@GetMapping("/{memberNo}")
-	public ResponseEntity<Response> getAnswerByMember(@PathVariable(name = "memberNo") Long memberNo,
+	@SecurityRequirement(name = "BearerAuth")//API 엔드포인트가 인증을 요구한다는 것을 문서화(Swagger에서 JWT인증을 명시
+	@PreAuthorize("hasRole('MENTEE') or hasRole('MENTOR')")//ROLE이 MENTEE인 사람만 접근 가능
+	@GetMapping
+	public ResponseEntity<Response> getAnswerByMember(
+			Authentication authentication,
 			@RequestParam(name = "page",defaultValue = "0") int page,  // 기본값은 0 페이지
             @RequestParam(name = "size",defaultValue = "10") int size) {
+		
+		PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
+		Long memberNo = principalDetails.getMemberNo(); 
 		
 		Page<AnswerDto> answerDtos = answerService.getAnswerByMember(memberNo,page,size);
 		
