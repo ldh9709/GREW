@@ -49,11 +49,11 @@ export default function Navigate() {
         질문하기
           <img
             className="gnb_menu_img"
-            src="https://img.icons8.com/?size=100&id=2juNVZZCBjKu&format=png&color=222222"
+            src="https://img.icons8.com/?size=100&id=RoRvPklVhWaK&format=png&color=000000"
             alt=""
             style={{
-              width: "24px",
-              height: "24px",
+              width: "25px",
+              height: "25px",
               marginRight: "0px",
               marginBottom: "-5px",
             }}
@@ -63,7 +63,7 @@ export default function Navigate() {
         멘토 찾기
           <img
             className="gnb_menu_img"
-            src="https://img.icons8.com/?size=100&id=84430&format=png&color=222222"
+            src="https://img.icons8.com/?size=100&id=sYFuuemrYz2i&format=png&color=000000"
             alt=""
             style={{
               width: "20px",
@@ -78,7 +78,7 @@ export default function Navigate() {
           <img
             멘토 컨텐츠
             className="gnb_menu_img"
-            src="https://img.icons8.com/?size=100&id=tximpWD78H0x&format=png&color=000000"
+            src="https://img.icons8.com/?size=100&id=U59m5VfviwEC&format=png&color=000000"
             alt=""
             style={{
               width: "20px",
