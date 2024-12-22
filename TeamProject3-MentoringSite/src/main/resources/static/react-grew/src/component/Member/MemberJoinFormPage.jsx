@@ -15,7 +15,9 @@ export const MemberJoinFormPage = () => {
   const [searchParams] = useSearchParams();
   //뒤에 붙은 역할을 가져옴
   const role = searchParams.get('role');
-
+  // 아이디 에러 상태메세지
+  const [memberIdError, setMemberIdError] = useState(""); 
+  //멤버 데이터
   const [member, setMember] = useState({
     memberId: "",
     memberPassword: "",
@@ -23,12 +25,24 @@ export const MemberJoinFormPage = () => {
     memberName: "",
     interests: [],
   });
-
+  //이메일 발송 코드
   const [tempCode, setTempCode] = useState("");
 
   // 입력 필드 업데이트 핸들러
   const handleChangeJoinForm = (e) => {
     setMember({ ...member, [e.target.name]: e.target.value });
+
+    
+    // 아이디 유효성 검사
+    if (e.target.name === "memberId") {
+      if (value.length < 3 || value.length > 15) {
+        setMemberIdError("아이디는 3자 이상 15자 이하로 입력해주세요.");
+      } else if (!/^[a-zA-Z0-9_-]+$/.test(value)) {
+        setMemberIdError("아이디는 영문자, 숫자, '-', '_'만 허용됩니다.");
+      } else {
+        setMemberIdError(""); // 규칙을 만족하면 에러 초기화
+      }
+    }
   };
 
   // 인증번호 발송
@@ -53,6 +67,8 @@ export const MemberJoinFormPage = () => {
       });
       console.log(value);
   };
+
+  
 
   // 회원가입 액션
   const MemberJoinAction = async () => {
@@ -81,26 +97,40 @@ export const MemberJoinFormPage = () => {
       return;
     }
 
-    console.log(member);
+    console.log("입력한 멤버 객체 : ", member);
 
-    const responseJsonObject = await memberApi.joinAction(member, tempCode);
-    
-    console.log(responseJsonObject);
-    switch (responseJsonObject.status) {
-      case responseStatus.CREATED_MEMBER_SUCCESS:
-        if(role === 'mentor') {
-          navigate('/mentor/join');
-        } else if(role ==='mentee') {
+    if(role === 'mentor') {
+      const responseJsonObject = await memberApi.mentorJoinAction(member, tempCode);
+      console.log("멘토 회원가입 시 반환 객체 : ", responseJsonObject);
+      switch (responseJsonObject.status) {
+        case responseStatus.CREATED_MEMBER_SUCCESS:
           navigate('/member/login');
-        }
-        break;
-      case responseStatus.CREATED_MEMBER_FAIL:
-        alert("가입 실패");
-        break;
-      default:
-        alert("에러 발생");
-        break;
+          break;
+        case responseStatus.CREATED_MEMBER_FAIL:
+          alert("가입 실패");
+          break;
+        default:
+          alert("에러 발생");
+          break;
+      }
+
+    } else if(role ==='mentee') {
+      const responseJsonObject = await memberApi.menteeJoinAction(member, tempCode);
+      console.log("멘티 회원가입 시 반환 객체 : ", responseJsonObject);
+      switch (responseJsonObject.status) {
+        case responseStatus.CREATED_MEMBER_SUCCESS:
+          navigate('/member/login');
+          break;
+        case responseStatus.CREATED_MEMBER_FAIL:
+          alert("가입 실패");
+          break;
+        default:
+          alert("에러 발생");
+          break;
+      }
+     
     }
+    
   };
 
   return (
@@ -135,6 +165,7 @@ export const MemberJoinFormPage = () => {
                 onChange={handleChangeJoinForm}
                 required
             />
+        <p className="member-form-join-check">아이디는 3자 이상 15자 이하로 입력해주세요</p>
         </div>
         <div className="member-form-join-group">
         <p className="member-form-join-p">

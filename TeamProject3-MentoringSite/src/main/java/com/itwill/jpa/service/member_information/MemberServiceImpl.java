@@ -31,6 +31,8 @@ import jakarta.persistence.EntityManager;
 @Service
 public class MemberServiceImpl implements MemberService {
 	
+	private static final Role ROLE_MENTOR = Role.ROLE_MENTOR;
+
 	@Autowired
 	MemberRepository memberRepository;
 	
@@ -129,17 +131,20 @@ public class MemberServiceImpl implements MemberService {
 		checkIdDupl(memberId);
 		checkEmailDupl(memberEmail);
 		
+		//멤버 생성
 		Member saveMember = Member.toEntity(memberDto);
 		
 		//비밀번호 암호화 추가
+		saveMember.setMemberPassword(passwordEncoder.encode(memberPassword));
 		
-		
+		//관심사 생성
 		for (InterestDto interest : memberDto.getInterests()) {
+			
 			Interest interestEntity = Interest.toEntity(interest);
 			System.out.println("회원가입 interestEntity : " + interestEntity);
+			
 			saveMember.addInterests(interestEntity);
 		}
-		saveMember.setMemberPassword(passwordEncoder.encode(memberPassword));
 		System.out.println(">>>>>saveMember : " + saveMember);
 		return memberRepository.save(saveMember);
 	}
@@ -215,7 +220,9 @@ public class MemberServiceImpl implements MemberService {
 			member.setMemberPassword(member.getMemberPassword());
 		}
 		
-		member.setMemberEmail(memberDto.getMemberEmail());
+		if(memberDto.getMemberEmail() != null) {
+			member.setMemberEmail(memberDto.getMemberEmail());
+		}
 		
 		return memberRepository.save(member);
 	}
@@ -402,13 +409,18 @@ public class MemberServiceImpl implements MemberService {
 		member.changePassword(tempPassword);
 		
 	}
-
-	@Override
-	public Member updateMemberStatus(MemberDto memberDto, Integer statusNo) {
-		return null;
-	}
-
 	
+	//멤버 역할 변경
+	@Override
+	public Member updateMemberRoleMentor(Long memberNo) {
+		
+		Member member = memberRepository.findByMemberNo(memberNo);
+		
+		member.setMemberRole(ROLE_MENTOR);
+		
+		return memberRepository.save(member);
+		
+	}
 	
 	
 	

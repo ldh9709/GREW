@@ -358,3 +358,10 @@ legend {
 .signup-mentor {
   background-color: #b0b0b0;
 }
+
+
+.member-form-join-check {
+  font-size: 10px;
+  color: red;
+  margin-top: 5px;
+}

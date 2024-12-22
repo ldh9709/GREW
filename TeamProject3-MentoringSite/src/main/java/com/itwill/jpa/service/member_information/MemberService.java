@@ -38,8 +38,9 @@ public interface MemberService {
 	//이메일로 회원 찾기
 	Member getMemberByMemberEmail(String memberEmail);
 		
-	//회원 상태 수정
-	Member updateMemberStatus(MemberDto memberDto, Integer statusNo);
+	//회원 역할 수정
+	Member updateMemberRoleMentor(Long memberNo);
+	
 	//회원 전체 출력
 	List<MemberDto> getMemberAll(String roleStr, Integer order);
 	

@@ -46,7 +46,7 @@ public class Interest {
 					        		.build();
 					        		
     	return Interest.builder()
-        		.interestNo(interestDto.getInterestNo())
+        		.interestNo(null)
                 .member(member)
                 .category(category)
                 .build();

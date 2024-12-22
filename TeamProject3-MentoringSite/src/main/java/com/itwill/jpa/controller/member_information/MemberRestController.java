@@ -32,6 +32,7 @@ import com.itwill.jpa.dto.member_information.MemberDto;
 import com.itwill.jpa.dto.member_information.MemberDtoAndTempCode;
 import com.itwill.jpa.entity.member_information.Member;
 import com.itwill.jpa.entity.member_information.MentorProfile;
+import com.itwill.jpa.entity.role.Role;
 import com.itwill.jpa.response.Response;
 import com.itwill.jpa.response.ResponseMessage;
 import com.itwill.jpa.response.ResponseStatusCode;
@@ -57,6 +58,7 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping("/member")
 public class MemberRestController {
 	
+	private static final Role ROLE_MENTOR = null;
 	@Autowired
 	private MemberService memberService;
 	@Autowired
@@ -137,7 +139,7 @@ public class MemberRestController {
 	/* 회원 저장 */
 	@Operation(summary = "회원가입/관심사 입력")
 	@PostMapping("/createMember")
-	public ResponseEntity<Response> createMember(@RequestBody MemberDtoAndTempCode memberJoinDto) {
+	public ResponseEntity<Response> createMember(@Valid	@RequestBody MemberDtoAndTempCode memberJoinDto) {
 		
 		MemberDto memberDto = memberJoinDto.getMemberDto();
 		System.out.println("MEMBERDTO : >>> " + memberDto);
@@ -194,12 +196,12 @@ public class MemberRestController {
 			response.setStatus(ResponseStatusCode.CREATED_MEMBER_FAIL);
 			response.setMessage(ResponseMessage.CREATED_MEMBER_FAIL);
 		}
+		
 		System.out.println(">>>>>saveMember memberDto : " + memberDto);
 		Member member = memberService.saveMember(memberDto);
 		System.out.println(">>>>>MEMBER member : " + member);
-		MentorProfile mentor =	mentorProfileService.saveMentorDummyProfile(member.getMemberNo());
 		
-		//System.out.println("mentor : >>>>>" + mentor);
+		MentorProfile mentor =	mentorProfileService.saveMentorDummyProfile(member.getMemberNo());
 		
 		response.setStatus(ResponseStatusCode.CREATED_MEMBER_SUCCESS);
 		response.setMessage(ResponseMessage.CREATED_MEMBER_SUCCESS);

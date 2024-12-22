@@ -11,7 +11,6 @@ public class TeamProject3MentoringSiteApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(TeamProject3MentoringSiteApplication.class, args);
 		
-		
 	}
 	
 	

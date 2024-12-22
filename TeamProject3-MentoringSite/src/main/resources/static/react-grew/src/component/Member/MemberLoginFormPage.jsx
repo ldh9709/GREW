@@ -31,7 +31,7 @@ const MemberLoginFormPage = () => {
       setCookie("member", JSON.stringify(responseJsonObject), 1);
       console.log("getCookies : " , getCookie("member"));
       console.log("getCookies.accessToken : " , getCookie("member").accessToken);
-
+      
       /* 로그인 성공 시 이동 */
       navigate("/main");
     } else {

@@ -12,9 +12,10 @@ const MentorJoinForm = () => {
     mentorCategory: "",
     mentorIntroduct: "",
     mentorCareer: "",
-  })
+    mentorImage: ""
+  });
 
-
+  
 
 
 
