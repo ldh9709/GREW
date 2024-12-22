@@ -151,7 +151,7 @@ body {
 
 /* 활성화된 탭 스타일 */
 .tab.active {
-  color: #008b62; 
+  color: #28a745; 
   font-weight: bold; 
   border-bottom: 2px solid #5cb85c; 
 }

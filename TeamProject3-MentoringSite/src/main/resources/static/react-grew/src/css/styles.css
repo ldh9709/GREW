@@ -67,7 +67,7 @@ button {
   gap: 5px; /*버튼간거리*/
 }
 
-/*메뉴바*/
+/*상단 메뉴바*/
 .navbar-collapse {
   height: 50px;
   line-height: 50px;
