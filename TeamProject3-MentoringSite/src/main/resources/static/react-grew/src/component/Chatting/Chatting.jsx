@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import SockJS from 'sockjs-client';
 import { Client as StompClient } from '@stomp/stompjs';
 import { getCookie } from "../../util/cookieUtil.js";
+import * as ChattingApi from '../../api/chattingApi.js';
 
 const ChattingMessage = ({ roomId, roomName }) => {
   const [username, setUsername] = useState('');
@@ -12,6 +13,10 @@ const ChattingMessage = ({ roomId, roomName }) => {
   const token = memberCookie.accessToken;
   let stompClient = useRef(null);
   
+  const chatMessages = async () => {
+    const responseJsonObject = await ChattingApi.viewChatMessage(roomId);
+  }
+
   useEffect(() => {
     console.log('등록된 roomId : '+roomId);
     if (roomId) {
