@@ -364,7 +364,7 @@ button {
   display: flex;
   justify-content: right;
   height: 40px;
-  margin: auto 0;
+  margin: auto 0 auto 50px;
 }
 
 /* 검색창 입력 필드 */
@@ -376,7 +376,6 @@ button {
   border-radius: 5px;
   outline: none;
   margin-right: -10px;
-  margin-left: 50px;
 }
 
 .search-input:focus {

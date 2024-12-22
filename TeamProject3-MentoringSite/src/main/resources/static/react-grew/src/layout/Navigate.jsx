@@ -40,29 +40,30 @@ export default function Navigate() {
       <div className="headerMenuBar" style={menuBarStyle}>
         <a href="/main" className="logo">
           <img
-            src="/logo_1.png"
+            src="/logo_10.png"
             alt=""
-            style={{ width: "100px", height: "50px", marginBottom: "-10px" }}
+            style={{ width: "100px", height: "50px", marginBottom: "-10px", marginRight:"5px"}}
           />
         </a>
         <a href="/inquiry" className="inquiry" style={linkStyle}>
+        질문하기
           <img
             className="gnb_menu_img"
-            src="https://img.icons8.com/?size=100&id=EtlPmfgnN7sW&format=png&color=000000"
+            src="https://img.icons8.com/?size=100&id=2juNVZZCBjKu&format=png&color=222222"
             alt=""
             style={{
-              width: "25px",
-              height: "25px",
+              width: "24px",
+              height: "24px",
               marginRight: "0px",
-              marginBottom: "-3px",
+              marginBottom: "-5px",
             }}
           />
-          질문하기
         </a>
         <a href="/멘토찾기페이지" className="findMentor" style={linkStyle}>
+        멘토 찾기
           <img
             className="gnb_menu_img"
-            src="https://img.icons8.com/?size=100&id=p3miLroKw4iR&format=png&color=000000"
+            src="https://img.icons8.com/?size=100&id=84430&format=png&color=222222"
             alt=""
             style={{
               width: "20px",
@@ -71,12 +72,13 @@ export default function Navigate() {
               marginBottom: "-3px",
             }}
           />
-          멘토 찾기
         </a>
         <a href="/멘토컨텐츠페이지" className="mentorContent" style={linkStyle}>
+        멘토 컨텐츠
           <img
+            멘토 컨텐츠
             className="gnb_menu_img"
-            src="https://img.icons8.com/?size=100&id=94504&format=png&color=000000"
+            src="https://img.icons8.com/?size=100&id=tximpWD78H0x&format=png&color=000000"
             alt=""
             style={{
               width: "20px",
@@ -85,7 +87,6 @@ export default function Navigate() {
               marginBottom: "-3px",
             }}
           />
-          멘토 컨텐츠
         </a>
         {/* 검색창 */}
         <div className="search-container">
