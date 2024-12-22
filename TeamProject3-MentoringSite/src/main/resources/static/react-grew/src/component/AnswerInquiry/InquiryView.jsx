@@ -21,7 +21,6 @@ function InquiryView() {
   const [totalPages, setTotalPages] = useState(0); // 전체 페이지 수
   const [itemsPerPage] = useState(5); // 페이지당 항목 수 (예: 한 페이지에 5개 항목)
   const [sortType, setSortType] = useState("latest"); // 기본적으로 'latest'로 설정
-  console.log(memberCookie.memberRole);
   useEffect(() => {
     (async () => {
       const responseJsonObject = await inquiryApi.viewInquiry(inquiryNo);
@@ -116,8 +115,6 @@ function InquiryView() {
           <input type="hidden" name="inquiryNo" value={inquiry.inquiryNo} />
 
           {/* 카테고리에 맞는 멘토만 보이는조건 */}
-
-          {/* {memberCookie.memberRole == "ROLE_MENTOR" ? ( */}
             <div className="answer-write">
                 <button className="answer-notify-btn" onClick={handleWriteButton}>
                   <img
@@ -133,9 +130,6 @@ function InquiryView() {
                   답변하기
                 </button>
             </div>
-          {/* // ) : (
-          //   <div style={{ marginBottom: "50px" }}></div>
-          // )} */}
           {/* 카테고리에 맞는 멘토만 보이는조건 */}
           <div className="inquiry-container-inview">
             <div>
@@ -153,7 +147,7 @@ function InquiryView() {
             </div>
 
             <br />
-            {memberCookie.memberNo == inquiry.memberNo ? (
+            {memberCookie!=null&&memberCookie.memberNo == inquiry.memberNo ? (
               <div>
                 <Link to={`/inquiry/modify/${inquiryNo}`}>
                   <button>수정</button>

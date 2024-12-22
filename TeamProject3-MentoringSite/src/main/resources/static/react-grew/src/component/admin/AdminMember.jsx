@@ -14,7 +14,7 @@ export default function AdminMember() {
         try {
             const response = await adminApi.adminMember(token,role,order);
             setMember(response.data);
-            
+            console.log(response);
         } catch (error) {
             console.log('회원 목록 조회 실패', error);
         }
