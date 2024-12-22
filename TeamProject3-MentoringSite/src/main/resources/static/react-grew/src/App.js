@@ -32,6 +32,7 @@ import Admin from "./component/admin/admin"
 import AdminReport4 from "./component/admin/adminReport4"
 import ForbiddenPage from "./component/ForbiddenPage";
 import MentorBoardCreate from "./component/MentorBoard/MentorBoardCreate";
+import MentorProfileItem from "./component/MentorProfile/MentorProfileItem";
 
 function App() {
   return (
@@ -53,7 +54,7 @@ function App() {
             {/*멘토페이지*/}
             <Route path="/mentorprofile/list" element={<MentorProfileList/>}/>
             <Route path="/mentorprofile/add" element={<MentorProfileAdd/>}/>
-            <Route path="/mentorprofile/view" element={<MentorProfileView/>}/>
+            <Route path="/mentorprofile/view" element={<MentorProfileItem/>}/>
             <Route path="/mentorprofile/search" element={<MentorSearchList />} />
             <Route path="/mentorboardcreate/:mentorProfileNo" element={<MentorBoardCreate />} />
             <Route path="/mentorprofile/detail/:mentorProfileNo" element={<MentorProfileDetail/>}/>
