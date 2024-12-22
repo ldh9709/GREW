@@ -31,8 +31,6 @@ import jakarta.persistence.EntityManager;
 @Service
 public class MemberServiceImpl implements MemberService {
 	
-	private static final Role ROLE_MENTOR = Role.ROLE_MENTOR;
-
 	@Autowired
 	MemberRepository memberRepository;
 	
@@ -416,10 +414,9 @@ public class MemberServiceImpl implements MemberService {
 		
 		Member member = memberRepository.findByMemberNo(memberNo);
 		
-		member.setMemberRole(ROLE_MENTOR);
+		member.setMemberRole(Role.ROLE_MENTOR);
 		
 		return memberRepository.save(member);
-		
 	}
 	
 	

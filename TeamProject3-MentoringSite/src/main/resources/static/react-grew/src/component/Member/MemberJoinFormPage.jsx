@@ -15,8 +15,11 @@ export const MemberJoinFormPage = () => {
   const [searchParams] = useSearchParams();
   //뒤에 붙은 역할을 가져옴
   const role = searchParams.get('role');
-  // 아이디 에러 상태메세지
+  //에러 상태메세지
   const [memberIdError, setMemberIdError] = useState(""); 
+  const [memberPasswordError, setMemberPasswordError] = useState(""); 
+  const [memberEmailError, setMemberEmailError] = useState("");
+  const [memberInterestError, setMemberInterestError] = useState("");
   //멤버 데이터
   const [member, setMember] = useState({
     memberId: "",
@@ -32,17 +35,50 @@ export const MemberJoinFormPage = () => {
   const handleChangeJoinForm = (e) => {
     setMember({ ...member, [e.target.name]: e.target.value });
 
-    
-    // 아이디 유효성 검사
+    /* 아이디 유효성 검사 */
     if (e.target.name === "memberId") {
-      if (value.length < 3 || value.length > 15) {
+      if (e.target.value.length < 3 || e.target.value.length > 15) {
         setMemberIdError("아이디는 3자 이상 15자 이하로 입력해주세요.");
-      } else if (!/^[a-zA-Z0-9_-]+$/.test(value)) {
+      } else if (!/^[a-zA-Z0-9_-]+$/.test(e.target.value)) {
         setMemberIdError("아이디는 영문자, 숫자, '-', '_'만 허용됩니다.");
       } else {
         setMemberIdError(""); // 규칙을 만족하면 에러 초기화
       }
     }
+
+    /* 패스워드 유효성 검사 */
+    if (e.target.name === "memberPassword") {
+      if (e.target.value.length < 8) {
+        setMemberPasswordError("비밀번호는 최소 8자 이상이어야 합니다.");
+      } else if (!(/[a-zA-Z]/.test(e.target.value) && // 알파벳 포함 여부
+        (/\d/.test(e.target.value) || /[@$!%*?&]/.test(e.target.value)) // 숫자 또는 특수문자 포함 여부
+      )) {
+        setMemberPasswordError( "비밀번호는 대문자, 소문자, 숫자, 특수문자 중 두 가지 이상을 포함해야 합니다.");
+      } else {
+        setMemberPasswordError(""); // 규칙을 만족하면 에러 초기화
+      }
+    }
+
+    /* 이메일 유효성 검사 */
+    if (e.target.name === "memberEmail") {
+      const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+      if (!emailRegex.test(e.target.value)) {
+        setMemberEmailError("유효하지 않은 이메일 형식입니다.");
+      } else {
+        setMemberEmailError(""); // 규칙을 만족하면 에러 초기화
+      }
+    }
+
+    /* 이메일 유효성 검사 */
+    if (e.target.name === "memberEmail") {
+      const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+      if (!emailRegex.test(e.target.value)) {
+        setMemberEmailError("3개의 관심사를 선택해주세요.");
+      } else {
+        setMemberEmailError(""); // 규칙을 만족하면 에러 초기화
+      }
+    }
+
   };
 
   // 인증번호 발송
@@ -63,10 +99,17 @@ export const MemberJoinFormPage = () => {
         ? prevState.interests.filter((interest) => interest !== value)
         /* 스프레드 연산자(...)를 사용하여 기존 배열의 모든 항목을 복사한 뒤, value를 추가, 선택되지 않은 경우에 추가(기존에 없을 시 추가) */
         : [...prevState.interests, value]; 
-        return { ...prevState, interests: updatedInterests }; // 새 배열로 업데이트
-      });
-      console.log(value);
-  };
+
+      // 최소 3개 선택하지 않았을 경우 에러 메시지 설정
+      if (updatedInterests.length < 3 || updatedInterests.length > 3) {
+        setMemberInterestError("3개의 관심사를 선택해주세요.");
+      } else {
+        setMemberInterestError(""); // 규칙을 만족하면 에러 초기화
+      }
+
+    return { ...prevState, interests: updatedInterests };
+  });
+};
 
   
 
@@ -165,7 +208,8 @@ export const MemberJoinFormPage = () => {
                 onChange={handleChangeJoinForm}
                 required
             />
-        <p className="member-form-join-check">아이디는 3자 이상 15자 이하로 입력해주세요</p>
+        <p className={`member-form-join-check ${memberIdError ? "visible" : ""}`}>
+        {memberIdError}</p>
         </div>
         <div className="member-form-join-group">
         <p className="member-form-join-p">
@@ -178,6 +222,8 @@ export const MemberJoinFormPage = () => {
                 onChange={handleChangeJoinForm}
                 required
             />
+         <p className={`member-form-join-check ${memberPasswordError ? "visible" : ""}`}>
+          {memberPasswordError}</p>    
         </div>
         <div className="member-form-join-group">
         <p className="member-form-join-p">
@@ -202,6 +248,8 @@ export const MemberJoinFormPage = () => {
                 onChange={handleChangeJoinForm}
                 required
             />
+         <p className={`member-form-join-check ${memberEmailError ? "visible" : ""}`}>
+         {memberEmailError}</p>   
             <input
                 type="button"
                 value="인증번호 발송"
@@ -209,7 +257,7 @@ export const MemberJoinFormPage = () => {
                 className="member-join-button"
             />
         </div>
-        <div className="member-form-join-group">
+        <div className="member-form-join-group-">
             <input
                 type="text"
                 placeholder="인증번호를 입력하세요"
@@ -218,7 +266,8 @@ export const MemberJoinFormPage = () => {
             />
         </div>
         <div className="member-form-interest-group">
-            <p>관심사</p>
+            <p>관심사<span className="red-star">*</span></p><p className={`member-form-join-check ${memberInterestError ? "visible" : ""}`}>
+            {memberInterestError}</p>
         <div
         /* 선택된 항목에는 selected 클래스를 추가, 기본 클래스 "interest-item"과 선택 여부에 따라 "selected" 클래스가 동적으로 추가(CSS), ${} : 동적으로 값을 삽입하기 위해 사용 */
         className={`interest-item ${

@@ -54,7 +54,11 @@
 /* 입력 폼 */
 .member-form-join-group,
 .member-login-input {
-  margin-bottom: 15px;
+  margin-bottom: 10px;
+}
+
+.member-form-join-group-input {
+  margin-top: 20px;
 }
 
 .member-signup-form input,
@@ -363,5 +367,13 @@ legend {
 .member-form-join-check {
   font-size: 10px;
   color: red;
-  margin-top: 5px;
+  height: 12px; /* 에러 메시지의 고정 높이 설정 */
+  margin-top: 5px; /* 불필요한 여백 제거 */
+  line-height: 12px; /* 텍스트와 높이를 맞춤 */
+  visibility: hidden; /* 기본적으로 숨김 처리 */
+  
+}
+
+.member-form-join-check.visible {
+  visibility: visible; /* 에러 메시지가 있을 때만 보이도록 설정 */
 }
