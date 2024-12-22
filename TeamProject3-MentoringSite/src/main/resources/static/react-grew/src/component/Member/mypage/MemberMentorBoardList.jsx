@@ -46,7 +46,7 @@ export default function MemberMentorContentList() {
           <div className="board-details">
             <h3 className="board-title">{board.mentorBoardTitle}</h3>
             <p className="board-description">{board.mentorBoardContent.substring(0,100)}...</p>
-            <p className='board-subInfo'>
+            <p className='board-info'>
               <span className="board-date">{board.mentorBoardDate.substring(0,10)}</span>
               <span className="board-views"> | 조회수 : {board.mentorBoardViews}</span>
             </p>
