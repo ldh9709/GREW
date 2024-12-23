@@ -28,6 +28,7 @@ import com.itwill.jpa.auth.PrincipalDetailsService;
 import com.itwill.jpa.auth.PrincipalOauth2UserService;
 import com.itwill.jpa.repository.member_information.MemberRepository;
 import com.itwill.jpa.security.filter.JWTCheckFilter;
+import com.itwill.jpa.security.handler.APIAuthLoginSuccessHandler;
 import com.itwill.jpa.security.handler.APILoginFailHandler;
 import com.itwill.jpa.security.handler.APILoginSuccessHandler;
 
@@ -129,7 +130,7 @@ public class SecurityConfig {
 			  * 6. 인증된 사용자 정보는 PrincipalDetails 객체로 반환되어 Spring Security 세션에 저장
 			  */
 				userInfoEndpointConfig.userService(principalOauth2UserSerivce);
-				config.successHandler(new APILoginSuccessHandler());
+				config.successHandler(new APIAuthLoginSuccessHandler());
 				config.failureHandler(new APILoginFailHandler());
 			 });
 		});
@@ -137,7 +138,6 @@ public class SecurityConfig {
 		//폼 기반 로그인 구성
 		httpSecurity.formLogin((config) -> {
 			config.loginPage("/login");
-			config.defaultSuccessUrl("/home", true);
 			config.successHandler(new APILoginSuccessHandler());
 			config.failureHandler(new APILoginFailHandler());
 		});

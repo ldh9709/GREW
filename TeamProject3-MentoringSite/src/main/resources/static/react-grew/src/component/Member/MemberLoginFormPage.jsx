@@ -39,18 +39,7 @@ const MemberLoginFormPage = () => {
       alert("회원정보가 일치하지 않습니다.");
     }
   };
-
- /*  useEffect(()=> {
-    const fetchUserInfo = async () => {
-      const userInfo = await memberApi.getUserInfo();
-      console.log("userInfo : ",userInfo);
-      if(userInfo.ok) {
-        navigate('/main');
-      }
-    }
-    fetchUserInfo();
-  }, [navigate]);
- */
+  
   return (
     <div className="member-login-container">
     <h2 className="member-login-title">로그인</h2>
