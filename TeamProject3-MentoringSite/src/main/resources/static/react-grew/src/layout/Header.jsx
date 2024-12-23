@@ -10,19 +10,17 @@ export default function HeaderMenu() {
   const memberCookie = getCookie("member");
   const token = memberCookie ? memberCookie.accessToken : null; // 안전하게 접근
   
-  console.log("멤버 쿠키 : ", memberCookie);
+  console.log("멤버 쿠키memberCookie : ", memberCookie);
+  console.log("멤버 토큰token : ", token);
+  
   const handleLoginNavigate = async () => {
     navigate('/member/login');
   };
   
   const handleLogoutAction = async () => {
     const isLogout = await logout();
-    if(isLogout) {
-      navigate('/main');
-      alert("로그아웃 성공");
-    } else {
-      alert("로그아웃 실패");
-    }
+    console.log("islogout : ", isLogout);
+    navigate('/main');
   };
 
   const handleJoinNavigate = async () => {

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import * as memberApi from "../../api/memberApi";
 import { setCookie, getCookie } from "../../util/cookieUtil"
@@ -28,7 +28,7 @@ const MemberLoginFormPage = () => {
     if (responseJsonObject.accessToken) {
 
       /* 쿠키 설정 */
-      setCookie("member", JSON.stringify(responseJsonObject), 1);
+      //setCookie("member", JSON.stringify(responseJsonObject), 1);
       console.log("getCookies : " , getCookie("member"));
       console.log("getCookies.accessToken : " , getCookie("member").accessToken);
       
@@ -40,6 +40,17 @@ const MemberLoginFormPage = () => {
     }
   };
 
+ /*  useEffect(()=> {
+    const fetchUserInfo = async () => {
+      const userInfo = await memberApi.getUserInfo();
+      console.log("userInfo : ",userInfo);
+      if(userInfo.ok) {
+        navigate('/main');
+      }
+    }
+    fetchUserInfo();
+  }, [navigate]);
+ */
   return (
     <div className="member-login-container">
     <h2 className="member-login-title">로그인</h2>

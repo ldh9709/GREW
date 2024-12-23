@@ -31,7 +31,7 @@ export const followList = async()=>{
 export const loginAction = async (sendJsonObject) => {
     console.log("Request Data: ", sendJsonObject);
 
-    const header = {headers: {"Content-Type": "x-www-form-urlencoded"}}
+    const header = {headers: {"Content-Type": "application/x-www-form-urlencoded"}, withCredentials: true }
 
     const form = new FormData()
     form.append('username', sendJsonObject.memberId)
@@ -40,7 +40,7 @@ export const loginAction = async (sendJsonObject) => {
     console.log("memberId : " , sendJsonObject.memberId);
     console.log("memberPassword : ", sendJsonObject.memberPassword);
 
-    const response = await axios.post("http://localhost:8080/login", form, header);
+    const response = await axios.post("http://localhost:8080/login", form, header,);
 
     console.log("response : " , response)
 
@@ -56,11 +56,7 @@ export const logout = async (token) => {
         },
     });
     console.log("로그아웃 시 반환객체 : ",response);
-    if(response.ok) {
-        return true;
-    } else {
-        return false;
-    }
+    return response.url;
 };
   
 
@@ -194,6 +190,10 @@ export const memberProfile = async (token) => {
     return resultJsonObject;
   };
 
+//멘토 프로필 조회
+export const getMentorProfile = async (memberNo) => {
+    const response = await fetch(`${BACKEND_SERVER}/mentor-profile/`)
+}
 
 //인증코드 메일 발송
 export const sendJoinCode = async (sendJsonObject) => {
