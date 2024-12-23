@@ -58,8 +58,6 @@ function App() {
             <Route path="/member/profile/edit" element={<MemberProfileFormPage/>}/>
             {/* Mentor페이지 */}
             <Route path="/mentor/join" element={<MentorJoinFormPage />} />
-            <Route path="/member/join" element={<MemberJoinFormPage />} />
-            <Route path="/member/login" element={<MemberLoginFormPage />} />
 			
             <Route
               path="/member/profile/edit"
