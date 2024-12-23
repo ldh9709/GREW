@@ -39,6 +39,7 @@ import ForbiddenPage from "./component/ForbiddenPage";
 import MentorBoardCreate from "./component/MentorBoard/MentorBoardCreate";
 import MentorProfileItem from "./component/MentorProfile/MentorProfileItem";
 import AdminRoutes from "./routes/AdminRoutes";
+import MentorBoardUpdate from "./component/MentorBoard/MentorBoardUpdate";
 
 function App() {
   const location = useLocation(); // 현재 URL 경로를 가져옴
@@ -73,7 +74,8 @@ function App() {
             <Route path="/mentorprofile/add" element={<MentorProfileAdd/>}/>
             <Route path="/mentorprofile/view" element={<MentorProfileItem/>}/>
             <Route path="/mentorprofile/search" element={<MentorSearchList />} />
-            <Route path="/mentorboardcreate/:mentorProfileNo" element={<MentorBoardCreate />} />
+            <Route path="/mentorboard/create/:mentorProfileNo" element={<MentorBoardCreate />} />
+            <Route path="/mentorboard/update/:mentorBoardNo" element={<MentorBoardUpdate />} />
             <Route path="/mentorprofile/detail/:mentorProfileNo" element={<MentorProfileDetail/>}/>
             <Route path="/mentorprofile/detail" element={<MentorProfileDetail/>}/>
             <Route path="/mentorprofile/search" element={<MentorSearchList/>} />

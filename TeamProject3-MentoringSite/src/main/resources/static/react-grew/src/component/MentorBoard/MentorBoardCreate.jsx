@@ -2,10 +2,10 @@ import React, { useEffect, useState, useRef } from "react";
 import * as categoryApi from "../../api/categoryApi"; // 카테고리 데이터를 조회하는 API
 import * as mentorProfileApi from "../../api/mentorProfileApi";
 import * as mentorBoardApi from "../../api/mentorBoardApi"; // API 호출 부분
-import "../../css/MentorBoardCreate.css";
-import { useParams } from "react-router-dom";
+import "../../css/MentorBoardForm.css";
+import { useParams, useNavigate } from "react-router-dom";  // useNavigate 추가
 
-function MentorBoardCreate({ onSubmit }) {
+function MentorBoardCreate() {
   const [category, setCategory] = useState(""); // 카테고리명 선언
   const [mentorBoardTitle, setMentorBoardTitle] = useState("");
   const [mentorBoardContent, setMentorBoardContent] = useState("");
@@ -13,6 +13,16 @@ function MentorBoardCreate({ onSubmit }) {
   const [imagePreview, setImagePreview] = useState(""); // 이미지 미리보기 URL
   const { mentorProfileNo } = useParams();  // URL에서 mentorProfileNo 가져오기
   const fileInputRef = useRef(null); // file input을 참조하기 위한 useRef 추가
+
+  // 기본이미지 URL 설정 (컴포넌트 로드 시 한번만 호출)
+  const defaultImageUrl = "/images/mentor-board/defaultImage.png";
+
+  const navigate = useNavigate();  // 페이지 이동을 위한 navigate 훅
+
+  useEffect(() => {
+    // 처음 로딩할 때만 기본 이미지 미리보기 설정
+    setImagePreview(defaultImageUrl);
+  }, []);
 
   useEffect(() => {
     const fetchCategory = async () => {
@@ -43,7 +53,7 @@ function MentorBoardCreate({ onSubmit }) {
     if (mentorProfileNo) {
       fetchCategory();
     }
-  }, [mentorProfileNo]);
+  }, );
 
   // 테스트용 임시 memberNo 설정
   const memberNo = 8; // 여기서 임시로 지정한 memberNo를 사용합니다.
@@ -58,7 +68,7 @@ function MentorBoardCreate({ onSubmit }) {
     const formData = {
       mentorBoardTitle,
       mentorBoardContent,
-      mentorBoardImage: "",
+      mentorBoardImage: defaultImageUrl,
       memberNo: memberNo,
     };
   
@@ -69,10 +79,10 @@ function MentorBoardCreate({ onSubmit }) {
       alert("게시글이 성공적으로 등록되었습니다!");
   
       // 이미지 업로드 처리
-      if (mentorBoardNo && mentorBoardImage) {
+      if (mentorBoardNo && mentorBoardImage && mentorBoardImage !== defaultImageUrl) {
         await handleImageUpload(mentorBoardNo); // 이미지 업로드 진행
       } else {
-        alert("이미지가 선택되지 않았습니다.");
+        alert("기본 이미지가 선택되었습니다.");
       }
   
       // 초기화
@@ -93,21 +103,21 @@ function MentorBoardCreate({ onSubmit }) {
   };
   
   const handleImageUpload = async (mentorBoardNo) => {
-    if (!mentorBoardImage) {
-      alert("이미지 파일을 선택해 주세요.");
-      return;
+    // 기본 이미지는 업로드하지 않음
+    if (mentorBoardImage === defaultImageUrl) {
+      console.log("기본 이미지가 선택되어 업로드하지 않습니다.");
+      return; // 기본 이미지는 업로드하지 않음
     }
-
-    // 사용자가 선택한 이미지(file객체)를 formData객체 추가
+  
+    // 사용자가 선택한 이미지(file객체)를 formData 객체에 추가
     const formData = new FormData();
     formData.append("file", mentorBoardImage);
-
+  
     try {
       // 이미지 업로드 API 호출
       const response = await mentorBoardApi.uploadMentorBoardImage(mentorBoardNo, formData);
       console.log("업로드 응답:", response);  // 서버 응답 확인
       alert("이미지 업로드가 완료되었습니다.");
-  
     } catch (err) {
       console.error("이미지 업로드 실패:", err);  // 에러 메시지 출력
       alert("이미지 업로드 실패!");
@@ -120,6 +130,14 @@ function MentorBoardCreate({ onSubmit }) {
       setMentorBoardImage(file);
       const previewUrl = URL.createObjectURL(file);  // 파일 URL 생성
       setImagePreview(previewUrl);  // 미리보기 URL 업데이트
+    }
+  };
+
+  // 취소 버튼 클릭 시 이전 페이지로 이동
+  const handleCancel = () => {
+    const shouldCancel = window.confirm("게시글 작성을 취소할까요?\n(작성된 내용은 사라집니다.)");
+    if (shouldCancel) {
+      navigate(-1); // 이전 페이지로 이동
     }
   };
 
@@ -145,7 +163,7 @@ function MentorBoardCreate({ onSubmit }) {
       </div>
   
       <div className="field">
-        <label htmlFor="mentorBoardImage">썸네일 이미지</label>
+        <label htmlFor="mentorBoardImage">썸네일 이미지(미선택시 기본이미지가 선택됩니다)</label>
         <input
           type="file"
           id="mentorBoardImage"
@@ -172,6 +190,9 @@ function MentorBoardCreate({ onSubmit }) {
       <div className="button-group">
         <button className="submit-button" onClick={handleSubmit}>
           등록
+        </button>
+        <button className="cancel-button" onClick={handleCancel}>
+          취소
         </button>
       </div>
     </div>
