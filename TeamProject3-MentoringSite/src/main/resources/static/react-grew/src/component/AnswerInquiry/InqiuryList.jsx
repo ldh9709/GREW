@@ -60,7 +60,7 @@ function InqiuryList() {
   }, []);
   const fetchBestAnswer = async () => {
     const responseJsonObject = await inquiryApi.bestAnswerList();
-    console.log(responseJsonObject.data.content);
+    console.log(responseJsonObject.data);
     setBestAnswer(responseJsonObject.data.content);
   };
   // 문의 목록을 페이지네이션과 함께 가져오는 함수
@@ -159,11 +159,6 @@ function InqiuryList() {
   };
   return (
     <>
-      <link
-        href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap"
-        rel="stylesheet"
-      ></link>
-
       <h1>질문게시판</h1>
 
       <div className="btn-inquiry-write-div">
@@ -310,7 +305,7 @@ function InqiuryList() {
             key={number}
             onClick={() => paginate(number)}
             style={{
-              backgroundColor: number === currentPage ? "#4CAF50" : "",
+              backgroundColor: number === currentPage ? "#006618" : "",
               color: number === currentPage ? "white" : "",
             }}
           >
