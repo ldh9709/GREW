@@ -7,15 +7,19 @@ function AdminMember() {
     const memberCookie = getCookie("member");
     const token = memberCookie.accessToken;
 
+
+    //1. 초기설정
     const [members,setMember] = useState([]);
+
     //const [role, setRole] = useState("ROLE_MENTEE");  //기본적으로 ROLE_MENTEE로 설정 =>
     const [role, setRole] = useState("ALL"); // 기본적으로 ALL로 설정 (전체 회원 조회)
 
-    //목록 조회 함수
+    //2. 목록 조회 함수(adminApi를 불러옴)
     const fetchMembers = async (role,order) => {
         try {
             const response = await adminApi.adminMember(token,role,order);
             setMember(response.data);
+            console.log(response.data)
             console.log(response);
         } catch (error) {
             console.log('회원 목록 조회 실패', error);

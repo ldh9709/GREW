@@ -39,7 +39,6 @@ import ReviewView from "./component/Review/ReviewView";
 import ReviewListPage from "./component/Review/ReviewList";
 
 import AdminRoutes from "./routes/AdminRoutes";
-
 import ForbiddenPage from "./component/ForbiddenPage";
 
 function App() {
