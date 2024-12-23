@@ -9,20 +9,7 @@ export default function Navigate() {
   const [searchTerm, setSearchTerm] = useState(""); // 검색어 상태
   const navigate = useNavigate();
   const location = useLocation();// 문 추가된메서드
-
-  const menuBarStyle = {
-    display: "flex",
-    justifyContent: "left",
-    gap: "20px",
-  };
-  const linkStyle = {
-    fontFamily: "'Noto Sans KR', sans-serif",
-    fontSize: "17px",
-    color: "#555",
-    textDecoration: "none",
-    transition: "color 0.3s",
-    fontWeight: "800",
-  };
+  
   // 검색어에 따라 목록 필터링
   const handleSearchChange = (e) => {
     const searchTerm = e.target.value;
@@ -52,38 +39,38 @@ export default function Navigate() {
   };
   return (
     <div className="collapse navbar-collapse" id="navbarCollapse">
-      <div className="headerMenuBar" style={menuBarStyle}>
-        <a href="/main" className="logo">
-          <img
-            src="/logo.png"
-            alt=""
-            style={{ width: "100px", height: "50px", marginBottom: "-10px", marginRight:"5px"}}
-          />
-        </a>
-        <a href="/inquiry" className="inquiry" style={linkStyle}>
+    <div className="headerMenuBar">
+      <a href="/main" className="logo">
+        <img
+          src="/logo.png"
+          alt=""
+          style={{ width: "100px", height: "50px", marginBottom: "-10px", marginRight: "5px" }}
+        />
+      </a>
+      <a href="/inquiry" className="header-link">
         질문하기
-        </a>
+      </a>
 
-        <a href="/mentorprofile/list" className="findMentor" style={linkStyle}>
-          멘토 찾기
-        </a>
+      <a href="/mentorprofile/list" className="header-link">
+        멘토 찾기
+      </a>
 
-        <a href="/mentorboard/list" className="mentorContent" style={linkStyle}>
-          멘토 컨텐츠
-        </a>
-        {/* 검색창 */}
-        <div className="search-container">
-          <input
-            type="text"
-            value={searchTerm}
-            onChange={handleSearchChange}
-            onKeyDown={handleKeyPress} // Enter 키를 감지
-            placeholder="궁금한 내용을 검색해보세요!"
-            className="search-input"
-          />
-          <FontAwesomeIcon icon={faSearch} className="search-icon" />
-        </div>
+      <a href="/mentorboard/list" className="header-link">
+        멘토 컨텐츠
+      </a>
+      <div className="search-container">
+        <input
+          type="text"
+          value={searchTerm}
+          onChange={handleSearchChange}
+          onKeyDown={handleKeyPress}
+          placeholder="궁금한 내용을 검색해보세요!"
+          className="search-input"
+        />
+        <FontAwesomeIcon icon={faSearch} className="search-icon" />
       </div>
+    </div>
+
     </div>
   );
 }
