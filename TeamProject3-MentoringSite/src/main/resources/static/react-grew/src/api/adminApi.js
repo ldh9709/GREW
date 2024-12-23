@@ -1,6 +1,5 @@
 const BACKEND_SERVER = ""; // 백엔드 서버 URL 정의
 
-
 //회원 목록 조회
 export const adminMember = async(token,role,order) =>{
   const response = await fetch(`${BACKEND_SERVER}/admin/member?role=${role}&order=${order}`, {
@@ -12,6 +11,11 @@ export const adminMember = async(token,role,order) =>{
   });
   const responseJsonObject= await response.json();
   return responseJsonObject;
+}
+
+//게시글 목록 조회
+export const adminInquiry = async() => {
+
 }
 
 {/*/chatroom/list?page=${page}&size=${size} =->19행수정 필요必要
@@ -27,6 +31,9 @@ export const adminReport = async (token,page,size) => {
    return responseJsonObject;
 }
 */} 
+
+
+
 // 관리자 - 신고 목록 조회
 export const getAdminReportList = async (filter, page = 0, size = 10) => {
   try {

@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import "../../css/admin.css";
 import AdminMember from './AdminMember';
+import AdminInquiry from './AdminInquiry';
 
 export default function Admin() {
 
@@ -24,6 +25,7 @@ export default function Admin() {
     </div>
     <div className="admin-content">
       <AdminMember/>
+      <AdminInquiry/>
     </div>
 </div>
   )
