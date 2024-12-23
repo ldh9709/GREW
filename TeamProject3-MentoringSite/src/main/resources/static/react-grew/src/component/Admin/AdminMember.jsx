@@ -96,6 +96,5 @@ function AdminMember() {
         </div>
     )
 }
->>>>>>> branch 'master' of https://github.com/2024-07-JAVA-DEVELOPER-155/final-project-team2.git
 
 export default AdminMember;
