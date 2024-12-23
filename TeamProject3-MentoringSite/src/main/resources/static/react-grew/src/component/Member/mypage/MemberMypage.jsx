@@ -4,8 +4,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import "../../../css/styles.css"
 import "../../../css/member.css";
 import MemberTabs from './MemberTabs'
-import { getCookie } from "../../../util/cookieUtil"
-import * as memberApi from "../../../api/memberApi"
+
 
 export default function MemberMypage() {
 

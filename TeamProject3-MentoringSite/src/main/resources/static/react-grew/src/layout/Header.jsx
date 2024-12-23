@@ -3,18 +3,27 @@ import { getCookie } from "../util/cookieUtil";
 import { useNavigate } from "react-router-dom";
 import { logout, memberProfile, getMentorProfile } from "../api/memberApi";
 import "../css/styles.css";
+import { jwtDecode } from "jwt-decode";
 
 export default function HeaderMenu() {
   const navigate = useNavigate();
-  const memberCookie = getCookie("member");
-  const token = memberCookie ? memberCookie.accessToken : null; // 안전하게 접근
-  const memberNo = memberCookie?.memberNo; // 옵셔널 체이닝으로 안전하게 접근
-  const mentorProfileNo = memberCookie?.mentorProfileNo;
 
-  console.log("멤버 넘버 : ", memberNo);
-  console.log("멘토 프로필 넘버 : ", mentorProfileNo);
+  const memberCookie = getCookie("member");
   console.log("멤버 쿠키 : ", memberCookie);
+
+  const token = memberCookie ? memberCookie.accessToken : null; // 안전하게 접근
   console.log("토큰 : ", token);
+
+  const DecodeToken = jwtDecode(token);
+  console.log("Decode 토큰 : ", DecodeToken);
+
+  const memberNo = DecodeToken.memberNo;
+  console.log("멤버 넘버 : ", memberNo);
+
+  const mentorProfileNo = DecodeToken.mentorProfileNo;
+  console.log("멘토 프로필 넘버 : ", mentorProfileNo);
+
+  
 
   // 로그인 페이지로 이동
   const handleLoginNavigate = () => {
@@ -40,11 +49,13 @@ export default function HeaderMenu() {
   // 프로필 페이지로 이동
   const handleProfileNavigate = async () => {
     try {
+      
+      const memberProfileResponse = await memberProfile(token);
+      console.log("멤버 프로필 : ", memberProfileResponse);
 
-      const memberProfileResponse = await memberProfile(memberNo);
       const mentorProfileResponse = await getMentorProfile(mentorProfileNo);
-      console.log("memberProfileResponse : ", memberProfileResponse);
-      console.log("mentorProfileResponse : ", mentorProfileResponse);
+      console.log("멘토 프로필 : ", mentorProfileResponse);
+
       if (mentorProfileResponse?.data?.categoryNo === 26) {
         navigate("/mentor/join");
       } else if (memberProfileResponse?.data?.categoryNo === 19) {
