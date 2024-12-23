@@ -73,7 +73,7 @@ export const MemberJoinFormPage = () => {
     if (e.target.name === "memberEmail") {
       const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
       if (!emailRegex.test(e.target.value)) {
-        setMemberEmailError("3개의 관심사를 선택해주세요.");
+        setMemberEmailError("이메일이 옳바르지 않습니다.");
       } else {
         setMemberEmailError(""); // 규칙을 만족하면 에러 초기화
       }

@@ -117,7 +117,7 @@ public class SecurityConfig {
 		//SNS로그인
 		httpSecurity.oauth2Login((config) -> {
 			config.loginPage("/login")//로그인 페이지 경로
-			 .defaultSuccessUrl("http://localhost:3000/main")//로그인 성공 후 리다이렉트 경로
+			 .defaultSuccessUrl("/")//로그인 성공 후 리다이렉트 경로
 			 .userInfoEndpoint((userInfoEndpointConfig) -> {
 			 /***
 			  * Spring Security의 OAuth2 사용자 정보 처리는 userInfoEndpoint를 통해 수행된다.

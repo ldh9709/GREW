@@ -27,8 +27,8 @@ import ReviewWriteFormPage from "./component/Review/ReviewWriteFormPage";
 import ReviewView from "./component/Review/ReviewView";
 import ReviewListPage from "./component/Review/ReviewList";
 
-import AdminReport2 from "./component/admin/adminReport2";
-import Admin from "./component/admin/admin";
+import AdminReport2 from "./component/admin/adminReport";
+import Admin from "./component/admin/Admin";
 import AdminReport4 from "./component/admin/adminReport4";
 import ForbiddenPage from "./component/ForbiddenPage";
 import AdminRoutes from "./routes/AdminRoutes";

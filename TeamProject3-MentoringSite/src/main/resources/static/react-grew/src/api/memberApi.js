@@ -181,6 +181,10 @@ export const memberProfile = async (token) => {
     return resultJsonObject;
   };
 
+//멘토 프로필 조회
+export const getMentorProfile = async (memberNo) => {
+    const response = await fetch(`${BACKEND_SERVER}/mentor-profile/`)
+}
 
 //인증코드 메일 발송
 export const sendJoinCode = async (sendJsonObject) => {
