@@ -426,6 +426,18 @@ public class MentorProfileServiceImpl implements MentorProfileService {
         return mentorProfiles.map(MentorProfileDto::toDto);
     }
 
+
+
+
+    //멤버 넘버로 멘토 프로필 찾기
+	@Override
+	public MentorProfileDto getMentorByMemberNo(Long memberNo) {
+		MentorProfile mentor = mentorProfileRepository.findByMember_MemberNo(memberNo);
+		return MentorProfileDto.toDto(mentor);
+	}
+    
+    
+
     
 
 }
