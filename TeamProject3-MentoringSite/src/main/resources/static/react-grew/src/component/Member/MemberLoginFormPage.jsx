@@ -47,10 +47,10 @@ const MemberLoginFormPage = () => {
     <div className="member-login-container">
     <h2 className="member-login-title">로그인</h2>
     <form className="member-login-form" onSubmit={loginAction}>
-        <div className="member-login-input">
+        <div className="member-login-div">
             <input type="text" name="memberId" className="member-login-input" placeholder="아이디" value={member.memberId} onChange={handleChangeLoginForm} required />
         </div>
-        <div className="member-login-input">
+        <div className="member-login-div">
             <input type="password" name="memberPassword" className="member-login-input" placeholder="비밀번호" value={member.memberPassword} onChange={handleChangeLoginForm} required />
         </div>
         <Link to="/join" className="member-findPassword-link">
@@ -60,7 +60,7 @@ const MemberLoginFormPage = () => {
         <Link to="/join" className="member-join-link">
             <p>회원이 아니신가요? 회원가입</p>
         </Link>
-        <h3 className="member-login-sub-title">SNS 로그인</h3>
+        <h3 className="member-login-sub-title">- SNS 간편 로그인 -</h3>
         <div className="member-sns-login-group">
             <Link to="http://localhost:8080/oauth2/authorization/google">
                 <img src={google} alt="Google" className="member-sns-icon" />

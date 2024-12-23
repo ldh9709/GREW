@@ -84,36 +84,24 @@ export default function HeaderMenu() {
   return (
     <div className="header" style={navStyle}>
       <div className="rightMenu" style={rightMenuBarStyle}>
-        {token ? (
-          <>
-            <input
-              type="button"
-              className="profile-button"
-              onClick={handleProfileNavigate}
-              value="마이페이지"
-            />
-            <input
-              type="button"
-              className="logout-button"
-              onClick={handleLogoutAction}
-              value="로그아웃"
-            />
-          </>
-        ) : (
-          <>
-            <input
-              type="button"
-              className="login-button"
-              onClick={handleLoginNavigate}
-              value="로그인"
-            />
-            <input
-              type="button"
-              className="join-button"
-              onClick={handleJoinNavigate}
-              value="회원가입"
-            />
-          </>
+      {token ? (
+        <>
+          {/* <a href="/member/profile" className="mypage">
+          마이페이지
+        </a> */}
+        <input type="button" className="profile-button " onClick={handleProfileNavigate} value="마이페이지"/>
+        {/* <a href="/logout" onClick={handleLogoutAction} className="mypage">
+        로그아웃
+        </a> */}
+        <input type="button" className="logout-button" onClick={handleLogoutAction} value="로그아웃"/>
+        </>
+      ) : (
+         <>
+         <input type="button" className="login-button" onClick={handleLoginNavigate} value="로그인"/>
+
+         <input type="button" className="join-button" onClick={handleJoinNavigate} value="회원가입"/>
+
+         </>
         )}
       </div>
     </div>

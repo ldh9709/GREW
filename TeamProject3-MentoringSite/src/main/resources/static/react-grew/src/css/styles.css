@@ -93,7 +93,7 @@ button {
 }
 
 .headerMenuBar a:hover {
-  color: #28a745;
+  color: #228f3b;
 }
 /*상단 메뉴바*/
 .navbar-collapse {
@@ -626,67 +626,34 @@ button {
 }
 
 /* Header 스타일 */
-.profile-button {
-  width: 80px;
-  padding: 10px;
+.rightMenu input{
+  width: 90px;
+  padding: 7px 10px;
   font-family: "nanumsquare";
   text-align: center;
   background-color: #ffffff;
-  color: black;
+  color: #444;
   border-radius: 30px;
   cursor: pointer;
-  font-size: 10px;
+  font-size: 13px;
   border: none;
-  outline: 1px solid gainsboro; /* 회색 외곽선 */
-}
-
-.logout-button {
-  width: 80px;
-  padding: 10px;
-  font-family: "nanumsquare";
-  text-align: center;
-  background-color: #007bff;
-  color: white;
-  border-radius: 30px;
-  cursor: pointer;
-  font-size: 10px;
-  border: none;
-  outline: 1px solid gainsboro; /* 회색 외곽선 */
-}
-
-.login-button {
-  width: 80px;
-  padding: 10px;
-  font-family: "nanumsquare";
-  text-align: center;
-  background-color: #ffffff;
-  color: black;
-  border-radius: 30px;
-  cursor: pointer;
-  font-size: 12px;
-  border: none;
-  outline: 1px solid gainsboro; /* 회색 외곽선 */
+  outline: 1px solid #ccc;
+  transition: background-color 0.3s ease;
 }
 .login-button:hover {
-  background-color: #f8f8f8;
+  background-color: #eeeeee;
 }
 
-.join-button {
-  width: 80px;
-  padding: 10px;
-  font-family: "nanumsquare";
-  text-align: center;
-  background-color: #28a745;
-  color: white;
-  border-radius: 30px;
-  cursor: pointer;
-  font-size: 12px;
-  border: none;
-  outline: 1px solid gainsboro; /* 회색 외곽선 */
+.join-button , .logout-button {
+  background-color: #eeeeee !important;
 }
-.join-button:hover {
-  background-color: #269c42;
+.join-button:hover, .logout-button:hover{
+  background-color: #d1d1d1 !important;
 }
+.profile-button:hover {
+  background-color:#eeeeee !important;
+}
+
 .small-list {
   width: 270px; /* 20% 너비 */
   border-left: 1px solid #ddd;
