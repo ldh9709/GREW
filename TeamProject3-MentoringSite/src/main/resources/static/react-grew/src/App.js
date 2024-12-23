@@ -51,7 +51,6 @@ function App() {
           <Routes>
             <Route path="/" exact element={<MainPage />} />
             <Route path="/main" element={<MainPage />} />
-            <Route path="/login" element={<MainPage />} />
             <Route path="/403" element={<ForbiddenPage />} />
             {/* Member페이지 */}
             <Route path="/member/profile" element={<MemberMypage />} />
