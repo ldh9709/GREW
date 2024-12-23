@@ -98,7 +98,7 @@ button {
 /* 상단 바, 로그인 바 반응형 디자인 */
 @media (max-width: 1500px) {
   .header{
-    right: 20px;
+    right: 25px;
   }
   .logo {
     margin-left: 10px;
@@ -472,7 +472,7 @@ button {
   display: flex;
   justify-content: right;
   height: 40px;
-  margin: auto 0 auto 130px;
+  margin: auto 0 auto 140px;
 }
 
 /* 검색창 입력 필드 */
