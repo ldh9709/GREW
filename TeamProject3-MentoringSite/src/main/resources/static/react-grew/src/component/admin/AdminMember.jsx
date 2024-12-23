@@ -55,7 +55,7 @@ function AdminMember() {
             {/* 드롭다운 */}
             <div className="dropdown">
                 <select onChange={handleRoleChange} value={role}>
-                <option value="ALL">ALL</option>  {/* 전체 회원 */}
+                    {/*<option value="ALL">ALL</option>   전체 회원 */}
                     <option value="ROLE_MENTEE">MENTEE</option>  {/* 멘티 */}
                     <option value="ROLE_MENTOR">MENTOR</option>  {/* 멘토 */}
                     
