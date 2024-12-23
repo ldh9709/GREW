@@ -112,16 +112,18 @@ export const mentorJoinAction = async (member, tempCode) => {
 export const mentorProfileCreateAction = async (memberNo, mentor) => {
     console.log("Request Data: ", memberNo);
     console.log("Request Data: ", mentor);
-
     const response = await fetch(`${BACKEND_SERVER}/mentor-profile/${memberNo}/create-profile`, {
         method:'POST', 
         headers:{
             'Content-type':'application/json'
         },
-        body:JSON.stringify({
-            memberNo : memberNo,
-            mentorProfileDto: mentor
-        })
+        body: JSON.stringify({
+            memberNo: memberNo,
+            categoryNo: mentor.categoryNo,
+            mentorIntroduce: mentor.mentorIntroduce,
+            mentorCareer: mentor.mentorCareer,
+            mentorImage: mentor.mentorImage,
+          })
     });
 
     const resultJsonObject = await response.json();

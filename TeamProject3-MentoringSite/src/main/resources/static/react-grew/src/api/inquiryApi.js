@@ -203,3 +203,27 @@ export const listInquiryByMemberNo = async (token,page) => {
    const responseJsonObject = await response.json();
    return responseJsonObject;
 }
+//질문의 답변수 
+export const countAnswerByinquiryNo = async (inquiryNo) => {
+   
+   const response = await fetch(`${BACKEND_SERVER}/answer/count-answer/${inquiryNo}`, {
+      method: 'GET',
+      headers: {
+         'Content-Type': 'application/json',
+      }
+   });
+   const responseJsonObject = await response.json();
+   return responseJsonObject;
+}
+//질문의 답변수 
+export const bestAnswerList = async () => {
+   
+   const response = await fetch(`${BACKEND_SERVER}/answer/recently-vote?page=0&size=10`, {
+      method: 'GET',
+      headers: {
+         'Content-Type': 'application/json',
+      }
+   });
+   const responseJsonObject = await response.json();
+   return responseJsonObject;
+}

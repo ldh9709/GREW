@@ -35,8 +35,8 @@ public interface MentorBoardRepository extends JpaRepository<MentorBoard, Long> 
     // 특정 사용자와 관련된 게시글 조회 페이징
     @Query("SELECT mb FROM MentorBoard mb WHERE mb.member = :member AND mb.mentorBoardStatus = 1")
     Page<MentorBoard> findByMember(@Param("member") Member member, Pageable pageable);
-    
-    
+    //멘토보드 리스트 12/22추가
+    Page<MentorBoard> findByMentorBoardStatusOrderByMentorBoardDateDesc(int status, Pageable pageable);
     
 }
     
