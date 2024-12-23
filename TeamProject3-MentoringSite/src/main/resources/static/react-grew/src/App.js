@@ -23,7 +23,7 @@ import MemberMypage from "./component/Member/mypage/MemberMypage";
 import SearchList from "./component/SearchList";
 import InquirySearchList from "./component/AnswerInquiry/InquirySearchList";
 
-import ReviewWriteFormPage from "./component/Review/ReviewWrithFormPage";
+import ReviewWriteFormPage from "./component/Review/ReviewWriteFormPage";
 import ReviewView from "./component/Review/ReviewView";
 import ReviewListPage from "./component/Review/ReviewList";
 import ForbiddenPage from "./component/ForbiddenPage";

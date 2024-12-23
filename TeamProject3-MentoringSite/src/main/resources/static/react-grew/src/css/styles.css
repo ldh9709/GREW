@@ -102,7 +102,7 @@ button {
   margin-top: 10px; /* 위쪽 여백 */
   font-size: 15px;
 }
-.inquiry-list-main{
+.inquiry-list-main {
   display: flex;
   justify-content: space-between; /* 양쪽 끝으로 배치 */
   margin-top: 20px; /* 위쪽 마진 추가 */
@@ -114,25 +114,26 @@ button {
   font-weight: bold;
   margin-bottom: 30px;
 }
-.inquiry-list-sort{
+.inquiry-list-sort {
   flex: 3; /* 문의 목록 테이블이 더 넓게 차지 */
   padding: 10px;
 }
 .inquiry-container {
-  border-top : 1px solid #ccc; /* 테두리 설정 */
-  border-bottom : 1px solid #ccc; /* 테두리 설정 */
+  position: relative;
+  border-top: 2px solid #ccc; /* 테두리 설정 */
+  border-bottom: 2px solid #ccc; /* 테두리 설정 */
   padding: 10px; /* 내부 여백 */
   background-color: #ffffff; /* 배경색 */
-  width:700px; /*너비*/
+  width: 700px; /*너비*/
   height: 130px;
   padding: 30px; /* 내부 여백 */
   display: block;
   justify-content: right;
-  margin-bottom: 3px;
+  margin-bottom: -10px;
 }
 .inquiry-container-inview {
-  border-top : 1px solid #ccc; /* 테두리 설정 */
-  border-bottom : 1px solid #ccc; /* 테두리 설정 */
+  border-top: 1px solid #ccc; /* 테두리 설정 */
+  border-bottom: 1px solid #ccc; /* 테두리 설정 */
   padding: 10px; /* 내부 여백 */
   background-color: #ffffff; /* 배경색 */
   width: 1080px; /*너비*/
@@ -146,6 +147,20 @@ button {
 .inquiry-container:hover .inquiry-desc {
   color: #000000; /* 호버 시 색상 변경 */
 }
+.inquiry-container .answer-btn {
+  display: none; /* 기본적으로 숨김 */
+  position: absolute;
+  padding: 5px 10px;
+  color: rgb(0, 0, 0);
+  border-radius: 5px;
+  font-size: 14px;
+  margin-bottom: 50px;
+  margin-left: 600px;
+}
+
+.inquiry-container:hover .answer-btn {
+  display: block; /* 호버시 답변하기 버튼을 표시 */
+}
 .inquiry-content {
   font-size: 13px;
   margin-bottom: 30px;
@@ -158,14 +173,55 @@ button {
   margin-left: 10px;
   color: #505050;
 }
-.inquiry-category-name{
+.inquiry-category-name {
   font-size: 40px;
   font-weight: bolder;
   margin-left: 20px;
-  margin-bottom:10px;
+  margin-bottom: 10px;
   color: #000000;
 }
+@keyframes content-slide-up {
+  0% {
+    transform: translateY(0);  /* 처음 위치 */
+    opacity: 1;                /* 완전히 보이는 상태 */
+  }
+  100% {
+    transform: translateY(-100%);  /* 위로 이동 */
+    opacity: 0;                  /* 사라짐 */
+  }
+}
 
+@keyframes content-slide-down {
+  0% {
+    transform: translateY(100%);  /* 아래에서 시작 */
+    opacity: 0;                   /* 처음엔 보이지 않음 */
+  }
+  100% {
+    transform: translateY(0);     /* 원래 위치로 올라옴 */
+    opacity: 1;                   /* 보이게 됨 */
+  }
+}
+.answer-best-container {
+  width: 280px;
+  display: inline-block;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  background-color: #f4f4f4;
+  cursor: pointer;
+  transition: transform 0.3s ease;  /* 호버 시 부드러운 확대 효과 */
+}
+.answer-best-container:hover {
+  transform: scale(1.05); /* 호버 시 살짝 커지는 효과 */
+}
+.answer-best-content {
+  font-size: 16px;
+  font-weight: bold;
+  white-space: nowrap; /* 텍스트가 한 줄로 표시되도록 */
+  overflow: hidden; /* 넘치는 부분은 숨기기 */
+  text-overflow: ellipsis; /* 넘치는 텍스트는 ...으로 표시 */
+  animation: content-slide-up 1s ease-out forwards, content-slide-down 1s ease-out forwards;  /* 애니메이션을 동시에 실행 */
+}
 .footer {
   background-color: #008b62;
   color: white;
@@ -321,18 +377,19 @@ button {
 }
 .category-container {
   display: flex; /* 부모 컨테이너에 flexbox를 사용하여 자식 요소들을 가로로 배치 */
-  align-items: flex-start; /* 세로로 정렬된 자식 요소들 상단 정렬 */
+  flex-direction: column;
+  gap: 10px;
 }
 
 .category-parent {
-  display: flex;         /* category-parent를 세로로 정렬 */
-  flex-direction: column; /* 세로로 정렬되게 설정 */
-  margin-right: 20px;     /* 오른쪽에 여백 추가 */
+  display: flex; /* category-parent를 세로로 정렬 */
+  margin-right: 20px; /* 오른쪽에 여백 추가 */
+  gap: 5px;
 }
 
 .category-child {
-  display: flex;         /* category-child도 세로로 정렬 */
-  flex-direction: column; /* 세로로 정렬되게 설정 */
+  display: flex; /* category-child도 세로로 정렬 */
+  gap: 5px;
 }
 .category-button {
   display: inline-block; /* 버튼을 인라인 블록으로 만들어 좌우로 길게 */
@@ -340,12 +397,14 @@ button {
   border: 2px solid #4caf50; /* 테두리를 추가하여 스타일링 */
   background-color: #fff; /* 배경 색은 흰색 */
   color: #4caf50; /* 텍스트 색상은 상위 카테고리 색과 동일 */
-  font-size: 14px; /* 텍스트 크기 */
+  font-size: 10px; /* 텍스트 크기 */
   font-weight: bold; /* 글씨 굵게 */
   text-align: center; /* 텍스트를 가운데로 정렬 */
   cursor: pointer; /* 마우스 커서가 손 모양으로 변경 */
   transition: all 0.3s ease; /* 버튼 상태 변화 시 부드럽게 전환 */
-  width: 150px;
+  width: 120px;
+  border-radius: 10px;
+  gap: 5px;
 }
 
 .category-button:hover {
@@ -439,7 +498,7 @@ button {
   align-items: center; /* 세로로 가운데 정렬 */
   font-size: 13px;
 }
-.notification-main-btn:hover, 
+.notification-main-btn:hover,
 .notification-main-btn-isread:hover {
   background-color: #adadad; /* 호버 시 배경색 변화 */
 }
@@ -452,11 +511,10 @@ button {
 .answer-accept-img {
   width: 40px;
   height: 40px;
-} 
-
+}
 
 /* Header 스타일 */
-.profile-button{
+.profile-button {
   width: 80px;
   padding: 10px;
   font-family: "nanumsquare";
@@ -512,8 +570,8 @@ button {
   outline: 1px solid gainsboro; /* 회색 외곽선 */
 }
 .small-list {
-  width: 320px; /* 20% 너비 */
-  border-right: 1px solid #ddd;
+  width: 270px; /* 20% 너비 */
+  border-left: 1px solid #ddd;
   padding: 10px;
   background-color: #f9f9f9;
   margin-left: -30px;

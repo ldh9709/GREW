@@ -104,6 +104,9 @@ public interface AnswerRepository extends JpaRepository<Answer, Long>{
            "(COUNT(CASE WHEN v.voteType = 1 THEN 1 END) - " +
            "COUNT(CASE WHEN v.voteType = 2 THEN 1 END)) DESC")
     Page<Answer> searchAnswersByKeyword(@Param("search") String search, Pageable pageable);
+    
+    //질문의 답변
+    Long countByInquiry_InquiryNo(Long inquiryNo);
 
 
 
