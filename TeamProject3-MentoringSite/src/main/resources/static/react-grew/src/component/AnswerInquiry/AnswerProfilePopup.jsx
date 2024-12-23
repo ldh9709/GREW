@@ -11,9 +11,9 @@ useEffect(()=>{
 },[]);
 
 const fetchMember = async()=>{
-    const response = await memberApi.getMemberByMemberNo(mentorProfile.memberNo);
+    const response = await memberApi.getMemberByMemberNo(memberNo);
     console.log(response);
-    setMember(response);
+    setMember(response.data);
 }
 const fetchMentorProfile = async()=>{
     const response = await answerApi.getMentorProfileByMemberNo(memberNo);
@@ -22,9 +22,9 @@ const fetchMentorProfile = async()=>{
 }
   return (
     <div className="popup">
-    <div>{member.memberName}</div>
-    <div>{mentorProfile.memberNo}</div>
-    <div>{mentorProfile.mentorIntroduce}</div>
+    <div>{member.memberName} 멘토</div>
+    <br/>
+    <div>한줄소개 : {mentorProfile.mentorIntroduce}</div>
   </div>
   )
 }

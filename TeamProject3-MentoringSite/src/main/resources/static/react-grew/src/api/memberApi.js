@@ -243,7 +243,7 @@ export const mentorSummary = async (token) => {
 //멤버 넘버로 멤버객체찾기
 export const getMemberByMemberNo = async (memberNo) => {
 
-    const response = await fetch(`${BACKEND_SERVER}/member-info/${memberNo}`,{
+    const response = await fetch(`${BACKEND_SERVER}/member/member-info?memberNo=${memberNo}`,{
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',

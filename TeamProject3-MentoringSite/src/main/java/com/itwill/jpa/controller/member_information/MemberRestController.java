@@ -222,7 +222,7 @@ public class MemberRestController {
 	/* 회원 정보 보기 */
 	@SecurityRequirement(name = "BearerAuth")//API 엔드포인트가 인증을 요구한다는 것을 문서화(Swagger에서 JWT인증을 명시
 	@Operation(summary = "회원 정보 보기")
-	@GetMapping("/member-info/{memberNo}")
+	@GetMapping("/member-info")
 	public ResponseEntity<Response> getMember(@RequestParam(name = "memberNo") Long memberNo) {
 		
 		//번호로 멤버 객체 찾기
