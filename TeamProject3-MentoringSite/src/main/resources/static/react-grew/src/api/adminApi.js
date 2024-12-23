@@ -14,7 +14,7 @@ export const adminMember = async(token,role,order) =>{
   return responseJsonObject;
 }
 
-
+{/*/chatroom/list?page=${page}&size=${size} =->19행수정 필요必要
 export const adminReport = async (token,page,size) => {
    const response = await fetch(`${BACKEND_SERVER}/chatroom/list?page=${page}&size=${size}`, {
       method: 'GET',
@@ -26,7 +26,7 @@ export const adminReport = async (token,page,size) => {
    const responseJsonObject= await response.json();
    return responseJsonObject;
 }
-
+*/} 
 // 관리자 - 신고 목록 조회
 export const getAdminReportList = async (filter, page = 0, size = 10) => {
   try {

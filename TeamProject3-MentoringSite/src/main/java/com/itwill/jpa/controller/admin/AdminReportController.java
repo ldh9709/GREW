@@ -49,7 +49,7 @@ public class AdminReportController {
 
 	/* 신고 출력(전체회원) */
 	@SecurityRequirement(name = "BearerAuth")
-	@PreAuthorize("hasRole('MENTEE')")
+	@PreAuthorize("hasRole('ADMIN')")
 	@Operation(summary = "전체 신고 목록 조회")
 	@GetMapping()
 	public ResponseEntity<Response> getAdminReportList(Authentication authentication,
@@ -82,7 +82,7 @@ public class AdminReportController {
 	
 	/* 신고 상태 변경 (검토중, 완료 등) */
 	@SecurityRequirement(name = "BearerAuth")
-	@PreAuthorize("hasRole('MENTEE')")
+	@PreAuthorize("hasRole('ADMIN')")
 	@Operation(summary = "신고상태 변경")
 	@PutMapping("{reportNo}/status")
 	public ResponseEntity<Response> updateReportStatusForAdmin(
