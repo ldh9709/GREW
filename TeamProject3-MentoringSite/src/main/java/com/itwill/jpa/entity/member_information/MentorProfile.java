@@ -32,24 +32,24 @@ public class MentorProfile {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonBackReference
-    @JoinColumn(name = "member_no", nullable = false)
+    @JoinColumn(name = "member_no")
     private Member member;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonBackReference
-    @JoinColumn(name = "category_no", nullable = false)
+    @JoinColumn(name = "category_no")
     private Category category;
 
-    @Column(name="mentor_career", nullable = false)
+    @Column(name="mentor_career")
     private String mentorCareer;
 
-    @Column(name="mentor_introduce", nullable = false)
+    @Column(name="mentor_introduce")
     private String mentorIntroduce;
 
     @Column(name="mentor_image")
     private String mentorImage;
 
-    @Column(name="mentor_status", nullable = false)
+    @Column(name="mentor_status")
     private Integer mentorStatus;
 
     @Column(name="mentor_rating", precision = 2)

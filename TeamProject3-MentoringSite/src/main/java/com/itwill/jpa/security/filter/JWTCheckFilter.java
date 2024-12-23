@@ -65,6 +65,9 @@ public class JWTCheckFilter extends OncePerRequestFilter {
 		|| path.startsWith("/answer/update") 
 		|| path.startsWith("/answer/view") 
 		|| path.startsWith("/answer/re") 
+		|| path.startsWith("/mentor-profile") 
+		|| path.startsWith("/mentor-board") 
+		
 		//|| path.startsWith("/chat") 
 		
 		|| path.startsWith("/chatroom/rejected")
@@ -83,6 +86,7 @@ public class JWTCheckFilter extends OncePerRequestFilter {
 		|| path.startsWith("/main")
     	|| path.startsWith("/v3/api-docs") 
     	|| path.startsWith("/favicon.ico")
+    	
     	) {
       return true;
     }

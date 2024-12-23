@@ -10,6 +10,17 @@ import MemberLoginFormPage from "./component/Member/MemberLoginFormPage";
 import MemberProfileFormPage  from "./component/Member/MemberProfileFormPage";
 /* 멘토 페이지 임포트 */
 import MentorJoinFormPage from "./component/Member/MentorJoinFormPage";
+import MentorProfileAdd  from "./component/MentorProfile/MentorProfileAdd";
+import MentorProfileList  from "./component/MentorProfile/MentorProfileList";
+import MentorProfileDetail from "./component/MentorProfile/MentorProfileDetail";
+import MentorSearchList from "./component/MentorProfile/MentorSearchList"; // 🔥 정확한 경로로 추가
+
+import MentorBoardCreat from "./component/MentorBoard/MentorBoardCreat"; 
+import MentorBoardFind from "./component/MentorBoard/MentorBoardFind"; 
+import MentorBoardList from "./component/MentorBoard/MentorBoardList"; 
+import MentorBoardUpdate from "./component/MentorBoard/MentorBoardUpdate"; 
+import MentorBoardDetail from './component/MentorBoard/MentorBoardDetail';
+
 
 import InquiryWriteFormpage from "./component/AnswerInquiry/InqiuryWriteFormPage";
 import InquiryModifyFormpage from "./component/AnswerInquiry/InquiryModifyFormPage";
@@ -65,6 +76,21 @@ function App() {
               path="/member/profile/edit"
               element={<MemberProfileFormPage />}
             />
+            {/*멘토프로필페이지*/}
+            <Route path="/mentorprofile/list" element={<MentorProfileList/>}/>
+            <Route path="/mentorprofile/add" element={<MentorProfileAdd/>}/>
+            <Route path="/mentorprofile/detail/:mentorProfileNo" element={<MentorProfileDetail/>}/>
+            <Route path="/mentorprofile/detail" element={<MentorProfileDetail/>}/>
+            <Route path="/mentorprofile/search" element={<MentorSearchList/>} />
+            <Route path="/mentor-profile/:mentorProfileNo" element={<MentorProfileDetail/>} />
+            {/*멘토보드드페이지*/}
+            <Route path="/mentorboard/creat" element={<MentorBoardCreat/>} />
+            <Route path="/mentorboard/find" element={<MentorBoardFind/>} />
+            <Route path="/mentorboard/list" element={<MentorBoardList/>} />
+            <Route path="/mentorboard/update" element={<MentorBoardUpdate/>} />
+            <Route path="/mentorboard/detail" element={<MentorBoardDetail/>}/>
+            <Route path="/mentor-board/detail/:mentorBoardNo" element={<MentorBoardDetail />} />
+
 
             <Route
               path="/review/reviewWrite"

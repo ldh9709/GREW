@@ -33,6 +33,32 @@ public class MentorBoardController {
     @Autowired
     private AlarmService alarmService;
     
+    
+    
+    
+    @Operation(summary = "멘토 보드 리스트")
+    @GetMapping("/sorted/{status}")
+    public ResponseEntity<Response> getMentorBoardList(
+            @PathVariable(name = "status") int status, // 경로 변수로 변경
+            @RequestParam(name = "page", defaultValue = "0") int page,
+            @RequestParam(name = "size", defaultValue = "10") int size
+    ) {
+        Page<MentorBoardDto> mentorBoards = mentorBoardService.getMentorBoardsSortedByDate(status, page, size);
+
+        Response response = new Response();
+        response.setStatus(ResponseStatusCode.READ_MEMBER_LIST_SUCCESS);
+        response.setMessage(ResponseMessage.READ_MEMBER_LIST_SUCCESS);
+        response.setData(mentorBoards);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(new MediaType(MediaType.APPLICATION_JSON, Charset.forName("UTF-8")));
+
+        return ResponseEntity.ok().headers(headers).body(response);
+    }
+
+    
+    
+    
     /* 멘토 보드 등록 */
     @Operation(summary = "멘토 보드 등록")
     @PostMapping
@@ -192,7 +218,7 @@ public class MentorBoardController {
     
     /* 날짜 기준 정렬 페이징 */
     @Operation(summary = "멘토 보드 날짜 기준 페이징")
-    @GetMapping("/sorted/date")
+    @GetMapping("/sorted/date/other")
     public ResponseEntity<Response> getMentorBoardsSortedByDate(
             @RequestParam(name = "page", defaultValue = "0") int page,
             @RequestParam(name = "size", defaultValue = "10") int size
@@ -238,12 +264,29 @@ public class MentorBoardController {
     
  // **이미지 업로드 엔드포인트**
     @PostMapping("/{mentorBoardNo}/upload-image")
-    public ResponseEntity<String> uploadImage( @PathVariable("mentorBoardNo") Long mentorBoardNo, @RequestParam("file") MultipartFile file) {
+    public ResponseEntity<Response> uploadImage(
+        @PathVariable("mentorBoardNo") Long mentorBoardNo, 
+        @RequestParam("file") MultipartFile file) {
         try {
-            mentorBoardService.uploadImage(mentorBoardNo, file);
-            return ResponseEntity.ok("이미지 업로드 성공");
+            // 📢 서비스 호출 후, 이미지 URL 받기
+            String imageUrl = mentorBoardService.uploadImage(mentorBoardNo, file);
+            
+            // 📢 클라이언트에 반환할 응답 생성
+            Response response = new Response();
+            response.setStatus(ResponseStatusCode.IMAGE_UPLOAD_SUCCESS);
+            response.setMessage(ResponseMessage.IMAGE_UPLOAD_SUCCESS);
+            response.setData(imageUrl); // **업로드된 이미지 URL 반환**
+            
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(new MediaType(MediaType.APPLICATION_JSON, Charset.forName("UTF-8")));
+
+            return new ResponseEntity<>(response, headers, HttpStatus.OK);
         } catch (Exception e) {
-            return ResponseEntity.status(500).body("이미지 업로드 실패: " + e.getMessage());
+            Response response = new Response();
+            response.setStatus(ResponseStatusCode.IMAGE_UPLOAD_FAIL);
+            response.setMessage("이미지 업로드 실패: " + e.getMessage());
+
+            return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -264,18 +307,4 @@ public class MentorBoardController {
     
     
     
-    
-
-//    @Operation(summary = "이미지 업로드")
-//    @PostMapping("/{mentorBoardNo}/upload-image")
-//    public String uploadMentorBoardImage(
-//            @PathVariable("mentorBoardNo") Long mentorBoardNo,
-//            @RequestParam("file") MultipartFile file) {
-//        try {
-//            mentorBoardService.updateMentorBoardImage(mentorBoardNo, file);
-//            return "이미지 업로드 성공";
-//        } catch (Exception e) {
-//            return "이미지 업로드 실패: " + e.getMessage();
-//        }
-//    }
-//    
+   
