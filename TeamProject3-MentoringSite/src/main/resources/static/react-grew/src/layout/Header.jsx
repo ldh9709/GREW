@@ -14,13 +14,17 @@ export default function HeaderMenu() {
   const token = memberCookie ? memberCookie.accessToken : null; // 안전하게 접근
   console.log("토큰 : ", token);
 
-  const DecodeToken = jwtDecode(token);
-  console.log("Decode 토큰 : ", DecodeToken);
+  const DecodeToken = token ? jwtDecode(token) : null; // 안전한 접근
+  if (!DecodeToken) {
+    console.error("Decode토큰이 Null입니다.(Token이 널이라 디코딩이 불가하다는 뜻)");
+  } else {
+    console.log("Decode 토큰 : ", DecodeToken);
+  }
 
-  const memberNo = DecodeToken.memberNo;
+  const memberNo = DecodeToken ? DecodeToken.memberNo : null;
   console.log("멤버 넘버 : ", memberNo);
 
-  const mentorProfileNo = DecodeToken.mentorProfileNo;
+  const mentorProfileNo = DecodeToken ? DecodeToken.mentorProfileNo : null;
   console.log("멘토 프로필 넘버 : ", mentorProfileNo);
 
   
@@ -49,7 +53,6 @@ export default function HeaderMenu() {
   // 프로필 페이지로 이동
   const handleProfileNavigate = async () => {
     try {
-      
       const memberProfileResponse = await memberProfile(token);
       console.log("멤버 프로필 : ", memberProfileResponse);
 
