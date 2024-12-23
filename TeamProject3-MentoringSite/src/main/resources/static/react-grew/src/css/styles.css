@@ -43,13 +43,13 @@ div#content {
   margin: 0 0 0 0px;
 }
 button:hover {
-  background-color: #0056b3; /* 버튼 호버 시 색상 변경 */
+  background-color: #006618; /* 버튼 호버 시 색상 변경 */
 }
 button {
   padding: 5px 10px; /* 버튼 내부 여백 */
   border: none;
   cursor: pointer;
-  background-color: #007bff;
+  background-color: #28a745;
   color: white;
 }
 .radio-container {
@@ -65,29 +65,64 @@ button {
   margin-top: 30px; /*위에 컨텐츠와의 거리*/
   gap: 5px; /*버튼간거리*/
 }
-
+#wrapper, #content{
+  margin-top: 120px;
+}
 /* 로그인 버튼 바 */
 .header{
+  position: fixed;
+  right: 19%;
+  height: 30px; line-height: 30px;
+  background-color: #fff;
   padding: 10px 0px 0px 0px!important;
+  z-index: 1000;
 }
 /*상단 메뉴바*/
 .navbar-collapse {
+  position: fixed;
+  left: 0px; right: 0px;
   height: 50px;
   line-height: 50px;
   align-items: center;
+  background-color: #fff;
+  border-bottom: 1px solid #ccc;
+  padding-top: 40px;
+  padding-bottom: 15px;
+  z-index: 999;
+}
+
+.logo{
+  margin-left: 20%;
+}
+
+/* 상단 바, 로그인 바 반응형 디자인 */
+@media (max-width: 1500px) {
+  .header{
+    right: 25px;
+  }
+  .logo {
+    margin-left: 10px;
+  }
+  .search-container {
+    margin-left: 0px;
+  }
 }
 .answer-container {
+  display: flex;
+  flex-direction: column;
   border: 1px solid #ccc; /* 테두리 설정 */
   padding: 30px; /* 내부 여백 */
   margin: 10px 0; /* 상하 마진 */
   background-color: #ffffff; /* 배경색 */
   width: 1080px; /*너비*/
-  justify-content: center;
   margin-left: 10px;
 }
 
 .answer-member {
   font-weight: bold; /* 이름을 강조 */
+  align-self: flex-start; /* member는 그 아래에 위치 */
+  margin-top: 10px;
+
 }
 
 .answer-content {
@@ -112,6 +147,17 @@ button {
   margin-top: 10px; /* 위쪽 여백 */
   font-size: 15px;
 }
+.modify-delete-btn{
+  display: flex;
+  justify-content: right;
+  gap:10px;
+}
+.modify-delete-btn2{
+  height: 30px;
+  display: flex;
+  justify-content: right;
+  gap:10px;
+}
 .inquiry-list-main {
   display: flex;
   justify-content: space-between; /* 양쪽 끝으로 배치 */
@@ -122,20 +168,21 @@ button {
   display: flex;
   font-size: 22px;
   font-weight: bold;
-  margin-bottom: 30px;
+  margin-bottom: 0px;
 }
 .inquiry-list-sort {
   flex: 3; /* 문의 목록 테이블이 더 넓게 차지 */
   padding: 10px;
 }
 .inquiry-container {
+  
   position: relative;
   border-top: 2px solid #ccc; /* 테두리 설정 */
   border-bottom: 2px solid #ccc; /* 테두리 설정 */
   padding: 10px; /* 내부 여백 */
   background-color: #ffffff; /* 배경색 */
   width: 700px; /*너비*/
-  height: 130px;
+  height: 160px;
   padding: 30px; /* 내부 여백 */
   display: block;
   justify-content: right;
@@ -147,11 +194,12 @@ button {
   padding: 10px; /* 내부 여백 */
   background-color: #ffffff; /* 배경색 */
   width: 1080px; /*너비*/
-  height: 160px;
+  height: 180px;
   padding: 30px; /* 내부 여백 */
-  display: block;
+  display: flex;
   margin-bottom: 3px;
   margin-top: 10px;
+  flex-direction: column;
 }
 .inquiry-container:hover .inquiry-content,
 .inquiry-container:hover .inquiry-desc {
@@ -232,8 +280,18 @@ button {
   text-overflow: ellipsis; /* 넘치는 텍스트는 ...으로 표시 */
   animation: content-slide-up 1s ease-out forwards, content-slide-down 1s ease-out forwards;  /* 애니메이션을 동시에 실행 */
 }
+.inquiry-report-btn-div{
+  display: flex;
+  justify-content: right;
+}
+.answer-report-btn,
+.inquiry-report-btn{
+  margin-top: 5px;
+  display: flex;
+  justify-content: right;
+}
 .footer {
-  background-color: #008b62;
+  background-color: #28a745;
   color: white;
   padding: 20px 0;
   text-align: center;
@@ -284,7 +342,7 @@ button {
 .btn-inquiry-write {
   display: inline-block; /* 인라인 블록으로 설정하여 버튼처럼 보이게 */
   padding: 10px 20px; /* 버튼 내부 여백 */
-  background-color: #12b12d; /* 버튼 배경색 */
+  background-color: #28a745; /* 버튼 배경색 */
   color: white; /* 글자 색 */
   text-align: center; /* 텍스트 중앙 정렬 */
   text-decoration: none; /* 링크 기본 스타일 제거 */
@@ -293,12 +351,12 @@ button {
 }
 /* 마우스 올렸을 때 배경색 변경 */
 .btn-inquiry-write:hover {
-  background-color: #0056b3; /* 마우스 올렸을 때 배경색 */
+  background-color: #006618; /* 마우스 올렸을 때 배경색 */
 }
 
 /* 클릭 시 효과 */
 .btn-inquiry-write.button:active {
-  background-color: #004085; /* 클릭 시 배경색 */
+  background-color: #006618; /* 클릭 시 배경색 */
 }
 .btn-inquiry-write-div {
   display: flex;
@@ -341,7 +399,7 @@ button {
 
 /* 버튼 스타일 */
 .inquiry-form input[type="button"] {
-  background-color: #018f37; /* 파란색 배경 */
+  background-color: #28a745; /* 파란색 배경 */
   color: white; /* 흰색 글자 */
   padding: 12px 20px; /* 버튼 패딩 */
   font-size: 16px; /* 글자 크기 */
@@ -364,7 +422,7 @@ button {
 }
 /* 버튼에 마우스를 올리면 배경색 변화 */
 .inquiry-form input[type="button"]:hover {
-  background-color: #0056b3; /* 버튼 위에 마우스를 올리면 어두운 파란색 */
+  background-color: #006618; /* 버튼 위에 마우스를 올리면 어두운 파란색 */
 }
 .inquiry-write-btn {
   display: flex;
@@ -378,7 +436,7 @@ button {
 .answer-notify-btn {
   display: flex; /* 인라인 블록으로 설정하여 버튼처럼 보이게 */
   padding: 10px 20px; /* 버튼 내부 여백 */
-  background-color: #12b12d; /* 버튼 배경색 */
+  background-color: #28a745; /* 버튼 배경색 */
   color: white; /* 글자 색 */
   text-align: center; /* 텍스트 중앙 정렬 */
   font-size: 16px; /* 폰트 크기 */
@@ -404,9 +462,9 @@ button {
 .category-button {
   display: inline-block; /* 버튼을 인라인 블록으로 만들어 좌우로 길게 */
   padding: 8px 15px; /* 상하 여백은 12px, 좌우 여백은 30px로 설정하여 길이를 조절 */
-  border: 2px solid #4caf50; /* 테두리를 추가하여 스타일링 */
+  border: 2px solid #28a745; /* 테두리를 추가하여 스타일링 */
   background-color: #fff; /* 배경 색은 흰색 */
-  color: #4caf50; /* 텍스트 색상은 상위 카테고리 색과 동일 */
+  color: #28a745; /* 텍스트 색상은 상위 카테고리 색과 동일 */
   font-size: 10px; /* 텍스트 크기 */
   font-weight: bold; /* 글씨 굵게 */
   text-align: center; /* 텍스트를 가운데로 정렬 */
@@ -418,7 +476,7 @@ button {
 }
 
 .category-button:hover {
-  background-color: #4caf50; /* 호버 시 배경색을 상위 카테고리 색상으로 변경 */
+  background-color: #28a745; /* 호버 시 배경색을 상위 카테고리 색상으로 변경 */
   color: white; /* 텍스트 색상 변경 */
 }
 /* 검색창 컨테이너 */
@@ -426,7 +484,7 @@ button {
   display: flex;
   justify-content: right;
   height: 40px;
-  margin: auto 0 auto 130px;
+  margin: auto 0 auto 140px;
 }
 
 /* 검색창 입력 필드 */
@@ -441,17 +499,17 @@ button {
 }
 
 .search-input:focus {
-  border-color: #4caf50;
+  border-color: #28a745;
 }
 .search-button {
   width: 50px;
   height: 40px;
-  background-color: #888888;
+  background-color: #28a745;
   border-radius: 10px;
   margin-top: 13px;
 }
 .search-button:hover{
-  background-color: #757575;
+  background-color: #006618;
 }
 .view-more {
   display: flex;
@@ -482,6 +540,7 @@ button {
   border-color: #ff0000; /* 테두리 색을 빨간색으로 변경 */
 }
 .notification-header {
+  display: flex;
   padding: 10px;
   background-color: #007bff;
   color: white;
@@ -517,6 +576,21 @@ button {
 }
 .notification-icon {
   font-size: 18px;
+}
+.all-delete-btn-div{
+  display: flex;
+  justify-content: right;
+}
+.notification-all-delete-btn{
+  border-radius: 10px;
+  font-weight: bold;
+  color: #000000;
+  background-color: #ffffff;
+}
+.notification-all-delete-btn:hover{
+  border-radius: 10px;
+  text-decoration: underline;
+  background-color: #ffffff;
 }
 .answer-accept-status {
   font-size: 25px;
@@ -594,4 +668,17 @@ button {
   padding: 10px;
   background-color: #f9f9f9;
   margin-left: -30px;
+}
+.popup {
+  position: absolute;
+  height: 150px;
+  width: 300px;
+  padding: 10px;
+  background-color: #f0f0f0;
+  border: 1px solid #ccc;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  z-index: 10;
+  opacity: 1;
+  margin-left: 60px;
+  transition: opacity 0.3s ease;
 }

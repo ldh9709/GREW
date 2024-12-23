@@ -97,76 +97,89 @@ function InquiryView() {
   for (let i = startPage; i <= endPage; i++) {
     pageNumbers.push(i);
   }
-  const handleWriteButton = ()=>{
-    console.log(memberCookie)
-    if(memberCookie){
+  const handleWriteButton = () => {
+    console.log(memberCookie);
+    if (memberCookie) {
       navigate(`/answer/answerWrite/${inquiryNo}`);
-    }else{
-      alert('로그인이 필요한 서비스입니다.');
+    } else {
+      alert("로그인이 필요한 서비스입니다.");
       return;
     }
-  }
+  };
+  const handleModify = () => {
+    navigate(`/inquiry/modify/${inquiryNo}`);
+  };
   return (
     <>
-      <link
-        href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap"
-        rel="stylesheet"
-      ></link>
       <div style={{ paddingLeft: 10 }}>
-          <input type="hidden" name="inquiryNo" value={inquiry.inquiryNo} />
+        <input type="hidden" name="inquiryNo" value={inquiry.inquiryNo} />
 
-          {/* 카테고리에 맞는 멘토만 보이는조건 */}
-            <div className="answer-write">
-                <button className="answer-notify-btn" onClick={handleWriteButton}>
-                  <img
-                    src="https://img.icons8.com/?size=100&id=P1bJzKUoOQYz&format=png&color=000000"
-                    style={{
-                      width: "20px",
-                      height: "20px",
-                      marginRight: "5px",
-                      marginLeft: "-5px",
-                      marginBottom: "-3px",
-                    }}
-                  />
-                  답변하기
-                </button>
-            </div>
-          {/* 카테고리에 맞는 멘토만 보이는조건 */}
-          <div className="inquiry-container-inview">
-            <div>
-              <div className="inquiry-title">{inquiry.inquiryTitle}</div>
-            </div>
-            <div className="inquiry-desc">
-              <div>{inquiry.categoryName}</div>
-              <div>
-                {inquiry.memberName} | 조회수 {inquiry.inquiryViews} |{" "}
-                {inquiry.inquiryDate.substring(0, 10)}
-              </div>
-            </div>
-            <div className="inquiry-content">
-              <div>{inquiry.inquiryContent}</div>
-            </div>
-
-            <br />
-            {memberCookie!=null&&memberCookie.memberNo == inquiry.memberNo ? (
-              <div>
-                <Link to={`/inquiry/modify/${inquiryNo}`}>
-                  <button>수정</button>
-                </Link>
-
-                <button
-                  onClick={(e) => {
-                    e.preventDefault(); // 폼 제출 방지
-                    inquiryRemoveAction(); // 삭제 액션 실행
-                  }}
-                >
-                  삭제
-                </button>
-              </div>
-            ) : (
-              <div></div>
-            )}
+        {/* 카테고리에 맞는 멘토만 보이는조건 */}
+        <div className="answer-write">
+          <button className="answer-notify-btn" onClick={handleWriteButton}>
+            <img
+              src="https://img.icons8.com/?size=100&id=P1bJzKUoOQYz&format=png&color=000000"
+              style={{
+                width: "20px",
+                height: "20px",
+                marginRight: "5px",
+                marginLeft: "-5px",
+                marginBottom: "-3px",
+              }}
+            />
+            답변하기
+          </button>
+        </div>
+        {/* 카테고리에 맞는 멘토만 보이는조건 */}
+        <div className="inquiry-container-inview">
+          <div>
+            <div className="inquiry-title">{inquiry.inquiryTitle}</div>
           </div>
+          <div className="inquiry-desc">
+            {/* 신고하기버튼 */}
+            {/* 신고하기버튼 */}
+            {/* 신고하기버튼 */}
+            {/* 신고하기버튼 */}
+            {/* 신고하기버튼 */}
+            {/* 신고하기버튼 */}
+            <div className="inquiry-report-btn-div">
+            <button className="inquiry-report-btn">신고하기</button>
+            </div>
+            {/* 신고하기버튼 */}
+            {/* 신고하기버튼 */}
+            {/* 신고하기버튼 */}
+            {/* 신고하기버튼 */}
+            {/* 신고하기버튼 */}
+            {/* 신고하기버튼 */}
+            {/* 신고하기버튼 */}
+
+            <div>{inquiry.categoryName}</div>
+            <div>
+              {inquiry.memberName} | 조회수 {inquiry.inquiryViews} |{" "}
+              {inquiry.inquiryDate.substring(0, 10)}
+            </div>
+          </div>
+          <div className="inquiry-content">
+            <div>{inquiry.inquiryContent}</div>
+          </div>
+
+          {memberCookie != null && memberCookie.memberNo == inquiry.memberNo ? (
+            <div className="modify-delete-btn2">
+              <button onClick={handleModify}>수정</button>
+
+              <button
+                onClick={(e) => {
+                  e.preventDefault(); // 폼 제출 방지
+                  inquiryRemoveAction(); // 삭제 액션 실행
+                }}
+              >
+                삭제
+              </button>
+            </div>
+          ) : (
+            <div></div>
+          )}
+        </div>
       </div>
       <div style={{ marginTop: "20px" }}>
         <div className="radio-container">
@@ -215,7 +228,7 @@ function InquiryView() {
             key={number}
             onClick={() => paginate(number)}
             style={{
-              backgroundColor: number === currentPage ? "#4CAF50" : "",
+              backgroundColor: number === currentPage ? "#006618" : "",
               color: number === currentPage ? "white" : "",
             }}
           >

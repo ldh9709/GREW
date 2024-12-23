@@ -1,11 +1,11 @@
-
-const BACKEND_SERVER = ''; // 🛠️ 서버 주소를 지정하세요
+// 기본 URL 설정
+const BACKEND_SERVER = "";
 const BASE_URL = '/mentor-board';
 
 //특정 멘토 컨텐츠 리스트 조회
 export const listBoardContentsByMemberNo = async(token,page,size) => {
     
-    const response = await fetch(`${BACKEND_SERVER}/mentor-board/list/member?page=${page}&size=${size}`,{
+    const response = await fetch(`${BACKEND_SERVER}${BASE_URL}/list/member?page=${page}&size=${size}`,{
         method:'GET',
         headers: {
             'Content-Type': 'application/json',
@@ -30,6 +30,63 @@ export const listMentorBoardsByStatus = async (status, page = 0, size = 10) => {
   return responseJsonObject;
 };
 
+// 새로운 멘토 보드를 생성합니다.
+export const createMentorBoard = async (data) => {
+    const response = await fetch(`${BACKEND_SERVER}${BASE_URL}`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data), // JSON 형식으로 전송
+    });
+    if (!response.ok) {
+        const errorData = await response.json();  // 서버에서 보내는 에러 메시지 출력
+        throw new Error(`Failed to create mentor board: ${JSON.stringify(errorData)}`);
+    }
+    return response.json();
+};
+
+
+// 멘토 보드에 이미지를 업로드합니다.
+export const uploadMentorBoardImage = async (id, formData) => {
+ 
+    const response = await fetch(`${BACKEND_SERVER}${BASE_URL}/${id}/upload-image`, {
+        method: 'POST',
+        body: formData, // `Content-Type` 헤더는 자동으로 설정되므로, 별도로 설정하지 않습니다.
+    });
+    
+    if (!response.ok) {
+        const errorData = await response.text(); // 서버 에러 메시지 읽기
+        console.error('업로드 실패:', errorData); // 디버깅
+        throw new Error('Failed to upload mentor board image');
+    }
+    
+    // 응답을 JSON으로 처리
+    const data = await response.json();  // 응답을 JSON으로 파싱
+
+    return data;  // 서버에서 반환한 JSON 객체를 그대로 반환
+};
+
+
+// 멘토 보드 수정
+export const updateMentorBoard = async (id, data) => {
+    const response = await fetch(`${BACKEND_SERVER}${BASE_URL}/${id}`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data), // JSON 형식으로 전송
+    });
+
+    if (!response.ok) {
+        const errorData = await response.json();  // 서버에서 보내는 에러 메시지 출력
+        throw new Error(`Failed to update mentor board: ${JSON.stringify(errorData)}`);
+    }
+    
+    return response.json();  // 수정된 멘토 보드 데이터 반환
+};
+
+
 /**
  * 🔥 멘토 보드 조회수 기준으로 정렬된 리스트를 가져옵니다.
  * @param {number} page - 페이지 번호
@@ -49,7 +106,7 @@ export const listMentorBoardsByViews = async (page = 0, size = 10) => {
  * @returns {Promise} - 멘토 보드 데이터를 포함하는 프로미스
  */
 export const getMentorBoardDetail = async (mentorBoardNo) => {
-  const response = await fetch(`/mentor-board/${mentorBoardNo}`);
+  const response = await fetch(`${BACKEND_SERVER}${BASE_URL}/${mentorBoardNo}`);
   if (!response.ok) {
     throw new Error('API 호출 실패');
   }
@@ -57,36 +114,6 @@ export const getMentorBoardDetail = async (mentorBoardNo) => {
 };
 
 
-/**
- * 🔥 새로운 멘토 보드를 생성합니다.
- * @param {object} mentorBoardDto - 멘토 보드 데이터
- * @returns {Promise} - 생성 성공 메시지를 포함하는 프로미스
- */
-export const createMentorBoard = async (mentorBoardDto) => {
-  const response = await fetch(`${BACKEND_SERVER}${BASE_URL}`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json;charset=UTF-8' },
-    body: JSON.stringify(mentorBoardDto),
-  });
-  const responseJsonObject = await response.json();
-  return responseJsonObject;
-};
-
-/**
- * 🔥 멘토 보드를 수정합니다.
- * @param {number} mentorBoardNo - 멘토 보드 번호
- * @param {object} mentorBoardDto - 수정할 데이터
- * @returns {Promise} - 수정 성공 메시지를 포함하는 프로미스
- */
-export const updateMentorBoard = async (mentorBoardNo, mentorBoardDto) => {
-  const response = await fetch(`${BACKEND_SERVER}${BASE_URL}/${mentorBoardNo}`, {
-    method: 'PUT',
-    headers: { 'Content-Type': 'application/json;charset=UTF-8' },
-    body: JSON.stringify(mentorBoardDto),
-  });
-  const responseJsonObject = await response.json();
-  return responseJsonObject;
-};
 
 /**
  * 🔥 멘토 보드를 삭제(상태 변경)합니다.
@@ -133,20 +160,3 @@ export const getMentorBoardImageUrl = async (mentorBoardNo) => {
   const responseJsonObject = await response.json();
   return responseJsonObject;
 };
-
-/**
- * 🔥 멘토 보드 이미지를 업로드합니다.
- * @param {number} mentorBoardNo - 멘토 보드 번호
- * @param {File} file - 업로드할 이미지 파일
- * @returns {Promise} - 업로드 성공 메시지를 포함하는 프로미스
- */
-export const uploadMentorBoardImage = async (mentorBoardNo, file) => {
-  const formData = new FormData();
-  formData.append('file', file);
-  const response = await fetch(`${BACKEND_SERVER}${BASE_URL}/${mentorBoardNo}/upload-image`, {
-    method: 'POST',
-    body: formData,
-  });
-  return await response.text();
-};
-

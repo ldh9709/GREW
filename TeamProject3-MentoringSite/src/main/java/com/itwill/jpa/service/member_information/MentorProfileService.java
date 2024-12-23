@@ -102,4 +102,7 @@ public interface MentorProfileService {
     Page<MentorProfileDto> getMentorsByMentoringCount(int page, int size);
     Page<MentorProfileDto> getMentorsByActivityCount(int page, int size);
 
+    //멤버 넘버로 멘토프로필 찾기
+    MentorProfileDto getMentorByMemberNo(Long memberNo);
 }
+

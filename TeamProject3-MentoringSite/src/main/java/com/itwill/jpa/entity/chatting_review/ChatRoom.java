@@ -17,6 +17,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.OrderBy;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
@@ -64,6 +65,7 @@ public class ChatRoom {
     private List<Review> reviews = new ArrayList<Review>();
     
     @OneToMany(mappedBy = "chatRoom", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
+    @OrderBy("chatMessageNo ASC")
     private List<ChatMessage> chatMessages= new ArrayList<ChatMessage>();
 	
     /* 초기값 설정 */
