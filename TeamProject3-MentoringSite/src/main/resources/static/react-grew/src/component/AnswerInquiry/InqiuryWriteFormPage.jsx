@@ -94,7 +94,7 @@ export default function InqiuryWriteFormPage() {
     }
     const responseJsonObject = await inquiryApi.writeInquiry(inquiry, token);
     console.log(token);
-    console.log(inquiry.inquiryNo)
+    console.log(responseJsonObject);
     navigate(`/inquiry/${responseJsonObject.data.inquiryNo}`);
   };
   return (
