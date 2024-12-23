@@ -12,27 +12,30 @@ const MentorJoinForm = () => {
   //onst memberNo = memberCookie.memberNo;
 
   const [mentor, setMentor] = useState({
-    mentorCategory: "",
-    mentorIntroduct: "",
+    categoryNo: "",
+    mentorIntroduce: "",
     mentorCareer: "",
     mentorImage: ""
   });
 
 //입력 업데이트 핸들러
 const handleChangeMentorJoinForm = (e) => {
-  setMentor({
-    ...setMentor,
-    [e.target.name]: e.target.value
-  });
+  setMentor((prevMentor) => ({
+    ...prevMentor, // 이전 상태를 펼치고
+    [e.target.name]: e.target.value // 업데이트하려는 필드만 덮어씌움
+  }));
+  console.log(e.target.value);
 }  
   
 const mentorProfileCreateAction = async () => {
+  console.log("멘토 정보 : ", mentor);
   const responseJsonObject = await memberApi.mentorProfileCreateAction(1, mentor);
+  console.log("서버 응답: ", responseJsonObject);
   switch (responseJsonObject.status) {
-    //case responseStatus.CREATED_MENTOR_PROFILE_SUCCESS_CODE:
-    //alert("멘토 가입 성공");  
-    //navigate('/main');
-    //break;
+    case responseStatus.CREATED_MENTOR_PROFILE_SUCCESS_CODE:
+    alert("멘토 가입 성공");  
+    navigate('/main');
+    break;
 
     default:
     alert("가입 실패");
@@ -52,8 +55,8 @@ const mentorProfileCreateAction = async () => {
         <div className="form-group-profile horizontal-field">
         <label htmlFor="introduction">전문 분야</label>
 
-          <select id="field" name="field" 
-          value={mentor.mentorCategory} 
+          <select id="categoryNo" name="categoryNo" 
+          value={mentor.categoryNo} 
           onChange={handleChangeMentorJoinForm} required>
             <option value="">-- 선택하세요 --</option>
             <option value="2">인사/총무/노무</option>
@@ -82,11 +85,11 @@ const mentorProfileCreateAction = async () => {
         <div className="form-group-profile horizontal">
           <label htmlFor="introduction">소개글</label>
             <textarea
-              id="introduction"
-              name="introduction"
+              id="mentorIntroduce"
+              name="mentorIntroduce"
               placeholder="자신을 소개해주세요."
               rows="3"
-              value={mentor.mentorIntroduct}
+              value={mentor.mentorIntroduce}
               onChange={handleChangeMentorJoinForm}
               required
             ></textarea>
@@ -111,8 +114,8 @@ const mentorProfileCreateAction = async () => {
         <div className="form-group-profile horizontal">
         <label htmlFor="introduction">경력</label>
           <textarea
-            id="experience"
-            name="experience"
+            id="mentorCareer"
+            name="mentorCareer"
             placeholder="경력을 입력하세요."
             rows="3"
             value={mentor.mentorCareer}
