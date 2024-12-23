@@ -8,6 +8,7 @@ AXIOS/login                                 :로그인
 POST /logout                                :로그아웃
 PUT  /member/{memberNo}                     :회원 정보 수정
 PUT  /member/{memberNo}/status/{statusNo}   :회원 상태 변경
+PUT  /member/update-role/{role}             :회원 권한 변경
 GET  /member                                :회원 전체 조회
 GET  /member/{memberNo}                     :특정 회원 조회
 GET  /member/mentee-summary/{memberNo}      :멘티 회원 활동정보 요약 조회
@@ -45,21 +46,6 @@ export const loginAction = async (sendJsonObject) => {
 
     return response.data;
 }
-
-/* // SNS 로그인 후 사용자 정보 가져오기
-export const getUserInfo = async () => {
-
-        const response = await fetch(`${BACKEND_SERVER}/oauth2/user`, {
-            method: "GET",
-            credentials: "include", // 쿠키 포함
-            headers: { 
-                "Content-Type": "application/json" 
-            },
-        });
-    
-    return response;
-}; */
-
 //로그아웃
 export const logout = async (token) => {
     const response = await fetch(`${BACKEND_SERVER}/logout`, {
@@ -160,7 +146,19 @@ export const updateAction = async (sendJsonObject) => {
       return resultJsonObject;
     
 }
-//회원 상태 변경
+//회원 권한 변경
+export const updateMemberRole = async(token,role) => {
+    const response = await fetch(`${BACKEND_SERVER}/member/update-role/${role}`,{
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+        },
+    })
+
+    const responseJsonObject = await response.json();
+    return responseJsonObject;
+}
 
 //회원 전체 조회
 
@@ -237,6 +235,18 @@ export const mentorSummary = async (token) => {
         headers: {
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${token}` // Authorization 헤더에 JWT 토큰 추가
+          },
+    });
+    const responseJsonObject = await response.json();
+    return responseJsonObject;
+}
+//멤버 넘버로 멤버객체찾기
+export const getMemberByMemberNo = async (memberNo) => {
+
+    const response = await fetch(`${BACKEND_SERVER}/member/member-info?memberNo=${memberNo}`,{
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
           },
     });
     const responseJsonObject = await response.json();

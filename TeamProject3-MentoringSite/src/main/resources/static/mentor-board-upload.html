@@ -47,6 +47,10 @@
     <label for="file">이미지 파일 선택:</label>
     <input type="file" id="file" name="file" accept="image/*" required>
     
+    <!-- 업로드할 이미지 미리보기 -->
+    <h3>업로드할 이미지 미리보기</h3>
+    <img id="upload-preview" src="" alt="이미지 미리보기" style="display: none;">
+
     <button type="submit">이미지 업로드</button>
 </form>
 
@@ -65,6 +69,21 @@
 <img id="fetched-image" src="" alt="이미지를 가져오면 여기에 표시됩니다." style="display: none;">
 
 <script>
+    // **파일 선택 후 업로드 미리보기**
+    document.getElementById('file').addEventListener('change', function(event) {
+        const file = event.target.files[0];
+        if (!file) return;
+
+        // **이미지를 읽어 미리보기로 표시**
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            const preview = document.getElementById('upload-preview');
+            preview.src = e.target.result; // 미리보기 이미지 설정
+            preview.style.display = 'block'; // 이미지 표시
+        };
+        reader.readAsDataURL(file); // 이미지 파일 읽기
+    });
+
     // 📤 이미지 업로드 로직
     document.getElementById('upload-form').addEventListener('submit', function(event) {
         event.preventDefault();

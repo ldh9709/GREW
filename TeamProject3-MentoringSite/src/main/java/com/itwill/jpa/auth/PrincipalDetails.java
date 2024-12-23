@@ -74,6 +74,10 @@ public class PrincipalDetails implements UserDetails, OAuth2User {
 	public String getRole() {
 		return member.getMemberRole().toString();
 	}
+	
+	public Long getmentorProfileNo() {
+		return member.getMentorProfileNo();
+	}
 	@Override
 	public String getName() {
 		return member.getMemberName();
@@ -142,6 +146,7 @@ public class PrincipalDetails implements UserDetails, OAuth2User {
 		dataMap.put("memberRole", member.getMemberRole());
 		dataMap.put("memberStatus", member.getMemberStatus());
 		dataMap.put("memberProvider", member.getMemberProvider());
+		dataMap.put("mentorProfileNo", member.getMentorProfileNo());
 		
 		return dataMap;
 		

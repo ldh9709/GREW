@@ -16,6 +16,7 @@ public class ResponseStatusCode {
     public static final int PASSWORD_RESET_SUCCESS = 2009; // 비밀번호 재설정 성공
     public static final int EMAIL_SEND_SUCCESS = 2010;     // 이메일 발송 성공
     public static final int INPUTCODE_CONFIRM_SUCCESS = 2011;     // 이메일 발송 성공
+    public static final int UPDATE_ROLE_SUCCESS = 2012;     // 회원 권한 수정 성공
 
     // 실패 코드 (2050번대 ~ )
     public static final int CREATED_MEMBER_FAIL = 2050;    // 회원 생성 실패
@@ -30,6 +31,7 @@ public class ResponseStatusCode {
     public static final int INPUTCODE_CONFIRM_FAIL = 2059;        // 이메일 발송 실패
     public static final int MEMBER_IS_NOT_EMAIL = 2060;        // 이메일로 가입한 회원이 아님
     public static final int AUTHENTICATION_FAILED = 2061;        // 토큰과 정보가 일치하지 않음
+    public static final int UPDATE_ROLE_FAIL = 2062;     // 회원 권한 수정 실패
 	
 	/******************* MEMBER 메시지 ************************/
 	
@@ -48,6 +50,7 @@ public class ResponseStatusCode {
 	public static final int CREATED_MENTOR_BOARD_FAIL = 2301; // 멘토 보드 등록 실패
 	public static final int UPDATE_MENTOR_BOARD_FAIL = 2331; // 멘토 보드 수정 실패
 	public static final int DELETE_MENTOR_BOARD_FAIL = 2341; // 멘토 보드 삭제 실패
+	public static final int IMAGE_UPLOAD_SUCCESS = 2365;
 	public static final int IMAGE_UPLOAD_FAIL = 2360; // 이미지 업로드 실패
 	public static final int MEMBER_NOT_FOUND = 2370; // 멤버를 찾을 수 없음 
 	public static final int NOT_A_MENTOR = 2375; // 멘토가 아님

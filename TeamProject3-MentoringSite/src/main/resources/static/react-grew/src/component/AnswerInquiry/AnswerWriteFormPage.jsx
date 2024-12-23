@@ -69,10 +69,6 @@ export default function AnswerWriteFormPage() {
   };
   return (
     <>
-      <link
-        href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap"
-        rel="stylesheet"
-      ></link>
       <div className="inquiry-container-inview">
         <div>
           <div className="inquiry-title">{inquiry.inquiryTitle}</div>
@@ -88,7 +84,6 @@ export default function AnswerWriteFormPage() {
           <div>{inquiry.inquiryContent}</div>
         </div>
 
-        <br />
       </div>
 
       <div>

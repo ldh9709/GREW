@@ -39,12 +39,11 @@ public class APILoginSuccessHandler implements AuthenticationSuccessHandler {
         claims = principal.getClaims();
         
         /***** 디버깅 START *****/
-        System.out.println("### onAuthenticationSuccess() CALLED ###");
         System.out.println(">>>>> principal : " + principal);
         System.out.println(">>>>> claims : " + claims);
         /***** 디버깅 END *****/
-        
         // 3. JWT 토큰을 생성합니다.
+        // JWTUtil.generateToken() 메서드를 사용해 액세스 토큰(accessToken)과 리프레시 토큰(refreshToken)을 생성합니다.
         String accessToken = JWTUtil.generateToken(claims, 60);  // access token은 10분 동안 유효
         String refreshToken = JWTUtil.generateToken(claims, 60 * 24);  // refresh token은 1일 동안 유효
 
@@ -67,8 +66,10 @@ public class APILoginSuccessHandler implements AuthenticationSuccessHandler {
         
         Gson gson = new Gson();
         String jsonStr = gson.toJson(claims);
-        // 7. 응답 설정
+        
+        //리다이렉트 설정
         response.sendRedirect("http://localhost:3000/main");
+        // 7. 응답 설정
         response.setContentType("application/json; charset=UTF-8");
         PrintWriter printWriter = response.getWriter();
         printWriter.println(jsonStr);  // 클라이언트에게 JSON 형식의 클레임을 반환

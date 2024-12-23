@@ -1,7 +1,6 @@
 .mentor-join-container {
     align-items: center; /* 수직 가운데 정렬 */
     text-align: center;
-    font-family: "nanumsquare";
     width: 600px;
     height: 100vh; /* 화면 전체 높이 */
     margin: 0 auto; /* 여백 자동으로 가운데 정렬 */
@@ -16,7 +15,6 @@
     flex-direction: column;
     align-items: flex-start;
     margin-bottom: 15px;
-    font-family: 'nanumsquare';
 }
 
 /* 가로 정렬을 위한 클래스 */

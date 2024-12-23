@@ -24,6 +24,7 @@ public class MemberSecurityDto {
 	private Integer memberStatus;	
 	private Role memberRole;
 	private String memberProvider;
+	private Long mentorProfileNo;
 	
 	
 	public static MemberSecurityDto toDto(Member entity) {
@@ -36,6 +37,7 @@ public class MemberSecurityDto {
 	            .memberStatus(entity.getMemberStatus())
 	            .memberRole(entity.getMemberRole())
 	            .memberProvider(entity.getMemberProvider())
+	            .mentorProfileNo(entity.getMentorProfile() != null ? entity.getMentorProfile().getMentorProfileNo() : 0L)
 	            .build();
 	}
 	
