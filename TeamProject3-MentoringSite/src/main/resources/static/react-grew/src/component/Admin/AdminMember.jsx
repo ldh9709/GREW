@@ -8,7 +8,7 @@ function AdminMember() {
     const token = memberCookie.accessToken;
 
     const [members,setMember] = useState([]);
-    //const [role, setRole] = useState("ROLE_MENTEE");  기본적으로 ROLE_MENTEE로 설정
+    //const [role, setRole] = useState("ROLE_MENTEE");  //기본적으로 ROLE_MENTEE로 설정 =>
     const [role, setRole] = useState("ALL"); // 기본적으로 ALL로 설정 (전체 회원 조회)
 
     //목록 조회 함수
@@ -44,18 +44,12 @@ function AdminMember() {
 
     };
 
-    // 지도자 목록
-{/*    const getMentee = () => {
-        setRole("ROLE_MENTOR"); // ROLE_MENTOR로 변경하여 멘토 목록을 조회
-        fetchMembers("ROLE_MENTOR", 1); // 1: 가입 순으로 정렬
-    }*/}
-
     return (
         <div className="admin-member-container">
             {/* 드롭다운 */}
             <div className="dropdown">
                 <select onChange={handleRoleChange} value={role}>
-                <option value="ALL">ALL</option>  {/* 전체 회원 */}
+                    {/*<option value="ALL">ALL</option>   전체 회원 */}
                     <option value="ROLE_MENTEE">MENTEE</option>  {/* 멘티 */}
                     <option value="ROLE_MENTOR">MENTOR</option>  {/* 멘토 */}
                     
@@ -102,6 +96,6 @@ function AdminMember() {
         </div>
     )
 }
-
+>>>>>>> branch 'master' of https://github.com/2024-07-JAVA-DEVELOPER-155/final-project-team2.git
 
 export default AdminMember;
