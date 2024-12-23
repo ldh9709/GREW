@@ -50,6 +50,7 @@ public class ResponseStatusCode {
 	public static final int CREATED_MENTOR_BOARD_FAIL = 2301; // 멘토 보드 등록 실패
 	public static final int UPDATE_MENTOR_BOARD_FAIL = 2331; // 멘토 보드 수정 실패
 	public static final int DELETE_MENTOR_BOARD_FAIL = 2341; // 멘토 보드 삭제 실패
+	public static final int IMAGE_UPLOAD_SUCCESS = 2365;
 	public static final int IMAGE_UPLOAD_FAIL = 2360; // 이미지 업로드 실패
 	public static final int MEMBER_NOT_FOUND = 2370; // 멤버를 찾을 수 없음 
 	public static final int NOT_A_MENTOR = 2375; // 멘토가 아님
