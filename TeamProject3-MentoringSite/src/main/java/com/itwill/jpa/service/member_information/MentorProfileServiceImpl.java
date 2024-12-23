@@ -35,7 +35,7 @@ import java.util.UUID;
 @Service
 public class MentorProfileServiceImpl implements MentorProfileService {
 
-    private static final String IMAGE_PATH = "C:/mentor-profile-images/";
+    private static final String IMAGE_PATH = "C:/upload/mentor-profile/";
     
     @Autowired
     private MentorProfileRepository mentorProfileRepository;
@@ -264,30 +264,37 @@ public class MentorProfileServiceImpl implements MentorProfileService {
     
     /**
      * 프로필 이미지 업로드 메서드
+     * @return 
      */
     @Override
-    public void uploadMentorProfileImage(Long mentorProfileNo, MultipartFile file) {
+    public String uploadMentorProfileImage(Long mentorProfileNo, MultipartFile file) {
         try {
             MentorProfile mentorProfile = mentorProfileRepository.findById(mentorProfileNo).orElse(null);
             if (mentorProfile == null) {
                 throw new CustomException(ResponseStatusCode.MENTOR_PROFILE_NOT_FOUND_CODE, ResponseMessage.MENTOR_PROFILE_NOT_FOUND, null);
             }
+            String fileName = file.getOriginalFilename();
+            String filePath = IMAGE_PATH + mentorProfileNo + "/" + fileName;
 
-            File directory = new File(IMAGE_PATH);
+            // 4️⃣ 디렉토리 생성 (존재하지 않으면)
+            File directory = new File(IMAGE_PATH + mentorProfileNo + "/");
             if (!directory.exists()) {
                 directory.mkdirs();
             }
 
-            String originalFilename = file.getOriginalFilename();
-            String fileName = UUID.randomUUID().toString() + "_" + originalFilename;
-            File saveFile = new File(IMAGE_PATH + fileName);
-            file.transferTo(saveFile);
+            // 5️⃣ 파일 저장
+            file.transferTo(new File(filePath));
 
-            mentorProfile.setMentorImage("/mentor-profile-images/" + fileName);
+            // 6️⃣ 저장된 이미지 URL 생성
+            String imageUrl = "/upload/mentor-profile/" + mentorProfileNo + "/" + fileName;
+            
+            // 7️⃣ 멘토 보드에 이미지 URL 저장
+            mentorProfile.setMentorImage(imageUrl);
             mentorProfileRepository.save(mentorProfile);
+            
+            // 8️⃣ 업로드된 이미지 URL 반환
+            return imageUrl;
         } catch (IOException e) {
-            throw new CustomException(ResponseStatusCode.IMAGE_UPLOAD_FAIL, ResponseMessage.IMAGE_UPLOAD_FAIL, e);
-        } catch (Exception e) {
             throw new CustomException(ResponseStatusCode.IMAGE_UPLOAD_FAIL, ResponseMessage.IMAGE_UPLOAD_FAIL, e);
         }
     }
@@ -430,4 +437,3 @@ public class MentorProfileServiceImpl implements MentorProfileService {
 
 }
     
-

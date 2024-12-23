@@ -66,7 +66,7 @@ public interface MentorProfileService {
     /**
      * 멘토 프로필 이미지 업로드
      */
-    void uploadMentorProfileImage(Long mentorProfileNo, MultipartFile file) throws Exception;
+    String uploadMentorProfileImage(Long mentorProfileNo, MultipartFile file) throws Exception;
 
     /**
      * 멘토 프로필의 이미지 URL을 가져오기
