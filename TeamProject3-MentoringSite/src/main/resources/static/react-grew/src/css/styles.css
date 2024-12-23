@@ -71,11 +71,14 @@ button {
 /* 로그인 버튼 바 */
 .header{
   position: fixed;
-  right: 350px;
+  right: 365px;
   height: 30px; line-height: 30px;
   background-color: #fff;
   padding: 10px 0px 0px 0px!important;
   z-index: 1000;
+}
+.headerMenuBar{
+  position: relative;
 }
 /*상단 메뉴바*/
 .navbar-collapse {
@@ -92,7 +95,7 @@ button {
 }
 
 .logo{
-  margin-left: 370px;
+  margin-left: 365px;
 }
 
 /* 상단 바, 로그인 바 반응형 디자인 */
@@ -480,9 +483,9 @@ button {
 /* 검색창 컨테이너 */
 .search-container {
   display: flex;
+  position: absolute;
+  right: 365px; bottom: 15px;
   justify-content: right;
-  height: 40px;
-  margin: auto 0 auto 140px;
 }
 
 /* 검색창 입력 필드 */
@@ -499,15 +502,12 @@ button {
 .search-input:focus {
   border-color: #28a745;
 }
-.search-button {
-  width: 50px;
-  height: 40px;
-  background-color: #28a745;
-  border-radius: 10px;
-  margin-top: 13px;
-}
-.search-button:hover{
-  background-color: #006618;
+/*돋보기 아이콘*/
+.search-icon{
+  position: absolute;
+  top: 10px;
+  font-size: 17px;
+  color: #888; 
 }
 .view-more {
   display: flex;

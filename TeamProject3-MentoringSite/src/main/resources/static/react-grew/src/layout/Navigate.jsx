@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import "../css/styles.css";
 import { useLocation, useNavigate } from "react-router-dom";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSearch } from '@fortawesome/free-solid-svg-icons';
 
 
 export default function Navigate() {
@@ -76,24 +78,10 @@ export default function Navigate() {
             value={searchTerm}
             onChange={handleSearchChange}
             onKeyDown={handleKeyPress} // Enter 키를 감지
-            placeholder="검색어를 입력하세요..."
+            placeholder="궁금한 내용을 검색해보세요!"
             className="search-input"
           />
-        </div>
-        <div>
-          <button onClick={handleSearchClick} className="search-button">
-            <img
-              className="gnb_menu_img"
-              src="https://img.icons8.com/?size=100&id=132&format=png&color=ffffff"
-              alt=""
-              style={{
-                width: "30px",
-                height: "30px",
-                marginRight: "5px",
-                marginBottom: "-3px",
-              }}
-            />
-          </button>
+          <FontAwesomeIcon icon={faSearch} className="search-icon" />
         </div>
       </div>
     </div>
