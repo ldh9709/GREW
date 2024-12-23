@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { getCookie } from "../../util/cookieUtil.js";
 import * as ChattingApi from '../../api/chattingApi.js';
-import { jwtDecode } from 'jwt-decode'; 
 
 const ChatRoom = ({ onRoomClick }) => {
     const [isModalOpen, setIsModalOpen] = useState(false);  //tate
@@ -12,7 +11,7 @@ const ChatRoom = ({ onRoomClick }) => {
     const [totalPages, setTotalPages] = useState(0); // 총 페이지 수
 
     const memberCookie = getCookie("member");
-    const token = jwtDecode(getCookie("member").accessToken);
+    const token = memberCookie ? memberCookie.accessToken : null;
 
     const chatRoomList = async (page) => {
         console.log('토큰'+token);

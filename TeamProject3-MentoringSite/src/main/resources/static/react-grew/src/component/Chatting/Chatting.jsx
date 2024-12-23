@@ -3,9 +3,12 @@ import SockJS from 'sockjs-client';
 import { Client as StompClient } from '@stomp/stompjs';
 import { getCookie } from "../../util/cookieUtil.js";
 import * as ChattingApi from '../../api/chattingApi.js';
+import { jwtDecode } from "jwt-decode";
 
 const ChattingMessage = ({ roomId, roomName }) => {
   const memberCookie = getCookie("member");
+  const token = memberCookie ? memberCookie.accessToken : null;
+  const decodeToken = token ? jwtDecode(token) : null;
   const [username, setUsername] = useState('');
   const [messageContent, setMessageContent] = useState('');
   const [messages, setMessages] = useState([]);
@@ -55,7 +58,7 @@ const ChattingMessage = ({ roomId, roomName }) => {
   }
   
   useEffect(() => {
-    const username = memberCookie.memberName;
+    const username = decodeToken.memberName;
     if (username) {
       console.log('username : '+username);
       setUsername(username); // 이름 설정
