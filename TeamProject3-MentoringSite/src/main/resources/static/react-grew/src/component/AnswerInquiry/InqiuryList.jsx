@@ -159,11 +159,6 @@ function InqiuryList() {
   };
   return (
     <>
-      <link
-        href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap"
-        rel="stylesheet"
-      ></link>
-
       <h1>질문게시판</h1>
 
       <div className="btn-inquiry-write-div">

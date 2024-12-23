@@ -108,10 +108,6 @@ function InquiryView() {
   }
   return (
     <>
-      <link
-        href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap"
-        rel="stylesheet"
-      ></link>
       <div style={{ paddingLeft: 10 }}>
           <input type="hidden" name="inquiryNo" value={inquiry.inquiryNo} />
 

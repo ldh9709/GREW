@@ -99,10 +99,6 @@ export default function InqiuryWriteFormPage() {
   };
   return (
     <>
-      <link
-        href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap"
-        rel="stylesheet"
-      ></link>
       <div>
         <form ref={writeFormRef} method="POST" className="inquiry-form">
           <div>

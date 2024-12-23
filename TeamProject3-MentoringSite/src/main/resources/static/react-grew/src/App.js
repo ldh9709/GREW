@@ -45,6 +45,10 @@ function App() {
       {!isAdminRoute && <ChatAlarim />}
 
       <div id="wrapper">
+      <link
+        href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap"
+        rel="stylesheet"
+      ></link>
         <div id="content">
           <Routes>
             <Route path="/" exact element={<MainPage />} />
