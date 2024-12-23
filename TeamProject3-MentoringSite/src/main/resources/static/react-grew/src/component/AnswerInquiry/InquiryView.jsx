@@ -215,7 +215,7 @@ function InquiryView() {
             key={number}
             onClick={() => paginate(number)}
             style={{
-              backgroundColor: number === currentPage ? "#4CAF50" : "",
+              backgroundColor: number === currentPage ? "#006618" : "",
               color: number === currentPage ? "white" : "",
             }}
           >

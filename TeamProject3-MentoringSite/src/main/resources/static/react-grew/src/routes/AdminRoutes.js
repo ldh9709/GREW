@@ -1,5 +1,5 @@
 import { Routes, Route } from "react-router-dom";
-import Admin from "../component/Admin/Admin";
+import Admin from "../component/admin/Admin";
 
 function AdminRoutes() {
     return (
