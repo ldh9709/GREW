@@ -31,6 +31,7 @@ function InquiryView() {
         responseJsonObject.data.inquiryStatus === 1
       ) {
         setInquiry(responseJsonObject.data);
+        await inquiryApi.increaseView(inquiryNo);
       } else {
         alert("게시물이 존재하지 않습니다");
         navigate("/inquiry");
