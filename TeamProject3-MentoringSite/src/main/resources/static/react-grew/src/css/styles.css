@@ -71,11 +71,14 @@ button {
 /* 로그인 버튼 바 */
 .header{
   position: fixed;
-  right: 19%;
+  right: 365px;
   height: 30px; line-height: 30px;
   background-color: #fff;
   padding: 10px 0px 0px 0px!important;
   z-index: 1000;
+}
+.headerMenuBar{
+  position: relative;
 }
 /*상단 메뉴바*/
 .navbar-collapse {
@@ -92,21 +95,31 @@ button {
 }
 
 .logo{
-  margin-left: 20%;
+  margin-left: 365px;
 }
 
 /* 상단 바, 로그인 바 반응형 디자인 */
-@media (max-width: 1500px) {
+@media (max-width: 1500px) { 
   .header{
-    right: 25px;
+    right: 10px;
   }
-  .logo {
+  .logo{
     margin-left: 10px;
   }
-  .search-container {
-    margin-left: 0px;
+}
+
+@media (max-width: 1024px) { 
+  .header{
+    right: 10px;
+  }
+  .logo{
+    margin-left: 10px;
+  }
+  .search-container{
+    margin: auto 0 auto 130px !important;
   }
 }
+
 .answer-container {
   display: flex;
   flex-direction: column;
@@ -482,9 +495,9 @@ button {
 /* 검색창 컨테이너 */
 .search-container {
   display: flex;
+  position: absolute;
+  right: 365px; bottom: 15px;
   justify-content: right;
-  height: 40px;
-  margin: auto 0 auto 140px;
 }
 
 /* 검색창 입력 필드 */
@@ -501,15 +514,12 @@ button {
 .search-input:focus {
   border-color: #28a745;
 }
-.search-button {
-  width: 50px;
-  height: 40px;
-  background-color: #28a745;
-  border-radius: 10px;
-  margin-top: 13px;
-}
-.search-button:hover{
-  background-color: #006618;
+/*돋보기 아이콘*/
+.search-icon{
+  position: absolute;
+  top: 10px;
+  font-size: 17px;
+  color: #888; 
 }
 .view-more {
   display: flex;
