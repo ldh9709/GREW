@@ -77,17 +77,21 @@ button {
   align-items: center;
 }
 .answer-container {
+  display: flex;
+  flex-direction: column;
   border: 1px solid #ccc; /* 테두리 설정 */
   padding: 30px; /* 내부 여백 */
   margin: 10px 0; /* 상하 마진 */
   background-color: #ffffff; /* 배경색 */
   width: 1080px; /*너비*/
-  justify-content: center;
   margin-left: 10px;
 }
 
 .answer-member {
   font-weight: bold; /* 이름을 강조 */
+  align-self: flex-start; /* member는 그 아래에 위치 */
+  margin-top: 10px;
+
 }
 
 .answer-content {
@@ -111,6 +115,11 @@ button {
   gap: 10px; /* 항목 간의 간격 설정 (필요에 따라 값을 조정) */
   margin-top: 10px; /* 위쪽 여백 */
   font-size: 15px;
+}
+.modify-delete-btn{
+  display: flex;
+  justify-content: right;
+  gap:10px;
 }
 .inquiry-list-main {
   display: flex;
@@ -231,6 +240,12 @@ button {
   overflow: hidden; /* 넘치는 부분은 숨기기 */
   text-overflow: ellipsis; /* 넘치는 텍스트는 ...으로 표시 */
   animation: content-slide-up 1s ease-out forwards, content-slide-down 1s ease-out forwards;  /* 애니메이션을 동시에 실행 */
+}
+.answer-report-btn,
+.inquiry-report-btn{
+  margin-top: 5px;
+  display: flex;
+  justify-content: right;
 }
 .footer {
   background-color: #28a745;
@@ -482,6 +497,7 @@ button {
   border-color: #ff0000; /* 테두리 색을 빨간색으로 변경 */
 }
 .notification-header {
+  display: flex;
   padding: 10px;
   background-color: #007bff;
   color: white;
@@ -517,6 +533,21 @@ button {
 }
 .notification-icon {
   font-size: 18px;
+}
+.all-delete-btn-div{
+  display: flex;
+  justify-content: right;
+}
+.notification-all-delete-btn{
+  border-radius: 10px;
+  font-weight: bold;
+  color: #000000;
+  background-color: #ffffff;
+}
+.notification-all-delete-btn:hover{
+  border-radius: 10px;
+  text-decoration: underline;
+  background-color: #ffffff;
 }
 .answer-accept-status {
   font-size: 25px;

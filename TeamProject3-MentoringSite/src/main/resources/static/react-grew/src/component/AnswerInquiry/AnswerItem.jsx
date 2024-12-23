@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from "react";
 import "../../css/styles.css";
 import * as answerApi from "../../api/answerApi";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { getCookie } from "../../util/cookieUtil";
 export default function AnswerItem({ answer }) {
   const [inquiry, setInquiry] = useState(0);
   const [voteCount, setVoteCount] = useState(0);
   const memberCookie = getCookie("member");
-  const token = memberCookie && memberCookie.accessToken ? memberCookie.accessToken : null;
+  const navigate = useNavigate();
+  const token =
+    memberCookie && memberCookie.accessToken ? memberCookie.accessToken : null;
 
   async function fetchData() {
     try {
@@ -22,14 +24,16 @@ export default function AnswerItem({ answer }) {
   useEffect(() => {
     fetchData();
   }, [voteCount]);
-
+  const handleModify = async () =>{
+    navigate(`/answer/modify/${answer.answerNo}`)
+  }
   const handleUpvote = async () => {
     try {
       const response = await answerApi.upVote(answer.answerNo, token); // API 호출
       if (response.status === 6000) {
         fetchData(); // 추천 성공 상태 확인
-      }else if(token==null){
-        alert('로그인이 필요한 서비스입니다')
+      } else if (token == null) {
+        alert("로그인이 필요한 서비스입니다");
       } else {
         alert("이미 추천 혹은 비추천을 누르셨습니다"); // 실패 시 에러 로그
       }
@@ -46,8 +50,8 @@ export default function AnswerItem({ answer }) {
       const response = await answerApi.downVote(answer.answerNo, token); // API 호출
       if (response.status === 6000) {
         fetchData(); // 추천 성공 상태 확인
-      }else if(token==null){
-        alert('로그인이 필요한 서비스입니다')
+      } else if (token == null) {
+        alert("로그인이 필요한 서비스입니다");
       } else {
         alert("이미 추천 혹은 비추천을 누르셨습니다"); // 실패 시 에러 로그
       }
@@ -84,14 +88,27 @@ export default function AnswerItem({ answer }) {
           <div></div>
         )}
 
-        {memberCookie&&memberCookie.memberNo == inquiry.memberNo ? (
+        {memberCookie && memberCookie.memberNo == inquiry.memberNo ? (
           <div className="answer-accept">
             <button onClick={handleAccept}>채택하기</button>
           </div>
         ) : (
           <div></div>
         )}
-
+        {/* 신고하기버튼 */}
+        {/* 신고하기버튼 */}
+        {/* 신고하기버튼 */}
+        {/* 신고하기버튼 */}
+        {/* 신고하기버튼 */}
+        <div className="answer-report-btn">
+          <button>신고하기</button>
+        </div>
+        {/* 신고하기버튼 */}
+        {/* 신고하기버튼 */}
+        {/* 신고하기버튼 */}
+        {/* 신고하기버튼 */}
+        {/* 신고하기버튼 */}
+        {/* 신고하기버튼 */}
         <div className="answer-member">{answer.memberName}</div>
         <div className="answer-content">{answer.answerContent}</div>
         <div className="answer-date">{answer.answerDate.substring(0, 10)}</div>
@@ -100,11 +117,9 @@ export default function AnswerItem({ answer }) {
           {voteCount}
           <button onClick={handleDownvote}>비추천</button>
         </div>
-        {memberCookie&&memberCookie.memberNo == answer.memberNo ? (
-          <div>
-            <Link to={`/answer/modify/${answer.answerNo}`}>
-              <button>수정</button>
-            </Link>
+        {memberCookie && memberCookie.memberNo == answer.memberNo ? (
+          <div className="modify-delete-btn">
+              <button onClick={handleModify}>수정</button>
 
             <button
               onClick={(e) => {

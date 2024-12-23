@@ -133,6 +133,21 @@ function InquiryView() {
               <div className="inquiry-title">{inquiry.inquiryTitle}</div>
             </div>
             <div className="inquiry-desc">
+              {/* 신고하기버튼 */}
+              {/* 신고하기버튼 */}
+              {/* 신고하기버튼 */}
+              {/* 신고하기버튼 */}
+              {/* 신고하기버튼 */}
+              {/* 신고하기버튼 */}
+              <button className="inquiry-report-btn">신고하기</button>
+              {/* 신고하기버튼 */}
+              {/* 신고하기버튼 */}
+              {/* 신고하기버튼 */}
+              {/* 신고하기버튼 */}
+              {/* 신고하기버튼 */}
+              {/* 신고하기버튼 */}
+              {/* 신고하기버튼 */}
+              
               <div>{inquiry.categoryName}</div>
               <div>
                 {inquiry.memberName} | 조회수 {inquiry.inquiryViews} |{" "}
