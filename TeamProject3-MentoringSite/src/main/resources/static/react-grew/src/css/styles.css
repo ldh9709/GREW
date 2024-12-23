@@ -71,7 +71,7 @@ button {
 /* 로그인 버튼 바 */
 .header{
   position: fixed;
-  right: 19%;
+  right: 350px;
   height: 30px; line-height: 30px;
   background-color: #fff;
   padding: 10px 0px 0px 0px!important;
@@ -92,21 +92,31 @@ button {
 }
 
 .logo{
-  margin-left: 20%;
+  margin-left: 370px;
 }
 
 /* 상단 바, 로그인 바 반응형 디자인 */
-@media (max-width: 1500px) {
+@media (max-width: 1500px) { 
   .header{
-    right: 25px;
+    right: 10px;
   }
-  .logo {
+  .logo{
     margin-left: 10px;
   }
-  .search-container {
-    margin-left: 0px;
+}
+
+@media (max-width: 1024px) { 
+  .header{
+    right: 10px;
+  }
+  .logo{
+    margin-left: 10px;
+  }
+  .search-container{
+    margin: auto 0 auto 130px !important;
   }
 }
+
 .answer-container {
   display: flex;
   flex-direction: column;
