@@ -20,7 +20,6 @@ export default function MemberSummary() {
         reviewCount: 0,
     })
     const [memberCookie, setMemberCookie] = useState(getCookie("member"));
-    const [isModalOpen, setIsModalOpen] = useState(false);
 
     //회원 요약정보 count 가져옴
     const fetchCountSummary = async (cookie) => {
@@ -70,17 +69,29 @@ export default function MemberSummary() {
     //회원 권한 변경
     const handleUpdateRole = async (role) => {
         try {
-        const confirmation = window.confirm(
-            role === "ROLE_MENTEE" 
-                ? "멘티로 변경하시겠습니까?" 
-                : "멘토로 변경하시겠습니까?"
-        );
-          // 권한 변경 로직에서 쿠키 재확인
-          const memberCookie = getCookie("member");
-          const token = memberCookie.accessToken;
+            // 권한 변경 로직에서 쿠키 재확인
+            const memberCookie = getCookie("member");
+            const token = memberCookie.accessToken;
+
+            if (memberCookie.mentorProfileNo === 0) {
+                const confirmation = window.confirm('멘토를 신청 하시겠습니까?')
+                if (!confirmation) {
+                    return;
+                }
+                navigate(`/mentor/join`);
+            } else {
+                const confirmation = window.confirm(
+                    role === "ROLE_MENTEE" 
+                    ? "멘티로 변경하시겠습니까?" 
+                    : "멘토로 변경하시겠습니까?"
+                );
+                if (!confirmation) {
+                    return;
+                }
+            }          
           
-          const response = await memberApi.updateMemberRole(token, role);
-          if (response.status === 2012) {
+            const response = await memberApi.updateMemberRole(token, role);
+            if (response.status === 2012) {
                 //변경회원 정보
                 const updatedMember = {
                     ...memberCookie,
