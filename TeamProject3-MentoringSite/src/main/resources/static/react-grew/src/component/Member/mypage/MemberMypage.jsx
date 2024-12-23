@@ -8,30 +8,7 @@ import { getCookie } from "../../../util/cookieUtil"
 import * as memberApi from "../../../api/memberApi"
 
 export default function MemberMypage() {
-  const navigate = useNavigate();
-  const memberCookie = getCookie("member");
-  const memberNo = memberCookie.memberNo;
-  const token = memberCookie.accessToken;
 
-  useEffect(() => {
-    const checkProfile = async () => {
-      const mentorProfile = await memberApi.getMentorProfile(memberNo);
-      const memberProfile = await memberApi.memberProfile(memberNo);
-
-
-      if(mentorProfile.data.categoryNo === 26) {
-        navigate('/mentor/join');
-      }
-
-      if(memberProfile.data.categoryNo === 19) {
-        navigate('/member/profile/edit');
-      }
-    }
-
-    if(memberNo) {
-      checkProfile();
-    }
-  }, []);
 
   // const { memberNo } = useParams();
   // const [isDataReady, setIsDataReady] = useState(false);
