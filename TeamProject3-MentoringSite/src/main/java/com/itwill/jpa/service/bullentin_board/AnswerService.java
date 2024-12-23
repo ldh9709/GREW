@@ -31,5 +31,7 @@ public interface AnswerService {
 	//내가 작성한 답변내역
 	Page<AnswerDto> getAnswerByMember(Long MemberNo, int pageNumber, int pageSize);
 	
+	//답변 수 
+	Long getAnswerCount(Long inquiryNo);
 	
 }

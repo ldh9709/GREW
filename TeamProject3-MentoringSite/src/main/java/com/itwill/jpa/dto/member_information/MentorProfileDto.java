@@ -1,5 +1,6 @@
 package com.itwill.jpa.dto.member_information;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.itwill.jpa.entity.member_information.MentorProfile;
 import lombok.*;
 
@@ -13,7 +14,7 @@ public class MentorProfileDto {
     private Long mentorProfileNo; 
     private Long memberNo; 
     private Long categoryNo; 
-    private String mentorCareer; 
+    private String mentorCareer;
     private String mentorIntroduce; 
     private String mentorImage; 
     private Integer mentorStatus; 

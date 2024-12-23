@@ -20,7 +20,7 @@ function MentorBoardUpdate() {
   useEffect(() => {
     const fetchBoardData = async () => {
       try {
-        const response = await mentorBoardApi.getMentorBoard(mentorBoardNo);
+        const response = await mentorBoardApi.getMentorBoardDetail(mentorBoardNo);
         if (response.status === 2310 && response.data) {
           const board = response.data;
           setMentorBoardTitle(board.mentorBoardTitle);

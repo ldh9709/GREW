@@ -86,6 +86,7 @@ public class MentorProfileServiceImpl implements MentorProfileService {
      */
     @Override
     public void saveMentorProfile(Long memberNo, MentorProfileDto mentorProfileDto) {
+    	
         try {
             // 1️⃣ 회원 정보 조회
             Member member = memberRepository.findById(memberNo).get();

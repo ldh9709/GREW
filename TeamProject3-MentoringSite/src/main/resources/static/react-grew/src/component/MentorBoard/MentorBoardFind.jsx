@@ -1,28 +1,30 @@
-import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
-import api from './api';
+import React, { useState, useEffect } from 'react';
+import { getMentorBoardDetail } from '../../api/mentorBoardApi';
 
-const MentorBoardDetail = () => {
-    const { id } = useParams();
-    const [board, setBoard] = useState(null);
+const MentorBoardFind = ({ mentorBoardNo }) => {
+  const [boardDetail, setBoardDetail] = useState(null);
 
-    useEffect(() => {
-        api.getMentorBoardDetail(id)
-            .then((data) => setBoard(data))
-            .catch((error) => console.error(error));
-    }, [id]);
+  useEffect(() => {
+    const fetchBoardDetail = async () => {
+      try {
+        const data = await getMentorBoardDetail(mentorBoardNo);
+        setBoardDetail(data);
+      } catch (error) {
+        console.error('멘토 보드 상세 정보를 가져오는 데 실패했습니다.', error);
+      }
+    };
 
-    if (!board) {
-        return <p>로딩 중...</p>;
-    }
+    fetchBoardDetail();
+  }, [mentorBoardNo]);
 
-    return (
-        <div>
-            <h1>{board.mentorBoardTitle}</h1>
-            <p>{board.mentorBoardContent}</p>
-            <img src={board.mentorBoardImage} alt="Mentor Board" />
-        </div>
-    );
+  if (!boardDetail) return <p>로딩 중...</p>;
+
+  return (
+    <div>
+      <h1>{boardDetail.title}</h1>
+      <p>{boardDetail.content}</p>
+    </div>
+  );
 };
 
-export default MentorBoardDetail;
+export default MentorBoardFind;

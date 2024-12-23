@@ -1,29 +1,47 @@
-
-import React, { useEffect, useState } from 'react';
-import api from './api';
+import React, { useState, useEffect } from 'react';
+import { listMentorBoardsByViews } from '../../api/mentorBoardApi';
+import MentorBoardItem from './MentorBoardItem';
+import '../../css/mentorBoard.css';
 
 const MentorBoardList = () => {
-    const [boards, setBoards] = useState([]);
+  const [boards, setBoards] = useState([]);
+  const [currentPage, setCurrentPage] = useState(0);
+  const [totalPages, setTotalPages] = useState(0);
 
-    useEffect(() => {
-        api.getMentorBoards()
-            .then((data) => setBoards(data))
-            .catch((error) => console.error(error));
-    }, []);
+  useEffect(() => {
+    const fetchBoards = async () => {
+      const response = await listMentorBoardsByViews(currentPage, 10);
+      setBoards(response.data.content);
+      setTotalPages(response.data.totalPages);
+    };
+    fetchBoards();
+  }, [currentPage]);
 
-    return (
-        <div>
-            <h1>멘토보드 리스트</h1>
-            {boards.map((board) => (
-                <div key={board.mentorBoardNo}>
-                    <h2>{board.mentorBoardTitle}</h2>
-                    <p>{board.mentorBoardContent}</p>
-                    <img src={board.mentorBoardImage} alt="Mentor Board" />
-                </div>
-            ))}
-        </div>
-    );
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+  };
+
+  return (
+    <div className="mentor-board-list-container">
+      <h1>멘토 보드</h1>
+      <div className="mentor-board-grid">
+        {boards.map((board) => (
+          <MentorBoardItem key={board.mentorBoardNo} board={board} />
+        ))}
+      </div>
+      <div className="pagination">
+        {[...Array(totalPages)].map((_, index) => (
+          <button
+            key={index}
+            onClick={() => handlePageChange(index)}
+            className={index === currentPage ? 'active-page' : ''}
+          >
+            {index + 1}
+          </button>
+        ))}
+      </div>
+    </div>
+  );
 };
 
 export default MentorBoardList;
-

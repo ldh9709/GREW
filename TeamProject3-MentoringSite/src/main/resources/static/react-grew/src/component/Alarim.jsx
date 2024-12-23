@@ -13,9 +13,14 @@ const Alarim = () => {
     fetchNotifications();
   }, []); // 빈 배열을 넣으면 컴포넌트가 마운트될 때만 실행됨
   const fetchNotifications = async () => {
-    const response = await alarmApi.findByMemberNo(memberCookie.memberNo); // API 호출
-    console.log(response);
-    setNotifications(response.data); // 받은 데이터로 notifications 상태 업데이트
+    if(memberCookie){
+
+      const response = await alarmApi.findByMemberNo(memberCookie.memberNo); // API 호출
+      setNotifications(response.data); // 받은 데이터로 notifications 상태 업데이트
+      console.log(response);
+    }else{
+      setNotifications(null);
+    }
   };
 
   const deleteNotification = async (alarmNo) => {
@@ -44,7 +49,7 @@ const Alarim = () => {
         전체 삭제
       </button>
       <div>
-        {notifications.length > 0 ? (
+        {memberCookie&&notifications.length > 0 ? (
           notifications.map((notification) => (
             <div key={notification.alarmNo} className="notification">
               {notification.isRead == 1 ? (

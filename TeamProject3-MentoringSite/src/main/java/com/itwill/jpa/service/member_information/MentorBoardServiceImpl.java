@@ -254,6 +254,16 @@ public class MentorBoardServiceImpl implements MentorBoardService {
 	    	Page<MentorBoard> mentorBoardPage = mentorBoardRepository.findByMember(member, pageable);
 	    	return mentorBoardPage.map(MentorBoardDto::toDto);
 	    }   
+	    //멘토보드 리스트 12/22일 추가
+	    @Override
+	    public Page<MentorBoardDto> getMentorBoardsSortedByDate(int status, int page, int size) {
+	        PageRequest pageable = PageRequest.of(page, size);
+	        return mentorBoardRepository.findByMentorBoardStatusOrderByMentorBoardDateDesc(status, pageable)
+	                                    .map(MentorBoardDto::toDto);
+	    }
+	    
+	    
+	    
 }
 
 	    
