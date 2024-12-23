@@ -4,6 +4,7 @@ import FollowList from './MemberFollowList'
 import CounselList from './MemberCounselList';
 import ReviewList from './MemberReviewList';
 import InquiryAnswerList from "./MemberInquiryAnswerList";
+import MemberMentorBoardList from "./MemberMentorBoardList";
 
 export default function MemberTabs() {
     //쿠키에 저장된 인증 유저 정보
@@ -67,8 +68,8 @@ export default function MemberTabs() {
                         리뷰내역
                     </li>
                     <li 
-                        className={`tab ${activeTab === "contents" ? "active" : ""}`} 
-                        onClick={() => handleTabClick("following")}
+                        className={`tab ${activeTab === "board" ? "active" : ""}`} 
+                        onClick={() => handleTabClick("board")}
                     >
                         컨텐츠
                     </li>
@@ -93,13 +94,19 @@ export default function MemberTabs() {
                 <FollowList />
             </div>
             )}
+            {activeTab === "answer" && (
+                <div id="answer">
+                    <InquiryAnswerList />
+                </div>
+            )}
             {activeTab === "review" && (
             <div id="review">
                 <ReviewList />
             </div>
             )}
-            {activeTab === "contens" && (
-            <div id="review">
+            {activeTab === "board" && (
+            <div id="boards">
+                <MemberMentorBoardList/>
             </div>
             )}
         </div>

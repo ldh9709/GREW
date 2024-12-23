@@ -26,9 +26,10 @@ import InquirySearchList from "./component/AnswerInquiry/InquirySearchList";
 import ReviewWriteFormPage from "./component/Review/ReviewWriteFormPage";
 import ReviewView from "./component/Review/ReviewView";
 import ReviewListPage from "./component/Review/ReviewList";
-import ForbiddenPage from "./component/ForbiddenPage";
+
 import AdminRoutes from "./routes/AdminRoutes";
 
+import ForbiddenPage from "./component/ForbiddenPage";
 
 function App() {
   const location = useLocation(); // 현재 URL 경로를 가져옴
@@ -63,12 +64,32 @@ function App() {
               path="/member/profile/edit"
               element={<MemberProfileFormPage />}
             />
-
+            <Route path="/inquiry" element={<InqiuryList />} />
+            <Route path="/inquiry/:inquiryNo" element={<InqiuryView />} />
+            <Route
+              path="/inquiry/inquiryWrite"
+              element={<InquiryWriteFormpage />}
+            />
+            <Route
+              path="/inquiry/modify/:inquiryNo"
+              element={<InquiryModifyFormpage />}
+            />
+            <Route
+              path="/answer/answerWrite/:inquiryNo"
+              element={<AnswerWriteFormpage />}
+            />
+            <Route
+              path="/answer/modify/:answerNo"
+              element={<AnswerModifyFormpage />}
+            />
+            <Route path="/searchList" element={<SearchList />} />
+            <Route path="/inquirySearchList" element={<InquirySearchList />} />
             <Route
               path="/review/reviewWrite"
               element={<ReviewWriteFormPage />}
             />
-            <Route path="/review/reviewView" element={<ReviewView />} />
+            <Route path="/review/:reviewNo" element={<ReviewView />} />{" "}
+            {/* 상세 페이지 라우팅 */}
             <Route path="/review/reviewList" element={<ReviewListPage />} />
             <Route path="/inquiry" element={<InqiuryList/>}/>
             <Route path="/inquiry/:inquiryNo" element={<InqiuryView/>}/>

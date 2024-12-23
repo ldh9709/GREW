@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom"; // useNavigate를 추가
 import * as reviewApi from "../../api/reviewApi"; // 리뷰 API
 
 export default function ReviewListPage() {
   const [reviews, setReviews] = useState([]); // 리뷰 목록 상태
   const [loading, setLoading] = useState(true); // 로딩 상태
+  const navigate = useNavigate(); // useNavigate 훅 사용
 
   // 리뷰 목록 데이터 불러오기
   useEffect(() => {
@@ -11,7 +13,6 @@ export default function ReviewListPage() {
       try {
         const response = await reviewApi.listReviewAll();
         console.log(response); // 응답을 콘솔로 확인
-        // 응답이 올바른 배열 형식인지 확인
         if (response && Array.isArray(response.data.content)) {
           setReviews(response.data.content);
         } else {
@@ -41,21 +42,26 @@ export default function ReviewListPage() {
     return <div>리뷰가 없습니다.</div>;
   }
 
+  // 리뷰 클릭 시 상세 페이지로 이동
+  const handleReviewClick = (reviewNo) => {
+    navigate(`/review/${reviewNo}`); // reviewNo를 URL로 넘겨서 상세 페이지로 이동
+  };
+
   return (
     <div>
       <h1>전체 리뷰 목록</h1>
       <ul>
         {reviews.map((review) => (
-          <li key={review.reviewNo}>
+          <li
+            key={review.reviewNo}
+            onClick={() => handleReviewClick(review.reviewNo)}
+          >
             <h3>{review.reviewTitle}</h3>
             <p>{review.reviewContent}</p>
             <p>{review.reviewScore}</p>
-            <p>
-              작성일: {new Date(review.reviewDate).toLocaleDateString()}
-            </p>{" "}
-            {/* 리뷰 작성일 */}
-            <p>작성자 번호: {review.memberNo}</p> {/* memberNo */}
-            <p>멘티 이름: {review.menteeName}</p> {/* menteeName */}
+            <p>작성일: {new Date(review.reviewDate).toLocaleDateString()}</p>
+            <p>작성자 번호: {review.memberNo}</p>
+            <p>멘티 이름: {review.menteeName}</p>
           </li>
         ))}
       </ul>
