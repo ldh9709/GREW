@@ -63,32 +63,10 @@ export default function Navigate() {
         </a>
 
         <a href="/mentorprofile/list" className="findMentor" style={linkStyle}>
-          <img
-            className="gnb_menu_img"
-            src="https://img.icons8.com/?size=100&id=p3miLroKw4iR&format=png&color=000000"
-            alt=""
-            style={{
-              width: "20px",
-              height: "20px",
-              marginRight: "5px",
-              marginBottom: "-3px",
-            }}
-          />
           멘토 찾기
         </a>
 
         <a href="/mentorboard/list" className="mentorContent" style={linkStyle}>
-          <img
-            className="gnb_menu_img"
-            src="https://img.icons8.com/?size=100&id=94504&format=png&color=000000"
-            alt=""
-            style={{
-              width: "20px",
-              height: "20px",
-              marginRight: "5px",
-              marginBottom: "-3px",
-            }}
-          />
           멘토 컨텐츠
         </a>
         {/* 검색창 */}
