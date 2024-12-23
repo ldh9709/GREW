@@ -21,10 +21,6 @@ export default function InquiryItem({ inquiry }) {
   }, []);
   return (
     <>
-      <link
-        href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap"
-        rel="stylesheet"
-      ></link>
       <div className="inquiry-list-sort">
         <a
           className="inquiry-container"

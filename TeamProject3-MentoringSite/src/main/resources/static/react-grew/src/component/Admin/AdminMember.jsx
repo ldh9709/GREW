@@ -2,6 +2,7 @@ import { getCookie } from "../../util/cookieUtil";
 import React, { useEffect, useState } from 'react'
 import * as adminApi from '../../api/adminApi';
 
+
 function AdminMember() {
     const memberCookie = getCookie("member");
     const token = memberCookie.accessToken;
