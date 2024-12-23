@@ -403,7 +403,6 @@ public class MentorProfileServiceImpl implements MentorProfileService {
             throw new CustomException(ResponseStatusCode.READ_MENTOR_PROFILE_FAIL, ResponseMessage.READ_MENTOR_PROFILE_FAIL, e);
         }
     }
-
     
     @Override
     public Page<MentorProfileDto> getMentorsByFollowCount(int page, int size) {
