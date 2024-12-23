@@ -67,6 +67,10 @@ button {
   gap: 5px; /*버튼간거리*/
 }
 
+/* 로그인 버튼 바 */
+.header{
+  padding: 10px 0px 0px 0px!important;
+}
 /*상단 메뉴바*/
 .navbar-collapse {
   height: 50px;
@@ -364,7 +368,7 @@ button {
   display: flex;
   justify-content: right;
   height: 40px;
-  margin: auto 0 auto 50px;
+  margin: auto 0 auto 130px;
 }
 
 /* 검색창 입력 필드 */
@@ -384,9 +388,12 @@ button {
 .search-button {
   width: 50px;
   height: 40px;
-  background-color: #4caf50;
-  border-radius: 5px;
+  background-color: #888888;
+  border-radius: 10px;
   margin-top: 13px;
+}
+.search-button:hover{
+  background-color: #757575;
 }
 .view-more {
   display: flex;
@@ -500,9 +507,12 @@ button {
   color: black;
   border-radius: 30px;
   cursor: pointer;
-  font-size: 10px;
+  font-size: 12px;
   border: none;
   outline: 1px solid gainsboro; /* 회색 외곽선 */
+}
+.login-button:hover {
+  background-color: #f8f8f8;
 }
 
 .join-button {
@@ -510,13 +520,16 @@ button {
   padding: 10px;
   font-family: "nanumsquare";
   text-align: center;
-  background-color: #007bff;
+  background-color: #28a745;
   color: white;
   border-radius: 30px;
   cursor: pointer;
-  font-size: 10px;
+  font-size: 12px;
   border: none;
   outline: 1px solid gainsboro; /* 회색 외곽선 */
+}
+.join-button:hover {
+  background-color: #269c42;
 }
 .small-list {
   width: 320px; /* 20% 너비 */

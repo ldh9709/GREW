@@ -40,53 +40,19 @@ export default function Navigate() {
       <div className="headerMenuBar" style={menuBarStyle}>
         <a href="/main" className="logo">
           <img
-            src="/logo_10.png"
+            src="/logo.png"
             alt=""
             style={{ width: "100px", height: "50px", marginBottom: "-10px", marginRight:"5px"}}
           />
         </a>
         <a href="/inquiry" className="inquiry" style={linkStyle}>
         질문하기
-          <img
-            className="gnb_menu_img"
-            src="https://img.icons8.com/?size=100&id=RoRvPklVhWaK&format=png&color=000000"
-            alt=""
-            style={{
-              width: "25px",
-              height: "25px",
-              marginRight: "0px",
-              marginBottom: "-5px",
-            }}
-          />
         </a>
         <a href="/멘토찾기페이지" className="findMentor" style={linkStyle}>
         멘토 찾기
-          <img
-            className="gnb_menu_img"
-            src="https://img.icons8.com/?size=100&id=sYFuuemrYz2i&format=png&color=000000"
-            alt=""
-            style={{
-              width: "20px",
-              height: "20px",
-              marginRight: "5px",
-              marginBottom: "-3px",
-            }}
-          />
         </a>
         <a href="/멘토컨텐츠페이지" className="mentorContent" style={linkStyle}>
         멘토 컨텐츠
-          <img
-            멘토 컨텐츠
-            className="gnb_menu_img"
-            src="https://img.icons8.com/?size=100&id=U59m5VfviwEC&format=png&color=000000"
-            alt=""
-            style={{
-              width: "20px",
-              height: "20px",
-              marginRight: "5px",
-              marginBottom: "-3px",
-            }}
-          />
         </a>
         {/* 검색창 */}
         <div className="search-container">
