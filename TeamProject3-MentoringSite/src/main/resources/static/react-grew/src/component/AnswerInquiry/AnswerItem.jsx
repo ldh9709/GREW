@@ -117,7 +117,7 @@ export default function AnswerItem({ answer }) {
         </button>
         {/* 팝업 창 */}
         {isPopupVisible && (
-          <AnswerProfilePopup key = {answer.answerNo} answerNo= {answer.memberNo}className="popup"/>
+          <AnswerProfilePopup key = {answer.answerNo} memberNo= {answer.memberNo}className="popup"/>
         )}
         <div className="answer-content">{answer.answerContent}</div>
         <div className="answer-date">{answer.answerDate.substring(0, 10)}</div>
