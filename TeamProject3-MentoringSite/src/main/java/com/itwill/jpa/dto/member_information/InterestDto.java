@@ -26,8 +26,9 @@ public class InterestDto {
     
     //// 문자열 또는 정수를 처리할 수 있는 생성자
     @JsonCreator
-    public InterestDto(String interestNo) {
-    	this.interestNo = Long.parseLong(interestNo);
+    public InterestDto(String categoryNoStr) {
+    	this.interestNo = null;
+    	this.categoryNo = Long.parseLong(categoryNoStr);
     }
     
     /*
