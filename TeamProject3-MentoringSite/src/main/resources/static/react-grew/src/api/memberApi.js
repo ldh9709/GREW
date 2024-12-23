@@ -1,5 +1,4 @@
 import axios from "axios"
-import { useNavigate } from "react-router-dom";
 
 const BACKEND_SERVER = "";
 /*
@@ -47,6 +46,21 @@ export const loginAction = async (sendJsonObject) => {
     return response.data;
 }
 
+/* // SNS 로그인 후 사용자 정보 가져오기
+export const getUserInfo = async () => {
+
+        const response = await fetch(`${BACKEND_SERVER}/oauth2/user`, {
+            method: "GET",
+            credentials: "include", // 쿠키 포함
+            headers: { 
+                "Content-Type": "application/json" 
+            },
+        });
+    
+    return response;
+}; */
+
+//로그아웃
 export const logout = async (token) => {
     const response = await fetch(`${BACKEND_SERVER}/logout`, {
         method: 'POST',
@@ -56,11 +70,7 @@ export const logout = async (token) => {
         },
     });
     console.log("로그아웃 시 반환객체 : ",response);
-    if(response.ok) {
-        return true;
-    } else {
-        return false;
-    }
+    return response.url;
 };
   
 

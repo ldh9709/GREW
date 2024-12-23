@@ -39,6 +39,7 @@ public class APILoginSuccessHandler implements AuthenticationSuccessHandler {
         claims = principal.getClaims();
         
         /***** 디버깅 START *****/
+        System.out.println("### onAuthenticationSuccess() CALLED ###");
         System.out.println(">>>>> principal : " + principal);
         System.out.println(">>>>> claims : " + claims);
         /***** 디버깅 END *****/
@@ -66,8 +67,8 @@ public class APILoginSuccessHandler implements AuthenticationSuccessHandler {
         
         Gson gson = new Gson();
         String jsonStr = gson.toJson(claims);
-        
         // 7. 응답 설정
+        response.sendRedirect("http://localhost:3000/main");
         response.setContentType("application/json; charset=UTF-8");
         PrintWriter printWriter = response.getWriter();
         printWriter.println(jsonStr);  // 클라이언트에게 JSON 형식의 클레임을 반환
@@ -75,7 +76,6 @@ public class APILoginSuccessHandler implements AuthenticationSuccessHandler {
         
         // 8. 헤더 설정 (선택적으로 Authorization 헤더 추가)
         response.setHeader("Authorization", "Bearer " + accessToken);
-        response.sendRedirect("http://localhost:3000/main");
         if (response.isCommitted()) {
             return;
         }

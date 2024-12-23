@@ -19,12 +19,8 @@ export default function HeaderMenu() {
   
   const handleLogoutAction = async () => {
     const isLogout = await logout();
-    if(isLogout) {
-      navigate('/main');
-      alert("로그아웃 성공");
-    } else {
-      alert("로그아웃 실패");
-    }
+    console.log("islogout : ", isLogout);
+    navigate('/main');
   };
 
   const handleJoinNavigate = async () => {
