@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef } from "react";
 import * as categoryApi from "../../api/categoryApi"; // 카테고리 데이터를 조회하는 API
 import * as mentorProfileApi from "../../api/mentorProfileApi";
 import * as mentorBoardApi from "../../api/mentorBoardApi"; // API 호출 부분
-import "../../css/MentorBoardForm.css";
+import "../../css/mentorBoardForm.css";
 import { useParams, useNavigate } from "react-router-dom";  // useNavigate 추가
 
 function MentorBoardCreate() {

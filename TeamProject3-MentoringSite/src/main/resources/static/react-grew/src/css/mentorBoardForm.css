@@ -1,10 +1,17 @@
 .mentor-board-form-container {
-  max-width: 600px;
-  margin: auto;
-  padding: 20px;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  background-color: #fff;
+  margin: 0 auto; /* 가운데 정렬 */
+  max-width: 800px; /* 너비 제한 */
+  padding: 20px; /* 내부 여백 */
+  background-color: #fff; /* 배경색 */
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* 박스 그림자 */
+  border-radius: 8px; /* 모서리 둥글게 */
+}
+
+.mentor-board-form-container h1 {
+  font-size: 24px;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 20px;
 }
 
 .form-title {
