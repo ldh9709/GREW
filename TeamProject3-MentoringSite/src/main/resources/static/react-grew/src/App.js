@@ -41,7 +41,6 @@ import ForbiddenPage from "./component/ForbiddenPage";
 import MentorProfileItem from "./component/MentorProfile/MentorProfileItem";
 
 import AdminRoutes from "./routes/AdminRoutes";
-import ForbiddenPage from "./component/ForbiddenPage";
 
 function App() {
   const location = useLocation(); // 현재 URL 경로를 가져옴
