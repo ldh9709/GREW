@@ -41,6 +41,7 @@ import ForbiddenPage from "./component/ForbiddenPage";
 import MentorProfileItem from "./component/MentorProfile/MentorProfileItem";
 
 import AdminRoutes from "./routes/AdminRoutes";
+import { AuthProvider } from "./util/AuthContext";
 
 function App() {
   const location = useLocation(); // 현재 URL 경로를 가져옴
@@ -61,6 +62,8 @@ function App() {
         rel="stylesheet"
       ></link>
         <div id="content">
+          <AuthProvider>
+          
           <Routes>
             <Route path="/" exact element={<MainPage />} />
             <Route path="/main" element={<MainPage />} />
@@ -148,6 +151,7 @@ function App() {
 
             
           </Routes>
+          </AuthProvider>
           {/* 어드민 경로가 아닌 경우에만 Footer 표시 */}
           {!isAdminRoute && <Footer />}
         </div>

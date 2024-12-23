@@ -6,9 +6,11 @@ import "../../css/memberPage.css"
 import google from '../../image/google.png';
 import naver from '../../image/naver.png';
 import kakao from '../../image/kakao.png';
+import { useMemberAuth } from "../../util/AuthContext";
 
 const MemberLoginFormPage = () => {
   const navigate = useNavigate();
+  const { login } = useMemberAuth();
 
   const [member, setMember] = useState({
     memberId: "",
@@ -27,8 +29,9 @@ const MemberLoginFormPage = () => {
     /* 로그인 성공해서 토큰이 있을 때 */
     if (responseJsonObject.accessToken) {
 
+      login(responseJsonObject.accessToken);
       /* 쿠키 설정 */
-      //setCookie("member", JSON.stringify(responseJsonObject), 1);
+      // setCookie("member", JSON.stringify(responseJsonObject), 1);
       console.log("getCookies : " , getCookie("member"));
       console.log("getCookies.accessToken : " , getCookie("member").accessToken);
       
