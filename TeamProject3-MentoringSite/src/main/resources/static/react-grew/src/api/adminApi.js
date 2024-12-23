@@ -66,7 +66,7 @@ export const updateReportStatusForAdmin = async (reportNo, status) => {
   return responseJson;  // 상태 업데이트 응답 반환
 };
 
-{/*const fetchReports = async () => {
+/*{const fetchReports = async () => {
   try {
     const token = "사용자가 로그인한 후 받은 액세스 토큰";  // 로그인 후 받은 토큰을 여기 넣어야 합니다.
     const response = await fetch('/admin/reports?filter=1&page=0&size=10', {
@@ -111,4 +111,4 @@ const reportNo = 123;  // 예시 신고 번호 (실제 신고 번호로 변경�
 const status = 'IN_PROGRESS';  // 예시 상태 (IN_PROGRESS, RESOLVED, FALSE_REPORT)
 updateReportStatusForAdmin(reportNo, status).then(data => {
   console.log(data); // 업데이트된 신고 데이터 처리
-});*/}
+});}*/

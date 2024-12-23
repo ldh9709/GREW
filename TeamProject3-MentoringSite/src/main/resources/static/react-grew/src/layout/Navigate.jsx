@@ -42,50 +42,17 @@ export default function Navigate() {
           <img
             src="/logo.png"
             alt=""
-            style={{ width: "100px", height: "28px", marginBottom: "-10px" }}
+            style={{ width: "100px", height: "50px", marginBottom: "-10px", marginRight:"5px"}}
           />
         </a>
         <a href="/inquiry" className="inquiry" style={linkStyle}>
-          <img
-            className="gnb_menu_img"
-            src="https://img.icons8.com/?size=100&id=EtlPmfgnN7sW&format=png&color=000000"
-            alt=""
-            style={{
-              width: "25px",
-              height: "25px",
-              marginRight: "0px",
-              marginBottom: "-3px",
-            }}
-          />
-          질문하기
+        질문하기
         </a>
         <a href="/멘토찾기페이지" className="findMentor" style={linkStyle}>
-          <img
-            className="gnb_menu_img"
-            src="https://img.icons8.com/?size=100&id=p3miLroKw4iR&format=png&color=000000"
-            alt=""
-            style={{
-              width: "20px",
-              height: "20px",
-              marginRight: "5px",
-              marginBottom: "-3px",
-            }}
-          />
-          멘토 찾기
+        멘토 찾기
         </a>
         <a href="/멘토컨텐츠페이지" className="mentorContent" style={linkStyle}>
-          <img
-            className="gnb_menu_img"
-            src="https://img.icons8.com/?size=100&id=94504&format=png&color=000000"
-            alt=""
-            style={{
-              width: "20px",
-              height: "20px",
-              marginRight: "5px",
-              marginBottom: "-3px",
-            }}
-          />
-          멘토 컨텐츠
+        멘토 컨텐츠
         </a>
         {/* 검색창 */}
         <div className="search-container">

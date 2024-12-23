@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 import image from '../../../image/images.jpeg'
 import * as chattingApi from '../../../api/chattingApi'
 import * as memberApi from '../../../api/memberApi'
+import * as reviewApi from '../../../api/reviewApi'
 
 export default function MemberCounselList() {
   const memberCookie = getCookie("member");
@@ -44,9 +45,15 @@ export default function MemberCounselList() {
         const updateRooms = await Promise.all(
           chatRooms.map(async (chat) => {
             const searchName = await fetchName(chat.menteeNo);
+            const reviewList = await reviewApi.listReviewByMember(token,0,100);
+            const isReview = reviewList.data.content.some((review) => 
+              review.memberNo === chat.menteeNo
+            );
+            console.log(isReview)
             return {
               ...chat,
-              searchName
+              searchName,
+              isReview
             };
           })
         )
@@ -101,7 +108,7 @@ export default function MemberCounselList() {
     }
 
     return (
-      <div className='tab-content tab-counsel'>
+      <div className='tab-counsel'>
         {counselList.length === 0 ? (
           <p> 진행한 상담내역이 없습니다. </p>
         ) : (
@@ -138,7 +145,7 @@ export default function MemberCounselList() {
                       {counsel.chatRoomEndDate ? counsel.chatRoomEndDate.substring(0, 10) : ""}
                     </p>
                     <p className="counsel-date">
-                      리뷰작성 여부:
+                      리뷰여부: {counsel.isReview === 1 ? "작성" : "미작성"}
                     </p>
                     <div className={`counsel-type ${counsel.chatRoomStatus === 7200 ? "green white" : "" }`}>
                       {counselStatus(counsel.chatRoomStatus)}
