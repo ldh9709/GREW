@@ -102,6 +102,23 @@ public class MentorProfileController {
         response.setMessage(ResponseMessage.CREATED_MENTOR_PROFILE_SUCCESS);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
+    
+    /**
+     * 멘토 프로필을 생성합니다.
+     */
+    @Operation(summary = "멘토 더미 프로필 생성")
+    @PostMapping("/{memberNo}/create-dumy-profile")
+    public ResponseEntity<Response> saveMentorDummyProfile(
+            @PathVariable(name = "memberNo") Long memberNo) {
+
+        mentorProfileService.saveMentorDummyProfile(memberNo);
+        
+        Response response = new Response();
+        response.setStatus(ResponseStatusCode.CREATED_MENTOR_PROFILE_SUCCESS_CODE);
+        response.setMessage(ResponseMessage.CREATED_MENTOR_PROFILE_SUCCESS);
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
+    }
+    
 
     /**
      * 멘토 상태를 변경하는 엔드포인트
