@@ -13,6 +13,7 @@ import com.itwill.jpa.util.HttpStatusMapper;
 import com.itwill.jpa.util.HttpStatusMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.jpa.repository.config.JpaRepositoryNameSpaceHandler;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -379,6 +380,15 @@ public class MentorProfileController {
         response.setData(mentors);
         return ResponseEntity.ok(response);
     }   
+    @Operation(summary = "멤버넘버로 멘토프로필 조회")
+    @GetMapping("/mentor-profile/{memberNo}")
+    public ResponseEntity<Response> getMentorProfileByMemberNo(@PathVariable(name = "memberNo") Long memberNo){
+    	MentorProfileDto mentor = mentorProfileService.getMentorByMemberNo(memberNo);
+    	Response response = new Response();
+    	response.setData(mentor);
+    	return ResponseEntity.ok(response);
+    	
+    }
 }
     
 

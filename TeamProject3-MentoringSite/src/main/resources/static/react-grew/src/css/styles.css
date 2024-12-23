@@ -165,6 +165,12 @@ button {
   justify-content: right;
   gap:10px;
 }
+.modify-delete-btn2{
+  height: 30px;
+  display: flex;
+  justify-content: right;
+  gap:10px;
+}
 .inquiry-list-main {
   display: flex;
   justify-content: space-between; /* 양쪽 끝으로 배치 */
@@ -175,20 +181,21 @@ button {
   display: flex;
   font-size: 22px;
   font-weight: bold;
-  margin-bottom: 30px;
+  margin-bottom: 0px;
 }
 .inquiry-list-sort {
   flex: 3; /* 문의 목록 테이블이 더 넓게 차지 */
   padding: 10px;
 }
 .inquiry-container {
+  
   position: relative;
   border-top: 2px solid #ccc; /* 테두리 설정 */
   border-bottom: 2px solid #ccc; /* 테두리 설정 */
   padding: 10px; /* 내부 여백 */
   background-color: #ffffff; /* 배경색 */
   width: 700px; /*너비*/
-  height: 130px;
+  height: 160px;
   padding: 30px; /* 내부 여백 */
   display: block;
   justify-content: right;
@@ -200,11 +207,12 @@ button {
   padding: 10px; /* 내부 여백 */
   background-color: #ffffff; /* 배경색 */
   width: 1080px; /*너비*/
-  height: 160px;
+  height: 180px;
   padding: 30px; /* 내부 여백 */
-  display: block;
+  display: flex;
   margin-bottom: 3px;
   margin-top: 10px;
+  flex-direction: column;
 }
 .inquiry-container:hover .inquiry-content,
 .inquiry-container:hover .inquiry-desc {
@@ -284,6 +292,10 @@ button {
   overflow: hidden; /* 넘치는 부분은 숨기기 */
   text-overflow: ellipsis; /* 넘치는 텍스트는 ...으로 표시 */
   animation: content-slide-up 1s ease-out forwards, content-slide-down 1s ease-out forwards;  /* 애니메이션을 동시에 실행 */
+}
+.inquiry-report-btn-div{
+  display: flex;
+  justify-content: right;
 }
 .answer-report-btn,
 .inquiry-report-btn{
@@ -666,4 +678,17 @@ button {
   padding: 10px;
   background-color: #f9f9f9;
   margin-left: -30px;
+}
+.popup {
+  position: absolute;
+  height: 150px;
+  width: 300px;
+  padding: 10px;
+  background-color: #f0f0f0;
+  border: 1px solid #ccc;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  z-index: 10;
+  opacity: 1;
+  margin-left: 60px;
+  transition: opacity 0.3s ease;
 }
