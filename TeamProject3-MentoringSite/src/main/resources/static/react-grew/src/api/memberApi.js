@@ -1,4 +1,5 @@
 import axios from "axios"
+import { useNavigate } from "react-router-dom";
 
 const BACKEND_SERVER = "";
 /*
@@ -30,7 +31,7 @@ export const followList = async()=>{
 export const loginAction = async (sendJsonObject) => {
     console.log("Request Data: ", sendJsonObject);
 
-    const header = {headers: {"Content-Type": "x-www-form-urlencoded"}}
+    const header = {headers: {"Content-Type": "application/x-www-form-urlencoded"}, withCredentials: true }
 
     const form = new FormData()
     form.append('username', sendJsonObject.memberId)
@@ -39,7 +40,7 @@ export const loginAction = async (sendJsonObject) => {
     console.log("memberId : " , sendJsonObject.memberId);
     console.log("memberPassword : ", sendJsonObject.memberPassword);
 
-    const response = await axios.post("http://localhost:8080/login", form, header);
+    const response = await axios.post("http://localhost:8080/login", form, header,);
 
     console.log("response : " , response)
 
