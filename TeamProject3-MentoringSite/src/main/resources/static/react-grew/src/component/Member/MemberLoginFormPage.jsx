@@ -28,7 +28,7 @@ const MemberLoginFormPage = () => {
     if (responseJsonObject.accessToken) {
 
       /* 쿠키 설정 */
-      setCookie("member", JSON.stringify(responseJsonObject), 1);
+      //setCookie("member", JSON.stringify(responseJsonObject), 1);
       console.log("getCookies : " , getCookie("member"));
       console.log("getCookies.accessToken : " , getCookie("member").accessToken);
       
