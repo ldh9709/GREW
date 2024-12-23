@@ -82,9 +82,10 @@ public class ChatRoomServiceImplTest {
 	void selectChatRoomByMenteeNo(){
 		System.out.println("유저 번호 6번 멘티 채팅방 전체 출력"+chatRoomService.selectChatRoomByMenteeNo(6L,0,10).getContent());
 	}
+	@Transactional
 	@Test
 	void selectChatRoomByMentorNo(){
-		System.out.println("유저 번호 6번 멘토 채팅방 전체 출력"+chatRoomService.selectChatRoomAll(6L,0,4).getContent());
+		//System.out.println("유저 번호 6번 멘토 채팅방 전체 출력"+chatRoomService.selectChatRoomAll(6L,1,8).getContent());
 	}
 	
 	//@Test

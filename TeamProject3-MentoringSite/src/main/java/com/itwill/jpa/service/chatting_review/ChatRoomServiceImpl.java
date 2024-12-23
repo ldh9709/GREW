@@ -152,6 +152,29 @@ public class ChatRoomServiceImpl implements ChatRoomService {
 		return new PageImpl<>(mentorChatRoomDtos, pageable, chatRooms.getTotalElements());
 	}
 	/*본인 활동 리스트 출력 */
+	public Page<ChatRoomDto> selectChatRoomAll(Long memberNo, int pageNumber, int pageSize) {
+		Pageable pageable = PageRequest.of(pageNumber, pageSize);
+		Page<ChatRoom> chatRooms = chatRoomRepository.findByMemberNo(memberNo,pageable);
+		List<ChatRoomDto> chatRoomDtos = new ArrayList<>();
+		for (ChatRoom chatRoom : chatRooms) {
+			Long chatRoomNo = chatRoom.getChatRoomNo();
+			String chatRoomName = null;
+			int chatRoomLeaveStatus = 0;
+			if (chatRoomStatusService.getChatRoomStatus(chatRoomNo, memberNo) != null) {
+				chatRoomName = chatRoomStatusService.getChatRoomStatus(chatRoomNo, memberNo).getChatRoomName();
+				chatRoomLeaveStatus = chatRoomStatusService.getChatRoomStatus(chatRoomNo, memberNo).getChatRoomStatus();
+			}
+			ChatRoomDto chatRoomDto = ChatRoomDto.toDto(chatRoom);
+			chatRoomDto.setChatRoomName(chatRoomName);
+			chatRoomDto.setChatRoomLeaveStatus(chatRoomLeaveStatus);
+			chatRoomDtos.add(chatRoomDto);
+			
+		}
+		
+		return new PageImpl<>(chatRoomDtos, pageable, chatRooms.getTotalElements());
+	}
+	
+	/*본인 활동 리스트 출력 
 	@Override
 	public Page<ChatRoomDto> selectChatRoomAll(Long MemberNo, int pageNumber, int pageSize) {
 		Pageable pageable = PageRequest.of(pageNumber, pageSize);
@@ -177,7 +200,7 @@ public class ChatRoomServiceImpl implements ChatRoomService {
 		}
 		return new PageImpl<>(chatRoomDtos, pageable, chatRooms.size());
 	}
-	
+	*/
 	@Override
 	public List<ChatMessageDto> selectChatMessages(Long chatRoomNo) {
 		ChatRoom chatRoom = chatRoomRepository.findById(chatRoomNo).get();

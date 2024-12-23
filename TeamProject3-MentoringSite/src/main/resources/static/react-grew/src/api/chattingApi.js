@@ -23,15 +23,15 @@ export const memberListChatRoom = async (token,page,size) => {
   return responseJsonObject;
 };
 
-export const changeChatRoomName = async (
-  chatRoomNo,
-  memberNo,
-  chatRoomName
-) => {
+export const changeChatRoomName = async (chatRoomNo, token, chatRoomName) => {
   const response = await fetch(
-    `${BACKEND_SERVER}/chatroom/name/${chatRoomNo}, ${memberNo}, ${chatRoomName}`,
+    `${BACKEND_SERVER}/chatroom/name/${chatRoomNo}, ${chatRoomName}`,
     {
       method: "PUT",
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}` // Authorization 헤더에 JWT 토큰 추가
+      }
     }
   );
   const responseJsonObject = await response.json();

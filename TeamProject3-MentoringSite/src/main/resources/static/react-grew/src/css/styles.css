@@ -46,7 +46,6 @@ button:hover {
   background-color: #0056b3; /* 버튼 호버 시 색상 변경 */
 }
 button {
-  margin-top: 10px; /* 버튼 위쪽 여백 */
   padding: 5px 10px; /* 버튼 내부 여백 */
   border: none;
   cursor: pointer;

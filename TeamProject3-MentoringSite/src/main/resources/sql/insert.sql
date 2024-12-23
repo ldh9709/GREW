@@ -64,8 +64,9 @@ VALUES(category_no_SEQ.nextval, '관심사를 선택해주세요', 3, null);
 
 
 /* 멘티 등록 */
-INSERT INTO member(member_no,member_id,member_password,member_email,member_name,member_points,member_status,member_join_date,member_report_count,member_role,member_provider)
-VALUES(member_no_SEQ.nextval,'aaa','aaa','aaa@naver.com','김진영',12000,1,sysdate,0,'ROLE_MENTEE','');
+/***** 테스트용 아이디 등록 *****/
+INSERT INTO member (member_no,member_id,member_password,member_email,member_name,member_points,member_status,member_join_date,member_report_count,member_role,member_provider) 
+VALUES (member_no_SEQ.nextval, 'asdf1234', '{bcrypt}$2a$10$Lhr9iLqvAzcQhu4Bd.VXmOHSu0LepHnKlrx43i5EbsEgkJBsNaVke', 'asdf1234@gmail.com', '김진영', 500, 1, sysdate, 0, 'ROLE_MENTEE', 'Email');
 /* 관심사 등록 */
 insert into interest (interest_no, member_no, category_no) 
 values(interest_no_SEQ.nextval, 1, 2);
@@ -86,9 +87,10 @@ VALUES(member_no_SEQ.nextval,'eee','eee','eee@naver.com','박은미',9000,1,sysd
 
 /***** 테스트용 아이디 등록 *****/
 INSERT INTO member (member_no,member_id,member_password,member_email,member_name,member_points,member_status,member_join_date,member_report_count,member_role,member_provider) 
-VALUES (member_no_SEQ.nextval, 'qwer1234', '{bcrypt}$2a$10$2Vj/MwAon9U1UFSHcF8DSe9VtT86qtIFmWo2.tocHk1Px1NAXFU3K', 'zszz5434@gmail.com', '이도현', 500, 1, sysdate, 0, 'ROLE_MENTOR', 'Email');
+VALUES (member_no_SEQ.nextval, 'qwer1234', '{bcrypt}$2a$10$2Vj/MwAon9U1UFSHcF8DSe9VtT86qtIFmWo2.tocHk1Px1NAXFU3K', 'zszz5434@gmail.com', '이도현', 500, 1, sysdate, 0, 'ROLE_MENTEE', 'Email');
 INSERT INTO mentor_profile(mentor_profile_no, mentor_introduce, mentor_career, mentor_rating, mentor_mentoring_count, mentor_image, mentor_activity_count, mentor_follow_count, mentor_status, category_no, member_no)
 VALUES (mentor_profile_no_SEQ.NEXTVAL, '안녕하세요, 이도현 멘토입니다.', '경력자입니다', 5, 10, 'profile1.jpg', 100, 50, 1, 2, member_no_SEQ.CURRVAL);
+
 
 /***** 테스트용 아이디 등록 *****/
 INSERT INTO member (member_no,member_id,member_password,member_email,member_name,member_points,member_status,member_join_date,member_report_count,member_role,member_provider) 
@@ -407,25 +409,25 @@ values (18, '박은미님과 이도현님의 채팅방', 7600, 6, chat_room_stat
 
 /* 채팅방 내용 등록 */
 insert into chat_message (chat_message_no, chat_message_check, chat_message_date, chat_room_no, member_no, chat_message_content) 
-values (chat_message_SEQ.nextval, 1, sysdate, 1, 1, '안녕하세요');
+values (chat_message_SEQ.nextval, 1, sysdate, 2, 1, '안녕하세요');
 insert into chat_message (chat_message_no, chat_message_check, chat_message_date, chat_room_no, member_no, chat_message_content) 
-values (chat_message_SEQ.nextval, 1, sysdate, 1, 5, '반가워요');
+values (chat_message_SEQ.nextval, 1, sysdate, 2, 6, '반가워요');
 insert into chat_message (chat_message_no, chat_message_check, chat_message_date, chat_room_no, member_no, chat_message_content) 
-values (chat_message_SEQ.nextval, 1, sysdate, 1, 5, '코딩에 관심이 많으세요?');
+values (chat_message_SEQ.nextval, 1, sysdate, 2, 6, '코딩에 관심이 많으세요?');
 insert into chat_message (chat_message_no, chat_message_check, chat_message_date, chat_room_no, member_no, chat_message_content) 
-values (chat_message_SEQ.nextval, 1, sysdate, 1, 1, '네');
+values (chat_message_SEQ.nextval, 1, sysdate, 2, 1, '네');
 insert into chat_message (chat_message_no, chat_message_check, chat_message_date, chat_room_no, member_no, chat_message_content) 
-values (chat_message_SEQ.nextval, 1, sysdate, 1, 1, '최근에 배우다가 어려운 부분이 있어서 조언을 구하고자 신청했어요!');
+values (chat_message_SEQ.nextval, 1, sysdate, 2, 1, '최근에 배우다가 어려운 부분이 있어서 조언을 구하고자 신청했어요!');
 insert into chat_message (chat_message_no, chat_message_check, chat_message_date, chat_room_no, member_no, chat_message_content) 
-values (chat_message_SEQ.nextval, 1, sysdate, 1, 5, '그렇군요 잘되었네요');
+values (chat_message_SEQ.nextval, 1, sysdate, 2, 6, '그렇군요 잘되었네요');
 insert into chat_message (chat_message_no, chat_message_check, chat_message_date, chat_room_no, member_no, chat_message_content) 
-values (chat_message_SEQ.nextval, 1, sysdate, 1, 5, '제가 이 분야 탑이에요  ㅎㅎ');
+values (chat_message_SEQ.nextval, 1, sysdate, 2, 6, '제가 이 분야 탑이에요  ㅎㅎ');
 insert into chat_message (chat_message_no, chat_message_check, chat_message_date, chat_room_no, member_no, chat_message_content) 
-values (chat_message_SEQ.nextval, 1, sysdate, 1, 1, '아 진짜요? 든든하네요');
+values (chat_message_SEQ.nextval, 1, sysdate, 2, 1, '아 진짜요? 든든하네요');
 insert into chat_message (chat_message_no, chat_message_check, chat_message_date, chat_room_no, member_no, chat_message_content) 
-values (chat_message_SEQ.nextval, 1, sysdate, 1, 5, '좋아요 그럼 먼저 뭐 때문에 신청하셨나요?');
+values (chat_message_SEQ.nextval, 1, sysdate, 2, 6, '좋아요 그럼 먼저 뭐 때문에 신청하셨나요?');
 insert into chat_message (chat_message_no, chat_message_check, chat_message_date, chat_room_no, member_no, chat_message_content) 
-values (chat_message_SEQ.nextval, 1, sysdate, 1, 1, 'java에서 객체지향이 어려워서 질문하려고요');
+values (chat_message_SEQ.nextval, 1, sysdate, 2, 1, 'java에서 객체지향이 어려워서 질문하려고요');
 /* 채팅방 나갔는지 여부 확인 */
 
 /* 리뷰 등록 */

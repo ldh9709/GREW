@@ -64,8 +64,8 @@ export const logout = async (token) => {
 };
   
 
-//회원가입
-export const joinAction = async (member, tempCode) => {
+//멘티 회원가입
+export const menteeJoinAction = async (member, tempCode) => {
     console.log("Request Data: ", member);
     console.log("Request Data: ", tempCode);
 
@@ -77,6 +77,50 @@ export const joinAction = async (member, tempCode) => {
         body:JSON.stringify({
             memberDto : member,
             tempCode: tempCode
+        })
+    });
+
+    const resultJsonObject = await response.json();
+    console.log("Response Data:", resultJsonObject);
+    return resultJsonObject;
+
+}
+
+//멘토 회원가입
+export const mentorJoinAction = async (member, tempCode) => {
+    console.log("Request Data: ", member);
+    console.log("Request Data: ", tempCode);
+
+    const response = await fetch(`${BACKEND_SERVER}/member/createMember/mentor`, {
+        method:'POST', 
+        headers:{
+            'Content-type':'application/json'
+        },
+        body:JSON.stringify({
+            memberDto : member,
+            tempCode: tempCode
+        })
+    });
+
+    const resultJsonObject = await response.json();
+    console.log("Response Data:", resultJsonObject);
+    return resultJsonObject;
+
+}
+
+//멘토 프로필 생성
+export const mentorProfileCreateAction = async (memberNo, mentor) => {
+    console.log("Request Data: ", memberNo);
+    console.log("Request Data: ", mentor);
+
+    const response = await fetch(`${BACKEND_SERVER}/mentor-profile/${memberNo}/create-profile`, {
+        method:'POST', 
+        headers:{
+            'Content-type':'application/json'
+        },
+        body:JSON.stringify({
+            memberNo : memberNo,
+            mentorProfileDto: mentor
         })
     });
 

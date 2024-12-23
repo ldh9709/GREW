@@ -31,6 +31,8 @@ import com.itwill.jpa.auth.PrincipalDetails;
 import com.itwill.jpa.dto.member_information.MemberDto;
 import com.itwill.jpa.dto.member_information.MemberDtoAndTempCode;
 import com.itwill.jpa.entity.member_information.Member;
+import com.itwill.jpa.entity.member_information.MentorProfile;
+import com.itwill.jpa.entity.role.Role;
 import com.itwill.jpa.response.Response;
 import com.itwill.jpa.response.ResponseMessage;
 import com.itwill.jpa.response.ResponseStatusCode;
@@ -44,6 +46,7 @@ import com.itwill.jpa.service.member_information.MemberService;
 import com.itwill.jpa.service.member_information.MentorBoardService;
 import com.itwill.jpa.util.JWTUtil;
 import com.nimbusds.jose.shaded.gson.Gson;
+import com.itwill.jpa.service.member_information.MentorProfileService;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
@@ -57,8 +60,11 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping("/member")
 public class MemberRestController {
 	
+	private static final Role ROLE_MENTOR = null;
 	@Autowired
 	private MemberService memberService;
+	@Autowired
+	private MentorProfileService mentorProfileService;
 	@Autowired
 	private MentorBoardService boardService;
 	@Autowired
@@ -135,7 +141,7 @@ public class MemberRestController {
 	/* 회원 저장 */
 	@Operation(summary = "회원가입/관심사 입력")
 	@PostMapping("/createMember")
-	public ResponseEntity<Response> createMember(@RequestBody MemberDtoAndTempCode memberJoinDto) {
+	public ResponseEntity<Response> createMember(@Valid	@RequestBody MemberDtoAndTempCode memberJoinDto) {
 		
 		MemberDto memberDto = memberJoinDto.getMemberDto();
 		System.out.println("MEMBERDTO : >>> " + memberDto);
@@ -143,7 +149,6 @@ public class MemberRestController {
 		System.out.println("TEMPCODE : >>>" + tempCode);
 		
 		Response response = new Response();
-		
 		
 		//인증번호가 맞는지 확인
 		boolean isChecked = memberService.certificationCode(memberDto.getMemberEmail(), tempCode);
@@ -154,7 +159,8 @@ public class MemberRestController {
 			response.setMessage(ResponseMessage.CREATED_MEMBER_FAIL);
 		}
 		System.out.println(">>>>>saveMember memberDto : " + memberDto);
-		memberService.saveMember(memberDto);
+		Member member = memberService.saveMember(memberDto);
+		System.out.println(">>>>>MEMBER member : " + member);
 		
 		response.setStatus(ResponseStatusCode.CREATED_MEMBER_SUCCESS);
 		response.setMessage(ResponseMessage.CREATED_MEMBER_SUCCESS);
@@ -169,7 +175,49 @@ public class MemberRestController {
 			
 			return responseEntity;
 		}
+	
+	/*** 
+	 * 회원 저장(멘토까지)
+	 ***/
+	@Operation(summary = "회원가입/관심사 입력/멘토더미데이터")
+	@PostMapping("/createMember/mentor")
+	public ResponseEntity<Response> createMemberMentor(@RequestBody MemberDtoAndTempCode memberJoinDto) {
 		
+		MemberDto memberDto = memberJoinDto.getMemberDto();
+		System.out.println("MEMBERDTO : >>> " + memberDto);
+		Integer tempCode = memberJoinDto.getTempCode();
+		System.out.println("TEMPCODE : >>>" + tempCode);
+		
+		Response response = new Response();
+		
+		//인증번호가 맞는지 확인
+		boolean isChecked = memberService.certificationCode(memberDto.getMemberEmail(), tempCode);
+		
+		System.out.println("isChecked : " + isChecked);
+		if(!isChecked) {
+			response.setStatus(ResponseStatusCode.CREATED_MEMBER_FAIL);
+			response.setMessage(ResponseMessage.CREATED_MEMBER_FAIL);
+		}
+		
+		System.out.println(">>>>>saveMember memberDto : " + memberDto);
+		Member member = memberService.saveMember(memberDto);
+		System.out.println(">>>>>MEMBER member : " + member);
+		
+		MentorProfile mentor =	mentorProfileService.saveMentorDummyProfile(member.getMemberNo());
+		
+		response.setStatus(ResponseStatusCode.CREATED_MEMBER_SUCCESS);
+		response.setMessage(ResponseMessage.CREATED_MEMBER_SUCCESS);
+		
+		//인코딩 타입 설정
+		HttpHeaders httpHeaders = new HttpHeaders();	
+		httpHeaders.setContentType(new MediaType(MediaType.APPLICATION_JSON, Charset.forName("UTF-8")));
+		
+		//반환할 응답Entity 생성
+		ResponseEntity<Response> responseEntity =
+				 new ResponseEntity<Response>(response, httpHeaders, HttpStatus.OK);
+			
+			return responseEntity;
+		}
 	
 	/* 회원 정보 보기 */
 	@SecurityRequirement(name = "BearerAuth")//API 엔드포인트가 인증을 요구한다는 것을 문서화(Swagger에서 JWT인증을 명시
