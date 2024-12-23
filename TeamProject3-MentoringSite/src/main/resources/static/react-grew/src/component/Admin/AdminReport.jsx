@@ -1,10 +1,11 @@
 import { getCookie } from "../../util/cookieUtil";
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
+import * as adminApi from '../../api/adminApi.js';
 
 export const UserCard = () => {
   const memberCookie = getCookie("member");
   const token = memberCookie.accessToken;
-  
+  const filter = null;
   /*
       1. 초기설정
       2. fetct 목록 조회 함수 생성(token,filter)
