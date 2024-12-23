@@ -31,6 +31,7 @@ function InquiryView() {
         responseJsonObject.data.inquiryStatus === 1
       ) {
         setInquiry(responseJsonObject.data);
+        await inquiryApi.increaseView(inquiryNo);
       } else {
         alert("게시물이 존재하지 않습니다");
         navigate("/inquiry");
@@ -107,10 +108,6 @@ function InquiryView() {
   }
   return (
     <>
-      <link
-        href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap"
-        rel="stylesheet"
-      ></link>
       <div style={{ paddingLeft: 10 }}>
           <input type="hidden" name="inquiryNo" value={inquiry.inquiryNo} />
 
@@ -136,6 +133,21 @@ function InquiryView() {
               <div className="inquiry-title">{inquiry.inquiryTitle}</div>
             </div>
             <div className="inquiry-desc">
+              {/* 신고하기버튼 */}
+              {/* 신고하기버튼 */}
+              {/* 신고하기버튼 */}
+              {/* 신고하기버튼 */}
+              {/* 신고하기버튼 */}
+              {/* 신고하기버튼 */}
+              <button className="inquiry-report-btn">신고하기</button>
+              {/* 신고하기버튼 */}
+              {/* 신고하기버튼 */}
+              {/* 신고하기버튼 */}
+              {/* 신고하기버튼 */}
+              {/* 신고하기버튼 */}
+              {/* 신고하기버튼 */}
+              {/* 신고하기버튼 */}
+              
               <div>{inquiry.categoryName}</div>
               <div>
                 {inquiry.memberName} | 조회수 {inquiry.inquiryViews} |{" "}
@@ -214,7 +226,7 @@ function InquiryView() {
             key={number}
             onClick={() => paginate(number)}
             style={{
-              backgroundColor: number === currentPage ? "#4CAF50" : "",
+              backgroundColor: number === currentPage ? "#006618" : "",
               color: number === currentPage ? "white" : "",
             }}
           >

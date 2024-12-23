@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import "../../css/admin.css";
-import { AdminReportPage } from './AdminReportPage';
 import AdminMember from './AdminMember';
 
 export default function Admin() {
@@ -19,7 +18,7 @@ export default function Admin() {
         <ul>
             <li>회원</li>
             <li>질문 게시글</li>
-            <li>지도자 게시글</li>
+            <li>멘토 게시글</li>
             <li>신고 목록</li>
         </ul>
     </div>

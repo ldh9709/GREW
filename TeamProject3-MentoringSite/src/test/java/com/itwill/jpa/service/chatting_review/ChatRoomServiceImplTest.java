@@ -85,7 +85,7 @@ public class ChatRoomServiceImplTest {
 	@Transactional
 	@Test
 	void selectChatRoomByMentorNo(){
-		System.out.println("유저 번호 6번 멘토 채팅방 전체 출력"+chatRoomService.selectChatRoomAll(6L,1,8).getContent());
+		//System.out.println("유저 번호 6번 멘토 채팅방 전체 출력"+chatRoomService.selectChatRoomAll(6L,1,8).getContent());
 	}
 	
 	//@Test

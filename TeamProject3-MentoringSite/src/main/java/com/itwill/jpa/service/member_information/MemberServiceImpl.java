@@ -46,7 +46,6 @@ public class MemberServiceImpl implements MemberService {
 	@Autowired
 	EntityManager entityManager;
 	
-	
 	//이메일별 인증번호 저장
 	private final Map<String, Integer> tempCode = new ConcurrentHashMap<>();
 	
@@ -129,17 +128,20 @@ public class MemberServiceImpl implements MemberService {
 		checkIdDupl(memberId);
 		checkEmailDupl(memberEmail);
 		
+		//멤버 생성
 		Member saveMember = Member.toEntity(memberDto);
 		
 		//비밀번호 암호화 추가
+		saveMember.setMemberPassword(passwordEncoder.encode(memberPassword));
 		
-		
+		//관심사 생성
 		for (InterestDto interest : memberDto.getInterests()) {
+			
 			Interest interestEntity = Interest.toEntity(interest);
 			System.out.println("회원가입 interestEntity : " + interestEntity);
+			
 			saveMember.addInterests(interestEntity);
 		}
-		saveMember.setMemberPassword(passwordEncoder.encode(memberPassword));
 		System.out.println(">>>>>saveMember : " + saveMember);
 		return memberRepository.save(saveMember);
 	}
@@ -204,10 +206,20 @@ public class MemberServiceImpl implements MemberService {
             Interest interest = Interest.toEntity(interestDto);
             member.addInterests(interest);
 	    }
+        
+		if(memberDto.getMemberName() != null) {
+			member.setMemberName(memberDto.getMemberName());
+		}
 		
-		member.setMemberName(memberDto.getMemberName());
-		member.setMemberPassword(memberDto.getMemberPassword());
-		member.setMemberEmail(memberDto.getMemberEmail());
+		if(memberDto.getMemberPassword() != null) {
+			member.setMemberPassword(memberDto.getMemberPassword());
+		} else {
+			member.setMemberPassword(member.getMemberPassword());
+		}
+		
+		if(memberDto.getMemberEmail() != null) {
+			member.setMemberEmail(memberDto.getMemberEmail());
+		}
 		
 		return memberRepository.save(member);
 	}
@@ -221,6 +233,17 @@ public class MemberServiceImpl implements MemberService {
 		return memberRepository.save(member);
 	}
 	
+	/***** 회원 권한 변경 *****/
+	public Member updateMemberRole(Long memberNo, String role) {
+		Member member = memberRepository.findByMemberNo(memberNo);
+		
+		if (role.equals("ROLE_MENTEE")) {
+		    member.setMemberRole(Role.ROLE_MENTEE);
+		} else {
+		    member.setMemberRole(Role.ROLE_MENTOR);
+		}
+		return memberRepository.save(member);
+	}
 	
 	/***** 회원 삭제 *****/
 	@Override
@@ -394,14 +417,6 @@ public class MemberServiceImpl implements MemberService {
 		member.changePassword(tempPassword);
 		
 	}
-
-	@Override
-	public Member updateMemberStatus(MemberDto memberDto, Integer statusNo) {
-		return null;
-	}
-
-	
-	
 	
 	
 }

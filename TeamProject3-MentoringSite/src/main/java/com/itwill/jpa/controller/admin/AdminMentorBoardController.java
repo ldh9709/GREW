@@ -34,7 +34,7 @@ public class AdminMentorBoardController {
 
 	/* (멘토)게시글 전체출력 * */
 	@SecurityRequirement(name = "BearerAuth")
-	@PreAuthorize("hasRole('MENTEE')")
+	@PreAuthorize("hasRole('ADMIN')")
 	@Operation(summary = "멘토 게시글 전체 조회(최신순)")
 	@GetMapping()
 	public ResponseEntity<Response> getAdminMentorBoardsForAdmin(
@@ -59,7 +59,7 @@ public class AdminMentorBoardController {
 	}
 	
 	@SecurityRequirement(name = "BearerAuth")
-	@PreAuthorize("hasRole('MENTEE')")
+	@PreAuthorize("hasRole('ADMIN')")
 	@Operation(summary = "멘토 게시글 조회(검색어)")
 	@GetMapping("/search/{search}")
 	public ResponseEntity<Response> getAdminMentorBoardsForAdminWithSearch(

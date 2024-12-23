@@ -89,7 +89,7 @@ const MemberProfileFormPage = () => {
       console.log("Server response:", responseJsonObject);
       switch (responseJsonObject.status) {
         case responseStatus.UPDATE_MEMBER_SUCCESS:
-          navigate("/member/profile/edit");
+          navigate("/member/profile");
           alert("회원 정보가 수정되었습니다.");
           break;
         case responseStatus.AUTHENTICATION_FAILED:

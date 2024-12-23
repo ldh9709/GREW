@@ -10,6 +10,7 @@ export default function HeaderMenu() {
   const memberCookie = getCookie("member");
   const token = memberCookie ? memberCookie.accessToken : null; // 안전하게 접근
   
+  console.log("멤버 쿠키 : ", memberCookie);
   const handleLoginNavigate = async () => {
     navigate('/member/login');
   };

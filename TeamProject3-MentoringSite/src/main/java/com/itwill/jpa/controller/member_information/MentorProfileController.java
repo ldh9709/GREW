@@ -34,6 +34,29 @@ public class MentorProfileController {
 	@Autowired
     private MentorProfileService mentorProfileService;
 
+	 @Operation(summary = "멘토 프로필 상세보기")
+	    @GetMapping("/{mentorProfileNo}")
+	    public ResponseEntity<Response> getMentorProfileDetail(@PathVariable("mentorProfileNo") Long mentorProfileNo) {
+	        try {
+	            // 🔥 서비스 호출하여 DTO 반환
+	            MentorProfileDto mentorProfileDto = mentorProfileService.getMentorProfileDetail(mentorProfileNo);
+	            
+	            // 🔥 응답 생성
+	            Response response = new Response();
+	            response.setStatus(ResponseStatusCode.READ_MENTOR_PROFILE_SUCCESS_CODE);
+	            response.setMessage(ResponseMessage.READ_MENTOR_PROFILE_SUCCESS);
+	            response.setData(mentorProfileDto);
+	            
+	            return ResponseEntity.ok(response);
+	        } catch (CustomException e) {
+	            Response response = new Response();
+	            response.setStatus(e.getStatusCode());
+	            response.setMessage(e.getMessage());
+	            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+	        }
+	    }
+	
+
     /**
      * 특정 멘토의 평균 점수를 조회합니다.
      */
@@ -79,6 +102,23 @@ public class MentorProfileController {
         response.setMessage(ResponseMessage.CREATED_MENTOR_PROFILE_SUCCESS);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
+    
+    /**
+     * 멘토 프로필을 생성합니다.
+     */
+    @Operation(summary = "멘토 더미 프로필 생성")
+    @PostMapping("/{memberNo}/create-dumy-profile")
+    public ResponseEntity<Response> saveMentorDummyProfile(
+            @PathVariable(name = "memberNo") Long memberNo) {
+
+        mentorProfileService.saveMentorDummyProfile(memberNo);
+        
+        Response response = new Response();
+        response.setStatus(ResponseStatusCode.CREATED_MENTOR_PROFILE_SUCCESS_CODE);
+        response.setMessage(ResponseMessage.CREATED_MENTOR_PROFILE_SUCCESS);
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
+    }
+    
 
     /**
      * 멘토 상태를 변경하는 엔드포인트
@@ -141,13 +181,13 @@ public class MentorProfileController {
     }
 
     @Operation(summary = "검색 기능 페이징")
-    @GetMapping("/search")
+    @GetMapping("/search/{search}")
     public ResponseEntity<Response> searchMentorProfiles(
-            @RequestParam(name = "keyword") String keyword,
+            @PathVariable(name = "search") String search,
             @RequestParam(name = "page", defaultValue = "0") int page,
             @RequestParam(name = "size", defaultValue = "10") int size
     ) {
-        Page<MentorProfileDto> mentors = mentorProfileService.getMentorProfiles(keyword, page, size);
+        Page<MentorProfileDto> mentors = mentorProfileService.getMentorProfiles(search, page, size);
 
         Response response = new Response();
         response.setStatus(ResponseStatusCode.READ_MENTOR_PROFILE_LIST_SUCCESS_CODE);
@@ -159,6 +199,7 @@ public class MentorProfileController {
 
         return new ResponseEntity<>(response, headers, HttpStatus.OK);
     }
+
 
     @Operation(summary = "카테고리 멘토리스트 페이징")
     @GetMapping("/category/{categoryNo}")
@@ -296,6 +337,48 @@ public class MentorProfileController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
         }
     }
+
+    @Operation(summary = "팔로우 수 순으로 멘토 목록 조회")
+    @GetMapping("/follow-count")
+    public ResponseEntity<Response> getMentorProfilesByFollowCount(
+        @RequestParam(name = "page", defaultValue = "0") int page,
+        @RequestParam(name = "size", defaultValue = "10") int size
+    ) {
+        Page<MentorProfileDto> mentors = mentorProfileService.getMentorsByFollowCount(page, size);
+        Response response = new Response();
+        response.setStatus(ResponseStatusCode.READ_MENTOR_PROFILE_LIST_SUCCESS_CODE);
+        response.setMessage(ResponseMessage.READ_MENTOR_PROFILE_LIST_SUCCESS);
+        response.setData(mentors);
+        return ResponseEntity.ok(response);
+    }
+
+    @Operation(summary = "멘토링 횟수 순으로 멘토 목록 조회")
+    @GetMapping("/mentoring-count")
+    public ResponseEntity<Response> getMentorProfilesByMentoringCount(
+        @RequestParam(name = "page", defaultValue = "0") int page,
+        @RequestParam(name = "size", defaultValue = "10") int size
+    ) {
+        Page<MentorProfileDto> mentors = mentorProfileService.getMentorsByMentoringCount(page, size);
+        Response response = new Response();
+        response.setStatus(ResponseStatusCode.READ_MENTOR_PROFILE_LIST_SUCCESS_CODE);
+        response.setMessage(ResponseMessage.READ_MENTOR_PROFILE_LIST_SUCCESS);
+        response.setData(mentors);
+        return ResponseEntity.ok(response);
+    }
+
+    @Operation(summary = "활동 수 순으로 멘토 목록 조회")
+    @GetMapping("/activity-count")
+    public ResponseEntity<Response> getMentorProfilesByActivityCount(
+        @RequestParam(name = "page", defaultValue = "0") int page,
+        @RequestParam(name = "size", defaultValue = "10") int size
+    ) {
+        Page<MentorProfileDto> mentors = mentorProfileService.getMentorsByActivityCount(page, size);
+        Response response = new Response();
+        response.setStatus(ResponseStatusCode.READ_MENTOR_PROFILE_LIST_SUCCESS_CODE);
+        response.setMessage(ResponseMessage.READ_MENTOR_PROFILE_LIST_SUCCESS);
+        response.setData(mentors);
+        return ResponseEntity.ok(response);
+    }   
 }
     
 

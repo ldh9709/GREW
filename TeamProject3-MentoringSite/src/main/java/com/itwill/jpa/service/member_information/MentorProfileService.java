@@ -16,6 +16,12 @@ public interface MentorProfileService {
      * 멘토 프로필 생성
      */
     void saveMentorProfile(Long memberNo, MentorProfileDto mentorProfileDto);
+    
+    /**
+     * 멘토 더미 프로필 생성
+     */
+    MentorProfile saveMentorDummyProfile(Long memberNo);
+    
 	// 멘토링 전체활동 수 업데이트
 	Integer updateMentoringCount(Long memberNo);
 	
@@ -50,7 +56,7 @@ public interface MentorProfileService {
     /**
      * 키워드를 기준으로 멘토 프로필을 검색
      */
-    Page<MentorProfileDto> getMentorProfiles(String keyword, int page, int size);
+    Page<MentorProfileDto> getMentorProfiles(String search, int page, int size);
 
     /**
      * 특정 카테고리에 속한 멘토 프로필을 페이지로 반환
@@ -86,4 +92,14 @@ public interface MentorProfileService {
      * 멘토 프로필의 활동 수 조회
      */
     Integer getMentorActivityCount(Long mentorProfileNo);
+    
+    //상세보기 1명
+    MentorProfileDto getMentorProfileDetail(Long mentorProfileNo);
+    
+    
+    //팔로우수 멘토링수 활동수 조회 리스트
+    Page<MentorProfileDto> getMentorsByFollowCount(int page, int size);
+    Page<MentorProfileDto> getMentorsByMentoringCount(int page, int size);
+    Page<MentorProfileDto> getMentorsByActivityCount(int page, int size);
+
 }
