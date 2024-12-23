@@ -59,7 +59,7 @@ export default function HeaderMenu() {
           {/* <a href="/member/profile" className="mypage">
           마이페이지
         </a> */}
-        <input type="button" className="profile-button" onClick={handleProfileNavigate} value="마이페이지"/>
+        <input type="button" className="profile-button " onClick={handleProfileNavigate} value="마이페이지"/>
         {/* <a href="/logout" onClick={handleLogoutAction} className="mypage">
         로그아웃
         </a> */}
