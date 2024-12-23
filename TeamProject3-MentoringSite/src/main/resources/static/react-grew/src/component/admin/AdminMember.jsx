@@ -1,8 +1,9 @@
 import { getCookie } from "../../util/cookieUtil";
 import React, { useEffect, useState } from 'react'
-import * as adminApi from '../../api/adminApi'
+import * as adminApi from '../../api/adminApi';
 
-export default function AdminMember() {
+
+function AdminMember() {
     const memberCookie = getCookie("member");
     const token = memberCookie.accessToken;
 
@@ -50,8 +51,8 @@ export default function AdminMember() {
                 <select onChange={handleRoleChange} value={role}>
                     <option value="ROLE_MENTEE">MENTEE</option>
                     <option value="ROLE_MENTOR">MENTOR</option>
-                    {/*<option value="전체">WITHDRAWAL</option>
-                    <option value="WITHDRAW">REMOVAL</option>*/}
+                    <option value="전체">WITHDRAWAL</option>
+                    <option value="WITHDRAW">REMOVAL</option>
                 </select>
             </div>
             <table className="member-table">
@@ -95,3 +96,6 @@ export default function AdminMember() {
         </div>
     )
 }
+
+
+export default AdminMember;

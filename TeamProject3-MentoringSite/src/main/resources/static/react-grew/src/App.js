@@ -27,11 +27,9 @@ import ReviewWriteFormPage from "./component/Review/ReviewWriteFormPage";
 import ReviewView from "./component/Review/ReviewView";
 import ReviewListPage from "./component/Review/ReviewList";
 
-import AdminReport2 from "./component/admin/adminReport2";
-import Admin from "./component/admin/admin";
-import AdminReport4 from "./component/admin/adminReport4";
-import ForbiddenPage from "./component/ForbiddenPage";
 import AdminRoutes from "./routes/AdminRoutes";
+
+import ForbiddenPage from "./component/ForbiddenPage";
 
 function App() {
   const location = useLocation(); // 현재 URL 경로를 가져옴
@@ -86,9 +84,6 @@ function App() {
             />
             <Route path="/searchList" element={<SearchList />} />
             <Route path="/inquirySearchList" element={<InquirySearchList />} />
-            <Route path="/admin/reports" element={<AdminReport2 />} />
-            <Route path="/admin" element={<Admin />} />
-            <Route path="/adminReport4" element={<AdminReport4 />} />
             <Route
               path="/review/reviewWrite"
               element={<ReviewWriteFormPage />}

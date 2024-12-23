@@ -16,6 +16,7 @@ public class ResponseStatusCode {
     public static final int PASSWORD_RESET_SUCCESS = 2009; // 비밀번호 재설정 성공
     public static final int EMAIL_SEND_SUCCESS = 2010;     // 이메일 발송 성공
     public static final int INPUTCODE_CONFIRM_SUCCESS = 2011;     // 이메일 발송 성공
+    public static final int UPDATE_ROLE_SUCCESS = 2012;     // 회원 권한 수정 성공
 
     // 실패 코드 (2050번대 ~ )
     public static final int CREATED_MEMBER_FAIL = 2050;    // 회원 생성 실패
@@ -30,6 +31,7 @@ public class ResponseStatusCode {
     public static final int INPUTCODE_CONFIRM_FAIL = 2059;        // 이메일 발송 실패
     public static final int MEMBER_IS_NOT_EMAIL = 2060;        // 이메일로 가입한 회원이 아님
     public static final int AUTHENTICATION_FAILED = 2061;        // 토큰과 정보가 일치하지 않음
+    public static final int UPDATE_ROLE_FAIL = 2062;     // 회원 권한 수정 실패
 	
 	/******************* MEMBER 메시지 ************************/
 	
