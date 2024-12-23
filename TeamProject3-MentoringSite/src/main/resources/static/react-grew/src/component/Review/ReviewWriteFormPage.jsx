@@ -13,6 +13,7 @@ export default function ReviewWriteFormPage() {
     reviewDate: "",
     reviewScore: 1,
     reviewStatus: 1,
+    chatRoomNo:1
   };
 
   const [review, setReview] = useState(initReview); // 리뷰 상태
@@ -27,10 +28,10 @@ export default function ReviewWriteFormPage() {
 
   // 리뷰 점수 변경 핸들러
   const onChangeReviewScore = (e) => {
-    setReview(e.target.value);
+    // 리뷰 점수를 숫자로 처리하도록 수정
     setReview({
       ...review,
-      reviewScore: e.target.value,
+      reviewScore: parseInt(e.target.value), // 점수를 숫자로 변경
     });
   };
 
@@ -46,6 +47,7 @@ export default function ReviewWriteFormPage() {
     try {
       const responseJsonObject = await reviewApi.writeReview(review);
       console.log(responseJsonObject.data);
+      // 리뷰 작성 후 해당 리뷰 상세 페이지로 이동
       navigate(`/review/${responseJsonObject.data.reviewNo}`);
     } catch (error) {
       console.error("리뷰 작성 오류:", error);
