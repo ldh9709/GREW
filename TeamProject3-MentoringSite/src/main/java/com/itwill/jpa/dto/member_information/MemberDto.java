@@ -38,10 +38,11 @@ public class MemberDto {
 	private Integer memberReportCount;
 	private Role memberRole;
 	private String memberProvider;
+	private Long mentorProfileNo;
 	
 	private List<InterestDto> interests;
 	
-	 /* Entitiy -> DTO*/
+	/* 관심사 포함 */
 	public static MemberDto toDto(Member memberEntity) {
 		return MemberDto.builder()
 				.memberNo(memberEntity.getMemberNo())
@@ -55,6 +56,7 @@ public class MemberDto {
 	            .memberReportCount(memberEntity.getMemberReportCount())
 	            .memberRole(memberEntity.getMemberRole())
 	            .memberProvider(memberEntity.getMemberProvider())
+	            .mentorProfileNo(memberEntity.getMentorProfile() !=null ? memberEntity.getMentorProfile().getMentorProfileNo() : 0L)
 	            .interests(memberEntity.getInterests().stream()
 	            		.map(InterestDto::toDto)
 	            		.toList())
@@ -62,6 +64,7 @@ public class MemberDto {
 	}
 	
 	
+	/* 관심사 미포함 */
 	public static MemberDto toBasicDto(Member memberEntity) {
 		return MemberDto.builder()
 				.memberNo(memberEntity.getMemberNo())

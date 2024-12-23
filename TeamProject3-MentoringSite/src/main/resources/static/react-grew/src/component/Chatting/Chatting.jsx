@@ -12,17 +12,46 @@ const ChattingMessage = ({ roomId, roomName }) => {
   const chatContainerRef = useRef(null);
   const [imagePreview, setImagePreview] = useState(null);
   let stompClient = useRef(null);
-  
+
+  const formatTime = (dateString) => {
+    const date = new Date(dateString);
+    const hours = date.getHours();
+    const minutes = String(date.getMinutes()).padStart(2, '0');
+    const period = hours >= 12 ? '오후' : '오전';
+    const formattedHours = hours % 12 || 12; // 0시는 12시로 표시
+    return `${period} ${formattedHours}:${minutes}`;
+  };
+
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    return `${year}년 ${month}월 ${day}일`;
+  };
+
   const chatMessages = async (username) => {
     const responseJsonObject = await ChattingApi.viewChatMessage(roomId);
     console.log(responseJsonObject);
     console.log('username : '+username);
-      const backMessage = responseJsonObject.data.map((msg) => ({
-        memberName: msg.memberName,
-        chatMessageContent: msg.chatMessageContent,
-        type: msg.memberName === username ? 'sent' : 'received', // 메시지 유형 설정
-      }));
-      setMessages(backMessage);
+    const backMessage = responseJsonObject.data.map((msg) => ({
+      memberName: msg.memberName,
+      chatMessageDate: msg.chatMessageDate,
+      chatMessageContent: msg.chatMessageContent,
+      chatMessageCheck: msg.chatMessageCheck,
+      type: msg.memberName === username ? 'sent' : 'received', // 메시지 유형 설정
+    }));
+    setMessages(backMessage);
+
+    // 읽지 않은 메시지 중 자신의 메시지가 아닌 것만 필터링
+    const unreadMessages = responseJsonObject.data.filter(
+      msg => msg.chatMessageCheck === 1 && msg.memberName !== username
+    );
+
+    // 읽음 상태 업데이트 요청
+    unreadMessages.forEach(async (msg) => {
+      await ChattingApi.readChatMessage(msg.chatMessageNo); // 업데이트 API 호출
+    });
   }
   
   useEffect(() => {
@@ -36,8 +65,8 @@ const ChattingMessage = ({ roomId, roomName }) => {
 
   useEffect(() => {
     if (!roomId || !username) {
-        // roomId 또는 username이 null일 경우, 아무 작업도 하지 않음
-        return;
+      // roomId 또는 username이 null일 경우, 아무 작업도 하지 않음
+      return;
     }
     console.log('입력받았었고 등록된 roomId : '+roomId);
     console.log('등록된 username : '+username);
@@ -53,12 +82,33 @@ const ChattingMessage = ({ roomId, roomName }) => {
               
               stompClient.current.subscribe(`/topic/messages/${roomId}`, (response) => { // 서버에서 소켓내용을 받아옴
                 const message = JSON.parse(response.body);
+                if (!message.chatMessageDate) {
+                  message.chatMessageDate = new Date().toISOString(); // ISO 8601 형식으로 현재 시간 설정
+                }
+                console.log("message : ")
                 console.log(message);
                 const messageType = message.memberName === username ? 'sent' : 'received';
                 setMessages((prevMessages) => [
                   ...prevMessages,
-                  { memberName: message.memberName, chatMessageContent: message.chatMessageContent, type: messageType },
+                  { chatMessageNo: message.chatMessageNo,
+                    chatMessageContent: message.chatMessageContent,
+                    chatMessageDate: message.chatMessageDate, 
+                    chatMessageCheck: message.chatMessageCheck,
+                    memberName: message.memberName, 
+                    type: messageType },
                 ]);
+                // 읽음 상태 업데이트 요청
+                if (message.memberName !== username) {
+                  stompClient.current.publish({
+                    destination: `/app/chat/read/${roomId}`,
+                    body: JSON.stringify(message),
+                  });
+                }
+              });
+              stompClient.current.subscribe(`/topic/read-status/${roomId}`, (response) => {
+                const responseJsonObject = JSON.parse(response.body);
+                console.log(responseJsonObject);
+                chatMessages(username);
               });
             },
             onDisconnect: () => console.log('Disconnected'),
@@ -111,7 +161,7 @@ const ChattingMessage = ({ roomId, roomName }) => {
         chatMessageNo: 0,
         chatMessageContent: messageContent,
         chatMessageDate: '',
-        chatMessagerCheck: 0,
+        chatMessageCheck: 1,
         memberNo: memberCookie.memberNo,
         memberName: username,
         chatRoomNo : roomId
@@ -122,6 +172,8 @@ const ChattingMessage = ({ roomId, roomName }) => {
     }
   };
 
+  let lastDate = null; // 마지막 메시지의 날짜
+
   if (username && roomId){
     return (
         <div className="chat-app">
@@ -131,11 +183,26 @@ const ChattingMessage = ({ roomId, roomName }) => {
             {messages.length === 0 ? (
             <div className="no-messages">채팅을 시작해보세요</div>
           ) : (
-            messages.map((msg, index) => (
-                <div key={index} className={`chat-message ${msg.type}`}>
+            messages.map((msg, index) => {
+              const currentDate = formatDate(msg.chatMessageDate);
+              const isNewDate = lastDate !== currentDate;
+              lastDate = currentDate;
+
+              return (
+                <div key={index} className="chat-message-container">
+                  {/* 날짜 변경 시 새로운 날짜 표시 */}
+                  {isNewDate && <div className="chat-message-date">{currentDate}</div>}
+                  {/* 읽음/안 읽음 상태 표시 */}
+                  <span className={`chat-message-status-${msg.type}`}>
+                    {msg.chatMessageCheck === 1 ? '1' : null}
+                  </span>
+                  <div className={`chat-message-${msg.type}`}>
                     {msg.type === 'sent' ? `${msg.memberName}: ${msg.chatMessageContent}` : `${msg.memberName}: ${msg.chatMessageContent}`}
+                  </div>
+                  <div className={`chat-message-time-${msg.type}`}>{formatTime(msg.chatMessageDate)}</div>
                 </div>
-            ))
+              );
+            })
           )}
           </div>
           {/* 전송을 누르면 handleSendMessage를 호출 */}

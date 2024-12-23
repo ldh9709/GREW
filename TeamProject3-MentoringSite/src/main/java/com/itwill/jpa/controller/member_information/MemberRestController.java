@@ -389,28 +389,16 @@ public class MemberRestController {
 		Member member = memberService.updateMemberRole(memberNo, role);
 		
 		//토큰 재생성
-		Map<String, Object> claims = principalDetails.getClaims();
-		
-		String newAccessToken = JWTUtil.generateToken(claims, 60);
-		String newRefreshToken = JWTUtil.generateToken(claims, 60 * 24);
-		
-		claims.put("accessToken", newAccessToken);
-		claims.put("refreshToken", newRefreshToken);
+		Map<String, String> tokens = memberService.regenerateTokens(authentication, member);
 
 		//토큰 생성 후 http응답 헤더에 포함
 		HttpHeaders httpHeaders=new HttpHeaders();
-		httpHeaders.add("Authorization", "Bearer " + newAccessToken);
-		httpHeaders.add("Refresh-Token", newRefreshToken);
-		
-		// 응답 데이터에 토큰 추가
-	    Map<String, String> tokenData = new HashMap<>();
-	    tokenData.put("accessToken", newAccessToken);
-	    tokenData.put("refreshToken", newRefreshToken);
+		httpHeaders.add("Authorization", "Bearer " + tokens.get("accessToken"));
+		httpHeaders.add("Refresh-Token", tokens.get("refreshToken"));
 		
 		response.setStatus(ResponseStatusCode.UPDATE_ROLE_SUCCESS);
 		response.setMessage(ResponseMessage.UPDATE_ROLE_SUCCESS);
-		response.setData(tokenData);
-		
+		response.setData(tokens);
 		
 		ResponseEntity<Response> responseEntity = 
 				new ResponseEntity<Response>(response, httpHeaders, HttpStatus.OK);
