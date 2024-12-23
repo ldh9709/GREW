@@ -59,10 +59,12 @@ export default function HeaderMenu() {
       const mentorProfileResponse = await getMentorProfile(mentorProfileNo);
       console.log("멘토 프로필 : ", mentorProfileResponse);
 
-      if (mentorProfileResponse?.data?.categoryNo === 26) {
+      if (mentorProfileResponse.data.categoryNo === 26) {
         navigate("/mentor/join");
-      } else if (memberProfileResponse?.data?.categoryNo === 19) {
+
+      } else if (memberProfileResponse.data.categoryNo === 19) {
         navigate("/member/profile/edit");
+
       } else {
         navigate("/member/profile"); // 기본 프로필로 이동
       }

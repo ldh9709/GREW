@@ -191,10 +191,17 @@ export const memberProfile = async (token) => {
   };
 
 //멘토 프로필 조회
-export const getMentorProfile = async (memberNo) => {
-    const response = await fetch(`${BACKEND_SERVER}/mentor-profile/${memberNo}`)
-
-    
+export const getMentorProfile = async (mentorProfileNo) => {
+    const response = await fetch(`${BACKEND_SERVER}/mentor-profile/${mentorProfileNo}`, {
+        method:'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            //'Authorization': `Bearer ${token}` // Authorization 헤더에 JWT 토큰 추가
+        },
+    });
+    // 서버 응답 처리
+    const resultJsonObject = await response.json();
+    return resultJsonObject;
 };
 
 //인증코드 메일 발송
