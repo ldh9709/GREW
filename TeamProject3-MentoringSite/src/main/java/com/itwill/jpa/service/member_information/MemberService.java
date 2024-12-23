@@ -1,6 +1,9 @@
 package com.itwill.jpa.service.member_information;
 
 import java.util.List;
+import java.util.Map;
+
+import org.springframework.security.core.Authentication;
 
 import com.itwill.jpa.dto.member_information.MemberDto;
 import com.itwill.jpa.entity.member_information.Member;
@@ -67,4 +70,7 @@ public interface MemberService {
 
 	//회원 신고 카운트 증가
 	Member incrementReportCount(Long MemberNo);
+	
+	//토큰 재생성
+	Map<String, String> regenerateTokens(Authentication authentication, Member updateMember);
 }
