@@ -1,16 +1,22 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "../../css/styles.css";
 import * as answerApi from "../../api/answerApi";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { getCookie } from "../../util/cookieUtil";
+import AnswerProfilePopup from "./AnswerProfilePopup";
 export default function AnswerItem({ answer }) {
   const [inquiry, setInquiry] = useState(0);
   const [voteCount, setVoteCount] = useState(0);
+  const [isPopupVisible, setIsPopupVisible] = useState(false);
+
   const memberCookie = getCookie("member");
   const navigate = useNavigate();
   const token =
     memberCookie && memberCookie.accessToken ? memberCookie.accessToken : null;
-
+  // 버튼 클릭 시 팝업 창을 토글하는 함수
+  const togglePopup = () => {
+    setIsPopupVisible((prevState) => !prevState);
+  };
   async function fetchData() {
     try {
       const response = await answerApi.findInquiry(answer.inquiryNo);
@@ -24,9 +30,9 @@ export default function AnswerItem({ answer }) {
   useEffect(() => {
     fetchData();
   }, [voteCount]);
-  const handleModify = async () =>{
-    navigate(`/answer/modify/${answer.answerNo}`)
-  }
+  const handleModify = async () => {
+    navigate(`/answer/modify/${answer.answerNo}`);
+  };
   const handleUpvote = async () => {
     try {
       const response = await answerApi.upVote(answer.answerNo, token); // API 호출
@@ -71,10 +77,7 @@ export default function AnswerItem({ answer }) {
   };
   return (
     <>
-      <link
-        href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap"
-        rel="stylesheet"
-      ></link>
+      
       <div className="answer-container">
         {answer.answerAccept == 2 ? (
           <div className="answer-accept-status">
@@ -109,7 +112,13 @@ export default function AnswerItem({ answer }) {
         {/* 신고하기버튼 */}
         {/* 신고하기버튼 */}
         {/* 신고하기버튼 */}
-        <div className="answer-member">{answer.memberName}</div>
+        <button className="answer-member" onClick={togglePopup}>
+          {answer.memberName}
+        </button>
+        {/* 팝업 창 */}
+        {isPopupVisible && (
+          <AnswerProfilePopup key = {answer.answerNo} answerNo= {answer.memberNo}className="popup"/>
+        )}
         <div className="answer-content">{answer.answerContent}</div>
         <div className="answer-date">{answer.answerDate.substring(0, 10)}</div>
         <div className="answer-vote">
@@ -119,7 +128,7 @@ export default function AnswerItem({ answer }) {
         </div>
         {memberCookie && memberCookie.memberNo == answer.memberNo ? (
           <div className="modify-delete-btn">
-              <button onClick={handleModify}>수정</button>
+            <button onClick={handleModify}>수정</button>
 
             <button
               onClick={(e) => {

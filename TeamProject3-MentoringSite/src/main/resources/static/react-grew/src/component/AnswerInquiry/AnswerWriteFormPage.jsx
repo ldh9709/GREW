@@ -84,7 +84,6 @@ export default function AnswerWriteFormPage() {
           <div>{inquiry.inquiryContent}</div>
         </div>
 
-        <br />
       </div>
 
       <div>
