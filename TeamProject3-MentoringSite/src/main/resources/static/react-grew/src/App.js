@@ -77,7 +77,7 @@ function App() {
               path="/review/reviewWrite"
               element={<ReviewWriteFormPage />}
             />
-            <Route path="/review/reviewView" element={<ReviewView />} />
+            <Route path="/review/:reviewNo" element={<ReviewView />} /> {/* 상세 페이지 라우팅 */}
             <Route path="/review/reviewList" element={<ReviewListPage />} />
           </Routes>
           <Footer />

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom"; // useParams를 사용하여 URL 파라미터 받기
 import * as reviewApi from "../../api/reviewApi"; // 리뷰 API
 
 export default function ReviewDetailPage() {
