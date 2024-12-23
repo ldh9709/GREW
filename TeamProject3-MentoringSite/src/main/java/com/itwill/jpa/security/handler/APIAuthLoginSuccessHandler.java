@@ -18,7 +18,7 @@ import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-public class APILoginSuccessHandler implements AuthenticationSuccessHandler {
+public class APIAuthLoginSuccessHandler implements AuthenticationSuccessHandler {
 
     /* 로그인 성공 후 호출되는 메서드
      * 
@@ -70,6 +70,7 @@ public class APILoginSuccessHandler implements AuthenticationSuccessHandler {
         //리다이렉트 설정
         // 7. 응답 설정
         response.setContentType("application/json; charset=UTF-8");
+        response.sendRedirect("http://localhost:3000/main");
         PrintWriter printWriter = response.getWriter();
         printWriter.println(jsonStr);  // 클라이언트에게 JSON 형식의 클레임을 반환
         printWriter.close();
