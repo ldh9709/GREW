@@ -50,8 +50,8 @@ export default function AdminMember() {
                 <select onChange={handleRoleChange} value={role}>
                     <option value="ROLE_MENTEE">MENTEE</option>
                     <option value="ROLE_MENTOR">MENTOR</option>
-                    <option value="전체">WITHDRAWAL</option>
-                    <option value="WITHDRAW">REMOVAL</option>
+                    {/*<option value="전체">WITHDRAWAL</option>
+                    <option value="WITHDRAW">REMOVAL</option>*/}
                 </select>
             </div>
             <table className="member-table">

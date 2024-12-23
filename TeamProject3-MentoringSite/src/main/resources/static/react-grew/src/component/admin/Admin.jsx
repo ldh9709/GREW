@@ -19,7 +19,7 @@ export default function Admin() {
         <ul>
             <li>회원</li>
             <li>질문 게시글</li>
-            <li>지도자 게시글</li>
+            <li>답변 게시글</li>
             <li>신고 목록</li>
         </ul>
     </div>
