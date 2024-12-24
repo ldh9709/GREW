@@ -44,7 +44,6 @@ import ForbiddenPage from "./component/ForbiddenPage";
 import MentorProfileItem from "./component/MentorProfile/MentorProfileItem";
 
 import AdminRoutes from "./routes/AdminRoutes";
-import MemberSummary from "./component/Member/mypage/MemberSummary";
 
 /* 신고 모달 */
 import ReportModal from "./component/Report/ReportModal";
