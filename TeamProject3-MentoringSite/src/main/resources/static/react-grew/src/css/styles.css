@@ -77,7 +77,7 @@ button {
   line-height: 30px;
   background-color: #fff;
   padding: 10px 0px 0px 0px !important;
-  z-index: 1000;
+  z-index: 999;
 }
 .headerMenuBar {
   display: flex;
@@ -109,7 +109,7 @@ button {
   border-bottom: 1px solid #ccc;
   padding-top: 40px;
   padding-bottom: 15px;
-  z-index: 999;
+  z-index: 998;
 }
 
 .logo {
