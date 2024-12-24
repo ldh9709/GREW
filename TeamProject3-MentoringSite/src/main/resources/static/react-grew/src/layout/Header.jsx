@@ -53,6 +53,8 @@ export default function HeaderMenu() {
   // 프로필 페이지로 이동
   const handleProfileNavigate = async () => {
     try {
+
+      
       const memberProfileResponse = await memberProfile(token);
       console.log("멤버 프로필 : ", memberProfileResponse);
 
