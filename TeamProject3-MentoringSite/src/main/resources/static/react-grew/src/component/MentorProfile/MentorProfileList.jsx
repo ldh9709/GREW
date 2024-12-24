@@ -10,6 +10,8 @@ import {
 } from "../../api/mentorProfileApi.js";
 import MentorProfileItem from "./MentorProfileItem";
 
+import * as categoryApi from "../../api/categoryApi"; //카테고리 
+
 const MentorProfileList = () => {
   const [mentorProfiles, setMentorProfiles] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -17,6 +19,45 @@ const MentorProfileList = () => {
   const [sortType, setSortType] = useState("follow");
   const [currentPage, setCurrentPage] = useState(0);
   const [totalPages, setTotalPages] = useState(0);
+      const [categories, setCategories] = useState([]); // 카테고리 리스트
+      const [selectedCategory, setSelectedCategory] = useState(null); // 선택된 카테고리
+      const [childCategories, setChildCategories] = useState([]); // 하위 카테고리 상태
+
+
+// 카테고리 목록을 가져오는 함수
+  const fetchCategories = async () => {
+    try {
+      const response = await categoryApi.ListCategory();
+      setCategories(response.data); // 카테고리 목록을 상태에 저장
+    } catch (error) {
+      console.error("카테고리 가져오기 실패:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchCategories();
+  }, []); //카테고리
+
+// 카테고리 버튼 클릭 시 호출되는 함수
+  const handleCategoryClick = async (categoryNo) => {
+    setSelectedCategory(categoryNo); // 새 카테고리 선택
+    console.log("선택된 상위 카테고리", categoryNo);
+
+    const selectedCategory = categories.find(
+      (cat) => cat.categoryNo === categoryNo
+    );
+    if (selectedCategory && selectedCategory.categoryDepth === 1) {
+      try {
+        // 하위 카테고리 API 호출
+        const response = await categoryApi.childCategory(categoryNo); // categoryNo를 API 요청에 포함
+        setChildCategories(response.data.childCategories); // 하위 카테고리 상태에 저장
+      } catch (error) {
+        console.error("하위 카테고리 로드 오류:", error);
+      }
+    }
+  };
+
+
 
   useEffect(() => {
     fetchMentorProfiles();
@@ -70,6 +111,8 @@ const MentorProfileList = () => {
     const pageNumbers = Array.from({ length: totalPages }, (_, i) => i);
 
     return (
+      
+      
       <div className="pagination">
         <button
           onClick={() => handlePageChange(currentPage - 1)}
@@ -97,9 +140,52 @@ const MentorProfileList = () => {
   };
 
   return (
+    
     <div className="mentor-list">
       <div className="mentor-profile-list">
         <h1>멘토 프로필 목록</h1>
+        {/* 카테고리 버튼들 */}
+      <div className="category-container">
+        <div className="category-parent">
+          {categories
+            .filter((category) => category.categoryDepth === 1) // categoryDepth가 1인 카테고리만 필터링
+            .map((category) => (
+              <button
+                key={category.categoryNo}
+                onClick={() => handleCategoryClick(category.categoryNo)} // 클릭 시 카테고리 선택
+                className="category-button"
+                style={{
+                  backgroundColor:
+                    selectedCategory === category.categoryNo ? "#4CAF50" : "", // 선택된 카테고리는 색상 변경
+                  color:
+                    selectedCategory === category.categoryNo ? "white" : "", // 선택된 카테고리 글자 색상 변경
+                }}
+              >
+                {category.categoryName}
+              </button>
+            ))}
+        </div>
+
+        {/* 하위 카테고리 버튼 렌더링 */}
+        {childCategories.length > 0 && (
+          <div className="category-child">
+            {childCategories.map((child) => (
+              <button
+                key={child.categoryNo}
+                onClick={() => handleCategoryClick(child.categoryNo)} // 하위 카테고리 선택
+                className="category-button"
+                style={{
+                  backgroundColor:
+                    selectedCategory === child.categoryNo ? "#4CAF50" : "", // 선택된 카테고리는 색상 변경
+                  color: selectedCategory === child.categoryNo ? "white" : "", // 선택된 카테고리 글자 색상 변경
+                }}
+              >
+                {child.categoryName}
+              </button>
+            ))}
+          </div>
+        )}
+      </div>
         <div className="radio-container">
           <label>
             <input

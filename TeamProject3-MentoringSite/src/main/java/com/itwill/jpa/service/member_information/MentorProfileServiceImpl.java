@@ -446,8 +446,65 @@ public class MentorProfileServiceImpl implements MentorProfileService {
 	}
     
     
+	
+	//12월 24일 멘토 프로필 카테고리
+	 /**
+     * 팔로우 순으로 소분류 카테고리별 멘토 리스트 조회
+     */
+    @Override
+    public Page<MentorProfileDto> getMentorsByCategoryOrderByFollowCount(Long categoryNo, int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        Page<MentorProfile> mentorProfiles = mentorProfileRepository.findByCategoryNoOrderByFollowCount(categoryNo, pageable);
+        return mentorProfiles.map(MentorProfileDto::toDto);
+    }
 
-    
+    /**
+     * 팔로우 순으로 대분류 카테고리별 멘토 리스트 조회
+     */
+    @Override
+    public Page<MentorProfileDto> getMentorsByParentCategoryOrderByFollowCount(Long categoryNo, int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        Page<MentorProfile> mentorProfiles = mentorProfileRepository.findByParentCategoryNoOrderByFollowCount(categoryNo, pageable);
+        return mentorProfiles.map(MentorProfileDto::toDto);
+    }
 
+    /**
+     * 멘토링 횟수 순으로 소분류 카테고리별 멘토 리스트 조회
+     */
+    @Override
+    public Page<MentorProfileDto> getMentorsByCategoryOrderByMentoringCount(Long categoryNo, int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        Page<MentorProfile> mentorProfiles = mentorProfileRepository.findByCategoryNoOrderByMentoringCount(categoryNo, pageable);
+        return mentorProfiles.map(MentorProfileDto::toDto);
+    }
+
+    /**
+     * 멘토링 횟수 순으로 대분류 카테고리별 멘토 리스트 조회
+     */
+    @Override
+    public Page<MentorProfileDto> getMentorsByParentCategoryOrderByMentoringCount(Long categoryNo, int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        Page<MentorProfile> mentorProfiles = mentorProfileRepository.findByParentCategoryNoOrderByMentoringCount(categoryNo, pageable);
+        return mentorProfiles.map(MentorProfileDto::toDto);
+    }
+
+    /**
+     * 활동 수 순으로 소분류 카테고리별 멘토 리스트 조회
+     */
+    @Override
+    public Page<MentorProfileDto> getMentorsByCategoryOrderByActivityCount(Long categoryNo, int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        Page<MentorProfile> mentorProfiles = mentorProfileRepository.findByCategoryNoOrderByActivityCount(categoryNo, pageable);
+        return mentorProfiles.map(MentorProfileDto::toDto);
+    }
+
+    /**
+     * 활동 수 순으로 대분류 카테고리별 멘토 리스트 조회
+     */
+    @Override
+    public Page<MentorProfileDto> getMentorsByParentCategoryOrderByActivityCount(Long categoryNo, int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        Page<MentorProfile> mentorProfiles = mentorProfileRepository.findByParentCategoryNoOrderByActivityCount(categoryNo, pageable);
+        return mentorProfiles.map(MentorProfileDto::toDto);
+    }
 }
-    
