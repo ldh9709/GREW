@@ -53,18 +53,31 @@ export default function HeaderMenu() {
   // 프로필 페이지로 이동
   const handleProfileNavigate = async () => {
     try {
-
+      
       
       const memberProfileResponse = await memberProfile(token);
       console.log("멤버 프로필 : ", memberProfileResponse);
-
+      
       const mentorProfileResponse = await getMentorProfile(mentorProfileNo);
       console.log("멘토 프로필 : ", mentorProfileResponse);
+      
+      /* 멤버의 관심사가 19번인지 확인(SNS로그인 시 기본값) */
+      const checkMemberCategory = memberProfileResponse?.data?.interests?.some(
+        (interest) => interest.categoryNo === 19
+      );
 
-      if (mentorProfileResponse.data.categoryNo === 26) {
+      /* 멘토의 전문분야가 26번인지 확인(멘토 회원가입 시 기본값) */
+      const checkMentorCategory = mentorProfileResponse?.data?.categoryNo === 26;
+      
+      
+      console.log("checkMemberCategory : ", checkMemberCategory);
+
+      console.log("checkMentorCategory : ", checkMentorCategory);
+      
+      if (checkMentorCategory) {
         navigate("/mentor/join");
 
-      } else if (memberProfileResponse.data.categoryNo === 19) {
+      } else if (checkMemberCategory) {
         navigate("/member/profile/edit");
 
       } else {
