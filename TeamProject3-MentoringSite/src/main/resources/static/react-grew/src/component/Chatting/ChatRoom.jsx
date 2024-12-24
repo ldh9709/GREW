@@ -11,7 +11,7 @@ const ChatRoom = ({ onRoomClick }) => {
     const [totalPages, setTotalPages] = useState(0); // 총 페이지 수
 
     const memberCookie = getCookie("member");
-    const token = memberCookie.accessToken;
+    const token = memberCookie ? memberCookie.accessToken : null;
 
     const chatRoomList = async (page) => {
         console.log('토큰'+token);

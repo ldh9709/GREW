@@ -3,14 +3,19 @@ import SockJS from 'sockjs-client';
 import { Client as StompClient } from '@stomp/stompjs';
 import { getCookie } from "../../util/cookieUtil.js";
 import * as ChattingApi from '../../api/chattingApi.js';
+import { jwtDecode } from "jwt-decode";
 
 const ChattingMessage = ({ roomId, roomName }) => {
   const memberCookie = getCookie("member");
+  const token = memberCookie ? memberCookie.accessToken : null;
+  const decodeToken = token ? jwtDecode(token) : null;
+
   const [username, setUsername] = useState('');
   const [messageContent, setMessageContent] = useState('');
   const [messages, setMessages] = useState([]);
   const chatContainerRef = useRef(null);
   const [imagePreview, setImagePreview] = useState(null);
+  const [hasUnreadMessages, setHasUnreadMessages] = useState(false);
   let stompClient = useRef(null);
 
   const formatTime = (dateString) => {
@@ -33,7 +38,7 @@ const ChattingMessage = ({ roomId, roomName }) => {
   const chatMessages = async (username) => {
     const responseJsonObject = await ChattingApi.viewChatMessage(roomId);
     console.log(responseJsonObject);
-    console.log('username : '+username);
+    
     const backMessage = responseJsonObject.data.map((msg) => ({
       memberName: msg.memberName,
       chatMessageDate: msg.chatMessageDate,
@@ -42,26 +47,40 @@ const ChattingMessage = ({ roomId, roomName }) => {
       type: msg.memberName === username ? 'sent' : 'received', // 메시지 유형 설정
     }));
     setMessages(backMessage);
-
+    
     // 읽지 않은 메시지 중 자신의 메시지가 아닌 것만 필터링
     const unreadMessages = responseJsonObject.data.filter(
       msg => msg.chatMessageCheck === 1 && msg.memberName !== username
     );
-
+    console.log(unreadMessages);
+    
     // 읽음 상태 업데이트 요청
-    unreadMessages.forEach(async (msg) => {
-      await ChattingApi.readChatMessage(msg.chatMessageNo); // 업데이트 API 호출
-    });
+    if (unreadMessages.length > 0) {  //안읽은 채팅이 있는지 확인 
+      Promise.all( //Promise.all은 배열이 완료될 때까지 기다린 뒤 .then 블록을 실행
+        unreadMessages.map((msg) => ChattingApi.readChatMessage(msg.chatMessageNo))
+      ).then(() => {
+        // 읽음 상태를 업데이트한 메시지를 반영
+        setHasUnreadMessages(true); // 상태 업데이트
+        setMessages((prevMessages) =>  //react객체안에 업데이트 된 정보를 담음
+        prevMessages.map((msg) =>
+          unreadMessages.some((unreadMsg) => unreadMsg.chatMessageNo === msg.chatMessageNo)
+        ? { ...msg, chatMessageCheck: 0 } // 읽음 상태로 변경
+        : msg
+          )
+        );
+      });
+    }
   }
   
   useEffect(() => {
-    const username = memberCookie.memberName;
+    const username = decodeToken.memberName;
     if (username) {
       console.log('username : '+username);
       setUsername(username); // 이름 설정
+      setHasUnreadMessages(false); // 다시 초기화
     } 
     chatMessages(username);
-  }, [roomId]);
+  }, [roomId, hasUnreadMessages]);
 
   useEffect(() => {
     if (!roomId || !username) {
@@ -162,7 +181,7 @@ const ChattingMessage = ({ roomId, roomName }) => {
         chatMessageContent: messageContent,
         chatMessageDate: '',
         chatMessageCheck: 1,
-        memberNo: memberCookie.memberNo,
+        memberNo: decodeToken.memberNo,
         memberName: username,
         chatRoomNo : roomId
       };
