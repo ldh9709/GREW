@@ -3,9 +3,10 @@ import "../../css/styles.css";
 import * as answerApi from "../../api/answerApi";
 import * as categoryApi from "../../api/categoryApi";
 import { useNavigate } from "react-router-dom";
-import { getCookie } from "../../util/cookieUtil";
 import AnswerProfilePopup from "./AnswerProfilePopup";
+import { useMemberAuth } from "../../util/AuthContext";
 export default function AnswerItem({ answer }) {
+  const { token, member } = useMemberAuth();
   const [inquiry, setInquiry] = useState(0);
   const [voteCount, setVoteCount] = useState(0);
   const [isPopupVisible, setIsPopupVisible] = useState(false);
@@ -14,10 +15,7 @@ export default function AnswerItem({ answer }) {
   const [isReportHovered, setIsReportHovered] = useState(false);
   const [isUpVoteHovered, setIsUpVoteHovered] = useState(false);
   const [isDownVoteHovered, setIsDownVoteHovered] = useState(false);
-  const memberCookie = getCookie("member");
   const navigate = useNavigate();
-  const token =
-    memberCookie && memberCookie.accessToken ? memberCookie.accessToken : null;
   // 버튼 클릭 시 팝업 창을 토글하는 함수
   const togglePopup = () => {
     setIsPopupVisible((prevState) => !prevState);
@@ -116,7 +114,7 @@ export default function AnswerItem({ answer }) {
           <div></div>
         )}
 
-        {memberCookie && memberCookie.memberNo == inquiry.memberNo ? (
+        {member && member.memberNo == inquiry.memberNo ? (
           <div className="answer-accept">
             <button onClick={handleAccept}>채택하기</button>
           </div>
@@ -209,7 +207,7 @@ export default function AnswerItem({ answer }) {
         {/* 신고하기버튼 */}
         {/* 신고하기버튼 */}
         {/* 신고하기버튼 */}
-        {memberCookie && memberCookie.memberNo == answer.memberNo ? (
+        {member && member.memberNo == answer.memberNo ? (
           <div className="modify-delete-btn">
             <button onClick={handleModify}>수정</button>
 

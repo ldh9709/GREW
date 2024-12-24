@@ -3,10 +3,10 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import * as inquiryApi from "../../api/inquiryApi";
 import * as answerApi from "../../api/answerApi";
 import AnswerItem from "./AnswerItem";
-import { getCookie } from "../../util/cookieUtil";
 import "../../css/styles.css";
+import { useMemberAuth } from "../../util/AuthContext";
 function InquiryView() {
-  const memberCookie = getCookie("member");
+  const {token, member} = useMemberAuth();
   const navigate = useNavigate();
   const { inquiryNo } = useParams(); //path에서 받아오는거임! app.js의 경로와 관련있음
   const [inquiry, setInquiry] = useState({
@@ -98,10 +98,12 @@ function InquiryView() {
     pageNumbers.push(i);
   }
   const handleWriteButton = () => {
-    console.log(memberCookie);
-    if (memberCookie) {
+    if (member.memberRole == 'ROLE_MENTOR') {
       navigate(`/answer/answerWrite/${inquiryNo}`);
-    } else {
+    } else if(member.memberRole=='ROLE_MENTEE'){
+      alert("멘토만 답변 작성이 가능합니다");
+      return;
+    }else{
       alert("로그인이 필요한 서비스입니다.");
       return;
     }
@@ -163,7 +165,7 @@ function InquiryView() {
             <div>{inquiry.inquiryContent}</div>
           </div>
 
-          {memberCookie != null && memberCookie.memberNo == inquiry.memberNo ? (
+          {member != null && member.memberNo == inquiry.memberNo ? (
             <div className="modify-delete-btn2">
               <button onClick={handleModify}>수정</button>
 
