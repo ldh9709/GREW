@@ -34,8 +34,9 @@
 /* 멘토 프로필 리스트 */
 .profile-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* 반응형으로 조정 */
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); /* 반응형으로 조정 */
   gap: 20px;
+  margin-right: 10px;
   margin-bottom: 30px;
 }
 
@@ -66,7 +67,7 @@
 /* 페이지네이션 버튼 */
 .pagenation {
   display: flex;
-  justify-content: center; /* 가운데 정렬 */
+  justify-content: center;
   margin-top: 30px; /* 위쪽 여백 */
   gap: 10px; /* 버튼 간 간격 */
 }
@@ -276,4 +277,11 @@
 
 .question-button:hover {
   background-color: #0056b3;
+}
+
+.mentor-profile-pagenation{
+  display: flex;
+  justify-content: center;
+  position: relative; /* 부모 요소에 상대적인 배치를 위해 */
+  height: 50px;
 }

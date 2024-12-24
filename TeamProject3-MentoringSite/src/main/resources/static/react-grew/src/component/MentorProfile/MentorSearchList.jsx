@@ -18,7 +18,7 @@ const MentorSearchList = () => {
     try {
       setError(null); 
       const response = await mentorProfileApi.searchMentorProfiles(query, page, size); 
-      console.log("API 응답 데이터:", response); 
+      console.log("API 응답 데이터:", response.data); 
       setSearchResults(response.data.content || response.data); 
       setTotalPages(response.data.totalPages); 
       console.log(response);

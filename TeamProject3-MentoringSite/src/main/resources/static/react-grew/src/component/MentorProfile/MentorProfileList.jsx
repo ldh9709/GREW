@@ -97,52 +97,57 @@ const MentorProfileList = () => {
   };
 
   return (
-    <div className="mentor-profile-list">
-      <h1>멘토 프로필 목록</h1>
-      <div className="radio-container">
-        <label>
-          <input
-            type="radio"
-            name="sortType"
-            value="follow"
-            checked={sortType === "follow"}
-            onChange={handleRadioChange}
-          />
-          팔로우 순
-        </label>
-        <label>
-          <input
-            type="radio"
-            name="sortType"
-            value="mentoring"
-            checked={sortType === "mentoring"}
-            onChange={handleRadioChange}
-          />
-          멘토링 횟수 순
-        </label>
-        <label>
-          <input
-            type="radio"
-            name="sortType"
-            value="activity"
-            checked={sortType === "activity"}
-            onChange={handleRadioChange}
-          />
-          활동 수 순
-        </label>
+    <div className="mentor-list">
+      <div className="mentor-profile-list">
+        <h1>멘토 프로필 목록</h1>
+        <div className="radio-container">
+          <label>
+            <input
+              type="radio"
+              name="sortType"
+              value="follow"
+              checked={sortType === "follow"}
+              onChange={handleRadioChange}
+            />
+            팔로우 순
+          </label>
+          <label>
+            <input
+              type="radio"
+              name="sortType"
+              value="mentoring"
+              checked={sortType === "mentoring"}
+              onChange={handleRadioChange}
+            />
+            멘토링 횟수 순
+          </label>
+          <label>
+            <input
+              type="radio"
+              name="sortType"
+              value="activity"
+              checked={sortType === "activity"}
+              onChange={handleRadioChange}
+            />
+            활동 수 순
+          </label>
+        </div>
+        {loading && <p className="loading-spinner">로딩 중입니다...</p>}
+        {error && <p className="error-message">에러 발생: {error}</p>}
+        <div className="profile-grid">
+          {!loading && mentorProfiles.length > 0
+            ? mentorProfiles.map((mentor) => (
+                <MentorProfileItem
+                  key={mentor.mentorProfileNo}
+                  mentor={mentor}
+                />
+              ))
+            : !loading && <p>멘토 프로필이 없습니다.</p>}
+        </div>
+        <div className="mentor-profile-pagenation">
+          {!loading && totalPages > 0 && renderPagination()}
+        </div>
       </div>
-      {loading && <p className="loading-spinner">로딩 중입니다...</p>}
-      {error && <p className="error-message">에러 발생: {error}</p>}
-      <div className="profile-grid">
-        {!loading && mentorProfiles.length > 0 ? (
-          mentorProfiles.map((mentor) => (
-            <MentorProfileItem key={mentor.mentorProfileNo} mentor={mentor} />
-          ))
-        ) : (
-          !loading && <p>멘토 프로필이 없습니다.</p>
-        )}
-      </div>
-      {!loading && totalPages > 0 && renderPagination()}
     </div>
   );
 };
