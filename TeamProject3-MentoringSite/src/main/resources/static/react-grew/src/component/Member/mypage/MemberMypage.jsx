@@ -4,15 +4,18 @@ import { useNavigate, useParams } from "react-router-dom";
 import "../../../css/styles.css"
 import "../../../css/member.css";
 import MemberTabs from './MemberTabs'
-import { getCookie } from "../../../util/cookieUtil"
-import * as memberApi from "../../../api/memberApi"
+
 
 export default function MemberMypage() {
+<<<<<<< HEAD
   // const navigate = useNavigate();
   // const memberCookie = getCookie("member");
   // const memberNo = memberCookie.memberNo;
   // const token = memberCookie.accessToken;
+=======
+>>>>>>> refs/heads/master
 
+<<<<<<< HEAD
   // useEffect(() => {
   //   const checkProfile = async () => {
   //     const mentorProfile = await memberApi.getMentorProfile(memberNo);
@@ -32,6 +35,8 @@ export default function MemberMypage() {
   //     checkProfile();
   //   }
   // }, []);
+=======
+>>>>>>> refs/heads/master
 
   // const { memberNo } = useParams();
   // const [isDataReady, setIsDataReady] = useState(false);

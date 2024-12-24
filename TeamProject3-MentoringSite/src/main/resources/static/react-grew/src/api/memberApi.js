@@ -82,7 +82,7 @@ export const menteeJoinAction = async (member, tempCode) => {
 
 }
 
-//멘토 회원가입
+//멘티 회원가입
 export const mentorJoinAction = async (member, tempCode) => {
     console.log("Request Data: ", member);
     console.log("Request Data: ", tempCode);
@@ -191,9 +191,18 @@ export const memberProfile = async (token) => {
   };
 
 //멘토 프로필 조회
-export const getMentorProfile = async (memberNo) => {
-    const response = await fetch(`${BACKEND_SERVER}/mentor-profile/`)
-}
+export const getMentorProfile = async (mentorProfileNo) => {
+    const response = await fetch(`${BACKEND_SERVER}/mentor-profile/${mentorProfileNo}`, {
+        method:'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            //'Authorization': `Bearer ${token}` // Authorization 헤더에 JWT 토큰 추가
+        },
+    });
+    // 서버 응답 처리
+    const resultJsonObject = await response.json();
+    return resultJsonObject;
+};
 
 //인증코드 메일 발송
 export const sendJoinCode = async (sendJsonObject) => {

@@ -65,20 +65,22 @@ button {
   margin-top: 30px; /*위에 컨텐츠와의 거리*/
   gap: 5px; /*버튼간거리*/
 }
-#wrapper, #content{
+#wrapper,
+#content {
   margin-top: 120px;
 }
 /* 로그인 버튼 바 */
-.header{
+.header {
   position: fixed;
   right: 365px;
-  height: 30px; line-height: 30px;
+  height: 30px;
+  line-height: 30px;
   background-color: #fff;
-  padding: 10px 0px 0px 0px!important;
+  padding: 10px 0px 0px 0px !important;
   z-index: 1000;
 }
-.headerMenuBar{
-  display:flex;
+.headerMenuBar {
+  display: flex;
   justify-content: left;
   gap: 20px;
   position: relative;
@@ -98,7 +100,8 @@ button {
 /*상단 메뉴바*/
 .navbar-collapse {
   position: fixed;
-  left: 0px; right: 0px;
+  left: 0px;
+  right: 0px;
   height: 50px;
   line-height: 50px;
   align-items: center;
@@ -109,16 +112,16 @@ button {
   z-index: 999;
 }
 
-.logo{
+.logo {
   margin-left: 365px;
 }
 
 /* 상단 바, 로그인 바 반응형 디자인 */
-@media (max-width: 1500px) { 
-  .header{
+@media (max-width: 1500px) {
+  .header {
     right: 10px;
   }
-  .logo{
+  .logo {
     margin-left: 10px;
   }
   .search-container{
@@ -126,14 +129,14 @@ button {
   }
 }
 
-@media (max-width: 1024px) { 
-  .header{
+@media (max-width: 1024px) {
+  .header {
     right: 10px;
   }
-  .logo{
+  .logo {
     margin-left: 10px;
   }
-  .search-container{
+  .search-container {
     margin: auto 0 auto 130px !important;
   }
 }
@@ -141,27 +144,54 @@ button {
 .answer-container {
   display: flex;
   flex-direction: column;
-  border: 1px solid #ccc; /* 테두리 설정 */
-  padding: 30px; /* 내부 여백 */
+  border-top: 1px solid #ccc; /* 테두리 설정 */
   margin: 10px 0; /* 상하 마진 */
   background-color: #ffffff; /* 배경색 */
-  width: 1080px; /*너비*/
+  width: 1150px; /*너비*/
   margin-left: 10px;
 }
-
+.answer-img {
+  display: flex;
+  margin: 10px;
+}
+.answer-img img {
+  width: 45px;
+  height: 45px;
+  border-radius: 50px;
+  object-fit: cover; /* 이미지를 비율에 맞게 잘라서 채우기 */
+}
 .answer-member {
-  font-weight: bold; /* 이름을 강조 */
+  margin-right: 1px;
+  margin: 5px;
+  display: flex;
+  border-radius: 20px;
+  height: 75px;
+  width: 99%;
   align-self: flex-start; /* member는 그 아래에 위치 */
   margin-top: 10px;
-
+  background-color: #d8e0d3;
+  color: #000000;
 }
-
+.answer-member:hover {
+  background-color: #c5e7af;
+}
+.answer-member-name{
+  margin-top: 15px;
+  margin-left: 10px;
+  font-weight: bold;
+  font-size: 23px;
+  display: flex;
+}
 .answer-content {
+  margin-left: 30px;
   margin-top: 10px; /* 내용 위쪽 여백 */
-  font-size: 14px; /* 내용 글자 크기 */
+  font-size: 20px; /* 내용 글자 크기 */
   word-wrap: break-word;
 }
-
+.answer-member-category{
+  margin-left: 8px;
+  margin-top: 23px;
+}
 .answer-date {
   display: flex;
   margin-top: 5px; /* 날짜 위쪽 여백 */
@@ -178,16 +208,40 @@ button {
   margin-top: 10px; /* 위쪽 여백 */
   font-size: 15px;
 }
-.modify-delete-btn{
+.answer-upvote-btn,
+.answer-downvote-btn{
+  background-color: transparent;  /* 배경을 투명하게 설정 */
+  border-radius: 50px;                   /* 버튼의 테두리 없애기 */
+  padding: 0;                     /* 패딩 없애기 */
+  display: inline-flex;           /* 이미지 크기에 맞게 정렬 */
+  justify-content: center;        /* 자식 요소 (이미지)를 중앙에 정렬 */
+  align-items: center;   
+  width: 40px;
+  height: 40px;
+}
+.answer-upvote-btn img,
+.answer-downvote-btn img{
+  width: 30px;
+}
+.answer-upvote-btn:hover,
+.answer-downvote-btn:hover{
+  background-color: transparent;
+  border: none;                   /* 버튼의 테두리 없애기 */
+  padding: 0;                     /* 패딩 없애기 */
+  display: inline-flex;           /* 이미지 크기에 맞게 정렬 */
+  justify-content: center;        /* 자식 요소 (이미지)를 중앙에 정렬 */
+  align-items: center;            /* 자식 요소 (이미지)를 세로로 중앙 정렬 */
+}
+.modify-delete-btn {
   display: flex;
   justify-content: right;
-  gap:10px;
+  gap: 10px;
 }
-.modify-delete-btn2{
+.modify-delete-btn2 {
   height: 30px;
   display: flex;
   justify-content: right;
-  gap:10px;
+  gap: 10px;
 }
 .inquiry-list-main {
   display: flex;
@@ -206,7 +260,6 @@ button {
   padding: 10px;
 }
 .inquiry-container {
-  
   position: relative;
   border-top: 2px solid #ccc; /* 테두리 설정 */
   border-bottom: 2px solid #ccc; /* 테두리 설정 */
@@ -271,23 +324,23 @@ button {
 }
 @keyframes content-slide-up {
   0% {
-    transform: translateY(0);  /* 처음 위치 */
-    opacity: 1;                /* 완전히 보이는 상태 */
+    transform: translateY(0); /* 처음 위치 */
+    opacity: 1; /* 완전히 보이는 상태 */
   }
   100% {
-    transform: translateY(-100%);  /* 위로 이동 */
-    opacity: 0;                  /* 사라짐 */
+    transform: translateY(-100%); /* 위로 이동 */
+    opacity: 0; /* 사라짐 */
   }
 }
 
 @keyframes content-slide-down {
   0% {
-    transform: translateY(100%);  /* 아래에서 시작 */
-    opacity: 0;                   /* 처음엔 보이지 않음 */
+    transform: translateY(100%); /* 아래에서 시작 */
+    opacity: 0; /* 처음엔 보이지 않음 */
   }
   100% {
-    transform: translateY(0);     /* 원래 위치로 올라옴 */
-    opacity: 1;                   /* 보이게 됨 */
+    transform: translateY(0); /* 원래 위치로 올라옴 */
+    opacity: 1; /* 보이게 됨 */
   }
 }
 .answer-best-container {
@@ -298,7 +351,7 @@ button {
   border-radius: 5px;
   background-color: #f4f4f4;
   cursor: pointer;
-  transition: transform 0.3s ease;  /* 호버 시 부드러운 확대 효과 */
+  transition: transform 0.3s ease; /* 호버 시 부드러운 확대 효과 */
 }
 .answer-best-container:hover {
   transform: scale(1.05); /* 호버 시 살짝 커지는 효과 */
@@ -309,15 +362,27 @@ button {
   white-space: nowrap; /* 텍스트가 한 줄로 표시되도록 */
   overflow: hidden; /* 넘치는 부분은 숨기기 */
   text-overflow: ellipsis; /* 넘치는 텍스트는 ...으로 표시 */
-  animation: content-slide-up 1s ease-out forwards, content-slide-down 1s ease-out forwards;  /* 애니메이션을 동시에 실행 */
+  animation: content-slide-up 1s ease-out forwards,
+    content-slide-down 1s ease-out forwards; /* 애니메이션을 동시에 실행 */
 }
-.inquiry-report-btn-div{
+.inquiry-report-btn-div {
   display: flex;
   justify-content: right;
 }
+.answer-report-btn img,
+.inquiry-report-btn img{
+width: 30px;
+}
+.answer-report-btn button,
+.inquiry-report-btn button{
+  background-color: transparent;
+width: 30px;
+}
 .answer-report-btn,
-.inquiry-report-btn{
+.inquiry-report-btn {
+  background-color: transparent;
   margin-top: 5px;
+  margin-right: 30px;
   display: flex;
   justify-content: right;
 }
@@ -514,7 +579,8 @@ button {
 .search-container {
   display: flex;
   position: absolute;
-  right: 365px; bottom: 15px;
+  right: 365px;
+  bottom: 15px;
   justify-content: right;
 }
 
@@ -533,11 +599,11 @@ button {
   border-color: #28a745;
 }
 /*돋보기 아이콘*/
-.search-icon{
+.search-icon {
   position: absolute;
   top: 10px;
   font-size: 17px;
-  color: #888; 
+  color: #888;
 }
 .view-more {
   display: flex;
@@ -605,17 +671,17 @@ button {
 .notification-icon {
   font-size: 18px;
 }
-.all-delete-btn-div{
+.all-delete-btn-div {
   display: flex;
   justify-content: right;
 }
-.notification-all-delete-btn{
+.notification-all-delete-btn {
   border-radius: 10px;
   font-weight: bold;
   color: #000000;
   background-color: #ffffff;
 }
-.notification-all-delete-btn:hover{
+.notification-all-delete-btn:hover {
   border-radius: 10px;
   text-decoration: underline;
   background-color: #ffffff;
@@ -629,7 +695,7 @@ button {
 }
 
 /* Header 스타일 */
-.rightMenu input{
+.rightMenu input {
   width: 90px;
   padding: 7px 10px;
   font-family: "nanumsquare";
@@ -647,14 +713,16 @@ button {
   background-color: #eeeeee;
 }
 
-.join-button , .logout-button {
+.join-button,
+.logout-button {
   background-color: #eeeeee !important;
 }
-.join-button:hover, .logout-button:hover{
+.join-button:hover,
+.logout-button:hover {
   background-color: #d1d1d1 !important;
 }
 .profile-button:hover {
-  background-color:#eeeeee !important;
+  background-color: #eeeeee !important;
 }
 
 .small-list {
@@ -666,14 +734,58 @@ button {
 }
 .popup {
   position: absolute;
-  height: 150px;
+  height: 250px;
   width: 300px;
   padding: 10px;
-  background-color: #f0f0f0;
+  background-color: #ffffff;
   border: 1px solid #ccc;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   z-index: 10;
   opacity: 1;
-  margin-left: 60px;
+  margin-left: 300px;
   transition: opacity 0.3s ease;
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+}
+.popup-img {
+  display: flex;
+  justify-content: center;
+}
+.popup img {
+  width: 100px; /* 이미지의 크기를 100px로 설정 */
+  height: 100px; /* 이미지의 높이를 100px로 설정 */
+  object-fit: cover; /* 이미지를 비율에 맞게 잘라서 채우기 */
+  border-radius: 50%;
+}
+.handle-mentor-profile-btn {
+  padding: 10px 20px;
+  font-size: 16px;
+  border: 1px solid #007bff;
+  background-color: #fff;
+  color: #007bff;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+.handle-mentor-profile-btn:hover {
+  color: #ffffff;
+  background-color: #007bff;
+}
+.answer-mentor-profile-btn {
+  display: flex;
+  gap: 30px;
+  margin-top: 10px;
+}
+.mentor-profile-name {
+  font-weight: bold;
+  justify-content: center;
+  font-size: 18px;
+}
+.mentor-profile-category {
+  font-size: 12px;
+}
+.mentor-profile-name {
 }

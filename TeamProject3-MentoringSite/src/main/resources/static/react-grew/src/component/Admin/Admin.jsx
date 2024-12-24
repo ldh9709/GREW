@@ -1,29 +1,32 @@
 import React, { useState } from 'react'
 import "../../css/admin.css";
 import AdminMember from './AdminMember';
+import AdminReport from './adminReport4';
 
 export default function Admin() {
 
-  // const [activeTab, setActiveTab] = useState("member");
+  const [activeTab, setActiveTab] = useState("member");
 
   // //탭 클릭시 실행되는 함수
-  //   const handleTabClick = (tab) => {
-  //     setActiveTab(tab);
-  // }
+    const handleTabClick = (tab) => {
+      setActiveTab(tab);
+  }
 
   return (
     <div className="container">
     <div className="sidebar">
         <h2>관리자 페이지</h2>
         <ul>
-            <li>회원</li>
-            <li>질문 게시글</li>
+          <li onClick={() => handleTabClick("member")}>회원</li>
+          <li onClick={() => handleTabClick("inquiry")}>질문 게시글</li>
             <li>멘토 게시글</li>
-            <li>신고 목록</li>
+            <li onClick={() => handleTabClick("report")}>신고 목록</li>
         </ul>
     </div>
     <div className="admin-content">
-      <AdminMember/>
+      {activeTab === "member" && <AdminMember />}
+      {activeTab === "report" && <AdminReport />}
+      
     </div>
 </div>
   )
