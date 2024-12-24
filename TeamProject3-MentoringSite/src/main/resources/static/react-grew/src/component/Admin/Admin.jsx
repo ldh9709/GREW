@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import "../../css/admin.css";
 import AdminMember from './AdminMember';
-import AdminReport from './AdminReport';
+import AdminReport from './adminReport4';
 
 export default function Admin() {
 
