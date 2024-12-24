@@ -3,10 +3,10 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import * as inquiryApi from "../../api/inquiryApi";
 import * as answerApi from "../../api/answerApi";
 import AnswerItem from "./AnswerItem";
-import { getCookie } from "../../util/cookieUtil";
 import "../../css/styles.css";
+import { useMemberAuth } from "../../util/AuthContext";
 function InquiryView() {
-  const memberCookie = getCookie("member");
+  const { token, member } = useMemberAuth();
   const navigate = useNavigate();
   const { inquiryNo } = useParams(); //path에서 받아오는거임! app.js의 경로와 관련있음
   const [inquiry, setInquiry] = useState({
@@ -21,6 +21,7 @@ function InquiryView() {
   const [totalPages, setTotalPages] = useState(0); // 전체 페이지 수
   const [itemsPerPage] = useState(5); // 페이지당 항목 수 (예: 한 페이지에 5개 항목)
   const [sortType, setSortType] = useState("latest"); // 기본적으로 'latest'로 설정
+  const [isReportHovered, setIsReportHovered] = useState(false);
   useEffect(() => {
     (async () => {
       const responseJsonObject = await inquiryApi.viewInquiry(inquiryNo);
@@ -98,9 +99,11 @@ function InquiryView() {
     pageNumbers.push(i);
   }
   const handleWriteButton = () => {
-    console.log(memberCookie);
-    if (memberCookie) {
+    if (member.memberRole == "ROLE_MENTOR") {
       navigate(`/answer/answerWrite/${inquiryNo}`);
+    } else if (member.memberRole == "ROLE_MENTEE") {
+      alert("멘토만 답변 작성이 가능합니다");
+      return;
     } else {
       alert("로그인이 필요한 서비스입니다.");
       return;
@@ -114,7 +117,6 @@ function InquiryView() {
       <div style={{ paddingLeft: 10 }}>
         <input type="hidden" name="inquiryNo" value={inquiry.inquiryNo} />
 
-        {/* 카테고리에 맞는 멘토만 보이는조건 */}
         <div className="answer-write">
           <button className="answer-notify-btn" onClick={handleWriteButton}>
             <img
@@ -130,29 +132,11 @@ function InquiryView() {
             답변하기
           </button>
         </div>
-        {/* 카테고리에 맞는 멘토만 보이는조건 */}
         <div className="inquiry-container-inview">
           <div>
             <div className="inquiry-title">{inquiry.inquiryTitle}</div>
           </div>
           <div className="inquiry-desc">
-            {/* 신고하기버튼 */}
-            {/* 신고하기버튼 */}
-            {/* 신고하기버튼 */}
-            {/* 신고하기버튼 */}
-            {/* 신고하기버튼 */}
-            {/* 신고하기버튼 */}
-            <div className="inquiry-report-btn-div">
-            <button className="inquiry-report-btn">신고하기</button>
-            </div>
-            {/* 신고하기버튼 */}
-            {/* 신고하기버튼 */}
-            {/* 신고하기버튼 */}
-            {/* 신고하기버튼 */}
-            {/* 신고하기버튼 */}
-            {/* 신고하기버튼 */}
-            {/* 신고하기버튼 */}
-
             <div>{inquiry.categoryName}</div>
             <div>
               {inquiry.memberName} | 조회수 {inquiry.inquiryViews} |{" "}
@@ -163,7 +147,7 @@ function InquiryView() {
             <div>{inquiry.inquiryContent}</div>
           </div>
 
-          {memberCookie != null && memberCookie.memberNo == inquiry.memberNo ? (
+          {member != null && member.memberNo == inquiry.memberNo ? (
             <div className="modify-delete-btn2">
               <button onClick={handleModify}>수정</button>
 
@@ -179,6 +163,36 @@ function InquiryView() {
           ) : (
             <div></div>
           )}
+          {/* 신고하기버튼 */}
+          {/* 신고하기버튼 */}
+          {/* 신고하기버튼 */}
+          {/* 신고하기버튼 */}
+          {/* 신고하기버튼 */}
+          {/* 신고하기버튼 */}
+          <div className="answer-report-btn">
+            <button
+              onMouseEnter={() => setIsReportHovered(true)} // 마우스가 버튼 위에 올라갔을 때
+              onMouseLeave={() => setIsReportHovered(false)} // 마우스가 버튼을 벗어났을 때
+              className={`hover-button ${isReportHovered ? "hovered" : ""}`}
+            >
+              <img
+                src={
+                  isReportHovered
+                    ? "https://img.icons8.com/?size=100&id=8773&format=png&color=000000"
+                    : "https://img.icons8.com/?size=100&id=5365&format=png&color=000000"
+                }
+                alt="Button Image"
+                className="button-image"
+              />
+            </button>
+          </div>
+          {/* 신고하기버튼 */}
+          {/* 신고하기버튼 */}
+          {/* 신고하기버튼 */}
+          {/* 신고하기버튼 */}
+          {/* 신고하기버튼 */}
+          {/* 신고하기버튼 */}
+          {/* 신고하기버튼 */}
         </div>
       </div>
       <div style={{ marginTop: "20px" }}>

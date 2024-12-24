@@ -1,13 +1,12 @@
 import React, { useEffect, useRef, useState } from "react";
 import * as answerApi from "../../api/answerApi";
 import { useNavigate, useParams } from "react-router-dom";
-import { getCookie } from "../../util/cookieUtil";
+import { useMemberAuth } from "../../util/AuthContext";
 export default function AnswerWriteFormPage() {
+  const {token, member} = useMemberAuth();
   const writeFormRef = useRef();
   const navigate = useNavigate();
   const { inquiryNo } = useParams();
-  const memberCookie = getCookie("member");
-  const token = memberCookie.accessToken;
   const initAnswer = {
     answerNo: 0,
     answerContent: "",

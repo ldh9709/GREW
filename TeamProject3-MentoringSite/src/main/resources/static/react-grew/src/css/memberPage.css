@@ -320,29 +320,23 @@ legend {
 /* MemberMainJoinFormCSS */
 /* 회원가입 유형 선택 컨테이너 */
 .signup-container {
-  width: 1000px;
-  height: 100vh; /* 페이지 전체 높이 */
-  margin: 50px auto;
-  padding: 20px;
+  width: 800px; 
   background-color: #ffffff;
+  border: 1px solid #ccc;
   border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   font-family: "nanumsquare";
   text-align: center;
+  margin: 200px auto 0 auto;
 }
 
 /* 제목 스타일 */
 .signup-title {
-  font-size: 24px;
-  color: #333;
-  margin-top: 100px;
-  margin-bottom: 10px;
+  font-size: 33px;
+  color: #555;
 }
-
-
 .signup-subtitle {
   font-size: 15px;
-  color: #333;
+  color: #555;
 }
 
 /* 버튼 컨테이너 */
@@ -354,9 +348,9 @@ legend {
 
 /* 버튼 스타일 */
 .signup-btn {
-  margin-top: 100px;
-  width: 300px;
-  height: 300px;
+  margin: 80px 0;
+  width: 250px;
+  height: 250px;
   font-size: 50px;
   font-family: 'nanumsquare';
   color: white;
@@ -380,7 +374,7 @@ legend {
 
 
 .member-form-join-check {
-  font-size: 10px;
+  font-size: 13px;
   color: red;
   height: 12px; /* 에러 메시지의 고정 높이 설정 */
   margin-top: 5px; /* 불필요한 여백 제거 */

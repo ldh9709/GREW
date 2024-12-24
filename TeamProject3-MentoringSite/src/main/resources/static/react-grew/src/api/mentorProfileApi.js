@@ -195,5 +195,12 @@ export const listMentorsByActivityCount = async (page, size) => {
   const responseJsonObject = await response.json();
   return responseJsonObject;
 };
+export const listMentorsByRating = async () => {
+  const response = await fetch(`${BACKEND_SERVER}/mentor-profile/rating`, {
+    method: 'GET',
+  });
+  const responseJsonObject = await response.json();
+  return responseJsonObject;
+};
 
 

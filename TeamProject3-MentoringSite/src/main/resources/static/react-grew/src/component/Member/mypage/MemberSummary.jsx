@@ -1,6 +1,7 @@
 import { getCookie, setCookie } from "../../../util/cookieUtil"
 import { useMemberAuth } from "../../../util/AuthContext"
 import image from '../../../image/images.jpeg'
+import profileDefault from '../../../image/mentor_profile_default.jpg'
 import React, { useEffect, useState, useCallback } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGear, faHeart } from '@fortawesome/free-solid-svg-icons';
@@ -41,7 +42,6 @@ export default function MemberSummary() {
                 }));
             }else if(member.memberRole==='ROLE_MENTOR'){
                 const response = await memberApi.mentorSummary(token);
-                console.log('response', response);
                 const { data } = await response;
 
                 setSummary((prevState) => ({
@@ -61,6 +61,7 @@ export default function MemberSummary() {
     const fetchMemberSummary = async () => {
         try {
             const response = await memberApi.memberProfile(token);
+            console.log('멘토기본정보',response)
             setSummary((prevState)=>({
                 ...prevState,
                 name: response.data.memberName,
@@ -68,6 +69,20 @@ export default function MemberSummary() {
             }));
         } catch (error) {
             console.error('요약정보 조회 실패:', error);
+        }
+    }
+
+    //멘토 정보 확인
+    const fetchMentorInfo = async (mentorProfileNo) => {
+        try {
+            const response = await memberApi.getMentorProfile(mentorProfileNo);
+            setSummary((prev) => ({
+                ...prev,
+                mentorCategoryNo: response.data.categoryNo
+                }
+            ));
+        } catch (error) {
+            console.log('멘토정보 조회 실패')
         }
     }
 
@@ -104,12 +119,20 @@ export default function MemberSummary() {
         } catch (error) {
           console.error('회원 권한 변경 실패', error);
         }
-      };
+    };
+    
+    //이미지 클릭시 멘토프로필 수정폼 이동
+    const handleClickImage = () => {
+        navigate(`/mentor/join`);
+    }
 
     useEffect(() => {
         if(member && token){
             fetchMemberSummary();
             fetchCountSummary();
+        }
+        if (member.memberRole === 'ROLE_MENTOR') {
+            fetchMentorInfo(member.mentorProfileNo);
         }
     }, [member, token]);
 
@@ -141,11 +164,17 @@ export default function MemberSummary() {
             ):
             (  
             <>
-             <h1>{summary.name}님 안녕하세요 <a href="/member/profile/edit"><FontAwesomeIcon icon={faGear} /> 개인정보 변경</a></h1>
-                <div className="summary_image_container">
-                    <img src={image} alt="멘토 프로필 이미지" />
+            <h1>{summary.name}님 안녕하세요 <a href="/member/profile/edit"><FontAwesomeIcon icon={faGear} /> 개인정보 변경</a></h1>
+                    {summary.mentorCategoryNo === 26 ? (
+                        <div className="summary_image_container mentor-image-default" onClick={handleClickImage}>
+                            <img src={profileDefault} alt="멘토 프로필 기본 이미지" />
+                        </div>
+                    ): (
+                        <div className="summary_image_container mentor-image" onClick={handleClickImage}>
+                            <img src={image} alt="멘토 프로필 이미지" />
+                        </div>
+                    )}
                     <div><FontAwesomeIcon icon={faHeart}  className="red"/> 팔로워 {summary.followCount}</div>
-                </div>
                 <div className="summary-stats">
                     <div>
                         <h2>{summary.answerCount}</h2>

@@ -107,6 +107,9 @@ public interface MentorProfileRepository extends JpaRepository<MentorProfile, Lo
      Page<MentorProfile> findByOrderByMentorFollowCountDesc(Pageable pageable);
      Page<MentorProfile> findByOrderByMentorMentoringCountDesc(Pageable pageable);
      Page<MentorProfile> findByOrderByMentorActivityCountDesc(Pageable pageable);
+     //별점 순으로 리스트뽑기(우수멘토)
+     List<MentorProfile> findByOrderByMentorRatingDesc();
+     
 }
 
 

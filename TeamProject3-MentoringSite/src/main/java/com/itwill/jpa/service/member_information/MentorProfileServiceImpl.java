@@ -444,6 +444,20 @@ public class MentorProfileServiceImpl implements MentorProfileService {
 		MentorProfile mentor = mentorProfileRepository.findByMember_MemberNo(memberNo);
 		return MentorProfileDto.toDto(mentor);
 	}
+
+
+
+
+	//별점 순으로 멘토 찾기
+	@Override
+	public List<MentorProfileDto> getMentorByRating() {
+		List<MentorProfile> profiles= mentorProfileRepository.findByOrderByMentorRatingDesc();
+		List<MentorProfileDto> profileDtos = new ArrayList<>();
+		for(MentorProfile profile : profiles) {
+			profileDtos.add(MentorProfileDto.toDto(profile));
+		}
+		return profileDtos;
+	}
     
     
 
