@@ -65,6 +65,7 @@ public class JWTCheckFilter extends OncePerRequestFilter {
 		|| path.startsWith("/answer/update") 
 		|| path.startsWith("/answer/view") 
 		|| path.startsWith("/answer/re") 
+		|| path.startsWith("/admin") 
 		
 
 		|| path.startsWith("/answer/count") 

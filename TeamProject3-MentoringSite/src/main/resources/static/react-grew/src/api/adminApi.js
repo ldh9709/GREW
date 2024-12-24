@@ -43,30 +43,16 @@ export const adminReport = async (token,page,size) => {
 
 
 // 관리자 - 신고 목록 조회
-export const getAdminReportList = async (token,filter, page = 0, size = 10) => {
-  try {
-  const response = await fetch(`${BACKEND_SERVER}/admin/reports?filter=${filter}&page=${page}&size=${size}`, {
-    method: 'GET', // HTTP 메서드
-    headers: {
-      'Authorization': `Bearer ${token}`,
-      "Content-Type": "application/json;charset=UTF-8", // 요청 헤더
-    },
-  });
-
-  // 응답 상태 코드 확인
-  if (!response.ok) {
-    throw new Error('신고 목록을 가져오는 데 실패했습니다.');
-  }
-
-  const responseJson = await response.json();
-  // 응답 데이터 콘솔에 출력
-  console.log("Response Data:", responseJson);
-  return responseJson;  // 신고 목록 응답 반환
-  } catch (error) {
-    // 오류가 발생한 경우 콘솔에 출력
-    console.error("Error fetching reports:", error);
-    throw error; // 에러를 다시 던져서 React에서 처리하도록 함
-  }
+export const getAdminReportList = async (token, filter,page) => {
+    const response = await fetch(`${BACKEND_SERVER}/admin/report?filter=${filter}&page=${page}&size=10`,{
+      method: 'GET',
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json'
+      }
+    });
+    const responseJsonObject = await response.json();
+    return responseJsonObject;
 };
 
 // 관리자 - 신고 상태 변경

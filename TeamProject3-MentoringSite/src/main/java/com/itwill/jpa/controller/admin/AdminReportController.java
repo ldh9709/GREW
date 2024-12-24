@@ -51,7 +51,7 @@ public class AdminReportController {
 	@SecurityRequirement(name = "BearerAuth")
 	@PreAuthorize("hasRole('ADMIN')")
 	@Operation(summary = "전체 신고 목록 조회")
-	@GetMapping()
+	@GetMapping
 	public ResponseEntity<Response> getAdminReportList(Authentication authentication,
 			@Parameter(name = "filter", description = "필터링 역할(1: 전체, 2: 신고접수 순)", required = true, example = "1")
 	        @RequestParam(name = "filter") Integer filter,
