@@ -5,6 +5,8 @@ import * as categoryApi from "../../api/categoryApi";
 import { useNavigate } from "react-router-dom";
 import { getCookie } from "../../util/cookieUtil";
 import AnswerProfilePopup from "./AnswerProfilePopup";
+import ReportModal from "../Report/ReportModal";
+
 export default function AnswerItem({ answer }) {
   const [inquiry, setInquiry] = useState(0);
   const [voteCount, setVoteCount] = useState(0);
@@ -101,6 +103,11 @@ export default function AnswerItem({ answer }) {
     console.log(response);
   };
 
+  //신고 하기
+  const handleReport = async () => {
+    ReportModal()
+  }
+
   return (
     <>
       <div className="answer-container">
@@ -181,11 +188,8 @@ export default function AnswerItem({ answer }) {
             />
           </button>
         </div>
-        {/* 신고하기버튼 */}
-        {/* 신고하기버튼 */}
-        {/* 신고하기버튼 */}
-        {/* 신고하기버튼 */}
-        {/* 신고하기버튼 */}
+
+        {/* 답변 신고 버튼 */}
         <div className="answer-report-btn">
           <button
             onMouseEnter={() => setIsReportHovered(true)} // 마우스가 버튼 위에 올라갔을 때
@@ -195,20 +199,14 @@ export default function AnswerItem({ answer }) {
             <img
               src={
                 isReportHovered
-                  ? "https://img.icons8.com/?size=100&id=8773&format=png&color=000000"
-                  : "https://img.icons8.com/?size=100&id=5365&format=png&color=000000"
+                  ? "https://img.icons8.com/?size=100&id=jy7dy2jsJ5UR&format=png&color=ed1515"
+                  : "https://img.icons8.com/?size=100&id=t5aOnHwCycmN&format=png&color=000000"
               }
               alt="Button Image"
               className="button-image"
             />
           </button>
         </div>
-        {/* 신고하기버튼 */}
-        {/* 신고하기버튼 */}
-        {/* 신고하기버튼 */}
-        {/* 신고하기버튼 */}
-        {/* 신고하기버튼 */}
-        {/* 신고하기버튼 */}
         {memberCookie && memberCookie.memberNo == answer.memberNo ? (
           <div className="modify-delete-btn">
             <button onClick={handleModify}>수정</button>
