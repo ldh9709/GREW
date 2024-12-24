@@ -11,7 +11,6 @@ import { useMemberAuth } from "../../util/AuthContext";
 const MemberLoginFormPage = () => {
   const navigate = useNavigate();
   const { login } = useMemberAuth();
-
   const [member, setMember] = useState({
     memberId: "",
     memberPassword: "",
@@ -24,7 +23,6 @@ const MemberLoginFormPage = () => {
   const loginAction = async (e) => {
     e.preventDefault();
     const responseJsonObject = await memberApi.loginAction(member);
-    console.log("responseJsonObject.memberId : ", responseJsonObject.memberId);
 
     /* 로그인 성공해서 토큰이 있을 때 */
     if (responseJsonObject.accessToken) {
