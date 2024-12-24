@@ -3,6 +3,7 @@ package com.itwill.jpa.controller.member_information;
 import com.itwill.jpa.auth.PrincipalDetails;
 import com.itwill.jpa.dto.alarm.AlarmDto;
 import com.itwill.jpa.dto.member_information.MentorBoardDto;
+import com.itwill.jpa.exception.CustomException;
 import com.itwill.jpa.response.Response;
 import com.itwill.jpa.response.ResponseMessage;
 import com.itwill.jpa.response.ResponseStatusCode;
@@ -69,7 +70,6 @@ public class MentorBoardController {
     public ResponseEntity<Response> createMentorBoard(Authentication authentication, @RequestBody MentorBoardDto mentorBoardDto) {
     	
     	PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
-    	System.out.println("사용자 권한: " + principalDetails.getAuthorities());
     	Long memberNo = principalDetails.getMemberNo();
     	mentorBoardDto.setMemberNo(memberNo);
     	
@@ -87,15 +87,34 @@ public class MentorBoardController {
     }
 
     /* 멘토 보드 수정 */
+    @SecurityRequirement(name = "BearerAuth")
+    @PreAuthorize("hasRole('MENTOR')")    
     @Operation(summary = "멘토 보드 수정")
     @PutMapping("/{mentorBoardNo}")
     public ResponseEntity<Response> updateMentorBoard(
-            @PathVariable(name = "mentorBoardNo") Long mentorBoardId, 
-            @RequestBody MentorBoardDto mentorBoardDto
+            @PathVariable(name = "mentorBoardNo") Long mentorBoardNo, 
+            @RequestBody MentorBoardDto mentorBoardDto,
+            Authentication authentication
         ) throws Exception {
 
-        // mentorBoardId를 DTO에 설정 (필요한 경우)
-        mentorBoardDto.setMentorBoardNo(mentorBoardId); 
+    	PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
+    	Long memberNo = principalDetails.getMemberNo();
+    	
+    	//기존 작성된 mentorboard정보 불러오기
+    	MentorBoardDto existingBoard = mentorBoardService.getMemtorBoard(mentorBoardNo);
+    	
+    	// 작성자와 요청자 일치 여부 확인
+        if (!existingBoard.getMemberNo().equals(memberNo)) {
+            throw new CustomException(
+            		ResponseStatusCode.UPDATE_MENTOR_BOARD_FAIL,
+            		ResponseMessage.UPDATE_MENTOR_BOARD_FAIL,
+            		new Throwable("수정권한이 없습니다.(작성자와 수정 요청자가 다릅니다.)")
+            );
+        }
+    		
+        // mentorBoardNo,memberNo를 수정할 mentorBoardDto에 저장
+        mentorBoardDto.setMentorBoardNo(mentorBoardNo);
+        mentorBoardDto.setMemberNo(memberNo);
 
         // 기존 멘토 보드 수정
         MentorBoardDto updatedBoard = mentorBoardService.updateMemtorBoard(mentorBoardDto);
