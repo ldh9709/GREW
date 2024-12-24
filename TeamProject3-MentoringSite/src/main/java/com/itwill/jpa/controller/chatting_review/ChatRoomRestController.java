@@ -245,8 +245,8 @@ public class ChatRoomRestController {
 		List<ChatMessageDto> chatMessageDtos = chatRoomService.selectChatMessages(chatRoomNo);
 		
 		Response response = new Response();
-		response.setStatus(ResponseStatusCode.CHATTING_MESSAGE);
-		response.setMessage(ResponseMessage.CHATTING_MESSAGE);
+		response.setStatus(ResponseStatusCode.CHATTING_MESSAGE_SUCCESS);
+		response.setMessage(ResponseMessage.CHATTING_MESSAGE_SUCCESS);
 		response.setData(chatMessageDtos);
 		
 		HttpHeaders httpHeaders = new HttpHeaders();
