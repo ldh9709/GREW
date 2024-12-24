@@ -1,15 +1,14 @@
 package com.itwill.jpa.service.member_information;
 
-import com.itwill.jpa.dto.alarm.AlarmDto;
 import com.itwill.jpa.dto.member_information.MentorBoardDto;
 import com.itwill.jpa.entity.member_information.MentorBoard;
 import com.itwill.jpa.entity.member_information.MentorProfile;
 import com.itwill.jpa.exception.CustomException;
 import com.itwill.jpa.entity.member_information.Member;
 import com.itwill.jpa.repository.member_information.MentorBoardRepository;
+import com.itwill.jpa.repository.member_information.MentorProfileRepository;
 import com.itwill.jpa.response.ResponseMessage;
 import com.itwill.jpa.response.ResponseStatusCode;
-import com.itwill.jpa.service.alarm.AlarmService;
 import com.itwill.jpa.repository.member_information.MemberRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,9 +22,6 @@ import jakarta.transaction.Transactional;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
 
 @Transactional
 @Service
@@ -33,11 +29,14 @@ public class MentorBoardServiceImpl implements MentorBoardService {
 
 	private static final String UPLOAD_DIR = "C:/upload/mentor-board/"; // **외부 경로**
 		
-	  @Autowired
+	  	@Autowired
 	    private MentorBoardRepository mentorBoardRepository;
 
 	    @Autowired
 	    private MemberRepository memberRepository;
+	    
+	    @Autowired
+	    private MentorProfileRepository mentorProfileRepository;
 	    
 
 	    
@@ -49,14 +48,14 @@ public class MentorBoardServiceImpl implements MentorBoardService {
 	        try {
 	            Long memberNo = mentorBoardDto.getMemberNo();
 	            Member member = memberRepository.findById(memberNo).orElse(null);
-
+	            
 	            // 멤버가 존재하지 않을 때 예외 발생
 	            if (member == null) {
 	                throw new CustomException(ResponseStatusCode.MEMBER_NOT_FOUND, ResponseMessage.MEMBER_NOT_FOUND, null);
 	            }
-
+	            
 	            // 멘토 프로필 존재 및 상태 확인
-	            MentorProfile mentorProfile = member.getMentorProfile();
+	            MentorProfile mentorProfile = mentorProfileRepository.findByMemberNo(memberNo);
 	            if (mentorProfile == null || mentorProfile.getMentorStatus() != 3) {
 	                throw new CustomException(ResponseStatusCode.NOT_A_MENTOR, ResponseMessage.NOT_A_MENTOR, null);
 	            }

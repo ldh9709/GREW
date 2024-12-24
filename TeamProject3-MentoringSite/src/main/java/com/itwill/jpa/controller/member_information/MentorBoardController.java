@@ -3,8 +3,6 @@ package com.itwill.jpa.controller.member_information;
 import com.itwill.jpa.auth.PrincipalDetails;
 import com.itwill.jpa.dto.alarm.AlarmDto;
 import com.itwill.jpa.dto.member_information.MentorBoardDto;
-import com.itwill.jpa.entity.member_information.Follow;
-import com.itwill.jpa.entity.member_information.MentorBoard;
 import com.itwill.jpa.response.Response;
 import com.itwill.jpa.response.ResponseMessage;
 import com.itwill.jpa.response.ResponseStatusCode;
@@ -25,9 +23,7 @@ import org.springframework.web.multipart.MultipartFile;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 
-import java.net.Authenticator;
 import java.nio.charset.Charset;
-import java.security.Principal;
 import java.util.List;
 
 @RestController
@@ -66,9 +62,17 @@ public class MentorBoardController {
     
     
     /* 멘토 보드 등록 */
+    @SecurityRequirement(name = "BearerAuth")
+    @PreAuthorize("hasRole('MENTOR')")
     @Operation(summary = "멘토 보드 등록")
     @PostMapping
-    public ResponseEntity<Response> createMentorBoard(@RequestBody MentorBoardDto mentorBoardDto) {
+    public ResponseEntity<Response> createMentorBoard(Authentication authentication, @RequestBody MentorBoardDto mentorBoardDto) {
+    	
+    	PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
+    	System.out.println("사용자 권한: " + principalDetails.getAuthorities());
+    	Long memberNo = principalDetails.getMemberNo();
+    	mentorBoardDto.setMemberNo(memberNo);
+    	
     	MentorBoardDto savedBoard = mentorBoardService.saveMemtorBoard(mentorBoardDto);
     	List<AlarmDto> saveAlarms = alarmService.createAlarmsByMentorBoard(savedBoard);
         Response response = new Response();
