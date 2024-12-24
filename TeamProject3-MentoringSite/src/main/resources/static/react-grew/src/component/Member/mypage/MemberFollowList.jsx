@@ -1,4 +1,4 @@
-import { getCookie } from "../../../util/cookieUtil"
+import { useMemberAuth } from "../../../util/AuthContext";
 import React, { useEffect, useState } from "react";
 import image from '../../../image/images.jpeg'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -6,8 +6,8 @@ import { faHeart } from '@fortawesome/free-solid-svg-icons';
 import * as followApi from "../../../api/followApi"
 
 export default function FollowList() {
-    const memberCookie = getCookie("member");
-    const token = memberCookie.accessToken;
+    /* Context에 저장된 토큰, 멤버정보 */
+    const { token } = useMemberAuth();
 
     const [followList, setFollowList] = useState([{
             no: 0,

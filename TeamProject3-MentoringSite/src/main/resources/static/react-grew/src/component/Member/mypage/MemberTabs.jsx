@@ -1,5 +1,5 @@
-import { getCookie } from "../../../util/cookieUtil"
 import { useState } from 'react'
+import { useMemberAuth } from "../../../util/AuthContext"
 import FollowList from './MemberFollowList'
 import CounselList from './MemberCounselList';
 import ReviewList from './MemberReviewList';
@@ -7,14 +7,12 @@ import InquiryAnswerList from "./MemberInquiryAnswerList";
 import MemberMentorBoardList from "./MemberMentorBoardList";
 
 export default function MemberTabs() {
-    //쿠키에 저장된 인증 유저 정보
-    const memberCookie = getCookie("member");
-    const token = memberCookie.accessToken;
-    const role = memberCookie.memberRole;
+    /* Context에 저장된 토큰, 멤버정보 */
+    const { token, member } = useMemberAuth();
 
     //활성화 된 탭 상태를 저장하는 state
     const [activeTab, setActiveTab] = useState(
-        role==='ROLE_MENTEE' ?
+        member.memberRole==='ROLE_MENTEE' ?
             "inquiry" : "answer"
     )
     //탭 클릭시 실행되는 함수
@@ -25,7 +23,7 @@ export default function MemberTabs() {
   return (
     <section className="tab-container">
         <nav>
-              {role === 'ROLE_MENTEE' ? (
+              {member.memberRole === 'ROLE_MENTEE' ? (
                 <ul className="tabs">
                     <li 
                         className={`tab ${activeTab === "inquiry" ? "active" : ""}`} 

@@ -1,4 +1,5 @@
 import { getCookie, setCookie } from "../../../util/cookieUtil"
+import { useMemberAuth } from "../../../util/AuthContext"
 import image from '../../../image/images.jpeg'
 import React, { useEffect, useState, useCallback } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -7,7 +8,13 @@ import * as memberApi from "../../../api/memberApi"
 import { useNavigate } from "react-router-dom";
 
 export default function MemberSummary() {
+    /* Context에 저장된 토큰, 멤버정보 */
+    const { token, member ,login} = useMemberAuth();
     const navigate = useNavigate();
+
+    console.log('token쳌',token);
+    console.log('member쳌',member);
+
     // State로 회원정보를 저장
     const [summary, setSummary] = useState({
         name: "",
@@ -19,13 +26,12 @@ export default function MemberSummary() {
         boardCount: 0,
         reviewCount: 0,
     })
-    const [memberCookie, setMemberCookie] = useState(getCookie("member"));
 
     //회원 요약정보 count 가져옴
-    const fetchCountSummary = async (cookie) => {
+    const fetchCountSummary = async () => {
         try {
-            if (cookie.memberRole === 'ROLE_MENTEE') {
-                const response = await memberApi.menteeSummary(cookie.accessToken);
+            if (member.memberRole === 'ROLE_MENTEE') {
+                const response = await memberApi.menteeSummary(token);
                 const { data } = await response;
                 setSummary((prevState) => ({
                     ...prevState,
@@ -33,8 +39,8 @@ export default function MemberSummary() {
                     counselCount: data.counselCount,
                     followCount: data.followCount,
                 }));
-            }else if(cookie.memberRole==='ROLE_MENTOR'){
-                const response = await memberApi.mentorSummary(cookie.accessToken);
+            }else if(member.memberRole==='ROLE_MENTOR'){
+                const response = await memberApi.mentorSummary(token);
                 console.log('response', response);
                 const { data } = await response;
 
@@ -52,10 +58,9 @@ export default function MemberSummary() {
         }
     }; 
     //회원 기본 정보
-    const fetchMemberSummary = async (cookie) => {
+    const fetchMemberSummary = async () => {
         try {
-            const response = await memberApi.memberProfile(cookie.accessToken);
-            
+            const response = await memberApi.memberProfile(token);
             setSummary((prevState)=>({
                 ...prevState,
                 name: response.data.memberName,
@@ -69,11 +74,7 @@ export default function MemberSummary() {
     //회원 권한 변경
     const handleUpdateRole = async (role) => {
         try {
-            // 권한 변경 로직에서 쿠키 재확인
-            const memberCookie = getCookie("member");
-            const token = memberCookie.accessToken;
-
-            if (memberCookie.mentorProfileNo === 0) {
+            if (member.mentorProfileNo === 0) {
                 const confirmation = window.confirm('멘토를 신청 하시겠습니까?')
                 if (!confirmation) {
                     return;
@@ -81,7 +82,7 @@ export default function MemberSummary() {
                 navigate(`/mentor/join`);
             } else {
                 const confirmation = window.confirm(
-                    role === "ROLE_MENTEE" 
+                    member.memberRole === "ROLE_MENTEE" 
                     ? "멘티로 변경하시겠습니까?" 
                     : "멘토로 변경하시겠습니까?"
                 );
@@ -89,53 +90,34 @@ export default function MemberSummary() {
                     return;
                 }
             }          
-          
+
             const response = await memberApi.updateMemberRole(token, role);
             if (response.status === 2012) {
-                //변경회원 정보
-                const updatedMember = {
-                    ...memberCookie,
-                    accessToken: response.data.accessToken,
-                    refreshToken: response.data.refreshToken,
-                    memberRole: role
-              }
-              
-                console.log("변경된 권한",response.data);
-                console.log('권한 변경 성공:', response.message);
-
-
                 // 기존 쿠키 삭제
-                document.cookie = "member=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-
-                // 새로운 쿠키 생성
-                setCookie("member", JSON.stringify(updatedMember),1);
-                console.log("getCookies : " , getCookie("member"));
-                console.log("getCookies.accessToken : ", getCookie("member").accessToken);
-              
+                // document.cookie = "member=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+                login(response.data.accessToken);
+              }
                 //강제 리로드
-                window.location.reload();
+                // window.location.reload();
                 // //성공 후 메인으로 이동
-                // navigate(`/main`);
-        }
-            console.log("변경된 권한",response.data);
-            console.log('권한 변경 성공:', response.message);
+                navigate(`/main`);
         } catch (error) {
           console.error('회원 권한 변경 실패', error);
         }
       };
 
     useEffect(() => {
-        const updateCookie = getCookie("member");
-        setMemberCookie(updateCookie);
-        fetchMemberSummary(updateCookie);
-        fetchCountSummary(updateCookie);
-    }, []);
+        if(member && token){
+            fetchMemberSummary();
+            fetchCountSummary();
+        }
+    }, [member, token]);
 
 
     return (
     <section className="summary">
         <div className="summary-box">
-            { memberCookie.memberRole === 'ROLE_MENTEE' ? 
+            { member.memberRole === 'ROLE_MENTEE' ? 
             (
             <>
                 <h1>{summary.name}님 안녕하세요 <a href="/member/profile/edit"><FontAwesomeIcon icon={faGear} /> 개인정보 변경</a></h1>
