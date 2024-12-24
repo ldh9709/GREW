@@ -1,6 +1,5 @@
 const BACKEND_SERVER = ""; // 백엔드 서버 URL 정의
 
-
 //회원 목록 조회
 export const adminMember = async(token,role,order) =>{
   const response = await fetch(`${BACKEND_SERVER}/admin/member?role=${role}&order=${order}`, {
@@ -14,9 +13,22 @@ export const adminMember = async(token,role,order) =>{
   return responseJsonObject;
 }
 
+//게시글 목록 조회
+export const adminInquiry = async(token, category, page, size) => {
+  const response = await fetch(`${BACKEND_SERVER}/admin/inquiry?category=${category}&page=${page}&size=${size}`, {
+    method: 'GET',
+    headers: {
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json'
+    }
+  });
+  const responseJsonObject = await response.json();
+  return responseJsonObject;
+}
+
 {/*/chatroom/list?page=${page}&size=${size} =->19행수정 필요必要
 export const adminReport = async (token,page,size) => {
-   const response = await fetch(`${BACKEND_SERVER}/chatroom/list?page=${page}&size=${size}`, {
+   const response = await fetch(`${BACKEND_SERVER}/ /list?page=${page}&size=${size}`, {
       method: 'GET',
       headers: {
          'Authorization': `Bearer ${token}`, // 전달받은 JWT 토큰 사용
@@ -27,12 +39,16 @@ export const adminReport = async (token,page,size) => {
    return responseJsonObject;
 }
 */} 
+
+
+
 // 관리자 - 신고 목록 조회
-export const getAdminReportList = async (filter, page = 0, size = 10) => {
+export const getAdminReportList = async (token,filter, page = 0, size = 10) => {
   try {
   const response = await fetch(`${BACKEND_SERVER}/admin/reports?filter=${filter}&page=${page}&size=${size}`, {
     method: 'GET', // HTTP 메서드
     headers: {
+      'Authorization': `Bearer ${token}`,
       "Content-Type": "application/json;charset=UTF-8", // 요청 헤더
     },
   });

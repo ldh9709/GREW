@@ -38,7 +38,8 @@ public class ChatController {
         if (message.getChatMessageNo() != null) {
         	System.out.println("읽은 메세지"+message);
             System.out.println("읽은 메세지 번호 " + message.getChatMessageNo());
-            chatMessageService.updateChatMessageCheck(message.getChatMessageNo()); // 읽음 상태 업데이트
+            Long chatMessageNo = chatMessageService.updateChatMessageCheck(message.getChatMessageNo()).getChatMessageNo(); // 읽음 상태 업데이트
+            message.setChatMessageNo(chatMessageNo);
         }
         return message;
     }

@@ -3,6 +3,7 @@ import "./css/styles.css";
 import Header from "./layout/Header";
 import { MainPage } from "./component/MainPage";
 import Navigate from "./layout/Navigate";
+import { AuthProvider } from "./util/AuthContext";
 /* 멤버 페이지 임포트 */
 import MemberMainJoinFormPage from "./component/Member/MemberMainJoinFormPage";
 import MemberJoinFormPage from "./component/Member/MemberJoinFormPage";
@@ -41,8 +42,10 @@ import ForbiddenPage from "./component/ForbiddenPage";
 import MentorProfileItem from "./component/MentorProfile/MentorProfileItem";
 
 import AdminRoutes from "./routes/AdminRoutes";
-import { AuthProvider } from "./util/AuthContext";
 import MemberSummary from "./component/Member/mypage/MemberSummary";
+
+/* 신고 모달 */
+import ReportModal from "./component/Report/ReportModal";
 
 function App() {
   const location = useLocation(); // 현재 URL 경로를 가져옴
@@ -128,7 +131,9 @@ function App() {
             {/* Admin페이지 */}
             <Route path="/admin/*" element={<AdminRoutes />} />
 
-            
+            {/* 신고 모달 */}
+            <Route path="/report-modal" element={<ReportModal/>}></Route>
+              
           </Routes>
           </AuthProvider>
           {/* 어드민 경로가 아닌 경우에만 Footer 표시 */}

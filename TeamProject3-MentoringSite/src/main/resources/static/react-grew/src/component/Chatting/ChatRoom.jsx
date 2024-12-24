@@ -5,8 +5,6 @@ import ChatRequests from './SlideList/ChatRequests.jsx';
 const ChatRoom = ({ onRoomClick }) => {
     const [activeTab, setActiveTab] = useState('rooms'); // 'rooms' 또는 'requests'
 
-    
-
     return (
         <div>
             {/* Panel */}
