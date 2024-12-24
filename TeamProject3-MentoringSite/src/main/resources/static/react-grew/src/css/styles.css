@@ -262,7 +262,6 @@ button {
 .inquiry-container {
   position: relative;
   border-top: 2px solid #ccc; /* 테두리 설정 */
-  border-bottom: 2px solid #ccc; /* 테두리 설정 */
   padding: 10px; /* 내부 여백 */
   background-color: #ffffff; /* 배경색 */
   width: 700px; /*너비*/
@@ -729,7 +728,6 @@ width: 30px;
   width: 270px; /* 20% 너비 */
   border-left: 1px solid #ddd;
   padding: 10px;
-  background-color: #f9f9f9;
   margin-left: -30px;
 }
 .popup {
@@ -788,4 +786,36 @@ width: 30px;
   font-size: 12px;
 }
 .mentor-profile-name {
+}
+.main-inquiry-container {
+  position: relative;
+  border-top: 2px solid #ccc; /* 테두리 설정 */
+  padding: 10px; /* 내부 여백 */
+  background-color: #ffffff; /* 배경색 */
+  width: 1050px; /*너비*/
+  height: 100px;
+  padding: 30px; /* 내부 여백 */
+  display: block;
+  justify-content: right;
+  margin-bottom: -10px;
+}
+.main-inquiry-container .answer-btn {
+  display: none; /* 기본적으로 숨김 */
+  position: absolute;
+  padding: 5px 10px;
+  color: rgb(0, 0, 0);
+  border-radius: 5px;
+  font-size: 14px;
+  margin-bottom: 50px;
+  margin-left: 950px;
+}
+.main-inquiry-container:hover .inquiry-content,
+.main-inquiry-container:hover .inquiry-desc {
+  color: #000000; /* 호버 시 색상 변경 */
+}
+.main-inquiry-container:hover .answer-btn {
+  display: block; /* 호버시 답변하기 버튼을 표시 */
+}
+.main-inquiry-container .inquiry-title{
+  margin-bottom: -20px;
 }
