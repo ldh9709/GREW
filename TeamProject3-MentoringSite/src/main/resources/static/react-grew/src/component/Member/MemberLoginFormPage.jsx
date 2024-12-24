@@ -35,7 +35,7 @@ const MemberLoginFormPage = () => {
 
       const token = jwtDecode(getCookie("member").accessToken);
       console.log("Decoded Token:", token);
-      console.log("Token:", token.memberNo);
+      console.log("Token.MemberNo:", token.memberNo);
       /* 로그인 성공 시 이동 */
       navigate("/main");
     } else {

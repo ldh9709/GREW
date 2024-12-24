@@ -38,9 +38,17 @@ export const AuthProvider = ({ children }) => {
             member: decoded,
         });
     };
-
+  
+    //로그아웃 시에 실행
+  const logout = () => {
+    removeCookie("member"); // 쿠키 삭제
+    setMember({
+      token: null,
+      member: null,
+    });
+  };
   return (
-    <AuthContext.Provider value={{ token: member.token, member: member.member , login}}>
+    <AuthContext.Provider value={{ token: member.token, member: member.member , login, logout}}>
       {children}
     </AuthContext.Provider>
   );
