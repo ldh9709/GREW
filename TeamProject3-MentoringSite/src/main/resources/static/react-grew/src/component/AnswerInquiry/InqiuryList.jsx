@@ -5,9 +5,10 @@ import InquiryItem from "./InquiryItem";
 import BestAnswerItem from "./BestAnswerItem";
 import * as categoryApi from "../../api/categoryApi";
 import { useNavigate } from "react-router-dom";
-import { getCookie } from "../../util/cookieUtil";
+import { useMemberAuth } from "../../util/AuthContext";
 
 function InqiuryList() {
+  const {token, member} = useMemberAuth();
   const [inquirys, setInquiry] = useState([]);
   const [currentPage, setCurrentPage] = useState(1); // 현재 페이지 번호
   const [totalPages, setTotalPages] = useState(0); // 전체 페이지 수
@@ -18,7 +19,6 @@ function InqiuryList() {
   const [childCategories, setChildCategories] = useState([]); // 하위 카테고리 상태
   const [bestAnswer, setBestAnswer] = useState([]);
   const navigate = useNavigate();
-  const memberCookie = getCookie("member");
   // 카테고리 목록을 가져오는 함수
   const fetchCategories = async () => {
     try {
@@ -150,9 +150,12 @@ function InqiuryList() {
   }
 
   const handleWriteButton = () => {
-    if (memberCookie != null) {
+    if (member.memberRole== 'ROLE_MENTEE') {
       navigate("/inquiry/inquiryWrite");
-    } else {
+    } else if(member.memberRole =='ROLE_MENTOR'){
+      alert('멘티만 질문을 등록할 수 있습니다.')
+      return;
+    }else{
       alert("로그인이 필요한 서비스입니다");
       return;
     }

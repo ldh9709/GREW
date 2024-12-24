@@ -3,11 +3,14 @@ import { getCookie } from "../util/cookieUtil";
 import { useNavigate } from "react-router-dom";
 import { logout, memberProfile, getMentorProfile } from "../api/memberApi";
 import "../css/styles.css";
+
 import { jwtDecode } from "jwt-decode";
+import { useMemberAuth } from "../util/AuthContext";
 
 export default function HeaderMenu() {
   const navigate = useNavigate();
 
+  /*
   const memberCookie = getCookie("member");
   console.log("멤버 쿠키 : ", memberCookie);
 
@@ -26,6 +29,22 @@ export default function HeaderMenu() {
 
   const mentorProfileNo = DecodeToken ? DecodeToken.mentorProfileNo : null;
   console.log("멘토 프로필 넘버 : ", mentorProfileNo);
+  */
+
+  const auth = useMemberAuth();
+
+  const token = auth?.token || null;
+  console.log("토큰 : ", auth?.token || null);
+  const member = auth?.member || {};
+  console.log("멤버 : ", auth?.member || {});
+  
+
+
+  const memberNo = token ? member.memberNo : null;
+  console.log("멤버 넘버 : ", memberNo);
+
+  const mentorProfileNo = token ? member.mentorProfileNo : null;
+  console.log("멘토 프로필 넘버 : ", mentorProfileNo);
 
   
 
@@ -38,6 +57,7 @@ export default function HeaderMenu() {
   const handleLogoutAction = async () => {
     try {
       const isLogout = await logout();
+      auth.logout();
       console.log("로그아웃 성공 여부 : ", isLogout);
       navigate("/main");
     } catch (error) {

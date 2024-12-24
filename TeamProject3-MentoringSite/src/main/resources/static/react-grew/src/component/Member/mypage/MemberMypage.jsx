@@ -7,7 +7,29 @@ import MemberTabs from './MemberTabs'
 
 
 export default function MemberMypage() {
+<<<<<<< HEAD
 
+=======
+  // useEffect(() => {
+  //   const checkProfile = async () => {
+  //     const mentorProfile = await memberApi.getMentorProfile(memberNo);
+  //     const memberProfile = await memberApi.memberProfile(memberNo);
+
+
+  //     if(mentorProfile.data.categoryNo === 26) {
+  //       navigate('/mentor/join');
+  //     }
+
+  //     if(memberProfile.data.categoryNo === 19) {
+  //       navigate('/member/profile/edit');
+  //     }
+  //   }
+
+  //   if(memberNo) {
+  //     checkProfile();
+  //   }
+  // }, []);
+>>>>>>> refs/heads/master
 
   // const { memberNo } = useParams();
   // const [isDataReady, setIsDataReady] = useState(false);

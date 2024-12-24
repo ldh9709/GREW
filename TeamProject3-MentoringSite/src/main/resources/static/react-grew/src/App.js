@@ -55,6 +55,7 @@ function App() {
 
   return (
     <>
+      <AuthProvider>
       {/* 어드민 경로가 아닌 경우에만 공통 레이아웃 표시 */}
       {!isAdminRoute && <Header />}
       {!isAdminRoute && <Navigate />}
@@ -66,7 +67,6 @@ function App() {
         rel="stylesheet"
       ></link>
         <div id="content">
-          <AuthProvider>
           
           <Routes>
             <Route path="/" exact element={<MainPage />} />
@@ -135,11 +135,11 @@ function App() {
             <Route path="/report-modal" element={<ReportModal/>}></Route>
               
           </Routes>
-          </AuthProvider>
           {/* 어드민 경로가 아닌 경우에만 Footer 표시 */}
           {!isAdminRoute && <Footer />}
         </div>
       </div>
+    </AuthProvider>
     </>
   );
 }
