@@ -1,6 +1,7 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import "../../css/styles.css";
 import * as answerApi from "../../api/answerApi";
+import * as categoryApi from "../../api/categoryApi";
 import { useNavigate } from "react-router-dom";
 import { getCookie } from "../../util/cookieUtil";
 import AnswerProfilePopup from "./AnswerProfilePopup";
@@ -8,7 +9,11 @@ export default function AnswerItem({ answer }) {
   const [inquiry, setInquiry] = useState(0);
   const [voteCount, setVoteCount] = useState(0);
   const [isPopupVisible, setIsPopupVisible] = useState(false);
-
+  const [mentorProfile, setMentorProFile] = useState([]);
+  const [category, setCategories] = useState([]);
+  const [isReportHovered, setIsReportHovered] = useState(false);
+  const [isUpVoteHovered, setIsUpVoteHovered] = useState(false);
+  const [isDownVoteHovered, setIsDownVoteHovered] = useState(false);
   const memberCookie = getCookie("member");
   const navigate = useNavigate();
   const token =
@@ -17,6 +22,18 @@ export default function AnswerItem({ answer }) {
   const togglePopup = () => {
     setIsPopupVisible((prevState) => !prevState);
   };
+  const fetchCategories = async () => {
+    const response = await categoryApi.getCategory(mentorProfile.categoryNo);
+    setCategories(response.data);
+  };
+
+  const fetchMentorProfile = async () => {
+    const response = await answerApi.getMentorProfileByMemberNo(
+      answer.memberNo
+    );
+    setMentorProFile(response.data);
+  };
+
   async function fetchData() {
     try {
       const response = await answerApi.findInquiry(answer.inquiryNo);
@@ -30,6 +47,14 @@ export default function AnswerItem({ answer }) {
   useEffect(() => {
     fetchData();
   }, [voteCount]);
+  useEffect(() => {
+    fetchMentorProfile();
+  }, []);
+  useEffect(() => {
+    if (mentorProfile?.categoryNo) {
+      fetchCategories();
+    }
+  }, [mentorProfile]); // mentorProfile가 업데이트된 후에 fetchCategories 실행
   const handleModify = async () => {
     navigate(`/answer/modify/${answer.answerNo}`);
   };
@@ -75,9 +100,9 @@ export default function AnswerItem({ answer }) {
     }
     console.log(response);
   };
+
   return (
     <>
-      
       <div className="answer-container">
         {answer.answerAccept == 2 ? (
           <div className="answer-accept-status">
@@ -98,13 +123,85 @@ export default function AnswerItem({ answer }) {
         ) : (
           <div></div>
         )}
+        <button className="answer-member" onClick={togglePopup}>
+          <div className="answer-img">
+            <img
+              src={
+                mentorProfile?.mentorImage ||
+                "/images/mentor-profile/defaultimg.jpeg"
+              }
+              alt="Mentor Profile"
+            />
+          </div>
+          <div className="answer-member-name">{answer.memberName}</div>
+          <div className="answer-member-category">{category.categoryName}</div>
+        </button>
+        {/* 팝업 창 */}
+        {isPopupVisible && (
+          <AnswerProfilePopup
+            key={answer.answerNo}
+            memberNo={answer.memberNo}
+            className="popup"
+          />
+        )}
+        <div className="answer-content">{answer.answerContent}</div>
+        <div className="answer-date">{answer.answerDate.substring(0, 10)}</div>
+        <div className="answer-vote">
+          <button
+            className="answer-upvote-btn"
+            onClick={handleUpvote}
+            onMouseEnter={() => setIsUpVoteHovered(true)} // 마우스가 버튼 위에 올라갔을 때
+            onMouseLeave={() => setIsUpVoteHovered(false)} // 마우스가 버튼을 벗어났을 때
+          >
+            <img
+              src={
+                isUpVoteHovered
+                  ? "https://img.icons8.com/?size=100&id=10271&format=png&color=000000"
+                  : "https://img.icons8.com/?size=100&id=2744&format=png&color=000000"
+              }
+              alt="Upvote Icon"
+              className="upvote-button-image"
+            />
+          </button>
+          {voteCount}
+          <button
+            className="answer-upvote-btn"
+            onClick={handleUpvote}
+            onMouseEnter={() => setIsDownVoteHovered(true)} // 마우스가 버튼 위에 올라갔을 때
+            onMouseLeave={() => setIsDownVoteHovered(false)} // 마우스가 버튼을 벗어났을 때
+          >
+            <img
+              src={
+                isDownVoteHovered
+                  ? "https://img.icons8.com/?size=100&id=10267&format=png&color=000000"
+                  : "https://img.icons8.com/?size=100&id=2913&format=png&color=000000"
+              }
+              alt="Upvote Icon"
+              className="downvote-button-image"
+            />
+          </button>
+        </div>
         {/* 신고하기버튼 */}
         {/* 신고하기버튼 */}
         {/* 신고하기버튼 */}
         {/* 신고하기버튼 */}
         {/* 신고하기버튼 */}
         <div className="answer-report-btn">
-          <button>신고하기</button>
+          <button
+            onMouseEnter={() => setIsReportHovered(true)} // 마우스가 버튼 위에 올라갔을 때
+            onMouseLeave={() => setIsReportHovered(false)} // 마우스가 버튼을 벗어났을 때
+            className={`hover-button ${isReportHovered ? "hovered" : ""}`}
+          >
+            <img
+              src={
+                isReportHovered
+                  ? "https://img.icons8.com/?size=100&id=8773&format=png&color=000000"
+                  : "https://img.icons8.com/?size=100&id=5365&format=png&color=000000"
+              }
+              alt="Button Image"
+              className="button-image"
+            />
+          </button>
         </div>
         {/* 신고하기버튼 */}
         {/* 신고하기버튼 */}
@@ -112,20 +209,6 @@ export default function AnswerItem({ answer }) {
         {/* 신고하기버튼 */}
         {/* 신고하기버튼 */}
         {/* 신고하기버튼 */}
-        <button className="answer-member" onClick={togglePopup}>
-          {answer.memberName}
-        </button>
-        {/* 팝업 창 */}
-        {isPopupVisible && (
-          <AnswerProfilePopup key = {answer.answerNo} memberNo= {answer.memberNo}className="popup"/>
-        )}
-        <div className="answer-content">{answer.answerContent}</div>
-        <div className="answer-date">{answer.answerDate.substring(0, 10)}</div>
-        <div className="answer-vote">
-          <button onClick={handleUpvote}>추천</button>
-          {voteCount}
-          <button onClick={handleDownvote}>비추천</button>
-        </div>
         {memberCookie && memberCookie.memberNo == answer.memberNo ? (
           <div className="modify-delete-btn">
             <button onClick={handleModify}>수정</button>
