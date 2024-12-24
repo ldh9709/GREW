@@ -19,6 +19,7 @@ import org.springframework.security.oauth2.client.web.OAuth2LoginAuthenticationF
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
@@ -147,9 +148,10 @@ public class SecurityConfig {
 		//로그아웃
 		httpSecurity.logout((t) -> {
 			t.logoutUrl("/logout")//로그아웃
-			.invalidateHttpSession(true)//세션 무효화
 			.deleteCookies("member")//쿠키삭제
-			.clearAuthentication(true);//인증 정보 삭제
+			//.invalidateHttpSession(true)//세션 무효화
+			//.clearAuthentication(true)//인증 정보 삭제
+			.addLogoutHandler(new SecurityContextLogoutHandler()); // SecurityContext 초기화
 		});
 
 		/***** 페이지 접근 경로 *****/

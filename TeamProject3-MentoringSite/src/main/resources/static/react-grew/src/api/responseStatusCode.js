@@ -27,4 +27,5 @@ export const MEMBER_IS_NOT_EMAIL = 2060; // 이메일로 가입한 회원이 아
 export const AUTHENTICATION_FAILED = 2061;        // 토큰과 정보가 일치하지 않음
 
 //MENTOR 성공 코드
-export const CREATED_MENTOR_PROFILE_SUCCESS_CODE = 2350; //멘토 가입 성공공
+export const CREATED_MENTOR_PROFILE_SUCCESS_CODE = 2350; //멘토 가입 성공
+export const UPDATE_MENTOR_PROFILE_SUCCESS_CODE = 2365

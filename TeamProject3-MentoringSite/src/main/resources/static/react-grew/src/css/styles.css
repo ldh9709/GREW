@@ -124,6 +124,9 @@ button {
   .logo {
     margin-left: 10px;
   }
+  .search-container{
+    right: 20px !important;
+  }
 }
 
 @media (max-width: 1024px) {
