@@ -159,7 +159,7 @@ function InqiuryList() {
   };
   return (
     <>
-      <h1>질문게시판</h1>
+      <h1>질문하기</h1>
 
       <div className="btn-inquiry-write-div">
         <button className="btn-inquiry-write" onClick={handleWriteButton}>
