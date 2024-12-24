@@ -3,14 +3,9 @@ import "../../css/styles.css";
 import * as answerApi from "../../api/answerApi";
 import * as categoryApi from "../../api/categoryApi";
 import { useNavigate } from "react-router-dom";
-<<<<<<< HEAD
-import { getCookie } from "../../util/cookieUtil";
-import AnswerProfilePopup from "./AnswerProfilePopup";
+import { useMemberAuth } from "../../util/AuthContext";
 import ReportModal from "../Report/ReportModal";
 
-=======
-import { useMemberAuth } from "../../util/AuthContext";
->>>>>>> refs/heads/master
 export default function AnswerItem({ answer }) {
   const { token, member } = useMemberAuth();
   const [inquiry, setInquiry] = useState(0);
@@ -201,9 +196,6 @@ export default function AnswerItem({ answer }) {
             />
           </button>
         </div>
-<<<<<<< HEAD
-        {memberCookie && memberCookie.memberNo == answer.memberNo ? (
-=======
         {/* 신고하기버튼 */}
         {/* 신고하기버튼 */}
         {/* 신고하기버튼 */}
@@ -211,7 +203,6 @@ export default function AnswerItem({ answer }) {
         {/* 신고하기버튼 */}
         {/* 신고하기버튼 */}
         {member && member.memberNo == answer.memberNo ? (
->>>>>>> refs/heads/master
           <div className="modify-delete-btn">
             <button onClick={handleModify}>수정</button>
 

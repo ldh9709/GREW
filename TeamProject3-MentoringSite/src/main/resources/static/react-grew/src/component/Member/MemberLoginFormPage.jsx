@@ -6,10 +6,6 @@ import "../../css/memberPage.css"
 import google from '../../image/google.png';
 import naver from '../../image/naver.png';
 import kakao from '../../image/kakao.png';
-<<<<<<< HEAD
-=======
-import { jwtDecode } from "jwt-decode";
->>>>>>> refs/heads/master
 import { useMemberAuth } from "../../util/AuthContext";
 
 const MemberLoginFormPage = () => {
@@ -32,19 +28,7 @@ const MemberLoginFormPage = () => {
     if (responseJsonObject.accessToken) {
 
       login(responseJsonObject.accessToken);
-<<<<<<< HEAD
-=======
-      /* 쿠키 설정 */
-      console.log("getCookies : " , getCookie("member"));
-      console.log("getCookies.accessToken : " , getCookie("member").accessToken);
->>>>>>> refs/heads/master
 
-<<<<<<< HEAD
-=======
-      const token = jwtDecode(getCookie("member").accessToken);
-      console.log("Decoded Token:", token);
-      console.log("Token.MemberNo:", token.memberNo);
->>>>>>> refs/heads/master
       /* 로그인 성공 시 이동 */
       navigate("/main");
     } else {
