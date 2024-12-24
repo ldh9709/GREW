@@ -57,6 +57,7 @@ export default function HeaderMenu() {
   const handleLogoutAction = async () => {
     try {
       const isLogout = await logout();
+      auth.logout();
       console.log("로그아웃 성공 여부 : ", isLogout);
       navigate("/main");
     } catch (error) {
