@@ -63,7 +63,6 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping("/member")
 public class MemberRestController {
 	
-	private static final Role ROLE_MENTOR = null;
 	@Autowired
 	private MemberService memberService;
 	@Autowired

@@ -93,7 +93,7 @@ public class MentorProfileServiceImpl implements MentorProfileService {
             if (member == null) {
                 throw new CustomException(ResponseStatusCode.MEMBER_MENTOR_NOT_FOUND, ResponseMessage.MEMBER_MENTOR_NOT_FOUND, null);
             }
-
+            
             // 2️⃣ 카테고리 정보 조회
             Category category = categoryRepository.findById(mentorProfileDto.getCategoryNo()).get();
             if (category == null) {
