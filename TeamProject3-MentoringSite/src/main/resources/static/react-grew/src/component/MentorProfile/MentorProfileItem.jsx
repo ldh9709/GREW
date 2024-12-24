@@ -35,6 +35,9 @@ export default function MentorProfileItem({ mentor }) {
     setAdditionalData({
       mentorIntroduce: response.data.mentorIntroduce || "소개 텍스트 없음",
       mentorCareer: response.data.mentorCareer || "경력 정보 없음",
+
+  
+
     });
   };
 
