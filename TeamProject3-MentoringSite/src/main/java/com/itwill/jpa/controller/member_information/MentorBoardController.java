@@ -68,7 +68,7 @@ public class MentorBoardController {
     /* 멘토 보드 등록 */
     @Operation(summary = "멘토 보드 등록")
     @PostMapping
-    public ResponseEntity<Response> saveMentorBoard(@RequestBody MentorBoardDto mentorBoardDto) {
+    public ResponseEntity<Response> createMentorBoard(@RequestBody MentorBoardDto mentorBoardDto) {
     	MentorBoardDto savedBoard = mentorBoardService.saveMemtorBoard(mentorBoardDto);
     	List<AlarmDto> saveAlarms = alarmService.createAlarmsByMentorBoard(savedBoard);
         Response response = new Response();
