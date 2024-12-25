@@ -200,81 +200,82 @@ export const listMentorsByActivityCount = async (page, size) => {
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////
-
+// PARENT_CATEGORY_NO 기준 팔로우 순 멘토 리스트 조회
 /**
- * 🔥 특정 소분류 카테고리의 멘토를 팔로우 순으로 조회합니다.
- * @param {number} categoryNo - 소분류 카테고리 번호
- * @param {number} page - 페이지 번호
- * @param {number} size - 페이지 크기
- * @returns {Promise} - 멘토 리스트를 포함하는 프로미스
+ *  대분류 카테고리의 팔로우 순 멘토 리스트 조회
  */
-export const listMentorsByCategoryFollowCount = async (categoryNo, page = 0, size = 10) => {
-  const response = await fetch(`${BACKEND_SERVER}/mentor-profile/${categoryNo}/follow-count?page=${page}&size=${size}`);
+export const listMentorsByParentCategoryFollowCount = async (parentCategoryNo, page = 0, size = 10) => {
+  const response = await fetch(
+    `${BACKEND_SERVER}${BASE_URL}/${parentCategoryNo}/parent/follow?page=${page}&size=${size}`,
+    {
+      method: "GET",
+    }
+  );
   const responseJsonObject = await response.json();
   return responseJsonObject;
 };
 
 /**
- * 🔥 특정 대분류 카테고리의 멘토를 팔로우 순으로 조회합니다.
- * @param {number} categoryNo - 대분류 카테고리 번호
- * @param {number} page - 페이지 번호
- * @param {number} size - 페이지 크기
- * @returns {Promise} - 멘토 리스트를 포함하는 프로미스
+ *  대분류 카테고리의 멘토링 횟수 순 멘토 리스트 조회
  */
-export const listMentorsByParentCategoryFollowCount = async (categoryNo, page = 0, size = 10) => {
-  const response = await fetch(`${BACKEND_SERVER}/mentor-profile/${categoryNo}/parent/follow-count?page=${page}&size=${size}`);
+export const listMentorsByParentCategoryMentoringCount = async (parentCategoryNo, page = 0, size = 10) => {
+  const response = await fetch(
+    `${BACKEND_SERVER}${BASE_URL}/${parentCategoryNo}/parent/mentoring?page=${page}&size=${size}`,
+    {
+      method: "GET",
+    }
+  );
   const responseJsonObject = await response.json();
   return responseJsonObject;
 };
 
 /**
- * 🔥 특정 소분류 카테고리의 멘토를 멘토링 횟수 순으로 조회합니다.
- * @param {number} categoryNo - 소분류 카테고리 번호
- * @param {number} page - 페이지 번호
- * @param {number} size - 페이지 크기
- * @returns {Promise} - 멘토 리스트를 포함하는 프로미스
+ *  대분류 카테고리의 활동 순 멘토 리스트 조회
  */
-export const listMentorsByCategoryMentoringCount = async (categoryNo, page = 0, size = 10) => {
-  const response = await fetch(`${BACKEND_SERVER}/mentor-profile/${categoryNo}/mentoring-count?page=${page}&size=${size}`);
+export const listMentorsByParentCategoryActivityCount = async (parentCategoryNo, page = 0, size = 10) => {
+  const response = await fetch(
+    `${BACKEND_SERVER}${BASE_URL}/${parentCategoryNo}/parent/activity?page=${page}&size=${size}`,
+    {
+      method: "GET",
+    }
+  );
   const responseJsonObject = await response.json();
   return responseJsonObject;
 };
 
-/**
- * 🔥 특정 대분류 카테고리의 멘토를 멘토링 횟수 순으로 조회합니다.
- * @param {number} categoryNo - 대분류 카테고리 번호
- * @param {number} page - 페이지 번호
- * @param {number} size - 페이지 크기
- * @returns {Promise} - 멘토 리스트를 포함하는 프로미스
- */
-export const listMentorsByParentCategoryMentoringCount = async (categoryNo, page = 0, size = 10) => {
-  const response = await fetch(`${BACKEND_SERVER}/mentor-profile/${categoryNo}/parent/mentoring-count?page=${page}&size=${size}`);
+
+// CATEGORY_NO 기준 팔로우 순 멘토 리스트 조회
+export const listMentorsByCategoryNoFollow = async (categoryNo, page = 0, size = 10) => {
+  const response = await fetch(
+    `${BACKEND_SERVER}${BASE_URL}/category/${categoryNo}/follow?page=${page}&size=${size}`,
+    {
+      method: "GET",
+    }
+  );
   const responseJsonObject = await response.json();
   return responseJsonObject;
 };
 
-/**
- * 🔥 특정 소분류 카테고리의 멘토를 활동 수 순으로 조회합니다.
- * @param {number} categoryNo - 소분류 카테고리 번호
- * @param {number} page - 페이지 번호
- * @param {number} size - 페이지 크기
- * @returns {Promise} - 멘토 리스트를 포함하는 프로미스
- */
-export const listMentorsByCategoryActivityCount = async (categoryNo, page = 0, size = 10) => {
-  const response = await fetch(`${BACKEND_SERVER}/mentor-profile/${categoryNo}/activity-count?page=${page}&size=${size}`);
+// CATEGORY_NO 기준 멘토링 횟수 순 멘토 리스트 조회
+export const listMentorsByCategoryNoMentoring = async (categoryNo, page = 0, size = 10) => {
+  const response = await fetch(
+    `${BACKEND_SERVER}${BASE_URL}/category/${categoryNo}/mentoring?page=${page}&size=${size}`,
+    {
+      method: "GET",
+    }
+  );
   const responseJsonObject = await response.json();
   return responseJsonObject;
 };
 
-/**
- * 🔥 특정 대분류 카테고리의 멘토를 활동 수 순으로 조회합니다.
- * @param {number} categoryNo - 대분류 카테고리 번호
- * @param {number} page - 페이지 번호
- * @param {number} size - 페이지 크기
- * @returns {Promise} - 멘토 리스트를 포함하는 프로미스
- */
-export const listMentorsByParentCategoryActivityCount = async (categoryNo, page = 0, size = 10) => {
-  const response = await fetch(`${BACKEND_SERVER}/mentor-profile/${categoryNo}/parent/activity-count?page=${page}&size=${size}`);
+// CATEGORY_NO 기준 활동 수 순 멘토 리스트 조회
+export const listMentorsByCategoryNoActivity = async (categoryNo, page = 0, size = 10) => {
+  const response = await fetch(
+    `${BACKEND_SERVER}${BASE_URL}/category/${categoryNo}/activity?page=${page}&size=${size}`,
+    {
+      method: "GET",
+    }
+  );
   const responseJsonObject = await response.json();
   return responseJsonObject;
 };

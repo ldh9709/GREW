@@ -1,30 +1,22 @@
 import "../../css/styles.css";
-import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import "../../css/mentorProfile.css";
-import {
-  listMentorProfiles,
-  listMentorsByFollowCount,
-  listMentorsByMentoringCount,
-  listMentorsByActivityCount,
-} from "../../api/mentorProfileApi.js";
+import React, { useEffect, useState } from "react";
+import * as mentorProfileApi from "../../api/mentorProfileApi";
 import MentorProfileItem from "./MentorProfileItem";
+import * as categoryApi from "../../api/categoryApi";
+import { useNavigate } from "react-router-dom";
 
-import * as categoryApi from "../../api/categoryApi"; //카테고리 
-
-const MentorProfileList = () => {
+function MentorProfileList() {
   const [mentorProfiles, setMentorProfiles] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-  const [sortType, setSortType] = useState("follow");
-  const [currentPage, setCurrentPage] = useState(0);
-  const [totalPages, setTotalPages] = useState(0);
-      const [categories, setCategories] = useState([]); // 카테고리 리스트
-      const [selectedCategory, setSelectedCategory] = useState(null); // 선택된 카테고리
-      const [childCategories, setChildCategories] = useState([]); // 하위 카테고리 상태
+  const [currentPage, setCurrentPage] = useState(1); // 현재 페이지 번호
+  const [totalPages, setTotalPages] = useState(0); // 전체 페이지 수
+  const [itemsPerPage] = useState(12); // 페이지당 항목 수
+  const [sortType, setSortType] = useState("follow"); // 기본적으로 'follow'로 설정
+  const [categories, setCategories] = useState([]); // 카테고리 리스트
+  const [selectedCategory, setSelectedCategory] = useState(null); // 선택된 카테고리
+  const [childCategories, setChildCategories] = useState([]); // 하위 카테고리 상태
+  const navigate = useNavigate();
 
-
-// 카테고리 목록을 가져오는 함수
+  // 카테고리 목록을 가져오는 함수
   const fetchCategories = async () => {
     try {
       const response = await categoryApi.ListCategory();
@@ -36,9 +28,15 @@ const MentorProfileList = () => {
 
   useEffect(() => {
     fetchCategories();
-  }, []); //카테고리
+  }, []);
 
-// 카테고리 버튼 클릭 시 호출되는 함수
+  // 라디오 버튼 클릭 시 정렬 방식 변경
+  const handleRadioChange = (e) => {
+    setSortType(e.target.value);
+    setCurrentPage(1); // 정렬 기준 변경 시 첫 페이지로 이동
+  };
+
+  // 카테고리 버튼 클릭 시 호출되는 함수
   const handleCategoryClick = async (categoryNo) => {
     setSelectedCategory(categoryNo); // 새 카테고리 선택
     console.log("선택된 상위 카테고리", categoryNo);
@@ -57,94 +55,94 @@ const MentorProfileList = () => {
     }
   };
 
-
-
-  useEffect(() => {
-    fetchMentorProfiles();
-  }, [sortType, currentPage]);
-
-  const fetchMentorProfiles = async () => {
+  // 멘토 프로필 데이터를 가져오는 함수
+  const fetchMentorProfiles = async (page, size, sortButton, selectedCategory) => {
     try {
-      setLoading(true);
-      setError(null);
-      let fetchFunction;
+      let responseJsonObject;
+      const selectedCat = categories.find(
+        (cat) => cat.categoryNo === selectedCategory
+      );
 
-      switch (sortType) {
-        case "follow":
-          fetchFunction = listMentorsByFollowCount;
-          break;
-        case "mentoring":
-          fetchFunction = listMentorsByMentoringCount;
-          break;
-        case "activity":
-          fetchFunction = listMentorsByActivityCount;
-          break;
-        default:
-          fetchFunction = listMentorProfiles;
+      if (!selectedCategory) {
+        if (sortButton === "follow") {
+          responseJsonObject = await mentorProfileApi.listMentorsByFollowCount(page, size);
+        } else if (sortButton === "mentoring") {
+          responseJsonObject = await mentorProfileApi.listMentorsByMentoringCount(page, size);
+        } else if (sortButton === "activity") {
+          responseJsonObject = await mentorProfileApi.listMentorsByActivityCount(page, size);
+        }
+      } else if (selectedCat?.categoryDepth === 2) {
+        if (sortButton === "follow") {
+          responseJsonObject = await mentorProfileApi.listMentorsByCategoryNoFollow(
+            selectedCategory,
+            page,
+            size
+          );
+        } else if (sortButton === "mentoring") {
+          responseJsonObject = await mentorProfileApi.listMentorsByCategoryNoMentoring(
+            selectedCategory,
+            page,
+            size
+          );
+        } else if (sortButton === "activity") {
+          responseJsonObject = await mentorProfileApi.listMentorsByCategoryNoActivity(
+            selectedCategory,
+            page,
+            size
+          );
+        }
+      } else if (selectedCat?.categoryDepth === 1) {
+        if (sortButton === "follow") {
+          responseJsonObject = await mentorProfileApi.listMentorsByParentCategoryFollowCount(
+            selectedCategory,
+            page,
+            size
+          );
+        } else if (sortButton === "mentoring") {
+          responseJsonObject = await mentorProfileApi.listMentorsByParentCategoryMentoringCount(
+            selectedCategory,
+            page,
+            size
+          );
+        } else if (sortButton === "activity") {
+          responseJsonObject = await mentorProfileApi.listMentorsByParentCategoryActivityCount(
+            selectedCategory,
+            page,
+            size
+          );
+        }
       }
 
-      const response = await fetchFunction(currentPage, 12);
-
-      if (response?.data?.content) {
-        setMentorProfiles(response.data.content);
-        setTotalPages(response.data.totalPages);
-      } else {
-        throw new Error("멘토 프로필을 불러오는 중 오류가 발생했습니다.");
-      }
-    } catch (err) {
-      setError(err.message || "알 수 없는 오류가 발생했습니다.");
-    } finally {
-      setLoading(false);
+      setMentorProfiles(responseJsonObject?.data?.content || []);
+      setTotalPages(responseJsonObject?.data?.totalPages || 0);
+    } catch (error) {
+      console.error("API 호출 실패:", error);
     }
   };
 
-  const handleRadioChange = (e) => {
-    setSortType(e.target.value);
-    setCurrentPage(0); // 정렬 기준 변경 시 첫 페이지로 이동
-  };
-
-  const handlePageChange = (pageNumber) => {
+  // 페이지 변경 시 데이터 갱신
+  const paginate = (pageNumber) => {
     setCurrentPage(pageNumber);
   };
 
-  const renderPagination = () => {
-    const pageNumbers = Array.from({ length: totalPages }, (_, i) => i);
+  useEffect(() => {
+    fetchMentorProfiles(currentPage - 1, itemsPerPage, sortType, selectedCategory);
+  }, [currentPage, sortType, selectedCategory]);
 
-    return (
-      
-      
-      <div className="pagination">
-        <button
-          onClick={() => handlePageChange(currentPage - 1)}
-          disabled={currentPage === 0}
-        >
-          이전
-        </button>
-        {pageNumbers.map((number) => (
-          <button
-            key={number}
-            onClick={() => handlePageChange(number)}
-            className={number === currentPage ? "active-page" : ""}
-          >
-            {number + 1}
-          </button>
-        ))}
-        <button
-          onClick={() => handlePageChange(currentPage + 1)}
-          disabled={currentPage === totalPages - 1}
-        >
-          다음
-        </button>
-      </div>
-    );
-  };
+  // 페이지네이션 버튼 표시 (10개씩 끊어서 표시)
+  const pageNumbers = [];
+  const pagesToShow = 10; // 한 번에 보여줄 페이지 수
+  const startPage = Math.floor((currentPage - 1) / pagesToShow) * pagesToShow + 1;
+  const endPage = Math.min(startPage + pagesToShow - 1, totalPages);
+
+  for (let i = startPage; i <= endPage; i++) {
+    pageNumbers.push(i);
+  }
 
   return (
-    
-    <div className="mentor-list">
-      <div className="mentor-profile-list">
-        <h1>멘토 프로필 목록</h1>
-        {/* 카테고리 버튼들 */}
+    <>
+      <h1>멘토 프로필 목록</h1>
+      {/* 카테고리 버튼들 */}
       <div className="category-container">
         <div className="category-parent">
           {categories
@@ -156,9 +154,9 @@ const MentorProfileList = () => {
                 className="category-button"
                 style={{
                   backgroundColor:
-                    selectedCategory === category.categoryNo ? "#4CAF50" : "", // 선택된 카테고리는 색상 변경
+                    selectedCategory === category.categoryNo ? "#4CAF50" : "",
                   color:
-                    selectedCategory === category.categoryNo ? "white" : "", // 선택된 카테고리 글자 색상 변경
+                    selectedCategory === category.categoryNo ? "white" : "",
                 }}
               >
                 {category.categoryName}
@@ -176,8 +174,8 @@ const MentorProfileList = () => {
                 className="category-button"
                 style={{
                   backgroundColor:
-                    selectedCategory === child.categoryNo ? "#4CAF50" : "", // 선택된 카테고리는 색상 변경
-                  color: selectedCategory === child.categoryNo ? "white" : "", // 선택된 카테고리 글자 색상 변경
+                    selectedCategory === child.categoryNo ? "#4CAF50" : "",
+                  color: selectedCategory === child.categoryNo ? "white" : "",
                 }}
               >
                 {child.categoryName}
@@ -186,56 +184,70 @@ const MentorProfileList = () => {
           </div>
         )}
       </div>
-        <div className="radio-container">
-          <label>
-            <input
-              type="radio"
-              name="sortType"
-              value="follow"
-              checked={sortType === "follow"}
-              onChange={handleRadioChange}
-            />
-            팔로우 순
-          </label>
-          <label>
-            <input
-              type="radio"
-              name="sortType"
-              value="mentoring"
-              checked={sortType === "mentoring"}
-              onChange={handleRadioChange}
-            />
-            멘토링 횟수 순
-          </label>
-          <label>
-            <input
-              type="radio"
-              name="sortType"
-              value="activity"
-              checked={sortType === "activity"}
-              onChange={handleRadioChange}
-            />
-            활동 수 순
-          </label>
-        </div>
-        {loading && <p className="loading-spinner">로딩 중입니다...</p>}
-        {error && <p className="error-message">에러 발생: {error}</p>}
-        <div className="profile-grid">
-          {!loading && mentorProfiles.length > 0
-            ? mentorProfiles.map((mentor) => (
-                <MentorProfileItem
-                  key={mentor.mentorProfileNo}
-                  mentor={mentor}
-                />
-              ))
-            : !loading && <p>멘토 프로필이 없습니다.</p>}
-        </div>
-        <div className="mentor-profile-pagenation">
-          {!loading && totalPages > 0 && renderPagination()}
-        </div>
+      {/* 정렬 라디오 버튼 */}
+      <div className="radio-container">
+        <label>
+          <input
+            type="radio"
+            name="sortType"
+            value="follow"
+            checked={sortType === "follow"}
+            onChange={handleRadioChange}
+          />
+          팔로우 순
+        </label>
+        <label>
+          <input
+            type="radio"
+            name="sortType"
+            value="mentoring"
+            checked={sortType === "mentoring"}
+            onChange={handleRadioChange}
+          />
+          멘토링 순
+        </label>
+        <label>
+          <input
+            type="radio"
+            name="sortType"
+            value="activity"
+            checked={sortType === "activity"}
+            onChange={handleRadioChange}
+          />
+          활동 순
+        </label>
       </div>
-    </div>
+      <div className="profile-grid">
+        {mentorProfiles.length > 0 ? (
+          mentorProfiles.map((mentor) => (
+            <MentorProfileItem key={mentor.mentorProfileNo} mentor={mentor} />
+          ))
+        ) : (
+          <p>멘토 프로필이 없습니다.</p>
+        )}
+      </div>
+      <div className="pagination">
+        {startPage > 1 && (
+          <button onClick={() => paginate(startPage - 1)}>이전</button>
+        )}
+        {pageNumbers.map((number) => (
+          <button
+            key={number}
+            onClick={() => paginate(number)}
+            style={{
+              backgroundColor: number === currentPage ? "#006618" : "",
+              color: number === currentPage ? "white" : "",
+            }}
+          >
+            {number}
+          </button>
+        ))}
+        {endPage < totalPages && (
+          <button onClick={() => paginate(endPage + 1)}>다음</button>
+        )}
+      </div>
+    </>
   );
-};
+}
 
 export default MentorProfileList;
