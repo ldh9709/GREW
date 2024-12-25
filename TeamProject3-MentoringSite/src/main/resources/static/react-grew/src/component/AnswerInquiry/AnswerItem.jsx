@@ -5,6 +5,8 @@ import * as categoryApi from "../../api/categoryApi";
 import { useNavigate } from "react-router-dom";
 import { useMemberAuth } from "../../util/AuthContext";
 import ReportModal from "../Report/ReportModal";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faThumbsDown, faThumbsUp } from "@fortawesome/free-regular-svg-icons";
 
 export default function AnswerItem({ answer }) {
   const { token, member } = useMemberAuth();
@@ -153,8 +155,10 @@ export default function AnswerItem({ answer }) {
               alt="Mentor Profile"
             />
           </div>
-          <div className="answer-member-name">{answer.memberName} 멘토</div>
-          <div className="answer-member-category">{category.categoryName}</div>
+          <div className="answer-mentor-info">
+            <div className="answer-member-category">{category.categoryName}</div>
+            <div className="answer-member-name">{answer.memberName} 멘토</div>
+          </div>
         </button>
         
         <div className="answer-content">{answer.answerContent}</div>
@@ -165,16 +169,12 @@ export default function AnswerItem({ answer }) {
             onClick={handleUpvote}
             onMouseEnter={() => setIsUpVoteHovered(true)} // 마우스가 버튼 위에 올라갔을 때
             onMouseLeave={() => setIsUpVoteHovered(false)} // 마우스가 버튼을 벗어났을 때
-          >
-            <img
-              src={
-                isUpVoteHovered
-                  ? "https://img.icons8.com/?size=100&id=10271&format=png&color=000000"
-                  : "https://img.icons8.com/?size=100&id=2744&format=png&color=000000"
-              }
-              alt="Upvote Icon"
-              className="upvote-button-image"
-            />
+         >     
+          {
+            isUpVoteHovered
+              ? <FontAwesomeIcon icon={faThumbsUp} />
+              : <FontAwesomeIcon icon={faThumbsUp} />
+            }
           </button>
           {voteCount}
           <button
@@ -183,20 +183,31 @@ export default function AnswerItem({ answer }) {
             onMouseEnter={() => setIsDownVoteHovered(true)} // 마우스가 버튼 위에 올라갔을 때
             onMouseLeave={() => setIsDownVoteHovered(false)} // 마우스가 버튼을 벗어났을 때
           >
-            <img
-              src={
+          {
                 isDownVoteHovered
-                  ? "https://img.icons8.com/?size=100&id=10267&format=png&color=000000"
-                  : "https://img.icons8.com/?size=100&id=2913&format=png&color=000000"
-              }
-              alt="Upvote Icon"
-              className="downvote-button-image"
-            />
+                  ? <FontAwesomeIcon icon={faThumbsDown} />
+                  : <FontAwesomeIcon icon={faThumbsDown} />
+          }
           </button>
         </div>
 
-        {/* 답변 신고 버튼 */}
-        <div className="answer-report-btn">
+        {/* 답변 수정 삭제 신고 버튼 */}
+        <div className="inquiry-view-answer-btn">
+          {member && member.memberNo == answer.memberNo ? (
+            <div className="modify-delete-btn">
+              <button onClick={handleModify}>수정</button>
+  
+              <button
+                onClick={(e) => {
+                  e.preventDefault(); // 폼 제출 방지
+                }}
+              >
+                삭제
+              </button>
+            </div>
+          ) : (
+            <div></div>
+          )}
           {isModalOpen && (
             <ReportModal 
             onClose={handleCloseModal} 
@@ -220,21 +231,6 @@ export default function AnswerItem({ answer }) {
           </button>
         </div>
 
-        {member && member.memberNo == answer.memberNo ? (
-          <div className="modify-delete-btn">
-            <button onClick={handleModify}>수정</button>
-
-            <button
-              onClick={(e) => {
-                e.preventDefault(); // 폼 제출 방지
-              }}
-            >
-              삭제
-            </button>
-          </div>
-        ) : (
-          <div></div>
-        )}
       </div>
     </>
   );

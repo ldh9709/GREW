@@ -6,6 +6,9 @@ import AnswerItem from "./AnswerItem";
 import "../../css/styles.css";
 import { useMemberAuth } from "../../util/AuthContext";
 import ReportModal from "../Report/ReportModal";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faEye } from "@fortawesome/free-regular-svg-icons";
+import { faPen } from "@fortawesome/free-solid-svg-icons";
 
 
 function InquiryView() {
@@ -119,6 +122,14 @@ function InquiryView() {
     navigate(`/inquiry/modify/${inquiryNo}`);
   };
 
+  // 이름 마스킹
+  const maskName = (name) => {
+    if (name.length <= 2) {
+      return name[0] + "*".repeat(name.length - 1);
+    }
+    return name[0] + "*".repeat(name.length - 2) + name[name.length - 1];
+  };
+
   //신고 하기 창 열고 닫기
   const handleOpenModal = () => {
     setIsModalOpen(true);
@@ -130,7 +141,6 @@ function InquiryView() {
 
   const handleCloseModal = () => {
     setIsModalOpen(false);
-    console.log('모달닫아!!')
   };
 
   return (
@@ -138,36 +148,22 @@ function InquiryView() {
       <div style={{ paddingLeft: 10 }}>
         <input type="hidden" name="inquiryNo" value={inquiry.inquiryNo} />
 
-        <div className="answer-write">
-          <button className="answer-notify-btn" onClick={handleWriteButton}>
-            <img
-              src="https://img.icons8.com/?size=100&id=P1bJzKUoOQYz&format=png&color=000000"
-              style={{
-                width: "20px",
-                height: "20px",
-                marginRight: "5px",
-                marginLeft: "-5px",
-                marginBottom: "-3px",
-              }}
-            />
-            답변하기
-          </button>
-        </div>
         <div className="inquiry-container-inview">
-          <div>
-            <div className="inquiry-title">{inquiry.inquiryTitle}</div>
+          <div className="inquiry-view-category">{inquiry.categoryName}</div>
+          <div className="inquiry-view-title">
+            <span>Q.</span>
+            <span>{inquiry.inquiryTitle}</span>
           </div>
-          <div className="inquiry-desc">
-            <div>{inquiry.categoryName}</div>
+          <div className="inquiry-view-desc">
             <div>
-              {inquiry.memberName} | 조회수 {inquiry.inquiryViews} |{" "}
-              {inquiry.inquiryDate.substring(0, 10)}
+              {inquiry.memberName} 멘티ㆍ
+              {inquiry.inquiryDate.substring(0, 10)}ㆍ
+              <FontAwesomeIcon icon={faEye}/> {inquiry.inquiryViews}
             </div>
           </div>
-          <div className="inquiry-content">
-            <div>{inquiry.inquiryContent}</div>
+          <div className="inquiry-view-content">
+            {inquiry.inquiryContent}
           </div>
-
           {member != null && member.memberNo == inquiry.memberNo ? (
             <div className="modify-delete-btn2">
               <button onClick={handleModify}>수정</button>
@@ -185,7 +181,7 @@ function InquiryView() {
             <div></div>
           )}
           {/* 신고하기버튼 */}
-          <div className="answer-report-btn">
+          <div className="inquiry-report-btn">
             {isModalOpen && (
               <ReportModal 
               onClose={handleCloseModal} 
@@ -209,31 +205,38 @@ function InquiryView() {
               />
             </button>
           </div>
+            <button className="answer-notify-btn" onClick={handleWriteButton}>
+              <FontAwesomeIcon icon={faPen} />
+              <span>답변하기</span>
+            </button>
+          </div>
         </div>
-      </div>
-      <div style={{ marginTop: "20px" }}>
+      <div className="inquiry-view-answer-container">
         <div className="radio-container">
+          <div>{answer.length}개 답변</div>
           {/* 라디오 버튼 */}
-          <label style={{ marginRight: "10px" }}>
-            <input
-              type="radio"
-              name="sortType"
-              value="latest"
-              checked={sortType === "latest"}
-              onChange={handleRadioChange}
-            />
-            최신순
-          </label>
-          <label>
-            <input
-              type="radio"
-              name="sortType"
-              value="vote"
-              checked={sortType === "vote"}
-              onChange={handleRadioChange}
-            />
-            추천순
-          </label>
+          <div>
+            <label style={{ marginRight: "10px" }}>
+              <input
+                type="radio"
+                name="sortType"
+                value="latest"
+                checked={sortType === "latest"}
+                onChange={handleRadioChange}
+              />
+              최신순
+            </label>
+            <label>
+              <input
+                type="radio"
+                name="sortType"
+                value="vote"
+                checked={sortType === "vote"}
+                onChange={handleRadioChange}
+              />
+              추천순
+            </label>
+          </div>
         </div>
         {answer && answer.length > 0 ? (
           answer.map((answer) => (
