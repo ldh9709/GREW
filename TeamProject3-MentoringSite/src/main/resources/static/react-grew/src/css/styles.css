@@ -49,7 +49,6 @@ button:hover {
   background-color: #006618; /* 버튼 호버 시 색상 변경 */
 }
 button {
-  padding: 5px 10px; /* 버튼 내부 여백 */
   border: none;
   cursor: pointer;
   background-color: #28a745;
@@ -58,10 +57,10 @@ button {
 .inquiry-radio-container {
   /*정렬을 위한 라디오 버튼css*/
   display: flex;
+  border-top: 1px solid #e4e4e4;
   justify-content: flex-end; /* 오른쪽 정렬 */
   gap: 10px; /* 라디오 버튼들 간의 간격 */
-  padding-bottom: 10px;
-  border-bottom: 1px solid #ccc;
+  padding: 10px 0;
   font-size: 13px;
 }
 .pagenation {
@@ -151,53 +150,45 @@ button {
 .answer-container {
   display: flex;
   flex-direction: column;
-  border-top: 1px solid #ccc; /* 테두리 설정 */
-  margin: 10px 0; /* 상하 마진 */
   background-color: #ffffff; /* 배경색 */
-  width: 1150px; /*너비*/
   margin-left: 10px;
+  margin-bottom: 20px;
 }
 .answer-img {
   display: flex;
   margin: 10px;
 }
 .answer-img img {
-  width: 45px;
-  height: 45px;
+  width: 90px;
+  height: 90px;
   border-radius: 50px;
   object-fit: cover; /* 이미지를 비율에 맞게 잘라서 채우기 */
 }
 .answer-member {
-  margin-right: 1px;
   margin: 5px;
   display: flex;
-  border-radius: 20px;
-  height: 75px;
+  border-radius: 10px;
+  height: 110px;
   width: 99%;
   align-self: flex-start; /* member는 그 아래에 위치 */
-  margin-top: 10px;
-  background-color: #d8e0d3;
+  background-color: #e4e4e4;
   color: #000000;
 }
 .answer-member:hover {
-  background-color: #c5e7af;
+  background-color: #c9c8c8;
+}
+.answer-mentor-info{
+  margin: auto 10px;
 }
 .answer-member-name{
-  margin-top: 15px;
-  margin-left: 10px;
   font-weight: bold;
-  font-size: 23px;
+  font-size: 19px;
   display: flex;
 }
 .answer-content {
-  margin-left: 30px;
-  margin-top: 10px; /* 내용 위쪽 여백 */
-  font-size: 20px; /* 내용 글자 크기 */
+  margin: 10px 0 50px 30px;
+  font-size: 18x; /* 내용 글자 크기 */
   word-wrap: break-word;
-}
-.answer-member-category{
-  margin-left: 8px;
-  margin-top: 23px;
 }
 .answer-date {
   display: flex;
@@ -213,18 +204,20 @@ button {
   align-items: center; /* 항목들을 세로로 가운데 정렬 */
   gap: 10px; /* 항목 간의 간격 설정 (필요에 따라 값을 조정) */
   margin-top: 10px; /* 위쪽 여백 */
-  font-size: 15px;
+  font-size: 16px;
 }
 .answer-upvote-btn,
 .answer-downvote-btn{
-  background-color: transparent;  /* 배경을 투명하게 설정 */
   border-radius: 50px;                   /* 버튼의 테두리 없애기 */
   padding: 0;                     /* 패딩 없애기 */
   display: inline-flex;           /* 이미지 크기에 맞게 정렬 */
   justify-content: center;        /* 자식 요소 (이미지)를 중앙에 정렬 */
   align-items: center;   
-  width: 40px;
-  height: 40px;
+  width: 50px;
+  height: 50px;
+  font-size: 20px;
+  background-color: #e4e4e4;
+  color: #444;
 }
 .answer-upvote-btn img,
 .answer-downvote-btn img{
@@ -232,17 +225,43 @@ button {
 }
 .answer-upvote-btn:hover,
 .answer-downvote-btn:hover{
-  background-color: transparent;
+  background-color: #cecece;
   border: none;                   /* 버튼의 테두리 없애기 */
   padding: 0;                     /* 패딩 없애기 */
   display: inline-flex;           /* 이미지 크기에 맞게 정렬 */
   justify-content: center;        /* 자식 요소 (이미지)를 중앙에 정렬 */
   align-items: center;            /* 자식 요소 (이미지)를 세로로 중앙 정렬 */
 }
-.modify-delete-btn {
+
+
+/* 질문내역 상세보기 수정삭제신고 버튼*/
+.inquiry-view-answer-btn{
   display: flex;
   justify-content: right;
+  margin-right: 20px;
+}
+.inquiry-view-answer-btn > button {
+  background-color: #fff;
+}
+.modify-delete-btn{
+  align-items: center;
+}
+.modify-delete-btn > button{
+  width: 60px; height: 30px;
+  border: 1px solid #e4e4e4;
+  border-radius: 20px;
+  margin-right: 5px;
   gap: 10px;
+}
+.modify-delete-btn > button:nth-child(2){
+  background-color: #dddfe2;
+  color: #444;
+}
+.modify-delete-btn > button:nth-child(2):hover{
+  background-color: #cecece;
+}
+.inquiry-view-answer-btn img {
+  width: 30px;
 }
 .modify-delete-btn2 {
   height: 30px;
@@ -297,9 +316,8 @@ button {
   margin-left: 10px;
 }
 .inquiry-container-inview {
-  border-top: 1px solid #ccc; /* 테두리 설정 */
-  border-bottom: 1px solid #ccc; /* 테두리 설정 */
-  padding: 10px; /* 내부 여백 */
+  position: relative;
+  padding: 0 10p 10p 10px; /* 내부 여백 */
   background-color: #ffffff; /* 배경색 */
   width: 1080px; /*너비*/
   height: 210px;
@@ -308,6 +326,23 @@ button {
   margin-bottom: 3px;
   margin-top: 10px;
   flex-direction: column;
+}
+.inquiry-view-category{
+  color: #208838;
+}
+.inquiry-view-title{
+  font-size: 25px;
+  font-weight: 600;
+}
+.inquiry-view-desc{
+  padding: 5px 0;
+  font-size: 14px;
+  border-bottom: 1px solid #dddfe2;
+}
+.inquiry-view-content{
+  padding: 15px;
+  font-size: 17px;
+  color: #444;
 }
 /* 질문 글 호버시 색변경 */
 .inquiry-title:hover,
@@ -382,6 +417,9 @@ button {
 }
 
 /*신고하기버튼*/
+.inquiry-report-btn{
+  position: relative;
+}
 .inquiry-report-btn-div {
   display: flex;
   justify-content: right;
@@ -390,12 +428,11 @@ button {
 .inquiry-report-btn img{
 width: 30px;
 }
-.answer-report-btn button,
 .inquiry-report-btn button{
   background-color: transparent;
-width: 30px;
+  width: 30px;
 }
-.answer-report-btn,
+.inquiry-view-answer-container > button,
 .inquiry-report-btn {
   background-color: transparent;
   margin-top: 5px;
@@ -555,14 +592,35 @@ width: 30px;
   justify-content: right;
 }
 .answer-notify-btn {
-  display: flex; /* 인라인 블록으로 설정하여 버튼처럼 보이게 */
-  padding: 10px 20px; /* 버튼 내부 여백 */
+  position: absolute;
+  top: 45px; right: 30px;
+  padding: 10px 18px; /* 버튼 내부 여백 */
   background-color: #28a745; /* 버튼 배경색 */
+  border-radius: 10px;
   color: white; /* 글자 색 */
   text-align: center; /* 텍스트 중앙 정렬 */
-  font-size: 16px; /* 폰트 크기 */
-  transition: background-color 0.3s ease; /* 배경색 변화 효과 */
-  margin-top: 50px;
+  font-size: 14px; /* 폰트 크기 */
+}
+.answer-notify-btn span {
+  margin-left: 5px;
+}
+
+/*질문 상세보기 답변 리스트*/
+.inquiry-view-answer-container{
+  width: 1080px;
+  margin: 20px auto;
+  padding: 20px;
+  border: 1px solid #d8e0d3;
+  border-radius: 10px;
+}
+.inquiry-view-answer-container .radio-container{
+  display: flex;
+  justify-content: space-between;
+}
+.radio-container div:first-child {
+  font-size: 20px;
+  font-weight: 600;
+  margin-left: 20px;
 }
 .category-container {
   height: 150px;
@@ -758,7 +816,7 @@ width: 30px;
 }
 
 .small-list {
-  margin-top: 20px;
+  margin-top: 10px;
   padding: 5px 20px;
   height: 380px;
   border: 1px solid #ccc;
