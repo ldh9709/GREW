@@ -1,35 +1,40 @@
 import React, { useState } from 'react'
 import { useMemberAuth } from "../../util/AuthContext"
 import "../../css/report.css"
+import * as reportApi from "../../api/reportApi"
 
-const ReportModal = ({ onClose = () => { }, onSubmit, report }) => {
+const ReportModal = ({ onClose = () => { }, report }) => {
     const { token, member } = useMemberAuth();
     const [reportData, setReportData] = useState({
-        type: report.type,
-        target: report.target,
-        reason: '',
-        content: '',
+        reportType: report.type,
+        reportTarget: report.target,
+        reportReason: '',
+        reportContent: '',
         memberNo: member.memberNo
     }) //신고 데이터 
   
     const handleReasonChange = (e) => {
-        setReportData(() => ({
-            reason:e.target.value
+        setReportData((prev) => ({
+            ...prev,
+            reportReason:e.target.value
       }))
     };
   
     const handleContentChange = (e) => {
-        setReportData(() => ({
-            content: e.target.value
+        setReportData((prev) => ({
+            ...prev,
+            reportContent: e.target.value
         }))
     };
   
-    const handleSubmit = () => {
-      if (!reportData.reason || !reportData.content.trim()) {
+    const handleSubmit = async() => {
+      if (!reportData.reportReason || !reportData.reportContent.trim()) {
         alert("신고 사유와 내용을 모두 입력해주세요.");
         return;
       }
-      onSubmit({ reportData });
+
+      console.log('reportData',reportData)
+      await reportApi.createReport(token,reportData);
       onClose(); // 모달 닫기
     };
 
@@ -58,10 +63,10 @@ const ReportModal = ({ onClose = () => { }, onSubmit, report }) => {
               onChange={handleContentChange}
             />
             <div className="report-buttons">
-              <button className="cancel-button" onClick={onClose}>
+              <button className="report-cancel-button" onClick={onClose}>
                 취소하기
               </button>
-              <button className="submit-button" onClick={handleSubmit}>
+              <button className="report-submit-button" onClick={handleSubmit}>
                 신고하기
               </button>
             </div>

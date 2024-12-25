@@ -15,6 +15,9 @@ export default function AnswerItem({ answer }) {
   const [isReportHovered, setIsReportHovered] = useState(false);
   const [isUpVoteHovered, setIsUpVoteHovered] = useState(false);
   const [isDownVoteHovered, setIsDownVoteHovered] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [report, setreport] = useState({});
+
   const navigate = useNavigate();
   // 버튼 클릭 시 팝업 창을 토글하는 함수
   const handleProfile = () => {
@@ -53,6 +56,11 @@ export default function AnswerItem({ answer }) {
       fetchCategories();
     }
   }, [mentorProfile]); // mentorProfile가 업데이트된 후에 fetchCategories 실행
+  useEffect(()=>{
+    console.log("isModalOpen 상태 변경:", isModalOpen);
+  },[isModalOpen])
+
+
   const handleModify = async () => {
     navigate(`/answer/modify/${answer.answerNo}`);
   };
@@ -99,10 +107,19 @@ export default function AnswerItem({ answer }) {
     console.log(response);
   };
 
-  //신고 하기
-  const handleReport = async () => {
-    ReportModal()
-  }
+  //신고 하기 창 열고 닫기
+  const handleOpenModal = () => {
+    setIsModalOpen(true);
+    setreport({
+      type: 'ANSWER',
+      target: answer.answerNo,
+    })
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+    console.log('모달닫아!!')
+  };
 
   return (
     <>
@@ -180,10 +197,16 @@ export default function AnswerItem({ answer }) {
 
         {/* 답변 신고 버튼 */}
         <div className="answer-report-btn">
+          {isModalOpen && (
+            <ReportModal 
+            onClose={handleCloseModal} 
+            report={report}/>
+          )}
           <button
             onMouseEnter={() => setIsReportHovered(true)} // 마우스가 버튼 위에 올라갔을 때
             onMouseLeave={() => setIsReportHovered(false)} // 마우스가 버튼을 벗어났을 때
             className={`hover-button ${isReportHovered ? "hovered" : ""}`}
+            onClick ={handleOpenModal}
           >
             <img
               src={
@@ -196,12 +219,7 @@ export default function AnswerItem({ answer }) {
             />
           </button>
         </div>
-        {/* 신고하기버튼 */}
-        {/* 신고하기버튼 */}
-        {/* 신고하기버튼 */}
-        {/* 신고하기버튼 */}
-        {/* 신고하기버튼 */}
-        {/* 신고하기버튼 */}
+
         {member && member.memberNo == answer.memberNo ? (
           <div className="modify-delete-btn">
             <button onClick={handleModify}>수정</button>
