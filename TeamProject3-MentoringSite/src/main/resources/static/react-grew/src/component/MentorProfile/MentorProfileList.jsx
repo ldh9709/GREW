@@ -129,16 +129,6 @@ function MentorProfileList() {
     fetchMentorProfiles(currentPage - 1, itemsPerPage, sortType, selectedCategory);
   }, [currentPage, sortType, selectedCategory]);
 
-  // 페이지네이션 버튼 표시 (10개씩 끊어서 표시)
-  const pageNumbers = [];
-  const pagesToShow = 10; // 한 번에 보여줄 페이지 수
-  const startPage = Math.floor((currentPage - 1) / pagesToShow) * pagesToShow + 1;
-  const endPage = Math.min(startPage + pagesToShow - 1, totalPages);
-
-  for (let i = startPage; i <= endPage; i++) {
-    pageNumbers.push(i);
-  }
-
   return (
     <>
       <h1>멘토 프로필 목록</h1>
@@ -192,7 +182,10 @@ function MentorProfileList() {
             name="sortType"
             value="follow"
             checked={sortType === "follow"}
-            onChange={handleRadioChange}
+            onChange={(e) => {
+              setSortType(e.target.value);
+              setCurrentPage(1); // 정렬 변경 시 페이지 초기화
+            }}
           />
           팔로우 순
         </label>
@@ -202,7 +195,10 @@ function MentorProfileList() {
             name="sortType"
             value="mentoring"
             checked={sortType === "mentoring"}
-            onChange={handleRadioChange}
+            onChange={(e) => {
+              setSortType(e.target.value);
+              setCurrentPage(1); // 정렬 변경 시 페이지 초기화
+            }}
           />
           멘토링 순
         </label>
@@ -212,7 +208,10 @@ function MentorProfileList() {
             name="sortType"
             value="activity"
             checked={sortType === "activity"}
-            onChange={handleRadioChange}
+            onChange={(e) => {
+              setSortType(e.target.value);
+              setCurrentPage(1); // 정렬 변경 시 페이지 초기화
+            }}
           />
           활동 순
         </label>
@@ -226,24 +225,32 @@ function MentorProfileList() {
           <p>멘토 프로필이 없습니다.</p>
         )}
       </div>
-      <div className="pagination">
-        {startPage > 1 && (
-          <button onClick={() => paginate(startPage - 1)}>이전</button>
-        )}
-        {pageNumbers.map((number) => (
-          <button
-            key={number}
-            onClick={() => paginate(number)}
-            style={{
-              backgroundColor: number === currentPage ? "#006618" : "",
-              color: number === currentPage ? "white" : "",
-            }}
-          >
-            {number}
-          </button>
-        ))}
-        {endPage < totalPages && (
-          <button onClick={() => paginate(endPage + 1)}>다음</button>
+      {/* 페이지네이션 */}
+      <div className="pagenation">
+        {totalPages > 0 && (
+          <>
+            {currentPage > 1 && (
+              <button onClick={() => paginate(currentPage - 1)}>이전</button>
+            )}
+            {Array.from(
+              { length: Math.min(10, totalPages) },
+              (_, i) => i + 1
+            ).map((page) => (
+              <button
+                key={page}
+                onClick={() => paginate(page)}
+                style={{
+                  backgroundColor: page === currentPage ? "#006618" : "",
+                  color: page === currentPage ? "white" : "",
+                }}
+              >
+                {page}
+              </button>
+            ))}
+            {currentPage < totalPages && (
+              <button onClick={() => paginate(currentPage + 1)}>다음</button>
+            )}
+          </>
         )}
       </div>
     </>

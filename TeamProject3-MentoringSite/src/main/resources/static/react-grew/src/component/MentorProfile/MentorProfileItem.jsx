@@ -4,6 +4,10 @@ import "../../css/mentorProfile.css"; // CSS 스타일 임포트
 import * as memberApi from "../../api/memberApi";
 import * as mentorProfileApi from "../../api/mentorProfileApi";
 
+
+
+
+
 export default function MentorProfileItem({ mentor }) {
   const navigate = useNavigate();
 
