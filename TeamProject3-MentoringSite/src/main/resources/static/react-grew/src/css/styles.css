@@ -52,12 +52,14 @@ button {
   background-color: #28a745;
   color: white;
 }
-.radio-container {
+.inquiry-radio-container {
   /*정렬을 위한 라디오 버튼css*/
   display: flex;
   justify-content: flex-end; /* 오른쪽 정렬 */
   gap: 10px; /* 라디오 버튼들 간의 간격 */
-  margin-bottom: 10px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #ccc;
+  font-size: 13px;
 }
 .pagenation {
   display: flex;
@@ -67,7 +69,7 @@ button {
 }
 #wrapper,
 #content {
-  margin-top: 120px;
+  margin-top: 140px;
 }
 /* 로그인 버튼 바 */
 .header {
@@ -246,30 +248,34 @@ button {
 .inquiry-list-main {
   display: flex;
   justify-content: space-between; /* 양쪽 끝으로 배치 */
-  margin-top: 20px; /* 위쪽 마진 추가 */
-  padding: 0 20px; /* 좌우 여백 */
 }
+
+.inquiry-member{
+  font-size: 15px
+}
+
 .inquiry-title {
   display: flex;
-  font-size: 22px;
+  font-size: 20px;
   font-weight: bold;
-  margin-bottom: 30px;
 }
 .inquiry-list-sort {
-  flex: 3; /* 문의 목록 테이블이 더 넓게 차지 */
-  padding: 10px;
+  width: 100%;
+}
+.inquiry-list-item{
+  width: 95%;
+  border-bottom: 1px solid #ccc;
 }
 .inquiry-container {
-  position: relative;
-  border-top: 2px solid #ccc; /* 테두리 설정 */
-  padding: 10px; /* 내부 여백 */
+  width: 100%;
   background-color: #ffffff; /* 배경색 */
-  width: 700px; /*너비*/
-  height: 160px;
-  padding: 30px; /* 내부 여백 */
-  display: block;
+  height: 150px;
   justify-content: right;
   margin-bottom: -10px;
+}
+
+.inquiry-container > div {
+  margin-left: 10px;
 }
 .inquiry-container-inview {
   border-top: 1px solid #ccc; /* 테두리 설정 */
@@ -304,22 +310,17 @@ button {
 }
 .inquiry-content {
   font-size: 13px;
-  margin-bottom: 30px;
-  margin-top: 30px;
-  margin-left: 10px;
   color: #505050;
 }
 .inquiry-desc {
   font-size: 13px;
-  margin-left: 10px;
   color: #505050;
 }
 .inquiry-category-name {
-  font-size: 40px;
+  font-size: 20px;
   font-weight: bolder;
-  margin-left: 20px;
   margin-bottom: 10px;
-  color: #000000;
+  color: #333;
 }
 @keyframes content-slide-up {
   0% {
@@ -541,10 +542,17 @@ width: 30px;
   margin-top: 50px;
 }
 .category-container {
-  display: flex; /* 부모 컨테이너에 flexbox를 사용하여 자식 요소들을 가로로 배치 */
+  height: 150px;
   flex-direction: column;
   gap: 10px;
 }
+
+.category-container > div:first-child {
+  display: flex;
+  justify-content: space-between; /* 버튼과 카테고리를 양쪽 끝으로 배치 */
+  align-items: center; /* 세로 가운데 정렬 */
+}
+
 
 .category-parent {
   display: flex; /* category-parent를 세로로 정렬 */
@@ -558,17 +566,17 @@ width: 30px;
 }
 .category-button {
   display: inline-block; /* 버튼을 인라인 블록으로 만들어 좌우로 길게 */
-  padding: 8px 15px; /* 상하 여백은 12px, 좌우 여백은 30px로 설정하여 길이를 조절 */
-  border: 2px solid #28a745; /* 테두리를 추가하여 스타일링 */
+  width: 130px;
+  padding: 8px 0; /* 상하 여백은 12px, 좌우 여백은 30px로 설정하여 길이를 조절 */
+  border: 1px solid #ccc; /* 테두리를 추가하여 스타일링 */
   background-color: #fff; /* 배경 색은 흰색 */
-  color: #28a745; /* 텍스트 색상은 상위 카테고리 색과 동일 */
+  color: #444; /* 텍스트 색상은 상위 카테고리 색과 동일 */
   font-size: 14px; /* 텍스트 크기 */
   font-weight: bold; /* 글씨 굵게 */
   text-align: center; /* 텍스트를 가운데로 정렬 */
   cursor: pointer; /* 마우스 커서가 손 모양으로 변경 */
   transition: all 0.3s ease; /* 버튼 상태 변화 시 부드럽게 전환 */
-  width: 150px;
-  border-radius: 10px;
+  border-radius: 15px;
   gap: 5px;
 }
 
@@ -727,10 +735,8 @@ width: 30px;
 }
 
 .small-list {
-  width: 270px; /* 20% 너비 */
   border-left: 1px solid #ddd;
   padding: 10px;
-  margin-left: -30px;
 }
 .popup {
   position: absolute;

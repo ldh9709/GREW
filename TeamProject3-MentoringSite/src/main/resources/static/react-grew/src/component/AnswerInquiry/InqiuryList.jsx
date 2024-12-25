@@ -135,7 +135,7 @@ function InqiuryList() {
 
   // 페이지 로드 시 데이터 가져오기
   useEffect(() => {
-    fetchInquiries(currentPage - 1, itemsPerPage, sortType, selectedCategory);
+    fetchInquiries(currentPage - 1, 8, sortType, selectedCategory);
   }, [currentPage, sortType, selectedCategory, childCategories]);
 
   // 페이지네이션 버튼 표시 (10개씩 끊어서 표시)
@@ -162,25 +162,13 @@ function InqiuryList() {
   };
   return (
     <>
-      <h1>질문하기</h1>
+      
 
-      <div className="btn-inquiry-write-div">
-        <button className="btn-inquiry-write" onClick={handleWriteButton}>
-          <img
-            src="https://img.icons8.com/?size=100&id=98973&format=png&color=000000"
-            style={{
-              width: "20px",
-              height: "20px",
-              marginRight: "5px",
-              marginLeft: "-5px",
-              marginBottom: "-3px",
-            }}
-          />
-          질문등록
-        </button>
-      </div>
-      {/* 카테고리 버튼들 */}
-      <div className="category-container">
+     {/* 카테고리 버튼들 */}
+    <div className="category-container">
+    <h1>질문하기</h1>
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+        {/* Parent 카테고리 */}
         <div className="category-parent">
           {categories
             .filter((category) => category.categoryDepth === 1) // categoryDepth가 1인 카테고리만 필터링
@@ -200,29 +188,45 @@ function InqiuryList() {
               </button>
             ))}
         </div>
-
-        {/* 하위 카테고리 버튼 렌더링 */}
-        {childCategories.length > 0 && (
-          <div className="category-child">
-            {childCategories.map((child) => (
-              <button
-                key={child.categoryNo}
-                onClick={() => handleCategoryClick(child.categoryNo)} // 하위 카테고리 선택
-                className="category-button"
-                style={{
-                  backgroundColor:
-                    selectedCategory === child.categoryNo ? "#4CAF50" : "", // 선택된 카테고리는 색상 변경
-                  color: selectedCategory === child.categoryNo ? "white" : "", // 선택된 카테고리 글자 색상 변경
-                }}
-              >
-                {child.categoryName}
-              </button>
-            ))}
-          </div>
-        )}
+        {/* 질문하기 버튼 */}
+        <div className="btn-inquiry-write-div">
+          <button className="btn-inquiry-write" onClick={handleWriteButton}>
+            <img
+              src="https://img.icons8.com/?size=100&id=98973&format=png&color=000000"
+              style={{
+                width: "20px",
+                height: "20px",
+                marginRight: "5px",
+                marginLeft: "-5px",
+                marginBottom: "-3px",
+              }}
+            />
+            질문등록
+          </button>
+        </div>
       </div>
+      {/* 하위 카테고리 버튼 */}
+      {childCategories.length > 0 && (
+        <div className="category-child">
+          {childCategories.map((child) => (
+            <button
+              key={child.categoryNo}
+              onClick={() => handleCategoryClick(child.categoryNo)} // 하위 카테고리 선택
+              className="category-button"
+              style={{
+                backgroundColor:
+                  selectedCategory === child.categoryNo ? "#4CAF50" : "", // 선택된 카테고리는 색상 변경
+                color: selectedCategory === child.categoryNo ? "white" : "", // 선택된 카테고리 글자 색상 변경
+              }}
+            >
+              {child.categoryName}
+            </button>
+          ))}
+        </div>
+      )}
+    </div>
       {/* 정렬 라디오 버튼 */}
-      <div className="radio-container">
+      <div className="inquiry-radio-container">
         <label>
           <input
             type="radio"
@@ -258,8 +262,8 @@ function InqiuryList() {
       <div className="inquiry-list-main">
         <div className="inquiry-list-sort">
           {/* 문의 목록 테이블 */}
-          <div>
-            {/* 선택된 카테고리가 존재할 때만 카테고리 이름을 표시 */}
+          {/*<div>
+             선택된 카테고리가 존재할 때만 카테고리 이름을 표시 
             {selectedCategory != null && (
               <div className="inquiry-category-name">
                 {
@@ -270,7 +274,7 @@ function InqiuryList() {
                 }
               </div>
             )}
-          </div>
+          </div>*/}
           {inquirys && inquirys.length > 0 ? (
             inquirys.map((inquiry) => (
               <InquiryItem key={inquiry.inquiryNo} inquiry={inquiry} />
