@@ -1,11 +1,13 @@
 import "../../css/styles.css";
 import React, { useEffect, useState } from "react";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import * as inquiryApi from "../../api/inquiryApi";
 import InquiryItem from "./InquiryItem";
 import BestAnswerItem from "./BestAnswerItem";
 import * as categoryApi from "../../api/categoryApi";
 import { useNavigate } from "react-router-dom";
 import { useMemberAuth } from "../../util/AuthContext";
+import { faPen } from "@fortawesome/free-solid-svg-icons";
 
 function InqiuryList() {
   const {token, member} = useMemberAuth();
@@ -179,9 +181,9 @@ function InqiuryList() {
                 className="category-button"
                 style={{
                   backgroundColor:
-                    selectedCategory === category.categoryNo ? "#4CAF50" : "", // 선택된 카테고리는 색상 변경
+                    selectedCategory === category.categoryNo ? "#28a745" : "", // 선택된 카테고리는 색상 변경
                   color:
-                    selectedCategory === category.categoryNo ? "white" : "", // 선택된 카테고리 글자 색상 변경
+                    selectedCategory === category.categoryNo ? "#f3f4f6" : "", // 선택된 카테고리 글자 색상 변경
                 }}
               >
                 {category.categoryName}
@@ -191,17 +193,8 @@ function InqiuryList() {
         {/* 질문하기 버튼 */}
         <div className="btn-inquiry-write-div">
           <button className="btn-inquiry-write" onClick={handleWriteButton}>
-            <img
-              src="https://img.icons8.com/?size=100&id=98973&format=png&color=000000"
-              style={{
-                width: "20px",
-                height: "20px",
-                marginRight: "5px",
-                marginLeft: "-5px",
-                marginBottom: "-3px",
-              }}
-            />
-            질문등록
+          <FontAwesomeIcon icon={faPen} />
+            <span>질문하기</span>
           </button>
         </div>
       </div>
@@ -215,8 +208,8 @@ function InqiuryList() {
               className="category-button"
               style={{
                 backgroundColor:
-                  selectedCategory === child.categoryNo ? "#4CAF50" : "", // 선택된 카테고리는 색상 변경
-                color: selectedCategory === child.categoryNo ? "white" : "", // 선택된 카테고리 글자 색상 변경
+                  selectedCategory === child.categoryNo ? "#28a745" : "", // 선택된 카테고리는 색상 변경
+                color: selectedCategory === child.categoryNo ? "#f3f4f6" : "", // 선택된 카테고리 글자 색상 변경
               }}
             >
               {child.categoryName}

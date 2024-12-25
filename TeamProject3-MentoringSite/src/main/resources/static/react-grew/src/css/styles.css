@@ -30,6 +30,9 @@ table {
   width: 100%;
   height: 100%;
 }
+h1 {
+  font-size: 28px;
+}
 /*
 layout
 */
@@ -450,23 +453,31 @@ width: 30px;
   font-size: 14px;
 }
 .btn-inquiry-write {
+  height: 38px;
   display: inline-block; /* 인라인 블록으로 설정하여 버튼처럼 보이게 */
-  padding: 10px 20px; /* 버튼 내부 여백 */
-  background-color: #28a745; /* 버튼 배경색 */
-  color: white; /* 글자 색 */
+  margin-bottom: 5px;
+  padding: 8px 15px; /* 버튼 내부 여백 */
+  background-color: #f8f8f8; /* 버튼 배경색 */
+  color: #131a29; /* 글자 색 */
+  border: 1px solid #ccc;
+  border-radius: 5px;
   text-align: center; /* 텍스트 중앙 정렬 */
   text-decoration: none; /* 링크 기본 스타일 제거 */
-  font-size: 16px; /* 폰트 크기 */
+  font-size: 13px; /* 폰트 크기 */
+  font-weight: 600;
   transition: background-color 0.3s ease; /* 배경색 변화 효과 */
+}
+.btn-inquiry-write span{
+  margin-left: 4px;
 }
 /* 마우스 올렸을 때 배경색 변경 */
 .btn-inquiry-write:hover {
-  background-color: #006618; /* 마우스 올렸을 때 배경색 */
+  background-color: #d1d1d1; /* 마우스 올렸을 때 배경색 */
 }
 
 /* 클릭 시 효과 */
 .btn-inquiry-write.button:active {
-  background-color: #006618; /* 클릭 시 배경색 */
+  background-color: #218838; /* 클릭 시 배경색 */
 }
 .btn-inquiry-write-div {
   display: flex;
@@ -568,7 +579,7 @@ width: 30px;
 
 .category-parent {
   display: flex; /* category-parent를 세로로 정렬 */
-  margin-right: 20px; /* 오른쪽에 여백 추가 */
+  margin-bottom: 5px; /* 오른쪽에 여백 추가 */
   gap: 5px;
 }
 
@@ -578,7 +589,7 @@ width: 30px;
 }
 .category-button {
   display: inline-block; /* 버튼을 인라인 블록으로 만들어 좌우로 길게 */
-  width: 130px;
+  width: 130px; height: 38px; 
   padding: 8px 0; /* 상하 여백은 12px, 좌우 여백은 30px로 설정하여 길이를 조절 */
   border: 1px solid #ccc; /* 테두리를 추가하여 스타일링 */
   background-color: #fff; /* 배경 색은 흰색 */
@@ -588,7 +599,7 @@ width: 30px;
   text-align: center; /* 텍스트를 가운데로 정렬 */
   cursor: pointer; /* 마우스 커서가 손 모양으로 변경 */
   transition: all 0.3s ease; /* 버튼 상태 변화 시 부드럽게 전환 */
-  border-radius: 15px;
+  border-radius: 5px;
   gap: 5px;
 }
 
