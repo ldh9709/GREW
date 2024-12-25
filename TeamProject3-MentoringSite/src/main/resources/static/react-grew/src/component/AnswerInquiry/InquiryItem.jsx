@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from "react";
 import * as inquiryApi from "../../api/inquiryApi";
 import "../../css/styles.css";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faCommentDots, faEye } from "@fortawesome/free-regular-svg-icons";
+
 
 export default function InquiryItem({ inquiry }) {
   const [count, setCount] = useState([]);
@@ -33,18 +36,17 @@ export default function InquiryItem({ inquiry }) {
           href={`inquiry/${inquiry.inquiryNo}`}
           inquiry_no={inquiry.inquiryNo}
         > 
-          <div className="inquiry-member">
-            <span>{maskName(inquiry.memberName)}멘티 </span>
-            <span>{inquiry.inquiryDate.substring(0, 10)}</span>
+          <div className="inquiry-item-top">
+            <span className="inquiry-category">{inquiry.categoryName}</span>
+            <span>{maskName(inquiry.memberName)}멘티 | </span>
+            <span> {inquiry.inquiryDate.substring(0, 10)}</span>
           </div>
           <div className="inquiry-title">{inquiry.inquiryTitle}</div>
           <div className="inquiry-content">{inquiry.inquiryContent.substring(0,100)}</div>
-          <div className="inquiry-desc">
-            {/* <div>{inquiry.memberName}</div> */}
-            {inquiry.categoryName} | 조회수 {inquiry.inquiryViews} |{" "}
-             | 답변수 {count}
+          <div className="inquiry-desc"> 
+            <FontAwesomeIcon icon={faEye}  /> {inquiry.inquiryViews} |{" "}
+            <FontAwesomeIcon icon={faCommentDots} /> {count}
           </div>
-          <div className="answer-btn">답변하러 가기 ▶</div>
         </a>
       </div>
     </>

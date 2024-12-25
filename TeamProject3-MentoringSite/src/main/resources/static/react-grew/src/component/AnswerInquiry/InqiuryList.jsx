@@ -288,7 +288,7 @@ function InqiuryList() {
         {/* 왼쪽 작은 리스트 */}
         <div className="small-list">
           <div>
-            최근 추천 많이 받은 답변
+            <p>최근 추천 많이 받은 답변</p>
             <div>
               {bestAnswer.map((answer, index) => (
                 <BestAnswerItem
