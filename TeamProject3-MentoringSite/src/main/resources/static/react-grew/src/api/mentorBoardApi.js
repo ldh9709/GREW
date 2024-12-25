@@ -160,3 +160,73 @@ export const getMentorBoardImageUrl = async (mentorBoardNo) => {
   const responseJsonObject = await response.json();
   return responseJsonObject;
 };
+ /////////////////////////카테고리 대분류 소분류 게시판
+
+
+// 조회수 많은 순으로 카테고리별 멘토 보드 가져오기
+export const listMentorBoardByCategoryView = async (categoryNo, page = 0, size = 10) => {
+  const response = await fetch(
+    `${BACKEND_SERVER}/${BASE_URL}/${categoryNo}/view-count?page=${page}&size=${size}`,
+    {
+      method: "GET",
+    }
+  );
+  const responseJsonObject = await response.json();
+  return responseJsonObject;
+};
+
+// 조회수 많은 순으로 카테고리별(대분류) 멘토 보드 가져오기
+export const listMentorBoardByParentCategoryView = async (categoryNo, page = 0, size = 10) => {
+  try {
+    const response = await fetch(
+      `${BACKEND_SERVER}/${BASE_URL}/${categoryNo}/parent/view-count?page=${page}&size=${size}`
+    );
+    if (!response.ok) throw new Error("API 호출 실패");
+    return await response.json();
+  } catch (error) {
+    console.error("API 호출 오류:", error);
+  }
+};
+
+// 최신 순으로 카테고리별 멘토 보드 가져오기
+export const listMentorBoardByCategoryDate = async (categoryNo, page = 0, size = 10) => {
+  const response = await fetch(
+    `${BACKEND_SERVER}/${BASE_URL}/${categoryNo}/parent/date?page=${page}&size=${size}`,
+    {
+      method: "GET",
+    }
+  );
+  const responseJsonObject = await response.json();
+  return responseJsonObject;
+};
+
+// 최신 순으로 카테고리별(대분류) 멘토 보드 가져오기
+export const listMentorBoardByParentCategoryDate = async (categoryNo, page = 0, size = 10) => {
+  const response = await fetch(
+   `${BACKEND_SERVER}/${BASE_URL}/${categoryNo}/parent/date?page=${page}&size=${size}`,
+    {
+      method: "GET",
+    }
+  );
+  const responseJsonObject = await response.json();
+  return responseJsonObject;
+};
+
+/**
+ * 상태값과 조회수 기준으로 정렬된 멘토 보드 리스트를 가져옵니다.
+*/
+export const getMentorBoardsSortedByViews = async (status, page = 0, size = 10) => {
+  const response = await fetch(
+    `${BASE_URL}/sorted/views/status?status=${status}&page=${page}&size=${size}`,
+    {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }
+  );
+
+  const responseJsonObject = await response.json();
+  return responseJsonObject;
+};
+
