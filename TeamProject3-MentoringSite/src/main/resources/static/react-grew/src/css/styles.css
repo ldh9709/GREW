@@ -411,9 +411,9 @@ button {
 }
 
 .answer-best-content span:first-child {
-  margin-right: 5px;
+  margin-right: 6px;
   font-weight: 600;
-  color: #208838;
+  color: #007bff;
 }
 
 /*신고하기버튼*/
