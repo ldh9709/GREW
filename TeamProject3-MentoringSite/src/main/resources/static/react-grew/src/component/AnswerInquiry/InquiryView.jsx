@@ -5,6 +5,9 @@ import * as answerApi from "../../api/answerApi";
 import AnswerItem from "./AnswerItem";
 import "../../css/styles.css";
 import { useMemberAuth } from "../../util/AuthContext";
+import ReportModal from "../Report/ReportModal";
+
+
 function InquiryView() {
   const { token, member } = useMemberAuth();
   const navigate = useNavigate();
@@ -22,6 +25,9 @@ function InquiryView() {
   const [itemsPerPage] = useState(5); // 페이지당 항목 수 (예: 한 페이지에 5개 항목)
   const [sortType, setSortType] = useState("latest"); // 기본적으로 'latest'로 설정
   const [isReportHovered, setIsReportHovered] = useState(false);
+  const [isModalOpen,setIsModalOpen] = useState(false);
+  const [report, setreport] = useState({});
+
   useEffect(() => {
     (async () => {
       const responseJsonObject = await inquiryApi.viewInquiry(inquiryNo);
@@ -112,6 +118,21 @@ function InquiryView() {
   const handleModify = () => {
     navigate(`/inquiry/modify/${inquiryNo}`);
   };
+
+  //신고 하기 창 열고 닫기
+  const handleOpenModal = () => {
+    setIsModalOpen(true);
+    setreport({
+      type: 'INQUIRY',
+      target: inquiry.inquiryNo
+    })
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+    console.log('모달닫아!!')
+  };
+
   return (
     <>
       <div style={{ paddingLeft: 10 }}>
@@ -164,35 +185,30 @@ function InquiryView() {
             <div></div>
           )}
           {/* 신고하기버튼 */}
-          {/* 신고하기버튼 */}
-          {/* 신고하기버튼 */}
-          {/* 신고하기버튼 */}
-          {/* 신고하기버튼 */}
-          {/* 신고하기버튼 */}
           <div className="answer-report-btn">
+            {isModalOpen && (
+              <ReportModal 
+              onClose={handleCloseModal} 
+              report={report}/>
+            )}
             <button
+              onClick={handleOpenModal}
               onMouseEnter={() => setIsReportHovered(true)} // 마우스가 버튼 위에 올라갔을 때
               onMouseLeave={() => setIsReportHovered(false)} // 마우스가 버튼을 벗어났을 때
-              className={`hover-button ${isReportHovered ? "hovered" : ""}`}
+              className={`hover-button ${isReportHovered ? "hovered" : ""}`
+            }
             >
               <img
                 src={
                   isReportHovered
-                    ? "https://img.icons8.com/?size=100&id=8773&format=png&color=000000"
-                    : "https://img.icons8.com/?size=100&id=5365&format=png&color=000000"
+                  ? "https://img.icons8.com/?size=100&id=jy7dy2jsJ5UR&format=png&color=ed1515"
+                  : "https://img.icons8.com/?size=100&id=t5aOnHwCycmN&format=png&color=000000"
                 }
                 alt="Button Image"
                 className="button-image"
               />
             </button>
           </div>
-          {/* 신고하기버튼 */}
-          {/* 신고하기버튼 */}
-          {/* 신고하기버튼 */}
-          {/* 신고하기버튼 */}
-          {/* 신고하기버튼 */}
-          {/* 신고하기버튼 */}
-          {/* 신고하기버튼 */}
         </div>
       </div>
       <div style={{ marginTop: "20px" }}>
