@@ -394,133 +394,142 @@ public class MentorProfileController {
  // MentorProfileController.java
     /**
      * 팔로우 순으로 카테고리별 멘토 리스트 조회
+     * 
+     * 
+     * 
+     * 
+     * 
+     * 
+     * 
+     * 
+     * 
+     * 
+     * 
+     * 
+     * 
+     * 
+     * 
      */
-    @Operation(summary = "팔로우 순으로 카테고리별 멘토 리스트 조회")
-    @GetMapping("/{categoryNo}/follow-count")
-    public ResponseEntity<Response> getMentorsByCategoryOrderByFollowCount(
-            @PathVariable(name = "categoryNo") Long categoryNo,
+    @Operation(summary = "팔로우 순으로 대분류 카테고리의 멘토 리스트 조회")
+    @GetMapping("/{parentCategoryNo}/parent/follow")
+    public ResponseEntity<Response> getByParentCategoryOrderByFollowCount(
+            @PathVariable(name = "parentCategoryNo") Long parentCategoryNo,
             @RequestParam(name = "page", defaultValue = "0") int page,
             @RequestParam(name = "size", defaultValue = "10") int size) {
 
-        // Service 호출하여 해당 카테고리의 멘토 리스트를 팔로우 순으로 조회
-        Page<MentorProfileDto> mentors = mentorProfileService.getMentorsByCategoryOrderByFollowCount(categoryNo, page, size);
+        Page<MentorProfileDto> mentorDtos = mentorProfileService.getByParentCategoryOrderByFollowCount(parentCategoryNo, page, size);
 
-        // Response 생성
         Response response = new Response();
         response.setStatus(ResponseStatusCode.READ_MENTOR_PROFILE_LIST_SUCCESS_CODE);
-        response.setMessage("팔로우 순으로 멘토 조회 성공");
-        response.setData(mentors);
+        response.setMessage(ResponseMessage.READ_MENTOR_PROFILE_LIST_SUCCESS);
+        response.setData(mentorDtos);
 
-        return ResponseEntity.ok(response);
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.setContentType(new MediaType(MediaType.APPLICATION_JSON, Charset.forName("UTF-8")));
+
+        return new ResponseEntity<>(response, httpHeaders, HttpStatus.OK);
     }
 
-    /**
-     * 팔로우 순으로 대분류 카테고리별 멘토 리스트 조회
-     */
-    @Operation(summary = "팔로우 순으로 대분류 카테고리별 멘토 리스트 조회")
-    @GetMapping("/{categoryNo}/parent/follow-count")
-    public ResponseEntity<Response> getMentorsByParentCategoryOrderByFollowCount(
-            @PathVariable(name = "categoryNo") Long categoryNo,
+    @Operation(summary = "멘토링 횟수 순으로 대분류 카테고리의 멘토 리스트 조회")
+    @GetMapping("/{parentCategoryNo}/parent/mentoring")
+    public ResponseEntity<Response> getByParentCategoryOrderByMentoringCount(
+            @PathVariable(name = "parentCategoryNo") Long parentCategoryNo,
             @RequestParam(name = "page", defaultValue = "0") int page,
             @RequestParam(name = "size", defaultValue = "10") int size) {
 
-        // Service 호출하여 대분류 카테고리의 멘토 리스트를 팔로우 순으로 조회
-        Page<MentorProfileDto> mentors = mentorProfileService.getMentorsByParentCategoryOrderByFollowCount(categoryNo, page, size);
+        Page<MentorProfileDto> mentorDtos = mentorProfileService.getByParentCategoryOrderByMentoringCount(parentCategoryNo, page, size);
 
-        // Response 생성
         Response response = new Response();
         response.setStatus(ResponseStatusCode.READ_MENTOR_PROFILE_LIST_SUCCESS_CODE);
-        response.setMessage("팔로우 순으로 대분류 멘토 조회 성공");
-        response.setData(mentors);
+        response.setMessage(ResponseMessage.READ_MENTOR_PROFILE_LIST_SUCCESS);
+        response.setData(mentorDtos);
 
-        return ResponseEntity.ok(response);
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.setContentType(new MediaType(MediaType.APPLICATION_JSON, Charset.forName("UTF-8")));
+
+        return new ResponseEntity<>(response, httpHeaders, HttpStatus.OK);
     }
 
-    /**
-     * 멘토링 횟수 순으로 카테고리별 멘토 리스트 조회
-     */
-    @Operation(summary = "멘토링 횟수 순으로 카테고리별 멘토 리스트 조회")
-    @GetMapping("/{categoryNo}/mentoring-count")
-    public ResponseEntity<Response> getMentorsByCategoryOrderByMentoringCount(
-            @PathVariable(name = "categoryNo") Long categoryNo,
+    @Operation(summary = "활동 순으로 대분류 카테고리의 멘토 리스트 조회")
+    @GetMapping("/{parentCategoryNo}/parent/activity")
+    public ResponseEntity<Response> getByParentCategoryOrderByActivityCount(
+            @PathVariable(name = "parentCategoryNo") Long parentCategoryNo,
             @RequestParam(name = "page", defaultValue = "0") int page,
             @RequestParam(name = "size", defaultValue = "10") int size) {
 
-        // Service 호출하여 해당 카테고리의 멘토 리스트를 멘토링 횟수 순으로 조회
-        Page<MentorProfileDto> mentors = mentorProfileService.getMentorsByCategoryOrderByMentoringCount(categoryNo, page, size);
+        Page<MentorProfileDto> mentorDtos = mentorProfileService.getByParentCategoryOrderByActivityCount(parentCategoryNo, page, size);
 
-        // Response 생성
         Response response = new Response();
         response.setStatus(ResponseStatusCode.READ_MENTOR_PROFILE_LIST_SUCCESS_CODE);
-        response.setMessage("멘토링 횟수 순으로 멘토 조회 성공");
-        response.setData(mentors);
+        response.setMessage(ResponseMessage.READ_MENTOR_PROFILE_LIST_SUCCESS);
+        response.setData(mentorDtos);
 
-        return ResponseEntity.ok(response);
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.setContentType(new MediaType(MediaType.APPLICATION_JSON, Charset.forName("UTF-8")));
+
+        return new ResponseEntity<>(response, httpHeaders, HttpStatus.OK);
     }
 
-    /**
-     * 멘토링 횟수 순으로 대분류 카테고리별 멘토 리스트 조회
-     */
-    @Operation(summary = "멘토링 횟수 순으로 대분류 카테고리별 멘토 리스트 조회")
-    @GetMapping("/{categoryNo}/parent/mentoring-count")
-    public ResponseEntity<Response> getMentorsByParentCategoryOrderByMentoringCount(
+
+
+
+    @Operation(summary = "팔로우 순으로 CATEGORY_NO별 멘토 리스트 조회")
+    @GetMapping("/category/{categoryNo}/follow")
+    public ResponseEntity<Response> getMentorsByCategoryNoFollow(
             @PathVariable(name = "categoryNo") Long categoryNo,
             @RequestParam(name = "page", defaultValue = "0") int page,
             @RequestParam(name = "size", defaultValue = "10") int size) {
 
-        // Service 호출하여 대분류 카테고리의 멘토 리스트를 멘토링 횟수 순으로 조회
-        Page<MentorProfileDto> mentors = mentorProfileService.getMentorsByParentCategoryOrderByMentoringCount(categoryNo, page, size);
+        Page<MentorProfileDto> mentors = mentorProfileService.getByCategoryNoOrderByFollowCount(categoryNo, page, size);
 
-        // Response 생성
         Response response = new Response();
         response.setStatus(ResponseStatusCode.READ_MENTOR_PROFILE_LIST_SUCCESS_CODE);
-        response.setMessage("멘토링 횟수 순으로 대분류 멘토 조회 성공");
+        response.setMessage(ResponseMessage.READ_MENTOR_PROFILE_LIST_SUCCESS);
         response.setData(mentors);
 
-        return ResponseEntity.ok(response);
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.setContentType(new MediaType(MediaType.APPLICATION_JSON, Charset.forName("UTF-8")));
+
+        return new ResponseEntity<>(response, httpHeaders, HttpStatus.OK);
     }
 
-    /**
-     * 활동 수 순으로 카테고리별 멘토 리스트 조회
-     */
-    @Operation(summary = "활동 수 순으로 카테고리별 멘토 리스트 조회")
-    @GetMapping("/{categoryNo}/activity-count")
-    public ResponseEntity<Response> getMentorsByCategoryOrderByActivityCount(
+    @Operation(summary = "멘토링 횟수 순으로 CATEGORY_NO별 멘토 리스트 조회")
+    @GetMapping("/category/{categoryNo}/mentoring")
+    public ResponseEntity<Response> getMentorsByCategoryNoMentoring(
             @PathVariable(name = "categoryNo") Long categoryNo,
             @RequestParam(name = "page", defaultValue = "0") int page,
             @RequestParam(name = "size", defaultValue = "10") int size) {
 
-        // Service 호출하여 해당 카테고리의 멘토 리스트를 활동 수 순으로 조회
-        Page<MentorProfileDto> mentors = mentorProfileService.getMentorsByCategoryOrderByActivityCount(categoryNo, page, size);
+        Page<MentorProfileDto> mentors = mentorProfileService.getByCategoryNoOrderByMentoringCount(categoryNo, page, size);
 
-        // Response 생성
         Response response = new Response();
         response.setStatus(ResponseStatusCode.READ_MENTOR_PROFILE_LIST_SUCCESS_CODE);
-        response.setMessage("활동 수 순으로 멘토 조회 성공");
+        response.setMessage(ResponseMessage.READ_MENTOR_PROFILE_LIST_SUCCESS);
         response.setData(mentors);
 
-        return ResponseEntity.ok(response);
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.setContentType(new MediaType(MediaType.APPLICATION_JSON, Charset.forName("UTF-8")));
+
+        return new ResponseEntity<>(response, httpHeaders, HttpStatus.OK);
     }
 
-    /**
-     * 활동 수 순으로 대분류 카테고리별 멘토 리스트 조회
-     */
-    @Operation(summary = "활동 수 순으로 대분류 카테고리별 멘토 리스트 조회")
-    @GetMapping("/{categoryNo}/parent/activity-count")
-    public ResponseEntity<Response> getMentorsByParentCategoryOrderByActivityCount(
+    @Operation(summary = "활동 수 순으로 CATEGORY_NO별 멘토 리스트 조회")
+    @GetMapping("/category/{categoryNo}/activity")
+    public ResponseEntity<Response> getMentorsByCategoryNoActivity(
             @PathVariable(name = "categoryNo") Long categoryNo,
             @RequestParam(name = "page", defaultValue = "0") int page,
             @RequestParam(name = "size", defaultValue = "10") int size) {
 
-        // Service 호출하여 대분류 카테고리의 멘토 리스트를 활동 수 순으로 조회
-        Page<MentorProfileDto> mentors = mentorProfileService.getMentorsByParentCategoryOrderByActivityCount(categoryNo, page, size);
+        Page<MentorProfileDto> mentors = mentorProfileService.getByCategoryNoOrderByActivityCount(categoryNo, page, size);
 
-        // Response 생성
         Response response = new Response();
         response.setStatus(ResponseStatusCode.READ_MENTOR_PROFILE_LIST_SUCCESS_CODE);
-        response.setMessage("활동 수 순으로 대분류 멘토 조회 성공");
+        response.setMessage(ResponseMessage.READ_MENTOR_PROFILE_LIST_SUCCESS);
         response.setData(mentors);
 
-        return ResponseEntity.ok(response);
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.setContentType(new MediaType(MediaType.APPLICATION_JSON, Charset.forName("UTF-8")));
+
+        return new ResponseEntity<>(response, httpHeaders, HttpStatus.OK);
     }
 }

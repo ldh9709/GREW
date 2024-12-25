@@ -107,21 +107,13 @@ public interface MentorProfileService {
     
     //12월 24일 멘토 프로필 카테고리
  // 팔로우 순으로 소분류 카테고리별 멘토 리스트 조회
-    Page<MentorProfileDto> getMentorsByCategoryOrderByFollowCount(Long categoryNo, int page, int size);
+    Page<MentorProfileDto> getByParentCategoryOrderByFollowCount(Long parentCategoryNo, int page, int size);
+    Page<MentorProfileDto> getByParentCategoryOrderByMentoringCount(Long parentCategoryNo, int page, int size);
+    Page<MentorProfileDto> getByParentCategoryOrderByActivityCount(Long parentCategoryNo, int page, int size);
 
-    // 팔로우 순으로 대분류 카테고리별 멘토 리스트 조회
-    Page<MentorProfileDto> getMentorsByParentCategoryOrderByFollowCount(Long categoryNo, int page, int size);
+    Page<MentorProfileDto> getByCategoryNoOrderByFollowCount(Long categoryNo, int page, int size);
+    Page<MentorProfileDto> getByCategoryNoOrderByMentoringCount(Long categoryNo, int page, int size);
+    Page<MentorProfileDto> getByCategoryNoOrderByActivityCount(Long categoryNo, int page, int size);
 
-    // 멘토링 횟수 순으로 소분류 카테고리별 멘토 리스트 조회
-    Page<MentorProfileDto> getMentorsByCategoryOrderByMentoringCount(Long categoryNo, int page, int size);
-
-    // 멘토링 횟수 순으로 대분류 카테고리별 멘토 리스트 조회
-    Page<MentorProfileDto> getMentorsByParentCategoryOrderByMentoringCount(Long categoryNo, int page, int size);
-
-    // 활동 수 순으로 소분류 카테고리별 멘토 리스트 조회
-    Page<MentorProfileDto> getMentorsByCategoryOrderByActivityCount(Long categoryNo, int page, int size);
-
-    // 활동 수 순으로 대분류 카테고리별 멘토 리스트 조회
-    Page<MentorProfileDto> getMentorsByParentCategoryOrderByActivityCount(Long categoryNo, int page, int size);
 }
 
