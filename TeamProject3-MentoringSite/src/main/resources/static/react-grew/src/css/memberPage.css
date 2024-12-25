@@ -164,6 +164,14 @@ legend {
   color: red;
 }
 
+/* 기타 스타일 */
+.red-text {
+  color: red;
+  font-size: 13px;
+  font-family: "nanumsquare";
+  margin-left: 10px;
+}
+
 .member-join-link,
 .member-findPassword-link {
   height: 70px;

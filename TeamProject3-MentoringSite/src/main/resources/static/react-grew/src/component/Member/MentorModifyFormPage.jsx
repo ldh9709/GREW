@@ -1,17 +1,17 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "../../css/mentor.css";
 import * as responseStatus from "../../api/responseStatusCode";
 import * as memberApi from "../../api/memberApi";
 import { useNavigate } from "react-router-dom";
 import { useMemberAuth } from "../../util/AuthContext";
 
-const MentorJoinForm = () => {
+const MentorEditForm = () => {
 
   /***** Context 가져오기 START *****/
   const auth = useMemberAuth(); //사용자 인증 정보를 가져온다
-  const token = auth?.token || null;  //사용자 인증 토큰
-  const member = auth?.member || {};  //사용자 관련 정보 객체
-  const mentorProfileNo = token ? member.mentorProfileNo : null;  //사용자 멘토 프로필 번호
+    const token = auth?.token || null;  //사용자 인증 토큰
+    const member = auth?.member || {};  //사용자 관련 정보 객체
+    const mentorProfileNo = token ? member.mentorProfileNo : null;  //사용자 멘토 프로필 번호
   /***** Context 가져오기 END *****/
 
   /* 네비게이트 */
@@ -25,7 +25,6 @@ const MentorJoinForm = () => {
     mentorImage: "",  //프로필 이미지지
   });
   /**** 멘토 선언 END ****/
-
 
   /********** 경력 관련 메소드 START ***********/
   /*
@@ -62,9 +61,11 @@ const MentorJoinForm = () => {
     /* 줄바꿈으로 합친 값을 mentor 객체에 저장 */
     setMentor((prev) => ({
       ...prev,
+      /* 배열로 관리 중인 careerFields(각 경력을 담고 있는 상태)를 줄바꿈(\n)으로 연결하여 하나의 문자열로 변환 */
       mentorCareer: updatedFields.join("\n"),
     }));
   };
+
   /* 
     예시)
     기존 careerFields: ["경력 1", "경력 2"]
@@ -75,57 +76,67 @@ const MentorJoinForm = () => {
    */
   /********** 경력 관련 메소드 END ***********/
 
-
   /***** 입력 업데이트 핸들러 START *****/
-  const handleChangeMentorJoinForm = (e) => {
+  const handleChangeMentorEditForm = (e) => {
     setMentor((prevMentor) => ({
-      ...prevMentor, // 이전 상태를 펼치고
-      [e.target.name]: e.target.value, // 업데이트하려는 필드만 덮어씌움
+      ...prevMentor,// 이전 상태를 펼치고
+      [e.target.name]: e.target.value,// 업데이트하려는 필드만 덮어씌움
     }));
   };
   /***** 입력 업데이트 핸들러 END *****/
 
-  /***** 멘토 생성 버튼 START *****/
-  const mentorProfileCreateAction = async () => {
-    //반환객체 미리 선언
-    let responseJsonObject;
-    
-    //멘토 프로필 번호가 0(멘토 프로필이 없다는 뜻)이면 생성 액션
-    if(mentorProfileNo === 0) {
-      responseJsonObject = await memberApi.mentorProfileCreateAction(
-        member.memberNo,
-        mentor
-      );
-    //그게 아니라면 수정 액션
-    } else {
-      responseJsonObject = await memberApi.mentorProfileUpdateAction(
-        mentorProfileNo,
-        mentor
-      );
-    }
-    
+  /* mentorProfileNo가 변경될 때 실행 */
+  useEffect(() => {
+    /* 멘토 정보 가져오기 */
+    const fetchMentorInfo = async () => {
+      try {
+        /* 멘토 프로필 번호로 멘토 프로필 가져와 반환 받음 */
+        const response = await memberApi.getMentorProfile(mentorProfileNo);
+        /* 데이터가 있으면 */
+        if (response?.data) {
+          /* categoryNo, mentorIntroduce, mentorCareer에 데이터 대입 */
+          const { categoryNo, mentorIntroduce, mentorCareer } = response.data;
+          /* 멤버 세팅 */
+          setMentor({
+            categoryNo: categoryNo || "",
+            mentorIntroduce: mentorIntroduce || "",
+            mentorCareer: mentorCareer || "",
+            mentorImage: "",
+          });
+
+          /* mentorCareer 정보를 처리하여 careerFields 상태에 초기값을 설정 */
+          /* 줄바꿈(\n)을 기준으로 나누어 배열로 변환 */
+          const careerArray = mentorCareer ? mentorCareer.split("\n") : [""];
+          setCareerFields(careerArray);
+        }
+      } catch (error) {
+        console.error("멘토 정보 로드 실패:", error);
+      }
+    };
+    //멘토 정보 가져오기 실행
+    fetchMentorInfo();
+  }, [mentorProfileNo]);
+  
+  const mentorProfileUpdateAction = async () => {
+    const responseJsonObject = await memberApi.mentorProfileUpdateAction(
+      mentorProfileNo,
+      mentor
+    );
     switch (responseJsonObject.status) {
-      case responseStatus.CREATED_MENTOR_PROFILE_SUCCESS_CODE:
-        alert("멘토 가입 성공");
-        navigate("/member/profile");
+      case responseStatus.UPDATE_MENTOR_PROFILE_SUCCESS_CODE:
+        alert("멘토 정보 수정 성공");
+        navigate("/main");
         break;
-        
-        case responseStatus.UPDATE_MENTOR_PROFILE_SUCCESS_CODE:
-          alert("멘토 가입 성공");
-          navigate("/member/profile");
-          break;
-          
-          default:
-            alert("가입 실패");
-            break;
-          }
-        };
-    /***** 멘토 생성 버튼 END *****/
+
+      default:
+        alert("수정 실패");
+        break;
+    }
+  };
 
   return (
     <div className="mentor-join-container">
-      <h1 className="form-title">회원가입</h1>
-      <h3 className="form-subtitle">멘토 가입을 환영합니다!</h3>
+      <h1 className="form-title">멘토 수정</h1>
       <form className="mentor-join-form">
         {/* 분야 */}
         <div className="form-group-profile horizontal-field">
@@ -136,7 +147,7 @@ const MentorJoinForm = () => {
             id="categoryNo"
             name="categoryNo"
             value={mentor.categoryNo}
-            onChange={handleChangeMentorJoinForm}
+            onChange={handleChangeMentorEditForm}
             required
           >
             <option value="">-- 선택하세요 --</option>
@@ -172,66 +183,41 @@ const MentorJoinForm = () => {
             placeholder="소개글 입력"
             rows="5"
             value={mentor.mentorIntroduce}
-            onChange={handleChangeMentorJoinForm}
+            onChange={handleChangeMentorEditForm}
             required
           ></textarea>
         </div>
 
-        {/********** 경력 **********/}
+        {/* 경력 */}
         <div className="form-group-profile horizontal">
-        <label htmlFor="mentorCareer">
-          경력<span className="red-text">필수</span>
-        </label>
-        <div className="textarea-container">
-          {/* 
-            [careerFields.map의 역할]
-            careerFields 배열을 순회하며 각 요소에 대해 입력 필드(텍스트 영역)를 생성합니다.
-
-            careerFields:
-            이 배열은 사용자가 입력한 경력 정보의 목록을 저장합니다.
-            각 요소는 개별 경력 정보를 나타냅니다.
-            예시:
-            careerFields = ["경력 1", "경력 2"]
-
-            .map()
-            배열의 각 요소(career)와 해당 인덱스(index)를 순회하며, JSX 요소를 생성합니다.
-            반환 값: 각 요소에 대해 <div>를 생성.
-           */}
-          {careerFields.map((career, index) => (
-            /* 
-              React에서 리스트를 렌더링할 때, 각 자식 요소를 고유하게 식별하기 위해 사용.
-              인덱스를 key로 설정하여 React가 효율적으로 변경 사항을 추적.
-             */
-            <div key={index} className="textarea-row"> 
-              <textarea
-                /* careerFields 배열의 현재 요소 값(career)을 텍스트 영역에 표시, 사용자가 입력하거나 수정한 값이 텍스트 영역에 반영. */
-                value={career}
-                /* 사용자가 아무것도 입력하지 않았을 때 표시되는 안내 문구. */
-                placeholder={"경력 입력"}
-                /* 텍스트 영역의 기본 높이 설정 (줄 수 기준) */
-                rows="1"
-                /* 해당 index의 값을 업데이트, careerFields와 mentor.mentorCareer를 동시에 변경 */
-                onChange={(e) => handleCareerChange(index, e.target.value)}
-                /* 필수 입력 필드로 지정, 값이 비어 있으면 폼 제출 시 유효성 검사가 발생 */
-                required
-              ></textarea>
-              <div className="button-container">
-                {/* + 추가 버튼은 배열의 마지막 입력 필드에만 표시 */}
-                {index === careerFields.length - 1 ? (
-                  <button
-                    type="button"
-                    /* 클릭 시 새로운 입력 필드를 추가 */
-                    onClick={addCareerField}
-                    className="add-career-button"
-                  >
-                    + 추가
-                  </button>
-                ) : null}
+          <label htmlFor="mentorCareer">
+            경력<span className="red-text">필수</span>
+          </label>
+          <div className="textarea-container">
+            {careerFields.map((career, index) => (
+              <div key={index} className="textarea-row">
+                <textarea
+                  value={career}
+                  placeholder={index >= careerFields.length - 1 && career.trim() === "" ? "경력 입력" : ""}
+                  rows="1"
+                  onChange={(e) => handleCareerChange(index, e.target.value)}
+                  required
+                ></textarea>
+                <div className="button-container">
+                  {index === careerFields.length - 1 ? (
+                    <button
+                      type="button"
+                      onClick={addCareerField}
+                      className="add-career-button"
+                    >
+                      + 추가
+                    </button>
+                  ) : null}
+                </div>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
-      </div>
 
         {/* 프로필 사진 첨부 */}
         <div className="form-group-profile horizontal">
@@ -244,21 +230,20 @@ const MentorJoinForm = () => {
             id="profileImage"
             name="profileImage"
             accept="image/*"
-            required
           />
         </div>
 
         {/* 제출 버튼 */}
         <button
           type="button"
-          onClick={mentorProfileCreateAction}
+          onClick={mentorProfileUpdateAction}
           className="submit-button"
         >
-          회원가입
+          수정하기
         </button>
       </form>
     </div>
   );
 };
 
-export default MentorJoinForm;
+export default MentorEditForm;

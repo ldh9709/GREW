@@ -1,21 +1,25 @@
 import { Route, Routes, useLocation } from "react-router-dom";
 import "./css/styles.css";
 import Header from "./layout/Header";
-import { MainPage } from "./component/MainPage";
+import Footer from "./layout/Footer";
 import Navigate from "./layout/Navigate";
+import { MainPage } from "./component/MainPage";
 import { AuthProvider } from "./util/AuthContext";
 /* 멤버 페이지 임포트 */
 import MemberMainJoinFormPage from "./component/Member/MemberMainJoinFormPage";
 import MemberJoinFormPage from "./component/Member/MemberJoinFormPage";
 import MemberLoginFormPage from "./component/Member/MemberLoginFormPage";
 import MemberProfileFormPage  from "./component/Member/MemberProfileFormPage";
-/* 멘토 페이지 임포트 */
+import MemberMypage from "./component/Member/mypage/MemberMypage";
+import MemberSummary from "./component/Member/mypage/MemberSummary";
+/* 멘토 프로필 페이지 임포트 */
 import MentorJoinFormPage from "./component/Member/MentorJoinFormPage";
+import MentorModifyFormPage from "./component/Member/MentorModifyFormPage";
 import MentorProfileAdd  from "./component/MentorProfile/MentorProfileAdd";
 import MentorProfileList  from "./component/MentorProfile/MentorProfileList";
 import MentorProfileDetail from "./component/MentorProfile/MentorProfileDetail";
 import MentorSearchList from "./component/MentorProfile/MentorSearchList"; // 🔥 정확한 경로로 추가
-
+/* 멘토 보드 페이지 임포트트 */
 import MentorBoardFind from "./component/MentorBoard/MentorBoardFind"; 
 import MentorBoardList from "./component/MentorBoard/MentorBoardList"; 
 import MentorBoardDetail from './component/MentorBoard/MentorBoardDetail';
@@ -30,8 +34,6 @@ import AnswerModifyFormpage from "./component/AnswerInquiry/AnswerModifyFormPage
 import InqiuryList from "./component/AnswerInquiry/InqiuryList";
 import InqiuryView from "./component/AnswerInquiry/InquiryView";
 import ChatAlarim from "./component/Chatting/ChatAlarim";
-import Footer from "./layout/Footer";
-import MemberMypage from "./component/Member/mypage/MemberMypage";
 import SearchList from "./component/SearchList";
 import InquirySearchList from "./component/AnswerInquiry/InquirySearchList";
 
@@ -42,7 +44,6 @@ import ForbiddenPage from "./component/ForbiddenPage";
 import MentorProfileItem from "./component/MentorProfile/MentorProfileItem";
 
 import AdminRoutes from "./routes/AdminRoutes";
-import MemberSummary from "./component/Member/mypage/MemberSummary";
 
 /* 신고 모달 */
 import ReportModal from "./component/Report/ReportModal";
@@ -83,6 +84,7 @@ function App() {
 
             {/* MentorProfile 페이지 */}
             <Route path="/mentor/join" element={<MentorJoinFormPage />} /> {/* 멘토 회원가입 */}
+            <Route path="/mentor/modify" element={<MentorModifyFormPage />} /> {/* 멘토 회원가입 */}
             <Route path="/mentorprofile/list" element={<MentorProfileList/>}/>
             <Route path="/mentorprofile/add" element={<MentorProfileAdd/>}/>
             <Route path="/mentorprofile/view" element={<MentorProfileItem/>}/>
