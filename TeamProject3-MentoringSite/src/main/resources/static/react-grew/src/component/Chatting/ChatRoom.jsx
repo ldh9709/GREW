@@ -17,7 +17,6 @@ const ChatRoom = ({ onRoomClick }) => {
         console.log('토큰'+token);
         const responseJsonObject = await ChattingApi.memberListChatRoom(token, page, 8);
         console.log(responseJsonObject);
-        console.log(responseJsonObject.data.content);
         if (responseJsonObject.status === 7010 && Array.isArray(responseJsonObject.data.content)) {
             // 각 채팅방 상태를 개별적으로 비교하여 필터링
             const activeRooms = responseJsonObject.data.content.filter((room) => { // filter()는 배열의 각 항목을 하나씩 검사하며, 주어진 콜백 함수에서 true를 반환하는 항목만 새로운 배열에 포함
