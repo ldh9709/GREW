@@ -606,19 +606,24 @@ body {
 }
 
 .board-details {
+  position: relative;
+  height: 140px;
   padding: 15px;
 }
 .board-info{
+  position: absolute;
+  right: 20px; bottom: 15px;
   text-align: right;
   padding-top: 15px;
 }
 .board-date {
   font-size: 14px;
+  margin-right: 5px;
   color: #888;
 }
 
 .board-views{
-  font-size: 14px;
+  font-size: 13px;
   color: #888;
 }
 .board-title {

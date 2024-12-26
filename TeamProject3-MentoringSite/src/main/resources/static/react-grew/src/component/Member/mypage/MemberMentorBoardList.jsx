@@ -2,7 +2,8 @@ import React, { useEffect, useState } from 'react'
 import { useMemberAuth } from "../../../util/AuthContext"
 import * as mentorBoardApi from '../../../api/mentorBoardApi'
 import imageSrc from '../mentor-content1.jpg'
-
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEye } from '@fortawesome/free-regular-svg-icons';
 
 export default function MemberMentorContentList() {
     /* Context에 저장된 토큰, 멤버정보 */
@@ -48,7 +49,9 @@ export default function MemberMentorContentList() {
             <p className="board-description">{board.mentorBoardContent.substring(0,100)}...</p>
             <p className='board-info'>
               <span className="board-date">{board.mentorBoardDate.substring(0,10)}</span>
-              <span className="board-views"> | 조회수 : {board.mentorBoardViews}</span>
+              <span className="board-views">
+               <FontAwesomeIcon icon={faEye} /> <span>{board.mentorBoardViews}</span>
+              </span>
             </p>
           </div>
         </div>

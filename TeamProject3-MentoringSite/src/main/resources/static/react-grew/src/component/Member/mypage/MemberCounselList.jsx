@@ -143,7 +143,7 @@ export default function MemberCounselList() {
                       {counsel.chatRoomEndDate ? counsel.chatRoomEndDate.substring(0, 10) : ""}
                     </p>
                     <p className="counsel-date">
-                      리뷰여부: {counsel.isReview === 1 ? "작성" : "미작성"}
+                      리뷰여부: { !counsel.isReview ? "미작성" : "작성"}
                     </p>
                     <div className={`counsel-type ${counsel.chatRoomStatus === 7200 ? "green white" : "" }`}>
                       {counselStatus(counsel.chatRoomStatus)}
