@@ -15,7 +15,7 @@ public interface MentorProfileService {
     /**
      * 멘토 프로필 생성
      */
-    void saveMentorProfile(Long memberNo, MentorProfileDto mentorProfileDto);
+    MentorProfile saveMentorProfile(Long memberNo, MentorProfileDto mentorProfileDto);
     
     /**
      * 멘토 더미 프로필 생성
@@ -32,7 +32,7 @@ public interface MentorProfileService {
      * 멘토의 상태를 변경
      * status 변경할 상태 (1: 멘티, 2: 심사 중, 3: 멘토, 4: 탈퇴)
      */
-    void updateMentorStatus(Long memberNo, int status);
+	void updateMentorStatus(Long memberNo, int status);
 
     /**
      * 특정 멘토의 평균 평점을 반환
@@ -76,7 +76,7 @@ public interface MentorProfileService {
     /**
      * 멘토 프로필 정보 수정
      */
-    void updateMentorProfile(Long mentorProfileNo, MentorProfileDto mentorProfileDto);
+    MentorProfile updateMentorProfile(Long mentorProfileNo, MentorProfileDto mentorProfileDto);
 
     /**
      * 멘토 프로필의 멘토링 횟수 조회
@@ -105,7 +105,20 @@ public interface MentorProfileService {
     //멤버 넘버로 멘토프로필 찾기
     MentorProfileDto getMentorByMemberNo(Long memberNo);
     
+
+    //12월 24일 멘토 프로필 카테고리
+ // 팔로우 순으로 소분류 카테고리별 멘토 리스트 조회
+    Page<MentorProfileDto> getByParentCategoryOrderByFollowCount(Long parentCategoryNo, int page, int size);
+    Page<MentorProfileDto> getByParentCategoryOrderByMentoringCount(Long parentCategoryNo, int page, int size);
+    Page<MentorProfileDto> getByParentCategoryOrderByActivityCount(Long parentCategoryNo, int page, int size);
+
+    Page<MentorProfileDto> getByCategoryNoOrderByFollowCount(Long categoryNo, int page, int size);
+    Page<MentorProfileDto> getByCategoryNoOrderByMentoringCount(Long categoryNo, int page, int size);
+    Page<MentorProfileDto> getByCategoryNoOrderByActivityCount(Long categoryNo, int page, int size);
+
+
     //별점 순으로 멘토 찾기
     List<MentorProfileDto> getMentorByRating();
+
 }
 

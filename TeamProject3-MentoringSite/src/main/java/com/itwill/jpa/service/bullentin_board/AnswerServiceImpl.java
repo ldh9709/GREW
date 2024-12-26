@@ -171,19 +171,13 @@ public class AnswerServiceImpl implements AnswerService {
 
 	/* 최근 3일간 추천 많은 답변 */
 	@Override
-	public Page<AnswerDto> getByAnswerOrderByVoteDate(int pageNumber, int pageSize) {
-		try {
-			Pageable pageable = PageRequest.of(pageNumber, pageSize);
-			Page<Answer> answerEntityList = answerRepository.findByAnswerOrderByVoteDate(pageable);
+	public List<AnswerDto> getByAnswerOrderByVoteDate() {
+			List<Answer> answerEntityList = answerRepository.findByAnswerOrderByVoteDate();
 			List<AnswerDto> answerDtoList = new ArrayList<>();
 			for (Answer answerEntity : answerEntityList) {
 				answerDtoList.add(AnswerDto.toDto(answerEntity));
 			}
-			return new PageImpl<>(answerDtoList, pageable, answerEntityList.getTotalElements());
-		} catch (Exception e) {
-			throw new CustomException(ResponseStatusCode.READ_ANSWER_LIST_FAIL, ResponseMessage.READ_ANSWER_LIST_FAIL,
-					e);
-		}
+			return answerDtoList;
 	}
 
 	// 내가 작성한 답변내역
@@ -206,7 +200,7 @@ public class AnswerServiceImpl implements AnswerService {
 
 	@Override
 	public Long getAnswerCount(Long inquiryNo) {
-		Long answerCount = answerRepository.countByInquiry_InquiryNo(inquiryNo);
+		Long answerCount = answerRepository.countByInquiry_InquiryNoAndAnswerStatus(inquiryNo,1);
 		return answerCount;
 
 	}

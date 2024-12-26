@@ -81,19 +81,24 @@ export const acceptAnswer = async (answerNo) => {
   return responseJsonObject;
 };
 //답변삭제
-export const deleteAnswer = async (answerNo) => {
+export const deleteAnswer = async (answerNo,token) => {
   const response = await fetch(`${BACKEND_SERVER}/answer/delete/${answerNo}`, {
     method: "PUT",
+    headers: {
+      "Content-Type": "application/json;charset=UTF-8", // 요청 헤더 설정
+      'Authorization': `Bearer ${token}`, // Authorization 헤더에 JWT 토큰 추가
+    },
   });
   const responseJsonObject = await response.json();
   return responseJsonObject;
 };
 //답변수정
-export const updateAnswer = async (sendJsonObject) => {
+export const updateAnswer = async (sendJsonObject,token) => {
   const response = await fetch(`${BACKEND_SERVER}/answer/update/${sendJsonObject.answerNo}`, {
     method: "PUT",
     headers: {
-      "Content-Type": "application/json;charset=UTF-8", // 요청 헤더 설정
+      "Content-Type": "application/json;charset=UTF-8",
+      'Authorization': `Bearer ${token}`// 요청 헤더 설정
     },
     body: JSON.stringify(sendJsonObject), // 요청 본문에 JSON 객체 전달
   });

@@ -1,11 +1,8 @@
 import React from "react";
-import { getCookie } from "../util/cookieUtil";
-import { useNavigate } from "react-router-dom";
-import { logout, memberProfile, getMentorProfile } from "../api/memberApi";
 import "../css/styles.css";
-
-import { jwtDecode } from "jwt-decode";
+import { useNavigate } from "react-router-dom";
 import { useMemberAuth } from "../util/AuthContext";
+import { logout, memberProfile, getMentorProfile, updateMemberRole } from "../api/memberApi";
 
 export default function HeaderMenu() {
   const navigate = useNavigate();
@@ -37,6 +34,7 @@ export default function HeaderMenu() {
   console.log("토큰 : ", auth?.token || null);
   const member = auth?.member || {};
   console.log("멤버 : ", auth?.member || {});
+  const login = auth.login;
   
 
 
@@ -85,11 +83,6 @@ export default function HeaderMenu() {
       const checkMemberCategory = memberProfileResponse?.data?.interests?.some(
         (interest) => interest.categoryNo === 19
       );
-
-      /* 멘토의 전문분야가 26번인지 확인(멘토 회원가입 시 기본값)
-      const checkMentorCategory = mentorProfileResponse?.data?.categoryNo === 26;
-      
-       */
       console.log("checkMemberCategory : ", checkMemberCategory);
 
     if (checkMemberCategory) {
@@ -104,6 +97,42 @@ export default function HeaderMenu() {
     }
   };
 
+  const handleUpdateRole = async (role) => {
+        try {
+            if (member.mentorProfileNo === 0) {
+                const confirmation = window.confirm('멘토를 신청 하시겠습니까?')
+                if (!confirmation) {
+                    return;
+                }
+                navigate(`/mentor/join`);
+            } else {
+                const confirmation = window.confirm(
+                    member.memberRole === "ROLE_MENTEE" 
+                    ? "멘토로 변경하시겠습니까?" 
+                    : "멘티로 변경하시겠습니까?"
+                );
+                if (!confirmation) {
+                    return;
+                }
+            }          
+
+            const response = await updateMemberRole(token, role);
+            if (response.status === 2012) {
+                // 기존 쿠키 삭제
+                // document.cookie = "member=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+                login(response.data.accessToken);
+              }
+                //강제 리로드
+                // window.location.reload();
+                // //성공 후 메인으로 이동
+                navigate(`/main`);
+        } catch (error) {
+          console.error('회원 권한 변경 실패', error);
+        }
+    };
+
+
+
   // 스타일 정의
   const navStyle = {
     fontFamily: "'Noto Sans KR', sans-serif",
@@ -117,28 +146,49 @@ export default function HeaderMenu() {
   };
 
   return (
-    <div className="header" style={navStyle}>
-      <div className="rightMenu" style={rightMenuBarStyle}>
+  <div className="header" style={navStyle}>
+    <div className="rightMenu" style={rightMenuBarStyle}>
       {token ? (
+        // 로그인 상태
         <>
-          {/* <a href="/member/profile" className="mypage">
-          마이페이지
-        </a> */}
-        <input type="button" className="profile-button " onClick={handleProfileNavigate} value="마이페이지"/>
-        {/* <a href="/logout" onClick={handleLogoutAction} className="mypage">
-        로그아웃
-        </a> */}
-        <input type="button" className="logout-button" onClick={handleLogoutAction} value="로그아웃"/>
+          <input
+            type="button"
+            className="profile-button"
+            onClick={handleProfileNavigate}
+            value="마이페이지"
+          />
+          <input
+            type="button"
+            className="logout-button"
+            onClick={handleLogoutAction}
+            value="로그아웃"
+            />
+          <input
+            type="button"
+            className="header-role"
+            onClick={()=>{member.memberRole === "ROLE_MENTEE" ? handleUpdateRole('ROLE_MENTOR') : handleUpdateRole('ROLE_MENTEE')}}
+            value={member.memberRole === "ROLE_MENTEE" ? "멘티" : "멘토"}
+          />
         </>
       ) : (
-         <>
-         <input type="button" className="login-button" onClick={handleLoginNavigate} value="로그인"/>
+        // 비로그인 상태
+        <>
 
-         <input type="button" className="join-button" onClick={handleJoinNavigate} value="회원가입"/>
-
-         </>
-        )}
-      </div>
+          <input
+            type="button"
+            className="login-button"
+            onClick={handleLoginNavigate}
+            value="로그인"
+          />
+          <input
+            type="button"
+            className="join-button"
+            onClick={handleJoinNavigate}
+            value="회원가입"
+          />
+        </>
+      )}
     </div>
+  </div>
   );
 }

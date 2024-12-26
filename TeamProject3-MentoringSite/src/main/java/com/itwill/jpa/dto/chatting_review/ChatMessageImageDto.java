@@ -13,10 +13,13 @@ public class ChatMessageImageDto {
 
     private Long imageNo;
     private String imageName;
-    private long chatMessageNo; // chatMessage의 ID만 필요한 경우
+    private Long chatMessageNo; // chatMessage의 ID만 필요한 경우
     private String chatMessageContent;
-    private Long chatRoomId;
-    private long memberNo;
+    private Long chatRoomNo;
+    private Long memberNo;
+    
+    private String base64Image;  // Base64 이미지 문자열 필드
+
 
     // DTO -> 엔티티 변환
     public static ChatMessageImageDto toDto(ChatMessageImage chatMessageImagedto) {
@@ -25,7 +28,7 @@ public class ChatMessageImageDto {
                 .imageName(chatMessageImagedto.getImageName())
                 .chatMessageNo(chatMessageImagedto.getChatMessage().getChatMessageNo()) // ChatMessage 객체를 직접 전달
                 .chatMessageContent(chatMessageImagedto.getChatMessage().getChatMessageContent())
-                .chatRoomId(chatMessageImagedto.getChatMessage().getChatRoom().getChatRoomNo())
+                .chatRoomNo(chatMessageImagedto.getChatMessage().getChatRoom().getChatRoomNo())
                 .memberNo(chatMessageImagedto.getChatMessage().getChatRoom().getMentee().getMemberNo())
                 .build();
     }

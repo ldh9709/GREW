@@ -24,36 +24,52 @@ export default function ReviewDetailPage() {
     fetchReviewDetail();
   }, [reviewNo]); // 리뷰 번호가 변경될 때마다 데이터 다시 가져오기
 
+  // 로딩 중일 때
   if (loading) {
-    return <div>로딩 중...</div>; // 로딩 중일 때 표시할 메시지
+    return <div>로딩 중...</div>;
   }
 
+  // 에러 발생 시
   if (error) {
-    return <div>{error}</div>; // 에러 메시지 표시
+    return <div>{error}</div>;
   }
 
+  // 리뷰가 없을 때
   if (!review) {
-    return <div>해당 리뷰를 찾을 수 없습니다.</div>; // 리뷰가 없을 경우
+    return <div>해당 리뷰를 찾을 수 없습니다.</div>;
   }
+
+  // 별점 표시 함수
+  const renderStars = (score) => {
+    const filledStars = Math.round(score); // 점수를 반올림하여 별을 채우기
+    const emptyStars = 5 - filledStars;
+    return (
+      <div>
+        {[...Array(filledStars)].map((_, index) => (
+          <span key={index} className="star filled">★</span>
+        ))}
+        {[...Array(emptyStars)].map((_, index) => (
+          <span key={index + filledStars} className="star">★</span>
+        ))}
+      </div>
+    );
+  };
 
   return (
-    <div>
+    <div className="review-detail-container">
       <h2>리뷰 자세히 보기</h2>
-      <div>
+      <div className="review-detail">
         <h3>{review.reviewTitle}</h3> {/* 리뷰 제목 */}
         <p>{review.reviewContent}</p> {/* 리뷰 내용 */}
-        <div>
-          <span>점수: {review.reviewScore}</span> {/* 리뷰 점수 */}
+        <div className="review-score">
+          <span>점수: </span>
+          {renderStars(review.reviewScore)} {/* 별점 표시 */}
         </div>
         <div>
-          <span>상태: {review.reviewStatus === 1 ? "활성" : "비활성"}</span>{" "}
-          {/* 리뷰 상태 */}
+          <span>상태: {review.reviewStatus === 1 ? "활성" : "비활성"}</span> {/* 리뷰 상태 */}
         </div>
         <div>
-          <span>
-            작성일: {new Date(review.reviewDate).toLocaleDateString()}
-          </span>{" "}
-          {/* 리뷰 작성일 */}
+          <span>작성일: {new Date(review.reviewDate).toLocaleDateString()}</span> {/* 리뷰 작성일 */}
         </div>
         <div>
           <span>작성자 번호: {review.memberNo}</span> {/* 작성자 번호 */}

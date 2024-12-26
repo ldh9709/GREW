@@ -33,7 +33,7 @@ public interface MentorProfileRepository extends JpaRepository<MentorProfile, Lo
     //mentorStatus를 특정 상태로 업데이트 심사전 심사중 심사완료 탈퇴 
     @Modifying
     @Query("UPDATE MentorProfile mp SET mp.mentorStatus = :status WHERE mp.member.memberNo = :memberNo")
-    void updateMentorStatus(@Param("memberNo") Long memberNo, @Param("status") int status);
+    MentorProfile updateMentorStatus(@Param("memberNo") Long memberNo, @Param("status") int status);
 
     //평점 
     @Query("SELECT AVG(r.reviewScore) FROM Review r WHERE r.chatRoom.mentor.memberNo = :mentorNo")
@@ -107,8 +107,43 @@ public interface MentorProfileRepository extends JpaRepository<MentorProfile, Lo
      Page<MentorProfile> findByOrderByMentorFollowCountDesc(Pageable pageable);
      Page<MentorProfile> findByOrderByMentorMentoringCountDesc(Pageable pageable);
      Page<MentorProfile> findByOrderByMentorActivityCountDesc(Pageable pageable);
+
+     //12/24일 멘토 프로필 카테고리
+  // MentorProfileRepository.java
+     // 팔로우 순으로 소분류 카테고리별 멘토 리스트 조회
+    
+     @Query("SELECT mp FROM MentorProfile mp " +
+    	       "WHERE mp.category.parentCategory.categoryNo = :parentCategoryNo " +
+    	       "ORDER BY mp.mentorFollowCount DESC")
+    	Page<MentorProfile> findByParentCategoryOrderByFollowCount(@Param("parentCategoryNo") Long parentCategoryNo, Pageable pageable);
+
+    	@Query("SELECT mp FROM MentorProfile mp " +
+    	       "WHERE mp.category.parentCategory.categoryNo = :parentCategoryNo " +
+    	       "ORDER BY mp.mentorMentoringCount DESC")
+    	Page<MentorProfile> findByParentCategoryOrderByMentoringCount(@Param("parentCategoryNo") Long parentCategoryNo, Pageable pageable);
+
+    	@Query("SELECT mp FROM MentorProfile mp " +
+    	       "WHERE mp.category.parentCategory.categoryNo = :parentCategoryNo " +
+    	       "ORDER BY mp.mentorActivityCount DESC")
+    	Page<MentorProfile> findByParentCategoryOrderByActivityCount(@Param("parentCategoryNo") Long parentCategoryNo, Pageable pageable);
+     
+     // CATEGORY_NO 별 조회
+     @Query("SELECT mp FROM MentorProfile mp WHERE mp.category.categoryNo = :categoryNo ORDER BY mp.mentorFollowCount DESC")
+     Page<MentorProfile> findByCategoryNoOrderByFollowCount(@Param("categoryNo") Long categoryNo, Pageable pageable);
+
+     @Query("SELECT mp FROM MentorProfile mp WHERE mp.category.categoryNo = :categoryNo ORDER BY mp.mentorMentoringCount DESC")
+     Page<MentorProfile> findByCategoryNoOrderByMentoringCount(@Param("categoryNo") Long categoryNo, Pageable pageable);
+
+     @Query("SELECT mp FROM MentorProfile mp WHERE mp.category.categoryNo = :categoryNo ORDER BY mp.mentorActivityCount DESC")
+     Page<MentorProfile> findByCategoryNoOrderByActivityCount(@Param("categoryNo") Long categoryNo, Pageable pageable);
+     
+     @Query("SELECT c.categoryNo FROM Category c WHERE c.parentCategory.categoryNo = :parentCategoryNo")
+     List<Long> findCategoryNosByParentCategoryNo(@Param("parentCategoryNo") Long parentCategoryNo);
+
+
      //별점 순으로 리스트뽑기(우수멘토)
      List<MentorProfile> findByOrderByMentorRatingDesc();
+
      
 }
 

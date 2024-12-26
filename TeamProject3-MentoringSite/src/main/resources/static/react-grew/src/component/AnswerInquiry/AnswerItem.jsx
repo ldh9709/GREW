@@ -5,6 +5,9 @@ import * as categoryApi from "../../api/categoryApi";
 import { useNavigate } from "react-router-dom";
 import { useMemberAuth } from "../../util/AuthContext";
 import ReportModal from "../Report/ReportModal";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faThumbsDown, faThumbsUp } from "@fortawesome/free-regular-svg-icons";
+import { faMedal } from "@fortawesome/free-solid-svg-icons";
 
 export default function AnswerItem({ answer }) {
   const { token, member } = useMemberAuth();
@@ -15,6 +18,9 @@ export default function AnswerItem({ answer }) {
   const [isReportHovered, setIsReportHovered] = useState(false);
   const [isUpVoteHovered, setIsUpVoteHovered] = useState(false);
   const [isDownVoteHovered, setIsDownVoteHovered] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [report, setreport] = useState({});
+
   const navigate = useNavigate();
   // 버튼 클릭 시 팝업 창을 토글하는 함수
   const handleProfile = () => {
@@ -53,6 +59,8 @@ export default function AnswerItem({ answer }) {
       fetchCategories();
     }
   }, [mentorProfile]); // mentorProfile가 업데이트된 후에 fetchCategories 실행
+
+  //답변 수정 버튼
   const handleModify = async () => {
     navigate(`/answer/modify/${answer.answerNo}`);
   };
@@ -74,6 +82,19 @@ export default function AnswerItem({ answer }) {
       alert("API 호출 중 오류 발생: " + error.message); // 사용자에게 오류 메시지 표시
     }
   };
+  
+  //답변 삭제 버튼
+  const handleRemoveAnswer = async () => {
+    try {
+      if (!window.confirm('답변을 삭제하시겠습니까?')) return;
+      await answerApi.deleteAnswer(answer.answerNo,token)
+      window.location.reload();
+    } catch (error) {
+      console.log('답변 삭제 실패',error)
+    }
+  }
+  
+
   const handleDownvote = async () => {
     try {
       const response = await answerApi.downVote(answer.answerNo, token); // API 호출
@@ -99,29 +120,36 @@ export default function AnswerItem({ answer }) {
     console.log(response);
   };
 
-  //신고 하기
-  const handleReport = async () => {
-    ReportModal()
-  }
+  //신고 하기 창 열고 닫기
+  const handleOpenModal = () => {
+    setIsModalOpen(true);
+    setreport({
+      type: "ANSWER",
+      target: answer.answerNo,
+    });
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+  };
 
   return (
     <>
       <div className="answer-container">
         {answer.answerAccept == 2 ? (
           <div className="answer-accept-status">
-            <img
-              src="https://img.icons8.com/?size=100&id=Ri1uVwXhVKOJ&format=png&color=000000"
-              className="answer-accept-img"
-            />
-            채택된 답변
+            <FontAwesomeIcon icon={faMedal} />
+            <span>채택된 답변</span>
           </div>
         ) : (
           <div></div>
         )}
 
-        {member && member.memberNo == inquiry.memberNo ? (
+        {member && member.memberNo == inquiry.memberNo &&answer.answerAccept==1? (
           <div className="answer-accept">
-            <button onClick={handleAccept}>채택하기</button>
+            <button className="accept-btn" onClick={handleAccept}>
+              채택하기
+            </button>
           </div>
         ) : (
           <div></div>
@@ -136,10 +164,14 @@ export default function AnswerItem({ answer }) {
               alt="Mentor Profile"
             />
           </div>
-          <div className="answer-member-name">{answer.memberName} 멘토</div>
-          <div className="answer-member-category">{category.categoryName}</div>
+          <div className="answer-mentor-info">
+            <div className="answer-member-category">
+              {category.categoryName}
+            </div>
+            <div className="answer-member-name">{answer.memberName} 멘토</div>
+          </div>
         </button>
-        
+
         <div className="answer-content">{answer.answerContent}</div>
         <div className="answer-date">{answer.answerDate.substring(0, 10)}</div>
         <div className="answer-vote">
@@ -149,15 +181,11 @@ export default function AnswerItem({ answer }) {
             onMouseEnter={() => setIsUpVoteHovered(true)} // 마우스가 버튼 위에 올라갔을 때
             onMouseLeave={() => setIsUpVoteHovered(false)} // 마우스가 버튼을 벗어났을 때
           >
-            <img
-              src={
-                isUpVoteHovered
-                  ? "https://img.icons8.com/?size=100&id=10271&format=png&color=000000"
-                  : "https://img.icons8.com/?size=100&id=2744&format=png&color=000000"
-              }
-              alt="Upvote Icon"
-              className="upvote-button-image"
-            />
+            {isUpVoteHovered ? (
+              <FontAwesomeIcon icon={faThumbsUp} />
+            ) : (
+              <FontAwesomeIcon icon={faThumbsUp} />
+            )}
           </button>
           {voteCount}
           <button
@@ -166,24 +194,34 @@ export default function AnswerItem({ answer }) {
             onMouseEnter={() => setIsDownVoteHovered(true)} // 마우스가 버튼 위에 올라갔을 때
             onMouseLeave={() => setIsDownVoteHovered(false)} // 마우스가 버튼을 벗어났을 때
           >
-            <img
-              src={
-                isDownVoteHovered
-                  ? "https://img.icons8.com/?size=100&id=10267&format=png&color=000000"
-                  : "https://img.icons8.com/?size=100&id=2913&format=png&color=000000"
-              }
-              alt="Upvote Icon"
-              className="downvote-button-image"
-            />
+            {isDownVoteHovered ? (
+              <FontAwesomeIcon icon={faThumbsDown} />
+            ) : (
+              <FontAwesomeIcon icon={faThumbsDown} />
+            )}
           </button>
         </div>
 
-        {/* 답변 신고 버튼 */}
-        <div className="answer-report-btn">
+        {/* 답변 수정 삭제 신고 버튼 */}
+        <div className="inquiry-view-answer-btn">
+          {member && member.memberNo == answer.memberNo ? (
+            <div className="modify-delete-btn">
+              <button onClick={handleModify}>수정</button>
+              <button onClick={handleRemoveAnswer}>
+                삭제
+              </button>
+            </div>
+          ) : (
+            <div></div>
+          )}
+          {isModalOpen && (
+            <ReportModal onClose={handleCloseModal} report={report} />
+          )}
           <button
             onMouseEnter={() => setIsReportHovered(true)} // 마우스가 버튼 위에 올라갔을 때
             onMouseLeave={() => setIsReportHovered(false)} // 마우스가 버튼을 벗어났을 때
             className={`hover-button ${isReportHovered ? "hovered" : ""}`}
+            onClick={handleOpenModal}
           >
             <img
               src={
@@ -196,27 +234,6 @@ export default function AnswerItem({ answer }) {
             />
           </button>
         </div>
-        {/* 신고하기버튼 */}
-        {/* 신고하기버튼 */}
-        {/* 신고하기버튼 */}
-        {/* 신고하기버튼 */}
-        {/* 신고하기버튼 */}
-        {/* 신고하기버튼 */}
-        {member && member.memberNo == answer.memberNo ? (
-          <div className="modify-delete-btn">
-            <button onClick={handleModify}>수정</button>
-
-            <button
-              onClick={(e) => {
-                e.preventDefault(); // 폼 제출 방지
-              }}
-            >
-              삭제
-            </button>
-          </div>
-        ) : (
-          <div></div>
-        )}
       </div>
     </>
   );

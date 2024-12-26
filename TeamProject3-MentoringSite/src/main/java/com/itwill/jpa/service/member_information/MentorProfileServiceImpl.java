@@ -85,7 +85,7 @@ public class MentorProfileServiceImpl implements MentorProfileService {
      * 멘토 프로필 생성 메서드
      */
     @Override
-    public void saveMentorProfile(Long memberNo, MentorProfileDto mentorProfileDto) {
+    public MentorProfile saveMentorProfile(Long memberNo, MentorProfileDto mentorProfileDto) {
     	
         try {
             // 1️⃣ 회원 정보 조회
@@ -93,7 +93,7 @@ public class MentorProfileServiceImpl implements MentorProfileService {
             if (member == null) {
                 throw new CustomException(ResponseStatusCode.MEMBER_MENTOR_NOT_FOUND, ResponseMessage.MEMBER_MENTOR_NOT_FOUND, null);
             }
-
+            
             // 2️⃣ 카테고리 정보 조회
             Category category = categoryRepository.findById(mentorProfileDto.getCategoryNo()).get();
             if (category == null) {
@@ -109,9 +109,12 @@ public class MentorProfileServiceImpl implements MentorProfileService {
             MentorProfile mentorProfile = MentorProfile.toEntity(mentorProfileDto, member, category);
             mentorProfile.setMentorStatus(1); // 초기값 1로 등록
             mentorProfileRepository.save(mentorProfile);
+            
+            return mentorProfile; 
         } catch (Exception e) {
             throw new CustomException(ResponseStatusCode.CREATED_MENTOR_PROFILE_FAIL, ResponseMessage.CREATED_MENTOR_PROFILE_FAIL, e);
         }
+        
     }
     /* 멘토링 전체활동 수 업데이트 */
     public Integer updateMentoringCount(Long memberNo) {
@@ -149,7 +152,7 @@ public class MentorProfileServiceImpl implements MentorProfileService {
 				                .mentorCareer("경력을 입력해주세요.")
 				                .mentorIntroduce("소개글을 입력해주세요.")
 				                .mentorImage(null)
-				                .mentorStatus(0) // 초기 상태가 없으면 1로 설정
+				                .mentorStatus(2) // 초기 상태가 없으면 2로 설정
 				                .mentorRating(0.0) // 초기 평점이 없으면 0.0으로 설정
 				                .mentorMentoringCount(0)
 				                .mentorFollowCount(0)
@@ -269,7 +272,7 @@ public class MentorProfileServiceImpl implements MentorProfileService {
     @Override
     public String uploadMentorProfileImage(Long mentorProfileNo, MultipartFile file) {
         try {
-            MentorProfile mentorProfile = mentorProfileRepository.findById(mentorProfileNo).orElse(null);
+        	MentorProfile mentorProfile = mentorProfileRepository.findById(mentorProfileNo).orElse(null);
             if (mentorProfile == null) {
                 throw new CustomException(ResponseStatusCode.MENTOR_PROFILE_NOT_FOUND_CODE, ResponseMessage.MENTOR_PROFILE_NOT_FOUND, null);
             }
@@ -287,8 +290,7 @@ public class MentorProfileServiceImpl implements MentorProfileService {
 
             // 6️⃣ 저장된 이미지 URL 생성
             String imageUrl = "/upload/mentor-profile/" + mentorProfileNo + "/" + fileName;
-            
-            // 7️⃣ 멘토 보드에 이미지 URL 저장
+            // 7️⃣ 멘토 프로필에 이미지 URL 저장
             mentorProfile.setMentorImage(imageUrl);
             mentorProfileRepository.save(mentorProfile);
             
@@ -303,7 +305,7 @@ public class MentorProfileServiceImpl implements MentorProfileService {
      * 프로필 이미지 URL 조회 메서드
      */
     @Override
-    public void updateMentorProfile(Long mentorProfileNo, MentorProfileDto mentorProfileDto) {
+    public MentorProfile updateMentorProfile(Long mentorProfileNo, MentorProfileDto mentorProfileDto) {
         try {
             // 🔥 멘토 프로필 조회
             MentorProfile mentorProfile = mentorProfileRepository.findById(mentorProfileNo)
@@ -323,10 +325,11 @@ public class MentorProfileServiceImpl implements MentorProfileService {
             mentorProfile.setMentorCareer(mentorProfileDto.getMentorCareer());
             mentorProfile.setMentorIntroduce(mentorProfileDto.getMentorIntroduce());
             mentorProfile.setMentorImage(mentorProfileDto.getMentorImage());
+            System.out.println(">>>>> updateMentorProfile : " + mentorProfileDto.getMentorImage());
             mentorProfile.setCategory(category); // 카테고리 설정
             
             // 🔥 저장
-            mentorProfileRepository.save(mentorProfile);
+            return mentorProfileRepository.save(mentorProfile);
             
         } catch (CustomException e) {
             throw e; // 그대로 예외 던지기
@@ -460,8 +463,48 @@ public class MentorProfileServiceImpl implements MentorProfileService {
 	}
     
     
+	
+	//12월 24일 멘토 프로필 카테고리
+	@Override
+	public Page<MentorProfileDto> getByParentCategoryOrderByFollowCount(Long parentCategoryNo, int page, int size) {
+	    Pageable pageable = PageRequest.of(page, size);
+	    Page<MentorProfile> mentorProfiles = mentorProfileRepository.findByParentCategoryOrderByFollowCount(parentCategoryNo, pageable);
+	    return mentorProfiles.map(MentorProfileDto::toDto);
+	}
 
-    
+	@Override
+	public Page<MentorProfileDto> getByParentCategoryOrderByMentoringCount(Long parentCategoryNo, int page, int size) {
+	    Pageable pageable = PageRequest.of(page, size);
+	    Page<MentorProfile> mentorProfiles = mentorProfileRepository.findByParentCategoryOrderByMentoringCount(parentCategoryNo, pageable);
+	    return mentorProfiles.map(MentorProfileDto::toDto);
+	}
 
+	@Override
+	public Page<MentorProfileDto> getByParentCategoryOrderByActivityCount(Long parentCategoryNo, int page, int size) {
+	    Pageable pageable = PageRequest.of(page, size);
+	    Page<MentorProfile> mentorProfiles = mentorProfileRepository.findByParentCategoryOrderByActivityCount(parentCategoryNo, pageable);
+	    return mentorProfiles.map(MentorProfileDto::toDto);
+	}
+
+
+    @Override
+    public Page<MentorProfileDto> getByCategoryNoOrderByFollowCount(Long categoryNo, int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        Page<MentorProfile> mentors = mentorProfileRepository.findByCategoryNoOrderByFollowCount(categoryNo, pageable);
+        return mentors.map(MentorProfileDto::toDto);
+    }
+
+    @Override
+    public Page<MentorProfileDto> getByCategoryNoOrderByMentoringCount(Long categoryNo, int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        Page<MentorProfile> mentors = mentorProfileRepository.findByCategoryNoOrderByMentoringCount(categoryNo, pageable);
+        return mentors.map(MentorProfileDto::toDto);
+    }
+
+    @Override
+    public Page<MentorProfileDto> getByCategoryNoOrderByActivityCount(Long categoryNo, int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        Page<MentorProfile> mentors = mentorProfileRepository.findByCategoryNoOrderByActivityCount(categoryNo, pageable);
+        return mentors.map(MentorProfileDto::toDto);
+    }
 }
-    

@@ -50,9 +50,9 @@ public class ReportServiceImpl implements ReportService {
 			reportRepository.save(report);
 			return reportDto;
 		} catch (Exception e) {
-			throw new CustomException(ResponseStatusCode.CREATED_REPORT_FAIL, ResponseMessage.READ_REPORT_FAIL, e);
+			throw new CustomException(ResponseStatusCode.CREATED_REPORT_FAIL, ResponseMessage.CREATED_REPORT_FAIL, e);
 		}
-	}
+	} 
 
 	/* [어드민] 신고 상태 변경 : 접수중 */
 	@Transactional

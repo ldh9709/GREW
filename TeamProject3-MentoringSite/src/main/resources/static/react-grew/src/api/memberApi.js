@@ -17,6 +17,17 @@ GET  /member/mentor-summary/{memberNo}      :멘토 회원 활동정보 요약 �
 */
 
 //아이디 중복 체크
+export const checkIdDupl = async (sendJsonObject) => {
+    const response = await fetch(`${BACKEND_SERVER}/member/check-memberId?memberId=${encodeURIComponent(sendJsonObject.memberId)}`, {
+        method:'GET',
+        headers: {
+            'Content-type': 'application/json'
+        },
+    });
+    
+    const responseJsonObject = await response.json();
+    return responseJsonObject;
+};
 
 //팔로잉 리스트 조회
 export const followList = async()=>{
@@ -47,7 +58,7 @@ export const loginAction = async (sendJsonObject) => {
     return response.data;
 }
 //로그아웃
-export const logout = async (token) => {
+export const logout = async () => {
     const response = await fetch(`${BACKEND_SERVER}/logout`, {
         method: 'POST',
         credentials: 'include',// 브라우저가 자동으로 쿠키를 포함하도록 설정
@@ -104,10 +115,34 @@ export const mentorJoinAction = async (member, tempCode) => {
 
 }
 
-//멘토 프로필 생성(업데이트)
-export const mentorProfileCreateAction = async (mentorProfileNo, mentor) => {
-    console.log("Request Data: ", mentorProfileNo);
-    console.log("Request Data: ", mentor);
+//멘토 프로필 생성(생성)
+export const mentorProfileCreateAction = async (memberNo, mentor) => {
+    console.log("mentorProfileCreateAction memberNo: ", memberNo);
+    console.log("mentorProfileCreateAction mentor: ", mentor);
+    const response = await fetch(`${BACKEND_SERVER}/mentor-profile/${memberNo}/create-profile`, {
+        method:'POST', 
+        headers:{
+            'Content-type':'application/json'
+        },
+        body: JSON.stringify({
+            memberNo: memberNo,
+            categoryNo: mentor.categoryNo,
+            mentorIntroduce: mentor.mentorIntroduce,
+            mentorCareer: mentor.mentorCareer,
+            mentorImage: mentor.mentorImage,
+          })
+    });
+
+    const resultJsonObject = await response.json();
+    console.log("Response Data:", resultJsonObject);
+    return resultJsonObject;
+
+}
+
+//멘토 프로필 생성(수정)
+export const mentorProfileUpdateAction = async (mentorProfileNo, mentor) => {
+    console.log("mentorProfileUpdateAction mentorProfileNo: ", mentorProfileNo);
+    console.log("mentorProfileUpdateAction mentor: ", mentor);
     const response = await fetch(`${BACKEND_SERVER}/mentor-profile/${mentorProfileNo}`, {
         method:'PUT', 
         headers:{
@@ -249,6 +284,7 @@ export const mentorSummary = async (token) => {
     const responseJsonObject = await response.json();
     return responseJsonObject;
 }
+
 //멤버 넘버로 멤버객체찾기
 export const getMemberByMemberNo = async (memberNo) => {
 
@@ -261,3 +297,17 @@ export const getMemberByMemberNo = async (memberNo) => {
     const responseJsonObject = await response.json();
     return responseJsonObject;
 }
+
+
+export const uploadMentorProfileImage = async (mentorProfileNo, file) => {
+    const formData = new FormData();
+    formData.append("file", file);
+  
+    const response = await fetch(`${BACKEND_SERVER}/mentor-profile/${mentorProfileNo}/upload-image`, {
+      method: "POST",
+      body: formData,
+    });
+  
+    const responseJson = await response.json();
+    return responseJson;
+  };

@@ -5,6 +5,12 @@ import * as answerApi from "../../api/answerApi";
 import AnswerItem from "./AnswerItem";
 import "../../css/styles.css";
 import { useMemberAuth } from "../../util/AuthContext";
+import ReportModal from "../Report/ReportModal";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faEye } from "@fortawesome/free-regular-svg-icons";
+import { faPen } from "@fortawesome/free-solid-svg-icons";
+
+
 function InquiryView() {
   const { token, member } = useMemberAuth();
   const navigate = useNavigate();
@@ -22,6 +28,9 @@ function InquiryView() {
   const [itemsPerPage] = useState(5); // 페이지당 항목 수 (예: 한 페이지에 5개 항목)
   const [sortType, setSortType] = useState("latest"); // 기본적으로 'latest'로 설정
   const [isReportHovered, setIsReportHovered] = useState(false);
+  const [isModalOpen,setIsModalOpen] = useState(false);
+  const [report, setreport] = useState({});
+
   useEffect(() => {
     (async () => {
       const responseJsonObject = await inquiryApi.viewInquiry(inquiryNo);
@@ -67,7 +76,8 @@ function InquiryView() {
 
   //질문삭제
   const inquiryRemoveAction = async () => {
-    const responseJsonObject = await inquiryApi.deleteInquiry(inquiryNo);
+    if (!window.confirm('질문을 삭제하시겠습니까?')) return;
+    const responseJsonObject = await inquiryApi.deleteInquiry(inquiryNo,token);
     if (responseJsonObject.status === 5200) {
       navigate("/inquiry");
     } else {
@@ -112,45 +122,52 @@ function InquiryView() {
   const handleModify = () => {
     navigate(`/inquiry/modify/${inquiryNo}`);
   };
+
+  // 이름 마스킹
+  const maskName = (name) => {
+    if (name.length <= 2) {
+      return name[0] + "*".repeat(name.length - 1);
+    }
+    return name[0] + "*".repeat(name.length - 2) + name[name.length - 1];
+  };
+
+  //신고 하기 창 열고 닫기
+  const handleOpenModal = () => {
+    setIsModalOpen(true);
+    setreport({
+      type: 'INQUIRY',
+      target: inquiry.inquiryNo
+    })
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+  };
+
   return (
     <>
       <div style={{ paddingLeft: 10 }}>
         <input type="hidden" name="inquiryNo" value={inquiry.inquiryNo} />
-
-        <div className="answer-write">
-          <button className="answer-notify-btn" onClick={handleWriteButton}>
-            <img
-              src="https://img.icons8.com/?size=100&id=P1bJzKUoOQYz&format=png&color=000000"
-              style={{
-                width: "20px",
-                height: "20px",
-                marginRight: "5px",
-                marginLeft: "-5px",
-                marginBottom: "-3px",
-              }}
-            />
-            답변하기
-          </button>
-        </div>
+  
         <div className="inquiry-container-inview">
-          <div>
-            <div className="inquiry-title">{inquiry.inquiryTitle}</div>
+          <div className="inquiry-view-category">{inquiry.categoryName}</div>
+          <div className="inquiry-view-title">
+            <span>Q.</span>
+            <span>{inquiry.inquiryTitle}</span>
           </div>
-          <div className="inquiry-desc">
-            <div>{inquiry.categoryName}</div>
+          <div className="inquiry-view-desc">
             <div>
-              {inquiry.memberName} | 조회수 {inquiry.inquiryViews} |{" "}
-              {inquiry.inquiryDate.substring(0, 10)}
+              {inquiry.memberName} 멘티ㆍ
+              {inquiry.inquiryDate.substring(0, 10)}ㆍ
+              <FontAwesomeIcon icon={faEye} /> {inquiry.inquiryViews}
             </div>
           </div>
-          <div className="inquiry-content">
-            <div>{inquiry.inquiryContent}</div>
-          </div>
+          <div className="inquiry-view-content">{inquiry.inquiryContent}</div>
 
           {member != null && member.memberNo == inquiry.memberNo ? (
             <div className="modify-delete-btn2">
               <button onClick={handleModify}>수정</button>
-
+  
               <button
                 onClick={(e) => {
                   e.preventDefault(); // 폼 제출 방지
@@ -159,98 +176,109 @@ function InquiryView() {
               >
                 삭제
               </button>
+            
             </div>
           ) : (
             <div></div>
           )}
-          {/* 신고하기버튼 */}
-          {/* 신고하기버튼 */}
-          {/* 신고하기버튼 */}
-          {/* 신고하기버튼 */}
-          {/* 신고하기버튼 */}
-          {/* 신고하기버튼 */}
-          <div className="answer-report-btn">
+        {/* 신고하기 버튼 */}
+        <div className="inquiry-report-btn">
+            {isModalOpen && (
+              <ReportModal onClose={handleCloseModal} report={report} />
+            )}
             <button
-              onMouseEnter={() => setIsReportHovered(true)} // 마우스가 버튼 위에 올라갔을 때
-              onMouseLeave={() => setIsReportHovered(false)} // 마우스가 버튼을 벗어났을 때
+              onClick={handleOpenModal}
+              onMouseEnter={() => setIsReportHovered(true)}
+              onMouseLeave={() => setIsReportHovered(false)}
               className={`hover-button ${isReportHovered ? "hovered" : ""}`}
             >
               <img
                 src={
                   isReportHovered
-                    ? "https://img.icons8.com/?size=100&id=8773&format=png&color=000000"
-                    : "https://img.icons8.com/?size=100&id=5365&format=png&color=000000"
+                    ? "https://img.icons8.com/?size=100&id=jy7dy2jsJ5UR&format=png&color=ed1515"
+                    : "https://img.icons8.com/?size=100&id=t5aOnHwCycmN&format=png&color=000000"
                 }
                 alt="Button Image"
                 className="button-image"
               />
             </button>
           </div>
-          {/* 신고하기버튼 */}
-          {/* 신고하기버튼 */}
-          {/* 신고하기버튼 */}
-          {/* 신고하기버튼 */}
-          {/* 신고하기버튼 */}
-          {/* 신고하기버튼 */}
-          {/* 신고하기버튼 */}
+          <button className="answer-notify-btn" onClick={handleWriteButton}>
+            <FontAwesomeIcon icon={faPen} />
+            <span>답변하기</span>
+          </button>
         </div>
       </div>
-      <div style={{ marginTop: "20px" }}>
+      <div className="inquiry-view-answer-container">
         <div className="radio-container">
+          <div>{answer.length}개 답변</div>
           {/* 라디오 버튼 */}
-          <label style={{ marginRight: "10px" }}>
-            <input
-              type="radio"
-              name="sortType"
-              value="latest"
-              checked={sortType === "latest"}
-              onChange={handleRadioChange}
-            />
-            최신순
-          </label>
-          <label>
-            <input
-              type="radio"
-              name="sortType"
-              value="vote"
-              checked={sortType === "vote"}
-              onChange={handleRadioChange}
-            />
-            추천순
-          </label>
+          <div>
+            <label style={{ marginRight: "10px" }}>
+              <input
+                type="radio"
+                name="sortType"
+                value="latest"
+                checked={sortType === "latest"}
+                onChange={handleRadioChange}
+              />
+              최신순
+            </label>
+            <label>
+              <input
+                type="radio"
+                name="sortType"
+                value="vote"
+                checked={sortType === "vote"}
+                onChange={handleRadioChange}
+              />
+              추천순
+            </label>
+          </div>
         </div>
         {answer && answer.length > 0 ? (
-          answer.map((answer) => (
-            <AnswerItem key={answer.answerNo} answer={answer} /> // 한 질문에 대한 답변(조회수 정렬)
-          ))
+          <>
+            {answer.map((answer) => (
+              <AnswerItem key={answer.answerNo} answer={answer} />
+            ))}
+            {/* 페이지네이션 버튼 */}
+            <div className="common-pagination common-pagination-bottom">
+              {/* 이전 버튼 */}
+              <button
+                className="common-pagination-arrow"
+                disabled={currentPage === 1}
+                onClick={() => paginate(currentPage - 1)}
+              >
+                &lt;
+              </button>
+  
+              {/* 페이지 번호 버튼 */}
+              {pageNumbers.map((number) => (
+                <button
+                  key={number}
+                  className={`common-pagination-number ${
+                    currentPage === number ? "active" : ""
+                  }`}
+                  onClick={() => paginate(number)}
+                >
+                  {number}
+                </button>
+              ))}
+  
+              {/* 다음 버튼 */}
+              <button
+                className="common-pagination-arrow"
+                disabled={currentPage === totalPages}
+                onClick={() => paginate(currentPage + 1)}
+              >
+                &gt;
+              </button>
+            </div>
+          </>
         ) : (
           <div className="inquiry-write-btn">
             <div>아직 등록된 답변이 없습니다.</div>
           </div>
-        )}
-      </div>
-
-      {/* 페이지네이션 버튼 */}
-      {/* 페이지네이션 버튼 */}
-      <div className="pagenation">
-        {startPage > 1 && (
-          <button onClick={() => paginate(startPage - 1)}>이전</button>
-        )}{" "}
-        {/* 이전 그룹 */}
-        {pageNumbers.map((number) => (
-          <button
-            key={number}
-            onClick={() => paginate(number)}
-            style={{
-              backgroundColor: number === currentPage ? "#006618" : "",
-              color: number === currentPage ? "white" : "",
-            }}
-          >
-            {number}
-          </button>
-        ))}
-        {endPage < totalPages && (
-          <button onClick={() => paginate(endPage + 1)}>다음</button> // 다음 그룹
         )}
       </div>
     </>
