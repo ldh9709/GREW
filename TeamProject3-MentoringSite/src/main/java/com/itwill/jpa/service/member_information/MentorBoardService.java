@@ -29,7 +29,7 @@ public interface MentorBoardService {
     /**
      * 멘토 보드 상세보기
      */
-    MentorBoardDto getMemtorBoard(Long mentorBoardNo);
+    MentorBoardDto getMentorBoard(Long mentorBoardNo);
 
     /**
      * 멘토 보드의 조회수 증가

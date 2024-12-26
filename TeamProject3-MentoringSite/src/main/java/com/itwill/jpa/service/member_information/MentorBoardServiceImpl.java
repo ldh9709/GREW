@@ -123,7 +123,7 @@ public class MentorBoardServiceImpl implements MentorBoardService {
 	     * 멘토 보드 상세 조회 메서드
 	     */
 	    @Override
-	    public MentorBoardDto getMemtorBoard(Long mentorBoardNo) {
+	    public MentorBoardDto getMentorBoard(Long mentorBoardNo) {
 	        try {
 	            MentorBoard mentorBoard = mentorBoardRepository.findById(mentorBoardNo).orElse(null);
 	            

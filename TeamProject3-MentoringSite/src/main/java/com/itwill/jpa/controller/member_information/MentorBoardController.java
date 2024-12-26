@@ -106,7 +106,7 @@ public class MentorBoardController {
                 .anyMatch(grantedAuthority -> grantedAuthority.getAuthority().equals("ROLE_ADMIN"));
     	
     	//기존 작성된 mentorboard정보 불러오기
-    	MentorBoardDto existingBoard = mentorBoardService.getMemtorBoard(mentorBoardNo);
+    	MentorBoardDto existingBoard = mentorBoardService.getMentorBoard(mentorBoardNo);
     	
     	// 작성자와 요청자 일치 여부 확인
         if (!existingBoard.getMemberNo().equals(memberNo) && !isAdmin) {
@@ -152,7 +152,7 @@ public class MentorBoardController {
                                           .anyMatch(grantedAuthority -> grantedAuthority.getAuthority().equals("ROLE_ADMIN"));
     	
         //기존 작성된 mentorboard정보 불러오기
-    	MentorBoardDto existingBoard = mentorBoardService.getMemtorBoard(mentorBoardNo);
+    	MentorBoardDto existingBoard = mentorBoardService.getMentorBoard(mentorBoardNo);
     	
     	// 작성자 검증: 작성자가 아니고 관리자가 아닌 경우 삭제 요청 거부
         if (!existingBoard.getMemberNo().equals(memberNo) && !isAdmin) {
@@ -186,7 +186,7 @@ public class MentorBoardController {
     @Operation(summary = "멘토 보드 상세 조회")
     @GetMapping("/{mentorBoardNo}")
     public ResponseEntity<Response> getMentorBoard(@PathVariable(name= "mentorBoardNo") Long mentorBoardNo) {
-        MentorBoardDto mentorBoard = mentorBoardService.getMemtorBoard(mentorBoardNo);
+        MentorBoardDto mentorBoard = mentorBoardService.getMentorBoard(mentorBoardNo);
 
         Response response = new Response();
         response.setStatus(ResponseStatusCode.READ_MENTOR_BOARD_SUCCESS);
