@@ -3,10 +3,14 @@ import * as reviewApi from "../../api/reviewApi"; // 리뷰 API
 import { useNavigate } from "react-router-dom";
 import "../../css/review.css"; // 리뷰 폼 스타일
 import { useMemberAuth } from "../../util/AuthContext";
+import { useLocation } from "react-router-dom"; // useLocation 훅 임포트
 
 export default function ReviewWriteFormPage() {
   const { token, member } = useMemberAuth();
   const navigate = useNavigate();
+  // location에서 전달된 상태값 받기
+  const location = useLocation();
+  const { chatRoomNo, memberNo } = location.state || {}; // state가 없을 경우 기본값
 
   // 초기 리뷰 상태
   const initReview = {
@@ -16,7 +20,8 @@ export default function ReviewWriteFormPage() {
     reviewDate: "",
     reviewScore: 1,
     reviewStatus: 1,
-    chatRoomNo: 1,
+    chatRoomNo: chatRoomNo,
+    memberNo: memberNo,
   };
 
   const [review, setReview] = useState(initReview); // 리뷰 상태
@@ -47,7 +52,7 @@ export default function ReviewWriteFormPage() {
 
     // 리뷰 작성 API 호출
     try {
-      const responseJsonObject = await reviewApi.writeReview(review,token);
+      const responseJsonObject = await reviewApi.writeReview(review, token);
       console.log(responseJsonObject.data);
       // 리뷰 작성 후 해당 리뷰 상세 페이지로 이동
       navigate(`/review/${responseJsonObject.data.reviewNo}`);
@@ -116,8 +121,6 @@ export default function ReviewWriteFormPage() {
             required
           />
         </div>
-
-
 
         {/* 작성 버튼 */}
         <div className="review-write-btn">

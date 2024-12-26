@@ -39,7 +39,7 @@ export default function MentorProfileDetail() {
         const reviewsResponse = await listReviewByMember(
           mentorProfileNo, // memberNo 대신 mentorProfileNo를 바로 사용
           0,
-          4,
+          5,
           token // `token`을 Authorization 헤더에 포함시켜야 함
         );
 
