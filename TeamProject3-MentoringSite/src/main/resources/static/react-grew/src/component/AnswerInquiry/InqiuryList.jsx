@@ -1,6 +1,6 @@
 import "../../css/styles.css";
 import React, { useEffect, useState } from "react";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import * as inquiryApi from "../../api/inquiryApi";
 import InquiryItem from "./InquiryItem";
 import BestAnswerItem from "./BestAnswerItem";
@@ -10,7 +10,7 @@ import { useMemberAuth } from "../../util/AuthContext";
 import { faPen } from "@fortawesome/free-solid-svg-icons";
 
 function InqiuryList() {
-  const {token, member} = useMemberAuth();
+  const { token, member } = useMemberAuth();
   const [inquirys, setInquiry] = useState([]);
   const [currentPage, setCurrentPage] = useState(1); // 현재 페이지 번호
   const [totalPages, setTotalPages] = useState(0); // 전체 페이지 수
@@ -152,72 +152,88 @@ function InqiuryList() {
   }
 
   const handleWriteButton = () => {
-    if (member.memberRole== 'ROLE_MENTEE') {
+    if (member.memberRole == "ROLE_MENTEE") {
       navigate("/inquiry/inquiryWrite");
-    } else if(member.memberRole =='ROLE_MENTOR'){
-      alert('멘티만 질문을 등록할 수 있습니다.')
+    } else if (member.memberRole == "ROLE_MENTOR") {
+      alert("멘티만 질문을 등록할 수 있습니다.");
       return;
-    }else{
+    } else {
       alert("로그인이 필요한 서비스입니다");
       return;
     }
   };
   return (
     <>
-      
-
-     {/* 카테고리 버튼들 */}
-    <div className="category-container">
-    <h1>질문하기</h1>
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-        {/* Parent 카테고리 */}
-        <div className="category-parent">
-          {categories
-            .filter((category) => category.categoryDepth === 1) // categoryDepth가 1인 카테고리만 필터링
-            .map((category) => (
+      {/* 카테고리 버튼들 */}
+      <div className="category-container">
+        <h1>질문하기</h1>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+          }}
+        >
+          {/* Parent 카테고리 */}
+          <div className="category-parent">
+            <button
+              className="category-button"
+              onClick={()=>setSelectedCategory(null)}
+              style={{
+                backgroundColor:
+                  selectedCategory === null ? "#28a745" : "", // 선택된 카테고리는 색상 변경
+                color:
+                  selectedCategory === null ? "#f3f4f6" : "", // 선택된 카테고리 글자 색상 변경
+              }}
+            >
+              전체
+            </button>
+            {categories && categories.length > 0 && categories
+              .filter((category) => category.categoryDepth === 1) // categoryDepth가 1인 카테고리만 필터링
+              .map((category) => (
+                <button
+                  key={category.categoryNo}
+                  onClick={() => handleCategoryClick(category.categoryNo)} // 클릭 시 카테고리 선택
+                  className="category-button"
+                  style={{
+                    backgroundColor:
+                      selectedCategory === category.categoryNo ? "#28a745" : "", // 선택된 카테고리는 색상 변경
+                    color:
+                      selectedCategory === category.categoryNo ? "#f3f4f6" : "", // 선택된 카테고리 글자 색상 변경
+                  }}
+                >
+                  {category.categoryName}
+                </button>
+              ))}
+          </div>
+          {/* 질문하기 버튼 */}
+          <div className="btn-inquiry-write-div">
+            <button className="btn-inquiry-write" onClick={handleWriteButton}>
+              <FontAwesomeIcon icon={faPen} />
+              <span>질문하기</span>
+            </button>
+          </div>
+        </div>
+        {/* 하위 카테고리 버튼 */}
+        {childCategories.length > 0 && (
+          <div className="category-child">
+            {childCategories.map((child) => (
               <button
-                key={category.categoryNo}
-                onClick={() => handleCategoryClick(category.categoryNo)} // 클릭 시 카테고리 선택
+                key={child.categoryNo}
+                onClick={() => handleCategoryClick(child.categoryNo)} // 하위 카테고리 선택
                 className="category-button"
                 style={{
                   backgroundColor:
-                    selectedCategory === category.categoryNo ? "#28a745" : "", // 선택된 카테고리는 색상 변경
-                  color:
-                    selectedCategory === category.categoryNo ? "#f3f4f6" : "", // 선택된 카테고리 글자 색상 변경
+                    selectedCategory === child.categoryNo ? "#28a745" : "", // 선택된 카테고리는 색상 변경
+                  color: selectedCategory === child.categoryNo ? "#f3f4f6" : "", // 선택된 카테고리 글자 색상 변경
                 }}
               >
-                {category.categoryName}
+                {child.categoryName}
               </button>
             ))}
-        </div>
-        {/* 질문하기 버튼 */}
-        <div className="btn-inquiry-write-div">
-          <button className="btn-inquiry-write" onClick={handleWriteButton}>
-          <FontAwesomeIcon icon={faPen} />
-            <span>질문하기</span>
-          </button>
-        </div>
+          </div>
+        )}
       </div>
-      {/* 하위 카테고리 버튼 */}
-      {childCategories.length > 0 && (
-        <div className="category-child">
-          {childCategories.map((child) => (
-            <button
-              key={child.categoryNo}
-              onClick={() => handleCategoryClick(child.categoryNo)} // 하위 카테고리 선택
-              className="category-button"
-              style={{
-                backgroundColor:
-                  selectedCategory === child.categoryNo ? "#28a745" : "", // 선택된 카테고리는 색상 변경
-                color: selectedCategory === child.categoryNo ? "#f3f4f6" : "", // 선택된 카테고리 글자 색상 변경
-              }}
-            >
-              {child.categoryName}
-            </button>
-          ))}
-        </div>
-      )}
-    </div>
       {/* 정렬 라디오 버튼 */}
       <div className="inquiry-radio-container">
         <label>
