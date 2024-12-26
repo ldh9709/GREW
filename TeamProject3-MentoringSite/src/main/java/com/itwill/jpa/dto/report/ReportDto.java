@@ -20,9 +20,12 @@ public class ReportDto {
 	private Long reportTarget;
 	private Integer reportReason;
 	private String reportContent;
-	private LocalDateTime reportDate;
-	private LocalDateTime resolvedDate;
-	private Integer reportStatus;
+	@Builder.Default
+	private LocalDateTime reportDate = LocalDateTime.now();
+	@Builder.Default
+	private LocalDateTime resolvedDate = LocalDateTime.now();
+	@Builder.Default
+	private Integer reportStatus = 1 ;
 	private Long memberNo;
 	
 	public static ReportDto toDto(Report entity) {
