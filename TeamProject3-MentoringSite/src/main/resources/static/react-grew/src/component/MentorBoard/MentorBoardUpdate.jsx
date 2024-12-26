@@ -17,8 +17,9 @@ function MentorBoardUpdate() {
   const [imagePreview, setImagePreview] = useState(""); // 이미지 미리보기 URL
   const { mentorBoardNo } = useParams();  // URL에서 mentorBoardNo 가져오기
   const fileInputRef = useRef(null); // file input을 참조하기 위한 useRef 추가
-
   const navigate = useNavigate();  // 페이지 이동을 위한 navigate 훅
+
+  const memberRef = useRef(member); // member의 최신 값 유지하기 위한 코드
 
   // 미리보기 URL 관리
   useEffect(() => {
@@ -29,26 +30,28 @@ function MentorBoardUpdate() {
     };
   }, [imagePreview]);
 
+  useEffect(() => {
+    memberRef.current = member;
+  }, [member]);
+
+
   // 수정할 게시글을 가져오는 함수
   useEffect(() => {
-
-    const loginMemberNo = member.memberNo;
-    const loginMemberRole = member.memberRole;
 
     const fetchBoardData = async () => {
       try {
 
+        console.log("1번번호:",memberRef.current.memberNo);
         const response = await mentorBoardApi.getMentorBoardDetail(mentorBoardNo);
-        console.log("멘토보드:",response);
-        console.log("loginMemberNo:",loginMemberNo);
-        console.log("response.data.memberNo:",response.data.memberNo);
-
+        console.log("2번번호:",memberRef.current.memberNo);
         // 게시글 작성자 확인 멘토 권한 확인
-        if (loginMemberNo !== response.data.memberNo) {
+        console.log("3번번호:",memberRef.current.memberNo);
+        if (memberRef.current.memberNo !== response.data.memberNo) {
           alert("권한이 없습니다. 게시글 작성자만 수정할 수 있습니다.");
           // navigate(-1, { replace: true });
           return; // 추가 동작 방지
-        } else if(loginMemberRole !== "ROLE_MENTOR"){
+        } else if(memberRef.current.memberRole !== "ROLE_MENTOR" && memberRef.current.memberRole !== "ROLE_ADMIN"){
+          console.log("4번번호:",memberRef.current.memberNo);
           alert("멘토 상태일 때만 게시글 수정이 가능합니다.");
           // navigate(-1, { replace: true });
           return; // 추가 동작 방지
@@ -82,7 +85,7 @@ function MentorBoardUpdate() {
     if (mentorBoardNo) {
       fetchBoardData();
     }
-  }, [mentorBoardNo, member, navigate]);
+  }, [mentorBoardNo, navigate]);
 
   const handleSubmit = async () => {
     if (mentorBoardTitle.trim() === "" || mentorBoardContent.trim() === "") {
