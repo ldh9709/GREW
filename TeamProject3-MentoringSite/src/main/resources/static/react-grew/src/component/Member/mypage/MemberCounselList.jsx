@@ -143,7 +143,7 @@ export default function MemberCounselList() {
                       {counsel.chatRoomEndDate ? counsel.chatRoomEndDate.substring(0, 10) : ""}
                     </p>
                     <p className="counsel-date">
-                      리뷰여부: {counsel.isReview === 1 ? "작성" : "미작성"}
+                      리뷰여부: { !counsel.isReview ? "미작성" : "작성"}
                     </p>
                     <div className={`counsel-type ${counsel.chatRoomStatus === 7200 ? "green white" : "" }`}>
                       {counselStatus(counsel.chatRoomStatus)}
@@ -155,13 +155,38 @@ export default function MemberCounselList() {
           )
         )}
         {/* 페이지네이션 버튼 */}
-        <div className="pagenation pagenation-bottom">
-          {pageNumbers.map((number) => (
-            <button key={number} onClick={() => paginate(number)}>
-              {number}
+          <div className="common-pagination common-pagination-bottom">
+            {/* 이전 버튼 */}
+            <button
+              className="common-pagination-arrow"
+              disabled={currentPage === 1}
+              onClick={() => paginate(currentPage - 1)}
+            >
+              &lt;
             </button>
-          ))}
-        </div>
+
+            {/* 페이지 번호 버튼 */}
+            {pageNumbers.map((number) => (
+              <button
+                key={number}
+                className={`common-pagination-number ${
+                  currentPage === number ? "active" : ""
+                }`}
+                onClick={() => paginate(number)}
+              >
+                {number}
+              </button>
+            ))}
+
+            {/* 다음 버튼 */}
+            <button
+              className="common-pagination-arrow"
+              disabled={currentPage === totalPages}
+              onClick={() => paginate(currentPage + 1)}
+            >
+              &gt;
+            </button>
+          </div>
       </div>
     )
 }
