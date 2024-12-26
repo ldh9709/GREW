@@ -1,10 +1,9 @@
-// 기본 URL 설정
 const BACKEND_SERVER = "";
 const BASE_URL = '/mentor-board';
 
 //특정 멘토 컨텐츠 리스트 조회
 export const listBoardContentsByMemberNo = async(token,page,size) => {
-    
+
     const response = await fetch(`${BACKEND_SERVER}${BASE_URL}/list/member?page=${page}&size=${size}`,{
         method:'GET',
         headers: {
@@ -49,18 +48,18 @@ export const createMentorBoard = async (data) => {
 
 // 멘토 보드에 이미지를 업로드합니다.
 export const uploadMentorBoardImage = async (id, formData) => {
- 
+
     const response = await fetch(`${BACKEND_SERVER}${BASE_URL}/${id}/upload-image`, {
         method: 'POST',
         body: formData, // `Content-Type` 헤더는 자동으로 설정되므로, 별도로 설정하지 않습니다.
     });
-    
+
     if (!response.ok) {
         const errorData = await response.text(); // 서버 에러 메시지 읽기
         console.error('업로드 실패:', errorData); // 디버깅
         throw new Error('Failed to upload mentor board image');
     }
-    
+
     // 응답을 JSON으로 처리
     const data = await response.json();  // 응답을 JSON으로 파싱
 
@@ -82,7 +81,7 @@ export const updateMentorBoard = async (id, data) => {
         const errorData = await response.json();  // 서버에서 보내는 에러 메시지 출력
         throw new Error(`Failed to update mentor board: ${JSON.stringify(errorData)}`);
     }
-    
+
     return response.json();  // 수정된 멘토 보드 데이터 반환
 };
 
@@ -232,4 +231,3 @@ export const getMentorBoardsSortedByViews = async (status, page = 0, size = 10) 
   const responseJsonObject = await response.json();
   return responseJsonObject;
 };
-
