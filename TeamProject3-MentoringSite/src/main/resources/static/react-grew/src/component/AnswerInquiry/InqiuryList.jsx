@@ -63,7 +63,7 @@ function InqiuryList() {
   const fetchBestAnswer = async () => {
     const responseJsonObject = await inquiryApi.bestAnswerList();
     console.log(responseJsonObject.data);
-    setBestAnswer(responseJsonObject.data.content);
+    setBestAnswer(responseJsonObject.data);
   };
   // 문의 목록을 페이지네이션과 함께 가져오는 함수
   const fetchInquiries = async (page, size, sortButton, selectedCategory) => {
@@ -72,7 +72,7 @@ function InqiuryList() {
       const selectedCat = categories.find(
         (cat) => cat.categoryNo === selectedCategory
       );
-      if (!selectedCategory) {
+      if (selectedCategory==null) {
         if (sortButton === "view") {
           responseJsonObject = await inquiryApi.listInquiryView(page, size);
         } else if (sortButton === "answerCount") {
@@ -178,33 +178,38 @@ function InqiuryList() {
           <div className="category-parent">
             <button
               className="category-button"
-              onClick={()=>setSelectedCategory(null)}
+              onClick={() => {setSelectedCategory(null);
+              setChildCategories(null);}}
               style={{
-                backgroundColor:
-                  selectedCategory === null ? "#28a745" : "", // 선택된 카테고리는 색상 변경
-                color:
-                  selectedCategory === null ? "#f3f4f6" : "", // 선택된 카테고리 글자 색상 변경
+                backgroundColor: selectedCategory === null ? "#28a745" : "", // 선택된 카테고리는 색상 변경
+                color: selectedCategory === null ? "#f3f4f6" : "", // 선택된 카테고리 글자 색상 변경
               }}
             >
               전체
             </button>
-            {categories && categories.length > 0 && categories
-              .filter((category) => category.categoryDepth === 1) // categoryDepth가 1인 카테고리만 필터링
-              .map((category) => (
-                <button
-                  key={category.categoryNo}
-                  onClick={() => handleCategoryClick(category.categoryNo)} // 클릭 시 카테고리 선택
-                  className="category-button"
-                  style={{
-                    backgroundColor:
-                      selectedCategory === category.categoryNo ? "#28a745" : "", // 선택된 카테고리는 색상 변경
-                    color:
-                      selectedCategory === category.categoryNo ? "#f3f4f6" : "", // 선택된 카테고리 글자 색상 변경
-                  }}
-                >
-                  {category.categoryName}
-                </button>
-              ))}
+            {categories &&
+              categories.length > 0 &&
+              categories
+                .filter((category) => category.categoryDepth === 1) // categoryDepth가 1인 카테고리만 필터링
+                .map((category) => (
+                  <button
+                    key={category.categoryNo}
+                    onClick={() => handleCategoryClick(category.categoryNo)} // 클릭 시 카테고리 선택
+                    className="category-button"
+                    style={{
+                      backgroundColor:
+                        selectedCategory === category.categoryNo
+                          ? "#28a745"
+                          : "", // 선택된 카테고리는 색상 변경
+                      color:
+                        selectedCategory === category.categoryNo
+                          ? "#f3f4f6"
+                          : "", // 선택된 카테고리 글자 색상 변경
+                    }}
+                  >
+                    {category.categoryName}
+                  </button>
+                ))}
           </div>
           {/* 질문하기 버튼 */}
           <div className="btn-inquiry-write-div">
@@ -215,7 +220,7 @@ function InqiuryList() {
           </div>
         </div>
         {/* 하위 카테고리 버튼 */}
-        {childCategories.length > 0 && (
+        {childCategories&&childCategories.length > 0 && (
           <div className="category-child">
             {childCategories.map((child) => (
               <button
@@ -270,20 +275,6 @@ function InqiuryList() {
 
       <div className="inquiry-list-main">
         <div className="inquiry-list-sort">
-          {/* 문의 목록 테이블 */}
-          {/*<div>
-             선택된 카테고리가 존재할 때만 카테고리 이름을 표시 
-            {selectedCategory != null && (
-              <div className="inquiry-category-name">
-                {
-                  // 선택된 카테고리 객체가 존재할 때만 categoryName을 출력
-                  categories.find(
-                    (category) => category.categoryNo === selectedCategory
-                  )?.categoryName || "선택된 카테고리가 없습니다"
-                }
-              </div>
-            )}
-          </div>*/}
           {inquirys && inquirys.length > 0 ? (
             inquirys.map((inquiry) => (
               <InquiryItem key={inquiry.inquiryNo} inquiry={inquiry} />
@@ -299,7 +290,7 @@ function InqiuryList() {
           <div>
             <p>최근 추천 많이 받은 답변</p>
             <div>
-              {bestAnswer.map((answer, index) => (
+              {bestAnswer&&bestAnswer.slice(0,10).map((answer, index) => (
                 <BestAnswerItem
                   key={answer.answerNo}
                   answer={answer}

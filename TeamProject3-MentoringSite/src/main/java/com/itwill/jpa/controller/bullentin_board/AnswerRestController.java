@@ -1,6 +1,7 @@
 package com.itwill.jpa.controller.bullentin_board;
 
 import java.nio.charset.Charset;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -262,11 +263,9 @@ public class AnswerRestController {
 	/* 최근 3일동안 추천 많이 받은 답변 리스트 */
 	@Operation(summary = "최근 3일간 추천 많이 받은 답변 리스트")
 	@GetMapping("/recently-vote")
-	public ResponseEntity<Response> getByAnswerOrderByVoteDate(
-			@RequestParam(name = "page", defaultValue = "0") int page, // 기본값은 0 페이지
-			@RequestParam(name = "size", defaultValue = "10") int size) {
+	public ResponseEntity<Response> getByAnswerOrderByVoteDate() {
 
-		Page<AnswerDto> answerDtos = answerService.getByAnswerOrderByVoteDate(page, size);
+		List<AnswerDto> answerDtos = answerService.getByAnswerOrderByVoteDate();
 
 		Response response = new Response();
 		response.setStatus(ResponseStatusCode.READ_ANSWER_LIST_SUCCESS);
