@@ -224,3 +224,87 @@ export const listMentorsByRating = async () => {
   const responseJsonObject = await response.json();
   return responseJsonObject;
 };
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////
+// PARENT_CATEGORY_NO 기준 팔로우 순 멘토 리스트 조회
+/**
+ *  대분류 카테고리의 팔로우 순 멘토 리스트 조회
+ */
+export const listMentorsByParentCategoryFollowCount = async (parentCategoryNo, page = 0, size = 10) => {
+  const response = await fetch(
+    `${BACKEND_SERVER}${BASE_URL}/${parentCategoryNo}/parent/follow?page=${page}&size=${size}`,
+    {
+      method: "GET",
+    }
+  );
+  const responseJsonObject = await response.json();
+  return responseJsonObject;
+};
+
+/**
+ *  대분류 카테고리의 멘토링 횟수 순 멘토 리스트 조회
+ */
+export const listMentorsByParentCategoryMentoringCount = async (parentCategoryNo, page = 0, size = 10) => {
+  const response = await fetch(
+    `${BACKEND_SERVER}${BASE_URL}/${parentCategoryNo}/parent/mentoring?page=${page}&size=${size}`,
+    {
+      method: "GET",
+    }
+  );
+  const responseJsonObject = await response.json();
+  return responseJsonObject;
+};
+
+/**
+ *  대분류 카테고리의 활동 순 멘토 리스트 조회
+ */
+export const listMentorsByParentCategoryActivityCount = async (parentCategoryNo, page = 0, size = 10) => {
+  const response = await fetch(
+    `${BACKEND_SERVER}${BASE_URL}/${parentCategoryNo}/parent/activity?page=${page}&size=${size}`,
+    {
+      method: "GET",
+    }
+  );
+  const responseJsonObject = await response.json();
+  return responseJsonObject;
+};
+
+
+// CATEGORY_NO 기준 팔로우 순 멘토 리스트 조회
+export const listMentorsByCategoryNoFollow = async (categoryNo, page = 0, size = 10) => {
+  const response = await fetch(
+    `${BACKEND_SERVER}${BASE_URL}/category/${categoryNo}/follow?page=${page}&size=${size}`,
+    {
+      method: "GET",
+    }
+  );
+  const responseJsonObject = await response.json();
+  return responseJsonObject;
+};
+
+// CATEGORY_NO 기준 멘토링 횟수 순 멘토 리스트 조회
+export const listMentorsByCategoryNoMentoring = async (categoryNo, page = 0, size = 10) => {
+  const response = await fetch(
+    `${BACKEND_SERVER}${BASE_URL}/category/${categoryNo}/mentoring?page=${page}&size=${size}`,
+    {
+      method: "GET",
+    }
+  );
+  const responseJsonObject = await response.json();
+  return responseJsonObject;
+};
+
+// CATEGORY_NO 기준 활동 수 순 멘토 리스트 조회
+export const listMentorsByCategoryNoActivity = async (categoryNo, page = 0, size = 10) => {
+  const response = await fetch(
+    `${BACKEND_SERVER}${BASE_URL}/category/${categoryNo}/activity?page=${page}&size=${size}`,
+    {
+      method: "GET",
+    }
+  );
+  const responseJsonObject = await response.json();
+  return responseJsonObject;
+};

@@ -5,6 +5,8 @@ import { getMentorProfileByNo } from "../../api/mentorProfileApi.js";
 import { listReviewByMember } from "../../api/reviewApi.js"; // 리뷰 목록 API 추가
 import { getCookie } from "../../util/cookieUtil.js";
 import { jwtDecode } from "jwt-decode";
+import * as categoryApi from "../../api/categoryApi";
+import * as memberApi from "../../api/memberApi";
 
 export default function MentorProfileDetail() {
   const { mentorProfileNo } = useParams();
@@ -12,6 +14,8 @@ export default function MentorProfileDetail() {
   const [reviews, setReviews] = useState([]); // 빈 배열로 초기화
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [categoryName, setCategoryName] = useState("카테고리 정보 없음");
+  const [memberName, setMemberName] = useState(""); // 멤버 이름 상태 추가
 
   // 쿠키에서 member 객체를 가져와 JWT 토큰을 추출
   const memberCookie = getCookie("member");
@@ -35,7 +39,7 @@ export default function MentorProfileDetail() {
         const reviewsResponse = await listReviewByMember(
           mentorProfileNo, // memberNo 대신 mentorProfileNo를 바로 사용
           0,
-          10,
+          4,
           token // `token`을 Authorization 헤더에 포함시켜야 함
         );
 
@@ -51,6 +55,14 @@ export default function MentorProfileDetail() {
           setReviews(reviewsResponse.data); // content 배열 처리
         } else {
           setReviews([]); // 데이터가 없으면 빈 배열 처리
+
+          // 멘토 프로필 데이터에서 categoryNo와 memberNo 가져오기
+          if (mentorProfile.categoryNo) {
+            fetchCategoryName(mentorProfile.categoryNo);
+          }
+          if (mentorProfile.memberNo) {
+            fetchMemberName(mentorProfile.memberNo); // 멤버 이름 가져오기
+          }
         }
       } catch (error) {
         setError("멘토 프로필을 가져오는 중 오류가 발생했습니다.");
@@ -63,6 +75,31 @@ export default function MentorProfileDetail() {
   console.log("Reviews:", reviews); // 이 줄을 추가하여 reviews 데이터를 확인
 
   if (loading) return <p>로딩 중...</p>;
+  const fetchCategoryName = async (categoryNo) => {
+    try {
+      const response = await categoryApi.ListCategory();
+      const allCategories = response.data || [];
+      const matchingCategory = allCategories.find(
+        (cat) => cat.categoryNo === categoryNo
+      );
+      setCategoryName(
+        matchingCategory ? matchingCategory.categoryName : "카테고리 정보 없음"
+      );
+    } catch (error) {
+      console.error("카테고리 정보를 가져오는 중 오류 발생:", error);
+      setCategoryName("카테고리 정보 없음");
+    }
+  };
+
+  const fetchMemberName = async (memberNo) => {
+    try {
+      const response = await memberApi.getMemberByMemberNo(memberNo); // 멤버 API 호출
+      setMemberName(response.data.memberName);
+    } catch (error) {
+      console.error("멤버 이름 정보를 가져오는 중 오류 발생:", error);
+    }
+  };
+
   if (error) return <p className="error-message">{error}</p>;
 
   return (
@@ -76,10 +113,18 @@ export default function MentorProfileDetail() {
             className="mentor-profile-image-large"
           />
           <div className="mentor-basic-info">
-            <h2>{mentorProfile?.memberName || "멘토 이름"}</h2>
+            <h2>{memberName}</h2> {/* 멤버 이름 표시 */}
             <p>{mentorProfile?.mentorCareer || "멘토 경력 정보 없음"}</p>
             <div className="mentor-stats">
-              <span>멘토링 성공률: 72%</span>
+              멘토링 성공률:{" "}
+              {mentorProfile?.mentorActivityCount
+                ? Math.round(
+                    (mentorProfile.mentorMentoringCount /
+                      mentorProfile.mentorActivityCount) *
+                      100
+                  )
+                : 0}
+              %
               <span>
                 멘토링 횟수: {mentorProfile?.mentorMentoringCount || 0}
               </span>
@@ -92,7 +137,6 @@ export default function MentorProfileDetail() {
             </div>
           </div>
         </div>
-
         {/* 우측: 상세 정보 */}
         <div className="mentor-details-section">
           <div className="mentor-section">
@@ -100,6 +144,7 @@ export default function MentorProfileDetail() {
             <p>
               {mentorProfile?.mentorSpecialty || "대표 멘토링 분야 정보 없음"}
             </p>
+            <p>{categoryName}</p>
           </div>
           <div className="mentor-section">
             <h3>멘토 소개</h3>
@@ -107,11 +152,7 @@ export default function MentorProfileDetail() {
           </div>
           <div className="mentor-section">
             <h3>주요 경력</h3>
-            <p>{mentorProfile?.mentorCareerDetail || "주요 경력 정보 없음"}</p>
-          </div>
-          <div className="mentor-section">
-            <h3>기타 사항</h3>
-            <p>{mentorProfile?.mentorOtherInfo || "기타 사항 정보 없음"}</p>
+            <p>{mentorProfile?.mentorCareer || "멘토 경력 정보 없음"}</p>
           </div>
         </div>
       </div>

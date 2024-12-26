@@ -46,7 +46,8 @@ public class MentorBoard {
     @Column(name = "mentor_board_status")
     private Integer mentorBoardStatus;   //답글 삭제 여부 (1또는 2)
     
-   
+
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_no")
     @JsonBackReference
@@ -66,6 +67,8 @@ public class MentorBoard {
     	Member member = Member.builder()
 				.memberNo(mentorBoardDto.getMemberNo())
 				.build();
+ 
+    	
     	
         return MentorBoard.builder()
         		.mentorBoardNo(mentorBoardDto.getMentorBoardNo())

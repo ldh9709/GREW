@@ -6,25 +6,26 @@ import MentorProfileItem from "./MentorProfile/MentorProfileItem";
 
 import { useEffect, useState } from "react";
 import MainInquiryListItem from "./AnswerInquiry/MainInquiryListItem";
+import MainMentorBoard from "./MainMentorBoard";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faRightFromBracket, faRightLong } from "@fortawesome/free-solid-svg-icons";
 export const MainPage = () => {
   const [mentorProfile, setMentorProFile] = useState([]);
   const [inquiry, setInquiry] = useState([]);
   const [mentorBoard, setMentorBoard] = useState([]);
 
-  const fetchMentorBoard = async() =>{
-    const response = await mentorBoardApi.listMentorBoardsByViews(0,4);
-    console.log(response);
-    setMentorBoard(response)
-  }
+  const fetchMentorBoard = async () => {
+    const response = await mentorBoardApi.listMentorBoardsByViews(0, 4);
+    console.log(response.data.content);
+    setMentorBoard(response.data.content);
+  };
   const fetchInquiry = async () => {
     const response = await inquiryApi.listInquiryView(0, 3);
-    console.log(response);
     setInquiry(response.data.content);
   };
 
   const fetchMentorProfile = async () => {
     const response = await mentorProfileApi.listMentorsByRating();
-    console.log(response);
     setMentorProFile(response.data);
   };
   useEffect(() => {
@@ -47,7 +48,7 @@ export const MainPage = () => {
       />
       <h1>우수 멘토</h1>
       <div className="profile-grid">
-        {mentorProfile.length > 0 ? (
+        {mentorProfile && mentorProfile.length > 0 ? (
           mentorProfile
             .slice(0, 4)
             .map((mentor) => (
@@ -57,9 +58,12 @@ export const MainPage = () => {
           <p>멘토 프로필이 없습니다.</p>
         )}
       </div>
+      <div className="view-more">
+        <a href="/mentorprofile/list">멘토 프로필 더 보기 <FontAwesomeIcon icon={faRightLong} /></a>
+      </div>
       <h1>관심 많은 질문</h1>
       <div>
-        {inquiry.length > 0 ? (
+        {inquiry && inquiry.length > 0 ? (
           inquiry.map((inquiry) => (
             <MainInquiryListItem key={inquiry.inquiryNo} inquiry={inquiry} />
           ))
@@ -67,42 +71,26 @@ export const MainPage = () => {
           <p>질문이 없습니다</p>
         )}
       </div>
+      <div className="view-more">
+        <a href="/inquiry">질문 더 보기 <FontAwesomeIcon icon={faRightLong} /></a>
+      </div>
       <h1>멘토들의 꿀팁 방출</h1>
-      <div>
-        {mentorBoard.length > 0 ? (
-          mentorBoard.map((mentorBoard) => (
-            <div className="board-list">
-              {/* {boardList.map((board, index) => (
-                <div className="board-card" key={index}>
-                  <div className="board-image-container">
-                    <img
-                      src={imageSrc}
-                      alt="content-image"
-                      className="board-image"
-                    />
-                  </div>
-                  <div className="board-details">
-                    <h3 className="board-title">{board.mentorBoardTitle}</h3>
-                    <p className="board-description">
-                      {board.mentorBoardContent.substring(0, 100)}...
-                    </p>
-                    <p className="board-info">
-                      <span className="board-date">
-                        {board.mentorBoardDate.substring(0, 10)}
-                      </span>
-                      <span className="board-views">
-                        {" "}
-                        | 조회수 : {board.mentorBoardViews}
-                      </span>
-                    </p>
-                  </div>
-                </div>
-              ))} */}
-            </div>
-          ))
+      <div className="main-mentor-board">
+        {mentorBoard && mentorBoard.length > 0 ? (
+          mentorBoard
+            .slice(0, 4)
+            .map((mentorBoard) => (
+              <MainMentorBoard
+                key={mentorBoard.mentorBoardNo}
+                mentorBoard={mentorBoard}
+              />
+            ))
         ) : (
           <p>게시글글이 없습니다</p>
         )}
+      </div>
+      <div className="view-more">
+        <a href="/mentorboard/list">멘토 컨텐츠 더 보기 <FontAwesomeIcon icon={faRightLong} /></a>
       </div>
     </>
   );

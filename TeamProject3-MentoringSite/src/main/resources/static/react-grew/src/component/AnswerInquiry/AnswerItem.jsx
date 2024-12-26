@@ -5,8 +5,9 @@ import * as categoryApi from "../../api/categoryApi";
 import { useNavigate } from "react-router-dom";
 import { useMemberAuth } from "../../util/AuthContext";
 import ReportModal from "../Report/ReportModal";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faThumbsDown, faThumbsUp } from "@fortawesome/free-regular-svg-icons";
+import { faMedal } from "@fortawesome/free-solid-svg-icons";
 
 export default function AnswerItem({ answer }) {
   const { token, member } = useMemberAuth();
@@ -58,11 +59,8 @@ export default function AnswerItem({ answer }) {
       fetchCategories();
     }
   }, [mentorProfile]); // mentorProfile가 업데이트된 후에 fetchCategories 실행
-  useEffect(()=>{
-    console.log("isModalOpen 상태 변경:", isModalOpen);
-  },[isModalOpen])
 
-
+  //답변 수정 버튼
   const handleModify = async () => {
     navigate(`/answer/modify/${answer.answerNo}`);
   };
@@ -84,6 +82,19 @@ export default function AnswerItem({ answer }) {
       alert("API 호출 중 오류 발생: " + error.message); // 사용자에게 오류 메시지 표시
     }
   };
+  
+  //답변 삭제 버튼
+  const handleRemoveAnswer = async () => {
+    try {
+      if (!window.confirm('답변을 삭제하시겠습니까?')) return;
+      await answerApi.deleteAnswer(answer.answerNo,token)
+      window.location.reload();
+    } catch (error) {
+      console.log('답변 삭제 실패',error)
+    }
+  }
+  
+
   const handleDownvote = async () => {
     try {
       const response = await answerApi.downVote(answer.answerNo, token); // API 호출
@@ -113,14 +124,13 @@ export default function AnswerItem({ answer }) {
   const handleOpenModal = () => {
     setIsModalOpen(true);
     setreport({
-      type: 'ANSWER',
+      type: "ANSWER",
       target: answer.answerNo,
-    })
+    });
   };
 
   const handleCloseModal = () => {
     setIsModalOpen(false);
-    console.log('모달닫아!!')
   };
 
   return (
@@ -128,19 +138,18 @@ export default function AnswerItem({ answer }) {
       <div className="answer-container">
         {answer.answerAccept == 2 ? (
           <div className="answer-accept-status">
-            <img
-              src="https://img.icons8.com/?size=100&id=Ri1uVwXhVKOJ&format=png&color=000000"
-              className="answer-accept-img"
-            />
-            채택된 답변
+            <FontAwesomeIcon icon={faMedal} />
+            <span>채택된 답변</span>
           </div>
         ) : (
           <div></div>
         )}
 
-        {member && member.memberNo == inquiry.memberNo ? (
+        {member && member.memberNo == inquiry.memberNo &&answer.answerAccept==1? (
           <div className="answer-accept">
-            <button onClick={handleAccept}>채택하기</button>
+            <button className="accept-btn" onClick={handleAccept}>
+              채택하기
+            </button>
           </div>
         ) : (
           <div></div>
@@ -156,11 +165,13 @@ export default function AnswerItem({ answer }) {
             />
           </div>
           <div className="answer-mentor-info">
-            <div className="answer-member-category">{category.categoryName}</div>
+            <div className="answer-member-category">
+              {category.categoryName}
+            </div>
             <div className="answer-member-name">{answer.memberName} 멘토</div>
           </div>
         </button>
-        
+
         <div className="answer-content">{answer.answerContent}</div>
         <div className="answer-date">{answer.answerDate.substring(0, 10)}</div>
         <div className="answer-vote">
@@ -169,12 +180,12 @@ export default function AnswerItem({ answer }) {
             onClick={handleUpvote}
             onMouseEnter={() => setIsUpVoteHovered(true)} // 마우스가 버튼 위에 올라갔을 때
             onMouseLeave={() => setIsUpVoteHovered(false)} // 마우스가 버튼을 벗어났을 때
-         >     
-          {
-            isUpVoteHovered
-              ? <FontAwesomeIcon icon={faThumbsUp} />
-              : <FontAwesomeIcon icon={faThumbsUp} />
-            }
+          >
+            {isUpVoteHovered ? (
+              <FontAwesomeIcon icon={faThumbsUp} />
+            ) : (
+              <FontAwesomeIcon icon={faThumbsUp} />
+            )}
           </button>
           {voteCount}
           <button
@@ -183,11 +194,11 @@ export default function AnswerItem({ answer }) {
             onMouseEnter={() => setIsDownVoteHovered(true)} // 마우스가 버튼 위에 올라갔을 때
             onMouseLeave={() => setIsDownVoteHovered(false)} // 마우스가 버튼을 벗어났을 때
           >
-          {
-                isDownVoteHovered
-                  ? <FontAwesomeIcon icon={faThumbsDown} />
-                  : <FontAwesomeIcon icon={faThumbsDown} />
-          }
+            {isDownVoteHovered ? (
+              <FontAwesomeIcon icon={faThumbsDown} />
+            ) : (
+              <FontAwesomeIcon icon={faThumbsDown} />
+            )}
           </button>
         </div>
 
@@ -196,12 +207,7 @@ export default function AnswerItem({ answer }) {
           {member && member.memberNo == answer.memberNo ? (
             <div className="modify-delete-btn">
               <button onClick={handleModify}>수정</button>
-  
-              <button
-                onClick={(e) => {
-                  e.preventDefault(); // 폼 제출 방지
-                }}
-              >
+              <button onClick={handleRemoveAnswer}>
                 삭제
               </button>
             </div>
@@ -209,15 +215,13 @@ export default function AnswerItem({ answer }) {
             <div></div>
           )}
           {isModalOpen && (
-            <ReportModal 
-            onClose={handleCloseModal} 
-            report={report}/>
+            <ReportModal onClose={handleCloseModal} report={report} />
           )}
           <button
             onMouseEnter={() => setIsReportHovered(true)} // 마우스가 버튼 위에 올라갔을 때
             onMouseLeave={() => setIsReportHovered(false)} // 마우스가 버튼을 벗어났을 때
             className={`hover-button ${isReportHovered ? "hovered" : ""}`}
-            onClick ={handleOpenModal}
+            onClick={handleOpenModal}
           >
             <img
               src={
@@ -230,7 +234,6 @@ export default function AnswerItem({ answer }) {
             />
           </button>
         </div>
-
       </div>
     </>
   );

@@ -92,12 +92,14 @@ public class MentorProfileController {
 	@PostMapping("/{memberNo}/create-profile")
 	public ResponseEntity<Response> saveMentorProfile(@PathVariable(name = "memberNo") Long memberNo,
 			@RequestBody MentorProfileDto mentorProfileDto) {
-
-		mentorProfileService.saveMentorProfile(memberNo, mentorProfileDto);
-
+		
+		MentorProfile mentorProfile = mentorProfileService.saveMentorProfile(memberNo, mentorProfileDto);
+		
 		Response response = new Response();
 		response.setStatus(ResponseStatusCode.CREATED_MENTOR_PROFILE_SUCCESS_CODE);
 		response.setMessage(ResponseMessage.CREATED_MENTOR_PROFILE_SUCCESS);
+		response.setData(mentorProfile);
+		
 		return ResponseEntity.status(HttpStatus.CREATED).body(response);
 	}
 
@@ -212,13 +214,29 @@ public class MentorProfileController {
 	 * 멘토 프로필 이미지 업로드 메서드
 	 */
 	@PostMapping("/{mentorProfileNo}/upload-image")
-	public ResponseEntity<String> uploadMentorProfileImage(@PathVariable("mentorProfileNo") Long mentorProfileNo,
+	public ResponseEntity<Response> uploadMentorProfileImage(@PathVariable("mentorProfileNo") Long mentorProfileNo,
 			@RequestParam("file") MultipartFile file) {
+		
 		try {
-			mentorProfileService.uploadMentorProfileImage(mentorProfileNo, file);
-			return ResponseEntity.ok("프로필 이미지 업로드 성공");
+			
+			String imageUrl = mentorProfileService.uploadMentorProfileImage(mentorProfileNo, file);
+			Response response = new Response();
+            response.setStatus(ResponseStatusCode.IMAGE_UPLOAD_SUCCESS);
+            response.setMessage(ResponseMessage.IMAGE_UPLOAD_SUCCESS);
+            response.setData(imageUrl); // **업로드된 이미지 URL 반환**
+            
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(new MediaType(MediaType.APPLICATION_JSON, Charset.forName("UTF-8")));
+            
+            return new ResponseEntity<>(response, headers, HttpStatus.OK);
+            
 		} catch (Exception e) {
-			return ResponseEntity.status(500).body("프로필 이미지 업로드 실패: " + e.getMessage());
+			
+			Response response = new Response();
+            response.setStatus(ResponseStatusCode.IMAGE_UPLOAD_FAIL);
+            response.setMessage("이미지 업로드 실패: " + e.getMessage());
+
+            return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 
@@ -245,12 +263,13 @@ public class MentorProfileController {
 		Response response = new Response();
 		try {
 			// 🔥 멘토 프로필 수정 서비스 호출
-			mentorProfileService.updateMentorProfile(mentorProfileNo, mentorProfileDto);
+			MentorProfile mentorProfile = mentorProfileService.updateMentorProfile(mentorProfileNo, mentorProfileDto);
 
 			// 🔥 성공 응답 생성
 			response.setStatus(ResponseStatusCode.UPDATE_MENTOR_PROFILE_SUCCESS_CODE);
 			response.setMessage(ResponseMessage.UPDATE_MENTOR_PROFILE_SUCCESS);
-
+			response.setData(mentorProfile);
+			
 			return ResponseEntity.status(HttpStatus.OK).body(response);
 		} catch (CustomException e) {
 			// ⚠️ CustomException이 발생한 경우 예외 정보를 클라이언트에 전달

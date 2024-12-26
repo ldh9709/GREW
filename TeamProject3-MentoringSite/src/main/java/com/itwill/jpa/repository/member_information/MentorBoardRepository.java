@@ -38,6 +38,47 @@ public interface MentorBoardRepository extends JpaRepository<MentorBoard, Long> 
     //멘토보드 리스트 12/22추가
     Page<MentorBoard> findByMentorBoardStatusOrderByMentorBoardDateDesc(int status, Pageable pageable);
     
+    //////////////////////////////////////카테고리
+ // 조회수순
+ // 조회수순
+    @Query("SELECT mb FROM MentorBoard mb " +
+           "JOIN mb.member m " +
+           "JOIN m.mentorProfile mp " +
+           "JOIN mp.category c " +
+           "WHERE c.categoryNo = :categoryNo AND mb.mentorBoardStatus = 1 " +
+           "ORDER BY mb.mentorBoardViews DESC")
+    Page<MentorBoard> findByCategoryMentorBoardOrderByView(@Param("categoryNo") Long categoryNo, Pageable pageable);
+
+    // 조회수순(대분류)
+    @Query("SELECT mb FROM MentorBoard mb " +
+           "JOIN mb.member m " +
+           "JOIN m.mentorProfile mp " +
+           "JOIN mp.category c " +
+           "WHERE c.parentCategory.categoryNo = :categoryNo AND mb.mentorBoardStatus = 1 " +
+           "ORDER BY mb.mentorBoardViews DESC")
+    Page<MentorBoard> findByParentCategoryMentorBoardOrderByView(@Param("categoryNo") Long categoryNo, Pageable pageable);
+
+    // 최신순
+    @Query("SELECT mb FROM MentorBoard mb " +
+           "JOIN mb.member m " +
+           "JOIN m.mentorProfile mp " +
+           "JOIN mp.category c " +
+           "WHERE c.categoryNo = :categoryNo AND mb.mentorBoardStatus = 1 " +
+           "ORDER BY mb.mentorBoardDate DESC")
+    Page<MentorBoard> findByCategoryMentorBoardOrderByDate(@Param("categoryNo") Long categoryNo, Pageable pageable);
+
+    // 최신순(대분류)
+    @Query("SELECT mb FROM MentorBoard mb " +
+           "JOIN mb.member m " +
+           "JOIN m.mentorProfile mp " +
+           "JOIN mp.category c " +
+           "WHERE c.parentCategory.categoryNo = :categoryNo AND mb.mentorBoardStatus = 1 " +
+           "ORDER BY mb.mentorBoardDate DESC")
+    Page<MentorBoard> findByParentCategoryMentorBoardOrderByDate(@Param("categoryNo") Long categoryNo, Pageable pageable);
+
+    @Query("SELECT b FROM MentorBoard b WHERE b.mentorBoardStatus = :status ORDER BY b.mentorBoardViews DESC")
+    Page<MentorBoard> findByStatusAndSortedByViews(@Param("status") int status, Pageable pageable);
+   
 }
-    
+    	
   

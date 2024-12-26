@@ -16,8 +16,7 @@
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    margin-bottom: 15px;
-    margin-top: 40px;
+    margin-bottom: 20px; /* 폼 그룹 간격 통일 */
 }
 
 /* 가로 정렬을 위한 공통 스타일 */
@@ -26,7 +25,7 @@
     display: flex;
     flex-direction: row;
     align-items: center;
-    gap: 10px;
+    gap: 20px; /* 내부 요소 간 간격 */
 }
 
 /* 라벨 스타일 */
@@ -51,10 +50,46 @@
     font-family: "nanumsquare";
 }
 
-
 /* 전문 분야 셀렉트 박스 */
 .form-group-profile.horizontal-field select {
     width: 200px;
+}
+
+/* 대/소분류 선택을 가로로 정렬하는 스타일 */
+.form-group-profile.horizontal-combined {
+    display: flex;
+    flex-direction: row;
+    align-items: center; /* 세로 정렬 */
+    gap: 10px; /* 대분류와 소분류 간의 간격을 줄임 */
+    width: 100%; /* 전체 너비 사용 */
+    margin-bottom: 20px; /* 다른 폼 그룹과 간격 맞춤 */
+}
+
+/* 대분류와 소분류의 공통 스타일 */
+.form-group-profile.horizontal-combined .category-select {
+    flex: 1; /* 동일한 비율로 크기 조정 */
+    max-width: 180px; /* 선택 박스 최대 너비 조정 */
+    padding: 10px; /* 내부 여백 */
+    font-size: 14px; /* 글자 크기 */
+    border: 1px solid #ccc; /* 경계선 */
+    border-radius: 5px; /* 경계선 라운딩 */
+}
+
+/* 대분류 라벨 */
+.form-group-profile.horizontal-combined .parent-label {
+    flex: 0 0 100px; /* 고정된 너비 */
+    font-weight: bold; /* 강조 */
+    text-align: left; /* 텍스트 정렬 */
+    margin-right: 60px; /* 라벨과 대분류 선택 칸 간격 */
+}
+
+/* 소분류 선택 박스를 대분류 쪽으로 더 붙이기 */
+.form-group-profile.horizontal-combined .child-label {
+    flex: 0 0 80px; /* 고정된 너비 */
+    font-weight: bold; /* 강조 */
+    text-align: left; /* 텍스트 정렬 */
+    margin-left: -80px; /* 소분류 선택 박스를 왼쪽으로 이동 */
+    margin-right: 5px; /* 라벨과 소분류 선택 칸 간격 */
 }
 
 /* 텍스트 영역 스타일 */
@@ -71,9 +106,7 @@
 
 /* 프로필 이미지 스타일 */
 .form-group-profileImage {
-
     margin-left: 33px;
-    
 }
 
 /* 제출 버튼 스타일 */
@@ -88,6 +121,7 @@
     font-size: 16px;
     cursor: pointer;
     text-align: center;
+    margin-top: 20px; /* 다른 폼 그룹과 간격 */
 }
 
 .submit-button:hover {

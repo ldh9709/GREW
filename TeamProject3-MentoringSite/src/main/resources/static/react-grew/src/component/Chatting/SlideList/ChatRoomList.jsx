@@ -15,7 +15,7 @@ const ChatRoomList = ({ onRoomClick }) => {
 
     const chatRoomList = async (page) => {
         console.log('토큰'+token);
-        const responseJsonObject = await ChattingApi.memberListChatRoom(token, page, 7);
+        const responseJsonObject = await ChattingApi.activeListChatRoom(token, page, 7);
         console.log(responseJsonObject);
         console.log(responseJsonObject.data.content);
         if (responseJsonObject.status === 7010 && Array.isArray(responseJsonObject.data.content)) {

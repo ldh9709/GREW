@@ -43,6 +43,28 @@ public class ChatRoomStatusServiceImpl implements ChatRoomStatusService{
 			chatRoomStatusRepository.save(menteeChatRoomStatus);	
 	}
 	@Override
+	public void ResetChatRoomStatus(Long chatRoomNo) {
+		ChatRoom chatRoom = chatRoomRepository.findById(chatRoomNo).get();
+		for (int i = 0; i < chatRoom.getChatRoomStatusList().size(); i++) {
+			ChatRoomStatus chatRoomStatus = chatRoom.getChatRoomStatusList().get(i);
+			chatRoomStatus.setChatRoomStatus(7500);
+			chatRoomStatus.setChatRoomName(chatRoom.getMentor().getMemberName()+"님과 "+chatRoom.getMentee().getMemberName()+"님의 채팅방");
+			ChatRoomStatus chatRoomStatus1 = chatRoomStatusRepository.save(chatRoomStatus);
+		}
+	}
+	@Override
+	public void updateChatRoomStatus(Long chatRoomNo) {
+		ChatRoom chatRoom = chatRoomRepository.findById(chatRoomNo).get();
+		if (chatRoom.getChatRoomStatus() == 7000) {
+			for (int i = 0; i < chatRoom.getChatRoomStatusList().size(); i++) {
+				ChatRoomStatus chatRoomStatus = chatRoom.getChatRoomStatusList().get(i);
+				chatRoomStatus.setChatRoomStatus(7600);
+				chatRoomStatus.setChatRoomName(chatRoom.getMentor().getMemberName()+"님과 "+chatRoom.getMentee().getMemberName()+"님의 채팅방");
+				ChatRoomStatus chatRoomStatus1 = chatRoomStatusRepository.save(chatRoomStatus);
+			}
+		}
+	}
+	@Override
 	public ChatRoomStatusDto updateChatRoomStatus(Long chatRoomNo, Long memberNo) {
 		ChatRoom chatRoom = chatRoomRepository.findById(chatRoomNo).get();
 		for (int i = 0; i < chatRoom.getChatRoomStatusList().size(); i++) {

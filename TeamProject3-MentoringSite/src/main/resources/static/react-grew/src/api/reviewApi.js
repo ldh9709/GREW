@@ -11,12 +11,13 @@ GET /review/reviewList                : 전체 리뷰 목록 출력
 */
 
 // 리뷰 등록
-export const writeReview = async (reviewDto) => {
+export const writeReview = async (reviewDto,token) => {
   const response = await fetch(`${BACKEND_SERVER}/review`, {
     method: "POST",
     headers: {
-      "Content-Type": "application/json;charset=UTF-8",
-    },
+        "Content-Type": "application/json;charset=UTF-8", // 요청 헤더 설정
+        'Authorization': `Bearer ${token}`, // Authorization 헤더에 JWT 토큰 추가
+      },
     body: JSON.stringify(reviewDto),
   });
   const responseJsonObject = await response.json();
