@@ -26,6 +26,15 @@ function MentorBoardCreate() {
   }, []);
 
   useEffect(() => {
+    // 미리보기 URL 변경 시 이전 URL 해제
+    return () => {
+      if (imagePreview) {
+        URL.revokeObjectURL(imagePreview);
+      }
+    };
+  }, [imagePreview]);
+
+  useEffect(() => {
     const fetchCategory = async () => {
       try {
 
@@ -126,9 +135,14 @@ function MentorBoardCreate() {
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     if (file) {
+      // 이전 미리보기 URL 해제
+      if (imagePreview) {
+        URL.revokeObjectURL(imagePreview);
+      }
+
+      const previewUrl = URL.createObjectURL(file); // 새 미리보기 URL 생성
       setMentorBoardImage(file);
-      const previewUrl = URL.createObjectURL(file);  // 파일 URL 생성
-      setImagePreview(previewUrl);  // 미리보기 URL 업데이트
+      setImagePreview(previewUrl);
     }
   };
 
