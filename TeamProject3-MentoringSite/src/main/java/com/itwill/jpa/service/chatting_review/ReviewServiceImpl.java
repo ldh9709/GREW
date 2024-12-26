@@ -121,15 +121,12 @@ public class ReviewServiceImpl implements ReviewService {
         try {
             Pageable pageable = PageRequest.of(pageNumber, pageSize); // Pageable 객체 생성
 
-            // 멘티 번호로 리뷰 조회 (페이징 처리)
-            Page<Review> menteeReviews = reviewRepository.findReviewByChatRoom_Mentee_MemberNoAndReviewStatus(memberNo, 1, pageable);
 
             // 멘토 번호로 리뷰 조회 (페이징 처리)
             Page<Review> mentorReviews = reviewRepository.findReviewByChatRoom_Mentor_MemberNoAndReviewStatus(memberNo, 1,pageable);
 
             // 멘티와 멘토의 리뷰를 합침 (합치기 전에 두 페이지를 병합할 필요가 있음)
             List<Review> allReviews = new ArrayList<>();
-            allReviews.addAll(menteeReviews.getContent());
             allReviews.addAll(mentorReviews.getContent());
 
             // 리뷰를 DTO로 변환
@@ -139,7 +136,7 @@ public class ReviewServiceImpl implements ReviewService {
             }
 
             // Page 객체로 반환 (totalElements는 두 페이지 합친 전체 리뷰 개수)
-            return new PageImpl<>(reviewDtoList, pageable, menteeReviews.getTotalElements() + mentorReviews.getTotalElements());
+            return new PageImpl<>(reviewDtoList, pageable, mentorReviews.getTotalElements());
         } catch (Exception e) {
             throw new CustomException(ResponseStatusCode.READ_REVIEW_LIST_FAIL, ResponseMessage.READ_REVIEW_LIST_FAIL, e);
         }

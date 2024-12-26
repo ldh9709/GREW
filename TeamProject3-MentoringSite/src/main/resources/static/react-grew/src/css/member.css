@@ -565,6 +565,14 @@ body {
 }
 
 .board-list {
+  padding-bottom: 100px;
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 20px; 
+}
+.board-list2 {
   width: 100%;
   display: flex;
   flex-wrap: wrap;

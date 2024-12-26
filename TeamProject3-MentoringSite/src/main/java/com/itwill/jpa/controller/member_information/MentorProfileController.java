@@ -10,7 +10,6 @@ import com.itwill.jpa.response.ResponseMessage;
 import com.itwill.jpa.response.ResponseStatusCode;
 import com.itwill.jpa.service.member_information.MentorProfileService;
 import com.itwill.jpa.util.HttpStatusMapper;
-import com.itwill.jpa.util.HttpStatusMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.jpa.repository.config.JpaRepositoryNameSpaceHandler;
@@ -201,6 +200,23 @@ public class MentorProfileController {
         return new ResponseEntity<>(response, headers, HttpStatus.OK);
     }
 
+	
+	@Operation(summary = "멘토의 멤버번호 조회")
+	@GetMapping("/{mentorProfileNo}/member_no")
+	public ResponseEntity<Response> getMemberNoByMentorProfileNo(@PathVariable("mentorProfileNo") Long mentorProfileNo){
+		Long mentorNo = mentorProfileService.getMemberNoByMentorNo(mentorProfileNo);
+		Response response = new Response();
+		response.setData(mentorNo);
+		
+		HttpHeaders httpHeaders = new HttpHeaders();
+		httpHeaders.setContentType(new MediaType(MediaType.APPLICATION_JSON, Charset.forName("UTF-8")));
+
+		ResponseEntity<Response> responseEntity = new ResponseEntity<Response>(response, httpHeaders, HttpStatus.OK);
+
+		return responseEntity;
+	}
+	
+	
 
     @Operation(summary = "카테고리 멘토리스트 페이징")
     @GetMapping("/category/{categoryNo}")

@@ -5,7 +5,7 @@ export default function MainMentorBoard({mentorBoard}) {
   return (
     
     <div className="tab-boards">
-      <div className="board-list">
+      <div className="board-list2">
           <div className="main-board-card">
             <div className="board-image-container">
               <img src={imageSrc} alt="content-image" className="board-image" />

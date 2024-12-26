@@ -21,6 +21,7 @@ import com.itwill.jpa.entity.member_information.Member;
 import com.itwill.jpa.exception.CustomException;
 import com.itwill.jpa.repository.chatting_review.ChatRoomRepository;
 import com.itwill.jpa.repository.chatting_review.ChatRoomStatusRepository;
+import com.itwill.jpa.repository.member_information.MemberRepository;
 import com.itwill.jpa.response.ResponseMessage;
 import com.itwill.jpa.response.ResponseStatusCode;
 import com.itwill.jpa.service.member_information.MentorProfileService;
@@ -31,6 +32,8 @@ public class ChatRoomServiceImpl implements ChatRoomService {
 	private ChatRoomRepository chatRoomRepository;
 	@Autowired
 	private ChatRoomStatusService chatRoomStatusService;
+	@Autowired
+	private MemberRepository memberRepository;
 	@Autowired
 	private MentorProfileService mentorProfileService;
 	
@@ -47,13 +50,50 @@ public class ChatRoomServiceImpl implements ChatRoomService {
 	}
 	/*활동 요청(기본 상태 요청 중)*/
 	@Override
-	public void saveChatRoom(ChatRoomDto chatRoomDto) {
+	public ChatRoomDto saveChatRoom(Long menteeNo, Long mentorNo) {
 		try {
-			if(chatRoomRepository.findById(chatRoomDto.getChatRoomNo()).isPresent()) {
-				
-			} else {
+			ChatRoom chatRoom1 = chatRoomRepository.findByMenteeAndMentor(menteeNo, mentorNo);
+			if(chatRoom1 == null) {
+				System.out.println("---------------------------------------------------------------존재하지않음---------------------------------------------------------------");
+				ChatRoomDto chatRoomDto = ChatRoomDto.builder()
+													 .chatRoomStatus(7000)
+													 .chatRoomStartDate(LocalDateTime.now())
+													 .chatRoomEndDate(null)
+													 .menteeNo(menteeNo)
+													 .mentorNo(mentorNo)
+													 .build();
 				ChatRoom mentoringRequest = ChatRoom.toEntity(chatRoomDto);
-				chatRoomRepository.save(mentoringRequest);
+				ChatRoom chatRoom = chatRoomRepository.save(mentoringRequest);
+				Member mentor = memberRepository.findById(mentorNo).orElse(null);
+				Member mentee = memberRepository.findById(menteeNo).orElse(null);
+				chatRoom.setMentor(mentor);
+				chatRoom.setMentee(mentee);
+				ChatRoomStatus mentorChatRoomStatus = ChatRoomStatus.builder()
+						.chatRoomName(mentee.getMemberName()+"님 에게서 채팅방 신청이 도착했습니다.")
+						.chatRoomStatus(7500)
+						.chatRoom(chatRoom)
+						.member(mentor)
+						.build();
+				ChatRoomStatus menteeChatRoomStatus = ChatRoomStatus.builder()
+						.chatRoomName(mentor.getMemberName()+"님 에게 채팅방을 신청했습니다.")
+						.chatRoomStatus(7500)
+						.chatRoom(chatRoom)
+						.member(mentee)
+						.build();
+				chatRoomStatusService.saveFirstChatRoomStatus(mentorChatRoomStatus, menteeChatRoomStatus);
+				return ChatRoomDto.toDto(chatRoom);
+			} else {
+				System.out.println("---------------------------------------------------------------존재함---------------------------------------------------------------");
+				if (chatRoom1.getChatRoomStatus() == 7500) {
+					return ChatRoomDto.toDto(chatRoom1);
+				}else {
+					chatRoom1.setChatRoomStatus(7000);
+					chatRoom1.setChatRoomEndDate(null);
+					ChatRoom chatRoom2 = chatRoomRepository.save(chatRoom1);
+					chatRoomStatusService.ResetChatRoomStatus(chatRoom1.getChatRoomNo());
+					return ChatRoomDto.toDto(chatRoom2);
+				}
+				
 			}
 		} catch (Exception e) {
 			throw new CustomException(ResponseStatusCode.PENDING_CHATTING_FAIE, ResponseMessage.PENDING_CHATTING_FAIE, e);
@@ -65,30 +105,17 @@ public class ChatRoomServiceImpl implements ChatRoomService {
 		try {
 			if (chatRoomRepository.findById(chatRoomNo).isPresent() && chatRoomRepository.findById(chatRoomNo).get().getChatRoomStatus() == 7000) {
 				ChatRoom chatRoom = chatRoomRepository.findById(chatRoomNo).get();
+				chatRoomStatusService.updateChatRoomStatus(chatRoomNo);
 				chatRoom.setChatRoomStatus(7100);
-				Member mentor = chatRoom.getMentor();
-				Member mentee = chatRoom.getMentee();
-				ChatRoomStatus mentorChatRoomStatus = ChatRoomStatus.builder()
-						.chatRoomName("")
-						.chatRoomStatus(0)
-					    .chatRoom(chatRoom)
-					    .member(mentor)
-					    .build();
-				ChatRoomStatus menteeChatRoomStatus = ChatRoomStatus.builder()
-						.chatRoomName("")
-						.chatRoomStatus(0)
-						.chatRoom(chatRoom)
-					    .member(mentee)
-					    .build();
-				chatRoomStatusService.saveFirstChatRoomStatus(mentorChatRoomStatus, menteeChatRoomStatus);
 				ChatRoom ChatRoom = chatRoomRepository.save(chatRoom);
+				Member mentor = chatRoom.getMentor();
 				/* 멘토 멘토링 수 업데이트 */
 				mentorProfileService.updateMentoringCount(mentor.getMemberNo());
 				return ChatRoomDto.toDto(ChatRoom);
 			}
 			return new ChatRoomDto();
 		}catch (Exception e) {
-			throw new CustomException(ResponseStatusCode.ACCEPT_ANSWER_FAIL, ResponseMessage.ACCEPT_ANSWER_FAIL, e);
+			throw new CustomException(ResponseStatusCode.ACTIVE_CHATTING_FAIE, ResponseMessage.ACTIVE_CHATTING_FAIE, e);
 		}
 		
 	}
@@ -199,10 +226,10 @@ public class ChatRoomServiceImpl implements ChatRoomService {
 		
 	}
 	/*본인 활동 리스트 출력 */
-	public Page<ChatRoomDto> selectChatRoomAll(Long memberNo, int pageNumber, int pageSize) {
+	public Page<ChatRoomDto> activeChatRoomAll(Long memberNo, int pageNumber, int pageSize) {
 		try {
 			Pageable pageable = PageRequest.of(pageNumber, pageSize);
-			Page<ChatRoom> chatRooms = chatRoomRepository.findByMemberNo(memberNo,pageable);
+			Page<ChatRoom> chatRooms = chatRoomRepository.findByMemberNoAndStatus1(memberNo,pageable);
 			List<ChatRoomDto> chatRoomDtos = new ArrayList<>();
 			for (ChatRoom chatRoom : chatRooms) {
 				Long chatRoomNo = chatRoom.getChatRoomNo();
@@ -224,7 +251,32 @@ public class ChatRoomServiceImpl implements ChatRoomService {
 			throw new CustomException(ResponseStatusCode.CHATTING_LIST_FAIE, ResponseMessage.CHATTING_LIST_FAIE, e);
 		}
 	}
-	
+	/*본인 활동 리스트 출력 */
+	public Page<ChatRoomDto> waitChatRoomAll(Long memberNo, int pageNumber, int pageSize) {
+		try {
+			Pageable pageable = PageRequest.of(pageNumber, pageSize);
+			Page<ChatRoom> chatRooms = chatRoomRepository.findByMemberNoAndStatus2(memberNo,pageable);
+			List<ChatRoomDto> chatRoomDtos = new ArrayList<>();
+			for (ChatRoom chatRoom : chatRooms) {
+				Long chatRoomNo = chatRoom.getChatRoomNo();
+				String chatRoomName = null;
+				int chatRoomLeaveStatus = 0;
+				if (chatRoomStatusService.getChatRoomStatus(chatRoomNo, memberNo) != null) {
+					chatRoomName = chatRoomStatusService.getChatRoomStatus(chatRoomNo, memberNo).getChatRoomName();
+					chatRoomLeaveStatus = chatRoomStatusService.getChatRoomStatus(chatRoomNo, memberNo).getChatRoomStatus();
+				}
+				ChatRoomDto chatRoomDto = ChatRoomDto.toDto(chatRoom);
+				chatRoomDto.setChatRoomName(chatRoomName);
+				chatRoomDto.setChatRoomLeaveStatus(chatRoomLeaveStatus);
+				chatRoomDtos.add(chatRoomDto);
+				
+			}
+			
+			return new PageImpl<>(chatRoomDtos, pageable, chatRooms.getTotalElements());
+		} catch (Exception e) {
+			throw new CustomException(ResponseStatusCode.CHATTING_LIST_FAIE, ResponseMessage.CHATTING_LIST_FAIE, e);
+		}
+	}
 	/*본인 활동 리스트 출력 
 	@Override
 	public Page<ChatRoomDto> selectChatRoomAll(Long MemberNo, int pageNumber, int pageSize) {

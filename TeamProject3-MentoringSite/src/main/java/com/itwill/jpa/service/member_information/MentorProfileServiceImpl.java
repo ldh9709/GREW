@@ -462,6 +462,12 @@ public class MentorProfileServiceImpl implements MentorProfileService {
 		return profileDtos;
 	}
     
+    @Override
+    public Long getMemberNoByMentorNo(Long mentorProfileNo) {
+    	MentorProfile mentor = mentorProfileRepository.findMemberNoByMentorProfileNo(mentorProfileNo);
+    	Long mentorNo = mentor.getMember().getMemberNo();
+    	return mentorNo;
+    }
     
 	
 	//12월 24일 멘토 프로필 카테고리

@@ -119,6 +119,9 @@ public interface MentorProfileService {
 
     //별점 순으로 멘토 찾기
     List<MentorProfileDto> getMentorByRating();
-
+    
+    Long getMemberNoByMentorNo(Long mentorProfileNo);
+    
+    
 }
 

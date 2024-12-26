@@ -35,10 +35,41 @@ function MentorBoardList() {
   }, []);
 
   // 라디오 버튼 클릭 시 정렬 방식 변경
-  const handleRadioChange = (e) => {
-    setSortType(e.target.value);
-    setCurrentPage(1);
-  };
+  const handleRadioChange = async (e) => {
+    const selectedSortType = e.target.value;
+    setSortType(selectedSortType);
+    setCurrentPage(1); // 정렬 변경 시 페이지 초기화  //////////////////////////////////////////////
+    try {
+      let responseJsonObject;
+      if (!selectedCategory) {
+          // 카테고리 선택 안 된 경우
+          responseJsonObject = 
+              selectedSortType === "view"
+              ? await mentorBoardApi.listMentorBoardsByViews(0, itemsPerPage)
+              : await mentorBoardApi.listMentorBoardsByStatus(1, 0, itemsPerPage);
+      } else {
+          const category = categories.find(cat => cat.categoryNo === selectedCategory);
+          if (category?.categoryDepth === 2) {
+              responseJsonObject =
+                  selectedSortType === "view"
+                  ? await mentorBoardApi.listMentorBoardByCategoryView(selectedCategory, 0, itemsPerPage)
+                  : await mentorBoardApi.listMentorBoardByCategoryDate(selectedCategory, 0, itemsPerPage);
+          } else if (category?.categoryDepth === 1) {
+              responseJsonObject =
+                  selectedSortType === "view"
+                  ? await mentorBoardApi.listMentorBoardByParentCategoryView(selectedCategory, 0, itemsPerPage)
+                  : await mentorBoardApi.listMentorBoardByParentCategoryDate(selectedCategory, 0, itemsPerPage);
+          }
+      }
+
+      // 데이터 업데이트
+      setBoards(responseJsonObject?.data?.content || []);
+      setTotalPages(responseJsonObject?.data?.totalPages || 0);
+  } catch (error) {
+      console.error("정렬 변경 중 API 호출 실패:", error);
+  }
+};
+
 
   // 카테고리 버튼 클릭 시 호출되는 함수
   const handleCategoryClick = async (categoryNo) => {
@@ -224,10 +255,7 @@ function MentorBoardList() {
             name="sortType"
             value="latest"
             checked={sortType === "latest"}
-            onChange={(e) => {
-              setSortType(e.target.value);
-              setCurrentPage(1); // 정렬 변경 시 페이지 초기화
-            }}
+            onChange={handleRadioChange}
           />
           최신순
         </label>
@@ -237,10 +265,7 @@ function MentorBoardList() {
             name="sortType"
             value="view"
             checked={sortType === "view"}
-             onChange={(e) => {
-              setSortType(e.target.value);
-              setCurrentPage(1); // 정렬 변경 시 페이지 초기화
-            }}
+            onChange={handleRadioChange}
           />
           조회순
         </label>

@@ -119,29 +119,11 @@ button {
   color: #fff;
 }
 
-.pagenation-btn {
-  background-color: #28a745;
-  color: white;
-  width: 40px;
-  height: 40px;
-  border-radius: 10px;
-  font-size: large;
-}
-
-/* 현재 페이지인 경우의 스타일 */
-.pagenation-btn-active {
-  background-color: #006618;
-  color: white;
-  width: 40px;
-  height: 40px;
-  border-radius: 10px;
-  font-size: large;
-}
 
 
 #wrapper,
 #content {
-  margin-top: 140px;
+  margin-top: 120px;
 }
 /* 로그인 버튼 바 */
 .header {
@@ -385,7 +367,6 @@ button {
   padding: 0 10p 10p 10px; /* 내부 여백 */
   background-color: #ffffff; /* 배경색 */
   width: 1080px; /*너비*/
-  height: 210px;
   padding: 30px; /* 내부 여백 */
   display: flex;
   margin-bottom: 3px;
@@ -408,6 +389,7 @@ button {
   padding: 15px;
   margin-bottom: 50px;
   font-size: 17px;
+  white-space: pre-wrap;
   color: #444;
 }
 /* 질문 글 호버시 색변경 */
@@ -459,7 +441,6 @@ button {
 .answer-best-list {
   display: flex;
   width: 250px;
-  height: 100px;
   margin-bottom: 5px;
   cursor: pointer;
   transition: transform 0.3s ease; /* 호버 시 부드러운 확대 효과 */
@@ -505,7 +486,7 @@ button {
 .index-span {
   margin-left: -10px;
   margin-right: 10px;
-  font-size: 40px; /* 인덱스를 크게 설정 */
+  font-size: 35px; /* 인덱스를 크게 설정 */
   font-weight: bold;
   flex-shrink: 0; /* 인덱스는 크기를 줄이지 않음 */
   color: #28a745; /* 원하는 색상 */
@@ -1009,12 +990,13 @@ button {
 }
 
 .small-list {
+  width: 300px; height: 100%;
   margin-top: 10px;
   padding: 5px 20px;
-  height: 1100px;
   border: 1px solid #ccc;
   border-radius: 5px;
   background-color: #f8f8f8;
+  color: #444;
 }
 .small-list p {
   margin: 10px 10px 5px 10px !important;

@@ -145,6 +145,8 @@ public interface MentorProfileRepository extends JpaRepository<MentorProfile, Lo
      List<MentorProfile> findByOrderByMentorRatingDesc();
 
      
+     MentorProfile findMemberNoByMentorProfileNo(Long mentorProfileNo);
+     
 }
 
 

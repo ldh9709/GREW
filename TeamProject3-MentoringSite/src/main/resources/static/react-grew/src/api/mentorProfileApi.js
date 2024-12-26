@@ -1,10 +1,5 @@
-const BACKEND_SERVER = ''; // 🛠️ 서버 주소를 지정하세요
-const BASE_URL = '/mentor-profile';
-
-
-
-
-
+const BACKEND_SERVER = ""; // 🛠️ 서버 주소를 지정하세요
+const BASE_URL = "/mentor-profile";
 
 // 🔥 멘토 프로필 번호로 특정 멘토의 프로필 정보를 가져오는 함수
 export const getMentorProfileByNo = async (mentorProfileNo) => {
@@ -12,11 +7,6 @@ export const getMentorProfileByNo = async (mentorProfileNo) => {
   const data = await response.json();
   return data;
 };
-
-
-
-
-
 
 /**
  * 🔥 특정 상태의 멘토 프로필 리스트를 조회합니다.
@@ -26,14 +16,12 @@ export const getMentorProfileByNo = async (mentorProfileNo) => {
  * @returns {Promise} - 멘토 목록을 포함하는 프로미스
  */
 export const listMentorProfiles = async (status = 3, page = 0, size = 10) => {
-  const response = await fetch(`${BACKEND_SERVER}/mentor-profile/status/${status}?page=${page}&size=${size}`);
+  const response = await fetch(
+    `${BACKEND_SERVER}/mentor-profile/status/${status}?page=${page}&size=${size}`
+  );
   const responseJsonObject = await response.json();
   return responseJsonObject;
 };
-
-
-
-
 
 /**
  * 🔥 특정 멘토 프로필을 조회합니다.
@@ -41,12 +29,12 @@ export const listMentorProfiles = async (status = 3, page = 0, size = 10) => {
  * @returns {Promise} - 멘토 프로필 데이터를 포함하는 프로미스
  */
 export const getMentorProfile = async (mentorProfileNo) => {
-  const response = await fetch(`${BACKEND_SERVER}/mentor-profile/${mentorProfileNo}`);
+  const response = await fetch(
+    `${BACKEND_SERVER}/mentor-profile/${mentorProfileNo}`
+  );
   const responseJsonObject = await response.json();
   return responseJsonObject;
 };
-
-
 
 /**
  * 🔥 새로운 멘토 프로필을 생성합니다.
@@ -55,11 +43,14 @@ export const getMentorProfile = async (mentorProfileNo) => {
  * @returns {Promise} - 생성 성공 메시지를 포함하는 프로미스
  */
 export const createMentorProfile = async (memberNo, mentorProfileDto) => {
-  const response = await fetch(`${BACKEND_SERVER}/mentor-profile/${memberNo}/create-profile`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json;charset=UTF-8' },
-    body: JSON.stringify(mentorProfileDto)
-  });
+  const response = await fetch(
+    `${BACKEND_SERVER}/mentor-profile/${memberNo}/create-profile`,
+    {
+      method: "POST",
+      headers: { "Content-Type": "application/json;charset=UTF-8" },
+      body: JSON.stringify(mentorProfileDto),
+    }
+  );
   const responseJsonObject = await response.json();
   return responseJsonObject;
 };
@@ -70,12 +61,18 @@ export const createMentorProfile = async (memberNo, mentorProfileDto) => {
  * @param {object} mentorProfileDto - 수정할 멘토 프로필 데이터
  * @returns {Promise} - 수정 성공 메시지를 포함하는 프로미스
  */
-export const updateMentorProfile = async (mentorProfileNo, mentorProfileDto) => {
-  const response = await fetch(`${BACKEND_SERVER}/mentor-profile/${mentorProfileNo}`, {
-    method: 'PUT',
-    headers: { 'Content-Type': 'application/json;charset=UTF-8' },
-    body: JSON.stringify(mentorProfileDto)
-  });
+export const updateMentorProfile = async (
+  mentorProfileNo,
+  mentorProfileDto
+) => {
+  const response = await fetch(
+    `${BACKEND_SERVER}/mentor-profile/${mentorProfileNo}`,
+    {
+      method: "PUT",
+      headers: { "Content-Type": "application/json;charset=UTF-8" },
+      body: JSON.stringify(mentorProfileDto),
+    }
+  );
   const responseJsonObject = await response.json();
   return responseJsonObject;
 };
@@ -87,8 +84,14 @@ export const updateMentorProfile = async (mentorProfileNo, mentorProfileDto) => 
  * @param {number} size - 페이지 크기
  * @returns {Promise} - 특정 카테고리의 멘토 목록을 포함하는 프로미스
  */
-export const getMentorProfilesByCategoryNo = async (categoryNo, page = 0, size = 10) => {
-  const response = await fetch(`${BACKEND_SERVER}/mentor-profile/category/${categoryNo}?page=${page}&size=${size}`);
+export const getMentorProfilesByCategoryNo = async (
+  categoryNo,
+  page = 0,
+  size = 10
+) => {
+  const response = await fetch(
+    `${BACKEND_SERVER}/mentor-profile/category/${categoryNo}?page=${page}&size=${size}`
+  );
   const responseJsonObject = await response.json();
   return responseJsonObject;
 };
@@ -101,7 +104,9 @@ export const getMentorProfilesByCategoryNo = async (categoryNo, page = 0, size =
  * @returns {Promise} - 검색된 멘토 목록을 포함하는 프로미스
  */
 export const searchMentorProfiles = async (search, page = 0, size = 10) => {
-  const response = await fetch(`${BACKEND_SERVER}/mentor-profile/search/${search}?page=${page}&size=${size}`);
+  const response = await fetch(
+    `${BACKEND_SERVER}/mentor-profile/search/${search}?page=${page}&size=${size}`
+  );
   const responseJsonObject = await response.json();
   console.log(responseJsonObject);
   return responseJsonObject;
@@ -113,7 +118,9 @@ export const searchMentorProfiles = async (search, page = 0, size = 10) => {
  * @returns {Promise} - 이미지 URL을 포함하는 프로미스
  */
 export const getMentorProfileImageUrl = async (mentorProfileNo) => {
-  const response = await fetch(`${BACKEND_SERVER}/mentor-profile/${mentorProfileNo}/image-url`);
+  const response = await fetch(
+    `${BACKEND_SERVER}/mentor-profile/${mentorProfileNo}/image-url`
+  );
   const responseJsonObject = await response.json();
   return responseJsonObject;
 };
@@ -126,11 +133,14 @@ export const getMentorProfileImageUrl = async (mentorProfileNo) => {
  */
 export const uploadMentorProfileImage = async (mentorProfileNo, file) => {
   const formData = new FormData();
-  formData.append('file', file);
-  const response = await fetch(`${BACKEND_SERVER}/mentor-profile/${mentorProfileNo}/upload-image`, {
-    method: 'POST',
-    body: formData
-  });
+  formData.append("file", file);
+  const response = await fetch(
+    `${BACKEND_SERVER}/mentor-profile/${mentorProfileNo}/upload-image`,
+    {
+      method: "POST",
+      body: formData,
+    }
+  );
   const responseJsonObject = await response.text();
   return responseJsonObject;
 };
@@ -141,7 +151,9 @@ export const uploadMentorProfileImage = async (mentorProfileNo, file) => {
  * @returns {Promise} - 멘토링 횟수를 포함하는 프로미스
  */
 export const getMentorMentoringCount = async (mentorProfileNo) => {
-  const response = await fetch(`${BACKEND_SERVER}/mentor-profile/${mentorProfileNo}/mentoring-count`);
+  const response = await fetch(
+    `${BACKEND_SERVER}/mentor-profile/${mentorProfileNo}/mentoring-count`
+  );
   const responseJsonObject = await response.json();
   return responseJsonObject;
 };
@@ -152,7 +164,9 @@ export const getMentorMentoringCount = async (mentorProfileNo) => {
  * @returns {Promise} - 팔로우 수를 포함하는 프로미스
  */
 export const getMentorFollowCount = async (mentorProfileNo) => {
-  const response = await fetch(`${BACKEND_SERVER}/mentor-profile/${mentorProfileNo}/follow-count`);
+  const response = await fetch(
+    `${BACKEND_SERVER}/mentor-profile/${mentorProfileNo}/follow-count`
+  );
   const responseJsonObject = await response.json();
   return responseJsonObject;
 };
@@ -163,41 +177,49 @@ export const getMentorFollowCount = async (mentorProfileNo) => {
  * @returns {Promise} - 활동 수를 포함하는 프로미스
  */
 export const getMentorActivityCount = async (mentorProfileNo) => {
-  const response = await fetch(`${BACKEND_SERVER}/mentor-profile/${mentorProfileNo}/activity-count`);
+  const response = await fetch(
+    `${BACKEND_SERVER}/mentor-profile/${mentorProfileNo}/activity-count`
+  );
   const responseJsonObject = await response.json();
   return responseJsonObject;
-
-  
 };
 
-
-//멘토 활동수 ,팔로우순 , 멘토링수  
+//멘토 활동수 ,팔로우순 , 멘토링수
 export const listMentorsByFollowCount = async (page, size) => {
-  const response = await fetch(`${BACKEND_SERVER}/mentor-profile/follow-count?page=${page}&size=${size}`, {
-    method: 'GET',
-  });
+  const response = await fetch(
+    `${BACKEND_SERVER}/mentor-profile/follow-count?page=${page}&size=${size}`,
+    {
+      method: "GET",
+    }
+  );
   const responseJsonObject = await response.json();
   return responseJsonObject;
 };
 
 export const listMentorsByMentoringCount = async (page, size) => {
-  const response = await fetch(`${BACKEND_SERVER}/mentor-profile/mentoring-count?page=${page}&size=${size}`, {
-    method: 'GET',
-  });
+  const response = await fetch(
+    `${BACKEND_SERVER}/mentor-profile/mentoring-count?page=${page}&size=${size}`,
+    {
+      method: "GET",
+    }
+  );
   const responseJsonObject = await response.json();
   return responseJsonObject;
 };
 
 export const listMentorsByActivityCount = async (page, size) => {
-  const response = await fetch(`${BACKEND_SERVER}/mentor-profile/activity-count?page=${page}&size=${size}`, {
-    method: 'GET',
-  });
+  const response = await fetch(
+    `${BACKEND_SERVER}/mentor-profile/activity-count?page=${page}&size=${size}`,
+    {
+      method: "GET",
+    }
+  );
   const responseJsonObject = await response.json();
   return responseJsonObject;
 };
 export const listMentorsByRating = async () => {
   const response = await fetch(`${BACKEND_SERVER}/mentor-profile/rating`, {
-    method: 'GET',
+    method: "GET",
   });
   const responseJsonObject = await response.json();
   return responseJsonObject;

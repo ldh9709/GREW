@@ -170,21 +170,22 @@ public class ReviewRestController {
 	@Operation(summary = "특정 멤버 리뷰 목록 출력")
 	@SecurityRequirement(name = "BearerAuth")//API 엔드포인트가 인증을 요구한다는 것을 문서화(Swagger에서 JWT인증을 명시
 	@PreAuthorize("hasRole('MENTEE') or hasRole('MENTOR')")//ROLE이 MENTEE인 사람만 접근 가능
-	@GetMapping("/memberList")
+	@GetMapping("/reviewList/{mentorProfileNo}")
 	public ResponseEntity<Response> selectReviewByMemberNo(
 			Authentication authentication,
+			@PathVariable(name="mentorProfileNo") Long mentorProfileNo,
 			@RequestParam(name = "page",defaultValue = "0") int page,  // 기본값은 0 페이지
             @RequestParam(name = "size",defaultValue = "10") int size){
 		
-		PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
-		Long memberNo = principalDetails.getMemberNo();
-		
-		Response response = new Response();
-		Page<ReviewDto> reviews = reviewService.getReviewByMemberNo(memberNo,page,size);
+		// mentorProfileNo로 멘토의 memberNo를 찾아야 합니다.
+	    Long memberNo = mentorProfileService.getMemberNoByMentorNo(mentorProfileNo); // 해당 멘토의 memberNo를 찾는 서비스 메서드
+
+	    Response response = new Response();
+	    Page<ReviewDto> reviewsPage = reviewService.getReviewByMemberNo(memberNo, page, size);
+	    List<ReviewDto> reviews = reviewsPage.getContent();
 		response.setStatus(ResponseStatusCode.READ_REVIEW_LIST_SUCCESS);
 		response.setMessage(ResponseMessage.READ_REVIEW_LIST_SUCCESS);
 		response.setData(reviews);
-		
 		HttpHeaders httpHeaders = new HttpHeaders();
 		httpHeaders.setContentType(new MediaType(MediaType.APPLICATION_JSON, Charset.forName("UTF-8")));
 		

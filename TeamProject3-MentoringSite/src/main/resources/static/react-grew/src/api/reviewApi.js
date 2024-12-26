@@ -67,15 +67,25 @@ export const listReviewByChatRoom = async (chatRoomNo, page, size) => {
   return responseJsonObject;
 };
 
-// 특정 멤버 리뷰 목록 출력
-export const listReviewByMember = async (token, page, size) => {
-  const response = await fetch(`${BACKEND_SERVER}/review/memberList?page=${page}&size=${size}`, {
-    method: "GET",
-    headers: {
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${token}` // Authorization 헤더에 JWT 토큰 추가
-   }
-  });
+export const listReviewByMember = async (
+  mentorProfileNo,
+  page,
+  size,
+  token
+) => {
+  const response = await fetch(
+    `${BACKEND_SERVER}/review/reviewList/${mentorProfileNo}?page=${page}&size=${size}`,
+    {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`, // JWT 토큰 추가
+      },
+    }
+  );
+  if (!response.ok) {
+    console.error("Error fetching reviews:", response.statusText);
+  }
   const responseJsonObject = await response.json();
   return responseJsonObject;
 };
