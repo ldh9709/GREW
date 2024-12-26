@@ -18,7 +18,7 @@ GET  /member/mentor-summary/{memberNo}      :멘토 회원 활동정보 요약 �
 
 //아이디 중복 체크
 export const checkIdDupl = async (sendJsonObject) => {
-    const response = await fetch(`${BACKEND_SERVER}/member/check-memberId`, {
+    const response = await fetch(`${BACKEND_SERVER}/member/check-memberId?memberId=${encodeURIComponent(sendJsonObject.memberId)}`, {
         method:'GET',
         headers: {
             'Content-type': 'application/json'

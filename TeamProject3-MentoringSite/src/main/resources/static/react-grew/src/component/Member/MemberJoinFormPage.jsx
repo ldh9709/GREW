@@ -18,12 +18,14 @@ export const MemberJoinFormPage = () => {
   //에러 상태메세지
   const [memberIdError, setMemberIdError] = useState(""); 
   const [memberPasswordError, setMemberPasswordError] = useState(""); 
+  const [memberPassword2Error, setMemberPassword2Error] = useState(""); 
   const [memberEmailError, setMemberEmailError] = useState("");
   const [memberInterestError, setMemberInterestError] = useState("");
   //멤버 데이터
   const [member, setMember] = useState({
     memberId: "",
     memberPassword: "",
+    memberPassword2: "",
     memberEmail: "",
     memberName: "",
     interests: [],
@@ -33,6 +35,7 @@ export const MemberJoinFormPage = () => {
   //아이디 중복
   const [isIdAvailable, setIsIdAvailable] = useState(null); // 중복 여부 상태
 
+  /* 아이디 중복 확인 */
   const checkIdDupl = async () => {
     const response = await memberApi.checkIdDupl({ memberId: member.memberId });
     if (response?.status === responseStatus.CREATED_MEMBER_FAIL) {
@@ -41,6 +44,15 @@ export const MemberJoinFormPage = () => {
     } else {
       setMemberIdError("");
       setIsIdAvailable(true);
+    }
+  }
+
+  /* 비밀번호 확인  */
+  const checkPassword = async () => {
+    if (member.memberPassword !== member.memberPassword2) {
+      setMemberPassword2Error("비밀번호를 다시 확인해주세요.");
+    } else {
+      setMemberPassword2Error("");
     }
   }
 
@@ -71,6 +83,7 @@ export const MemberJoinFormPage = () => {
       }
     }
 
+
     /* 이메일 유효성 검사 */
     if (e.target.name === "memberEmail") {
       const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
@@ -97,6 +110,7 @@ export const MemberJoinFormPage = () => {
   const sendJoinCode = async () => {
     const response = await memberApi.sendJoinCode(member.memberEmail);
     setTempCode(response.data);
+    alert("이메일이 발송되었습니다.");
   };
 
   /* 관심사 선택 시 배열 업데이트 */
@@ -137,6 +151,11 @@ export const MemberJoinFormPage = () => {
       return;
     }
 
+    if(member.memberPassword !== member.memberPassword2) {
+      alert("비밀번호와 일치하지 않습니다다.");
+      return;
+    }
+
     if(!member.memberName) {
       alert("이름을 입력하세요.");
       return;
@@ -147,7 +166,7 @@ export const MemberJoinFormPage = () => {
       return;
     }
 
-    if(!member.interests) {
+    if(!member.interests || member.interests.length !== 3) {
       alert("3개의 관심사를 선택하세요.");
       return;
     }
@@ -216,6 +235,7 @@ export const MemberJoinFormPage = () => {
             <input
                 type="text"
                 name="memberId"
+                className={memberIdError ? "member-input-error" : ""} // 에러가 있을 경우 클래스 추가
                 placeholder="아이디를 입력하세요"
                 onChange={handleChangeJoinForm}
                 onBlur={checkIdDupl}
@@ -231,12 +251,29 @@ export const MemberJoinFormPage = () => {
             <input
                 type="password"
                 name="memberPassword"
+                className={memberPasswordError ? "member-input-error" : ""} // 에러가 있을 경우 클래스 추가
                 placeholder="비밀번호를 입력하세요"
                 onChange={handleChangeJoinForm}
                 required
             />
          <p className={`member-form-join-check ${memberPasswordError ? "visible" : ""}`}>
           {memberPasswordError}</p>    
+        </div>
+        <div className="member-form-join-group">
+        <p className="member-form-join-p">
+        비밀번호 확인<span className="red-star">*</span>
+        </p>
+            <input
+                type="password"
+                name="memberPassword2"
+                className={memberPassword2Error ? "member-input-error" : ""} // 에러가 있을 경우 클래스 추가
+                placeholder="비밀번호를 입력하세요"
+                onChange={handleChangeJoinForm}
+                onBlur={checkPassword}
+                required
+            />
+         <p className={`member-form-join-check ${memberPassword2Error ? "visible" : ""}`}>
+          {memberPassword2Error}</p>    
         </div>
         <div className="member-form-join-group">
         <p className="member-form-join-p">
@@ -308,13 +345,13 @@ export const MemberJoinFormPage = () => {
         className={`interest-item ${member.interests.includes("6") ? "selected" : ""}`}
         onClick={() => handleInterestClick("6")}
       >
-        중학생 교육육</div>
+        중학생 교육</div>
         
         <div
         className={`interest-item ${member.interests.includes("7") ? "selected" : ""}`}
         onClick={() => handleInterestClick("7")}
       >
-        고등학생 교육육</div>
+        고등학생 교육</div>
         
         <div
         className={`interest-item ${member.interests.includes("8") ? "selected" : ""}`}
