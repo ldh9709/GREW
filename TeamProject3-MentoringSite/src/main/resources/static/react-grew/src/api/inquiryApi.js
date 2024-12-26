@@ -17,13 +17,14 @@ GET  /inquiry                         :내가 작성한 질문 전체 출력
 
 */
 //질문수정
-export const updateInquiry = async (sendJsonObject) => {
+export const updateInquiry = async (sendJsonObject,token) => {
   const response = await fetch(
     `${BACKEND_SERVER}/inquiry/update/${sendJsonObject.inquiryNo}`,
     {
       method: "PUT", // HTTP 메서드
       headers: {
-        "Content-Type": "application/json;charset=UTF-8", // 요청 헤더 설정
+        "Content-Type": "application/json;charset=UTF-8",
+        'Authorization': `Bearer ${token}`// 요청 헤더 설정
       },
       body: JSON.stringify(sendJsonObject), // 요청 본문에 JSON 객체 전달
     }
@@ -32,11 +33,15 @@ export const updateInquiry = async (sendJsonObject) => {
   return responseJsonObject;
 };
 //질문삭제(상태변경)
-export const deleteInquiry = async (inquiryNo) => {
+export const deleteInquiry = async (inquiryNo,token) => {
   const response = await fetch(
     `${BACKEND_SERVER}/inquiry/delete/${inquiryNo}`,
     {
       method: "PUT",
+      headers:{
+                "Content-Type": "application/json;charset=UTF-8",
+        'Authorization': `Bearer ${token}`
+      }
     }
   );
   const responseJsonObject = await response.json();
@@ -215,10 +220,10 @@ export const countAnswerByinquiryNo = async (inquiryNo) => {
    const responseJsonObject = await response.json();
    return responseJsonObject;
 }
-//질문의 답변수 
+//베스트 답변변
 export const bestAnswerList = async () => {
    
-   const response = await fetch(`${BACKEND_SERVER}/answer/recently-vote?page=0&size=10`, {
+   const response = await fetch(`${BACKEND_SERVER}/answer/recently-vote`, {
       method: 'GET',
       headers: {
          'Content-Type': 'application/json',

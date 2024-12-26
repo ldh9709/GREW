@@ -112,12 +112,14 @@ public class MemberServiceImpl implements MemberService {
 	/***** 아이디 중복체크 *****/	
 	public Boolean checkIdDupl(String memberId) {
 		Boolean exitsMember = memberRepository.existsByMemberId(memberId);
+		//아이디가 중복이면 true, 아니면 false
 		return exitsMember;
 	}
 	
 	/* 이메일 중복 체크 */
 	public Boolean checkEmailDupl(String memberEmail) {
 		Boolean exitstEmail = memberRepository.existsByMemberEmail(memberEmail);
+		//이메일이 중복이면 false, 중복이 아니면 true
 		return exitstEmail ? false : true;
 	}
 	
@@ -125,11 +127,17 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	@Transactional
 	public Member saveMember(MemberDto memberDto) {
+		
+		//멤버DTO 객체에서 속성 분리
 		String memberId = memberDto.getMemberId();
 		String memberPassword = memberDto.getMemberPassword();
 		String memberEmail = memberDto.getMemberEmail();
 		
+		//ID중복 체크
 		checkIdDupl(memberId);
+		
+		
+		//이메일 중복 체크
 		checkEmailDupl(memberEmail);
 		
 		//멤버 생성

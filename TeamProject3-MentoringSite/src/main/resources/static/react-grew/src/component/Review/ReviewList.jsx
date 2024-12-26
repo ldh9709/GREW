@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom"; // useNavigate를 추가
 import * as reviewApi from "../../api/reviewApi"; // 리뷰 API
+import "../../css/review.css"; // CSS 파일 임포트
 
 export default function ReviewListPage() {
   const [reviews, setReviews] = useState([]); // 리뷰 목록 상태
@@ -47,18 +48,34 @@ export default function ReviewListPage() {
     navigate(`/review/${reviewNo}`); // reviewNo를 URL로 넘겨서 상세 페이지로 이동
   };
 
+  // 별점 생성 함수
+  const renderStars = (score) => {
+    const stars = [];
+    for (let i = 0; i < 5; i++) {
+      if (i < score) {
+        stars.push(<span key={i} className="star filled">★</span>);
+      } else {
+        stars.push(<span key={i} className="star">★</span>);
+      }
+    }
+    return stars;
+  };
+
   return (
-    <div>
+    <div className="review-list-container">
       <h1>전체 리뷰 목록</h1>
-      <ul>
+      <ul className="review-list">
         {reviews.map((review) => (
           <li
             key={review.reviewNo}
             onClick={() => handleReviewClick(review.reviewNo)}
+            className="review-item"
           >
             <h3>{review.reviewTitle}</h3>
             <p>{review.reviewContent}</p>
-            <p>{review.reviewScore}</p>
+            <div className="review-stars">
+              {renderStars(review.reviewScore)} {/* 별점 표시 */}
+            </div>
             <p>작성일: {new Date(review.reviewDate).toLocaleDateString()}</p>
             <p>작성자 번호: {review.memberNo}</p>
             <p>멘티 이름: {review.menteeName}</p>

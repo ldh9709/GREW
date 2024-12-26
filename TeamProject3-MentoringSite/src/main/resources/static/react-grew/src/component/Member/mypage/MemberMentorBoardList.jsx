@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react'
-import { getCookie } from "../../../util/cookieUtil"
+import { useMemberAuth } from "../../../util/AuthContext"
 import * as mentorBoardApi from '../../../api/mentorBoardApi'
 import imageSrc from '../mentor-content1.jpg'
-
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEye } from '@fortawesome/free-regular-svg-icons';
 
 export default function MemberMentorContentList() {
-    const memberCookie = getCookie("member");
-    const token = memberCookie.accessToken;
+    /* Context에 저장된 토큰, 멤버정보 */
+    const { token, member } = useMemberAuth();
 
     const [boardList, setBoardList] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
@@ -48,20 +49,47 @@ export default function MemberMentorContentList() {
             <p className="board-description">{board.mentorBoardContent.substring(0,100)}...</p>
             <p className='board-info'>
               <span className="board-date">{board.mentorBoardDate.substring(0,10)}</span>
-              <span className="board-views"> | 조회수 : {board.mentorBoardViews}</span>
+              <span className="board-views">
+               <FontAwesomeIcon icon={faEye} /> <span>{board.mentorBoardViews}</span>
+              </span>
             </p>
           </div>
         </div>
       ))}
     </div>
     {/* 페이지네이션 버튼 */}
-    <div className="pagenation pagenation-bottom">
-      {pageNumbers.map((number) => (
-          <button key={number} onClick={() => paginate(number)}>
-              {number}
+    <div className="common-pagination common-pagination-bottom">
+        {/* 이전 버튼 */}
+        <button
+          className="common-pagination-arrow"
+          disabled={currentPage === 1}
+          onClick={() => paginate(currentPage - 1)}
+        >
+          &lt;
+        </button>
+
+        {/* 페이지 번호 버튼 */}
+        {pageNumbers.map((number) => (
+          <button
+            key={number}
+            className={`common-pagination-number ${
+              currentPage === number ? "active" : ""
+            }`}
+            onClick={() => paginate(number)}
+          >
+            {number}
           </button>
-      ))}
-      </div>   
+        ))}
+
+        {/* 다음 버튼 */}
+        <button
+          className="common-pagination-arrow"
+          disabled={currentPage === totalPages}
+          onClick={() => paginate(currentPage + 1)}
+        >
+          &gt;
+        </button>
+      </div> 
     </div>
   </>
   )

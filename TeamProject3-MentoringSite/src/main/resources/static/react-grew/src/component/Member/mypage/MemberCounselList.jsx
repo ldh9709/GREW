@@ -1,16 +1,15 @@
-import { getCookie } from "../../../util/cookieUtil"
+import { useMemberAuth } from "../../../util/AuthContext"
 import React, { useEffect, useState } from 'react'
 import image from '../../../image/images.jpeg'
 import * as chattingApi from '../../../api/chattingApi'
 import * as memberApi from '../../../api/memberApi'
 import * as reviewApi from '../../../api/reviewApi'
+import { useNavigate } from "react-router-dom"
 
 export default function MemberCounselList() {
-  const memberCookie = getCookie("member");
-  const token = memberCookie.accessToken;
-  const memberNo = memberCookie.memberNo;
-  const role = memberCookie.memberRole;
-
+    /* Context에 저장된 토큰, 멤버정보 */
+  const { token, member } = useMemberAuth();
+  const navigate = useNavigate();
   const [counselList, setCounselList] = useState([{}]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
@@ -23,7 +22,7 @@ export default function MemberCounselList() {
   //상담 내역 조회
   const fetchCounselList = async (page) => {
     try {
-      if (role === 'ROLE_MENTEE') {
+      if (member.memberRole === 'ROLE_MENTEE') {
         const response = await chattingApi.listChatRoom(token, page, 4);
         const chatRooms = response.data.content;
         const updateRooms = await Promise.all(
@@ -38,7 +37,7 @@ export default function MemberCounselList() {
         )
         setCounselList(updateRooms);
         setTotalPages(response.data.totalPages);
-      } else if (role === 'ROLE_MENTOR') {
+      } else if (member.memberRole === 'ROLE_MENTOR') {
         const response = await chattingApi.listChatRoom(token, page, 6);
         const chatRooms = response.data.content;
         console.log(chatRooms);
@@ -65,10 +64,6 @@ export default function MemberCounselList() {
     }
   }
 
-    //리뷰 작성 여부 확인
-    const fetchReview = async () => {
-    }
-
     const counselStatus = (status) => {
       switch (status) {
         case 7000:
@@ -90,7 +85,12 @@ export default function MemberCounselList() {
           return "관리 종료 ";
           break;
       }
-    }
+  }
+  
+  //
+  const handleReview = () => {
+    navigate(`/review/reviewWrite`);
+  }
 
     useEffect(() => {
       fetchCounselList(currentPage - 1);
@@ -112,7 +112,7 @@ export default function MemberCounselList() {
         {counselList.length === 0 ? (
           <p> 진행한 상담내역이 없습니다. </p>
         ) : (
-          role === "ROLE_MENTEE" ? (
+          member.memberRole === "ROLE_MENTEE" ? (
             <ul className="mentor-list">
               {counselList.map((counsel, index) => (
                 <li className="mentor-counsel-item" key={index}>
@@ -126,8 +126,8 @@ export default function MemberCounselList() {
                     </p>
                   </div>
                   <button
-                    className={`review-button ${counsel.chatRoomStatus === 7200 ? "active" : ""
-                      }`}
+                    className={`review-button ${counsel.chatRoomStatus === 7200 ? "active" : ""}`}
+                    onClick={handleReview}
                   >
                     리뷰 작성
                   </button>
@@ -145,7 +145,7 @@ export default function MemberCounselList() {
                       {counsel.chatRoomEndDate ? counsel.chatRoomEndDate.substring(0, 10) : ""}
                     </p>
                     <p className="counsel-date">
-                      리뷰여부: {counsel.isReview === 1 ? "작성" : "미작성"}
+                      리뷰여부: { !counsel.isReview ? "미작성" : "작성"}
                     </p>
                     <div className={`counsel-type ${counsel.chatRoomStatus === 7200 ? "green white" : "" }`}>
                       {counselStatus(counsel.chatRoomStatus)}
@@ -157,13 +157,38 @@ export default function MemberCounselList() {
           )
         )}
         {/* 페이지네이션 버튼 */}
-        <div className="pagenation pagenation-bottom">
-          {pageNumbers.map((number) => (
-            <button key={number} onClick={() => paginate(number)}>
-              {number}
+          <div className="common-pagination common-pagination-bottom">
+            {/* 이전 버튼 */}
+            <button
+              className="common-pagination-arrow"
+              disabled={currentPage === 1}
+              onClick={() => paginate(currentPage - 1)}
+            >
+              &lt;
             </button>
-          ))}
-        </div>
+
+            {/* 페이지 번호 버튼 */}
+            {pageNumbers.map((number) => (
+              <button
+                key={number}
+                className={`common-pagination-number ${
+                  currentPage === number ? "active" : ""
+                }`}
+                onClick={() => paginate(number)}
+              >
+                {number}
+              </button>
+            ))}
+
+            {/* 다음 버튼 */}
+            <button
+              className="common-pagination-arrow"
+              disabled={currentPage === totalPages}
+              onClick={() => paginate(currentPage + 1)}
+            >
+              &gt;
+            </button>
+          </div>
       </div>
     )
 }

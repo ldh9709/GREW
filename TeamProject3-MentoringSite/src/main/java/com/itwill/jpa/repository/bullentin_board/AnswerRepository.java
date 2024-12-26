@@ -1,5 +1,7 @@
 package com.itwill.jpa.repository.bullentin_board;
 
+import java.util.List;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -71,14 +73,14 @@ public interface AnswerRepository extends JpaRepository<Answer, Long>{
 	            "FROM answer a " +
 	            "LEFT JOIN vote v " +
 	            "ON a.answer_no = v.answer_no " +
-	            "WHERE (v.vote_date >= SYSDATE - 3 OR v.vote_date IS NULL) " +
+	            "WHERE (v.vote_date >= SYSDATE - INTERVAL '3' DAY OR v.vote_date IS NULL) " +
 	            "AND a.answer_status = 1 " +
 	            "GROUP BY a.answer_no, a.answer_content, a.answer_date, a.answer_status, a.answer_accept, a.inquiry_no, a.member_no " +
 	            "ORDER BY COUNT(CASE WHEN v.vote_type = 1 THEN 1 END) - " +
 	            "COUNT(CASE WHEN v.vote_type = 2 THEN 1 END) DESC," +
 	            "a.answer_no DESC", 
             nativeQuery = true)//jpql엔 sysdate 사용불가하기 때문에 nativeQuery로 오라클의 sql사용
-		Page<Answer> findByAnswerOrderByVoteDate(Pageable pageable);
+		List<Answer> findByAnswerOrderByVoteDate();
 
 	@Query("SELECT i.member.memberNo "
 		       + "FROM Answer a "
@@ -106,7 +108,7 @@ public interface AnswerRepository extends JpaRepository<Answer, Long>{
     Page<Answer> searchAnswersByKeyword(@Param("search") String search, Pageable pageable);
     
     //질문의 답변 수
-    Long countByInquiry_InquiryNo(Long inquiryNo);
+    Long countByInquiry_InquiryNoAndAnswerStatus(Long inquiryNo, Integer answerStatus);
 
 
 

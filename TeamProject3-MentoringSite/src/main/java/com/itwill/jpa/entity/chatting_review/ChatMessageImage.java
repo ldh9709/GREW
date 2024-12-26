@@ -34,6 +34,9 @@ public class ChatMessageImage {
     
     @Column(name="image_name", nullable=false)
     private String imageName;
+    
+    @Column(name = "BASE64IMAGE", columnDefinition = "CLOB")
+    private String base64Image;  // Base64로 인코딩된 이미지 데이터
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="chat_message_no", nullable=false)

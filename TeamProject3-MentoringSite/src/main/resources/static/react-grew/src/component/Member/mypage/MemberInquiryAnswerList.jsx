@@ -1,13 +1,12 @@
-import { getCookie } from "../../../util/cookieUtil"
+import { useMemberAuth } from "../../../util/AuthContext"
 import React, { useEffect, useState } from 'react'
 import * as inquiryApi from "../../../api/inquiryApi"
 import * as answerApi from "../../../api/answerApi"
 import { useNavigate } from 'react-router-dom';
 
 export default function MemberInquiryAnswerList() {
-    const memberCookie = getCookie("member");
-    const token = memberCookie.accessToken;
-    const role = memberCookie.memberRole;
+    /* Context에 저장된 토큰, 멤버정보 */
+    const { token, member } = useMemberAuth();
     
     const [dataList, setdataList] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
@@ -18,12 +17,12 @@ export default function MemberInquiryAnswerList() {
     const fetchInquiryAnswerList = async (page) => {
         try {
             let response;
-            if (role === 'ROLE_MENTEE') {
+            if (member.memberRole === 'ROLE_MENTEE') {
                 response = await inquiryApi.listInquiryByMemberNo(token, page);
                 console.log(response);
                 setdataList(response.data.content);
                 setTotalPages(response.data.totalPages);
-            } else if (role === 'ROLE_MENTOR') {
+            } else if (member.memberRole === 'ROLE_MENTOR') {
                 response = await answerApi.listAnswerByMemberNo(token,page);
                 console.log(response);
                 const updateAnswers = await Promise.all(
@@ -49,7 +48,7 @@ export default function MemberInquiryAnswerList() {
 
     useEffect(() => {
         fetchInquiryAnswerList(currentPage - 1);
-    },[currentPage])
+    },[currentPage,token])
     
     // 페이지 변경 시 데이터 갱신
     const paginate = (pageNumber) => {
@@ -67,7 +66,7 @@ export default function MemberInquiryAnswerList() {
         {dataList.length === 0 ?(
             <p> 작성 내용이 없습니다. </p>
         ) : (
-            role === "ROLE_MENTEE" ? (
+            member.memberRole === "ROLE_MENTEE" ? (
                 <table className="list-table">
                     <thead>
                         <tr>
@@ -79,19 +78,34 @@ export default function MemberInquiryAnswerList() {
                         </tr>
                     </thead>
                     <tbody>
-                        {/* 질문 리스트 map으로 반복 */}          
-                        {dataList.map((inquiry,index) => (
-                            <tr key={index} onClick={() => {
-                                navigate(`/inquiry/${inquiry.inquiryNo}`)
-                            }}>
-                                <td className="col-no">{index+1}</td>
+                        {/* 질문 리스트 map으로 반복 */}
+                        {dataList && dataList.length > 0 ? (
+                            dataList.map((inquiry, index) => (
+                            <tr
+                                key={index}
+                                onClick={() => {
+                                navigate(`/inquiry/${inquiry.inquiryNo}`);
+                                }}
+                            >
+                                <td className="col-no">{index + 1}</td>
                                 <td className="col-category">{inquiry.parentsCategoryName}</td>
                                 <td className="col-title">{inquiry.inquiryTitle}</td>
-                                <td className="col-date">{inquiry.inquiryDate.substring(0,10)}</td>
+                                {inquiry.inquiryDate ? (
+                                    <td className="col-date">{inquiry.inquiryDate.substring(0, 10)}</td>
+                                ) : (
+                                     <td>-</td>       
+                                )}
                                 <td className="col-views">{inquiry.inquiryViews}</td>
                             </tr>
-                        ))} 
-                    </tbody>
+                            ))
+                        ) : (
+                            <tr>
+                            <td colSpan="5" style={{ textAlign: "center" }}>
+                                질문내용이 없습니다
+                            </td>
+                            </tr>
+                        )}
+                        </tbody>
                 </table>
             ):(
                 <table className="list-table">
@@ -105,28 +119,67 @@ export default function MemberInquiryAnswerList() {
                     </thead>
                     <tbody>
                         {/* 질문 리스트 map으로 반복 */}          
-                        {dataList.map((answer,index) => (
-                            <tr key={index} onClick={() => {
-                                navigate(`/inquiry/${answer.inquiryNo}`)
-                            }}>
-                                <td className="col-no">{index+1}</td>
-                                <td className="col-inquiry-title">{answer.inquiryTitle}</td>
-                                <td className="col-views">{answer.answerContent.substring(0,50)}...</td>
-                                <td className="col-likes">{answer.vote}</td>
+                        {dataList && dataList.length > 0 ? (
+                            dataList.map((answer,index) => (
+                                <tr key={index} onClick={() => {
+                                    navigate(`/inquiry/${answer.inquiryNo}`)
+                                }}>
+                                    <td className="col-no">{index+1}</td>
+                                    <td className="col-inquiry-title">{answer.inquiryTitle}</td>
+                                    <td className="col-views">
+                                        {answer.answerContent
+                                            ? answer.answerContent.length > 50
+                                            ? `${answer.answerContent.substring(0, 50)}...`
+                                            : answer.answerContent
+                                            : "내용 없음"}
+                                    </td>
+                                    <td className="col-likes">{answer.vote}</td>
+                                </tr>
+                            )) 
+                        ) :(
+                            <tr>
+                            <td colSpan="4" style={{ textAlign: "center" }}>
+                                질문내용이 없습니다
+                            </td>
                             </tr>
-                        ))} 
+                        )}          
                     </tbody>
                 </table>
             )
         )}
             {/* 페이지네이션 버튼 */}
-            <div className="pagenation pagenation-bottom">
+            <div className="common-pagination common-pagination-bottom">
+                {/* 이전 버튼 */}
+                <button
+                className="common-pagination-arrow"
+                disabled={currentPage === 1}
+                onClick={() => paginate(currentPage - 1)}
+                >
+                &lt;
+                </button>
+
+                {/* 페이지 번호 버튼 */}
                 {pageNumbers.map((number) => (
-                    <button key={number} onClick={() => paginate(number)}>
-                        {number}
-                    </button>
+                <button
+                    key={number}
+                    className={`common-pagination-number ${
+                    currentPage === number ? "active" : ""
+                    }`}
+                    onClick={() => paginate(number)}
+                >
+                    {number}
+                </button>
                 ))}
-            </div>   
+
+                {/* 다음 버튼 */}
+                <button
+                className="common-pagination-arrow"
+                disabled={currentPage === totalPages}
+                onClick={() => paginate(currentPage + 1)}
+                >
+                &gt;
+                </button>
+            </div>
     </div>
   )
 }

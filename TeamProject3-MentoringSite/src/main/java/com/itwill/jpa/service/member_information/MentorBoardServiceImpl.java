@@ -267,31 +267,30 @@ public class MentorBoardServiceImpl implements MentorBoardService {
 	    @Override
 	    public Page<MentorBoardDto> getByCategoryMentorBoardOrderByView(Long categoryNo, int page, int size) {
 	        Pageable pageable = PageRequest.of(page, size);
-	        Page<MentorBoard> mentorBoards = mentorBoardRepository.findByCategoryMentorBoardOrderByView(categoryNo, pageable);
-	        return mentorBoards.map(MentorBoardDto::toDto);
+	        return mentorBoardRepository.findByCategoryMentorBoardOrderByView(categoryNo, pageable)
+	                                    .map(MentorBoardDto::toDto);
 	    }
 
 	    @Override
 	    public Page<MentorBoardDto> getByParentCategoryMentorBoardOrderByView(Long categoryNo, int page, int size) {
 	        Pageable pageable = PageRequest.of(page, size);
-	        Page<MentorBoard> mentorBoards = mentorBoardRepository.findByParentCategoryMentorBoardOrderByView(categoryNo, pageable);
-	        return mentorBoards.map(MentorBoardDto::toDto);
+	        return mentorBoardRepository.findByParentCategoryMentorBoardOrderByView(categoryNo, pageable)
+	                                    .map(MentorBoardDto::toDto);
 	    }
 
 	    @Override
 	    public Page<MentorBoardDto> getByCategoryMentorBoardOrderByDate(Long categoryNo, int page, int size) {
 	        Pageable pageable = PageRequest.of(page, size);
-	        Page<MentorBoard> mentorBoards = mentorBoardRepository.findByCategoryMentorBoardOrderByDate(categoryNo, pageable);
-	        return mentorBoards.map(MentorBoardDto::toDto);
+	        return mentorBoardRepository.findByCategoryMentorBoardOrderByDate(categoryNo, pageable)
+	                                    .map(MentorBoardDto::toDto);
 	    }
 
 	    @Override
 	    public Page<MentorBoardDto> getByParentCategoryMentorBoardOrderByDate(Long categoryNo, int page, int size) {
 	        Pageable pageable = PageRequest.of(page, size);
-	        Page<MentorBoard> mentorBoards = mentorBoardRepository.findByParentCategoryMentorBoardOrderByDate(categoryNo, pageable);
-	        return mentorBoards.map(MentorBoardDto::toDto);
+	        return mentorBoardRepository.findByParentCategoryMentorBoardOrderByDate(categoryNo, pageable)
+	                                    .map(MentorBoardDto::toDto);
 	    }
-	    
 	    
 	    @Override
 	    public Page<MentorBoardDto> getMentorBoardsByStatusAndSortedByViews(int status, int page, int size) {

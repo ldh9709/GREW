@@ -47,9 +47,9 @@ public class JWTCheckFilter extends OncePerRequestFilter {
 //		|| path.startsWith("/review")
 //		|| path.equals("/inquiry") 
 //		|| path.startsWith("/inquiry/list")
-		|| path.startsWith("/inquiry/update")
+//		|| path.startsWith("/inquiry/update")
 		|| path.startsWith("/inquiry/increase")
-		|| path.startsWith("/inquiry/delete")
+//		|| path.startsWith("/inquiry/delete")
 		|| path.startsWith("/inquiry/view-count")
 		|| path.startsWith("/inquiry/search")
 		|| path.startsWith("/inquiry/find")
@@ -60,11 +60,12 @@ public class JWTCheckFilter extends OncePerRequestFilter {
 		|| path.endsWith("-vote")
 		|| path.endsWith("votes")
 		|| path.startsWith("/inquiry/answer-count")
-		|| path.startsWith("/answer/delete") 
+//		|| path.startsWith("/answer/delete") 
 		|| path.startsWith("/answer/accept") 
-		|| path.startsWith("/answer/update") 
+//		|| path.startsWith("/answer/update") 
 		|| path.startsWith("/answer/view") 
 		|| path.startsWith("/answer/re") 
+
 
 		|| path.startsWith("/mentor-profile/upload-image") 
 		|| path.startsWith("/mentor-profile/create-profile") 
@@ -77,8 +78,17 @@ public class JWTCheckFilter extends OncePerRequestFilter {
 		|| path.startsWith("/mentor-profile/follow-count") 
 		|| path.startsWith("/mentor-profile/activity-count") 
 		|| path.startsWith("/mentor-profile/mentor-rating") 
+
 		
-	//	|| path.startsWith("/mentor-board") 
+		|| path.startsWith("/mentor-board/upload-image") 
+		|| path.startsWith("/mentor-board/image-url") 
+		|| path.startsWith("/mentor-board/view-count") 
+		|| path.startsWith("/mentor-board/date") 
+		|| path.startsWith("/mentor-board/views") 
+		|| path.startsWith("/mentor-board/status") 
+		|| path.startsWith("/mentor-board/other") 
+		|| path.startsWith("/mentor-board/search") 
+		|| path.startsWith("/mentor-board/member") 
 		
 
 
@@ -101,8 +111,8 @@ public class JWTCheckFilter extends OncePerRequestFilter {
 		|| path.startsWith("/main")
     	|| path.startsWith("/v3/api-docs") 
     	|| path.startsWith("/favicon.ico")
-    	|| path.startsWith("/mentor-profile")
-    	|| path.startsWith("/mentor-board")
+//    	|| path.startsWith("/mentor-profile")
+//    	|| path.startsWith("/mentor-board")
     	|| path.startsWith("/mentorprofile")
     	) {
       return true;
@@ -117,11 +127,7 @@ public class JWTCheckFilter extends OncePerRequestFilter {
   protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
       throws ServletException, IOException {
 	  
-	  // 요청 헤더에서 Authorization 추출
-	  System.out.println(">>>>>>>>>>>>request : " + request);
-	  System.out.println(">>>>>>>>>>>>response : " + response);
-	  System.out.println(">>>>>>>>>>>>filterChain : " + filterChain);
-	  
+	  	//요청 헤더에서 Authorization 추출
         String authHeaderStr = request.getHeader("Authorization");
         
         if (authHeaderStr == null || !authHeaderStr.startsWith("Bearer ")) {
@@ -130,7 +136,7 @@ public class JWTCheckFilter extends OncePerRequestFilter {
             return;
         }
         
-        System.out.println(">>>>>>>>>>>>authHeaderStr(JWT필터 적용되고 있음) : " + authHeaderStr);
+        System.out.println("authHeaderStr(JWT필터 적용되고 있음) : >>>>>" + authHeaderStr);
         
         try {
           // Authorization 헤더에서 'Bearer ' 부분을 제외한 토큰만 추출

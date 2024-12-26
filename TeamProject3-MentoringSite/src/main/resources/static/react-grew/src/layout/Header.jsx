@@ -1,44 +1,139 @@
-import React, { useState } from "react";
-import { getCookie } from "../util/cookieUtil";
-import { useNavigate } from "react-router-dom";
-import { logout } from "../api/memberApi"
+import React from "react";
 import "../css/styles.css";
+import { useNavigate } from "react-router-dom";
+import { useMemberAuth } from "../util/AuthContext";
+import { logout, memberProfile, getMentorProfile, updateMemberRole } from "../api/memberApi";
 
 export default function HeaderMenu() {
   const navigate = useNavigate();
 
+  /*
   const memberCookie = getCookie("member");
-  const token = memberCookie ? memberCookie.accessToken : null; // 안전하게 접근
-  
   console.log("멤버 쿠키 : ", memberCookie);
-  const handleLoginNavigate = async () => {
-    navigate('/member/login');
-  };
+
+  const token = memberCookie ? memberCookie.accessToken : null; // 안전하게 접근
+  console.log("토큰 : ", token);
+
+  const DecodeToken = token ? jwtDecode(token) : null; // 안전한 접근
+  if (!DecodeToken) {
+    console.error("Decode토큰이 Null입니다.(Token이 널이라 디코딩이 불가하다는 뜻)");
+  } else {
+    console.log("Decode 토큰 : ", DecodeToken);
+  }
+
+  const memberNo = DecodeToken ? DecodeToken.memberNo : null;
+  console.log("멤버 넘버 : ", memberNo);
+
+  const mentorProfileNo = DecodeToken ? DecodeToken.mentorProfileNo : null;
+  console.log("멘토 프로필 넘버 : ", mentorProfileNo);
+  */
+
+  const auth = useMemberAuth();
+
+  const token = auth?.token || null;
+  console.log("토큰 : ", auth?.token || null);
+  const member = auth?.member || {};
+  console.log("멤버 : ", auth?.member || {});
+  const login = auth.login;
   
+
+
+  const memberNo = token ? member.memberNo : null;
+  console.log("멤버 넘버 : ", memberNo);
+
+  const mentorProfileNo = token ? member.mentorProfileNo : null;
+  console.log("멘토 프로필 넘버 : ", mentorProfileNo);
+
+  
+
+  // 로그인 페이지로 이동
+  const handleLoginNavigate = () => {
+    navigate("/member/login");
+  };
+
+  // 로그아웃 처리
   const handleLogoutAction = async () => {
-    const isLogout = await logout();
-    if(isLogout) {
-      navigate('/main');
-      alert("로그아웃 성공");
-    } else {
-      alert("로그아웃 실패");
+    try {
+      const isLogout = await logout();
+      auth.logout();
+      console.log("로그아웃 성공 여부 : ", isLogout);
+      navigate("/main");
+    } catch (error) {
+      console.error("로그아웃 실패: ", error);
     }
   };
 
-  const handleJoinNavigate = async () => {
-    navigate('/member/join');
+  // 회원가입 페이지로 이동
+  const handleJoinNavigate = () => {
+    navigate("/member/join");
   };
 
+  // 프로필 페이지로 이동
   const handleProfileNavigate = async () => {
-    navigate('/member/profile');
+    try {
+      
+      
+      const memberProfileResponse = await memberProfile(token);
+      console.log("멤버 프로필 : ", memberProfileResponse);
+      
+      const mentorProfileResponse = await getMentorProfile(mentorProfileNo);
+      console.log("멘토 프로필 : ", mentorProfileResponse);
+      
+      /* 멤버의 관심사가 19번인지 확인(SNS로그인 시 기본값) */
+      const checkMemberCategory = memberProfileResponse?.data?.interests?.some(
+        (interest) => interest.categoryNo === 19
+      );
+      console.log("checkMemberCategory : ", checkMemberCategory);
+
+    if (checkMemberCategory) {
+        navigate("/member/profile/edit");
+
+      } else {
+        navigate("/member/profile"); // 기본 프로필로 이동
+      }
+    } catch (error) {
+      console.error("프로필 이동 중 오류 발생: ", error);
+      navigate("/member/profile"); // 오류 시 기본 경로로 이동
+    }
   };
 
-  /* 로그인 성공 시 화면 리로드 */
-  useState(()=> {
-    navigate(0);
-  }, []);
+  const handleUpdateRole = async (role) => {
+        try {
+            if (member.mentorProfileNo === 0) {
+                const confirmation = window.confirm('멘토를 신청 하시겠습니까?')
+                if (!confirmation) {
+                    return;
+                }
+                navigate(`/mentor/join`);
+            } else {
+                const confirmation = window.confirm(
+                    member.memberRole === "ROLE_MENTEE" 
+                    ? "멘토로 변경하시겠습니까?" 
+                    : "멘티로 변경하시겠습니까?"
+                );
+                if (!confirmation) {
+                    return;
+                }
+            }          
+
+            const response = await updateMemberRole(token, role);
+            if (response.status === 2012) {
+                // 기존 쿠키 삭제
+                // document.cookie = "member=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+                login(response.data.accessToken);
+              }
+                //강제 리로드
+                // window.location.reload();
+                // //성공 후 메인으로 이동
+                navigate(`/main`);
+        } catch (error) {
+          console.error('회원 권한 변경 실패', error);
+        }
+    };
 
 
+
+  // 스타일 정의
   const navStyle = {
     fontFamily: "'Noto Sans KR', sans-serif",
     padding: "10px 20px",
@@ -50,30 +145,50 @@ export default function HeaderMenu() {
     gap: "20px",
   };
 
- 
   return (
-    <div className="header" style={navStyle}>
-      <div className="rightMenu" style={rightMenuBarStyle}>
+  <div className="header" style={navStyle}>
+    <div className="rightMenu" style={rightMenuBarStyle}>
       {token ? (
+        // 로그인 상태
         <>
-          {/* <a href="/member/profile" className="mypage">
-          마이페이지
-        </a> */}
-        <input type="button" className="profile-button" onClick={handleProfileNavigate} value="마이페이지"/>
-        {/* <a href="/logout" onClick={handleLogoutAction} className="mypage">
-        로그아웃
-        </a> */}
-        <input type="button" className="logout-button" onClick={handleLogoutAction} value="로그아웃"/>
+          <input
+            type="button"
+            className="profile-button"
+            onClick={handleProfileNavigate}
+            value="마이페이지"
+          />
+          <input
+            type="button"
+            className="logout-button"
+            onClick={handleLogoutAction}
+            value="로그아웃"
+            />
+          <input
+            type="button"
+            className="header-role"
+            onClick={()=>{member.memberRole === "ROLE_MENTEE" ? handleUpdateRole('ROLE_MENTOR') : handleUpdateRole('ROLE_MENTEE')}}
+            value={member.memberRole === "ROLE_MENTEE" ? "멘티" : "멘토"}
+          />
         </>
       ) : (
-         <>
-         <input type="button" className="login-button" onClick={handleLoginNavigate} value="로그인"/>
+        // 비로그인 상태
+        <>
 
-         <input type="button" className="join-button" onClick={handleJoinNavigate} value="회원가입"/>
-
-         </>
-        )}
-      </div>
+          <input
+            type="button"
+            className="login-button"
+            onClick={handleLoginNavigate}
+            value="로그인"
+          />
+          <input
+            type="button"
+            className="join-button"
+            onClick={handleJoinNavigate}
+            value="회원가입"
+          />
+        </>
+      )}
     </div>
+  </div>
   );
 }

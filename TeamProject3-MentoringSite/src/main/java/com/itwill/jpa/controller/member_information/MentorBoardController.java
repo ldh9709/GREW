@@ -393,6 +393,7 @@ public class MentorBoardController {
 
         return new ResponseEntity<>(response, headers, HttpStatus.OK);
     }
+
     
     @Operation(summary = "상태값과 조회수 기준 정렬된 멘토 보드 리스트 조회")
     @GetMapping("/sorted/views/status")

@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.itwill.jpa.dto.chatting_review.ChatMessageDto;
 import com.itwill.jpa.entity.chatting_review.ChatMessage;
+import com.itwill.jpa.entity.chatting_review.ChatMessageImage;
 
 public interface ChatMessageService {
 	// 메시지 저장
@@ -14,5 +15,7 @@ public interface ChatMessageService {
 	public ChatMessage getChatMessageByNo(Long chatMessageNo);
 	// 모든 채팅 불러오기
 	public List<ChatMessageDto> getChatMessageAll();
+
+	public ChatMessage createChatMessageWithImage(ChatMessage chatMessage, ChatMessageImage chatMessageImage);
 
 }

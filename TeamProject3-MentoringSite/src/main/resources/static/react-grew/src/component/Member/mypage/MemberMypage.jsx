@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import MemberSummary from './MemberSummary'
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import "../../../css/styles.css"
 import "../../../css/member.css";
 import MemberTabs from './MemberTabs'
-import * as memberApi from "../../../api/memberApi"
+
 
 export default function MemberMypage() {
+
   // const { memberNo } = useParams();
   // const [isDataReady, setIsDataReady] = useState(false);
 
