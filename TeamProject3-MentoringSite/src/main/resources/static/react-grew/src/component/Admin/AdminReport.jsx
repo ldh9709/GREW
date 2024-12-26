@@ -7,13 +7,13 @@ export const UserCard = () => {
     const token = memberCookie.accessToken;
 
     const [reports,setReport] = useState([]);//초기설정
-    const [filter, setFilter] = useState(1); // 초기 필터를 1(전체 출력)로 설정
+  
     const fetchReports = async (token,filter,page) => {//fetct 목록 조회 함수 생성
         try {
             const response = await adminApi.getAdminReportList(token,filter,0);
             setReport(response.data);
             console.log(response);
-            console.log('신고 목록:',response.data);            
+            console.log(response.data);            
         } catch (error) {
             console.log('신고 목록 조회 실패', error);
         }
@@ -21,25 +21,19 @@ export const UserCard = () => {
     
     useEffect(() => {
         if (token) {  // token이 있을 경우에만 실행
-            fetchReports(filter, 0); // 초기 페이지를 0으로 설정
+            fetchReports(token, 1);  // 1번 필터링을 예시로 사용
         }
-    }, [filter, token]);  // token이 변경될 때마다 실행
+    }, [token]);  // token이 변경될 때마다 실행
 
-    const handleFilterChange = (event) => {
-        const selectedFilter = parseInt(event.target.value, 10); // 드롭다운에서 선택된 필터 값
-        setFilter(selectedFilter);
-    };
+    /*
+    신고 접수 흐름
+    1. 신고타켓번호를 통해 신고 내용을 확인하러감
+    2. '접수' 버튼 클릭 1) 신고처리완료
+                          2)무고처리
+  */
 
     return (
-        <div className="admin-member-container">             
-            <div className="dropdown"> {/* 드롭다운 메뉴 */}
-                <select onChange={handleFilterChange} value={filter}>
-                    <option value={1}>전체 출력</option>
-                    <option value={2}>신고 접수</option>
-                    <option value={3}>검토 중</option>
-                    <option value={4}>처리 완료</option>
-                </select>
-            </div> 
+        <div className="admin-member-container">  
             <table className="member-table">
                 <thead>
                     <tr>
