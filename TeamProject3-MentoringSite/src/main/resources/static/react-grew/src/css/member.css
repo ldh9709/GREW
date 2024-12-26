@@ -513,7 +513,6 @@ body {
 /* 프로필 리뷰 내역 */
 .review-list {
   position: relative;
-  display: flex;
   justify-content: flex-start;
   align-items: flex-start;
   flex-wrap: wrap;
@@ -527,6 +526,7 @@ body {
   border: 1px solid #ddd; 
   border-radius: 8px;
   padding: 16px; margin: 0 auto;
+  margin-bottom: 15px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
   text-align: left;
   transition: box-shadow 0.3s ease, transform 0.3s ease;
@@ -631,3 +631,4 @@ body {
   font-size: 14px;
   color: #555;
 }
+

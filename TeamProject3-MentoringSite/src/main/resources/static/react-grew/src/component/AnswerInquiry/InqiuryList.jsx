@@ -302,26 +302,37 @@ function InqiuryList() {
         </div>
       </div>
       {/* 페이지네이션 버튼 */}
-      <div className="pagenation">
-        {startPage > 1 && (
-          <button onClick={() => paginate(startPage - 1)}>이전</button>
-        )}{" "}
-        {/* 이전 그룹 */}
+      <div className="common-pagination common-pagination-bottom">
+        {/* 이전 버튼 */}
+        <button
+          className="common-pagination-arrow"
+          disabled={currentPage === 1}
+          onClick={() => paginate(currentPage - 1)}
+        >
+          &lt;
+        </button>
+
+        {/* 페이지 번호 버튼 */}
         {pageNumbers.map((number) => (
           <button
             key={number}
+            className={`common-pagination-number ${
+              currentPage === number ? "active" : ""
+            }`}
             onClick={() => paginate(number)}
-            style={{
-              backgroundColor: number === currentPage ? "#006618" : "",
-              color: number === currentPage ? "white" : "",
-            }}
           >
             {number}
           </button>
         ))}
-        {endPage < totalPages && (
-          <button onClick={() => paginate(endPage + 1)}>다음</button> // 다음 그룹
-        )}
+
+        {/* 다음 버튼 */}
+        <button
+          className="common-pagination-arrow"
+          disabled={currentPage === totalPages}
+          onClick={() => paginate(currentPage + 1)}
+        >
+          &gt;
+        </button>
       </div>
     </>
   );
