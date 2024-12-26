@@ -218,7 +218,7 @@ export const countAnswerByinquiryNo = async (inquiryNo) => {
 //베스트 답변변
 export const bestAnswerList = async () => {
    
-   const response = await fetch(`${BACKEND_SERVER}/answer/recently-vote?page=0&size=10`, {
+   const response = await fetch(`${BACKEND_SERVER}/answer/recently-vote`, {
       method: 'GET',
       headers: {
          'Content-Type': 'application/json',

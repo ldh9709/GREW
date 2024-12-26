@@ -130,7 +130,7 @@ button {
   .logo {
     margin-left: 10px;
   }
-  .search-container{
+  .search-container {
     right: 20px !important;
   }
 }
@@ -177,10 +177,10 @@ button {
 .answer-member:hover {
   background-color: #c9c8c8;
 }
-.answer-mentor-info{
+.answer-mentor-info {
   margin: auto 10px;
 }
-.answer-member-name{
+.answer-member-name {
   font-weight: bold;
   font-size: 19px;
   display: flex;
@@ -207,12 +207,12 @@ button {
   font-size: 16px;
 }
 .answer-upvote-btn,
-.answer-downvote-btn{
-  border-radius: 50px;                   /* 버튼의 테두리 없애기 */
-  padding: 0;                     /* 패딩 없애기 */
-  display: inline-flex;           /* 이미지 크기에 맞게 정렬 */
-  justify-content: center;        /* 자식 요소 (이미지)를 중앙에 정렬 */
-  align-items: center;   
+.answer-downvote-btn {
+  border-radius: 50px; /* 버튼의 테두리 없애기 */
+  padding: 0; /* 패딩 없애기 */
+  display: inline-flex; /* 이미지 크기에 맞게 정렬 */
+  justify-content: center; /* 자식 요소 (이미지)를 중앙에 정렬 */
+  align-items: center;
   width: 50px;
   height: 50px;
   font-size: 20px;
@@ -220,22 +220,21 @@ button {
   color: #444;
 }
 .answer-upvote-btn img,
-.answer-downvote-btn img{
+.answer-downvote-btn img {
   width: 30px;
 }
 .answer-upvote-btn:hover,
-.answer-downvote-btn:hover{
+.answer-downvote-btn:hover {
   background-color: #cecece;
-  border: none;                   /* 버튼의 테두리 없애기 */
-  padding: 0;                     /* 패딩 없애기 */
-  display: inline-flex;           /* 이미지 크기에 맞게 정렬 */
-  justify-content: center;        /* 자식 요소 (이미지)를 중앙에 정렬 */
-  align-items: center;            /* 자식 요소 (이미지)를 세로로 중앙 정렬 */
+  border: none; /* 버튼의 테두리 없애기 */
+  padding: 0; /* 패딩 없애기 */
+  display: inline-flex; /* 이미지 크기에 맞게 정렬 */
+  justify-content: center; /* 자식 요소 (이미지)를 중앙에 정렬 */
+  align-items: center; /* 자식 요소 (이미지)를 세로로 중앙 정렬 */
 }
 
-
 /* 질문내역 상세보기 수정삭제신고 버튼*/
-.inquiry-view-answer-btn{
+.inquiry-view-answer-btn {
   display: flex;
   justify-content: right;
   margin-right: 20px;
@@ -243,21 +242,22 @@ button {
 .inquiry-view-answer-btn > button {
   background-color: #fff;
 }
-.modify-delete-btn{
+.modify-delete-btn {
   align-items: center;
 }
-.modify-delete-btn > button{
-  width: 60px; height: 30px;
+.modify-delete-btn > button {
+  width: 60px;
+  height: 30px;
   border: 1px solid #e4e4e4;
   border-radius: 20px;
   margin-right: 5px;
   gap: 10px;
 }
-.modify-delete-btn > button:nth-child(2){
+.modify-delete-btn > button:nth-child(2) {
   background-color: #dddfe2;
   color: #444;
 }
-.modify-delete-btn > button:nth-child(2):hover{
+.modify-delete-btn > button:nth-child(2):hover {
   background-color: #cecece;
 }
 .inquiry-view-answer-btn img {
@@ -274,7 +274,7 @@ button {
   justify-content: space-between; /* 양쪽 끝으로 배치 */
 }
 
-.inquiry-item-top{
+.inquiry-item-top {
   font-size: 13px;
   margin-left: 2px !important;
   color: #444;
@@ -299,7 +299,7 @@ button {
 .inquiry-list-sort {
   width: 100%;
 }
-.inquiry-list-item{
+.inquiry-list-item {
   position: relative;
   width: 95%;
   border-bottom: 1px solid #eeeeee;
@@ -327,27 +327,26 @@ button {
   margin-top: 10px;
   flex-direction: column;
 }
-.inquiry-view-category{
+.inquiry-view-category {
   color: #208838;
 }
-.inquiry-view-title{
+.inquiry-view-title {
   font-size: 25px;
   font-weight: 600;
 }
-.inquiry-view-desc{
+.inquiry-view-desc {
   padding: 5px 0;
   font-size: 14px;
   border-bottom: 1px solid #dddfe2;
 }
-.inquiry-view-content{
+.inquiry-view-content {
   padding: 15px;
   font-size: 17px;
   color: #444;
 }
 /* 질문 글 호버시 색변경 */
 .inquiry-title:hover,
-.inquiry-content:hover
-{
+.inquiry-content:hover {
   color: #228f3b;
 }
 
@@ -357,7 +356,8 @@ button {
 }
 .inquiry-desc {
   position: absolute;
-  right: 18px; bottom: 25px;
+  right: 18px;
+  bottom: 25px;
   font-size: 13px;
   color: #505050;
 }
@@ -389,35 +389,63 @@ button {
   }
 }
 
-.answer-best-list{
-  width: 250px; height: 30px;
+.answer-best-list {
+  display: flex;
+  width: 250px;
+  height: 100px;
   margin-bottom: 5px;
   cursor: pointer;
   transition: transform 0.3s ease; /* 호버 시 부드러운 확대 효과 */
 }
-.answer-best-container{
-  display: inline-block;
+.answer-best-container {
+  display: flex;
+  flex-grow: 1;
+  text-decoration: none;
 }
 .answer-best-list:hover {
   transform: scale(1.05); /* 호버 시 살짝 커지는 효과 */
 }
+.answer-best-content span{
+  display: inline-block;
+  max-width: 90%; /* 부모의 너비를 넘지 않도록 설정 */
+  overflow: hidden; /* 넘치는 부분은 숨기기 */
+  text-overflow: ellipsis; /* 텍스트가 잘릴 때 ... 표시 */
+  white-space: nowrap; /* 한 줄로 표시 */
+}
 .answer-best-content {
   font-size: 15px;
+  width: 200px;
   white-space: nowrap; /* 텍스트가 한 줄로 표시되도록 */
   overflow: hidden; /* 넘치는 부분은 숨기기 */
   text-overflow: ellipsis; /* 넘치는 텍스트는 ...으로 표시 */
   animation: content-slide-up 1s ease-out forwards,
     content-slide-down 1s ease-out forwards; /* 애니메이션을 동시에 실행 */
 }
-
-.answer-best-content span:first-child {
+.answer-span {
   margin-right: 6px;
   font-weight: 600;
   color: #007bff;
 }
-
+.inquiry-span {
+  margin-right: 6px;
+  font-weight: 600;
+  color: #007bff;
+}
+.index-span {
+  margin-right: 10px;
+  font-size: 40px; /* 인덱스를 크게 설정 */
+  font-weight: bold;
+  flex-shrink: 0; /* 인덱스는 크기를 줄이지 않음 */
+  color: #28a745; /* 원하는 색상 */
+  width: 40px; /* 인덱스가 일정 크기를 유지하도록 설정 */
+  text-align: center; /* 가운데 정렬 */
+}
+.best-detail{
+  margin-left: 22px;
+  font-size: 14px;
+}
 /*신고하기버튼*/
-.inquiry-report-btn{
+.inquiry-report-btn {
   position: relative;
 }
 .inquiry-report-btn-div {
@@ -425,10 +453,10 @@ button {
   justify-content: right;
 }
 .answer-report-btn img,
-.inquiry-report-btn img{
-width: 30px;
+.inquiry-report-btn img {
+  width: 30px;
 }
-.inquiry-report-btn button{
+.inquiry-report-btn button {
   background-color: transparent;
   width: 30px;
 }
@@ -504,7 +532,7 @@ width: 30px;
   font-weight: 600;
   transition: background-color 0.3s ease; /* 배경색 변화 효과 */
 }
-.btn-inquiry-write span{
+.btn-inquiry-write span {
   margin-left: 4px;
 }
 /* 마우스 올렸을 때 배경색 변경 */
@@ -593,7 +621,8 @@ width: 30px;
 }
 .answer-notify-btn {
   position: absolute;
-  top: 45px; right: 30px;
+  top: 45px;
+  right: 30px;
   padding: 10px 18px; /* 버튼 내부 여백 */
   background-color: #28a745; /* 버튼 배경색 */
   border-radius: 10px;
@@ -606,14 +635,14 @@ width: 30px;
 }
 
 /*질문 상세보기 답변 리스트*/
-.inquiry-view-answer-container{
+.inquiry-view-answer-container {
   width: 1080px;
   margin: 20px auto;
   padding: 20px;
   border: 1px solid #d8e0d3;
   border-radius: 10px;
 }
-.inquiry-view-answer-container .radio-container{
+.inquiry-view-answer-container .radio-container {
   display: flex;
   justify-content: space-between;
 }
@@ -634,7 +663,6 @@ width: 30px;
   align-items: center; /* 세로 가운데 정렬 */
 }
 
-
 .category-parent {
   display: flex; /* category-parent를 세로로 정렬 */
   margin-bottom: 5px; /* 오른쪽에 여백 추가 */
@@ -647,7 +675,8 @@ width: 30px;
 }
 .category-button {
   display: inline-block; /* 버튼을 인라인 블록으로 만들어 좌우로 길게 */
-  width: 130px; height: 38px; 
+  width: 130px;
+  height: 38px;
   padding: 8px 0; /* 상하 여백은 12px, 좌우 여백은 30px로 설정하여 길이를 조절 */
   border: 1px solid #ccc; /* 테두리를 추가하여 스타일링 */
   background-color: #fff; /* 배경 색은 흰색 */
@@ -818,13 +847,13 @@ width: 30px;
 .small-list {
   margin-top: 10px;
   padding: 5px 20px;
-  height: 380px;
+  height: 1100px;
   border: 1px solid #ccc;
   border-radius: 5px;
-  background-color:#f8f8f8;
+  background-color: #f8f8f8;
 }
 .small-list p {
-  margin: 10px 10px 5px 10px!important;
+  margin: 10px 10px 5px 10px !important;
   padding: 5px;
   border-radius: 9px 9px 0 0;
   font-size: 17px;
@@ -914,6 +943,26 @@ width: 30px;
 .main-inquiry-container:hover .answer-btn {
   display: block; /* 호버시 답변하기 버튼을 표시 */
 }
-.main-inquiry-container .inquiry-title{
+.main-inquiry-container .inquiry-title {
   margin-bottom: -20px;
+}
+.main-mentor-board{
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* 두 개씩 1:1 비율로 그리드 배치 */
+}
+.main-board-card{
+  width: 100%;
+  flex-direction: column;
+  text-align: left;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  background-color: #fff;
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+  cursor: pointer;
+}
+.main-board-card:hover{
+  box-shadow: 0 8px 12px rgba(0, 0, 0, 0.15);
+  transform: translateY(-4px);
 }
