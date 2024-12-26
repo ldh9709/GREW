@@ -34,7 +34,7 @@ export const MemberJoinFormPage = () => {
   // 입력 필드 업데이트 핸들러
   const handleChangeJoinForm = (e) => {
     setMember({ ...member, [e.target.name]: e.target.value });
-
+    
     /* 아이디 유효성 검사 */
     if (e.target.name === "memberId") {
       if (e.target.value.length < 3 || e.target.value.length > 15) {
