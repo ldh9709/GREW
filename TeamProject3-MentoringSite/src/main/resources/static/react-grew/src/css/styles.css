@@ -118,6 +118,27 @@ button {
   background-color: #28a745;
   color: #fff;
 }
+
+.pagenation-btn {
+  background-color: #28a745;
+  color: white;
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  font-size: large;
+}
+
+/* 현재 페이지인 경우의 스타일 */
+.pagenation-btn-active {
+  background-color: #006618;
+  color: white;
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  font-size: large;
+}
+
+
 #wrapper,
 #content {
   margin-top: 140px;
@@ -396,7 +417,7 @@ button {
 }
 
 .inquiry-content {
-  width: 80%;
+  width: 600px;
   font-size: 13px;
   color: #505050;
 }
@@ -460,7 +481,7 @@ button {
 }
 .answer-best-content {
   font-size: 15px;
-  width: 200px;
+  width: 215px;
   white-space: nowrap; /* 텍스트가 한 줄로 표시되도록 */
   overflow: hidden; /* 넘치는 부분은 숨기기 */
   text-overflow: ellipsis; /* 넘치는 텍스트는 ...으로 표시 */
@@ -472,12 +493,17 @@ button {
   font-weight: 600;
   color: #007bff;
 }
+.inquiry-q-span{
+  font-size: 30px;
+  color:#28a745;
+}
 .inquiry-span {
   margin-right: 6px;
   font-weight: 600;
   color: #007bff;
 }
 .index-span {
+  margin-left: -10px;
   margin-right: 10px;
   font-size: 40px; /* 인덱스를 크게 설정 */
   font-weight: bold;
@@ -515,7 +541,7 @@ button {
   justify-content: right;
 }
 .footer {
-  background-color: #f5f5f8;
+  background-color: #28a745;
   color: white;
   padding: 20px 0;
   text-align: center;
@@ -692,6 +718,12 @@ button {
 .answer-accept {
   display: flex;
   justify-content: right;
+  
+}
+.accept-btn{
+  border-radius: 10px;
+  height: 30px;
+  width: 100px;
 }
 .answer-notify-btn {
   position: absolute;
@@ -820,6 +852,15 @@ button {
 .view-more {
   display: flex;
   justify-content: right;
+  margin-right: 30px;
+}
+.view-more a{
+  font-weight: bold;
+ color: #858585;
+}
+.view-more a:hover{
+  text-decoration: underline;
+  color: #000;
 }
 .notification {
   margin-bottom: 10px; /* 각 알림 사이 간격을 추가 */
@@ -900,10 +941,13 @@ button {
 }
 .answer-accept-status {
   font-size: 25px;
+  font-weight: bold;
+  background-color: #fff676;
+  border-radius: 10px;
+  padding: 10px;
 }
-.answer-accept-img {
-  width: 40px;
-  height: 40px;
+.answer-accept-status span{
+  margin-left:15px ;
 }
 
 /* Header 스타일 */

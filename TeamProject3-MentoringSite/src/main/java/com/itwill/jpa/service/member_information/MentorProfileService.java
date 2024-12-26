@@ -15,7 +15,7 @@ public interface MentorProfileService {
     /**
      * 멘토 프로필 생성
      */
-    void saveMentorProfile(Long memberNo, MentorProfileDto mentorProfileDto);
+    MentorProfile saveMentorProfile(Long memberNo, MentorProfileDto mentorProfileDto);
     
     /**
      * 멘토 더미 프로필 생성
@@ -32,7 +32,7 @@ public interface MentorProfileService {
      * 멘토의 상태를 변경
      * status 변경할 상태 (1: 멘티, 2: 심사 중, 3: 멘토, 4: 탈퇴)
      */
-    void updateMentorStatus(Long memberNo, int status);
+	void updateMentorStatus(Long memberNo, int status);
 
     /**
      * 특정 멘토의 평균 평점을 반환
@@ -76,7 +76,7 @@ public interface MentorProfileService {
     /**
      * 멘토 프로필 정보 수정
      */
-    void updateMentorProfile(Long mentorProfileNo, MentorProfileDto mentorProfileDto);
+    MentorProfile updateMentorProfile(Long mentorProfileNo, MentorProfileDto mentorProfileDto);
 
     /**
      * 멘토 프로필의 멘토링 횟수 조회

@@ -33,7 +33,7 @@ public interface MentorProfileRepository extends JpaRepository<MentorProfile, Lo
     //mentorStatus를 특정 상태로 업데이트 심사전 심사중 심사완료 탈퇴 
     @Modifying
     @Query("UPDATE MentorProfile mp SET mp.mentorStatus = :status WHERE mp.member.memberNo = :memberNo")
-    void updateMentorStatus(@Param("memberNo") Long memberNo, @Param("status") int status);
+    MentorProfile updateMentorStatus(@Param("memberNo") Long memberNo, @Param("status") int status);
 
     //평점 
     @Query("SELECT AVG(r.reviewScore) FROM Review r WHERE r.chatRoom.mentor.memberNo = :mentorNo")

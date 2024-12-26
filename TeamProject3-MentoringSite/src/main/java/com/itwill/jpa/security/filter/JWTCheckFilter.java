@@ -102,11 +102,7 @@ public class JWTCheckFilter extends OncePerRequestFilter {
   protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
       throws ServletException, IOException {
 	  
-	  // 요청 헤더에서 Authorization 추출
-	  System.out.println(">>>>>>>>>>>>request : " + request);
-	  System.out.println(">>>>>>>>>>>>response : " + response);
-	  System.out.println(">>>>>>>>>>>>filterChain : " + filterChain);
-	  
+	  	//요청 헤더에서 Authorization 추출
         String authHeaderStr = request.getHeader("Authorization");
         
         if (authHeaderStr == null || !authHeaderStr.startsWith("Bearer ")) {
@@ -115,7 +111,7 @@ public class JWTCheckFilter extends OncePerRequestFilter {
             return;
         }
         
-        System.out.println(">>>>>>>>>>>>authHeaderStr(JWT필터 적용되고 있음) : " + authHeaderStr);
+        System.out.println("authHeaderStr(JWT필터 적용되고 있음) : >>>>>" + authHeaderStr);
         
         try {
           // Authorization 헤더에서 'Bearer ' 부분을 제외한 토큰만 추출
