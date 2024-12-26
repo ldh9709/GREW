@@ -343,7 +343,7 @@ body {
 
 .review-button {
   display: none;
-  background-color: #007bff;
+  background-color: #28a745;
   color: #fff;
   border: none;
   padding: 10px 25px;
@@ -358,7 +358,7 @@ body {
 }
 
 .review-button:hover {
-  background-color: #0060c7;
+  background-color: #167a2e;
 }
 
 /* 상담 내역 멘토기준 */

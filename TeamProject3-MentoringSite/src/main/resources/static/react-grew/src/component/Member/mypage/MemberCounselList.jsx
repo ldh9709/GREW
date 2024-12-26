@@ -126,6 +126,7 @@ export default function MemberCounselList() {
                   <button
                     className={`review-button ${counsel.chatRoomStatus === 7200 ? "active" : ""
                       }`}
+                    // onClick={}
                   >
                     리뷰 작성
                   </button>
