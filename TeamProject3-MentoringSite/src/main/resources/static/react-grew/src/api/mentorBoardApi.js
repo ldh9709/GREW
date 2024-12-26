@@ -70,11 +70,12 @@ export const uploadMentorBoardImage = async (id, formData) => {
 
 
 // 멘토 보드 수정
-export const updateMentorBoard = async (id, data) => {
+export const updateMentorBoard = async (id, data, token) => {
     const response = await fetch(`${BACKEND_SERVER}${BASE_URL}/${id}`, {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
         },
         body: JSON.stringify(data), // JSON 형식으로 전송
     });

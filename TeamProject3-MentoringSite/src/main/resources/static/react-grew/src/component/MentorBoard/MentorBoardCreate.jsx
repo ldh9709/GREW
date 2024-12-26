@@ -80,7 +80,7 @@ function MentorBoardCreate() {
     const formData = {
       mentorBoardTitle,
       mentorBoardContent,
-      mentorBoardImage: mentorBoardImage || DEFAULT_IMAGE_URL, // 기본 이미지를 선택
+      mentorBoardImage: DEFAULT_IMAGE_URL, // 기본 이미지를 선택
       memberNo: memberNo,
     };
   
@@ -108,6 +108,8 @@ function MentorBoardCreate() {
         fileInputRef.current.value = "";  // file input 초기화
       }
 
+      navigate(`/mentorboard/detail/${mentorBoardNo}`); // 수정된 게시글 페이지로 이동
+      
     } catch (err) {
       console.error("게시글 등록 실패:", err);
       alert("게시글 등록에 실패했습니다.");
