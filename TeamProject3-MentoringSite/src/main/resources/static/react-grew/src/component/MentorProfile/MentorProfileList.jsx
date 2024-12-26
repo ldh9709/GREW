@@ -131,9 +131,9 @@ function MentorProfileList() {
 
   return (
     <>
-      <h1>멘토 프로필 목록</h1>
-      {/* 카테고리 버튼들 */}
       <div className="category-container">
+      <h1>멘토 찾기</h1>
+      {/* 카테고리 버튼들 */}
         <div className="category-parent">
           {categories
             .filter((category) => category.categoryDepth === 1) // categoryDepth가 1인 카테고리만 필터링
@@ -175,7 +175,7 @@ function MentorProfileList() {
         )}
       </div>
       {/* 정렬 라디오 버튼 */}
-      <div className="radio-container">
+      <div className="mentorprofile-radio-container">
         <label>
           <input
             type="radio"
@@ -216,7 +216,7 @@ function MentorProfileList() {
           활동 순
         </label>
       </div>
-      <div className="profile-grid">
+      <div className="profile-container">
         {mentorProfiles.length > 0 ? (
           mentorProfiles.map((mentor) => (
             <MentorProfileItem key={mentor.mentorProfileNo} mentor={mentor} />
