@@ -5,6 +5,8 @@ import * as inquiryApi from "../api/inquiryApi"; // API 호출
 import InquiryItem from "./AnswerInquiry/InquiryItem";
 import MentorProfileItem from "./MentorProfile/MentorProfileItem";
 import * as mentorProfileApi from "../api/mentorProfileApi";
+import MentorBoardItem from "./MentorBoard/MentorBoardItem";
+import * as mentorBoardApi from "../api/mentorBoardApi";
 function SearchList() {
   const [searchResults, setSearchResults] = useState([]);
   const [loading, setLoading] = useState(false);
