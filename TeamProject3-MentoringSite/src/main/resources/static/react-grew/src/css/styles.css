@@ -541,7 +541,7 @@ button {
   justify-content: right;
 }
 .footer {
-  background-color: #f5f5f8;
+  background-color: #28a745;
   color: white;
   padding: 20px 0;
   text-align: center;
@@ -852,6 +852,15 @@ button {
 .view-more {
   display: flex;
   justify-content: right;
+  margin-right: 30px;
+}
+.view-more a{
+  font-weight: bold;
+ color: #858585;
+}
+.view-more a:hover{
+  text-decoration: underline;
+  color: #000;
 }
 .notification {
   margin-bottom: 10px; /* 각 알림 사이 간격을 추가 */
