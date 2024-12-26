@@ -163,6 +163,7 @@ function InquiryView() {
             </div>
           </div>
           <div className="inquiry-view-content">{inquiry.inquiryContent}</div>
+
           {member != null && member.memberNo == inquiry.memberNo ? (
             <div className="modify-delete-btn2">
               <button onClick={handleModify}>수정</button>
@@ -175,33 +176,33 @@ function InquiryView() {
               >
                 삭제
               </button>
-              {/* 신고하기 버튼 */}
-              <div className="inquiry-report-btn">
-                {isModalOpen && (
-                  <ReportModal onClose={handleCloseModal} report={report} />
-                )}
-                <button
-                  onClick={handleOpenModal}
-                  onMouseEnter={() => setIsReportHovered(true)}
-                  onMouseLeave={() => setIsReportHovered(false)}
-                  className={`hover-button ${isReportHovered ? "hovered" : ""}`}
-                >
-                  <img
-                    src={
-                      isReportHovered
-                        ? "https://img.icons8.com/?size=100&id=jy7dy2jsJ5UR&format=png&color=ed1515"
-                        : "https://img.icons8.com/?size=100&id=t5aOnHwCycmN&format=png&color=000000"
-                    }
-                    alt="Button Image"
-                    className="button-image"
-                  />
-                </button>
-              </div>
+            
             </div>
           ) : (
             <div></div>
           )}
-  
+        {/* 신고하기 버튼 */}
+        <div className="inquiry-report-btn">
+            {isModalOpen && (
+              <ReportModal onClose={handleCloseModal} report={report} />
+            )}
+            <button
+              onClick={handleOpenModal}
+              onMouseEnter={() => setIsReportHovered(true)}
+              onMouseLeave={() => setIsReportHovered(false)}
+              className={`hover-button ${isReportHovered ? "hovered" : ""}`}
+            >
+              <img
+                src={
+                  isReportHovered
+                    ? "https://img.icons8.com/?size=100&id=jy7dy2jsJ5UR&format=png&color=ed1515"
+                    : "https://img.icons8.com/?size=100&id=t5aOnHwCycmN&format=png&color=000000"
+                }
+                alt="Button Image"
+                className="button-image"
+              />
+            </button>
+          </div>
           <button className="answer-notify-btn" onClick={handleWriteButton}>
             <FontAwesomeIcon icon={faPen} />
             <span>답변하기</span>
