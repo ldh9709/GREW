@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'; // React와 필요한 훅들 import
 import { useParams } from 'react-router-dom'; // useParams import
-import { getMentorBoardDetail } from '../../api/mentorBoardApi'; // API 함수 import
+import { getMentorBoardDetail, increaseViewCount } from '../../api/mentorBoardApi'; // API 함수 import
 import '../../css/mentorBoard.css'; // 스타일 import
 
 const MentorBoardDetail = () => {
@@ -27,7 +27,7 @@ const MentorBoardDetail = () => {
       try {
         setLoading(true);
         const response = await getMentorBoardDetail(mentorBoardNo);
-        console.log(response)
+        console.log(response);
         setBoard(response.data); // API 응답 데이터 저장
       } catch (err) {
         setError('멘토 보드 상세 데이터를 가져오는 중 오류가 발생했습니다.');
@@ -36,7 +36,19 @@ const MentorBoardDetail = () => {
       }
     };
 
+    const handleViewCount = async () => {
+      const lastViewedTime = localStorage.getItem(`mentorBoard-${mentorBoardNo}-lastViewed`);
+      const now = Date.now();
+
+      // 10분 제한 체크
+      if (!lastViewedTime || now - lastViewedTime > 10 * 60 * 1000) {
+        await increaseViewCount(mentorBoardNo); // API 호출
+        localStorage.setItem(`mentorBoard-${mentorBoardNo}-lastViewed`, now);
+      }
+    };
+
     fetchBoardDetail();
+    handleViewCount(); // 조회수 증가 로직 추가
   }, [mentorBoardNo]);
 
   if (loading) return <p>로딩 중입니다...</p>;
