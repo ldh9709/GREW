@@ -70,4 +70,19 @@ public interface MentorBoardService {
      */
     Page<MentorBoardDto> getMentorBoardsSortedByDate(int status, int page, int size);
     
+    
+    
+    
+    
+    
+    
+    
+    //////////////////////////////////카테고리 리스트 대분류 소분류
+    Page<MentorBoardDto> getByCategoryMentorBoardOrderByView(Long categoryNo, int page, int size);
+    Page<MentorBoardDto> getByParentCategoryMentorBoardOrderByView(Long categoryNo, int page, int size);
+    Page<MentorBoardDto> getByCategoryMentorBoardOrderByDate(Long categoryNo, int page, int size);
+    Page<MentorBoardDto> getByParentCategoryMentorBoardOrderByDate(Long categoryNo, int page, int size);
+    //상태별 
+    Page<MentorBoardDto> getMentorBoardsByStatusAndSortedByViews(int status, int page, int size);
+ 
 }

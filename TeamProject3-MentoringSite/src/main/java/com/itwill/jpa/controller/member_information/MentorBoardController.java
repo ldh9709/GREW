@@ -312,11 +312,109 @@ public class MentorBoardController {
             return ResponseEntity.status(500).body("이미지 URL 조회 실패: " + e.getMessage());
         }
     }
-}
+    
+    ////////////////////카테고리 리스트 대분류 소분류 
     
     
+    
+    
+    @Operation(summary = "조회수 많은 순으로 카테고리별 멘토 보드 출력")
+    @GetMapping("/{categoryNo}/view-count")
+    public ResponseEntity<Response> getByCategoryMentorBoardOrderByView(
+            @PathVariable(name = "categoryNo") Long categoryNo,
+            @RequestParam(name = "page", defaultValue = "0") int page,
+            @RequestParam(name = "size", defaultValue = "10") int size) {
+        Page<MentorBoardDto> mentorBoards = mentorBoardService.getByCategoryMentorBoardOrderByView(categoryNo, page, size);
+
+        Response response = new Response();
+        response.setStatus(ResponseStatusCode.READ_MEMBER_LIST_SUCCESS);
+        response.setMessage(ResponseMessage.READ_MEMBER_LIST_SUCCESS);
+        response.setData(mentorBoards);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(new MediaType(MediaType.APPLICATION_JSON, Charset.forName("UTF-8")));
+
+        return new ResponseEntity<>(response, headers, HttpStatus.OK);
+    }
+
+    @Operation(summary = "조회수 많은 순으로 카테고리별(대분류) 멘토 보드 출력")
+    @GetMapping("/{categoryNo}/parent/view-count")
+    public ResponseEntity<Response> getByParentCategoryMentorBoardOrderByView(
+            @PathVariable(name = "categoryNo") Long categoryNo,
+            @RequestParam(name = "page", defaultValue = "0") int page,
+            @RequestParam(name = "size", defaultValue = "10") int size) {
+        Page<MentorBoardDto> mentorBoards = mentorBoardService.getByParentCategoryMentorBoardOrderByView(categoryNo, page, size);
+
+        Response response = new Response();
+        response.setStatus(ResponseStatusCode.READ_MEMBER_LIST_SUCCESS);
+        response.setMessage(ResponseMessage.READ_MEMBER_LIST_SUCCESS);
+        response.setData(mentorBoards);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(new MediaType(MediaType.APPLICATION_JSON, Charset.forName("UTF-8")));
+
+        return new ResponseEntity<>(response, headers, HttpStatus.OK);
+    }
+
+    @Operation(summary = "최신 순으로 카테고리별 멘토 보드 출력")
+    @GetMapping("/{categoryNo}/date")
+    public ResponseEntity<Response> getByCategoryMentorBoardOrderByDate(
+            @PathVariable(name = "categoryNo") Long categoryNo,
+            @RequestParam(name = "page", defaultValue = "0") int page,
+            @RequestParam(name = "size", defaultValue = "10") int size) {
+        Page<MentorBoardDto> mentorBoards = mentorBoardService.getByCategoryMentorBoardOrderByDate(categoryNo, page, size);
+
+        Response response = new Response();
+        response.setStatus(ResponseStatusCode.READ_MEMBER_LIST_SUCCESS);
+        response.setMessage(ResponseMessage.READ_MEMBER_LIST_SUCCESS);
+        response.setData(mentorBoards);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(new MediaType(MediaType.APPLICATION_JSON, Charset.forName("UTF-8")));
+
+        return new ResponseEntity<>(response, headers, HttpStatus.OK);
+    }
+
+    @Operation(summary = "최신 순으로 카테고리별(대분류) 멘토 보드 출력")
+    @GetMapping("/{categoryNo}/parent/date")
+    public ResponseEntity<Response> getByParentCategoryMentorBoardOrderByDate(
+            @PathVariable(name = "categoryNo") Long categoryNo,
+            @RequestParam(name = "page", defaultValue = "0") int page,
+            @RequestParam(name = "size", defaultValue = "10") int size) {
+        Page<MentorBoardDto> mentorBoards = mentorBoardService.getByParentCategoryMentorBoardOrderByDate(categoryNo, page, size);
+
+        Response response = new Response();
+        response.setStatus(ResponseStatusCode.READ_MEMBER_LIST_SUCCESS);
+        response.setMessage(ResponseMessage.READ_MEMBER_LIST_SUCCESS);
+        response.setData(mentorBoards);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(new MediaType(MediaType.APPLICATION_JSON, Charset.forName("UTF-8")));
+
+        return new ResponseEntity<>(response, headers, HttpStatus.OK);
+    }
 
     
+    @Operation(summary = "상태값과 조회수 기준 정렬된 멘토 보드 리스트 조회")
+    @GetMapping("/sorted/views/status")
+    public ResponseEntity<Response> getMentorBoardsSortedByViews(
+            @RequestParam(name = "status") int status,
+            @RequestParam(name = "page", defaultValue = "0") int page,
+            @RequestParam(name = "size", defaultValue = "10") int size
+    ) {
+        Page<MentorBoardDto> sortedBoards = mentorBoardService.getMentorBoardsByStatusAndSortedByViews(status, page, size);
+
+        Response response = new Response();
+        response.setStatus(ResponseStatusCode.READ_MEMBER_LIST_SUCCESS);
+        response.setMessage(ResponseMessage.READ_MEMBER_LIST_SUCCESS);
+        response.setData(sortedBoards);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(new MediaType(MediaType.APPLICATION_JSON, Charset.forName("UTF-8")));
+
+        return new ResponseEntity<>(response, headers, HttpStatus.OK);
+    }
     
     
    
+}

@@ -263,57 +263,47 @@ public class MentorBoardServiceImpl implements MentorBoardService {
 	    }
 	    
 	    
-	    
-}
+	    ///////////////////////////카테고리 리스트 대분류 소분류
+	    @Override
+	    public Page<MentorBoardDto> getByCategoryMentorBoardOrderByView(Long categoryNo, int page, int size) {
+	        Pageable pageable = PageRequest.of(page, size);
+	        return mentorBoardRepository.findByCategoryMentorBoardOrderByView(categoryNo, pageable)
+	                                    .map(MentorBoardDto::toDto);
+	    }
 
-	    
-	    
-	    
-	    
-	    
+	    @Override
+	    public Page<MentorBoardDto> getByParentCategoryMentorBoardOrderByView(Long categoryNo, int page, int size) {
+	        Pageable pageable = PageRequest.of(page, size);
+	        return mentorBoardRepository.findByParentCategoryMentorBoardOrderByView(categoryNo, pageable)
+	                                    .map(MentorBoardDto::toDto);
+	    }
 
-//
-//	    /**
-//	     * 멘토 보드 이미지 업로드 메서드
-//	     */
-//	    @Override
-//	    public void updateMentorBoardImage(Long mentorBoardNo, MultipartFile file) {
-//	        try {
-//	            // 멘토 보드 정보 조회
-//	            MentorBoard mentorBoard = mentorBoardRepository.findById(mentorBoardNo)
-//	                    .orElseThrow(() -> new CustomException(
-//	                        ResponseStatusCode.MENTOR_BOARD_NOT_FOUND, 
-//	                        ResponseMessage.MENTOR_BOARD_NOT_FOUND
-//	                    ));
-//
-//	            // 이미지 저장 경로 설정
-//	            String absolutePath = new File("").getAbsolutePath();
-//	            String IMAGE_PATH = absolutePath + "/src/main/resources/static/images/mentor-board/";
-//
-//	            // 디렉터리 생성
-//	            File saveDir = new File(IMAGE_PATH);
-//	            if (!saveDir.exists()) {
-//	                saveDir.mkdirs();
-//	            }
-//
-//	            // 파일명 생성 (UUID + 원본 파일명)
-//	            String originalFilename = file.getOriginalFilename();
-//	            String fileName = UUID.randomUUID().toString() + "_" + originalFilename;
-//
-//	            // 파일 저장 경로 생성
-//	            File saveFile = new File(IMAGE_PATH + fileName);
-//
-//	            // 파일 저장
-//	            file.transferTo(saveFile);
-//
-//	            // 멘토 보드 이미지 정보 업데이트
-//	            mentorBoard.setMentorBoardImage("/images/mentor-board/" + fileName);
-//	            mentorBoardRepository.save(mentorBoard);
-//	        } catch (Exception e) {
-//	            // 예외 발생 시 커스텀 예외 던짐
-//	            throw new CustomException(
-//	                ResponseStatusCode.IMAGE_UPLOAD_FAIL, 
-//	                ResponseMessage.IMAGE_UPLOAD_FAIL
-//	            );
-//	        }
-//	    }
+	    @Override
+	    public Page<MentorBoardDto> getByCategoryMentorBoardOrderByDate(Long categoryNo, int page, int size) {
+	        Pageable pageable = PageRequest.of(page, size);
+	        return mentorBoardRepository.findByCategoryMentorBoardOrderByDate(categoryNo, pageable)
+	                                    .map(MentorBoardDto::toDto);
+	    }
+
+	    @Override
+	    public Page<MentorBoardDto> getByParentCategoryMentorBoardOrderByDate(Long categoryNo, int page, int size) {
+	        Pageable pageable = PageRequest.of(page, size);
+	        return mentorBoardRepository.findByParentCategoryMentorBoardOrderByDate(categoryNo, pageable)
+	                                    .map(MentorBoardDto::toDto);
+	    }
+	    
+	    @Override
+	    public Page<MentorBoardDto> getMentorBoardsByStatusAndSortedByViews(int status, int page, int size) {
+	        PageRequest pageable = PageRequest.of(page, size);
+	        // Repository 호출하여 데이터 가져오기
+	        Page<MentorBoard> mentorBoards = mentorBoardRepository.findByStatusAndSortedByViews(status, pageable);
+	        // Entity -> DTO 변환 및 반환
+	        return mentorBoards.map(MentorBoardDto::toDto);
+	    }
+	    
+	    
+	    
+	  
+	}
+	    
+	    

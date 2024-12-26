@@ -65,7 +65,32 @@ public class JWTCheckFilter extends OncePerRequestFilter {
 //		|| path.startsWith("/answer/update") 
 		|| path.startsWith("/answer/view") 
 		|| path.startsWith("/answer/re") 
+
+
+		|| path.startsWith("/mentor-profile/upload-image") 
+		|| path.startsWith("/mentor-profile/create-profile") 
+		|| path.startsWith("/mentor-profile/create-dumy-profile") 
+		|| path.startsWith("/mentor-profile/mentoring") 
+		|| path.startsWith("/mentor-profile/follow") 
+		|| path.startsWith("/mentor-profile/activity") 
+		|| path.startsWith("/mentor-profile/mentoring-count") 
+		|| path.startsWith("/mentor-profile/image-url") 
+		|| path.startsWith("/mentor-profile/follow-count") 
+		|| path.startsWith("/mentor-profile/activity-count") 
+		|| path.startsWith("/mentor-profile/mentor-rating") 
+
 		
+		|| path.startsWith("/mentor-board/upload-image") 
+		|| path.startsWith("/mentor-board/image-url") 
+		|| path.startsWith("/mentor-board/view-count") 
+		|| path.startsWith("/mentor-board/date") 
+		|| path.startsWith("/mentor-board/views") 
+		|| path.startsWith("/mentor-board/status") 
+		|| path.startsWith("/mentor-board/other") 
+		|| path.startsWith("/mentor-board/search") 
+		|| path.startsWith("/mentor-board/member") 
+		
+
 
 		|| path.startsWith("/answer/count") 
 

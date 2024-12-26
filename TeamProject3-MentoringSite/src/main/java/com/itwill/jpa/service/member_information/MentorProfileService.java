@@ -105,7 +105,20 @@ public interface MentorProfileService {
     //멤버 넘버로 멘토프로필 찾기
     MentorProfileDto getMentorByMemberNo(Long memberNo);
     
+
+    //12월 24일 멘토 프로필 카테고리
+ // 팔로우 순으로 소분류 카테고리별 멘토 리스트 조회
+    Page<MentorProfileDto> getByParentCategoryOrderByFollowCount(Long parentCategoryNo, int page, int size);
+    Page<MentorProfileDto> getByParentCategoryOrderByMentoringCount(Long parentCategoryNo, int page, int size);
+    Page<MentorProfileDto> getByParentCategoryOrderByActivityCount(Long parentCategoryNo, int page, int size);
+
+    Page<MentorProfileDto> getByCategoryNoOrderByFollowCount(Long categoryNo, int page, int size);
+    Page<MentorProfileDto> getByCategoryNoOrderByMentoringCount(Long categoryNo, int page, int size);
+    Page<MentorProfileDto> getByCategoryNoOrderByActivityCount(Long categoryNo, int page, int size);
+
+
     //별점 순으로 멘토 찾기
     List<MentorProfileDto> getMentorByRating();
+
 }
 
