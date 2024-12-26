@@ -110,6 +110,8 @@ public interface MentorProfileRepository extends JpaRepository<MentorProfile, Lo
      //별점 순으로 리스트뽑기(우수멘토)
      List<MentorProfile> findByOrderByMentorRatingDesc();
      
+     MentorProfile findMemberNoByMentorProfileNo(Long mentorProfileNo);
+     
 }
 
 

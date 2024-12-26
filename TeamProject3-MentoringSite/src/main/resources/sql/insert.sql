@@ -464,6 +464,8 @@ insert into review (review_no, review_title,review_status, review_content,review
 values (review_no_SEQ.nextval, '제목5',1, '최고에요', 5, sysdate, 2);
 insert into review (review_no, review_title,review_status, review_content,review_score,review_date,chat_room_no) 
 values (review_no_SEQ.nextval, '제목6',1, '그냥그래요', 3, sysdate, 2);
+insert into review (review_no, review_title,review_status, review_content,review_score,review_date,chat_room_no) 
+values (review_no_SEQ.nextval, '제목6',1, '그냥그래요', 4, sysdate, 10);
 
 /* 추천 등록 */
 insert into vote(vote_no, vote_type, vote_date, answer_no, member_no)

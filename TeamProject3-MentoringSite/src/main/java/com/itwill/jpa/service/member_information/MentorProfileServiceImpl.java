@@ -459,7 +459,12 @@ public class MentorProfileServiceImpl implements MentorProfileService {
 		return profileDtos;
 	}
     
-    
+    @Override
+    public Long getMemberNoByMentorNo(Long mentorProfileNo) {
+    	MentorProfile mentor = mentorProfileRepository.findMemberNoByMentorProfileNo(mentorProfileNo);
+    	Long mentorNo = mentor.getMember().getMemberNo();
+    	return mentorNo;
+    }
 
     
 

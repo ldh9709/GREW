@@ -382,4 +382,21 @@ public class MentorProfileController {
 		return responseEntity;
 
 	}
+	
+	@Operation(summary = "멘토의 멤버번호 조회")
+	@GetMapping("/{mentorProfileNo}/member_no")
+	public ResponseEntity<Response> getMemberNoByMentorProfileNo(@PathVariable("mentorProfileNo") Long mentorProfileNo){
+		Long mentorNo = mentorProfileService.getMemberNoByMentorNo(mentorProfileNo);
+		Response response = new Response();
+		response.setData(mentorNo);
+		
+		HttpHeaders httpHeaders = new HttpHeaders();
+		httpHeaders.setContentType(new MediaType(MediaType.APPLICATION_JSON, Charset.forName("UTF-8")));
+
+		ResponseEntity<Response> responseEntity = new ResponseEntity<Response>(response, httpHeaders, HttpStatus.OK);
+
+		return responseEntity;
+	}
+	
+	
 }
