@@ -17,7 +17,7 @@ function InqiuryList() {
   const [itemsPerPage] = useState(5); // 페이지당 항목 수 (예: 한 페이지에 5개 항목)
   const [sortType, setSortType] = useState("latest"); // 기본적으로 'latest'로 설정
   const [categories, setCategories] = useState([]); // 카테고리 리스트
-  const [selectedCategory, setSelectedCategory] = useState([]); // 선택된 카테고리
+  const [selectedCategory, setSelectedCategory] = useState(null); // 선택된 카테고리
   const [childCategories, setChildCategories] = useState([]); // 하위 카테고리 상태
   const [bestAnswer, setBestAnswer] = useState([]);
   const navigate = useNavigate();
