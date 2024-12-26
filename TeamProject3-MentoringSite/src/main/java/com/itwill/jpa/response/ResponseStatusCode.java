@@ -140,19 +140,24 @@ public class ResponseStatusCode {
 	
 	/******************* CHATTING 메시지 ************************/
 	public static final int PENDING_CHATTING = 7000; // (멘토의 수락/거절 대기 상태)
+	public static final int PENDING_CHATTING_FAIE = 7001; // (멘토의 수락/거절 대기 상태)
 	public static final int ACTIVE_CHATTING = 7100; // (채팅방 활성화)
+	public static final int ACTIVE_CHATTING_FAIE = 7101; 
 	public static final int COMPLETED_CHATTING = 7200; // (활동 종료)
 	public static final int REJECTED_CHATTING = 7300; // (멘토가 요청을 수락하지 않음)
 	public static final int CANCELED_CHATTING_FAIL = 7400; // (멘티가 요청을 철회함)
 	public static final int FORCE_CLOSED_CHATTING = 7500; // (관리자가 비정상적인 요청을 종료함)
 	public static final int STAY_CHATTING = 7600; // (채팅방을 나가지않음)
 	public static final int LEAVE_CHATTING = 7700; // (채팅방을 나감)
+	public static final int CHATTING_STATUS_CHANGE_FAIE = 7777;
 	public static final int SEND_CHATTING_SUCCESS = 7800;
 	public static final int SEND_CHATTING_FAIL = 7900;
 	public static final int CHATTING_LIST_SUCCESS = 7010;
+	public static final int CHATTING_LIST_FAIE = 7011;
 	public static final int CHATTING_NAME = 7020;
 	public static final int CHATTING_NAME_CHANGE = 7030;
-	public static final int CHATTING_MESSAGE = 7040;
+	public static final int CHATTING_MESSAGE_SUCCESS = 7040;
+	public static final int CHATTING_MESSAGE_FAIE = 7041;
 	public static final int READ_MESSAGE = 7050;
 	
 	

@@ -1,11 +1,11 @@
 import { getCookie } from "../../util/cookieUtil";
+import { useMemberAuth } from "../../util/AuthContext"
 import React, { useEffect, useState } from 'react'
 import * as adminApi from '../../api/adminApi';
 
 
 function AdminMember() {
-    const memberCookie = getCookie("member");
-    const token = memberCookie.accessToken;
+    const { token } = useMemberAuth();
 
 
     //1. 초기설정

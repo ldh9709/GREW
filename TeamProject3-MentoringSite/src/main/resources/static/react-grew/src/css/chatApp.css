@@ -21,6 +21,8 @@ body {
     right: 0;
 }
 .chat-header {
+    display: flex;
+    justify-content: center;
     padding: 10px;
     background-color: #007bff;
     color: white;
@@ -28,10 +30,25 @@ body {
     text-align: center;
     
 }
+.chat-tab {
+    text-align: center;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    margin: 0 10px;
+}
+.chat-tab.active {
+    background-color: white; /* 활성화된 탭 스타일 */
+    color: #333;
+    font-weight: bold;
+}
 .chat-room-list {
     list-style: none;
     padding: 0;
     margin: 0;
+    overflow-y: auto; /*스크롤 가능 */
+    height: calc(100vh - 160px); /*채팅 내용 영역의 높이를 화면 크기에 맞게 조정*/
 }
 .chat-room-item {
     display: flex;

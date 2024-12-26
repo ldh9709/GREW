@@ -1,11 +1,8 @@
 import React from "react";
-import { getCookie } from "../util/cookieUtil";
-import { useNavigate } from "react-router-dom";
-import { logout, memberProfile, getMentorProfile } from "../api/memberApi";
 import "../css/styles.css";
-
-import { jwtDecode } from "jwt-decode";
+import { useNavigate } from "react-router-dom";
 import { useMemberAuth } from "../util/AuthContext";
+import { logout, memberProfile, getMentorProfile } from "../api/memberApi";
 
 export default function HeaderMenu() {
   const navigate = useNavigate();
@@ -86,18 +83,13 @@ export default function HeaderMenu() {
         (interest) => interest.categoryNo === 19
       );
 
-      /* 멘토의 전문분야가 26번인지 확인(멘토 회원가입 시 기본값) */
+      /* 멘토의 전문분야가 26번인지 확인(멘토 회원가입 시 기본값)
       const checkMentorCategory = mentorProfileResponse?.data?.categoryNo === 26;
       
-      
+       */
       console.log("checkMemberCategory : ", checkMemberCategory);
 
-      console.log("checkMentorCategory : ", checkMentorCategory);
-      
-      if (checkMentorCategory) {
-        navigate("/mentor/join");
-
-      } else if (checkMemberCategory) {
+    if (checkMemberCategory) {
         navigate("/member/profile/edit");
 
       } else {

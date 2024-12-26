@@ -20,7 +20,7 @@ const ChatAlarim = () => {
         setRoomName(roomName); // 선택된 roomName 설정
         setActivePanel('ChattingMessage');
     };
- 
+    
     return (
         <div>
             {token != null ? (

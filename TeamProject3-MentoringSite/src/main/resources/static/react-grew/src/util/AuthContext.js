@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
-import { getCookie, setCookie, removeCookie } from "./cookieUtil";
+import { getCookie, removeCookie } from "./cookieUtil";
 import { jwtDecode } from "jwt-decode";
 
 /* 컴포넌트 전역에서 데이터를 공유하는 Context생성 */

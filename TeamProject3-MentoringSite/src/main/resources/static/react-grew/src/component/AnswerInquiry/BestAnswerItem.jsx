@@ -8,7 +8,10 @@ export default function InquiryItem({ answer,index }) {
     <>
       <div className="answer-best-list">
         <a className="answer-best-container" href={`inquiry/${answer.inquiryNo}`} inquiry_no="answer.inquiryNo">
-        <div className="answer-best-content">{index+1}.{answer.answerContent}</div>
+        <div className="answer-best-content">
+          <span>{index+1} </span>
+          <span>{answer.answerContent}</span>
+          </div>
         </a>
       </div>
     </>

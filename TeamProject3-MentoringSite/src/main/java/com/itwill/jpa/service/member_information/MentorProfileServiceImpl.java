@@ -93,7 +93,7 @@ public class MentorProfileServiceImpl implements MentorProfileService {
             if (member == null) {
                 throw new CustomException(ResponseStatusCode.MEMBER_MENTOR_NOT_FOUND, ResponseMessage.MEMBER_MENTOR_NOT_FOUND, null);
             }
-
+            
             // 2️⃣ 카테고리 정보 조회
             Category category = categoryRepository.findById(mentorProfileDto.getCategoryNo()).get();
             if (category == null) {
@@ -443,6 +443,20 @@ public class MentorProfileServiceImpl implements MentorProfileService {
 	public MentorProfileDto getMentorByMemberNo(Long memberNo) {
 		MentorProfile mentor = mentorProfileRepository.findByMember_MemberNo(memberNo);
 		return MentorProfileDto.toDto(mentor);
+	}
+
+
+
+
+	//별점 순으로 멘토 찾기
+	@Override
+	public List<MentorProfileDto> getMentorByRating() {
+		List<MentorProfile> profiles= mentorProfileRepository.findByOrderByMentorRatingDesc();
+		List<MentorProfileDto> profileDtos = new ArrayList<>();
+		for(MentorProfile profile : profiles) {
+			profileDtos.add(MentorProfileDto.toDto(profile));
+		}
+		return profileDtos;
 	}
     
     
