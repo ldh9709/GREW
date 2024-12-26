@@ -347,6 +347,7 @@ button {
 }
 
 .inquiry-content {
+  width: 80%;
   font-size: 13px;
   color: #505050;
 }
