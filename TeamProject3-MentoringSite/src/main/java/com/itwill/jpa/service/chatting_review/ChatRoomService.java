@@ -9,7 +9,7 @@ import com.itwill.jpa.dto.chatting_review.ChatRoomDto;
 
 public interface ChatRoomService {
 	ChatRoomDto getChatRoom(Long chatRoomNo);
-	void saveChatRoom(ChatRoomDto ChatRoomDto);
+	ChatRoomDto saveChatRoom(Long mentorNo, Long menteeNo);
 	ChatRoomDto updateActive(Long chatRoomNo) throws Exception;
 	ChatRoomDto updateCompleted(Long chatRoomNo) throws Exception;
 	ChatRoomDto updateRejected(Long chatRoomNo) throws Exception;
@@ -17,6 +17,7 @@ public interface ChatRoomService {
 	ChatRoomDto updateForceClosed(Long chatRoomNo) throws Exception;
 	Page<ChatRoomDto> selectChatRoomByMenteeNo(Long MemberNo, int pageNumber, int pageSize);
 	Page<ChatRoomDto> selectChatRoomByMentorNo(Long MemberNo, int pageNumber, int pageSize);
-	Page<ChatRoomDto> selectChatRoomAll(Long MemberNo, int pageNumber, int pageSize);
+	Page<ChatRoomDto> activeChatRoomAll(Long MemberNo, int pageNumber, int pageSize);
+	Page<ChatRoomDto> waitChatRoomAll(Long MemberNo, int pageNumber, int pageSize);
 	List<ChatMessageDto> selectChatMessages(Long chatRoomNo);
 }

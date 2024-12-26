@@ -139,9 +139,10 @@ public class ResponseMessage {
 	
 	/******************* CHATTING 메시지 ************************/
 	public static final String PENDING_CHATTING = "요청 대기 중"; // (멘토의 수락/거절 대기 상태)
-	public static final String PENDING_CHATTING_FAIE = "채팅방 생성 실패"; // (채팅방 활성화)
+	public static final String PENDING_CHATTING_FAIE = "채팅방 생성 실패"; 
+	public static final String PENDING_CHATTING_IMPOSSIBLE = "채팅방 생성 불가능"; 
 	public static final String ACTIVE_CHATTING = "멘토링 진행 중"; // (채팅방 활성화)
-	public static final String ACTIVE_CHATTING_FAIE = "채팅방 활성화 실패"; // (채팅방 활성화)
+	public static final String ACTIVE_CHATTING_FAIE = "채팅방 활성화 실패"; // (채팅방 활성화 실패)
 	public static final String COMPLETED_CHATTING = "멘토링 완료"; // (활동 종료)
 	public static final String REJECTED_CHATTING = "요청 거절"; // (멘토가 요청을 수락하지 않음)
 	public static final String CANCELED_CHATTING_FAIL = "요청 취소"; // (멘티가 요청을 철회함)

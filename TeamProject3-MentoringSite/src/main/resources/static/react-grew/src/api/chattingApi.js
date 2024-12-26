@@ -14,17 +14,26 @@ export const listChatRoom = async (token, page, size) => {
   return responseJsonObject;
 };
 
-export const memberListChatRoom = async (token, page, size) => {
-  const response = await fetch(
-    `${BACKEND_SERVER}/chatroom/memberList?page=${page}&size=${size}`,
-    {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`, // Authorization 헤더에 JWT 토큰 추가
-      },
+export const activeListChatRoom = async (token,page,size) => {
+  const response = await fetch(`${BACKEND_SERVER}/chatroom/list/active?page=${page}&size=${size}`, {
+     method: "GET",
+     headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}` // Authorization 헤더에 JWT 토큰 추가
     }
-  );
+  });
+  const responseJsonObject = await response.json();
+  return responseJsonObject;
+};
+
+export const waitListChatRoom = async (token,page,size) => {
+  const response = await fetch(`${BACKEND_SERVER}/chatroom/list/wait?page=${page}&size=${size}`, {
+     method: "GET",
+     headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}` // Authorization 헤더에 JWT 토큰 추가
+    }
+  });
   const responseJsonObject = await response.json();
   return responseJsonObject;
 };

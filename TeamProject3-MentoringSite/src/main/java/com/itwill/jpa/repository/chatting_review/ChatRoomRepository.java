@@ -15,6 +15,10 @@ public interface ChatRoomRepository extends JpaRepository<ChatRoom, Long>{
 	Page<ChatRoom> findByMenteeNo(@Param("memberNo") Long memberNo,Pageable pageable);
 	@Query("SELECT c FROM ChatRoom c WHERE c.mentor.memberNo = :memberNo")
 	Page<ChatRoom> findByMentorNo(@Param("memberNo") Long memberNo,Pageable pageable);
-	@Query("SELECT c FROM ChatRoom c WHERE c.mentee.memberNo = :memberNo OR c.mentor.memberNo = :memberNo")
-	Page<ChatRoom> findByMemberNo(@Param("memberNo") Long memberNo, Pageable pageable);
+	@Query("SELECT c FROM ChatRoom c WHERE (c.mentee.memberNo = :memberNo OR c.mentor.memberNo = :memberNo) AND (c.chatRoomStatus = 7100 OR c.chatRoomStatus = 7200)")
+	Page<ChatRoom> findByMemberNoAndStatus1(@Param("memberNo") Long memberNo, Pageable pageable);
+	@Query("SELECT c FROM ChatRoom c WHERE (c.mentee.memberNo = :memberNo OR c.mentor.memberNo = :memberNo) AND c.chatRoomStatus = 7000")
+	Page<ChatRoom> findByMemberNoAndStatus2(@Param("memberNo") Long memberNo, Pageable pageable);
+	@Query("SELECT c FROM ChatRoom c WHERE c.mentee.memberNo = :menteeNo AND c.mentor.memberNo = :mentorNo")
+	ChatRoom findByMenteeAndMentor(@Param("menteeNo") Long menteeNo, @Param("mentorNo") Long mentorNo);
 }
