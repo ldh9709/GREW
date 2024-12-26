@@ -9,6 +9,9 @@ body {
 div {
   font-family: "Noto Sans KR", sans-serif;
 }
+textarea {
+  font-family: "Noto Sans KR", sans-serif !important;
+}
 p {
   margin: 0 10px 10px;
 }
