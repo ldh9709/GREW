@@ -63,13 +63,9 @@ button {
   padding: 10px 0;
   font-size: 13px;
 }
-<<<<<<< HEAD
-.pagenation1 {
-=======
 
 /*페이지 네이션*/
 .common-pagination {
->>>>>>> branch 'master' of https://github.com/2024-07-JAVA-DEVELOPER-155/final-project-team2.git
   display: flex;
   position: absolute;
   left: 50%; transform: translateX(-50%);
@@ -545,7 +541,7 @@ button {
   justify-content: right;
 }
 .footer {
-  background-color: #f5f5f8;
+  background-color: #28a745;
   color: white;
   padding: 20px 0;
   text-align: center;
