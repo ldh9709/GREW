@@ -18,7 +18,7 @@ function SearchList() {
       const fetchSearchResults = async () => {
         setLoading(true);
         try {
-          const response = await inquiryApi.searchInquiry(query, 1, 3); // API 호출
+          const response = await inquiryApi.searchInquiry(query, 0, 3); // API 호출
           console.log(response);
           console.log(query);
           setSearchResults(response.data.content); // 검색 결과 저장
