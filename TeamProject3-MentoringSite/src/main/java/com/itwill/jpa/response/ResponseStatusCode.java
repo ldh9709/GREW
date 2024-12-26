@@ -140,7 +140,8 @@ public class ResponseStatusCode {
 	
 	/******************* CHATTING 메시지 ************************/
 	public static final int PENDING_CHATTING = 7000; // (멘토의 수락/거절 대기 상태)
-	public static final int PENDING_CHATTING_FAIE = 7001; // (멘토의 수락/거절 대기 상태)
+	public static final int PENDING_CHATTING_FAIE = 7001; // (채팅방 생성 실패)
+	public static final int PENDING_CHATTING_IMPOSSIBLE = 7002; // (채팅방 생성 불가능)
 	public static final int ACTIVE_CHATTING = 7100; // (채팅방 활성화)
 	public static final int ACTIVE_CHATTING_FAIE = 7101; 
 	public static final int COMPLETED_CHATTING = 7200; // (활동 종료)

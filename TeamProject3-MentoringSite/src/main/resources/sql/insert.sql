@@ -348,25 +348,12 @@ values(answer_no_SEQ.nextval, 'JAVA를 배우세요 추천합니다!',sysdate, 1
 
 /* 채팅방 요정 등록 */
 insert into chat_room (chat_room_no, chat_room_status, chat_room_start_date, chat_room_end_date, mentee_no, mentor_no)
-values(chat_room_no_SEQ.nextval, 7100, sysdate, null, 1, 5);
-insert into chat_room (chat_room_no, chat_room_status, chat_room_start_date, chat_room_end_date, mentee_no, mentor_no)
 values(chat_room_no_SEQ.nextval, 7100, sysdate, null, 1, 6);
 insert into chat_room (chat_room_no, chat_room_status, chat_room_start_date, chat_room_end_date, mentee_no, mentor_no)
-values(chat_room_no_SEQ.nextval, 7000, sysdate, null, 1, 7);
+values(chat_room_no_SEQ.nextval, 7000, sysdate, null, 4, 6);
 insert into chat_room (chat_room_no, chat_room_status, chat_room_start_date, chat_room_end_date, mentee_no, mentor_no)
-values(chat_room_no_SEQ.nextval, 7000, sysdate, null, 1, 8);
-insert into chat_room (chat_room_no, chat_room_status, chat_room_start_date, chat_room_end_date, mentee_no, mentor_no)
-values(chat_room_no_SEQ.nextval, 7100, sysdate, null, 3, 6);
-insert into chat_room (chat_room_no, chat_room_status, chat_room_start_date, chat_room_end_date, mentee_no, mentor_no)
-values(chat_room_no_SEQ.nextval, 7200, sysdate, null, 4, 7);
-insert into chat_room (chat_room_no, chat_room_status, chat_room_start_date, chat_room_end_date, mentee_no, mentor_no)
-values(chat_room_no_SEQ.nextval, 7200, sysdate, null, 2, 8);
-insert into chat_room (chat_room_no, chat_room_status, chat_room_start_date, chat_room_end_date, mentee_no, mentor_no)
-values(chat_room_no_SEQ.nextval, 7500, sysdate, null, 2, 5);
+values(chat_room_no_SEQ.nextval, 7200, sysdate, null, 5, 6);
 
-/*채팅방 테스트*/
-insert into chat_room (chat_room_no, chat_room_status, chat_room_start_date, chat_room_end_date, mentee_no, mentor_no)
-values(chat_room_no_SEQ.nextval, 7000, sysdate, null, 6, 7);
 insert into chat_room (chat_room_no, chat_room_status, chat_room_start_date, chat_room_end_date, mentee_no, mentor_no)
 values(chat_room_no_SEQ.nextval, 7000, sysdate, null, 6, 8);
 insert into chat_room (chat_room_no, chat_room_status, chat_room_start_date, chat_room_end_date, mentee_no, mentor_no)
@@ -380,51 +367,44 @@ values(chat_room_no_SEQ.nextval, 7200, sysdate, null, 6, 12);
 insert into chat_room (chat_room_no, chat_room_status, chat_room_start_date, chat_room_end_date, mentee_no, mentor_no)
 values(chat_room_no_SEQ.nextval, 7500, sysdate, null, 6, 13);
 
-insert into chat_room (chat_room_no, chat_room_status, chat_room_start_date, chat_room_end_date, mentee_no, mentor_no)
-values(chat_room_no_SEQ.nextval, 7000, sysdate, null, 2, 6);
-insert into chat_room (chat_room_no, chat_room_status, chat_room_start_date, chat_room_end_date, mentee_no, mentor_no)
-values(chat_room_no_SEQ.nextval, 7000, sysdate, null, 4, 6);
-insert into chat_room (chat_room_no, chat_room_status, chat_room_start_date, chat_room_end_date, mentee_no, mentor_no)
-values(chat_room_no_SEQ.nextval, 7000, sysdate, null, 5, 6);
 
 /* 채팅방 활성화 등록 */
 insert into chat_room_status (chat_room_no, chat_room_name, chat_room_status, member_no, chat_room_status_no) 
-values (1, '김진영님과 박은미님의 채팅방', 7600, 1, chat_room_status_no_SEQ.nextval);
+values (1, '김진영님과 이도현님의 채팅방', 7600, 1, chat_room_status_no_SEQ.nextval);
 insert into chat_room_status (chat_room_no, chat_room_name, chat_room_status, member_no, chat_room_status_no) 
-values (1, '김진영님과 박은미님의 채팅방', 7600, 5, chat_room_status_no_SEQ.nextval);
+values (1, '김진영님과 이도현님의 채팅방', 7600, 6, chat_room_status_no_SEQ.nextval);
 insert into chat_room_status (chat_room_no, chat_room_name, chat_room_status, member_no, chat_room_status_no) 
-values (2, '김진영님과 이도현님의 채팅방', 7600, 1, chat_room_status_no_SEQ.nextval);
+values (2, '문준형님과 이도현님의 채팅방', 7500, 4, chat_room_status_no_SEQ.nextval);
 insert into chat_room_status (chat_room_no, chat_room_name, chat_room_status, member_no, chat_room_status_no) 
-values (2, '김진영님과 이도현님의 채팅방', 7600, 6, chat_room_status_no_SEQ.nextval);
+values (2, '문준형님과 이도현님의 채팅방', 7500, 6, chat_room_status_no_SEQ.nextval);
 insert into chat_room_status (chat_room_no, chat_room_name, chat_room_status, member_no, chat_room_status_no) 
-values (5, '나문정님과 이도현님의 채팅방', 7600, 3, chat_room_status_no_SEQ.nextval);
+values (3, '박은미님과 이도현님의 채팅방', 7600, 5, chat_room_status_no_SEQ.nextval);
 insert into chat_room_status (chat_room_no, chat_room_name, chat_room_status, member_no, chat_room_status_no) 
-values (5, '나문정님과 이도현님의 채팅방', 7600, 6, chat_room_status_no_SEQ.nextval);
+values (3, '박은미님과 이도현님의 채팅방', 7600, 6, chat_room_status_no_SEQ.nextval);
 insert into chat_room_status (chat_room_no, chat_room_name, chat_room_status, member_no, chat_room_status_no) 
-values (6, '양한수님과 문준형님의 채팅방', 7600, 4, chat_room_status_no_SEQ.nextval);
+values (4, '이도현님과 송대현님의 채팅방', 7500, 6, chat_room_status_no_SEQ.nextval);
 insert into chat_room_status (chat_room_no, chat_room_name, chat_room_status, member_no, chat_room_status_no) 
-values (6, '양한수님과 문준형님의 채팅방', 7600, 7, chat_room_status_no_SEQ.nextval);
+values (4, '이도현님과 송대현님의 채팅방', 7500, 8, chat_room_status_no_SEQ.nextval);
 insert into chat_room_status (chat_room_no, chat_room_name, chat_room_status, member_no, chat_room_status_no) 
-values (7, '이도현님과 김찬영님의 채팅방', 7600, 2, chat_room_status_no_SEQ.nextval);
+values (5, '이도현님과 양한수님의 채팅방', 7500, 6, chat_room_status_no_SEQ.nextval);
 insert into chat_room_status (chat_room_no, chat_room_name, chat_room_status, member_no, chat_room_status_no) 
-values (7, '이도현님과 김찬영님의 채팅방', 7600, 8, chat_room_status_no_SEQ.nextval);
-/* 방 최대 갯수 확인용  */
+values (5, '이도현님과 양한수님의 채팅방', 7500, 9, chat_room_status_no_SEQ.nextval);
 insert into chat_room_status (chat_room_no, chat_room_name, chat_room_status, member_no, chat_room_status_no) 
-values (11, '이도현님과 양한수님의 채팅방', 7600, 6, chat_room_status_no_SEQ.nextval);
+values (6, '이도현님과 이도현님의 채팅방', 7600, 6, chat_room_status_no_SEQ.nextval);
 insert into chat_room_status (chat_room_no, chat_room_name, chat_room_status, member_no, chat_room_status_no) 
-values (11, '이도현님과 양한수님의 채팅방', 7600, 9, chat_room_status_no_SEQ.nextval);
+values (6, '이도현님과 이도현님의 채팅방', 7600, 10, chat_room_status_no_SEQ.nextval);
 insert into chat_room_status (chat_room_no, chat_room_name, chat_room_status, member_no, chat_room_status_no) 
-values (12, '이도현님과 이도현님의 채팅방', 7600, 6, chat_room_status_no_SEQ.nextval);
+values (7, '이도현님과 김민수님의 채팅방', 7600, 6, chat_room_status_no_SEQ.nextval);
 insert into chat_room_status (chat_room_no, chat_room_name, chat_room_status, member_no, chat_room_status_no) 
-values (12, '이도현님과 이도현님의 채팅방', 7600, 10, chat_room_status_no_SEQ.nextval);
+values (7, '이도현님과 김민수님의 채팅방', 7600, 11, chat_room_status_no_SEQ.nextval);
 insert into chat_room_status (chat_room_no, chat_room_name, chat_room_status, member_no, chat_room_status_no) 
-values (13, '이도현님과 김민수님의 채팅방', 7600, 6, chat_room_status_no_SEQ.nextval);
+values (8, '이도현님과 이서준님의 채팅방', 7600, 6, chat_room_status_no_SEQ.nextval);
 insert into chat_room_status (chat_room_no, chat_room_name, chat_room_status, member_no, chat_room_status_no) 
-values (13, '이도현님과 김민수님의 채팅방', 7600, 11, chat_room_status_no_SEQ.nextval);
+values (8, '이도현님과 이서준님의 채팅방', 7600, 12, chat_room_status_no_SEQ.nextval);
 insert into chat_room_status (chat_room_no, chat_room_name, chat_room_status, member_no, chat_room_status_no) 
-values (14, '이도현님과 이서준님의 채팅방', 7600, 6, chat_room_status_no_SEQ.nextval);
+values (9, '이도현님과 박지우님의 채팅방', 7600, 6, chat_room_status_no_SEQ.nextval);
 insert into chat_room_status (chat_room_no, chat_room_name, chat_room_status, member_no, chat_room_status_no) 
-values (14, '이도현님과 이서준님의 채팅방', 7600, 12, chat_room_status_no_SEQ.nextval);
+values (9, '이도현님과 박지우님의 채팅방', 7600, 13, chat_room_status_no_SEQ.nextval);
 
 
 

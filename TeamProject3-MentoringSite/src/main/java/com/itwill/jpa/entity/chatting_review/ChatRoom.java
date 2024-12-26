@@ -18,14 +18,12 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OrderBy;
-import jakarta.persistence.PrePersist;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
 
 @Entity
 @NoArgsConstructor
@@ -37,24 +35,24 @@ public class ChatRoom {
 	@Id
 	@SequenceGenerator(name = "chat_room_no_SEQ", sequenceName = "chat_room_no_SEQ", initialValue = 1, allocationSize = 1)
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "chat_room_no_SEQ")
-	@Column(name = "chat_room_no", nullable = false)
+	@Column(name = "chat_room_no")
 	private Long chatRoomNo;
 	
-	@Column(name = "chat_room_status", nullable = false)
+	@Column(name = "chat_room_status")
 	private Integer chatRoomStatus;
 	
-	@Column(name = "chat_room_start_date", updatable = false)
+	@Column(name = "chat_room_start_date")
 	private LocalDateTime chatRoomStartDate;
 	
 	@Column(name = "chat_room_end_date")
 	private LocalDateTime chatRoomEndDate;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "mentee_no", nullable = false)
+    @JoinColumn(name = "mentee_no")
     private Member mentee;
 	
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "mentor_no", nullable = false)
+    @JoinColumn(name = "mentor_no")
     private Member mentor;
 	
 	
@@ -68,13 +66,6 @@ public class ChatRoom {
     @OrderBy("chatMessageNo ASC")
     private List<ChatMessage> chatMessages= new ArrayList<ChatMessage>();
 	
-    /* 초기값 설정 */
-    @PrePersist
-    public void setDefaultValues() {
-    	if (this.chatRoomStatus == 0 || this.chatRoomStatus == null) this.chatRoomStatus = 7000;
-    	if (this.chatRoomStartDate == null) this.chatRoomStartDate = LocalDateTime.now();
-    }
-    
     public static ChatRoom toEntity(ChatRoomDto mentoringRequestDto) {
         return ChatRoom.builder()
                 .chatRoomNo(mentoringRequestDto.getChatRoomNo())
