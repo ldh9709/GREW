@@ -46,9 +46,7 @@ public class MentorBoard {
     @Column(name = "mentor_board_status")
     private Integer mentorBoardStatus;   //답글 삭제 여부 (1또는 2)
     
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "category_no")
-    private Category category;  // FK 연관 관계 (Category 엔티티)
+
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_no")
@@ -69,10 +67,7 @@ public class MentorBoard {
     	Member member = Member.builder()
 				.memberNo(mentorBoardDto.getMemberNo())
 				.build();
-    	// Category 객체 생성
-        Category category = Category.builder()
-                .categoryNo(mentorBoardDto.getCategoryNo())
-                .build();
+ 
     	
     	
         return MentorBoard.builder()
@@ -83,7 +78,6 @@ public class MentorBoard {
                 .mentorBoardStatus(mentorBoardDto.getMentorBoardStatus())
                 .mentorBoardViews(mentorBoardDto.getMentorBoardViews())
                 .mentorBoardStatus(mentorBoardDto.getMentorBoardStatus())
-                .category(category)
                 .member(member)
                 .build();
     }

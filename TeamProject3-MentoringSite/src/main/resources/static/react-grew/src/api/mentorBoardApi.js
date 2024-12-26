@@ -166,7 +166,7 @@ export const getMentorBoardImageUrl = async (mentorBoardNo) => {
 // 조회수 많은 순으로 카테고리별 멘토 보드 가져오기
 export const listMentorBoardByCategoryView = async (categoryNo, page = 0, size = 10) => {
   const response = await fetch(
-    `${BACKEND_SERVER}/${BASE_URL}/${categoryNo}/view-count?page=${page}&size=${size}`,
+    `${BACKEND_SERVER}${BASE_URL}/${categoryNo}/view-count?page=${page}&size=${size}`,
     {
       method: "GET",
     }
@@ -179,7 +179,7 @@ export const listMentorBoardByCategoryView = async (categoryNo, page = 0, size =
 export const listMentorBoardByParentCategoryView = async (categoryNo, page = 0, size = 10) => {
   try {
     const response = await fetch(
-      `${BACKEND_SERVER}/${BASE_URL}/${categoryNo}/parent/view-count?page=${page}&size=${size}`
+      `${BACKEND_SERVER}${BASE_URL}/${categoryNo}/parent/view-count?page=${page}&size=${size}`
     );
     if (!response.ok) throw new Error("API 호출 실패");
     return await response.json();
@@ -191,7 +191,7 @@ export const listMentorBoardByParentCategoryView = async (categoryNo, page = 0, 
 // 최신 순으로 카테고리별 멘토 보드 가져오기
 export const listMentorBoardByCategoryDate = async (categoryNo, page = 0, size = 10) => {
   const response = await fetch(
-    `${BACKEND_SERVER}/${BASE_URL}/${categoryNo}/parent/date?page=${page}&size=${size}`,
+    `${BACKEND_SERVER}${BASE_URL}/${categoryNo}/date?page=${page}&size=${size}`,
     {
       method: "GET",
     }
@@ -203,11 +203,14 @@ export const listMentorBoardByCategoryDate = async (categoryNo, page = 0, size =
 // 최신 순으로 카테고리별(대분류) 멘토 보드 가져오기
 export const listMentorBoardByParentCategoryDate = async (categoryNo, page = 0, size = 10) => {
   const response = await fetch(
-   `${BACKEND_SERVER}/${BASE_URL}/${categoryNo}/parent/date?page=${page}&size=${size}`,
+   `${BACKEND_SERVER}${BASE_URL}/${categoryNo}/parent/date?page=${page}&size=${size}`,
+   
     {
       method: "GET",
     }
+    
   );
+  
   const responseJsonObject = await response.json();
   return responseJsonObject;
 };
@@ -217,7 +220,7 @@ export const listMentorBoardByParentCategoryDate = async (categoryNo, page = 0, 
 */
 export const getMentorBoardsSortedByViews = async (status, page = 0, size = 10) => {
   const response = await fetch(
-    `${BASE_URL}/sorted/views/status?status=${status}&page=${page}&size=${size}`,
+    `${BACKEND_SERVER}/${BASE_URL}/sorted/views/status?status=${status}&page=${page}&size=${size}`,
     {
       method: "GET",
       headers: {

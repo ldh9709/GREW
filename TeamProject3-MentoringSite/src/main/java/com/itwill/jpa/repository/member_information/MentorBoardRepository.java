@@ -40,21 +40,42 @@ public interface MentorBoardRepository extends JpaRepository<MentorBoard, Long> 
     
     //////////////////////////////////////카테고리
  // 조회수순
-    @Query("SELECT mb FROM MentorBoard mb WHERE mb.category.categoryNo = :categoryNo AND mb.mentorBoardStatus = 1 ORDER BY mb.mentorBoardViews DESC")
+ // 조회수순
+    @Query("SELECT mb FROM MentorBoard mb " +
+           "JOIN mb.member m " +
+           "JOIN m.mentorProfile mp " +
+           "JOIN mp.category c " +
+           "WHERE c.categoryNo = :categoryNo AND mb.mentorBoardStatus = 1 " +
+           "ORDER BY mb.mentorBoardViews DESC")
     Page<MentorBoard> findByCategoryMentorBoardOrderByView(@Param("categoryNo") Long categoryNo, Pageable pageable);
 
     // 조회수순(대분류)
-    @Query("SELECT mb FROM MentorBoard mb WHERE mb.category.parentCategory.categoryNo = :categoryNo AND mb.mentorBoardStatus = 1 ORDER BY mb.mentorBoardViews DESC")
+    @Query("SELECT mb FROM MentorBoard mb " +
+           "JOIN mb.member m " +
+           "JOIN m.mentorProfile mp " +
+           "JOIN mp.category c " +
+           "WHERE c.parentCategory.categoryNo = :categoryNo AND mb.mentorBoardStatus = 1 " +
+           "ORDER BY mb.mentorBoardViews DESC")
     Page<MentorBoard> findByParentCategoryMentorBoardOrderByView(@Param("categoryNo") Long categoryNo, Pageable pageable);
 
     // 최신순
-    @Query("SELECT mb FROM MentorBoard mb WHERE mb.category.categoryNo = :categoryNo AND mb.mentorBoardStatus = 1 ORDER BY mb.mentorBoardDate DESC")
+    @Query("SELECT mb FROM MentorBoard mb " +
+           "JOIN mb.member m " +
+           "JOIN m.mentorProfile mp " +
+           "JOIN mp.category c " +
+           "WHERE c.categoryNo = :categoryNo AND mb.mentorBoardStatus = 1 " +
+           "ORDER BY mb.mentorBoardDate DESC")
     Page<MentorBoard> findByCategoryMentorBoardOrderByDate(@Param("categoryNo") Long categoryNo, Pageable pageable);
 
     // 최신순(대분류)
-    @Query("SELECT mb FROM MentorBoard mb WHERE mb.category.parentCategory.categoryNo = :categoryNo AND mb.mentorBoardStatus = 1 ORDER BY mb.mentorBoardDate DESC")
+    @Query("SELECT mb FROM MentorBoard mb " +
+           "JOIN mb.member m " +
+           "JOIN m.mentorProfile mp " +
+           "JOIN mp.category c " +
+           "WHERE c.parentCategory.categoryNo = :categoryNo AND mb.mentorBoardStatus = 1 " +
+           "ORDER BY mb.mentorBoardDate DESC")
     Page<MentorBoard> findByParentCategoryMentorBoardOrderByDate(@Param("categoryNo") Long categoryNo, Pageable pageable);
-    
+
     @Query("SELECT b FROM MentorBoard b WHERE b.mentorBoardStatus = :status ORDER BY b.mentorBoardViews DESC")
     Page<MentorBoard> findByStatusAndSortedByViews(@Param("status") int status, Pageable pageable);
    

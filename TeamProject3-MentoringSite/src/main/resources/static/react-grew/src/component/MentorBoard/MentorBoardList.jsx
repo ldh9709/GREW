@@ -6,6 +6,7 @@ import * as categoryApi from "../../api/categoryApi";
 import { useNavigate } from "react-router-dom";
 import { getCookie } from "../../util/cookieUtil";
 
+
 function MentorBoardList() {
   const [boards, setBoards] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
@@ -17,7 +18,8 @@ function MentorBoardList() {
   const [childCategories, setChildCategories] = useState([]);
   const navigate = useNavigate();
   const memberCookie = getCookie("member");
-
+  const BACKEND_SERVER = "http://localhost:8080"; // 백엔드 서버 URL
+  const BASE_URL = "/mentor-board";
   // 카테고리 목록을 가져오는 함수
   const fetchCategories = async () => {
     try {
@@ -53,8 +55,6 @@ function MentorBoardList() {
       } catch (error) {
         console.error("하위 카테고리 로드 오류:", error);
       }
-    } else {
-      setChildCategories([]);
     }
   };
 
@@ -66,6 +66,8 @@ function MentorBoardList() {
         (cat) => cat.categoryNo === selectedCategory
       );
 
+
+      console.log("Selected Category:", selectedCategory);
       if (!selectedCategory) {
         if (sortButton === "view") {
           responseJsonObject = await mentorBoardApi.listMentorBoardsByViews(
@@ -95,7 +97,12 @@ function MentorBoardList() {
               size
             );
         }
+        
       } else if (selectedCat?.categoryDepth === 1) {
+        const url = `${BACKEND_SERVER}${BASE_URL}/${selectedCategory}/parent/date?page=${page}&size=${size}`;
+        console.log("Request URL:", url); // 요청 URL 확인
+
+
         if (sortButton === "view") {
           responseJsonObject =
             await mentorBoardApi.listMentorBoardByParentCategoryView(
@@ -217,7 +224,10 @@ function MentorBoardList() {
             name="sortType"
             value="latest"
             checked={sortType === "latest"}
-            onChange={handleRadioChange}
+            onChange={(e) => {
+              setSortType(e.target.value);
+              setCurrentPage(1); // 정렬 변경 시 페이지 초기화
+            }}
           />
           최신순
         </label>
@@ -227,7 +237,10 @@ function MentorBoardList() {
             name="sortType"
             value="view"
             checked={sortType === "view"}
-            onChange={handleRadioChange}
+             onChange={(e) => {
+              setSortType(e.target.value);
+              setCurrentPage(1); // 정렬 변경 시 페이지 초기화
+            }}
           />
           조회순
         </label>
@@ -257,7 +270,7 @@ function MentorBoardList() {
               color: number === currentPage ? "white" : "",
             }}
           >
-            {number}
+            {number}  
           </button>
         ))}
         {endPage < totalPages && (
