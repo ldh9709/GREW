@@ -46,8 +46,8 @@ public class AnswerRestController {
 	/* 답변 등록 */
 	@Operation(summary = "답변 등록")
 	@SecurityRequirement(name = "BearerAuth") // API 엔드포인트가 인증을 요구한다는 것을 문서화(Swagger에서 JWT인증을 명시
-	@PreAuthorize("hasRole('MENTEE')") // ROLE이 MENTEE인 사람만 접근 가능 멘토로 변경해야함
-	@PostMapping("{inquiryNo}")
+	@PreAuthorize("hasRole('MENTOR')") // ROLE이 MENTEE인 사람만 접근 가능 멘토로 변경해야함
+	@PostMapping("/{inquiryNo}")
 	// @Transactional
 	public ResponseEntity<Response> createAnswer(Authentication authentication, @RequestBody AnswerDto answerDto,
 			@PathVariable("inquiryNo") Long inquiryNo) {
@@ -80,8 +80,10 @@ public class AnswerRestController {
 
 	/* 답변 수정 */
 	@Operation(summary = "답변 수정")
-	@PutMapping("update")
-	public ResponseEntity<Response> updateAnswer(@RequestBody AnswerDto answerDto) throws Exception {
+	@SecurityRequirement(name = "BearerAuth") // API 엔드포인트가 인증을 요구한다는 것을 문서화(Swagger에서 JWT인증을 명시
+	@PreAuthorize("hasRole('MENTOR')") // ROLE이 MENTEE인 사람만 접근 가능 멘토로 변경해야함
+	@PutMapping("/update/{answerNo}")
+	public ResponseEntity<Response> updateAnswer(@PathVariable(name = "answerNo") Long answerNo,@RequestBody AnswerDto answerDto) throws Exception {
 
 		// 1. 서비스 호출 : 답변 업데이트 메소드 실행
 		answerDto.setAnswerNo(answerDto.getAnswerNo());
@@ -128,6 +130,8 @@ public class AnswerRestController {
 
 	/* 답변 삭제(상태 업데이트) */
 	@Operation(summary = "답변 삭제(상태 수정)")
+	@SecurityRequirement(name = "BearerAuth") // API 엔드포인트가 인증을 요구한다는 것을 문서화(Swagger에서 JWT인증을 명시
+	@PreAuthorize("hasRole('MENTOR')") // ROLE이 MENTEE인 사람만 접근 가능 멘토로 변경해야함
 	@PutMapping("/delete/{answerNo}")
 	public ResponseEntity<Response> deleteAnswer(@PathVariable(name = "answerNo") Long answerNo) throws Exception {
 

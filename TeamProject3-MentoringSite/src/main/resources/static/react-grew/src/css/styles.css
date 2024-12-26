@@ -543,9 +543,9 @@ width: 30px;
 }
 .inquiry-form-title{
   margin-top: 10px;
-  font-size: 17px;
+  font-size: 16px;
   width: 100%; /* 입력란 너비를 100%로 설정 */
-  padding: 8px; /* 패딩 */
+  padding: 8px 15px; /* 패딩 */
   background-color: #f5f6f8; /* 배경색 */
   border: 1px solid #ccc; /* 테두리 */
   border-radius: 4px; /* 둥근 테두리 */
@@ -575,27 +575,39 @@ width: 30px;
 }
 
 /* 버튼 스타일 */
-.inquiry-write-btn-container{
+.inquiry-write-btn-container, .answer-write-btn-container{
   display: flex; 
   justify-content: flex-end;
 }
-.inquiry-form .inquiry-write-btn{
+.inquiry-form .inquiry-write-btn,
+.inquiry-form .answer-write-btn{
   background-color: #28a745; /* 파란색 배경 */
   color: white; /* 흰색 글자 */
-  padding: 10px 12px; /* 버튼 패딩 */
-  font-size: 16px; /* 글자 크기 */
+  padding: 8px 25px; /* 버튼 패딩 */
+  margin-left: 8px;
+  font-size: 14px; /* 글자 크기 */
   font-weight: 600;
   border: none; /* 테두리 제거 */
   border-radius: 4px; /* 둥근 모서리 */
   cursor: pointer; /* 마우스 커서 포인터 */
-  width: 150px; /* 버튼 전체 너비 */
   transition: background-color 0.3s ease; /* 배경색 변화 효과 */
 }
+.inquiry-form .inquiry-write-btn:nth-child(2),
+.inquiry-form .answer-write-btn:nth-child(2){
+  background-color: #ebebeb;
+  color: #444;
+}
 /* 버튼에 마우스를 올리면 배경색 변화 */
-.inquiry-form .inquiry-write-btn:hover {
+.inquiry-form .inquiry-write-btn:hover,
+.inquiry-form .answer-write-btn:hover {
   background-color: #006618; /* 버튼 위에 마우스를 올리면 어두운 파란색 */
 }
-.inquiry-write-btn {
+
+.inquiry-form .inquiry-write-btn:nth-child(2):hover,
+.inquiry-form .answer-write-btn:nth-child(2):hover{
+  background-color: #d1d1d1;
+}
+.inquiry-write-btn ,.answer-write-btn{
   display: flex;
   justify-content: center;
 }
@@ -616,6 +628,16 @@ width: 30px;
 }
 .answer-notify-btn span {
   margin-left: 5px;
+}
+
+/* 질문 수정  */
+.inquiry-modify-category{
+  padding: 5px 15px;
+  display: inline-block;
+  border-radius: 5px;
+  margin: 5px 0;
+  font-size: 15px;
+  background-color: #dbdbdb;
 }
 
 /*질문 상세보기 답변 리스트*/
@@ -678,6 +700,14 @@ width: 30px;
   background-color: #28a745; /* 호버 시 배경색을 상위 카테고리 색상으로 변경 */
   color: white; /* 텍스트 색상 변경 */
 }
+
+
+/*답변 수정 폼*/
+.inquiry-answer-form .answer-textarea{
+  font-size: 16px;
+}
+
+
 /* 검색창 컨테이너 */
 .search-container {
   display: flex;

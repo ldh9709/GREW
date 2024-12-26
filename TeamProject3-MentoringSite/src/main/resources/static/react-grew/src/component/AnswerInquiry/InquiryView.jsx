@@ -76,7 +76,8 @@ function InquiryView() {
 
   //질문삭제
   const inquiryRemoveAction = async () => {
-    const responseJsonObject = await inquiryApi.deleteInquiry(inquiryNo);
+    if (!window.confirm('질문을 삭제하시겠습니까?')) return;
+    const responseJsonObject = await inquiryApi.deleteInquiry(inquiryNo,token);
     if (responseJsonObject.status === 5200) {
       navigate("/inquiry");
     } else {
