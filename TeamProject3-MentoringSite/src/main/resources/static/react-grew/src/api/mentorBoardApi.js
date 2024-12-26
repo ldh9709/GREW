@@ -31,11 +31,12 @@ export const listMentorBoardsByStatus = async (status, page = 0, size = 10) => {
 };
 
 // 새로운 멘토 보드를 생성합니다.
-export const createMentorBoard = async (data) => {
+export const createMentorBoard = async (token,data) => {
     const response = await fetch(`${BACKEND_SERVER}${BASE_URL}`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
         },
         body: JSON.stringify(data), // JSON 형식으로 전송
     });

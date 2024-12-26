@@ -3,61 +3,63 @@ import * as categoryApi from "../../api/categoryApi"; // 카테고리 데이터�
 import * as mentorProfileApi from "../../api/mentorProfileApi";
 import * as mentorBoardApi from "../../api/mentorBoardApi"; // API 호출 부분
 import "../../css/mentorBoardForm.css";
-import { useParams, useNavigate } from "react-router-dom";  // useNavigate 추가
+import { useNavigate } from "react-router-dom";  // useNavigate 추가
+import { useMemberAuth } from "../../util/AuthContext"
+
+const DEFAULT_IMAGE_URL = "/images/mentor-board/defaultImage.png"; // 기본이미지 URL 설정
 
 function MentorBoardCreate() {
+  const { token, member } = useMemberAuth(); // 토큰과 멤버 선언하여 Context에 담긴 정보 가져오기
+  const memberNo = member?.memberNo || null;  // member에서 memberNo 추출, 값이 없을경우 null값 입력력
   const [category, setCategory] = useState(""); // 카테고리명 선언
   const [mentorBoardTitle, setMentorBoardTitle] = useState("");
   const [mentorBoardContent, setMentorBoardContent] = useState("");
   const [mentorBoardImage, setMentorBoardImage] = useState(null); // 이미지 파일
   const [imagePreview, setImagePreview] = useState(""); // 이미지 미리보기 URL
-  const { mentorProfileNo } = useParams();  // URL에서 mentorProfileNo 가져오기
   const fileInputRef = useRef(null); // file input을 참조하기 위한 useRef 추가
-
-  // 기본이미지 URL 설정 (컴포넌트 로드 시 한번만 호출)
-  const defaultImageUrl = "/images/mentor-board/defaultImage.png";
 
   const navigate = useNavigate();  // 페이지 이동을 위한 navigate 훅
 
   useEffect(() => {
     // 처음 로딩할 때만 기본 이미지 미리보기 설정
-    setImagePreview(defaultImageUrl);
+    setImagePreview(DEFAULT_IMAGE_URL);
   }, []);
 
   useEffect(() => {
     const fetchCategory = async () => {
       try {
-        const response = await mentorProfileApi.getMentorProfile(mentorProfileNo);
-        if (response.status === 2355 && response.data) {
-          const categoryNo = response.data.categoryNo || null;
-          if (categoryNo) {
-            // categoryNo에 해당하는 문자열 가져오기
-            const categoryResponse = await categoryApi.childCategory(categoryNo);
-            if (categoryResponse.status === 2420 && categoryResponse.data) {
-              setCategory(categoryResponse.data.categoryName || "카테고리 없음");
-            } else {
-              setCategory("카테고리를 불러오지 못했습니다.");
-            }
-          } else {
-            setCategory("카테고리 없음");
-          }
-        } else {
-          setCategory("카테고리를 불러오지 못했습니다.");
+
+        // 멘토권한 확인인
+        if (!member || member?.memberRole !== "ROLE_MENTOR") {
+          alert("멘토만 게시글을 작성할 수 있습니다.");
+          navigate(-1);
         }
+
+        // 프로필 정보 조회
+        const response = await mentorProfileApi.getMentorProfileByMemberNo(memberNo);
+
+        // 카테고리 정보 조회
+        if (response.status !== 2355 || !response.data?.categoryNo) {
+          setCategory("카테고리를 불러오지 못했습니다.");
+          return;
+        }
+    
+        const categoryResponse = await categoryApi.childCategory(response.data.categoryNo);
+        setCategory(categoryResponse.data?.categoryName || "카테고리 없음");
+
       } catch (err) {
         console.error("카테고리 데이터 로드 중 오류 발생:", err);
-        setCategory("오류 발생");
+        setCategory("카테고리 오류 발생");
       }
     };
 
-    if (mentorProfileNo) {
+    if (memberNo) {
       fetchCategory();
     }
-  }, );
+  }, [memberNo, member, navigate]);
 
-  // 테스트용 임시 memberNo 설정
-  const memberNo = 8; // 여기서 임시로 지정한 memberNo를 사용합니다.
 
+  // 등록 버튼 누를시
   const handleSubmit = async () => {
     if (mentorBoardTitle.trim() === "" || mentorBoardContent.trim() === "") {
       alert("제목과 본문을 모두 입력해주세요.");
@@ -68,18 +70,18 @@ function MentorBoardCreate() {
     const formData = {
       mentorBoardTitle,
       mentorBoardContent,
-      mentorBoardImage: defaultImageUrl,
+      mentorBoardImage: mentorBoardImage || DEFAULT_IMAGE_URL, // 기본 이미지를 선택
       memberNo: memberNo,
     };
   
     try {
       // 게시글 등록 API 호출
-      const response = await mentorBoardApi.createMentorBoard(formData);
+      const response = await mentorBoardApi.createMentorBoard(token,formData);
       const mentorBoardNo = response.data.mentorBoardNo; // 응답에서 mentorBoardNo 추출
       alert("게시글이 성공적으로 등록되었습니다!");
   
       // 이미지 업로드 처리
-      if (mentorBoardNo && mentorBoardImage && mentorBoardImage !== defaultImageUrl) {
+      if (mentorBoardNo && mentorBoardImage && mentorBoardImage !== DEFAULT_IMAGE_URL) {
         await handleImageUpload(mentorBoardNo); // 이미지 업로드 진행
       } else {
         alert("기본 이미지가 선택되었습니다.");
@@ -103,11 +105,8 @@ function MentorBoardCreate() {
   };
   
   const handleImageUpload = async (mentorBoardNo) => {
-    // 기본 이미지는 업로드하지 않음
-    if (mentorBoardImage === defaultImageUrl) {
-      console.log("기본 이미지가 선택되어 업로드하지 않습니다.");
-      return; // 기본 이미지는 업로드하지 않음
-    }
+
+    if (!mentorBoardImage) return; // 이미지 없으면 업로드 생략
   
     // 사용자가 선택한 이미지(file객체)를 formData 객체에 추가
     const formData = new FormData();

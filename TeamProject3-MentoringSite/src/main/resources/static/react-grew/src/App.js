@@ -97,7 +97,7 @@ function App() {
             {/* MentorBoard 페이지 */}
             <Route path="/mentorboard/find" element={<MentorBoardFind/>} />
             <Route path="/mentorboard/list" element={<MentorBoardList/>} />
-            <Route path="/mentorboard/create/:mentorProfileNo" element={<MentorBoardCreate />} />
+            <Route path="/mentorboard/create" element={<MentorBoardCreate />} />
             <Route path="/mentorboard/update/:mentorBoardNo" element={<MentorBoardUpdate />} />
             <Route path="/mentorboard/detail" element={<MentorBoardDetail/>}/>
             <Route path="/mentor-board/detail/:mentorBoardNo" element={<MentorBoardDetail />} />
