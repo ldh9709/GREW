@@ -35,7 +35,7 @@ import java.util.UUID;
 @Service
 public class MentorProfileServiceImpl implements MentorProfileService {
 
-    private static final String IMAGE_PATH = "C:/mentor-profile-images/";
+    private static final String IMAGE_PATH = "C:/upload/mentor-profile/";
     
     @Autowired
     private MentorProfileRepository mentorProfileRepository;
@@ -44,6 +44,31 @@ public class MentorProfileServiceImpl implements MentorProfileService {
     @Autowired
     private CategoryRepository categoryRepository;
 
+    
+    
+    //상세보기 12-19일
+    @Override
+    public MentorProfileDto getMentorProfileDetail(Long mentorProfileNo) {
+        // 🔥 엔티티 조회
+        MentorProfile mentorProfile = mentorProfileRepository.findDetailedProfileByNo(mentorProfileNo);
+        
+        // 🔥 엔티티가 존재하지 않으면 예외 발생
+        if (mentorProfile == null) {
+            throw new CustomException(
+                ResponseStatusCode.MENTOR_PROFILE_NOT_FOUND_CODE, 
+                ResponseMessage.MENTOR_PROFILE_NOT_FOUND, 
+                null
+            );
+        }
+
+        // 🔥 엔티티 → DTO 변환
+        return MentorProfileDto.toDto(mentorProfile);
+    }
+
+    
+    
+    
+    
     /**
      * 멘토 상태를 변경하는 메서드
      */
@@ -61,13 +86,14 @@ public class MentorProfileServiceImpl implements MentorProfileService {
      */
     @Override
     public void saveMentorProfile(Long memberNo, MentorProfileDto mentorProfileDto) {
+    	
         try {
             // 1️⃣ 회원 정보 조회
             Member member = memberRepository.findById(memberNo).get();
             if (member == null) {
                 throw new CustomException(ResponseStatusCode.MEMBER_MENTOR_NOT_FOUND, ResponseMessage.MEMBER_MENTOR_NOT_FOUND, null);
             }
-
+            
             // 2️⃣ 카테고리 정보 조회
             Category category = categoryRepository.findById(mentorProfileDto.getCategoryNo()).get();
             if (category == null) {
@@ -210,10 +236,10 @@ public class MentorProfileServiceImpl implements MentorProfileService {
      * 멘토 프로필 검색
      */
     @Override
-    public Page<MentorProfileDto> getMentorProfiles(String keyword, int page, int size) {
+    public Page<MentorProfileDto> getMentorProfiles(String search, int page, int size) {
         try {
             Pageable pageable = PageRequest.of(page, size);
-            Page<MentorProfile> mentorProfiles = mentorProfileRepository.searchMentorProfiles(keyword, pageable);
+            Page<MentorProfile> mentorProfiles = mentorProfileRepository.searchMentorProfiles(search, pageable);
             return mentorProfiles.map(MentorProfileDto::toDto);
         } catch (Exception e) {
             throw new CustomException(ResponseStatusCode.MENTOR_PROFILE_NOT_FOUND_CODE, ResponseMessage.MENTOR_PROFILE_NOT_FOUND, e);
@@ -238,30 +264,37 @@ public class MentorProfileServiceImpl implements MentorProfileService {
     
     /**
      * 프로필 이미지 업로드 메서드
+     * @return 
      */
     @Override
-    public void uploadMentorProfileImage(Long mentorProfileNo, MultipartFile file) {
+    public String uploadMentorProfileImage(Long mentorProfileNo, MultipartFile file) {
         try {
             MentorProfile mentorProfile = mentorProfileRepository.findById(mentorProfileNo).orElse(null);
             if (mentorProfile == null) {
                 throw new CustomException(ResponseStatusCode.MENTOR_PROFILE_NOT_FOUND_CODE, ResponseMessage.MENTOR_PROFILE_NOT_FOUND, null);
             }
+            String fileName = file.getOriginalFilename();
+            String filePath = IMAGE_PATH + mentorProfileNo + "/" + fileName;
 
-            File directory = new File(IMAGE_PATH);
+            // 4️⃣ 디렉토리 생성 (존재하지 않으면)
+            File directory = new File(IMAGE_PATH + mentorProfileNo + "/");
             if (!directory.exists()) {
                 directory.mkdirs();
             }
 
-            String originalFilename = file.getOriginalFilename();
-            String fileName = UUID.randomUUID().toString() + "_" + originalFilename;
-            File saveFile = new File(IMAGE_PATH + fileName);
-            file.transferTo(saveFile);
+            // 5️⃣ 파일 저장
+            file.transferTo(new File(filePath));
 
-            mentorProfile.setMentorImage("/mentor-profile-images/" + fileName);
+            // 6️⃣ 저장된 이미지 URL 생성
+            String imageUrl = "/upload/mentor-profile/" + mentorProfileNo + "/" + fileName;
+            
+            // 7️⃣ 멘토 보드에 이미지 URL 저장
+            mentorProfile.setMentorImage(imageUrl);
             mentorProfileRepository.save(mentorProfile);
+            
+            // 8️⃣ 업로드된 이미지 URL 반환
+            return imageUrl;
         } catch (IOException e) {
-            throw new CustomException(ResponseStatusCode.IMAGE_UPLOAD_FAIL, ResponseMessage.IMAGE_UPLOAD_FAIL, e);
-        } catch (Exception e) {
             throw new CustomException(ResponseStatusCode.IMAGE_UPLOAD_FAIL, ResponseMessage.IMAGE_UPLOAD_FAIL, e);
         }
     }
@@ -378,7 +411,57 @@ public class MentorProfileServiceImpl implements MentorProfileService {
         }
     }
 
-	
-}
+
+
+    
+    @Override
+    public Page<MentorProfileDto> getMentorsByFollowCount(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        Page<MentorProfile> mentorProfiles = mentorProfileRepository.findByOrderByMentorFollowCountDesc(pageable);
+        return mentorProfiles.map(MentorProfileDto::toDto);
+    }
+
+    @Override
+    public Page<MentorProfileDto> getMentorsByMentoringCount(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        Page<MentorProfile> mentorProfiles = mentorProfileRepository.findByOrderByMentorMentoringCountDesc(pageable);
+        return mentorProfiles.map(MentorProfileDto::toDto);
+    }
+
+    @Override
+    public Page<MentorProfileDto> getMentorsByActivityCount(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        Page<MentorProfile> mentorProfiles = mentorProfileRepository.findByOrderByMentorActivityCountDesc(pageable);
+        return mentorProfiles.map(MentorProfileDto::toDto);
+    }
+
+
+
+
+    //멤버 넘버로 멘토 프로필 찾기
+	@Override
+	public MentorProfileDto getMentorByMemberNo(Long memberNo) {
+		MentorProfile mentor = mentorProfileRepository.findByMember_MemberNo(memberNo);
+		return MentorProfileDto.toDto(mentor);
+	}
+
+
+
+
+	//별점 순으로 멘토 찾기
+	@Override
+	public List<MentorProfileDto> getMentorByRating() {
+		List<MentorProfile> profiles= mentorProfileRepository.findByOrderByMentorRatingDesc();
+		List<MentorProfileDto> profileDtos = new ArrayList<>();
+		for(MentorProfile profile : profiles) {
+			profileDtos.add(MentorProfileDto.toDto(profile));
+		}
+		return profileDtos;
+	}
+    
     
 
+    
+
+}
+    

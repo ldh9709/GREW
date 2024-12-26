@@ -1,14 +1,13 @@
-import { getCookie } from "../../../util/cookieUtil"
+import { useMemberAuth } from "../../../util/AuthContext"
 import React, { useEffect, useState } from 'react'
 import image from '../../../image/images.jpeg'
 import * as chattingApi from '../../../api/chattingApi'
 import * as memberApi from '../../../api/memberApi'
+import * as reviewApi from '../../../api/reviewApi'
 
 export default function MemberCounselList() {
-  const memberCookie = getCookie("member");
-  const token = memberCookie.accessToken;
-  const memberNo = memberCookie.memberNo;
-  const role = memberCookie.memberRole;
+    /* Context에 저장된 토큰, 멤버정보 */
+    const { token, member } = useMemberAuth();
 
   const [counselList, setCounselList] = useState([{}]);
   const [currentPage, setCurrentPage] = useState(1);
@@ -22,7 +21,7 @@ export default function MemberCounselList() {
   //상담 내역 조회
   const fetchCounselList = async (page) => {
     try {
-      if (role === 'ROLE_MENTEE') {
+      if (member.memberRole === 'ROLE_MENTEE') {
         const response = await chattingApi.listChatRoom(token, page, 4);
         const chatRooms = response.data.content;
         const updateRooms = await Promise.all(
@@ -37,16 +36,22 @@ export default function MemberCounselList() {
         )
         setCounselList(updateRooms);
         setTotalPages(response.data.totalPages);
-      } else if (role === 'ROLE_MENTOR') {
+      } else if (member.memberRole === 'ROLE_MENTOR') {
         const response = await chattingApi.listChatRoom(token, page, 6);
         const chatRooms = response.data.content;
         console.log(chatRooms);
         const updateRooms = await Promise.all(
           chatRooms.map(async (chat) => {
             const searchName = await fetchName(chat.menteeNo);
+            const reviewList = await reviewApi.listReviewByMember(token,0,100);
+            const isReview = reviewList.data.content.some((review) => 
+              review.memberNo === chat.menteeNo
+            );
+            console.log(isReview)
             return {
               ...chat,
-              searchName
+              searchName,
+              isReview
             };
           })
         )
@@ -101,11 +106,11 @@ export default function MemberCounselList() {
     }
 
     return (
-      <div className='tab-content tab-counsel'>
+      <div className='tab-counsel'>
         {counselList.length === 0 ? (
           <p> 진행한 상담내역이 없습니다. </p>
         ) : (
-          role === "ROLE_MENTEE" ? (
+          member.memberRole === "ROLE_MENTEE" ? (
             <ul className="mentor-list">
               {counselList.map((counsel, index) => (
                 <li className="mentor-counsel-item" key={index}>
@@ -138,7 +143,7 @@ export default function MemberCounselList() {
                       {counsel.chatRoomEndDate ? counsel.chatRoomEndDate.substring(0, 10) : ""}
                     </p>
                     <p className="counsel-date">
-                      리뷰작성 여부:
+                      리뷰여부: {counsel.isReview === 1 ? "작성" : "미작성"}
                     </p>
                     <div className={`counsel-type ${counsel.chatRoomStatus === 7200 ? "green white" : "" }`}>
                       {counselStatus(counsel.chatRoomStatus)}

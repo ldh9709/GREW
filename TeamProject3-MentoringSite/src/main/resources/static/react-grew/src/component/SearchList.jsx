@@ -44,7 +44,7 @@ function SearchList() {
       ></link>
       <div>
         <h1>검색 결과</h1>
-
+        <h2>질문 검색 결과</h2>
         {loading && <div>로딩 중...</div>}
         {error && <div>{error}</div>}
 
@@ -58,7 +58,7 @@ function SearchList() {
               )
             )}
             <div className="view-more">
-              <button onClick={handleViewMore}>더보기</button>
+              <button onClick={handleViewMore}>질문 검색 내용 더보기</button>
             </div>
           </div>
         ) : (

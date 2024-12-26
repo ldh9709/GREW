@@ -3,11 +3,11 @@ import * as inquiryApi from "../../api/inquiryApi";
 import { useNavigate } from "react-router-dom";
 import { getCookie } from "../../util/cookieUtil";
 import * as categoryApi from "../../api/categoryApi";
+import {useMemberAuth} from '../../util/AuthContext';
 export default function InqiuryWriteFormPage() {
+  const {token,member} = useMemberAuth();
   const writeFormRef = useRef();
   const navigate = useNavigate();
-  const memberCookie = getCookie("member");
-  const token = memberCookie.accessToken;
 
   const initInquiry = {
     inquiryNo: 0,
@@ -94,15 +94,11 @@ export default function InqiuryWriteFormPage() {
     }
     const responseJsonObject = await inquiryApi.writeInquiry(inquiry, token);
     console.log(token);
-    console.log(inquiry.inquiryNo)
+    console.log(responseJsonObject);
     navigate(`/inquiry/${responseJsonObject.data.inquiryNo}`);
   };
   return (
     <>
-      <link
-        href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap"
-        rel="stylesheet"
-      ></link>
       <div>
         <form ref={writeFormRef} method="POST" className="inquiry-form">
           <div>

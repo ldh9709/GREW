@@ -142,3 +142,14 @@ export const listAnswerByMemberNo = async (token, page) => {
   const responseJsonObject = await response.json();
   return responseJsonObject;
 };
+//멤버 넘버로 멘토프로필 조회
+export const getMentorProfileByMemberNo = async (memberNo) => {
+  const response = await fetch(`${BACKEND_SERVER}/mentor-profile/mentor-profile/${memberNo}`, {
+    method: 'GET',
+    headers: {
+      "Content-Type": "application/json;charset=UTF-8", // 요청 헤더 설정
+    }
+  })
+  const responseJsonObject = await response.json();
+  return responseJsonObject;
+};

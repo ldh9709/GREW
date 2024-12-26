@@ -44,6 +44,17 @@ export const changeChatRoomName = async (chatRoomNo, token, chatRoomName) => {
   return responseJsonObject;
 };
 
+export const readChatMessage = async (chatRoomNo) => {
+   const response = await fetch(
+     `${BACKEND_SERVER}/chatmessage/update/${chatRoomNo}`,
+     {
+       method: "PUT"
+     }
+   );
+   const responseJsonObject = await response.json();
+   return responseJsonObject;
+ };
+
 export const viewChatMessage = async (chatRoomNo) => {
   const response = await fetch(
     `${BACKEND_SERVER}/chatroom/messages/${chatRoomNo}`,

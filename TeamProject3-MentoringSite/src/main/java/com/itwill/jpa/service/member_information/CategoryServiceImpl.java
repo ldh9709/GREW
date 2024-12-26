@@ -72,6 +72,12 @@ public class CategoryServiceImpl implements CategoryService{
 		
 		return categoriesDto;
 	}
+	//카테고리 넘버로 카테고리 객체 조회
+	@Override
+	public CategoryResponseDto getCategroyNo(Long categoryNo) {
+		return CategoryResponseDto.toDto(categoryRepository.findByCategoryNo(categoryNo));
+		
+	}
 	
 }
 

@@ -55,10 +55,10 @@ public interface MentorProfileRepository extends JpaRepository<MentorProfile, Lo
             "JOIN FETCH mp.member " +
             "JOIN FETCH mp.category " +
             "WHERE mp.mentorStatus = 3 AND " +
-            "(LOWER(mp.mentorIntroduce) LIKE LOWER(CONCAT('%', :keyword, '%')) " +
-            "OR LOWER(mp.mentorCareer) LIKE LOWER(CONCAT('%', :keyword, '%')) " +
-            "OR LOWER(mp.member.memberName) LIKE LOWER(CONCAT('%', :keyword, '%'))) ")
-     Page<MentorProfile> searchMentorProfiles(@Param("keyword") String keyword, Pageable pageable);
+            "(LOWER(mp.mentorIntroduce) LIKE LOWER(CONCAT('%', :search, '%')) " +
+            "OR LOWER(mp.mentorCareer) LIKE LOWER(CONCAT('%', :search, '%')) " +
+            "OR LOWER(mp.member.memberName) LIKE LOWER(CONCAT('%', :search, '%'))) ")
+     Page<MentorProfile> searchMentorProfiles(@Param("search") String search, Pageable pageable);
 
      @Query("SELECT mp FROM MentorProfile mp WHERE mp.category.categoryNo = :categoryNo")
      Page<MentorProfile> findByCategoryNo(@Param("categoryNo") Long categoryNo, Pageable pageable);
@@ -100,6 +100,15 @@ public interface MentorProfileRepository extends JpaRepository<MentorProfile, Lo
      @Query("SELECT mp.mentorActivityCount FROM MentorProfile mp WHERE mp.mentorProfileNo = :mentorProfileNo")
      Integer findMentorActivityCountByProfileNo(@Param("mentorProfileNo") Long mentorProfileNo);
      
+     @Query("SELECT mp FROM MentorProfile mp JOIN FETCH mp.member JOIN FETCH mp.category WHERE mp.mentorProfileNo = :mentorProfileNo")
+     MentorProfile findDetailedProfileByNo(@Param("mentorProfileNo") Long mentorProfileNo);
+     
+     //조회 리스트
+     Page<MentorProfile> findByOrderByMentorFollowCountDesc(Pageable pageable);
+     Page<MentorProfile> findByOrderByMentorMentoringCountDesc(Pageable pageable);
+     Page<MentorProfile> findByOrderByMentorActivityCountDesc(Pageable pageable);
+     //별점 순으로 리스트뽑기(우수멘토)
+     List<MentorProfile> findByOrderByMentorRatingDesc();
      
 }
 

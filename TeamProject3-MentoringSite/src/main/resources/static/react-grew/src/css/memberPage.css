@@ -2,14 +2,12 @@
 .member-container,
 .member-signup-container,
 .member-login-container {
-  width: 500px;
-  margin: 50px auto;
+  width: 450px;
+  margin: 200px auto;
   padding: 20px;
   background-color: #ffffff;
+  border: 1px solid #ccc;
   border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  font-family: "nanumsquare";
-  
 }
 
 /* 제목 스타일 */
@@ -18,7 +16,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 18px;
+  font-size: 30px;
   color: #555;
   position: relative;
 }
@@ -56,13 +54,12 @@
 .member-login-input {
   margin-top: 15px;
 }
-
 .member-form-join-group-input {
   margin-top: 20px;
 }
 
 .member-signup-form input,
-.member-login-input input {
+.member-login-input {
   width: 100%;
   padding: 10px;
   border: 1px solid #ccc;
@@ -70,28 +67,30 @@
   box-sizing: border-box;
   font-size: 15px;
 }
-
+.member-login-input:focus {
+  border-color: #28a745;
+}
 /* 버튼 공통 스타일 */
 .member-join-button,
 .member-signup-button,
 .member-login-button {
   width: 100%;
   padding: 10px;
-  background-color: #4caf50;
+  background-color: #28a745;
   color: white;
   border: none;
   border-radius: 5px;
-  font-size: 16px;
+  font-size: 18px;
   cursor: pointer;
   margin-top: 10px;
+  transition: background-color 0.3s ;
 }
 
 .member-join-button:hover,
 .member-signup-button:hover,
 .member-login-button:hover {
-  background-color: #45a049;
+  background-color: #1f973b;
 }
-
 .logo-icon {
   display: flex; /* 플렉스박스 활성화 */
     font-family: "nanumsquare";
@@ -165,12 +164,21 @@ legend {
   color: red;
 }
 
+/* 기타 스타일 */
+.red-text {
+  color: red;
+  font-size: 13px;
+  font-family: "nanumsquare";
+  margin-left: 10px;
+}
+
 .member-join-link,
 .member-findPassword-link {
+  height: 70px;
   text-align: center;
   margin-top: 10px;
   font-size: 14px;
-  color: #555;
+  color: #797878;
   text-decoration: none;
 }
 
@@ -189,7 +197,9 @@ legend {
   justify-content: center;
   gap: 15px;
 }
-
+.member-sns-login-group img {
+  width: 120px; height: 30px;
+}
 .member-sns-icon {
   width: 120px;
   height: 30px;
@@ -310,29 +320,23 @@ legend {
 /* MemberMainJoinFormCSS */
 /* 회원가입 유형 선택 컨테이너 */
 .signup-container {
-  width: 1000px;
-  height: 100vh; /* 페이지 전체 높이 */
-  margin: 50px auto;
-  padding: 20px;
+  width: 800px; 
   background-color: #ffffff;
+  border: 1px solid #ccc;
   border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   font-family: "nanumsquare";
   text-align: center;
+  margin: 200px auto 0 auto;
 }
 
 /* 제목 스타일 */
 .signup-title {
-  font-size: 24px;
-  color: #333;
-  margin-top: 100px;
-  margin-bottom: 10px;
+  font-size: 33px;
+  color: #555;
 }
-
-
 .signup-subtitle {
   font-size: 15px;
-  color: #333;
+  color: #555;
 }
 
 /* 버튼 컨테이너 */
@@ -344,9 +348,9 @@ legend {
 
 /* 버튼 스타일 */
 .signup-btn {
-  margin-top: 100px;
-  width: 300px;
-  height: 300px;
+  margin: 80px 0;
+  width: 250px;
+  height: 250px;
   font-size: 50px;
   font-family: 'nanumsquare';
   color: white;
@@ -370,7 +374,7 @@ legend {
 
 
 .member-form-join-check {
-  font-size: 10px;
+  font-size: 13px;
   color: red;
   height: 12px; /* 에러 메시지의 고정 높이 설정 */
   margin-top: 5px; /* 불필요한 여백 제거 */

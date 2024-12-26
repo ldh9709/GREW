@@ -19,6 +19,7 @@ import org.springframework.security.oauth2.client.web.OAuth2LoginAuthenticationF
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
@@ -28,6 +29,7 @@ import com.itwill.jpa.auth.PrincipalDetailsService;
 import com.itwill.jpa.auth.PrincipalOauth2UserService;
 import com.itwill.jpa.repository.member_information.MemberRepository;
 import com.itwill.jpa.security.filter.JWTCheckFilter;
+import com.itwill.jpa.security.handler.APIAuthLoginSuccessHandler;
 import com.itwill.jpa.security.handler.APILoginFailHandler;
 import com.itwill.jpa.security.handler.APILoginSuccessHandler;
 
@@ -117,7 +119,7 @@ public class SecurityConfig {
 		//SNS로그인
 		httpSecurity.oauth2Login((config) -> {
 			config.loginPage("/login")//로그인 페이지 경로
-			 .defaultSuccessUrl("http://localhost:3000/main")//로그인 성공 후 리다이렉트 경로
+			 //.defaultSuccessUrl("http://localhost:3000/main", true)//로그인 성공 후 리다이렉트 경로
 			 .userInfoEndpoint((userInfoEndpointConfig) -> {
 			 /***
 			  * Spring Security의 OAuth2 사용자 정보 처리는 userInfoEndpoint를 통해 수행된다.
@@ -129,7 +131,7 @@ public class SecurityConfig {
 			  * 6. 인증된 사용자 정보는 PrincipalDetails 객체로 반환되어 Spring Security 세션에 저장
 			  */
 				userInfoEndpointConfig.userService(principalOauth2UserSerivce);
-				config.successHandler(new APILoginSuccessHandler());
+				config.successHandler(new APIAuthLoginSuccessHandler());
 				config.failureHandler(new APILoginFailHandler());
 			 });
 		});
@@ -137,7 +139,6 @@ public class SecurityConfig {
 		//폼 기반 로그인 구성
 		httpSecurity.formLogin((config) -> {
 			config.loginPage("/login");
-			config.defaultSuccessUrl("/home", true);
 			config.successHandler(new APILoginSuccessHandler());
 			config.failureHandler(new APILoginFailHandler());
 		});
@@ -147,10 +148,10 @@ public class SecurityConfig {
 		//로그아웃
 		httpSecurity.logout((t) -> {
 			t.logoutUrl("/logout")//로그아웃
-			.invalidateHttpSession(true)//세션 무효화
 			.deleteCookies("member")//쿠키삭제
-			.clearAuthentication(true)//인증 정보 삭제
-            .logoutSuccessUrl("/");//로그아웃 이후 리다이렉트
+			//.invalidateHttpSession(true)//세션 무효화
+			//.clearAuthentication(true)//인증 정보 삭제
+			.addLogoutHandler(new SecurityContextLogoutHandler()); // SecurityContext 초기화
 		});
 
 		/***** 페이지 접근 경로 *****/

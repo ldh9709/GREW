@@ -15,4 +15,6 @@ public interface CategoryService {
 	CategoryResponseDto getCategoriesBycategoryNo(Long categoryNo);
 	//카테고리 전체 조회
 	List<CategoryResponseDto> getCategories();
+	//카테고리 넘버로 카테고리 객체 조회
+	CategoryResponseDto getCategroyNo(Long categoryNo);
 }

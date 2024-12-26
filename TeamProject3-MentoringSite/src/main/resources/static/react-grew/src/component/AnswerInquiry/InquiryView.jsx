@@ -3,10 +3,16 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import * as inquiryApi from "../../api/inquiryApi";
 import * as answerApi from "../../api/answerApi";
 import AnswerItem from "./AnswerItem";
-import { getCookie } from "../../util/cookieUtil";
 import "../../css/styles.css";
+import { useMemberAuth } from "../../util/AuthContext";
+import ReportModal from "../Report/ReportModal";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faEye } from "@fortawesome/free-regular-svg-icons";
+import { faPen } from "@fortawesome/free-solid-svg-icons";
+
+
 function InquiryView() {
-  const memberCookie = getCookie("member");
+  const { token, member } = useMemberAuth();
   const navigate = useNavigate();
   const { inquiryNo } = useParams(); //path에서 받아오는거임! app.js의 경로와 관련있음
   const [inquiry, setInquiry] = useState({
@@ -21,6 +27,10 @@ function InquiryView() {
   const [totalPages, setTotalPages] = useState(0); // 전체 페이지 수
   const [itemsPerPage] = useState(5); // 페이지당 항목 수 (예: 한 페이지에 5개 항목)
   const [sortType, setSortType] = useState("latest"); // 기본적으로 'latest'로 설정
+  const [isReportHovered, setIsReportHovered] = useState(false);
+  const [isModalOpen,setIsModalOpen] = useState(false);
+  const [report, setreport] = useState({});
+
   useEffect(() => {
     (async () => {
       const responseJsonObject = await inquiryApi.viewInquiry(inquiryNo);
@@ -31,6 +41,7 @@ function InquiryView() {
         responseJsonObject.data.inquiryStatus === 1
       ) {
         setInquiry(responseJsonObject.data);
+        await inquiryApi.increaseView(inquiryNo);
       } else {
         alert("게시물이 존재하지 않습니다");
         navigate("/inquiry");
@@ -96,100 +107,136 @@ function InquiryView() {
   for (let i = startPage; i <= endPage; i++) {
     pageNumbers.push(i);
   }
-  const handleWriteButton = ()=>{
-    console.log(memberCookie)
-    if(memberCookie){
+  const handleWriteButton = () => {
+    if (member.memberRole == "ROLE_MENTOR") {
       navigate(`/answer/answerWrite/${inquiryNo}`);
-    }else{
-      alert('로그인이 필요한 서비스입니다.');
+    } else if (member.memberRole == "ROLE_MENTEE") {
+      alert("멘토만 답변 작성이 가능합니다");
+      return;
+    } else {
+      alert("로그인이 필요한 서비스입니다.");
       return;
     }
-  }
+  };
+  const handleModify = () => {
+    navigate(`/inquiry/modify/${inquiryNo}`);
+  };
+
+  // 이름 마스킹
+  const maskName = (name) => {
+    if (name.length <= 2) {
+      return name[0] + "*".repeat(name.length - 1);
+    }
+    return name[0] + "*".repeat(name.length - 2) + name[name.length - 1];
+  };
+
+  //신고 하기 창 열고 닫기
+  const handleOpenModal = () => {
+    setIsModalOpen(true);
+    setreport({
+      type: 'INQUIRY',
+      target: inquiry.inquiryNo
+    })
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+  };
+
   return (
     <>
-      <link
-        href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap"
-        rel="stylesheet"
-      ></link>
       <div style={{ paddingLeft: 10 }}>
-          <input type="hidden" name="inquiryNo" value={inquiry.inquiryNo} />
+        <input type="hidden" name="inquiryNo" value={inquiry.inquiryNo} />
 
-          {/* 카테고리에 맞는 멘토만 보이는조건 */}
-            <div className="answer-write">
-                <button className="answer-notify-btn" onClick={handleWriteButton}>
-                  <img
-                    src="https://img.icons8.com/?size=100&id=P1bJzKUoOQYz&format=png&color=000000"
-                    style={{
-                      width: "20px",
-                      height: "20px",
-                      marginRight: "5px",
-                      marginLeft: "-5px",
-                      marginBottom: "-3px",
-                    }}
-                  />
-                  답변하기
-                </button>
-            </div>
-          {/* 카테고리에 맞는 멘토만 보이는조건 */}
-          <div className="inquiry-container-inview">
-            <div>
-              <div className="inquiry-title">{inquiry.inquiryTitle}</div>
-            </div>
-            <div className="inquiry-desc">
-              <div>{inquiry.categoryName}</div>
-              <div>
-                {inquiry.memberName} | 조회수 {inquiry.inquiryViews} |{" "}
-                {inquiry.inquiryDate.substring(0, 10)}
-              </div>
-            </div>
-            <div className="inquiry-content">
-              <div>{inquiry.inquiryContent}</div>
-            </div>
-
-            <br />
-            {memberCookie!=null&&memberCookie.memberNo == inquiry.memberNo ? (
-              <div>
-                <Link to={`/inquiry/modify/${inquiryNo}`}>
-                  <button>수정</button>
-                </Link>
-
-                <button
-                  onClick={(e) => {
-                    e.preventDefault(); // 폼 제출 방지
-                    inquiryRemoveAction(); // 삭제 액션 실행
-                  }}
-                >
-                  삭제
-                </button>
-              </div>
-            ) : (
-              <div></div>
-            )}
+        <div className="inquiry-container-inview">
+          <div className="inquiry-view-category">{inquiry.categoryName}</div>
+          <div className="inquiry-view-title">
+            <span>Q.</span>
+            <span>{inquiry.inquiryTitle}</span>
           </div>
-      </div>
-      <div style={{ marginTop: "20px" }}>
+          <div className="inquiry-view-desc">
+            <div>
+              {inquiry.memberName} 멘티ㆍ
+              {inquiry.inquiryDate.substring(0, 10)}ㆍ
+              <FontAwesomeIcon icon={faEye}/> {inquiry.inquiryViews}
+            </div>
+          </div>
+          <div className="inquiry-view-content">
+            {inquiry.inquiryContent}
+          </div>
+          {member != null && member.memberNo == inquiry.memberNo ? (
+            <div className="modify-delete-btn2">
+              <button onClick={handleModify}>수정</button>
+
+              <button
+                onClick={(e) => {
+                  e.preventDefault(); // 폼 제출 방지
+                  inquiryRemoveAction(); // 삭제 액션 실행
+                }}
+              >
+                삭제
+              </button>
+            </div>
+          ) : (
+            <div></div>
+          )}
+          {/* 신고하기버튼 */}
+          <div className="inquiry-report-btn">
+            {isModalOpen && (
+              <ReportModal 
+              onClose={handleCloseModal} 
+              report={report}/>
+            )}
+            <button
+              onClick={handleOpenModal}
+              onMouseEnter={() => setIsReportHovered(true)} // 마우스가 버튼 위에 올라갔을 때
+              onMouseLeave={() => setIsReportHovered(false)} // 마우스가 버튼을 벗어났을 때
+              className={`hover-button ${isReportHovered ? "hovered" : ""}`
+            }
+            >
+              <img
+                src={
+                  isReportHovered
+                  ? "https://img.icons8.com/?size=100&id=jy7dy2jsJ5UR&format=png&color=ed1515"
+                  : "https://img.icons8.com/?size=100&id=t5aOnHwCycmN&format=png&color=000000"
+                }
+                alt="Button Image"
+                className="button-image"
+              />
+            </button>
+          </div>
+            <button className="answer-notify-btn" onClick={handleWriteButton}>
+              <FontAwesomeIcon icon={faPen} />
+              <span>답변하기</span>
+            </button>
+          </div>
+        </div>
+      <div className="inquiry-view-answer-container">
         <div className="radio-container">
+          <div>{answer.length}개 답변</div>
           {/* 라디오 버튼 */}
-          <label style={{ marginRight: "10px" }}>
-            <input
-              type="radio"
-              name="sortType"
-              value="latest"
-              checked={sortType === "latest"}
-              onChange={handleRadioChange}
-            />
-            최신순
-          </label>
-          <label>
-            <input
-              type="radio"
-              name="sortType"
-              value="vote"
-              checked={sortType === "vote"}
-              onChange={handleRadioChange}
-            />
-            추천순
-          </label>
+          <div>
+            <label style={{ marginRight: "10px" }}>
+              <input
+                type="radio"
+                name="sortType"
+                value="latest"
+                checked={sortType === "latest"}
+                onChange={handleRadioChange}
+              />
+              최신순
+            </label>
+            <label>
+              <input
+                type="radio"
+                name="sortType"
+                value="vote"
+                checked={sortType === "vote"}
+                onChange={handleRadioChange}
+              />
+              추천순
+            </label>
+          </div>
         </div>
         {answer && answer.length > 0 ? (
           answer.map((answer) => (
@@ -214,7 +261,7 @@ function InquiryView() {
             key={number}
             onClick={() => paginate(number)}
             style={{
-              backgroundColor: number === currentPage ? "#4CAF50" : "",
+              backgroundColor: number === currentPage ? "#006618" : "",
               color: number === currentPage ? "white" : "",
             }}
           >

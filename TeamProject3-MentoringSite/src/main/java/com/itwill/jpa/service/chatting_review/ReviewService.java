@@ -6,6 +6,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import com.itwill.jpa.dto.bulletin_board.InquiryDto;
 import com.itwill.jpa.dto.chatting_review.ReviewDto;
 import com.itwill.jpa.entity.chatting_review.Review;
 

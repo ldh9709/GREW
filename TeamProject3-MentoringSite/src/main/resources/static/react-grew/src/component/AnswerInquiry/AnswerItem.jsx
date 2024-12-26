@@ -1,13 +1,41 @@
 import React, { useEffect, useState } from "react";
 import "../../css/styles.css";
 import * as answerApi from "../../api/answerApi";
-import { Link } from "react-router-dom";
-import { getCookie } from "../../util/cookieUtil";
+import * as categoryApi from "../../api/categoryApi";
+import { useNavigate } from "react-router-dom";
+import { useMemberAuth } from "../../util/AuthContext";
+import ReportModal from "../Report/ReportModal";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faThumbsDown, faThumbsUp } from "@fortawesome/free-regular-svg-icons";
+
 export default function AnswerItem({ answer }) {
+  const { token, member } = useMemberAuth();
   const [inquiry, setInquiry] = useState(0);
   const [voteCount, setVoteCount] = useState(0);
-  const memberCookie = getCookie("member");
-  const token = memberCookie && memberCookie.accessToken ? memberCookie.accessToken : null;
+  const [mentorProfile, setMentorProFile] = useState([]);
+  const [category, setCategories] = useState([]);
+  const [isReportHovered, setIsReportHovered] = useState(false);
+  const [isUpVoteHovered, setIsUpVoteHovered] = useState(false);
+  const [isDownVoteHovered, setIsDownVoteHovered] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [report, setreport] = useState({});
+
+  const navigate = useNavigate();
+  // 버튼 클릭 시 팝업 창을 토글하는 함수
+  const handleProfile = () => {
+    navigate(`/mentor-profile/${mentorProfile.mentorProfileNo}`);
+  };
+  const fetchCategories = async () => {
+    const response = await categoryApi.getCategory(mentorProfile.categoryNo);
+    setCategories(response.data);
+  };
+
+  const fetchMentorProfile = async () => {
+    const response = await answerApi.getMentorProfileByMemberNo(
+      answer.memberNo
+    );
+    setMentorProFile(response.data);
+  };
 
   async function fetchData() {
     try {
@@ -22,14 +50,29 @@ export default function AnswerItem({ answer }) {
   useEffect(() => {
     fetchData();
   }, [voteCount]);
+  useEffect(() => {
+    fetchMentorProfile();
+  }, []);
+  useEffect(() => {
+    if (mentorProfile?.categoryNo) {
+      fetchCategories();
+    }
+  }, [mentorProfile]); // mentorProfile가 업데이트된 후에 fetchCategories 실행
+  useEffect(()=>{
+    console.log("isModalOpen 상태 변경:", isModalOpen);
+  },[isModalOpen])
 
+
+  const handleModify = async () => {
+    navigate(`/answer/modify/${answer.answerNo}`);
+  };
   const handleUpvote = async () => {
     try {
       const response = await answerApi.upVote(answer.answerNo, token); // API 호출
       if (response.status === 6000) {
         fetchData(); // 추천 성공 상태 확인
-      }else if(token==null){
-        alert('로그인이 필요한 서비스입니다')
+      } else if (token == null) {
+        alert("로그인이 필요한 서비스입니다");
       } else {
         alert("이미 추천 혹은 비추천을 누르셨습니다"); // 실패 시 에러 로그
       }
@@ -46,8 +89,8 @@ export default function AnswerItem({ answer }) {
       const response = await answerApi.downVote(answer.answerNo, token); // API 호출
       if (response.status === 6000) {
         fetchData(); // 추천 성공 상태 확인
-      }else if(token==null){
-        alert('로그인이 필요한 서비스입니다')
+      } else if (token == null) {
+        alert("로그인이 필요한 서비스입니다");
       } else {
         alert("이미 추천 혹은 비추천을 누르셨습니다"); // 실패 시 에러 로그
       }
@@ -65,12 +108,23 @@ export default function AnswerItem({ answer }) {
     }
     console.log(response);
   };
+
+  //신고 하기 창 열고 닫기
+  const handleOpenModal = () => {
+    setIsModalOpen(true);
+    setreport({
+      type: 'ANSWER',
+      target: answer.answerNo,
+    })
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+    console.log('모달닫아!!')
+  };
+
   return (
     <>
-      <link
-        href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap"
-        rel="stylesheet"
-      ></link>
       <div className="answer-container">
         {answer.answerAccept == 2 ? (
           <div className="answer-accept-status">
@@ -84,39 +138,99 @@ export default function AnswerItem({ answer }) {
           <div></div>
         )}
 
-        {memberCookie&&memberCookie.memberNo == inquiry.memberNo ? (
+        {member && member.memberNo == inquiry.memberNo ? (
           <div className="answer-accept">
             <button onClick={handleAccept}>채택하기</button>
           </div>
         ) : (
           <div></div>
         )}
-
-        <div className="answer-member">{answer.memberName}</div>
+        <button className="answer-member" onClick={handleProfile}>
+          <div className="answer-img">
+            <img
+              src={
+                mentorProfile?.mentorImage ||
+                "/images/mentor-profile/defaultimg.jpeg"
+              }
+              alt="Mentor Profile"
+            />
+          </div>
+          <div className="answer-mentor-info">
+            <div className="answer-member-category">{category.categoryName}</div>
+            <div className="answer-member-name">{answer.memberName} 멘토</div>
+          </div>
+        </button>
+        
         <div className="answer-content">{answer.answerContent}</div>
         <div className="answer-date">{answer.answerDate.substring(0, 10)}</div>
         <div className="answer-vote">
-          <button onClick={handleUpvote}>추천</button>
+          <button
+            className="answer-upvote-btn"
+            onClick={handleUpvote}
+            onMouseEnter={() => setIsUpVoteHovered(true)} // 마우스가 버튼 위에 올라갔을 때
+            onMouseLeave={() => setIsUpVoteHovered(false)} // 마우스가 버튼을 벗어났을 때
+         >     
+          {
+            isUpVoteHovered
+              ? <FontAwesomeIcon icon={faThumbsUp} />
+              : <FontAwesomeIcon icon={faThumbsUp} />
+            }
+          </button>
           {voteCount}
-          <button onClick={handleDownvote}>비추천</button>
+          <button
+            className="answer-downvote-btn"
+            onClick={handleDownvote}
+            onMouseEnter={() => setIsDownVoteHovered(true)} // 마우스가 버튼 위에 올라갔을 때
+            onMouseLeave={() => setIsDownVoteHovered(false)} // 마우스가 버튼을 벗어났을 때
+          >
+          {
+                isDownVoteHovered
+                  ? <FontAwesomeIcon icon={faThumbsDown} />
+                  : <FontAwesomeIcon icon={faThumbsDown} />
+          }
+          </button>
         </div>
-        {memberCookie&&memberCookie.memberNo == answer.memberNo ? (
-          <div>
-            <Link to={`/answer/modify/${answer.answerNo}`}>
-              <button>수정</button>
-            </Link>
 
-            <button
-              onClick={(e) => {
-                e.preventDefault(); // 폼 제출 방지
-              }}
-            >
-              삭제
-            </button>
-          </div>
-        ) : (
-          <div></div>
-        )}
+        {/* 답변 수정 삭제 신고 버튼 */}
+        <div className="inquiry-view-answer-btn">
+          {member && member.memberNo == answer.memberNo ? (
+            <div className="modify-delete-btn">
+              <button onClick={handleModify}>수정</button>
+  
+              <button
+                onClick={(e) => {
+                  e.preventDefault(); // 폼 제출 방지
+                }}
+              >
+                삭제
+              </button>
+            </div>
+          ) : (
+            <div></div>
+          )}
+          {isModalOpen && (
+            <ReportModal 
+            onClose={handleCloseModal} 
+            report={report}/>
+          )}
+          <button
+            onMouseEnter={() => setIsReportHovered(true)} // 마우스가 버튼 위에 올라갔을 때
+            onMouseLeave={() => setIsReportHovered(false)} // 마우스가 버튼을 벗어났을 때
+            className={`hover-button ${isReportHovered ? "hovered" : ""}`}
+            onClick ={handleOpenModal}
+          >
+            <img
+              src={
+                isReportHovered
+                  ? "https://img.icons8.com/?size=100&id=jy7dy2jsJ5UR&format=png&color=ed1515"
+                  : "https://img.icons8.com/?size=100&id=t5aOnHwCycmN&format=png&color=000000"
+              }
+              alt="Button Image"
+              className="button-image"
+            />
+          </button>
+        </div>
+
       </div>
     </>
   );

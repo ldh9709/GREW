@@ -56,11 +56,11 @@ public class ChatMessageRestController {
 	
 	@Operation(summary="읽음 상태 변경")
 	@PutMapping("/update/{chatmessageNo}")
-	public ResponseEntity<Response> updateChatMessageCheck(@RequestBody ChatMessageDto chatMessageDto){
+	public ResponseEntity<Response> updateChatMessageCheck(@PathVariable(name="chatmessageNo") Long chatmessageNo){
 		Response response = new Response();
-		ChatMessageDto chatMessage =  ChatMessageDto.toDto(chatMessageService.updateChatMessageCheck(chatMessageDto.getChatMessageNo()));
-		//response.setStatus(ResponseStatusCode.READ_MESSAGE);
-		//response.setMessage(ResponseMessage.READ_MESSAGE);
+		ChatMessageDto chatMessage =  ChatMessageDto.toDto(chatMessageService.updateChatMessageCheck(chatmessageNo));
+		response.setStatus(ResponseStatusCode.READ_MESSAGE);
+		response.setMessage(ResponseMessage.READ_MESSAGE);
 		response.setData(chatMessage);
 		
 		HttpHeaders httpHeaders = new HttpHeaders();
@@ -74,7 +74,7 @@ public class ChatMessageRestController {
 	
 	@Operation(summary="특정 메시지 선택")
 	@PutMapping("/{chatmessageNo}")
-	public ResponseEntity<Response> getChatMessageByChatMessageNo(@PathVariable(name="chatmessageNo") long chatmessageNo){
+	public ResponseEntity<Response> getChatMessageByChatMessageNo(@PathVariable(name="chatmessageNo") Long chatmessageNo){
 		Response response = new Response();
 		ChatMessageDto chatMessage =  ChatMessageDto.toDto(chatMessageService.getChatMessageByNo(chatmessageNo));
 		response.setStatus(ResponseStatusCode.CHATTING_LIST_SUCCESS);

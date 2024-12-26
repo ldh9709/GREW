@@ -1,9 +1,8 @@
 import React, { useEffect, useRef, useState } from "react";
 import * as answerApi from "../../api/answerApi";
 import { useNavigate, useParams } from "react-router-dom";
-import { getCookie } from "../../util/cookieUtil";
+import { useMemberAuth } from "../../util/AuthContext";
 export default function AnswerModifyFormPage() {
-  const memberCookie = getCookie("member");
   const modifyFormRef = useRef();
   const navigate = useNavigate();
   const initAnswer = {
@@ -30,7 +29,7 @@ export default function AnswerModifyFormPage() {
   const [answer, setAnswer] = useState(initAnswer);
   const [inquiry, setInquiry] = useState(initInquiry);
   const { answerNo } = useParams();
-
+const {token, member} = useMemberAuth();
   // 질문 데이터 가져오는 함수
   useEffect(() => {
     const fetchInquiryData = async () => {
@@ -50,7 +49,7 @@ export default function AnswerModifyFormPage() {
     const a = async () => {
       const responseJsonObject = await answerApi.viewAnswer(answerNo);
       console.log(responseJsonObject.data);
-      if (memberCookie.memberNo != responseJsonObject.data.memberNo) {
+      if (member.memberNo != responseJsonObject.data.memberNo) {
         navigate("/403");
       }
       setAnswer(responseJsonObject.data);

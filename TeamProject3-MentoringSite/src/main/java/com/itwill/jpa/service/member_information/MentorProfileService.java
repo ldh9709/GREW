@@ -56,7 +56,7 @@ public interface MentorProfileService {
     /**
      * 키워드를 기준으로 멘토 프로필을 검색
      */
-    Page<MentorProfileDto> getMentorProfiles(String keyword, int page, int size);
+    Page<MentorProfileDto> getMentorProfiles(String search, int page, int size);
 
     /**
      * 특정 카테고리에 속한 멘토 프로필을 페이지로 반환
@@ -66,7 +66,7 @@ public interface MentorProfileService {
     /**
      * 멘토 프로필 이미지 업로드
      */
-    void uploadMentorProfileImage(Long mentorProfileNo, MultipartFile file) throws Exception;
+    String uploadMentorProfileImage(Long mentorProfileNo, MultipartFile file) throws Exception;
 
     /**
      * 멘토 프로필의 이미지 URL을 가져오기
@@ -92,4 +92,20 @@ public interface MentorProfileService {
      * 멘토 프로필의 활동 수 조회
      */
     Integer getMentorActivityCount(Long mentorProfileNo);
+    
+    //상세보기 1명
+    MentorProfileDto getMentorProfileDetail(Long mentorProfileNo);
+    
+    
+    //팔로우수 멘토링수 활동수 조회 리스트
+    Page<MentorProfileDto> getMentorsByFollowCount(int page, int size);
+    Page<MentorProfileDto> getMentorsByMentoringCount(int page, int size);
+    Page<MentorProfileDto> getMentorsByActivityCount(int page, int size);
+
+    //멤버 넘버로 멘토프로필 찾기
+    MentorProfileDto getMentorByMemberNo(Long memberNo);
+    
+    //별점 순으로 멘토 찾기
+    List<MentorProfileDto> getMentorByRating();
 }
+

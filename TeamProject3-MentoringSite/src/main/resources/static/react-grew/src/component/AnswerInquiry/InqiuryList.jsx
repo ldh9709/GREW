@@ -1,12 +1,16 @@
 import "../../css/styles.css";
 import React, { useEffect, useState } from "react";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import * as inquiryApi from "../../api/inquiryApi";
 import InquiryItem from "./InquiryItem";
+import BestAnswerItem from "./BestAnswerItem";
 import * as categoryApi from "../../api/categoryApi";
 import { useNavigate } from "react-router-dom";
-import { getCookie } from "../../util/cookieUtil";
+import { useMemberAuth } from "../../util/AuthContext";
+import { faPen } from "@fortawesome/free-solid-svg-icons";
 
 function InqiuryList() {
+  const {token, member} = useMemberAuth();
   const [inquirys, setInquiry] = useState([]);
   const [currentPage, setCurrentPage] = useState(1); // 현재 페이지 번호
   const [totalPages, setTotalPages] = useState(0); // 전체 페이지 수
@@ -15,8 +19,8 @@ function InqiuryList() {
   const [categories, setCategories] = useState([]); // 카테고리 리스트
   const [selectedCategory, setSelectedCategory] = useState(null); // 선택된 카테고리
   const [childCategories, setChildCategories] = useState([]); // 하위 카테고리 상태
+  const [bestAnswer, setBestAnswer] = useState([]);
   const navigate = useNavigate();
-  const memberCookie = getCookie("member");
   // 카테고리 목록을 가져오는 함수
   const fetchCategories = async () => {
     try {
@@ -53,7 +57,14 @@ function InqiuryList() {
       }
     }
   };
-
+  useEffect(() => {
+    fetchBestAnswer();
+  }, []);
+  const fetchBestAnswer = async () => {
+    const responseJsonObject = await inquiryApi.bestAnswerList();
+    console.log(responseJsonObject.data);
+    setBestAnswer(responseJsonObject.data.content);
+  };
   // 문의 목록을 페이지네이션과 함께 가져오는 함수
   const fetchInquiries = async (page, size, sortButton, selectedCategory) => {
     try {
@@ -61,7 +72,6 @@ function InqiuryList() {
       const selectedCat = categories.find(
         (cat) => cat.categoryNo === selectedCategory
       );
-      console.log(selectedCat);
       if (!selectedCategory) {
         if (sortButton === "view") {
           responseJsonObject = await inquiryApi.listInquiryView(page, size);
@@ -127,7 +137,7 @@ function InqiuryList() {
 
   // 페이지 로드 시 데이터 가져오기
   useEffect(() => {
-    fetchInquiries(currentPage - 1, itemsPerPage, sortType, selectedCategory);
+    fetchInquiries(currentPage - 1, 8, sortType, selectedCategory);
   }, [currentPage, sortType, selectedCategory, childCategories]);
 
   // 페이지네이션 버튼 표시 (10개씩 끊어서 표시)
@@ -142,40 +152,74 @@ function InqiuryList() {
   }
 
   const handleWriteButton = () => {
-    if (memberCookie != null) {
+    if (member.memberRole== 'ROLE_MENTEE') {
       navigate("/inquiry/inquiryWrite");
-    } else {
+    } else if(member.memberRole =='ROLE_MENTOR'){
+      alert('멘티만 질문을 등록할 수 있습니다.')
+      return;
+    }else{
       alert("로그인이 필요한 서비스입니다");
       return;
     }
   };
   return (
     <>
-      <link
-        href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap"
-        rel="stylesheet"
-      ></link>
+      
 
-      <h1>질문게시판</h1>
-
-      <div className="btn-inquiry-write-div">
-        <button className="btn-inquiry-write" onClick={handleWriteButton}>
-          <img
-            src="https://img.icons8.com/?size=100&id=98973&format=png&color=000000"
-            style={{
-              width: "20px",
-              height: "20px",
-              marginRight: "5px",
-              marginLeft: "-5px",
-              marginBottom: "-3px",
-            }}
-          />
-          질문등록
-        </button>
+     {/* 카테고리 버튼들 */}
+    <div className="category-container">
+    <h1>질문하기</h1>
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+        {/* Parent 카테고리 */}
+        <div className="category-parent">
+          {categories
+            .filter((category) => category.categoryDepth === 1) // categoryDepth가 1인 카테고리만 필터링
+            .map((category) => (
+              <button
+                key={category.categoryNo}
+                onClick={() => handleCategoryClick(category.categoryNo)} // 클릭 시 카테고리 선택
+                className="category-button"
+                style={{
+                  backgroundColor:
+                    selectedCategory === category.categoryNo ? "#28a745" : "", // 선택된 카테고리는 색상 변경
+                  color:
+                    selectedCategory === category.categoryNo ? "#f3f4f6" : "", // 선택된 카테고리 글자 색상 변경
+                }}
+              >
+                {category.categoryName}
+              </button>
+            ))}
+        </div>
+        {/* 질문하기 버튼 */}
+        <div className="btn-inquiry-write-div">
+          <button className="btn-inquiry-write" onClick={handleWriteButton}>
+          <FontAwesomeIcon icon={faPen} />
+            <span>질문하기</span>
+          </button>
+        </div>
       </div>
-
+      {/* 하위 카테고리 버튼 */}
+      {childCategories.length > 0 && (
+        <div className="category-child">
+          {childCategories.map((child) => (
+            <button
+              key={child.categoryNo}
+              onClick={() => handleCategoryClick(child.categoryNo)} // 하위 카테고리 선택
+              className="category-button"
+              style={{
+                backgroundColor:
+                  selectedCategory === child.categoryNo ? "#28a745" : "", // 선택된 카테고리는 색상 변경
+                color: selectedCategory === child.categoryNo ? "#f3f4f6" : "", // 선택된 카테고리 글자 색상 변경
+              }}
+            >
+              {child.categoryName}
+            </button>
+          ))}
+        </div>
+      )}
+    </div>
       {/* 정렬 라디오 버튼 */}
-      <div className="radio-container">
+      <div className="inquiry-radio-container">
         <label>
           <input
             type="radio"
@@ -207,75 +251,23 @@ function InqiuryList() {
           답변많은순
         </label>
       </div>
-      
-      <div className="inquiry-list-main">
-        {/* 왼쪽 작은 리스트 */}
-        <div className="small-list">
-            {/* 카테고리 버튼들 */}
-            <div className="category-container">
-              <div className="category-parent">
-                {categories
-                  .filter((category) => category.categoryDepth === 1) // categoryDepth가 1인 카테고리만 필터링
-                  .map((category) => (
-                    <button
-                      key={category.categoryNo}
-                      onClick={() => handleCategoryClick(category.categoryNo)} // 클릭 시 카테고리 선택
-                      className="category-button"
-                      style={{
-                        backgroundColor:
-                          selectedCategory === category.categoryNo
-                            ? "#4CAF50"
-                            : "", // 선택된 카테고리는 색상 변경
-                        color:
-                          selectedCategory === category.categoryNo
-                            ? "white"
-                            : "", // 선택된 카테고리 글자 색상 변경
-                      }}
-                    >
-                      {category.categoryName}
-                    </button>
-                  ))}
-              </div>
 
-              {/* 하위 카테고리 버튼 렌더링 */}
-              {childCategories.length > 0 && (
-                <div className="category-child">
-                  {childCategories.map((child) => (
-                    <button
-                      key={child.categoryNo}
-                      onClick={() => handleCategoryClick(child.categoryNo)} // 하위 카테고리 선택
-                      className="category-button"
-                      style={{
-                        backgroundColor:
-                          selectedCategory === child.categoryNo
-                            ? "#4CAF50"
-                            : "", // 선택된 카테고리는 색상 변경
-                        color:
-                          selectedCategory === child.categoryNo ? "white" : "", // 선택된 카테고리 글자 색상 변경
-                      }}
-                    >
-                      {child.categoryName}
-                    </button>
-                  ))}
-                </div>
-              )}
-            </div>
-        </div>
+      <div className="inquiry-list-main">
         <div className="inquiry-list-sort">
           {/* 문의 목록 테이블 */}
-          <div>
-        {/* 선택된 카테고리가 존재할 때만 카테고리 이름을 표시 */}
-        {selectedCategory != null && (
-          <div className="inquiry-category-name">
-            {
-              // 선택된 카테고리 객체가 존재할 때만 categoryName을 출력
-              categories.find(
-                (category) => category.categoryNo === selectedCategory
-              )?.categoryName || "선택된 카테고리가 없습니다"
-            }
-          </div>
-        )}
-      </div>
+          {/*<div>
+             선택된 카테고리가 존재할 때만 카테고리 이름을 표시 
+            {selectedCategory != null && (
+              <div className="inquiry-category-name">
+                {
+                  // 선택된 카테고리 객체가 존재할 때만 categoryName을 출력
+                  categories.find(
+                    (category) => category.categoryNo === selectedCategory
+                  )?.categoryName || "선택된 카테고리가 없습니다"
+                }
+              </div>
+            )}
+          </div>*/}
           {inquirys && inquirys.length > 0 ? (
             inquirys.map((inquiry) => (
               <InquiryItem key={inquiry.inquiryNo} inquiry={inquiry} />
@@ -285,6 +277,21 @@ function InqiuryList() {
               <div>아직 등록된 질문이 없습니다.</div>
             </div>
           )}
+        </div>
+        {/* 왼쪽 작은 리스트 */}
+        <div className="small-list">
+          <div>
+            <p>최근 추천 많이 받은 답변</p>
+            <div>
+              {bestAnswer.map((answer, index) => (
+                <BestAnswerItem
+                  key={answer.answerNo}
+                  answer={answer}
+                  index={index}
+                />
+              ))}
+            </div>
+          </div>
         </div>
       </div>
       {/* 페이지네이션 버튼 */}
@@ -298,7 +305,7 @@ function InqiuryList() {
             key={number}
             onClick={() => paginate(number)}
             style={{
-              backgroundColor: number === currentPage ? "#4CAF50" : "",
+              backgroundColor: number === currentPage ? "#006618" : "",
               color: number === currentPage ? "white" : "",
             }}
           >

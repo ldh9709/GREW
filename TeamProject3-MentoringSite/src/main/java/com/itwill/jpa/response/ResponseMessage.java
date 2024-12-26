@@ -16,6 +16,7 @@ public class ResponseMessage {
 	public static final String PASSWORD_RESET_SUCCESS = "비밀번호 재설정 성공";
 	public static final String EMAIL_SEND_SUCCESS = "이메일 발송 성공";
 	public static final String INPUTCODE_CONFIRM_SUCCESS = "인증번호 인증 성공";
+	public static final String UPDATE_ROLE_SUCCESS = "회원 권한 수정 성공";
 	
 	
 	// 실패 메시지
@@ -31,6 +32,7 @@ public class ResponseMessage {
 	public static final String INPUTCODE_CONFIRM_FAIL = "인증번호 인증 실패";
 	public static final String MEMBER_IS_NOT_EMAIL = "SNS로 가입한 사용자입니다.";        // 이메일로 가입한 회원이 아님
 	public static final String AUTHENTICATION_FAILED = "로그인 정보와 일치하지 않습니다."; // 토큰과 정보가 일치하지 않음
+	public static final String UPDATE_ROLE_FAIL = "회원 권한 수정 성공";
 	
     /******************* MENTOR BOARD 메시지 ************************/
     public static final String CREATED_MENTOR_BOARD_SUCCESS = "멘토 보드 등록 성공";
@@ -42,6 +44,7 @@ public class ResponseMessage {
     public static final String CREATED_MENTOR_BOARD_FAIL = "멘토 보드 등록에 실패했습니다.";
     public static final String UPDATE_MENTOR_BOARD_FAIL = "멘토 보드 수정에 실패했습니다.";
     public static final String DELETE_MENTOR_BOARD_FAIL = "멘토 보드 삭제에 실패했습니다.";
+    public static final String IMAGE_UPLOAD_SUCCESS = "이미지 업로드 성공";
     public static final String IMAGE_UPLOAD_FAIL = "이미지 업로드에 실패했습니다.";
     public static final String MEMBER_NOT_FOUND = "해당 멤버를 찾을 수 없습니다."; 
     public static final String NOT_A_MENTOR = "해당 멤버는 멘토가 아닙니다."; 
@@ -136,19 +139,24 @@ public class ResponseMessage {
 	
 	/******************* CHATTING 메시지 ************************/
 	public static final String PENDING_CHATTING = "요청 대기 중"; // (멘토의 수락/거절 대기 상태)
+	public static final String PENDING_CHATTING_FAIE = "채팅방 생성 실패"; // (채팅방 활성화)
 	public static final String ACTIVE_CHATTING = "멘토링 진행 중"; // (채팅방 활성화)
+	public static final String ACTIVE_CHATTING_FAIE = "채팅방 활성화 실패"; // (채팅방 활성화)
 	public static final String COMPLETED_CHATTING = "멘토링 완료"; // (활동 종료)
 	public static final String REJECTED_CHATTING = "요청 거절"; // (멘토가 요청을 수락하지 않음)
 	public static final String CANCELED_CHATTING_FAIL = "요청 취소"; // (멘티가 요청을 철회함)
 	public static final String FORCE_CLOSED_CHATTING = "강제 종료"; // (관리자가 비정상적인 요청을 종료함)
 	public static final String STAY_CHATTING = "채팅방에 머무릅니다."; // (채팅방을 나가지않음)
 	public static final String LEAVE_CHATTING = "채팅방을 나갔습니다."; // (채팅방을 나감)
+	public static final String CHATTING_STATUS_CHANGE_FAIE = "상태 변경 실패";
 	public static final String SEND_CHATTING_SUCCESS = "채팅방 요청 전송 완료";
 	public static final String SEND_CHATTING_FAIL = "채팅방 요청 전송 실패";
 	public static final String CHATTING_LIST_SUCCESS = "채팅방 리스트 출력";
+	public static final String CHATTING_LIST_FAIE = "채팅방 리스트 출력";
 	public static final String CHATTING_NAME = "채팅방 제목 출력 성공";
 	public static final String CHATTING_NAME_CHANGE = "채팅방 제목 변경 성공";
-	public static final String CHATTING_MESSAGE = "채팅방 대화 목록 출력";
+	public static final String CHATTING_MESSAGE_SUCCESS = "채팅방 대화 목록 출력";
+	public static final String CHATTING_MESSAGE_FAIE = "채팅방 대화 목록 출력";
 	public static final String READ_MESSAGE = "채팅방 대화 목록 출력";
 	
 	/******************* REVIEW 메시지 **********************/

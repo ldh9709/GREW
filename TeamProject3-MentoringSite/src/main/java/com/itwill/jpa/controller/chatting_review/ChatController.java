@@ -51,7 +51,8 @@ public class ChatController {
 	    	System.out.println(message);
 	        System.out.println("memberName : " + message.getMemberName());
 	        System.out.println("ChatContent : " + message.getChatMessageContent());
-	        chatMessageService.createChatMessage(message);
+	        Long ChatMessageNo = chatMessageService.createChatMessage(message).getChatMessageNo();
+	        message.setChatMessageNo(ChatMessageNo);
 	    }
 	    return message;
 	}
@@ -160,5 +161,19 @@ public class ChatController {
 	    // Base64 형식의 이미지 반환
 	    return ResponseEntity.ok(base64Image);
 	}
+
+	
+	// 읽음 상태 업데이트 처리
+    @MessageMapping("/chat/read/{roomId}") // 읽음 상태 업데이트를 처리
+    @SendTo("/topic/read-status/{roomId}") // 읽음 상태를 해당 방의 모든 클라이언트에게 브로드캐스트
+    public ChatMessageDto updateReadStatus(@DestinationVariable("roomId") String roomId, @Payload ChatMessageDto message) {
+        if (message.getChatMessageNo() != null) {
+        	System.out.println("읽은 메세지"+message);
+            System.out.println("읽은 메세지 번호 " + message.getChatMessageNo());
+            Long chatMessageNo = chatMessageService.updateChatMessageCheck(message.getChatMessageNo()).getChatMessageNo(); // 읽음 상태 업데이트
+            message.setChatMessageNo(chatMessageNo);
+        }
+        return message;
+    }
 
 }

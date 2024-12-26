@@ -1,6 +1,7 @@
 package com.itwill.jpa.service.member_information;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -10,11 +11,13 @@ import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.itwill.jpa.auth.PrincipalDetails;
 import com.itwill.jpa.dto.member_information.InterestDto;
 import com.itwill.jpa.dto.member_information.MemberDto;
 import com.itwill.jpa.dto.member_information.MemberDto.JoinFormDto;
@@ -25,6 +28,7 @@ import com.itwill.jpa.repository.member_information.InterestRepository;
 import com.itwill.jpa.entity.role.Role;
 import com.itwill.jpa.repository.member_information.MemberRepository;
 import com.itwill.jpa.util.CustomMailSender;
+import com.itwill.jpa.util.JWTUtil;
 
 import jakarta.persistence.EntityManager;
 
@@ -45,7 +49,6 @@ public class MemberServiceImpl implements MemberService {
 	
 	@Autowired
 	EntityManager entityManager;
-	
 	
 	//이메일별 인증번호 저장
 	private final Map<String, Integer> tempCode = new ConcurrentHashMap<>();
@@ -234,6 +237,17 @@ public class MemberServiceImpl implements MemberService {
 		return memberRepository.save(member);
 	}
 	
+	/***** 회원 권한 변경 *****/
+	public Member updateMemberRole(Long memberNo, String role) {
+		Member member = memberRepository.findByMemberNo(memberNo);
+		
+		if (role.equals("ROLE_MENTEE")) {
+		    member.setMemberRole(Role.ROLE_MENTEE);
+		} else {
+		    member.setMemberRole(Role.ROLE_MENTOR);
+		}
+		return memberRepository.save(member);
+	}
 	
 	/***** 회원 삭제 *****/
 	@Override
@@ -408,17 +422,25 @@ public class MemberServiceImpl implements MemberService {
 		
 	}
 	
-	//멤버 역할 변경
-	@Override
-	public Member updateMemberRoleMentor(Long memberNo) {
-		
-		Member member = memberRepository.findByMemberNo(memberNo);
-		
-		member.setMemberRole(Role.ROLE_MENTOR);
-		
-		return memberRepository.save(member);
+	
+	/* 토큰 재생성 메소드 */
+	public Map<String, String> regenerateTokens(Authentication authentication, Member updatedMember) {
+        PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
+        Map<String, Object> claims = principalDetails.getClaims();
+        
+        // 필요한 권한 정보 갱신
+        claims.put("memberRole", updatedMember.getMemberRole());
+
+        // 새 토큰 생성
+        String newAccessToken = JWTUtil.generateToken(claims, 60); // 60분
+        String newRefreshToken = JWTUtil.generateToken(claims, 60 * 24); // 24시간
+
+        // 토큰을 반환
+        Map<String, String> tokens = new HashMap<>();
+        tokens.put("accessToken", newAccessToken);
+        tokens.put("refreshToken", newRefreshToken);
+
+        return tokens;
 	}
-	
-	
 	
 }

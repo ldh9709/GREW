@@ -65,7 +65,10 @@ public class JWTCheckFilter extends OncePerRequestFilter {
 		|| path.startsWith("/answer/update") 
 		|| path.startsWith("/answer/view") 
 		|| path.startsWith("/answer/re") 
-		//|| path.startsWith("/chat") 
+		
+
+		|| path.startsWith("/answer/count") 
+
 		
 		|| path.startsWith("/chatroom/rejected")
 		|| path.startsWith("/chatroom/completed")
@@ -83,6 +86,9 @@ public class JWTCheckFilter extends OncePerRequestFilter {
 		|| path.startsWith("/main")
     	|| path.startsWith("/v3/api-docs") 
     	|| path.startsWith("/favicon.ico")
+//    	|| path.startsWith("/mentor-profile")
+//    	|| path.startsWith("/mentor-board")
+    	|| path.startsWith("/mentorprofile")
     	) {
       return true;
     }
@@ -127,6 +133,7 @@ public class JWTCheckFilter extends OncePerRequestFilter {
           String memberName = (String) claims.get("memberName");
           Integer memberStatus = (Integer) claims.get("memberStatus");
           String memberProvider = (String) claims.get("memberProvider");
+          Long mentorProfileNo = ((Number) claims.get("mentorProfileNo")).longValue();
           
           //memberRole을 처리하기 위해 String으로 받고 Role로 변환
           String roleName = (String) claims.get("memberRole");
@@ -142,6 +149,7 @@ public class JWTCheckFilter extends OncePerRequestFilter {
                   .memberStatus(memberStatus)
                   .memberRole(memberRole)
                   .memberProvider(memberProvider)
+                  .mentorProfileNo(mentorProfileNo)
                   .build();
           
           System.out.println(">>>>>JWTCheckFilter memberDTO : " + memberDto);
