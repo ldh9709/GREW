@@ -28,6 +28,18 @@ export const UserCard = () => {
         fetchReports(token, selectedFilter, page); // 선택된 필터 값에 맞는 신고 목록 조회
     };
 
+    // 신고 상태 업데이트 핸들러
+    const handleStatusUpdate = async (reportNo, status) => {
+        try {
+            const response = await adminApi.updateReportStatusForAdmin(token, reportNo, status);
+            alert(`신고 상태가 '${status}'로 변경되었습니다.`);
+            fetchReports(token, filter, page); // 상태 업데이트 후 목록 새로고침
+        } catch (error) {
+            console.error("신고 상태 업데이트 실패", error);
+            alert("상태 업데이트에 실패했습니다.");
+        }
+    };
+
     useEffect(() => {
         if (token) {
             fetchReports(token, filter, page); // 초기 데이터 로드
@@ -40,9 +52,7 @@ export const UserCard = () => {
             <div className="dropdown">
                 <select onChange={handleFilterChange} value={filter}>
                     <option value={1}>전체보기</option>
-                    <option value={2}>접수순서</option>
-                    {/*<option value={3}>처리 완료</option>
-                    <option value={4}>무고 처리</option>*/}
+                    <option value={2}>접수순서</option>                    
                 </select>
             </div>
 
@@ -76,7 +86,9 @@ export const UserCard = () => {
                                 <td>{report.reportStatus}</td>
                                 <td>{report.memberNo}</td>
                                 <td>
-                                    <button className="check">접수</button>
+                                    <button className="check"
+                                    onClick={() => handleStatusUpdate(report.id, "IN_PROGRESS")}
+                                    >접수</button>
                                 </td>
                             </tr>
                         ))

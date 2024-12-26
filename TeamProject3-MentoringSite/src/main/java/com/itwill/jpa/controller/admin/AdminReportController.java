@@ -125,6 +125,34 @@ public class AdminReportController {
 	    return responseEntity;
 	}
 
+	@SecurityRequirement(name = "BearerAuth")
+	@PreAuthorize("hasRole('ADMIN')")
+	@Operation(summary = "신고 상세 정보 조회")
+	@GetMapping("/{reportNo}")
+	public ResponseEntity<Response> getReportDetails(
+	        @PathVariable(name = "reportNo") Long reportNo) {
+	    try {
+	        // 신고 상세 정보 조회 서비스 호출
+	        ReportDto reportDetails = reportService.getReportByreportNo(reportNo);
+
+	        // 응답 객체 생성
+	        Response response = new Response();
+	        response.setStatus(ResponseStatusCode.READ_REPORT_SUCCESS);
+	        response.setMessage(ResponseMessage.READ_REPORT_SUCCESS);
+	        response.setData(reportDetails);
+
+	        HttpHeaders httpHeaders = new HttpHeaders();
+	        httpHeaders.setContentType(new MediaType(MediaType.APPLICATION_JSON, Charset.forName("UTF-8")));
+
+	        return new ResponseEntity<>(response, httpHeaders, HttpStatus.OK);
+	    } catch (Exception e) {
+	        Response response = new Response();
+	        response.setStatus(ResponseStatusCode.READ_REPORT_FAIL);
+	        response.setMessage(ResponseMessage.READ_REPORT_FAIL);
+	        return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+	    }
+	}
+
 	/************* 답변 ***********
 	@Operation(summary = "답변 게시글 번호로 출력(최신순)")
 	@GetMapping("/answer/{inquiryNo}")
