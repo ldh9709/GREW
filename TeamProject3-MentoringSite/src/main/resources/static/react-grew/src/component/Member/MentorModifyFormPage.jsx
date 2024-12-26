@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import "../../css/mentor.css";
 import * as responseStatus from "../../api/responseStatusCode";
 import * as memberApi from "../../api/memberApi";
+import * as categoryApi from "../../api/categoryApi";
 import { useNavigate } from "react-router-dom";
 import { useMemberAuth } from "../../util/AuthContext";
 
@@ -25,6 +26,68 @@ const MentorEditForm = () => {
     mentorImage: "",  //프로필 이미지지
   });
   /**** 멘토 선언 END ****/
+
+  /**** 카테고리 선언 START ****/
+    const [categories, setCategories] = useState([]);
+    // selectedParent / selectedChild
+    const [selectedParent, setSelectedParent] = useState("");
+    const [selectedChild, setSelectedChild] = useState("");
+    /**** 카테고리 선언 END ****/
+
+  /********** 카테고리 불러오기 START ***********/
+    useEffect(() => {
+      async function getCategories() {
+        // 서버에서 이미 대분류 객체의 childCategories에 소분류가 들어있는 구조를 내려준다고 가정
+        const res = await categoryApi.ListCategory();
+        console.log("category res : ", res);
+        const data = await res.data;
+        console.log("category data : ", data);
+        // 여기서는 별도의 필터를 안 합니다. 
+        // data 예: [
+        //   { categoryNo:1, categoryName:'직무 상담', categoryDepth:1, childCategories:[
+        //       { categoryNo:2, categoryName:'인사/총무/노무', categoryDepth:2, childCategories:[] },
+        //       ...
+        //   ]},
+        //   { categoryNo:5, categoryName:'학습/교육', categoryDepth:1, childCategories:[...], ...},
+        //   ...
+        // ]
+        setCategories(data);
+      }
+      getCategories();
+    }, []);
+  
+    // 현재 선택된 "대분류" 객체를 찾는다
+    const parentObj = categories.find(
+      (cat) => String(cat.categoryNo) === String(selectedParent)
+    );
+    // 만약 parentObj가 있으면, 그 안의 childCategories가 소분류 목록
+    const childCategories = parentObj ? parentObj.childCategories : [];
+  
+    // 대분류 변경 시
+    const handleParentChange = (e) => {
+      const parentNo = e.target.value;
+      setSelectedParent(parentNo);
+      setSelectedChild(""); // 소분류 초기화
+  
+      // mentor.categoryNo도 초기화(아직 소분류를 안 골랐으므로)
+      setMentor((prev) => ({
+        ...prev,
+        categoryNo: "",
+      }));
+    };
+  
+    // 소분류 변경 시
+    const handleChildChange = (e) => {
+      const childNo = e.target.value;
+      setSelectedChild(childNo);
+  
+      // 실제 mentor.categoryNo에 저장
+      setMentor((prev) => ({
+        ...prev,
+        categoryNo: childNo,
+      }));
+    };
+    /********** 카테고리 불러오기 END ***********/
 
   /********** 경력 관련 메소드 START ***********/
   /*
@@ -108,15 +171,40 @@ const MentorEditForm = () => {
           /* 줄바꿈(\n)을 기준으로 나누어 배열로 변환 */
           const careerArray = mentorCareer ? mentorCareer.split("\n") : [""];
           setCareerFields(careerArray);
+
+        // 카테고리 정보가 로드된 후 초기화
+        if (categoryNo && categories.length > 0) {
+          initializeCategorySelection(categoryNo);
+        }
         }
       } catch (error) {
         console.error("멘토 정보 로드 실패:", error);
       }
     };
+
+  // 초기화 함수: 카테고리 설정
+  const initializeCategorySelection = (categoryNo) => {
+    // 대분류를 찾는다
+    const parentCategory = categories.find((cat) =>
+      cat.childCategories.some(
+        (child) => String(child.categoryNo) === String(categoryNo)
+      )
+    );
+
+    if (parentCategory) {
+      setSelectedParent(parentCategory.categoryNo); // 대분류 설정
+      setSelectedChild(categoryNo); // 소분류 설정
+    }
+  };
+
+
     //멘토 정보 가져오기 실행
     fetchMentorInfo();
-  }, [mentorProfileNo]);
+  }, [mentorProfileNo, categories]);
   
+
+
+
   const mentorProfileUpdateAction = async () => {
     const responseJsonObject = await memberApi.mentorProfileUpdateAction(
       mentorProfileNo,
@@ -137,41 +225,40 @@ const MentorEditForm = () => {
   return (
     <div className="mentor-join-container">
       <h1 className="form-title">멘토 수정</h1>
-      <form className="mentor-join-form">
-        {/* 분야 */}
-        <div className="form-group-profile horizontal-field">
-          <label htmlFor="categoryNo">
-            전문 분야<span className="red-text">필수</span>
-          </label>
-          <select
-            id="categoryNo"
-            name="categoryNo"
-            value={mentor.categoryNo}
-            onChange={handleChangeMentorEditForm}
-            required
-          >
-            <option value="">-- 선택하세요 --</option>
-            <option value="2">인사/총무/노무</option>
-            <option value="3">영업/영업관리</option>
-            <option value="4">IT개발/데이터</option>
-            <option value="6">중학생 교육</option>
-            <option value="7">고등학생 교육</option>
-            <option value="8">대학입시 상담</option>
-            <option value="10">음악</option>
-            <option value="11">글쓰기</option>
-            <option value="12">미술</option>
-            <option value="13">사진/영상 제작</option>
-            <option value="14">연기/연극</option>
-            <option value="16">스타트업 아이디어</option>
-            <option value="17">마케팅 전략</option>
-            <option value="18">법률 특허 상담</option>
-            <option value="22">피트니스</option>
-            <option value="23">요가/필라테스</option>
-            <option value="24">재활 운동</option>
-            <option value="25">식단/영양 상담</option>
-          </select>
-        </div>
+      {/* 대/소분류 선택 폼 */}
+      <div className="form-group-profile horizontal-combined">
+        {/* 대분류 선택 */}
+        <label className="parent-label">전문분야<span className="red-text">필수</span></label>
+        <select className="category-select" value={selectedParent} onChange={handleParentChange}>
+          <option value="">-- 대분류 선택 --</option>
+          {categories
+            .filter((cat) => cat.categoryDepth === 1) // depth=1인 것만 추려낸다
+            .map((parent) => (
+              <option key={parent.categoryNo} value={parent.categoryNo}>
+                {parent.categoryName}
+              </option>
+            ))}
+        </select>
 
+        {/* 소분류 선택 */}
+        <label className="child-label"></label>
+        <select
+          className="category-select"
+          value={selectedChild}
+          onChange={handleChildChange}
+          disabled={!selectedParent}
+        >
+          <option value="">-- 소분류 선택 --</option>
+          {childCategories.map((child) => (
+            <option key={child.categoryNo} value={child.categoryNo}>
+              {child.categoryName}
+            </option>
+          ))}
+        </select>
+      </div>
+
+
+      <form className="mentor-join-form">
         {/* 소개글 */}
         <div className="form-group-profile horizontal">
           <label htmlFor="mentorIntroduce">
