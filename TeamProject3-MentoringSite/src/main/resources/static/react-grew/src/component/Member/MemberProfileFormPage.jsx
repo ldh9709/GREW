@@ -15,13 +15,15 @@ const MemberProfileFormPage = () => {
     memberName: "",
     memberId: "",
     memberEmail: "",
+    memberPassword: "",
+    memberPassword2: "",
     interests: [],
   });
 
+  /***** 사용자 정보 가져오기 *****/
   const fetchProfileData = async () => {
     const response = await memberProfile(token);
     console.log("프로필response : ", response);
-    console.log("프로필response.data : ", response.data);
 
     const { data } = response;
 
@@ -35,6 +37,8 @@ const MemberProfileFormPage = () => {
       memberName: data.memberName,
       memberId: data.memberId,
       memberEmail: data.memberEmail,
+      memberPassword: data.memberPassword,
+      memberPassword2: data.memberPassword,
       interests: filteredInterests || [],
     });
   };
@@ -72,13 +76,14 @@ const MemberProfileFormPage = () => {
     });
   };
   
-
+  /***** 관심사 선택 *****/
   const isInterestSelected = (categoryNo) => {
     return member.interests.some(
       (interest) => interest.categoryNo === parseInt(categoryNo)
     );
   };
 
+  /***** 수정폼 핸들러 *****/
   const onChangeMemberModifyForm = (e) => {
     setMember({
       ...member,
@@ -87,9 +92,20 @@ const MemberProfileFormPage = () => {
     console.log(e.target.value);
   };
 
+  /***** 업데이트 액션 *****/
   const updateMember = () => {
     console.log("업데이트 시 멤버 : ", member);
     
+    if(member.memberPassword !== member.memberPassword2) {
+      alert("비밀번호를 다시 확인해주세요.");
+      return;
+    }
+
+    if(member.interests.length !== 3) {
+      alert("3개의 관심사를 선택해주세요.");
+      return;
+    }
+
     updateAction(member, token).then((responseJsonObject) => {
       console.log("Server response:", responseJsonObject);
       switch (responseJsonObject.status) {
@@ -149,7 +165,7 @@ const MemberProfileFormPage = () => {
             <input
               type="password"
               placeholder="비밀번호 확인"
-              name="memberPassword"
+              name="memberPassword2"
               className="member-form-password"
               onChange={onChangeMemberModifyForm}
             />
