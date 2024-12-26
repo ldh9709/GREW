@@ -354,7 +354,6 @@ public class MentorProfileServiceImpl implements MentorProfileService {
                     ));
 
             // 🔥 멘토 이미지 URL 반환
-            System.out.println("getMentorProfileImageUrl :  >>>>>" + mentorProfile.getMentorImage());
             return mentorProfile.getMentorImage();
         } catch (CustomException e) {
             // ⚠️ CustomException이 발생한 경우 그대로 예외를 던짐
