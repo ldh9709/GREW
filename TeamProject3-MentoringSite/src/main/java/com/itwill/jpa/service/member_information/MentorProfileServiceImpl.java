@@ -325,6 +325,7 @@ public class MentorProfileServiceImpl implements MentorProfileService {
             mentorProfile.setMentorCareer(mentorProfileDto.getMentorCareer());
             mentorProfile.setMentorIntroduce(mentorProfileDto.getMentorIntroduce());
             mentorProfile.setMentorImage(mentorProfileDto.getMentorImage());
+            System.out.println(">>>>> updateMentorProfile : " + mentorProfileDto.getMentorImage());
             mentorProfile.setCategory(category); // 카테고리 설정
             
             // 🔥 저장
@@ -353,6 +354,7 @@ public class MentorProfileServiceImpl implements MentorProfileService {
                     ));
 
             // 🔥 멘토 이미지 URL 반환
+            System.out.println("getMentorProfileImageUrl :  >>>>>" + mentorProfile.getMentorImage());
             return mentorProfile.getMentorImage();
         } catch (CustomException e) {
             // ⚠️ CustomException이 발생한 경우 그대로 예외를 던짐

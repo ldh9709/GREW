@@ -248,6 +248,7 @@ public class MentorProfileController {
 			@PathVariable("mentorProfileNo") Long mentorProfileNo) {
 		try {
 			String imageUrl = mentorProfileService.getMentorProfileImageUrl(mentorProfileNo);
+			System.out.println(">>>>> getMentorProfileImageUrl imageUrl : " + imageUrl);
 			Map<String, String> response = new HashMap<>();
 			response.put("imageUrl", imageUrl);
 			return ResponseEntity.ok(response);
