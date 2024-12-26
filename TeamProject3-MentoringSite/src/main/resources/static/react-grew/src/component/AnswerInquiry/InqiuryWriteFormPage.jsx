@@ -7,6 +7,7 @@ import {useMemberAuth} from '../../util/AuthContext';
 export default function InqiuryWriteFormPage() {
   const {token,member} = useMemberAuth();
   const writeFormRef = useRef();
+  const textareaRef = useRef();
   const navigate = useNavigate();
 
   const initInquiry = {
@@ -40,6 +41,12 @@ export default function InqiuryWriteFormPage() {
   // 컴포넌트 로드 시 카테고리 목록 가져오기
   useEffect(() => {
     fetchCategories();
+  }, []);
+
+  useEffect(() => {
+    if (textareaRef.current) {
+      textareaRef.current.focus();
+    }
   }, []);
 
   const handleCategoryClick = async (categoryNo) => {
@@ -101,9 +108,10 @@ export default function InqiuryWriteFormPage() {
     <>
       <div>
         <form ref={writeFormRef} method="POST" className="inquiry-form">
+          <h1>질문등록</h1>
           <div>
-            <div>질문등록</div>
             <div>
+              <div>카테고리 선택</div>
               {categories
                 .filter((category) => category.categoryDepth === 1) // categoryDepth가 1인 카테고리만 필터링
                 .map((category) => (
@@ -115,7 +123,6 @@ export default function InqiuryWriteFormPage() {
                       handleCategoryClick(category.categoryNo);
                     }} // 클릭 시 카테고리 선택
                     style={{
-                      margin: "5px",
                       backgroundColor:
                         selectedCategory === category.categoryNo
                           ? "#4CAF50"
@@ -141,7 +148,6 @@ export default function InqiuryWriteFormPage() {
                       handleCategoryClick(child.categoryNo);
                     }} // 하위 카테고리 선택
                     style={{
-                      margin: "5px",
                       backgroundColor:
                         selectedCategory === child.categoryNo ? "#4CAF50" : "", // 선택된 카테고리는 색상 변경
                       color:
@@ -154,27 +160,32 @@ export default function InqiuryWriteFormPage() {
               </div>
             )}
             <input
+              className="inquiry-form-title"
               type="text"
               name="inquiryTitle"
               onChange={onChangeInquiryForm}
               value={inquiry.inquiryTitle}
               placeholder="제목을 입력하세요"
+              autoComplete="off"
               required
             />
           </div>
           <div>
             <textarea
+              ref={textareaRef}
               name="inquiryContent"
               onChange={onChangeInquiryForm}
               value={inquiry.inquiryContent}
               placeholder="내용을 입력하세요"
+              autoComplete="off"
               required
             />
           </div>
-          <div className="inquiry-write-btn">
+          <div className="inquiry-write-btn-container">
             <input
+              className="inquiry-write-btn"
               type="button"
-              value="질문등록"
+              value="등록하기"
               onClick={inquiryWriteAction}
               id="btn_inquiry_write_action"
             />
