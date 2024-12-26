@@ -47,7 +47,7 @@ public class AnswerRestController {
 	/* 답변 등록 */
 	@Operation(summary = "답변 등록")
 	@SecurityRequirement(name = "BearerAuth") // API 엔드포인트가 인증을 요구한다는 것을 문서화(Swagger에서 JWT인증을 명시
-	@PreAuthorize("hasRole('MENTEE')") // ROLE이 MENTEE인 사람만 접근 가능 멘토로 변경해야함
+	@PreAuthorize("hasRole('MENTOR')") // ROLE이 MENTEE인 사람만 접근 가능 멘토로 변경해야함
 	@PostMapping("{inquiryNo}")
 	// @Transactional
 	public ResponseEntity<Response> createAnswer(Authentication authentication, @RequestBody AnswerDto answerDto,

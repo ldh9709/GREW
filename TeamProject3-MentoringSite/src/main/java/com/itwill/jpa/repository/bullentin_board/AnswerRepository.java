@@ -108,7 +108,7 @@ public interface AnswerRepository extends JpaRepository<Answer, Long>{
     Page<Answer> searchAnswersByKeyword(@Param("search") String search, Pageable pageable);
     
     //질문의 답변 수
-    Long countByInquiry_InquiryNo(Long inquiryNo);
+    Long countByInquiry_InquiryNoAndAnswerStatus(Long inquiryNo, Integer answerStatus);
 
 
 

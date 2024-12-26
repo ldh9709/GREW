@@ -200,7 +200,7 @@ public class AnswerServiceImpl implements AnswerService {
 
 	@Override
 	public Long getAnswerCount(Long inquiryNo) {
-		Long answerCount = answerRepository.countByInquiry_InquiryNo(inquiryNo);
+		Long answerCount = answerRepository.countByInquiry_InquiryNoAndAnswerStatus(inquiryNo,1);
 		return answerCount;
 
 	}

@@ -3,6 +3,8 @@ import * as alarmApi from "../api/alarmApi";
 import "../css/styles.css";
 import { useNavigate } from "react-router-dom";
 import { useMemberAuth } from "../util/AuthContext";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faXmark } from "@fortawesome/free-solid-svg-icons";
 const Alarim = () => {
   const {token, member} = useMemberAuth();
   const [notifications, setNotifications] = useState([]);
@@ -94,7 +96,7 @@ const Alarim = () => {
                       deleteNotification(notification.alarmNo);
                     }}
                   >
-                    ×
+                    <FontAwesomeIcon icon={faXmark} />
                   </div>
                 </button>
               )}
