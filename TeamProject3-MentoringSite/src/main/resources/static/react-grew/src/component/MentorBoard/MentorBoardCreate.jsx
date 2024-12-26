@@ -38,18 +38,19 @@ function MentorBoardCreate() {
     const fetchCategory = async () => {
       try {
 
-        // 멘토권한 확인인
+        // 멘토권한 확인
         if (!member || member?.memberRole !== "ROLE_MENTOR") {
           alert("멘토만 게시글을 작성할 수 있습니다.");
           navigate(-1);
+          return; // 추가 동작 방지
         }
 
         // 프로필 정보 조회
         const response = await mentorProfileApi.getMentorProfileByMemberNo(memberNo);
 
-        // 카테고리 정보 조회
+        // 프로필 정보를 통해 카테고리 번호 조회
         if (response.status !== 2355 || !response.data?.categoryNo) {
-          setCategory("카테고리를 불러오지 못했습니다.");
+          setCategory("프로필 정보를 불러오지 못했습니다.");
           return;
         }
     
@@ -100,7 +101,7 @@ function MentorBoardCreate() {
       setMentorBoardTitle("");
       setMentorBoardContent("");
       setMentorBoardImage(null); // 이미지 상태 초기화
-      setImagePreview(""); // 미리보기 초기화
+      setImagePreview(DEFAULT_IMAGE_URL); // 미리보기 초기화
 
       // input[type="file"] 초기화
       if (fileInputRef.current) {
@@ -123,8 +124,7 @@ function MentorBoardCreate() {
   
     try {
       // 이미지 업로드 API 호출
-      const response = await mentorBoardApi.uploadMentorBoardImage(mentorBoardNo, formData);
-      console.log("업로드 응답:", response);  // 서버 응답 확인
+      await mentorBoardApi.uploadMentorBoardImage(mentorBoardNo, formData);
       alert("이미지 업로드가 완료되었습니다.");
     } catch (err) {
       console.error("이미지 업로드 실패:", err);  // 에러 메시지 출력
@@ -150,7 +150,7 @@ function MentorBoardCreate() {
   const handleCancel = () => {
     const shouldCancel = window.confirm("게시글 작성을 취소할까요?\n(작성된 내용은 사라집니다.)");
     if (shouldCancel) {
-      navigate(-1); // 이전 페이지로 이동
+      navigate(-1, { replace: true }); // 이전 페이지로 이동, 브라우저 기록 덮어쓰기
     }
   };
 
