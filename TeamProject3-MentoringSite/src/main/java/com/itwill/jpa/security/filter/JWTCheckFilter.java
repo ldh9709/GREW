@@ -47,9 +47,9 @@ public class JWTCheckFilter extends OncePerRequestFilter {
 //		|| path.startsWith("/review")
 //		|| path.equals("/inquiry") 
 //		|| path.startsWith("/inquiry/list")
-		|| path.startsWith("/inquiry/update")
+//		|| path.startsWith("/inquiry/update")
 		|| path.startsWith("/inquiry/increase")
-		|| path.startsWith("/inquiry/delete")
+//		|| path.startsWith("/inquiry/delete")
 		|| path.startsWith("/inquiry/view-count")
 		|| path.startsWith("/inquiry/search")
 		|| path.startsWith("/inquiry/find")
@@ -60,11 +60,12 @@ public class JWTCheckFilter extends OncePerRequestFilter {
 		|| path.endsWith("-vote")
 		|| path.endsWith("votes")
 		|| path.startsWith("/inquiry/answer-count")
-		|| path.startsWith("/answer/delete") 
+//		|| path.startsWith("/answer/delete") 
 		|| path.startsWith("/answer/accept") 
-		|| path.startsWith("/answer/update") 
+//		|| path.startsWith("/answer/update") 
 		|| path.startsWith("/answer/view") 
 		|| path.startsWith("/answer/re") 
+
 
 		|| path.startsWith("/mentor-profile/upload-image") 
 		|| path.startsWith("/mentor-profile/create-profile") 
@@ -77,6 +78,7 @@ public class JWTCheckFilter extends OncePerRequestFilter {
 		|| path.startsWith("/mentor-profile/follow-count") 
 		|| path.startsWith("/mentor-profile/activity-count") 
 		|| path.startsWith("/mentor-profile/mentor-rating") 
+
 		
 		|| path.startsWith("/mentor-board/upload-image") 
 		|| path.startsWith("/mentor-board/image-url") 
@@ -109,8 +111,8 @@ public class JWTCheckFilter extends OncePerRequestFilter {
 		|| path.startsWith("/main")
     	|| path.startsWith("/v3/api-docs") 
     	|| path.startsWith("/favicon.ico")
-    	|| path.startsWith("/mentor-profile")
-    	|| path.startsWith("/mentor-board")
+//    	|| path.startsWith("/mentor-profile")
+//    	|| path.startsWith("/mentor-board")
     	|| path.startsWith("/mentorprofile")
     	) {
       return true;

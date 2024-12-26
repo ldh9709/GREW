@@ -107,6 +107,7 @@ public interface MentorProfileRepository extends JpaRepository<MentorProfile, Lo
      Page<MentorProfile> findByOrderByMentorFollowCountDesc(Pageable pageable);
      Page<MentorProfile> findByOrderByMentorMentoringCountDesc(Pageable pageable);
      Page<MentorProfile> findByOrderByMentorActivityCountDesc(Pageable pageable);
+
      //12/24일 멘토 프로필 카테고리
   // MentorProfileRepository.java
      // 팔로우 순으로 소분류 카테고리별 멘토 리스트 조회
@@ -138,6 +139,10 @@ public interface MentorProfileRepository extends JpaRepository<MentorProfile, Lo
      
      @Query("SELECT c.categoryNo FROM Category c WHERE c.parentCategory.categoryNo = :parentCategoryNo")
      List<Long> findCategoryNosByParentCategoryNo(@Param("parentCategoryNo") Long parentCategoryNo);
+
+
+     //별점 순으로 리스트뽑기(우수멘토)
+     List<MentorProfile> findByOrderByMentorRatingDesc();
 
      
 }

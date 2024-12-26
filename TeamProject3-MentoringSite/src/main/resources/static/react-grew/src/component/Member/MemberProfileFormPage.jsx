@@ -25,12 +25,17 @@ const MemberProfileFormPage = () => {
 
     const { data } = response;
 
+    //기본 관심사 필터링
+    const filteredInterests = data.interests.filter(
+      (interest) => ![19, 20, 21].includes(interest.categoryNo) // categoryNo가 19, 20, 21이 아닌 항목만 필터링
+    );
+
     setMember({
       memberNo: data.memberNo,
       memberName: data.memberName,
       memberId: data.memberId,
       memberEmail: data.memberEmail,
-      interests: data.interests || [],
+      interests: filteredInterests || [],
     });
   };
 

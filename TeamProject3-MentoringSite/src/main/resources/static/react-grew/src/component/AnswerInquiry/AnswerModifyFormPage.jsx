@@ -1,9 +1,15 @@
 import React, { useEffect, useRef, useState } from "react";
 import * as answerApi from "../../api/answerApi";
 import { useNavigate, useParams } from "react-router-dom";
-import { getCookie } from "../../util/cookieUtil";
+import { useMemberAuth } from "../../util/AuthContext";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faEye } from "@fortawesome/free-regular-svg-icons";
+import * as inquiryApi from "../../api/inquiryApi";
+
 export default function AnswerModifyFormPage() {
-  const memberCookie = getCookie("member");
+
+  const { answerNo } = useParams();
+  const {token, member} = useMemberAuth();
   const modifyFormRef = useRef();
   const navigate = useNavigate();
   const initAnswer = {
@@ -12,7 +18,7 @@ export default function AnswerModifyFormPage() {
     answerDate: "",
     answerStatus: 1,
     answerAccept: 1,
-    memberNo: "",
+    memberNo: member.memberNo,
     inquiryNo: 1,
   };
   const initInquiry = {
@@ -29,8 +35,6 @@ export default function AnswerModifyFormPage() {
   };
   const [answer, setAnswer] = useState(initAnswer);
   const [inquiry, setInquiry] = useState(initInquiry);
-  const { answerNo } = useParams();
-
   // 질문 데이터 가져오는 함수
   useEffect(() => {
     const fetchInquiryData = async () => {
@@ -50,7 +54,7 @@ export default function AnswerModifyFormPage() {
     const a = async () => {
       const responseJsonObject = await answerApi.viewAnswer(answerNo);
       console.log(responseJsonObject.data);
-      if (memberCookie.memberNo != responseJsonObject.data.memberNo) {
+      if (member.memberNo != responseJsonObject.data.memberNo) {
         navigate("/403");
       }
       setAnswer(responseJsonObject.data);
@@ -65,42 +69,57 @@ export default function AnswerModifyFormPage() {
     });
   };
 
-  const answerModifyAction = async (e) => {
-    const responseJsonObject = await answerApi.updateAnswer(answer);
+  const answerModifyAction = async () => {
+    console.log('answer',answer)
+    const responseJsonObject = await answerApi.updateAnswer(answer,token);
     console.log(responseJsonObject);
     navigate(`/inquiry/${answer.inquiryNo}`);
   };
+
+  const answerRemoveAction = async () => {
+    try {
+      const confirmation = window.confirm('답변을 삭제하시겠습니까?')
+      if (!confirmation) return;
+    
+      const responseJsonObject = await answerApi.deleteAnswer(answerNo, token);
+      if (responseJsonObject.status === 6300) {
+        navigate("/inquiry");
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  };
+  
   return (
     <>
-      <link
-        href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap"
-        rel="stylesheet"
-      ></link>
-      <div className="inquiry-container">
-        <div>
-          <div className="inquiry-title">{inquiry.inquiryTitle}</div>
-        </div>
-        <div className="inquiry-desc">
-          <div>
-            {inquiry.memberName.slice(0, 1) + "*" + inquiry.memberName.slice(2)}{" "}
-            | 조회수 {inquiry.inquiryViews} |{" "}
-            {inquiry.inquiryDate.substring(0, 10)}
-          </div>
-          <br />
-          <div>{inquiry.categoryName}</div>
-        </div>
-        <br />
-        <br />
-        <div className="inquiry-content">
-          <div>{inquiry.inquiryContent}</div>
-        </div>
-
-        <br />
-      </div>
       <div>
+        <div style={{ paddingLeft: 10 }}>
+          <input type="hidden" name="inquiryNo" value={inquiry.inquiryNo} />
+
+          <div className="inquiry-container-inview">
+            <div className="inquiry-view-category">{inquiry.categoryName}</div>
+            <div className="inquiry-view-title">
+              <span>Q.</span>
+              <span>{inquiry.inquiryTitle}</span>
+            </div>
+            <div className="inquiry-view-desc">
+              <div>
+                {inquiry.memberName} 멘티ㆍ
+                {inquiry.inquiryDate.substring(0, 10)}ㆍ
+                <FontAwesomeIcon icon={faEye}/> {inquiry.inquiryViews}
+              </div>
+            </div>
+            <div className="inquiry-view-content">
+              {inquiry.inquiryContent}
+            </div>
+          </div>
+        </div>
+      </div>
+      <div className="inquiry-answer-form">
         <form ref={modifyFormRef} method="POST" className="inquiry-form">
           <div>
             <textarea
+              className="answer-textarea"
               name="answerContent"
               onChange={onChangeAnswerForm}
               value={answer.answerContent}
@@ -108,11 +127,19 @@ export default function AnswerModifyFormPage() {
               required
             />
           </div>
-          <div className="inquiry-write-btn">
+          <div className="answer-write-btn-container">
             <input
+              className="answer-write-btn"
               type="button"
               value="수정"
               onClick={answerModifyAction}
+              id="btn_answer_modify_action"
+            />
+            <input
+              className="answer-write-btn"
+              type="button"
+              value="삭제"
+              onClick={answerRemoveAction}
               id="btn_answer_modify_action"
             />
           </div>

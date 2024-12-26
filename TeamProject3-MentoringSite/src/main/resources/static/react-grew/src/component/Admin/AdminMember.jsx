@@ -1,21 +1,25 @@
 import { getCookie } from "../../util/cookieUtil";
+import { useMemberAuth } from "../../util/AuthContext"
 import React, { useEffect, useState } from 'react'
 import * as adminApi from '../../api/adminApi';
 
 
 function AdminMember() {
-    const memberCookie = getCookie("member");
-    const token = memberCookie.accessToken;
+    const { token } = useMemberAuth();
 
+
+    //1. 초기설정
     const [members,setMember] = useState([]);
-    //const [role, setRole] = useState("ROLE_MENTEE");  기본적으로 ROLE_MENTEE로 설정
+
+    //const [role, setRole] = useState("ROLE_MENTEE");  //기본적으로 ROLE_MENTEE로 설정 =>
     const [role, setRole] = useState("ALL"); // 기본적으로 ALL로 설정 (전체 회원 조회)
 
-    //목록 조회 함수
+    //2. 목록 조회 함수(adminApi를 불러옴)
     const fetchMembers = async (role,order) => {
         try {
             const response = await adminApi.adminMember(token,role,order);
             setMember(response.data);
+            console.log(response.data)
             console.log(response);
         } catch (error) {
             console.log('회원 목록 조회 실패', error);
@@ -55,7 +59,7 @@ function AdminMember() {
             {/* 드롭다운 */}
             <div className="dropdown">
                 <select onChange={handleRoleChange} value={role}>
-                <option value="ALL">ALL</option>  {/* 전체 회원 */}
+                {/*<option value="ALL">ALL</option>   전체 회원 */}
                     <option value="ROLE_MENTEE">MENTEE</option>  {/* 멘티 */}
                     <option value="ROLE_MENTOR">MENTOR</option>  {/* 멘토 */}
                     

@@ -2,6 +2,7 @@ package com.itwill.jpa.controller.member_information;
 
 import java.nio.charset.Charset;
 import java.security.Principal;
+import java.util.Base64;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -51,6 +52,8 @@ import com.itwill.jpa.service.member_information.MentorProfileService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.Parameter;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
@@ -60,7 +63,6 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping("/member")
 public class MemberRestController {
 	
-	private static final Role ROLE_MENTOR = null;
 	@Autowired
 	private MemberService memberService;
 	@Autowired
@@ -253,7 +255,7 @@ public class MemberRestController {
 	/***** 회원 정보 보기(토큰) *****/
 	@Operation(summary = "회원 정보 보기(토큰)")
 	@SecurityRequirement(name = "BearerAuth")//API 엔드포인트가 인증을 요구한다는 것을 문서화(Swagger에서 JWT인증을 명시
-	@PreAuthorize("hasRole('MENTEE') or hasRole('MENTOR') ")//ROLE이 MENTEE인 사람만 접근 가능
+	@PreAuthorize("hasRole('MENTEE') or hasRole('MENTOR') or hasRole('ADMIN') ")//ROLE이 MENTEE인 사람만 접근 가능
 	@GetMapping("/profile")
 	public ResponseEntity<Response> getMember(Authentication authentication) {
 		
@@ -377,7 +379,8 @@ public class MemberRestController {
 	@PutMapping("/update-role/{role}")
 	public ResponseEntity<Response> updateMemberRole(
 			Authentication authentication,
-			@PathVariable(name="role") String role
+			@PathVariable(name="role") String role,
+			HttpServletResponse res
 			){
 		
 		PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
@@ -396,6 +399,19 @@ public class MemberRestController {
 		httpHeaders.add("Authorization", "Bearer " + tokens.get("accessToken"));
 		httpHeaders.add("Refresh-Token", tokens.get("refreshToken"));
 		
+		//쿠키 설정
+		// 4. JSON 문자열 생성 후 Base64로 인코딩
+        String jsonValue = String.format("{\"accessToken\": \"%s\", \"refreshToken\": \"%s\"}", tokens.get("accessToken"), tokens.get("refreshToken"));
+        String encodedValue = Base64.getEncoder().encodeToString(jsonValue.getBytes());
+        
+        // 5. 쿠키 설정
+        Cookie cookie = new Cookie("member", encodedValue); // Base64로 인코딩된 값 저장
+        cookie.setHttpOnly(false); // JavaScript에서 접근 가능
+        cookie.setSecure(false); // HTTPS에서만 전송 (개발 환경에서는 false)
+        cookie.setPath("/");
+        cookie.setMaxAge(60 * 60 * 24); // 1일
+
+        res.addCookie(cookie);
 		response.setStatus(ResponseStatusCode.UPDATE_ROLE_SUCCESS);
 		response.setMessage(ResponseMessage.UPDATE_ROLE_SUCCESS);
 		response.setData(tokens);

@@ -36,7 +36,7 @@ function SearchList() {
       const fetchSearchResults = async () => {
         setLoading(true);
         try {
-          const response = await inquiryApi.searchInquiry(query, 1, 3); // API 호출
+          const response = await inquiryApi.searchInquiry(query, 0, 3); // API 호출
           console.log(response);
           console.log(query);
           setSearchResults(response.data.content); // 검색 결과 저장
@@ -74,7 +74,7 @@ function SearchList() {
       ></link>
       <div>
         <h1>검색 결과</h1>
-
+        <h2>질문 검색 결과</h2>
         {loading && <div>로딩 중...</div>}
         {error && <div>{error}</div>}
 
@@ -88,7 +88,7 @@ function SearchList() {
               )
             )}
             <div className="view-more">
-              <button onClick={handleViewMore}>더보기</button>
+              <button onClick={handleViewMore}>질문 검색 내용 더보기</button>
             </div>
           </div>
         ) : (

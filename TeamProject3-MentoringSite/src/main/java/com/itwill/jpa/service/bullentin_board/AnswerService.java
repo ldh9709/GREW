@@ -1,5 +1,7 @@
 package com.itwill.jpa.service.bullentin_board;
 
+import java.util.List;
+
 import org.springframework.data.domain.Page;
 
 import com.itwill.jpa.dto.bulletin_board.AnswerDto;
@@ -26,7 +28,7 @@ public interface AnswerService {
 	//최신순
 	Page<AnswerDto> getByCategoryAnswerOrderByDate(Long categoryNo,int pageNumber, int pageSize);
 	//최근3일간 상위추천 답변
-	Page<AnswerDto> getByAnswerOrderByVoteDate(int pageNumber, int pageSize);
+	List<AnswerDto> getByAnswerOrderByVoteDate();
 	
 	//내가 작성한 답변내역
 	Page<AnswerDto> getAnswerByMember(Long MemberNo, int pageNumber, int pageSize);

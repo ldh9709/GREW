@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react'
-import { getCookie } from "../../../util/cookieUtil"
+import { useMemberAuth } from "../../../util/AuthContext"
 import * as mentorBoardApi from '../../../api/mentorBoardApi'
 import imageSrc from '../mentor-content1.jpg'
 
 
 export default function MemberMentorContentList() {
-    const memberCookie = getCookie("member");
-    const token = memberCookie.accessToken;
+    /* Context에 저장된 토큰, 멤버정보 */
+    const { token, member } = useMemberAuth();
 
     const [boardList, setBoardList] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);

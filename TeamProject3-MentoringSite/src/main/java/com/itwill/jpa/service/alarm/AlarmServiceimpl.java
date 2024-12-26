@@ -9,15 +9,23 @@ import org.springframework.stereotype.Service;
 
 import com.itwill.jpa.dto.alarm.AlarmDto;
 import com.itwill.jpa.dto.bulletin_board.AnswerDto;
+import com.itwill.jpa.dto.bulletin_board.InquiryDto;
 import com.itwill.jpa.dto.chatting_review.ReviewDto;
 import com.itwill.jpa.dto.member_information.MentorBoardDto;
 import com.itwill.jpa.dto.report.ReportDto;
 import com.itwill.jpa.entity.alarm.Alarm;
 import com.itwill.jpa.entity.bullentin_board.Answer;
+import com.itwill.jpa.entity.bullentin_board.Inquiry;
+import com.itwill.jpa.entity.chatting_review.ChatRoom;
+import com.itwill.jpa.entity.chatting_review.Review;
+import com.itwill.jpa.entity.member_information.Member;
 import com.itwill.jpa.repository.alarm.AlarmRepository;
 import com.itwill.jpa.repository.bullentin_board.AnswerRepository;
+import com.itwill.jpa.repository.bullentin_board.InquiryRepository;
+import com.itwill.jpa.repository.chatting_review.ChatRoomRepository;
 import com.itwill.jpa.repository.chatting_review.ReviewRepository;
 import com.itwill.jpa.repository.member_information.FollowReporitory;
+import com.itwill.jpa.repository.member_information.MemberRepository;
 import com.itwill.jpa.repository.report.ReportRepository;
 
 @Service
@@ -32,6 +40,12 @@ public class AlarmServiceimpl implements AlarmService {
 	private ReviewRepository reviewRepository;
 	@Autowired
 	private ReportRepository reportRepository;
+	@Autowired
+	private InquiryRepository inquiryRepository;
+	@Autowired
+	private MemberRepository memberRepository;
+	@Autowired
+	private ChatRoomRepository chatRoomRepository;
 
 	// 알림등록
 	@Override
@@ -66,7 +80,12 @@ public class AlarmServiceimpl implements AlarmService {
 	public AlarmDto createAlarmByAnswerToInquiry(AnswerDto answerDto) {
 		AlarmDto alarmDto = new AlarmDto();
 		alarmDto.setReferenceNo(answerDto.getInquiryNo());
-		alarmDto.setAlarmContent("회원님의 질문에 답변이 달렸습니다");
+		Inquiry inquiry = inquiryRepository.findById(answerDto.getInquiryNo()).get();
+		String inquiryTitle = inquiry.getInquiryTitle();
+		if (inquiryTitle.length() > 10) {
+			inquiryTitle = inquiryTitle.substring(0, 10) + "..."; // 길이를 초과하면 '...' 추가
+		}
+		alarmDto.setAlarmContent("회원님의 질문" + inquiryTitle + "에 " + answerDto.getMemberName() + "멘토 님의 답변이 달렸습니다");
 		alarmDto.setAlarmType("answer");
 		alarmDto.setReferenceType("question");
 		alarmDto.setMemberNo(answerRepository.findByMemberNoByInquiryByAnswer(answerDto.getAnswerNo()));
@@ -78,12 +97,10 @@ public class AlarmServiceimpl implements AlarmService {
 	public List<AlarmDto> createAlarmsByMentorBoard(MentorBoardDto mentorBoardDto) {
 		List<AlarmDto> alarmDtos = new ArrayList<>();
 		List<Long> menteeList = followReporitory.findMenteeByMentor(mentorBoardDto.getMemberNo());
+		Member member = memberRepository.findById(mentorBoardDto.getMemberNo()).get();
 		for (Long menteeMemberNo : menteeList) {
-			AlarmDto alarmDto = AlarmDto.builder()
-					.alarmContent("팔로잉하는 멘토가 게시물을 등록했습니다.")
-					.alarmType("follower")
-					.referenceType("mentorBoard")
-					.referenceNo(mentorBoardDto.getMentorBoardNo())
+			AlarmDto alarmDto = AlarmDto.builder().alarmContent(member.getMemberName() + " 멘토가 게시물을 등록했습니다.")
+					.alarmType("follower").referenceType("mentorBoard").referenceNo(mentorBoardDto.getMentorBoardNo())
 					.memberNo(menteeMemberNo).build();
 			alarmRepository.save(Alarm.toEntity(alarmDto));
 			alarmDtos.add(alarmDto);
@@ -95,8 +112,11 @@ public class AlarmServiceimpl implements AlarmService {
 	@Override
 	public AlarmDto createAlarmByReview(Long reviewNo) {
 		AlarmDto alarmDto = new AlarmDto();
+		Review review = reviewRepository.findById(reviewNo).get();
+		ChatRoom chatRoom = chatRoomRepository.findById(review.getChatRoom().getChatRoomNo()).get();
+
 		alarmDto.setReferenceNo(reviewNo);
-		alarmDto.setAlarmContent("멘티님이 리뷰를 달았습니다.");
+		alarmDto.setAlarmContent(chatRoom.getMentee().getMemberName() + " 멘티님이 리뷰를 달았습니다.");
 		alarmDto.setAlarmType("mentee");
 		alarmDto.setReferenceType("review");
 		alarmDto.setMemberNo(reviewRepository.findMentorNoByReviewNo(reviewNo));
@@ -112,7 +132,8 @@ public class AlarmServiceimpl implements AlarmService {
 		alarmDto.setMemberNo(reportRepository.findByReportNo(reportNo).getMember().getMemberNo());
 		return AlarmDto.toDto(alarmRepository.save(Alarm.toEntity(alarmDto)));
 	}
-	//팔로우 시 멘토에게 팔로워 증가 알림
+
+	// 팔로우 시 멘토에게 팔로워 증가 알림
 	@Override
 	public AlarmDto createAlarmByFollowByMentor(Long MentorMemberNo) {
 		AlarmDto alarmDto = new AlarmDto();
@@ -121,29 +142,40 @@ public class AlarmServiceimpl implements AlarmService {
 		alarmDto.setMemberNo(MentorMemberNo);
 		return AlarmDto.toDto(alarmRepository.save(Alarm.toEntity(alarmDto)));
 	}
-	//추천시 답변 작성자에게 추천 증가 알림
+
+	// 추천시 답변 작성자에게 추천 증가 알림
 	@Override
 	public AlarmDto createAlarmByVoteByMentor(Long answerNo) {
 		AlarmDto alarmDto = new AlarmDto();
 		Answer answer = answerRepository.findById(answerNo).get();
-			alarmDto.setAlarmContent("회원님의 답변에 추천이 달렸습니다");
-			alarmDto.setAlarmType("vote");
-			alarmDto.setMemberNo(answer.getMember().getMemberNo());
-			alarmDto.setReferenceNo(answer.getInquiry().getInquiryNo());
-			alarmDto.setReferenceType("question");
-			return AlarmDto.toDto(alarmRepository.save(Alarm.toEntity(alarmDto)));
+		String inquiryTitle = answer.getInquiry().getInquiryTitle();
+		String answerContent = answer.getAnswerContent();
+		if(answerContent.length()>10) {
+			answerContent =answerContent.substring(0,10)+"...";
+		}
+		if (inquiryTitle.length() > 10) {
+			inquiryTitle = inquiryTitle.substring(0, 10) + "..."; // 길이를 초과하면 '...' 추가
+		}
+		alarmDto.setAlarmContent("질문'" + inquiryTitle + "'에 대한 회원님의 답변'"+answerContent+"'에 추천이 달렸습니다");
+		alarmDto.setAlarmType("vote");
+		alarmDto.setMemberNo(answer.getMember().getMemberNo());
+		alarmDto.setReferenceNo(answer.getInquiry().getInquiryNo());
+		alarmDto.setReferenceType("question");
+		return AlarmDto.toDto(alarmRepository.save(Alarm.toEntity(alarmDto)));
 	}
-	//멤버한명의 알림 출력
+
+	// 멤버한명의 알림 출력
 	@Override
 	public List<AlarmDto> findAlarmByMember(Long memberNo) {
-		
+
 		List<AlarmDto> alarmDtoList = new ArrayList<>();
 		List<Alarm> alarmList = alarmRepository.findByMember_MemberNo(memberNo);
 		for (Alarm alarm : alarmList) {
-	        alarmDtoList.add(AlarmDto.toDto(alarm));
-	    }
+			alarmDtoList.add(AlarmDto.toDto(alarm));
+		}
 		return alarmDtoList;
 	}
+
 	// 알림 클릭시 URl전송
 	@Override
 	public String alarmRedirectURL(AlarmDto alarmDto) {
@@ -159,8 +191,5 @@ public class AlarmServiceimpl implements AlarmService {
 			throw new IllegalArgumentException("Unknown reference type");
 		}
 	}
-
-
-	
 
 }
