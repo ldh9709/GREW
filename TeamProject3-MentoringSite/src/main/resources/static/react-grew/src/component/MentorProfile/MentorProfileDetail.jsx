@@ -63,7 +63,9 @@ export default function MentorProfileDetail() {
             <h2>{mentorProfile?.memberName || "회원 이름 없음"}</h2>
             <p>{mentorProfile?.mentorCareer || "멘토 경력 정보 없음"}</p>
             <div className="mentor-stats">
-              <span>멘토링 성공률: 72%</span>
+                    멘토링 성공률: {mentorProfile?.mentorActivityCount 
+                                   ? Math.round(mentorProfile.mentorMentoringCount / mentorProfile.mentorActivityCount * 100)
+                                 : 0}%
               <span>멘토링 횟수: {mentorProfile?.mentorMentoringCount || 0}</span>
               <span>팔로워: {mentorProfile?.mentorFollowCount || 0}</span>
             </div>

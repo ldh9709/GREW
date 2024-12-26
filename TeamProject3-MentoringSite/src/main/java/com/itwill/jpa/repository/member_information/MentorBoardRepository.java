@@ -80,5 +80,5 @@ public interface MentorBoardRepository extends JpaRepository<MentorBoard, Long> 
     Page<MentorBoard> findByStatusAndSortedByViews(@Param("status") int status, Pageable pageable);
    
 }
-    
+    	
   
