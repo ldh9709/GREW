@@ -26,22 +26,6 @@ export const adminInquiry = async(token, category, page, size) => {
   return responseJsonObject;
 }
 
-{/*/chatroom/list?page=${page}&size=${size} =->19행수정 필요必要
-export const adminReport = async (token,page,size) => {
-   const response = await fetch(`${BACKEND_SERVER}/ /list?page=${page}&size=${size}`, {
-      method: 'GET',
-      headers: {
-         'Authorization': `Bearer ${token}`, // 전달받은 JWT 토큰 사용
-         'Content-Type': 'application/json'
-      }
-   });
-   const responseJsonObject= await response.json();
-   return responseJsonObject;
-}
-*/} 
-
-
-
 // 관리자 - 신고 목록 조회
 export const getAdminReportList = async (token, filter,page) => {
     const response = await fetch(`${BACKEND_SERVER}/admin/report?filter=${filter}&page=${page}&size=10`,{

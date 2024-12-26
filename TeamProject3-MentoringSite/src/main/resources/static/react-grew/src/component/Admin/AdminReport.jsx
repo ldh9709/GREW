@@ -1,59 +1,72 @@
-import { getCookie } from "../../util/cookieUtil";
 import React, { useEffect, useState } from 'react';
 import * as adminApi from '../../api/adminApi';
+import { getCookie } from "../../util/cookieUtil";
 
 export const UserCard = () => {
     const memberCookie = getCookie("member");
     const token = memberCookie.accessToken;
 
-    const [reports,setReport] = useState([]);//초기설정
-  
-    const fetchReports = async (token,filter,page) => {//fetct 목록 조회 함수 생성
-        try {
-            const response = await adminApi.getAdminReportList(token,filter,0);
-            setReport(response.data);
-            console.log(response);
-            console.log(response.data);            
-        } catch (error) {
-            console.log('신고 목록 조회 실패', error);
-        }
-    };  
-    
-    useEffect(() => {
-        if (token) {  // token이 있을 경우에만 실행
-            fetchReports(token, 1);  // 1번 필터링을 예시로 사용
-        }
-    }, [token]);  // token이 변경될 때마다 실행
+    const [reports, setReports] = useState([]); // 신고 목록
+    const [filter, setFilter] = useState(1); // 초기 필터 상태 (1: 전체)
+    const [page, setPage] = useState(0); // 페이지 번호
 
-    /*
-    신고 접수 흐름
-    1. 신고타켓번호를 통해 신고 내용을 확인하러감
-    2. '접수' 버튼 클릭 1) 신고처리완료
-                          2)무고처리
-  */
+    // 신고 목록 조회
+    const fetchReports = async (token, filter, page) => {
+        try {
+            const response = await adminApi.getAdminReportList(token, filter, page);
+            setReports(response.data);
+            console.log(response);
+        } catch (error) {
+            console.error("신고 목록 조회 실패", error);
+        }
+    };
+
+    // 필터 변경 핸들러
+    const handleFilterChange = (event) => {
+        const selectedFilter = parseInt(event.target.value, 10); // 드롭다운에서 선택된 필터 값
+        setFilter(selectedFilter);
+        fetchReports(token, selectedFilter, page); // 선택된 필터 값에 맞는 신고 목록 조회
+    };
+
+    useEffect(() => {
+        if (token) {
+            fetchReports(token, filter, page); // 초기 데이터 로드
+        }
+    }, [token, filter, page]);
 
     return (
-        <div className="admin-member-container">  
+        <div className="admin-member-container">
+            {/* 드롭다운 */}
+            <div className="dropdown">
+                <select onChange={handleFilterChange} value={filter}>
+                    <option value={1}>전체보기</option>
+                    <option value={2}>접수순서</option>
+                    {/*<option value={3}>처리 완료</option>
+                    <option value={4}>무고 처리</option>*/}
+                </select>
+            </div>
+
+            {/* 신고 목록 테이블 */}
             <table className="member-table">
                 <thead>
                     <tr>
                         <th>신고번호</th>
-                        <th>타켓타입</th>
-                        <th>신고타켓번호</th>
-                        <th>신고타입</th>
-                        <th>신고내용</th>
-                        <th>신고일자</th>
-                        <th>처리일자</th>
-                        <th>신고상태</th>
+                        <th>타겟 타입</th>
+                        <th>신고 타겟 번호</th>
+                        <th>신고 타입</th>
+                        <th>신고 내용</th>
+                        <th>신고 일자</th>
+                        <th>처리 일자</th>
+                        <th>신고 상태</th>
                         <th>신고자</th>
-                        <th>처리상황</th>
+                        <th>처리 상황</th>
                     </tr>
                 </thead>
                 <tbody>
                     {reports && reports.length > 0 ? (
                         reports.map((report, index) => (
                             <tr key={index}>
-                                <td>{index+1}</td>
+                                <td>{index + 1}</td>
                                 <td>{report.reportType}</td>
                                 <td>{report.reportTarget}</td>
                                 <td>{report.reportReason}</td>
@@ -73,9 +86,9 @@ export const UserCard = () => {
                         </tr>
                     )}
                 </tbody>
-
             </table>
         </div>
     );
-};    
+};
+
 export default UserCard;
