@@ -2,6 +2,9 @@ import React, { useEffect, useRef, useState } from "react";
 import * as answerApi from "../../api/answerApi";
 import { useNavigate, useParams } from "react-router-dom";
 import { useMemberAuth } from "../../util/AuthContext";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faEye } from "@fortawesome/free-regular-svg-icons";
+
 export default function AnswerWriteFormPage() {
   const {token, member} = useMemberAuth();
   const writeFormRef = useRef();
@@ -69,38 +72,37 @@ export default function AnswerWriteFormPage() {
   return (
     <>
       <div className="inquiry-container-inview">
-        <div>
-          <div className="inquiry-title">{inquiry.inquiryTitle}</div>
+        <div className="inquiry-view-category">{inquiry.categoryName}</div>
+        <div className="inquiry-view-title">
+          <span>Q.</span>
+          <span>{inquiry.inquiryTitle}</span>
         </div>
-        <div className="inquiry-desc">
+        <div className="inquiry-view-desc">
           <div>
-            {inquiry.memberName} | 조회수 {inquiry.inquiryViews} |{" "}
-            {inquiry.inquiryDate.substring(0, 10)}
+            {inquiry.memberName} 멘티ㆍ
+            {inquiry.inquiryDate.substring(0, 10)}ㆍ
+            <FontAwesomeIcon icon={faEye}/> {inquiry.inquiryViews}
           </div>
-          <div>{inquiry.categoryName}</div>
         </div>
-        <div className="inquiry-content">
-          <div>{inquiry.inquiryContent}</div>
+        <div className="inquiry-view-content">
+          {inquiry.inquiryContent}
         </div>
-
       </div>
 
       <div>
         <form ref={writeFormRef}  className="inquiry-form">
           <div>
-            <div>답변등록</div>
-          </div>
-          <div>
             <textarea
               name="answerContent"
               onChange={onChangeAnswerForm}
               value={answer.answerContent}
-              placeholder="내용을 입력하세요"
+              placeholder="답변을 입력해주세요."
               required
             />
           </div>
-          <div className="inquiry-write-btn">
+          <div className="answer-write-btn-container">
             <input
+              className="answer-write-btn"
               type="button"
               value="답변등록"
               onClick={answerWriteAction}
