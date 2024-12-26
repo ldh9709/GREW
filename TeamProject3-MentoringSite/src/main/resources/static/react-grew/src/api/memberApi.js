@@ -117,8 +117,8 @@ export const mentorJoinAction = async (member, tempCode) => {
 
 //멘토 프로필 생성(생성)
 export const mentorProfileCreateAction = async (memberNo, mentor) => {
-    console.log("Request Data: ", memberNo);
-    console.log("Request Data: ", mentor);
+    console.log("mentorProfileCreateAction memberNo: ", memberNo);
+    console.log("mentorProfileCreateAction mentor: ", mentor);
     const response = await fetch(`${BACKEND_SERVER}/mentor-profile/${memberNo}/create-profile`, {
         method:'POST', 
         headers:{
@@ -141,8 +141,8 @@ export const mentorProfileCreateAction = async (memberNo, mentor) => {
 
 //멘토 프로필 생성(수정)
 export const mentorProfileUpdateAction = async (mentorProfileNo, mentor) => {
-    console.log("Request Data: ", mentorProfileNo);
-    console.log("Request Data: ", mentor);
+    console.log("mentorProfileUpdateAction mentorProfileNo: ", mentorProfileNo);
+    console.log("mentorProfileUpdateAction mentor: ", mentor);
     const response = await fetch(`${BACKEND_SERVER}/mentor-profile/${mentorProfileNo}`, {
         method:'PUT', 
         headers:{
@@ -284,6 +284,7 @@ export const mentorSummary = async (token) => {
     const responseJsonObject = await response.json();
     return responseJsonObject;
 }
+
 //멤버 넘버로 멤버객체찾기
 export const getMemberByMemberNo = async (memberNo) => {
 
@@ -296,3 +297,17 @@ export const getMemberByMemberNo = async (memberNo) => {
     const responseJsonObject = await response.json();
     return responseJsonObject;
 }
+
+
+export const uploadMentorProfileImage = async (mentorProfileNo, file) => {
+    const formData = new FormData();
+    formData.append("file", file);
+  
+    const response = await fetch(`${BACKEND_SERVER}/mentor-profile/${mentorProfileNo}/upload-image`, {
+      method: "POST",
+      body: formData,
+    });
+  
+    const responseJson = await response.json();
+    return responseJson;
+  };

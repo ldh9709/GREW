@@ -12,10 +12,13 @@ const MentorJoinForm = () => {
   const token = auth?.token || null; // 사용자 인증 토큰
   const member = auth?.member || {}; // 사용자 관련 정보 객체
   const mentorProfileNo = token ? member.mentorProfileNo : null; // 사용자 멘토 프로필 번호
+  const [mentorImage, setMentorImage] = useState(null); // 이미지 파일
   /***** Context 가져오기 END *****/
 
-  /* 네비게이트 */
+
+  /***** 네비게이트 *****/
   const navigate = useNavigate();
+
 
   /**** 멘토 선언 START ****/
   const [mentor, setMentor] = useState({
@@ -26,11 +29,14 @@ const MentorJoinForm = () => {
   });
   /**** 멘토 선언 END ****/
 
+
   /**** 카테고리 선언 START ****/
   const [categories, setCategories] = useState([]);
-  // selectedParent / selectedChild
+
+  //selectedParent / selectedChild
   const [selectedParent, setSelectedParent] = useState("");
   const [selectedChild, setSelectedChild] = useState("");
+
   /**** 카테고리 선언 END ****/
 
   /********** 경력 관련 메소드 START ***********/
@@ -119,33 +125,65 @@ const MentorJoinForm = () => {
 
   /***** 멘토 생성 버튼 START *****/
   const mentorProfileCreateAction = async () => {
-    let responseJsonObject;
-    // mentorProfileNo === 0 이면 새로 생성, 아니면 업데이트
-    if (mentorProfileNo === 0) {
-      responseJsonObject = await memberApi.mentorProfileCreateAction(
-        member.memberNo,
-        mentor
-      );
-    } else {
-      responseJsonObject = await memberApi.mentorProfileUpdateAction(
-        mentorProfileNo,
-        mentor
-      );
+    if (!mentor.categoryNo || !mentor.mentorIntroduce.trim()) {
+      alert("필수 항목을 모두 입력해주세요.");
+      return;
     }
-
-    switch (responseJsonObject.status) {
-      case responseStatus.CREATED_MENTOR_PROFILE_SUCCESS_CODE:
-      case responseStatus.UPDATE_MENTOR_PROFILE_SUCCESS_CODE:
-        alert("멘토 가입 성공");
+  
+    try {
+      // Step 1: 멘토 프로필 생성
+      const responseJsonObject =
+        mentorProfileNo === 0
+          ? await memberApi.mentorProfileCreateAction(member.memberNo, mentor)
+          : await memberApi.mentorProfileUpdateAction(mentorProfileNo, mentor);
+  
+      if (
+        responseJsonObject.status === responseStatus.CREATED_MENTOR_PROFILE_SUCCESS_CODE ||
+        responseJsonObject.status === responseStatus.UPDATE_MENTOR_PROFILE_SUCCESS_CODE
+      ) {
+        alert("멘토 프로필 생성 성공!");
+  
+        // Step 2: 생성된 프로필 번호 확인
+        const createdProfileNo = responseJsonObject.data.mentorProfileNo;
+        console.log("createdProfileNo : ", createdProfileNo);
+        // Step 3: 이미지 업로드 (필수 이미지가 있다면)
+        if (mentorImage) {
+          await uploadImage(createdProfileNo); // 생성된 번호로 이미지 업로드
+        } else {
+          alert("이미지 없이 멘토 프로필이 저장되었습니다.");
+        }
+  
+        // 완료 후 페이지 이동
         navigate("/member/profile");
-        break;
-      default:
-        alert("가입 실패");
-        break;
+      } else {
+        alert("멘토 프로필 생성 실패");
+      }
+    } catch (error) {
+      console.error("프로필 생성 중 오류 발생:", error);
+      alert("프로필 생성 중 오류가 발생했습니다.");
     }
   };
   /***** 멘토 생성 버튼 END *****/
+  
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    setMentorImage(file);
+  }
 
+  const uploadImage= async (mentorProfileNo) => {
+
+    if(!mentorImage) {
+      alert("이미지를 선택해주세요.");
+      return;
+    }
+
+    const response = await memberApi.uploadMentorProfileImage(mentorProfileNo, mentorImage);
+    console.log("이미지 업로드 response : ", response);
+
+    alert("이미지 업로드 성공");
+
+  }
+  
   return (
     <div className="mentor-join-container">
       <h1 className="form-title">회원가입</h1>
@@ -248,11 +286,11 @@ const MentorJoinForm = () => {
             className="form-group-profileImage"
             id="profileImage"
             name="profileImage"
+            onChange={handleImageChange}
             accept="image/*"
             required
           />
         </div>
-
         {/* 제출 버튼 */}
         <button
           type="button"
