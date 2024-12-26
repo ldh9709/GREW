@@ -151,7 +151,7 @@ function InquiryView() {
         <div className="inquiry-container-inview">
           <div className="inquiry-view-category">{inquiry.categoryName}</div>
           <div className="inquiry-view-title">
-            <span>Q.</span>
+            <span className="inquiry-q-span">Q. </span>
             <span>{inquiry.inquiryTitle}</span>
           </div>
           <div className="inquiry-view-desc">
@@ -165,7 +165,7 @@ function InquiryView() {
             {inquiry.inquiryContent}
           </div>
           {member != null && member.memberNo == inquiry.memberNo ? (
-            <div className="modify-delete-btn2">
+            <div className="modify-delete-btn">
               <button onClick={handleModify}>수정</button>
 
               <button
@@ -251,7 +251,7 @@ function InquiryView() {
 
       {/* 페이지네이션 버튼 */}
       {/* 페이지네이션 버튼 */}
-      <div className="pagenation">
+      <div className="pagenation1">
         {startPage > 1 && (
           <button onClick={() => paginate(startPage - 1)}>이전</button>
         )}{" "}
@@ -260,10 +260,7 @@ function InquiryView() {
           <button
             key={number}
             onClick={() => paginate(number)}
-            style={{
-              backgroundColor: number === currentPage ? "#006618" : "",
-              color: number === currentPage ? "white" : "",
-            }}
+            className={`${number === currentPage ? 'pagenation-btn-active ' : 'pagenation-btn'}`}
           >
             {number}
           </button>

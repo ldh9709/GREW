@@ -302,7 +302,7 @@ function InqiuryList() {
         </div>
       </div>
       {/* 페이지네이션 버튼 */}
-      <div className="pagenation">
+      <div className="pagenation1">
         {startPage > 1 && (
           <button onClick={() => paginate(startPage - 1)}>이전</button>
         )}{" "}
@@ -311,10 +311,7 @@ function InqiuryList() {
           <button
             key={number}
             onClick={() => paginate(number)}
-            style={{
-              backgroundColor: number === currentPage ? "#006618" : "",
-              color: number === currentPage ? "white" : "",
-            }}
+            className={`${number === currentPage ? 'pagenation-btn-active ' : 'pagenation-btn'}`}
           >
             {number}
           </button>
