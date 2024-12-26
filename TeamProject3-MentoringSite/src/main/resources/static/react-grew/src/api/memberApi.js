@@ -17,6 +17,17 @@ GET  /member/mentor-summary/{memberNo}      :멘토 회원 활동정보 요약 �
 */
 
 //아이디 중복 체크
+export const checkIdDupl = async (sendJsonObject) => {
+    const response = await fetch(`${BACKEND_SERVER}/member/check-memberId`, {
+        method:'GET',
+        headers: {
+            'Content-type': 'application/json'
+        },
+    });
+    
+    const responseJsonObject = await response.json();
+    return responseJsonObject;
+};
 
 //팔로잉 리스트 조회
 export const followList = async()=>{
@@ -47,7 +58,7 @@ export const loginAction = async (sendJsonObject) => {
     return response.data;
 }
 //로그아웃
-export const logout = async (token) => {
+export const logout = async () => {
     const response = await fetch(`${BACKEND_SERVER}/logout`, {
         method: 'POST',
         credentials: 'include',// 브라우저가 자동으로 쿠키를 포함하도록 설정

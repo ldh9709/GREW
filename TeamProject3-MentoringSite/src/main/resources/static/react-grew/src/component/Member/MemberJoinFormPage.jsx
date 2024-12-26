@@ -30,11 +30,23 @@ export const MemberJoinFormPage = () => {
   });
   //이메일 발송 코드
   const [tempCode, setTempCode] = useState("");
+  //아이디 중복
+  const [isIdAvailable, setIsIdAvailable] = useState(null); // 중복 여부 상태
+
+  const checkIdDupl = async () => {
+    const response = await memberApi.checkIdDupl({ memberId: member.memberId });
+    if (response?.status === responseStatus.CREATED_MEMBER_FAIL) {
+      setMemberIdError("사용 불가능한 아이디입니다.");
+      setIsIdAvailable(false);
+    } else {
+      setMemberIdError("");
+      setIsIdAvailable(true);
+    }
+  }
 
   // 입력 필드 업데이트 핸들러
   const handleChangeJoinForm = (e) => {
     setMember({ ...member, [e.target.name]: e.target.value });
-    
     /* 아이디 유효성 검사 */
     if (e.target.name === "memberId") {
       if (e.target.value.length < 3 || e.target.value.length > 15) {
@@ -206,6 +218,7 @@ export const MemberJoinFormPage = () => {
                 name="memberId"
                 placeholder="아이디를 입력하세요"
                 onChange={handleChangeJoinForm}
+                onBlur={checkIdDupl}
                 required
             />
         <p className={`member-form-join-check ${memberIdError ? "visible" : ""}`}>
