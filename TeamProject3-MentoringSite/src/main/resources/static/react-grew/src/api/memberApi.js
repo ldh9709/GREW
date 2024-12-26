@@ -6,6 +6,7 @@ GET  /member/check-memberId                 :아이디 중복 체크
 POST /member                                :회원 가입
 AXIOS/login                                 :로그인
 POST /logout                                :로그아웃
+POST /member/find-password                  :비밀번호 찾기
 PUT  /member/{memberNo}                     :회원 정보 수정
 PUT  /member/{memberNo}/status/{statusNo}   :회원 상태 변경
 PUT  /member/update-role/{role}             :회원 권한 변경
@@ -69,7 +70,21 @@ export const logout = async () => {
     console.log("로그아웃 시 반환객체 : ",response);
     return response.url;
 };
-  
+
+export const findPassword = async (member) => {
+    const response = await fetch(`${BACKEND_SERVER}/logout`, {
+        method: 'POST',
+        headers: {
+           'Content-Type': 'application/json'
+        },
+        body:JSON.stringify({
+            memberDto : member,
+        })
+    });
+    const resultJsonObject = await response.json();
+    console.log("Response Data:", resultJsonObject);
+    return resultJsonObject;
+}
 
 //멘티 회원가입
 export const menteeJoinAction = async (member, tempCode) => {
