@@ -1,11 +1,11 @@
 /* 리뷰 작성 페이지 스타일 */
 .review-form-container {
-  padding: 20px;
+  padding: 10px 20px 40px 20px;
   max-width: 600px;
   margin: 0 auto;
   background-color: #fff;
+  border: 1px solid #ccc;
   border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   font-family: "Noto Sans KR", sans-serif;
 }
 
@@ -15,11 +15,15 @@
   font-weight: bold;
   margin-bottom: 20px;
 }
-
-.review-form input,
+.review-title{
+  width:100% ; height: 35px;
+  margin-bottom: 20px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 1rem;
+}
 .review-form textarea {
   width: 100%;
-  padding: 12px;
   margin-bottom: 20px;
   border: 1px solid #ddd;
   border-radius: 5px;
@@ -32,17 +36,21 @@
 
 .review-form label {
   font-size: 1.1rem;
-  margin-bottom: 10px;
+  text-align: center;
   display: block;
 }
-
+.review-write-btn{
+  position: relative;
+}
 .review-write-btn input {
-  width: 100%;
-  padding: 15px;
+  position: absolute;
+  width: 30%;
+  bottom: -30px; right: -5px;
+  padding: 10px 8px;
   background-color: #28a745;
   border: none;
   border-radius: 5px;
-  font-size: 1.2rem;
+  font-size: 16px;
   font-weight: bold;
   color: white;
   cursor: pointer;
@@ -54,14 +62,14 @@
 
 /* 별점 스타일 */
 .stars {
+  width: 100%;
   font-size: 2rem;
   display: flex;
-  justify-content: space-between;
-  max-width: 250px;
-  margin: 10px 0;
+  justify-content: center;
 }
 
 .star {
+  margin: 0 2px;
   cursor: pointer;
   color: #ddd; /* 기본 회색 */
 }
@@ -124,13 +132,4 @@
 
 .review-detail .star.filled {
   color: #f39c12; /* 채워진 별은 노란색 */
-}
-
-/* 별점 표시 */
-.stars {
-  font-size: 2rem;
-  display: flex;
-  justify-content: space-between;
-  max-width: 250px;
-  margin: 10px 0;
 }

@@ -325,6 +325,7 @@ public class MentorProfileServiceImpl implements MentorProfileService {
             mentorProfile.setMentorCareer(mentorProfileDto.getMentorCareer());
             mentorProfile.setMentorIntroduce(mentorProfileDto.getMentorIntroduce());
             mentorProfile.setMentorImage(mentorProfileDto.getMentorImage());
+            System.out.println(">>>>> updateMentorProfile : " + mentorProfileDto.getMentorImage());
             mentorProfile.setCategory(category); // 카테고리 설정
             
             // 🔥 저장

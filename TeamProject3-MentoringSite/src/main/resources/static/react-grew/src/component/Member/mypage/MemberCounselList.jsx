@@ -4,11 +4,12 @@ import image from '../../../image/images.jpeg'
 import * as chattingApi from '../../../api/chattingApi'
 import * as memberApi from '../../../api/memberApi'
 import * as reviewApi from '../../../api/reviewApi'
+import { useNavigate } from "react-router-dom"
 
 export default function MemberCounselList() {
     /* Context에 저장된 토큰, 멤버정보 */
-    const { token, member } = useMemberAuth();
-
+  const { token, member } = useMemberAuth();
+  const navigate = useNavigate();
   const [counselList, setCounselList] = useState([{}]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
@@ -63,10 +64,6 @@ export default function MemberCounselList() {
     }
   }
 
-    //리뷰 작성 여부 확인
-    const fetchReview = async () => {
-    }
-
     const counselStatus = (status) => {
       switch (status) {
         case 7000:
@@ -88,7 +85,12 @@ export default function MemberCounselList() {
           return "관리 종료 ";
           break;
       }
-    }
+  }
+  
+  //
+  const handleReview = () => {
+    navigate(`/review/reviewWrite`);
+  }
 
     useEffect(() => {
       fetchCounselList(currentPage - 1);
@@ -124,9 +126,8 @@ export default function MemberCounselList() {
                     </p>
                   </div>
                   <button
-                    className={`review-button ${counsel.chatRoomStatus === 7200 ? "active" : ""
-                      }`}
-                    // onClick={}
+                    className={`review-button ${counsel.chatRoomStatus === 7200 ? "active" : ""}`}
+                    onClick={handleReview}
                   >
                     리뷰 작성
                   </button>
