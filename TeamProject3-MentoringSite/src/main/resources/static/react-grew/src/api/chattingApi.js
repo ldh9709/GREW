@@ -15,7 +15,7 @@ export const listChatRoom = async (token, page, size) => {
 };
 
 export const activeListChatRoom = async (token,page,size) => {
-  const response = await fetch(`${BACKEND_SERVER}/chatroom/activeList?page=${page}&size=${size}`, {
+  const response = await fetch(`${BACKEND_SERVER}/chatroom/list/active?page=${page}&size=${size}`, {
      method: "GET",
      headers: {
       'Content-Type': 'application/json',
@@ -27,7 +27,7 @@ export const activeListChatRoom = async (token,page,size) => {
 };
 
 export const waitListChatRoom = async (token,page,size) => {
-  const response = await fetch(`${BACKEND_SERVER}/chatroom/waitList?page=${page}&size=${size}`, {
+  const response = await fetch(`${BACKEND_SERVER}/chatroom/list/wait?page=${page}&size=${size}`, {
      method: "GET",
      headers: {
       'Content-Type': 'application/json',
