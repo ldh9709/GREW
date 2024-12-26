@@ -78,19 +78,34 @@ export default function MemberInquiryAnswerList() {
                         </tr>
                     </thead>
                     <tbody>
-                        {/* 질문 리스트 map으로 반복 */}          
-                        {dataList.map((inquiry,index) => (
-                            <tr key={index} onClick={() => {
-                                navigate(`/inquiry/${inquiry.inquiryNo}`)
-                            }}>
-                                <td className="col-no">{index+1}</td>
+                        {/* 질문 리스트 map으로 반복 */}
+                        {dataList && dataList.length > 0 ? (
+                            dataList.map((inquiry, index) => (
+                            <tr
+                                key={index}
+                                onClick={() => {
+                                navigate(`/inquiry/${inquiry.inquiryNo}`);
+                                }}
+                            >
+                                <td className="col-no">{index + 1}</td>
                                 <td className="col-category">{inquiry.parentsCategoryName}</td>
                                 <td className="col-title">{inquiry.inquiryTitle}</td>
-                                <td className="col-date">{inquiry.inquiryDate.substring(0,10)}</td>
+                                {inquiry.inquiryDate ? (
+                                    <td className="col-date">{inquiry.inquiryDate.substring(0, 10)}</td>
+                                ) : (
+                                     <td>-</td>       
+                                )}
                                 <td className="col-views">{inquiry.inquiryViews}</td>
                             </tr>
-                        ))} 
-                    </tbody>
+                            ))
+                        ) : (
+                            <tr>
+                            <td colSpan="5" style={{ textAlign: "center" }}>
+                                질문내용이 없습니다
+                            </td>
+                            </tr>
+                        )}
+                        </tbody>
                 </table>
             ):(
                 <table className="list-table">
@@ -104,20 +119,30 @@ export default function MemberInquiryAnswerList() {
                     </thead>
                     <tbody>
                         {/* 질문 리스트 map으로 반복 */}          
-                        {dataList.map((answer,index) => (
-                            <tr key={index} onClick={() => {
-                                navigate(`/inquiry/${answer.inquiryNo}`)
-                            }}>
-                                <td className="col-no">{index+1}</td>
-                                <td className="col-inquiry-title">{answer.inquiryTitle}</td>
-                                <td className="col-views">    
-                                    {answer.answerContent.length > 50 
-                                    ? `${answer.answerContent.substring(0, 50)}...` 
-                                    : answer.answerContent}
+                        {dataList && dataList.length > 0 ? (
+                            dataList.map((answer,index) => (
+                                <tr key={index} onClick={() => {
+                                    navigate(`/inquiry/${answer.inquiryNo}`)
+                                }}>
+                                    <td className="col-no">{index+1}</td>
+                                    <td className="col-inquiry-title">{answer.inquiryTitle}</td>
+                                    <td className="col-views">
+                                        {answer.answerContent
+                                            ? answer.answerContent.length > 50
+                                            ? `${answer.answerContent.substring(0, 50)}...`
+                                            : answer.answerContent
+                                            : "내용 없음"}
                                     </td>
-                                <td className="col-likes">{answer.vote}</td>
+                                    <td className="col-likes">{answer.vote}</td>
+                                </tr>
+                            )) 
+                        ) :(
+                            <tr>
+                            <td colSpan="4" style={{ textAlign: "center" }}>
+                                질문내용이 없습니다
+                            </td>
                             </tr>
-                        ))} 
+                        )}          
                     </tbody>
                 </table>
             )

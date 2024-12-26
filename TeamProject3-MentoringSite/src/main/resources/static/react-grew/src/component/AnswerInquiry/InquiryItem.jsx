@@ -12,6 +12,7 @@ export default function InquiryItem({ inquiry }) {
       const response = await inquiryApi.countAnswerByinquiryNo(
         inquiry.inquiryNo
       );
+      console.log('질문 답변',response)
       setCount(response.data);
     } catch (error) {
       console.error("답변 가져오기 실패:", error);

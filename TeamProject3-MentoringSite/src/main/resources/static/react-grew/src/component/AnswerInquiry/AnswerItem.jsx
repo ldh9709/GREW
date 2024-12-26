@@ -58,11 +58,8 @@ export default function AnswerItem({ answer }) {
       fetchCategories();
     }
   }, [mentorProfile]); // mentorProfile가 업데이트된 후에 fetchCategories 실행
-  useEffect(()=>{
-    console.log("isModalOpen 상태 변경:", isModalOpen);
-  },[isModalOpen])
 
-
+  //답변 수정 버튼
   const handleModify = async () => {
     navigate(`/answer/modify/${answer.answerNo}`);
   };
@@ -84,6 +81,19 @@ export default function AnswerItem({ answer }) {
       alert("API 호출 중 오류 발생: " + error.message); // 사용자에게 오류 메시지 표시
     }
   };
+  
+  //답변 삭제 버튼
+  const handleRemoveAnswer = async () => {
+    try {
+      if (!window.confirm('답변을 삭제하시겠습니까?')) return;
+      await answerApi.deleteAnswer(answer.answerNo,token)
+      window.location.reload();
+    } catch (error) {
+      console.log('답변 삭제 실패',error)
+    }
+  }
+  
+
   const handleDownvote = async () => {
     try {
       const response = await answerApi.downVote(answer.answerNo, token); // API 호출
@@ -120,7 +130,6 @@ export default function AnswerItem({ answer }) {
 
   const handleCloseModal = () => {
     setIsModalOpen(false);
-    console.log('모달닫아!!')
   };
 
   return (
@@ -196,12 +205,7 @@ export default function AnswerItem({ answer }) {
           {member && member.memberNo == answer.memberNo ? (
             <div className="modify-delete-btn">
               <button onClick={handleModify}>수정</button>
-  
-              <button
-                onClick={(e) => {
-                  e.preventDefault(); // 폼 제출 방지
-                }}
-              >
+              <button onClick={handleRemoveAnswer}>
                 삭제
               </button>
             </div>

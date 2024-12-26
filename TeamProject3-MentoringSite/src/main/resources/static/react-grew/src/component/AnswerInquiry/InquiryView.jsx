@@ -76,7 +76,8 @@ function InquiryView() {
 
   //질문삭제
   const inquiryRemoveAction = async () => {
-    const responseJsonObject = await inquiryApi.deleteInquiry(inquiryNo);
+    if (!window.confirm('질문을 삭제하시겠습니까?')) return;
+    const responseJsonObject = await inquiryApi.deleteInquiry(inquiryNo,token);
     if (responseJsonObject.status === 5200) {
       navigate("/inquiry");
     } else {
@@ -176,24 +177,20 @@ function InquiryView() {
               >
                 삭제
               </button>
-            </div>
-          ) : (
-            <div></div>
-          )}
-          {/* 신고하기버튼 */}
-          <div className="inquiry-report-btn">
-            {isModalOpen && (
-              <ReportModal 
-              onClose={handleCloseModal} 
-              report={report}/>
-            )}
-            <button
-              onClick={handleOpenModal}
-              onMouseEnter={() => setIsReportHovered(true)} // 마우스가 버튼 위에 올라갔을 때
-              onMouseLeave={() => setIsReportHovered(false)} // 마우스가 버튼을 벗어났을 때
-              className={`hover-button ${isReportHovered ? "hovered" : ""}`
-            }
-            >
+               {/* 신고하기버튼 */}
+            <div className="inquiry-report-btn">
+              {isModalOpen && (
+                <ReportModal 
+                onClose={handleCloseModal} 
+                report={report}/>
+              )}
+              <button
+                onClick={handleOpenModal}
+                onMouseEnter={() => setIsReportHovered(true)} // 마우스가 버튼 위에 올라갔을 때
+                onMouseLeave={() => setIsReportHovered(false)} // 마우스가 버튼을 벗어났을 때
+                className={`hover-button ${isReportHovered ? "hovered" : ""}`
+              }
+              >
               <img
                 src={
                   isReportHovered
@@ -205,6 +202,11 @@ function InquiryView() {
               />
             </button>
           </div>
+            </div>
+          ) : (
+            <div></div>
+          )}
+         
             <button className="answer-notify-btn" onClick={handleWriteButton}>
               <FontAwesomeIcon icon={faPen} />
               <span>답변하기</span>
