@@ -119,24 +119,6 @@ button {
   color: #fff;
 }
 
-.pagenation-btn {
-  background-color: #28a745;
-  color: white;
-  width: 40px;
-  height: 40px;
-  border-radius: 10px;
-  font-size: large;
-}
-
-/* 현재 페이지인 경우의 스타일 */
-.pagenation-btn-active {
-  background-color: #006618;
-  color: white;
-  width: 40px;
-  height: 40px;
-  border-radius: 10px;
-  font-size: large;
-}
 
 
 #wrapper,
