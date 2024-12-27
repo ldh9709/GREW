@@ -5,12 +5,13 @@ import "../../css/mentorProfile.css"; // 🔥 추가된 CSS 파일
 import { getMentorProfileByNo } from "../../api/mentorProfileApi.js";
 import { listReviewByMember } from "../../api/reviewApi.js"; // 리뷰 목록 API 추가
 import * as categoryApi from "../../api/categoryApi";
+import * as ChattingApi from '../../api/chattingApi.js';
 import * as followApi from "../../api/followApi";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHeart, faHeartCircleCheck, faHeartCirclePlus } from '@fortawesome/free-solid-svg-icons';
 
 export default function MentorProfileDetail() {
-  const { token } = useMemberAuth();
+  const { token, memberNo } = useMemberAuth();
   const { mentorProfileNo } = useParams();
   const [mentorProfile, setMentorProfile] = useState(null);
   const [reviews, setReviews] = useState([]); // 빈 배열로 초기화
@@ -82,6 +83,7 @@ export default function MentorProfileDetail() {
     checkFollow();
     fetchMentorProfile();
   }, [mentorProfileNo, token]);
+
   console.log("Reviews:", reviews); // 이 줄을 추가하여 reviews 데이터를 확인
 
   if (loading) return <p>로딩 중...</p>;
@@ -102,6 +104,26 @@ export default function MentorProfileDetail() {
   };
 
   if (error) return <p className="error-message">{error}</p>;
+
+  const handleQuestionButtonClick = async () => {
+    if (!memberNo || !mentorProfileNo) {
+      alert("멘토 또는 멘티 정보가 없습니다.");
+      return;
+    }
+
+    try {
+      const response = await ChattingApi.createChatting(memberNo, mentorProfileNo);
+      if (response.success) {
+        alert("멘토와의 채팅이 시작되었습니다!");
+        // 채팅방으로 이동하거나 다른 추가 동작을 구현할 수 있습니다.
+      } else {
+        alert(response.message || "채팅 생성에 실패했습니다.");
+      }
+    } catch (error) {
+      console.error("채팅 생성 중 오류 발생:", error);
+      alert("채팅 생성 중 오류가 발생했습니다.");
+    }
+  };
 
   return (
     <div className="mentor-profile-detail-container">
@@ -142,7 +164,12 @@ export default function MentorProfileDetail() {
             {/* 버튼 */}
             <div className="mentor-actions">
               <button className="follow-button"><FontAwesomeIcon icon={faHeartCirclePlus}/> 팔로우</button>
-              <button className="question-button">멘토링 신청하기</button>
+              <button
+                className="question-button"
+                onClick={handleQuestionButtonClick}
+              >
+                멘토링 신청하기
+              </button>
             </div>
             <div className="mentor-follow-count">{mentorProfile?.mentorFollowCount || 0}명이 팔로우 하는 중</div>
           </div>
