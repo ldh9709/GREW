@@ -130,35 +130,56 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	@Transactional
 	public Member saveMember(MemberDto memberDto) {
-		
-		//멤버DTO 객체에서 속성 분리
-		String memberId = memberDto.getMemberId();
-		String memberPassword = memberDto.getMemberPassword();
-		String memberEmail = memberDto.getMemberEmail();
-		
-		//ID중복 체크
-		checkIdDupl(memberId);
-		
-		
-		//이메일 중복 체크
-		checkEmailDupl(memberEmail);
-		
-		//멤버 생성
-		Member saveMember = Member.toEntity(memberDto);
-		
-		//비밀번호 암호화 추가
-		saveMember.setMemberPassword(passwordEncoder.encode(memberPassword));
-		
-		//관심사 생성
-		for (InterestDto interest : memberDto.getInterests()) {
+		try {
+			//매개변수가 null이면 오류
+			if(memberDto == null) {
+				throw new CustomException(ResponseStatusCode.NOT_FOUND_MEMBER, ResponseMessage.NOT_FOUND_MEMBER, null);
+			}
 			
-			Interest interestEntity = Interest.toEntity(interest);
-			System.out.println("회원가입 interestEntity : " + interestEntity);
+			//멤버DTO 객체에서 속성 분리
+			String memberId = memberDto.getMemberId();
+			String memberPassword = memberDto.getMemberPassword();
+			String memberEmail = memberDto.getMemberEmail();
 			
-			saveMember.addInterests(interestEntity);
+			//ID중복 체크
+			boolean checkId = checkIdDupl(memberId);
+			
+			//ID중복 시 에러
+			if(checkId) {
+				throw new CustomException(ResponseStatusCode.DUPLICATION_MENBER_ID, ResponseMessage.DUPLICATION_MENBER_ID, null);
+			}
+			
+			//이메일 중복 체크
+			boolean checkEmail = checkEmailDupl(memberEmail);
+			
+			//이메일 중복 시 에러
+			if(!checkEmail) {
+				throw new CustomException(ResponseStatusCode.DUPLICATION_MENBER_EMAIL, ResponseMessage.DUPLICATION_MENBER_EMAIL, null);
+			}
+			
+			//멤버 생성
+			Member saveMember = Member.toEntity(memberDto);
+			
+			//비밀번호 암호화 추가
+			saveMember.setMemberPassword(passwordEncoder.encode(memberPassword));
+			
+			//관심사 생성
+			for (InterestDto interest : memberDto.getInterests()) {
+				
+				Interest interestEntity = Interest.toEntity(interest);
+				System.out.println("회원가입 interestEntity : " + interestEntity);
+				
+				saveMember.addInterests(interestEntity);
+			}
+			
+			System.out.println(">>>>>saveMember : " + saveMember);
+			return memberRepository.save(saveMember);
+			
+		} catch (Exception e) {
+			throw new CustomException(ResponseStatusCode.CREATED_MEMBER_FAIL, ResponseMessage.CREATED_MEMBER_FAIL, e);
 		}
-		System.out.println(">>>>>saveMember : " + saveMember);
-		return memberRepository.save(saveMember);
+		
+		
 	}
 	
 	/***** 아이디 찾기 *****/

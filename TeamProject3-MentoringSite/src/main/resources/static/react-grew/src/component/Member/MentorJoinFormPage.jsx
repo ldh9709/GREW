@@ -26,6 +26,7 @@ const MentorJoinForm = () => {
     mentorIntroduce: "",
     mentorCareer: "",
     mentorImage: "",
+    mentorHeadline: ""
   });
   /**** 멘토 선언 END ****/
 
@@ -134,7 +135,7 @@ const MentorJoinForm = () => {
       // Step 1: 멘토 프로필 생성
       const responseJsonObject =
         mentorProfileNo === 0
-          ? await memberApi.mentorProfileCreateAction(member.memberNo, mentor)
+          ? await memberApi.mentorProfileCreateAction(token, mentor)
           : await memberApi.mentorProfileUpdateAction(mentorProfileNo, mentor);
   
       if (
@@ -244,6 +245,22 @@ const MentorJoinForm = () => {
             required
           ></textarea>
         </div>
+        
+        {/* 한 줄 소개글 */}
+        <div className="form-group-profile horizontal">
+          <label htmlFor="mentorIntroduce">
+            한줄 소개<span className="red-text">필수</span>
+          </label>
+          <textarea
+            id="mentorHeadline"
+            name="mentorHeadline"
+            placeholder="한 줄 소개 입력"
+            rows="1"
+            value={mentor.mentorHeadline}
+            onChange={handleChangeMentorJoinForm}
+            required
+          ></textarea>
+        </div>
 
         {/* 경력 */}
         <div className="form-group-profile horizontal">
@@ -275,6 +292,8 @@ const MentorJoinForm = () => {
             ))}
           </div>
         </div>
+        
+         
 
         {/* 프로필 사진 첨부 */}
         <div className="form-group-profile horizontal">

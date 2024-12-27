@@ -55,6 +55,17 @@ const MentorBoardDetail = () => {
   }, [mentorBoardNo]);
 
   const handleEdit = () => {
+    if (!board) {
+      alert("게시글 정보를 불러오는 중입니다. 잠시 후 다시 시도해주세요.");
+      return;
+    }
+  
+    // 게시글 작성자와 현재 로그인한 유저의 memberNo 비교
+    if (member.memberNo !== board.memberNo) {
+      alert("게시글 작성자만 수정할 수 있습니다.");
+      return;
+    }
+
     navigate(`/mentor-board/update/${mentorBoardNo}`); // 수정 페이지로 이동
   };
 

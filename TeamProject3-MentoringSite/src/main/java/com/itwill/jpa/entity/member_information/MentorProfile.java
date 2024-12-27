@@ -63,6 +63,10 @@ public class MentorProfile {
 
     @Column(name="mentor_activity_count")
     private Integer mentorActivityCount;
+    
+    //멘토 한줄 소개
+    @Column(name="mentor_headline")
+    private String mentorHeadline;
 
     /**
      * DTO를 엔티티로 변환하는 메서드
@@ -85,6 +89,7 @@ public class MentorProfile {
                 .mentorMentoringCount(mentorProfileDto.getMentorMentoringCount() != null ? mentorProfileDto.getMentorMentoringCount() : 0)
                 .mentorFollowCount(mentorProfileDto.getMentorFollowCount() != null ? mentorProfileDto.getMentorFollowCount() : 0)
                 .mentorActivityCount(mentorProfileDto.getMentorActivityCount() != null ? mentorProfileDto.getMentorActivityCount() : 0)
+                .mentorHeadline(mentorProfileDto.getMentorHeadline())
                 .build();
     }
 }
