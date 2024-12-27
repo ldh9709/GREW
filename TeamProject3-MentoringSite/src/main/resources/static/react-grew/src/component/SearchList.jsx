@@ -1,71 +1,97 @@
-// SearchList.jsx
 import React, { useState, useEffect } from "react";
-import { useLocation, useNavigate } from "react-router-dom"; // URL 파라미터를 가져오기 위한 useLocation
-import * as inquiryApi from "../api/inquiryApi"; // API 호출
+import { useLocation, useNavigate } from "react-router-dom"; 
+import * as inquiryApi from "../api/inquiryApi"; 
+import * as mentorProfileApi from "../api/mentorProfileApi";
+import * as mentorBoardApi from "../api/mentorBoardApi";
 import InquiryItem from "./AnswerInquiry/InquiryItem";
 import MentorProfileItem from "./MentorProfile/MentorProfileItem";
-import * as mentorProfileApi from "../api/mentorProfileApi";
+import MentorBoardItem from "./MentorBoard/MentorBoardItem";
+
 function SearchList() {
   const [searchResults, setSearchResults] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  const [mentor, setMentor] = useState([]);
+  const [mentorBoards, setMentorBoards] = useState([]);
+  const [mentorProfiles, setMentorProfiles] = useState([]);
   const navigate = useNavigate();
-  const location = useLocation(); // 현재 위치 정보 얻기
-  const queryParams = new URLSearchParams(location.search); // 쿼리 파라미터를 파싱
-  const query = queryParams.get("query"); // 'query' 파라미터 값 추출
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+  const query = queryParams.get("query");
 
-  const fetchMentorProfiles = async (query, page, size) => {
+  // 멘토 프로필 검색 함수
+  const fetchMentorProfiles = async (query) => {
+    setLoading(true);
     try {
+      const response = await mentorProfileApi.searchMentorProfiles(query, 0, 3);
+      setMentorProfiles(response.data.content);
       setError(null);
-      const response = await mentorProfileApi.searchMentorProfiles(
-        query,
-        page,
-        size
-      );
-      console.log("API 응답 데이터:", response.data);
-      setMentor(response.data.content || response.data);
-    } catch (error) {
-      console.error("검색 중 오류가 발생했습니다.", error);
-      setError("검색 중 오류가 발생했습니다.");
+    } catch (err) {
+      setError("멘토 프로필 검색 중 오류가 발생했습니다.");
+    } finally {
+      setLoading(false);
     }
   };
 
+  // 멘토 보드 검색 함수
+const fetchMentorBoards = async (query) => {
+  setLoading(true); // 멘토 보드 검색에 대한 로딩 상태
+  try {
+    const response = await mentorBoardApi.searchMentorBoards(query, 0, 3);
+    console.log("멘토 보드 API 응답 데이터:", response.data); // 여기서 API 응답 확인
+    setMentorBoards(response.data.content); // 응답 데이터에서 content만 저장
+    setError(null); // 에러 상태 초기화
+  } catch (err) {
+    setError("멘토 보드 검색 중 오류가 발생했습니다."); // 명확한 에러 메시지
+  } finally {
+    setLoading(false); // 로딩 상태 해제
+  }
+};
+
+  // 질문 검색
   useEffect(() => {
     if (query) {
       const fetchSearchResults = async () => {
         setLoading(true);
         try {
-          const response = await inquiryApi.searchInquiry(query, 0, 3); // API 호출
-          console.log(response);
-          console.log(query);
-          setSearchResults(response.data.content); // 검색 결과 저장
+          const response = await inquiryApi.searchInquiry(query, 0, 3);
+          setSearchResults(response.data.content);
+          setError(null);
         } catch (err) {
           setError("검색 중 오류가 발생했습니다.");
         } finally {
           setLoading(false);
         }
       };
-
-      fetchSearchResults(); // 검색 결과 가져오기
+      fetchSearchResults();
     }
-  }, [query]); // query가 변경될 때마다 다시 호출
-
-  useEffect(() => {
-    if (!query) {
-      console.warn("검색어가 비어 있습니다.");
-      return;
-    }
-    fetchMentorProfiles(query, 1, 3);
   }, [query]);
+
+  // 멘토 프로필 검색
+  useEffect(() => {
+    if (query) {
+      fetchMentorProfiles(query);
+    }
+  }, [query]);
+
+  // 멘토 보드 검색 useEffect
+useEffect(() => {
+  if (query) {
+    fetchMentorBoards(query); // 멘토 보드 검색 함수 호출
+  }
+}, [query]);
+
   const handleViewMore = () => {
-    // "더보기" 클릭 시 InquirySearch 페이지로 이동
-    navigate(`/inquirySearchList?query=${query}`); // 쿼리 파라미터를 그대로 전달하여 이동
+    navigate(`/inquirySearchList?query=${query}`);
   };
-  const handleMentorProfileViewMore = () => {
-    // "더보기" 클릭 시 InquirySearch 페이지로 이동
-    navigate(`/mentorprofile/search?query=${query}`); // 쿼리 파라미터를 그대로 전달하여 이동
+
+  const handleViewMoreMentorProfiles = () => {
+    navigate(`/mentorprofile/search?query=${query}`);
   };
+
+  const handleViewMoreMentorBoards = () => {
+    navigate(`/mentorboard/search?query=${query}`);
+  };
+
   return (
     <>
       <link
@@ -74,46 +100,55 @@ function SearchList() {
       ></link>
       <div>
         <h1>검색 결과</h1>
+
+        {/* 질문 검색 결과 */}
         <h2>질문 검색 결과</h2>
         {loading && <div>로딩 중...</div>}
         {error && <div>{error}</div>}
-
         {searchResults.length > 0 ? (
           <div>
-            {searchResults.slice(0, 3).map(
-              (
-                inquiry //슬라이스로 3개만 표출
-              ) => (
-                <InquiryItem key={inquiry.inquiryNo} inquiry={inquiry} />
-              )
-            )}
-            <div className="view-more">
-              <button onClick={handleViewMore}>질문 검색 내용 더보기</button>
-            </div>
-          </div>
-        ) : (
-          <div>검색 결과가 없습니다.</div>
-        )}
-      </div>
-      <div>
-        <h2>멘토 검색 결과</h2>
-        {error && <p style={{ color: "red" }}>{error}</p>}
-
-        {mentor.length > 0 ? (
-          <div>
-            {mentor.slice(0, 3).map((mentor) => (
-              <MentorProfileItem key={mentor.MentorProfileNo} mentor={mentor} />
+            {searchResults.map((inquiry) => (
+              <InquiryItem key={inquiry.inquiryNo} inquiry={inquiry} />
             ))}
-            <div className="view-more">
-              <button onClick={handleMentorProfileViewMore}>더보기</button>
-            </div>
+            <button onClick={handleViewMore}>질문 검색 내용 더보기</button>
           </div>
         ) : (
           <p>검색 결과가 없습니다.</p>
         )}
+
+        {/* 멘토 프로필 검색 결과 */}
+        <h2>멘토 프로필 검색 결과</h2>
+        {loading && <div>로딩 중...</div>}
+        {error && <div>{error}</div>}
+        {mentorProfiles.length > 0 ? (
+          <div>
+            {mentorProfiles.map((profile) => (
+              <MentorProfileItem key={profile.mentorProfileNo} mentor={profile} />
+            ))}
+            <button onClick={handleViewMoreMentorProfiles}>멘토 프로필 더보기</button>
+          </div>
+        ) : (
+          <p>검색 결과가 없습니다.</p>
+        )}
+
+        {/* 멘토 보드 검색 결과 */}
+          <h2>멘토 보드 검색 결과</h2>
+          {loading && <div>로딩 중...</div>}
+          {error && <div>{error}</div>}
+        {mentorBoards.length > 0 ? (
+        <div>
+           {mentorBoards.map((board) => (
+           <MentorBoardItem key={board.mentorBoardNo} mentorBoard={board} />
+         ))}
+         <button onClick={handleViewMoreMentorBoards}>멘토 보드 더보기</button>
+            </div>
+        ) : (
+        <p>검색 결과가 없습니다.</p>
+          )}    
       </div>
     </>
   );
 }
 
-export default SearchList;
+export default SearchList; 
+ 
