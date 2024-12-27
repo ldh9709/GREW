@@ -1,10 +1,11 @@
 const BACKEND_SERVER = "";
 export const createChatting = async (menteeNo, mentorNo) => {
-    const response = await fetch(`${BACKEND_SERVER}/create/${menteeNo}, ${mentorNo}`, {
-        method: 'POST'
-    });
-    const responseJsonObject = await response.json();
-    return responseJsonObject;
+  const response = await fetch(
+    `${BACKEND_SERVER}/chatroom/create/${menteeNo}, ${mentorNo}`, {
+      method: 'POST'
+  });
+  const responseJsonObject = await response.json();
+  return responseJsonObject;
 };
 
 export const listChatRoom = async (token, page, size) => {

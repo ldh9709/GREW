@@ -11,7 +11,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHeart, faHeartCircleCheck, faHeartCirclePlus } from '@fortawesome/free-solid-svg-icons';
 
 export default function MentorProfileDetail() {
-  const { token, memberNo } = useMemberAuth();
+  const { token, member } = useMemberAuth();
   const { mentorProfileNo } = useParams();
   const [mentorProfile, setMentorProfile] = useState(null);
   const [reviews, setReviews] = useState([]); // 빈 배열로 초기화
@@ -106,23 +106,16 @@ export default function MentorProfileDetail() {
   if (error) return <p className="error-message">{error}</p>;
 
   const handleQuestionButtonClick = async () => {
-    if (!memberNo || !mentorProfileNo) {
-      alert("멘토 또는 멘티 정보가 없습니다.");
-      return;
-    }
-
-    try {
-      const response = await ChattingApi.createChatting(memberNo, mentorProfileNo);
-      if (response.success) {
-        alert("멘토와의 채팅이 시작되었습니다!");
-        // 채팅방으로 이동하거나 다른 추가 동작을 구현할 수 있습니다.
-      } else {
-        alert(response.message || "채팅 생성에 실패했습니다.");
+      if(member.memberRole === "ROLE_MENTEE"){
+        console.log("member.memberNo : "+member.memberNo);
+        console.log("mentorProfile.memberNo : "+mentorProfile.memberNo);
+    
+        await ChattingApi.createChatting(member.memberNo, mentorProfile.memberNo);
+        
+      }else {
+        alert("멘티만 가능한 서비스입니다.");
       }
-    } catch (error) {
-      console.error("채팅 생성 중 오류 발생:", error);
-      alert("채팅 생성 중 오류가 발생했습니다.");
-    }
+      
   };
 
   return (
