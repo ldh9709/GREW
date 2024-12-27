@@ -1,5 +1,4 @@
 import React, { useEffect, useState, useRef } from "react";
-import * as categoryApi from "../../api/categoryApi"; // 카테고리 데이터를 조회하는 API
 import * as mentorProfileApi from "../../api/mentorProfileApi";
 import * as mentorBoardApi from "../../api/mentorBoardApi"; // API 호출 부분
 import "../../css/mentorBoardForm.css";
@@ -11,12 +10,13 @@ const DEFAULT_IMAGE_URL = "/images/mentor-board/defaultImage.png"; // 기본이�
 function MentorBoardCreate() {
   const { token, member } = useMemberAuth(); // 토큰과 멤버 선언하여 Context에 담긴 정보 가져오기
   const memberNo = member?.memberNo || null;  // member에서 memberNo 추출, 값이 없을경우 null값 입력력
-  const [category, setCategory] = useState(""); // 카테고리명 선언
   const [mentorBoardTitle, setMentorBoardTitle] = useState("");
   const [mentorBoardContent, setMentorBoardContent] = useState("");
   const [mentorBoardImage, setMentorBoardImage] = useState(null); // 이미지 파일
   const [imagePreview, setImagePreview] = useState(""); // 이미지 미리보기 URL
+  const [categoryName, setCategoryName] = useState(""); // 카테고리명 선언
   const fileInputRef = useRef(null); // file input을 참조하기 위한 useRef 추가
+  const [categoryNo, setCategoryNo] = useState(null);
 
   const navigate = useNavigate();  // 페이지 이동을 위한 navigate 훅
 
@@ -46,20 +46,20 @@ function MentorBoardCreate() {
         }
 
         // 프로필 정보 조회
-        const response = await mentorProfileApi.getMentorProfileByMemberNo(memberNo);
+        const profileResponse = await mentorProfileApi.getMentorProfileByMemberNo(memberNo);
 
         // 프로필 정보를 통해 카테고리 번호 조회
-        if (response.status !== 2355 || !response.data?.categoryNo) {
-          setCategory("프로필 정보를 불러오지 못했습니다.");
+        if (profileResponse.status !== 2355 || !profileResponse.data?.categoryNo) {
+          setCategoryName("프로필 정보를 불러오지 못했습니다.");
           return;
         }
-    
-        const categoryResponse = await categoryApi.childCategory(response.data.categoryNo);
-        setCategory(categoryResponse.data?.categoryName || "카테고리 없음");
+        
+        setCategoryNo(profileResponse.data.categoryNo);
+        setCategoryName(profileResponse.data.categoryName);
 
       } catch (err) {
         console.error("카테고리 데이터 로드 중 오류 발생:", err);
-        setCategory("카테고리 오류 발생");
+        setCategoryName("카테고리 오류 발생");
       }
     };
 
@@ -76,17 +76,25 @@ function MentorBoardCreate() {
       return;
     }
   
+
     // 게시글을 먼저 등록합니다.
     const formData = {
       mentorBoardTitle,
       mentorBoardContent,
       mentorBoardImage: DEFAULT_IMAGE_URL, // 기본 이미지를 선택
       memberNo: memberNo,
+      categoryNo,
+      categoryName,
     };
   
     try {
       // 게시글 등록 API 호출
+      console.log("메소드동작전 token",token);
+      console.log("메소드동작전 formdata",formData);
       const response = await mentorBoardApi.createMentorBoard(token,formData);
+      console.log("메소드동작후 token",token);
+      console.log("메소드동작후 formdata",formData);
+      console.log("생성된 멘토보드:",response);
       const mentorBoardNo = response.data.mentorBoardNo; // 응답에서 mentorBoardNo 추출
       alert("게시글이 성공적으로 등록되었습니다!");
   
@@ -108,7 +116,7 @@ function MentorBoardCreate() {
         fileInputRef.current.value = "";  // file input 초기화
       }
 
-      navigate(`/mentorboard/detail/${mentorBoardNo}`); // 수정된 게시글 페이지로 이동
+      navigate(`/mentor-board/detail/${mentorBoardNo}`); // 수정된 게시글 페이지로 이동
       
     } catch (err) {
       console.error("게시글 등록 실패:", err);
@@ -163,7 +171,7 @@ function MentorBoardCreate() {
   
       <div className="field">
         <label htmlFor="category">전문 분야</label>
-        <span className="category">{category}</span>
+        <span className="category">{categoryName}</span>
       </div>
   
       <div className="field">

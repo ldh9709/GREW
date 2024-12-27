@@ -62,77 +62,168 @@ function App() {
         {!isAdminRoute && <Navigate />}
         {!isAdminRoute && <ChatAlarim />}
 
-      <div id="wrapper">
-      <link
-        href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap"
-        rel="stylesheet"
-      ></link>
-        <div id="content">
-          
-		<Routes>
-		  <Route path="/" exact element={<MainPage />} />
-		  <Route path="/main" element={<MainPage />} />
-		  <Route path="/403" element={<ForbiddenPage />} />
-		  <Route path="/summary" element={<MemberSummary />} />
-
-		  {/* Member페이지 */}
-		  <Route path="/member/profile" element={<MemberMypage />} />
-		  <Route path="/member/join" element={<MemberMainJoinFormPage />} />
-		  <Route path="/member/join/form" element={<MemberJoinFormPage />} />
-		  <Route path="/member/login" element={<MemberLoginFormPage />} />
-		  <Route path="/member/profile/edit" element={<MemberProfileFormPage />} />
-
-		  {/* MentorProfile 페이지 */}
-		  <Route path="/mentor/join" element={<MentorJoinFormPage />} /> {/* 멘토 회원가입 */}
-		  <Route path="/mentor/modify" element={<MentorModifyFormPage />} /> {/* 멘토 프로필 수정 */}
-		  <Route path="/mentorprofile/list" element={<MentorProfileList />} />
-		  <Route path="/mentorprofile/add" element={<MentorProfileAdd />} />
-		  <Route path="/mentorprofile/view" element={<MentorProfileItem />} />
-		  <Route path="/mentorprofile/search" element={<MentorSearchList />} />
-		  <Route path="/mentorprofile/detail/:mentorProfileNo" element={<MentorProfileDetail />} />
-		  <Route path="/mentorprofile/detail" element={<MentorProfileDetail />} />
-
-		  {/* MentorBoard 페이지 */}
-		  <Route path="/mentorboard/find" element={<MentorBoardFind />} />
-		  <Route path="/mentorboard/list" element={<MentorBoardList />} />
-		  <Route path="/mentorboard/create" element={<MentorBoardCreate />} /> {/* 정상 경로로 복구 */}
-		  <Route path="/mentorboard/update/:mentorBoardNo" element={<MentorBoardUpdate />} />
-		  <Route path="/mentorboard/detail" element={<MentorBoardDetail />} />
-		  <Route path="/mentor-board/detail/:mentorBoardNo" element={<MentorBoardDetail />} />
-
-		  {/* inquiry 페이지 */}
-		  <Route path="/inquiry" element={<InqiuryList />} />
-		  <Route path="/inquiry/:inquiryNo" element={<InqiuryView />} />
-		  <Route path="/inquiry/inquiryWrite" element={<InquiryWriteFormpage />} />
-		  <Route path="/inquiry/modify/:inquiryNo" element={<InquiryModifyFormpage />} />
-		  <Route path="/inquirySearchList" element={<InquirySearchList />} />
-
-		  {/* answer 페이지 */}
-		  <Route path="/answer/answerWrite/:inquiryNo" element={<AnswerWriteFormpage />} />
-		  <Route path="/answer/modify/:answerNo" element={<AnswerModifyFormpage />} />
-
-		  {/* review 페이지 */}
-		  <Route path="/review/reviewWrite" element={<ReviewWriteFormPage />} />
-		  <Route path="/review/reviewView" element={<ReviewView />} />
-		  <Route path="/review/:reviewNo" element={<ReviewView />} />
-		  <Route path="/review/reviewList" element={<ReviewListPage />} />
-
-		  {/* 상세 페이지 라우팅 */}
-		  <Route path="/searchList" element={<SearchList />} />
-		  <Route path="/inquiry" element={<InqiuryList />} />
-		  <Route path="/inquiry/:inquiryNo" element={<InqiuryView />} />
-		  <Route path="/inquiry/inquiryWrite" element={<InquiryWriteFormpage />} />
-		  <Route path="/inquiry/modify/:inquiryNo" element={<InquiryModifyFormpage />} />
-		  <Route path="/answer/answerWrite/:inquiryNo" element={<AnswerWriteFormpage />} />
-		  <Route path="/answer/modify/:answerNo" element={<AnswerModifyFormpage />} />
-		  <Route path="/inquirySearchList" element={<InquirySearchList />} />
-
-		  {/* Admin페이지 */}
-		  <Route path="/admin/*" element={<AdminRoutes />} />
-
-		  {/* 신고 모달 */}
-		  <Route path="/report-modal" element={<ReportModal />} />
-		</Routes>
+        <div id="wrapper">
+          <link
+            href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap"
+            rel="stylesheet"
+          ></link>
+          <div id="content">
+            <Routes>
+              <Route path="/" exact element={<MainPage />} />
+              <Route path="/main" element={<MainPage />} />
+              <Route path="/403" element={<ForbiddenPage />} />
+              <Route path="/summary" element={<MemberSummary />} />
+              {/* Member페이지 */}
+              <Route path="/member/profile" element={<MemberMypage />} />
+              <Route path="/member/join" element={<MemberMainJoinFormPage />} />
+              <Route
+                path="/member/join/form"
+                element={<MemberJoinFormPage />}
+              />
+              <Route path="/member/login" element={<MemberLoginFormPage />} />
+              <Route
+                path="/member/profile/edit"
+                element={<MemberProfileFormPage />}
+              />
+              {/* Mentor페이지 */}
+              <Route path="/mentor/join" element={<MentorJoinFormPage />} />
+              <Route
+                path="/member/profile/edit"
+                element={<MemberProfileFormPage />}
+              />
+              <Route path="/member/join" element={<MemberMainJoinFormPage />} />
+              <Route
+                path="/member/join/form"
+                element={<MemberJoinFormPage />}
+              />
+              <Route path="/member/login" element={<MemberLoginFormPage />} />
+              <Route
+                path="/member/profile/edit"
+                element={<MemberProfileFormPage />}
+              />
+              {/* MentorProfile 페이지 */}
+              <Route
+                path="/mentor/join"
+                element={<MentorJoinFormPage />}
+              />{" "}
+              {/* 멘토 회원가입 */}
+              <Route
+                path="/mentor/modify"
+                element={<MentorModifyFormPage />}
+              />{" "}
+              {/* 멘토 회원가입 */}
+              <Route
+                path="/mentorprofile/list"
+                element={<MentorProfileList />}
+              />
+              <Route path="/mentorprofile/add" element={<MentorProfileAdd />} />
+              <Route
+                path="/mentorprofile/view"
+                element={<MentorProfileItem />}
+              />
+              <Route
+                path="/mentorprofile/search"
+                element={<MentorSearchList />}
+              />
+              <Route
+                path="/mentorprofile/detail/:mentorProfileNo"
+                element={<MentorProfileDetail />}
+              />
+              <Route
+                path="/mentorprofile/detail"
+                element={<MentorProfileDetail />}
+              />
+              <Route
+                path="/mentorprofile/search"
+                element={<MentorSearchList />}
+              />
+              <Route
+                path="/mentor-profile/:mentorProfileNo"
+                element={<MentorProfileDetail />}
+              />
+              {/* MentorBoard 페이지 */}
+              <Route path="/mentorboard/find" element={<MentorBoardFind />} />
+              <Route path="/mentorboard/list" element={<MentorBoardList />} />
+              <Route
+                path="/mentorboard/create"
+                element={<MentorBoardCreate />}
+              />
+              <Route
+                path="/mentorboard/update/:mentorBoardNo"
+                element={<MentorBoardUpdate />}
+              />
+              <Route
+                path="/mentorboard/detail"
+                element={<MentorBoardDetail />}
+              />
+              <Route
+                path="/mentor-board/detail/:mentorBoardNo"
+                element={<MentorBoardDetail />}
+              />
+              {/* inquiry 페이지 */}
+              <Route path="/inquiry" element={<InqiuryList />} />
+              <Route path="/inquiry/:inquiryNo" element={<InqiuryView />} />
+              <Route
+                path="/inquiry/inquiryWrite"
+                element={<InquiryWriteFormpage />}
+              />
+              <Route
+                path="/inquiry/modify/:inquiryNo"
+                element={<InquiryModifyFormpage />}
+              />
+              <Route
+                path="/inquirySearchList"
+                element={<InquirySearchList />}
+              />
+              <Route
+                path="/review/reviewWrite"
+                element={<ReviewWriteFormPage />}
+              />
+              {/* answer 페이지 */}
+              <Route
+                path="/answer/answerWrite/:inquiryNo"
+                element={<AnswerWriteFormpage />}
+              />
+              <Route
+                path="/answer/modify/:answerNo"
+                element={<AnswerModifyFormpage />}
+              />
+              {/* review 페이지 */}
+              <Route
+                path="/review/reviewWrite"
+                element={<ReviewWriteFormPage />}
+              />
+              <Route path="/review/:reviewNo" element={<ReviewView />} />{" "}
+              {/* 상세 페이지 라우팅 */}
+              <Route path="/review/reviewList" element={<ReviewListPage />} />
+              <Route path="/inquiry" element={<InqiuryList />} />
+              <Route path="/inquiry/:inquiryNo" element={<InqiuryView />} />
+              <Route
+                path="/inquiry/inquiryWrite"
+                element={<InquiryWriteFormpage />}
+              />
+              <Route
+                path="/inquiry/modify/:inquiryNo"
+                element={<InquiryModifyFormpage />}
+              />
+              <Route
+                path="/answer/answerWrite/:inquiryNo"
+                element={<AnswerWriteFormpage />}
+              />
+              <Route
+                path="/answer/modify/:answerNo"
+                element={<AnswerModifyFormpage />}
+              />
+              <Route path="/searchList" element={<SearchList />} />
+              <Route
+                path="/inquirySearchList"
+                element={<InquirySearchList />}
+              />
+              {/* Admin페이지 */}
+              <Route path="/admin/*" element={<AdminRoutes />} />
+              {/* 신고 모달 */}
+              <Route path="/report-modal" element={<ReportModal />}></Route>
+            </Routes>
             {/* 어드민 경로가 아닌 경우에만 Footer 표시 */}
             {!isAdminRoute && <Footer />}
           </div>

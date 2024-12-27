@@ -114,7 +114,7 @@ function MentorBoardUpdate() {
       setMentorBoardImage(null); // 이미지 상태 초기화
       setImagePreview(DEFAULT_IMAGE_URL); // 미리보기 초기화
 
-      navigate(`/mentorboard/detail/${mentorBoardNo}`); // 수정된 게시글 페이지로 이동
+      navigate(`/mentor-board/detail/${mentorBoardNo}`); // 수정된 게시글 페이지로 이동
     } catch (err) {
       console.error("게시글 수정 실패:", err);
       alert("게시글 수정에 실패했습니다. 다시 시도해주세요.");
