@@ -94,7 +94,6 @@ export const updateMentorBoard = async (id, data) => {
  */
 export const listMentorBoardsByViews = async (page = 0, size = 10) => {
   const response = await fetch(`${BACKEND_SERVER}${BASE_URL}/sorted/views?page=${page}&size=${size}`);
-  console.log(response)
   const responseJsonObject = await response.json();
   return responseJsonObject;
 };

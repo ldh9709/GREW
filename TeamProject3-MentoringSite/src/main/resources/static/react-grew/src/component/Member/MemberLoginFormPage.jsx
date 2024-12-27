@@ -47,11 +47,11 @@ const MemberLoginFormPage = () => {
         <div className="member-login-div">
             <input type="password" name="memberPassword" className="member-login-input" placeholder="비밀번호" value={member.memberPassword} onChange={handleChangeLoginForm} required />
         </div>
-        <Link to="/join" className="member-findPassword-link">
+        <Link to="/member/find-password" className="member-findPassword-link">
             <p className="member-findPassword">비밀번호를 잊으셨나요?</p>
         </Link>
         <button type="submit" className="member-login-button">로그인</button>
-        <Link to="/join" className="member-join-link">
+        <Link to="/member/join" className="member-join-link">
             <p>회원이 아니신가요? 회원가입</p>
         </Link>
         <h3 className="member-login-sub-title">- SNS 간편 로그인 -</h3>

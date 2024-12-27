@@ -10,6 +10,8 @@ import MemberMainJoinFormPage from "./component/Member/MemberMainJoinFormPage";
 import MemberJoinFormPage from "./component/Member/MemberJoinFormPage";
 import MemberLoginFormPage from "./component/Member/MemberLoginFormPage";
 import MemberProfileFormPage from "./component/Member/MemberProfileFormPage";
+import MemberFindPasswordFormPage from "./component/Member/MemberFindPasswordFormPage";
+
 /* 멘토 페이지 임포트 */
 import MemberMypage from "./component/Member/mypage/MemberMypage";
 import MemberSummary from "./component/Member/mypage/MemberSummary";
@@ -74,17 +76,13 @@ function App() {
               <Route path="/403" element={<ForbiddenPage />} />
               <Route path="/summary" element={<MemberSummary />} />
               {/* Member페이지 */}
-              <Route path="/member/profile" element={<MemberMypage />} />
               <Route path="/member/join" element={<MemberMainJoinFormPage />} />
-              <Route
-                path="/member/join/form"
-                element={<MemberJoinFormPage />}
-              />
+              <Route path="/member/join/form" element={<MemberJoinFormPage />} />
               <Route path="/member/login" element={<MemberLoginFormPage />} />
-              <Route
-                path="/member/profile/edit"
-                element={<MemberProfileFormPage />}
-              />
+              <Route path="/member/profile" element={<MemberMypage />} />
+              <Route path="/member/profile/edit" element={<MemberProfileFormPage />} />
+              <Route path="/member/find-password" element={<MemberFindPasswordFormPage />} />
+
               {/* Mentor페이지 */}
               <Route path="/mentor/join" element={<MentorJoinFormPage />} />
               <Route

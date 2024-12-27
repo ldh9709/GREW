@@ -35,4 +35,6 @@ public interface AlarmService{
 	
 	//알림 클릭시 URl전송
 	String alarmRedirectURL(AlarmDto alarmDto);
+	//안읽음 알림 갯수
+	Long alarmIsReadCount(Long memberNo);
 }
