@@ -153,6 +153,42 @@ public class AdminReportController {
 	    }
 	}
 
+	/**
+     * 신고 목록 필터별 조회 (전체, 신고 접수, 검토 중, 처리 완료)
+     */
+    @SecurityRequirement(name = "BearerAuth")
+    @PreAuthorize("hasRole('ADMIN')")
+    @Operation(summary = "필터별 신고 목록 조회")
+    @GetMapping("/filter")
+    public ResponseEntity<Response> getReportsByFilter(
+            @RequestParam(name = "filter", required = true) Integer filter,
+            @RequestParam(name = "page", defaultValue = "0") int page,
+            @RequestParam(name = "size", defaultValue = "10") int size) {
+
+        try {
+            // 서비스 호출
+            List<ReportDto> reports = reportService.getReportAll(filter, page, size);
+
+            // 응답 객체 생성
+            Response response = new Response();
+            response.setStatus(ResponseStatusCode.READ_REPORT_LIST_SUCCESS);
+            response.setMessage(ResponseMessage.READ_REPORT_LIST_SUCCESS);
+            response.setData(reports);
+
+            // HTTP 헤더 설정
+            HttpHeaders httpHeaders = new HttpHeaders();
+            httpHeaders.setContentType(new MediaType(MediaType.APPLICATION_JSON, Charset.forName("UTF-8")));
+
+            // 응답 반환
+            return new ResponseEntity<>(response, httpHeaders, HttpStatus.OK);
+        } catch (Exception e) {
+            // 오류 응답 반환
+            Response response = new Response();
+            response.setStatus(ResponseStatusCode.READ_REPORT_LIST_FAIL);
+            response.setMessage(ResponseMessage.READ_REPORT_LIST_FAIL);
+            return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 	/************* 답변 ***********
 	@Operation(summary = "답변 게시글 번호로 출력(최신순)")
 	@GetMapping("/answer/{inquiryNo}")
