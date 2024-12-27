@@ -87,7 +87,7 @@ public class AdminReportController {
 	@PutMapping("{reportNo}/status")
 	public ResponseEntity<Response> updateReportStatusForAdmin(
 	        @PathVariable(name = "reportNo") Long reportNo,
-	        @Parameter(name = "status", description = "변경할 상태(IN_PROGRESS, RESOLVED, FALSE_REPORT)", required = true, example = "IN_PROGRESS")
+	        @Parameter(name = "status", description = "변경할 상태(IN_PROGRESS(접수중), RESOLVED(처리완료), FALSE_REPORT(무고처리))", required = true, example = "IN_PROGRESS")
 	        @RequestParam(name = "status") String status) {
 	    
 	    // 신고 상태 변경: 상태에 따라 '검토중', '완료' 등으로 설정
@@ -95,15 +95,15 @@ public class AdminReportController {
 
 	    // 상태에 따른 로직 분기
 	    switch (status.toUpperCase()) {
-	        case "IN_PROGRESS":
+	        case "IN_PROGRESS(접수중)":
 	            // 신고 상태 '접수중'으로 변경
 	            updatedReport = reportService.updateReportStatusToInProgress(reportNo);
 	            break;
-	        case "RESOLVED":
+	        case "RESOLVED(처리완료)":
 	            // 신고 상태 '처리완료'로 변경
 	            updatedReport = reportService.updateReportStatusToResolved(reportNo);
 	            break;
-	        case "FALSE_REPORT":
+	        case "FALSE_REPORT(무고처리)":
 	            // 신고 상태 '무고처리'로 변경
 	            updatedReport = reportService.updateReportStatusToFalseReport(reportNo);
 	            break;
