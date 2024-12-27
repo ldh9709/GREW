@@ -38,19 +38,6 @@ export const MainPage = () => {
     fetchMentorBoard();
   }, []);
   const slides = document.querySelectorAll(".slide");
-  const totalSlides = slides.length;
-
-  function goToNextSlide() {
-    currentIndex = (currentIndex + 1) % totalSlides;
-    updateSlidePosition();
-  }
-
-  function updateSlidePosition() {
-    const offset = -currentIndex * 100; // 100%는 각 슬라이드의 너비
-    document.querySelector(
-      ".slider"
-    ).style.transform = `translateX(${offset}%)`;
-  }
 
   useEffect(() => {
     const intervalId = setInterval(() => {
