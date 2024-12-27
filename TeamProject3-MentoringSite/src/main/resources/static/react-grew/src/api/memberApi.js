@@ -179,15 +179,15 @@ export const mentorProfileUpdateAction = async (mentorProfileNo, mentor) => {
 }
 
 //회원 정보 수정
-export const updateAction = async (sendJsonObject) => {
-    console.log("updateMember : ", sendJsonObject);
+export const updateAction = async (memberDto, token) => {
 
-    const response = await fetch(`${BACKEND_SERVER}/member/profile/edit/${sendJsonObject.memberNo}`, {
+    const response = await fetch(`${BACKEND_SERVER}/member/profile/modify`, {
         method: 'PUT',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
         },
-        body:JSON.stringify(sendJsonObject)
+        body:JSON.stringify(memberDto)
       });
       const resultJsonObject = await response.json();
 
