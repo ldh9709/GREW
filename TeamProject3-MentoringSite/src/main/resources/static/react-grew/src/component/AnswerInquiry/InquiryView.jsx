@@ -109,14 +109,18 @@ function InquiryView() {
     pageNumbers.push(i);
   }
   const handleWriteButton = () => {
-    if (member.memberRole == "ROLE_MENTOR") {
-      navigate(`/answer/answerWrite/${inquiryNo}`);
-    } else if (member.memberRole == "ROLE_MENTEE") {
+    if (member.memberRole == "ROLE_MENTEE") {
       alert("멘토만 답변 작성이 가능합니다");
       return;
-    } else {
+    } else if(!member){
       alert("로그인이 필요한 서비스입니다.");
       return;
+    }else if(inquiry.memberNo==member.memberNo){
+      alert("본인의 질문엔 답변을 남길 수 없습니다.");
+      return;
+
+    }else if (member.memberRole == "ROLE_MENTOR") {
+      navigate(`/answer/answerWrite/${inquiryNo}`);
     }
   };
   const handleModify = () => {
