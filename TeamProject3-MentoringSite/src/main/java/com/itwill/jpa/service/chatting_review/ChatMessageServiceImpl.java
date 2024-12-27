@@ -9,7 +9,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.itwill.jpa.dto.chatting_review.ChatMessageDto;
 import com.itwill.jpa.entity.chatting_review.ChatMessage;
+import com.itwill.jpa.entity.chatting_review.ChatMessageImage;
 import com.itwill.jpa.exception.CustomException;
+import com.itwill.jpa.repository.chatting_review.ChatMessageImageRepository;
 import com.itwill.jpa.repository.chatting_review.ChatMessageRepository;
 import com.itwill.jpa.response.ResponseMessage;
 import com.itwill.jpa.response.ResponseStatusCode;
@@ -19,12 +21,16 @@ public class ChatMessageServiceImpl implements ChatMessageService {
 
 	@Autowired
 	private ChatMessageRepository chatMessageRepository;
+	@Autowired
+	private ChatMessageImageRepository chatMessageImageRepository;
+	
 	
 	/*메시지 저장*/
 	@Override
 	public ChatMessage createChatMessage(ChatMessageDto chatMessageDto) {
 		try {
-		ChatMessage message = ChatMessage.toEntity(chatMessageDto);
+		
+			ChatMessage message = ChatMessage.toEntity(chatMessageDto);
 		
 		
 		return chatMessageRepository.save(message);
@@ -62,6 +68,14 @@ public class ChatMessageServiceImpl implements ChatMessageService {
 		}
 		
 		return chatMessageList;
+	}
+	@Override
+	public ChatMessage createChatMessageWithImage(ChatMessage chatMessage, ChatMessageImage chatMessageImage) {
+		 ChatMessage savedChatMessage = chatMessageRepository.save(chatMessage);
+		chatMessageImage.setChatMessage(savedChatMessage);
+        chatMessageImageRepository.save(chatMessageImage);
+        
+        return savedChatMessage;
 	}
 	
 }

@@ -66,6 +66,8 @@ public class InquiryRestController {
 
 	// 질문수정
 	@Operation(summary = "질문 수정")
+	@SecurityRequirement(name = "BearerAuth")//API 엔드포인트가 인증을 요구한다는 것을 문서화(Swagger에서 JWT인증을 명시
+	@PreAuthorize("hasRole('MENTEE')")//ROLE이 MENTEE인 사람만 접근 가능
 	@PutMapping("/update/{inquiryNo}")
 	public ResponseEntity<Response> updateInquiry(@PathVariable(name = "inquiryNo") Long inquiryNo,@RequestBody InquiryDto inquiryDto) throws Exception {
 		inquiryDto.setInquiryNo(inquiryNo);
@@ -86,6 +88,8 @@ public class InquiryRestController {
 
 	// 질문삭제
 	@Operation(summary = "질문삭제")
+	@SecurityRequirement(name = "BearerAuth")//API 엔드포인트가 인증을 요구한다는 것을 문서화(Swagger에서 JWT인증을 명시
+	@PreAuthorize("hasRole('MENTEE')")//ROLE이 MENTEE인 사람만 접근 가능
 	@PutMapping("/delete/{inquiryNo}")
 	public ResponseEntity<Response> deleteInquiry(@PathVariable(name = "inquiryNo") Long inquiryNo) throws Exception {
 		;

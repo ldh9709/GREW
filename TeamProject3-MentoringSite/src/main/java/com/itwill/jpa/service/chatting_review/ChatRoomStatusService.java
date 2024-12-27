@@ -7,6 +7,8 @@ public interface ChatRoomStatusService {
 	ChatRoomStatusDto getChatRoomStatus(Long chatRoomStatusNo);
 	ChatRoomStatusDto getChatRoomStatus(Long chatRoomNo, Long memberNo);
 	void saveFirstChatRoomStatus(ChatRoomStatus mentorChatRoomStatus, ChatRoomStatus menteeChatRoomStatus);
+	void ResetChatRoomStatus(Long chatRoomNo);
+	void updateChatRoomStatus(Long chatRoomNo);
 	ChatRoomStatusDto updateChatRoomStatus(Long chatRoomNo, Long memberNo);
 	ChatRoomStatusDto updateChatRoomName(Long chatRoomNo, Long memberNo, String chatRoomName);
 }

@@ -2,6 +2,7 @@ package com.itwill.jpa.entity.chatting_review;
 
 import com.itwill.jpa.dto.chatting_review.ChatRoomStatusDto;
 import com.itwill.jpa.entity.member_information.Member;
+import com.itwill.jpa.entity.role.Role;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -30,28 +31,22 @@ public class ChatRoomStatus {
 	@Id
 	@SequenceGenerator(name = "chat_room_status_no_SEQ", sequenceName = "chat_room_status_no_SEQ", initialValue = 1, allocationSize = 1)
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "chat_room_status_no_SEQ")
-    @Column(name = "chat_room_status_no", nullable = false)
+    @Column(name = "chat_room_status_no")
     private Long chatRoomStatusNo;
 
-    @Column(name = "chat_room_name", nullable = false)
+    @Column(name = "chat_room_name")
     private String chatRoomName;
 
-    @Column(name = "chat_room_status", nullable = false)
+    @Column(name = "chat_room_status")
     private Integer chatRoomStatus;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "chat_room_no", nullable = false)
+    @JoinColumn(name = "chat_room_no")
     private ChatRoom chatRoom;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "member_no", nullable = false)
+    @JoinColumn(name = "member_no")
     private Member member;
-    
-    @PrePersist
-    public void setDefaultValues() {
-    	if (this.chatRoomName.equals("") || this.chatRoomName == null) this.chatRoomName = chatRoom.getMentor().getMemberName()+"님과 "+chatRoom.getMentee().getMemberName()+"님의 채팅방";
-    	if (this.chatRoomStatus == 0 || this.chatRoomStatus == null) this.chatRoomStatus = 7600;
-    }
     
     public static ChatRoomStatus toEntity(ChatRoomStatusDto chatRoomStatusDto) {
         return ChatRoomStatus.builder()
