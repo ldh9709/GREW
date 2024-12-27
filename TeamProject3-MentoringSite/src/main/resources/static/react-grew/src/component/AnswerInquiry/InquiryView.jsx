@@ -162,7 +162,9 @@ function InquiryView() {
               <FontAwesomeIcon icon={faEye} /> {inquiry.inquiryViews}
             </div>
           </div>
-          <div className="inquiry-view-content">{inquiry.inquiryContent}</div>
+          <div className="inquiry-view-content">
+            {inquiry.inquiryContent.replace('\n', '<br>')}
+          </div>
 
           {member != null && member.memberNo == inquiry.memberNo ? (
             <div className="modify-delete-btn2">

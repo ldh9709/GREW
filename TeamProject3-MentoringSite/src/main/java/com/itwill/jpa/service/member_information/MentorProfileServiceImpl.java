@@ -462,9 +462,55 @@ public class MentorProfileServiceImpl implements MentorProfileService {
 		return profileDtos;
 	}
     
+    @Override
+    public Long getMemberNoByMentorNo(Long mentorProfileNo) {
+    	MentorProfile mentor = mentorProfileRepository.findMemberNoByMentorProfileNo(mentorProfileNo);
+    	Long mentorNo = mentor.getMember().getMemberNo();
+    	return mentorNo;
+    }
     
+	
+	//12월 24일 멘토 프로필 카테고리
+	@Override
+	public Page<MentorProfileDto> getByParentCategoryOrderByFollowCount(Long parentCategoryNo, int page, int size) {
+	    Pageable pageable = PageRequest.of(page, size);
+	    Page<MentorProfile> mentorProfiles = mentorProfileRepository.findByParentCategoryOrderByFollowCount(parentCategoryNo, pageable);
+	    return mentorProfiles.map(MentorProfileDto::toDto);
+	}
 
-    
+	@Override
+	public Page<MentorProfileDto> getByParentCategoryOrderByMentoringCount(Long parentCategoryNo, int page, int size) {
+	    Pageable pageable = PageRequest.of(page, size);
+	    Page<MentorProfile> mentorProfiles = mentorProfileRepository.findByParentCategoryOrderByMentoringCount(parentCategoryNo, pageable);
+	    return mentorProfiles.map(MentorProfileDto::toDto);
+	}
 
+	@Override
+	public Page<MentorProfileDto> getByParentCategoryOrderByActivityCount(Long parentCategoryNo, int page, int size) {
+	    Pageable pageable = PageRequest.of(page, size);
+	    Page<MentorProfile> mentorProfiles = mentorProfileRepository.findByParentCategoryOrderByActivityCount(parentCategoryNo, pageable);
+	    return mentorProfiles.map(MentorProfileDto::toDto);
+	}
+
+
+    @Override
+    public Page<MentorProfileDto> getByCategoryNoOrderByFollowCount(Long categoryNo, int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        Page<MentorProfile> mentors = mentorProfileRepository.findByCategoryNoOrderByFollowCount(categoryNo, pageable);
+        return mentors.map(MentorProfileDto::toDto);
+    }
+
+    @Override
+    public Page<MentorProfileDto> getByCategoryNoOrderByMentoringCount(Long categoryNo, int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        Page<MentorProfile> mentors = mentorProfileRepository.findByCategoryNoOrderByMentoringCount(categoryNo, pageable);
+        return mentors.map(MentorProfileDto::toDto);
+    }
+
+    @Override
+    public Page<MentorProfileDto> getByCategoryNoOrderByActivityCount(Long categoryNo, int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        Page<MentorProfile> mentors = mentorProfileRepository.findByCategoryNoOrderByActivityCount(categoryNo, pageable);
+        return mentors.map(MentorProfileDto::toDto);
+    }
 }
-    

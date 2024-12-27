@@ -18,6 +18,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class MentorBoardDto {
 	private Long mentorBoardNo;
+	
     private String mentorBoardTitle;
     private String mentorBoardContent;
     private String mentorBoardImage;
@@ -26,6 +27,8 @@ public class MentorBoardDto {
     private Integer mentorBoardStatus;
     //private MemberDto member;
     private Long memberNo;
+    private Long categoryNo;
+    private String categoryName;
     /*
      * Entity -> DTO
      */
@@ -40,6 +43,8 @@ public class MentorBoardDto {
                 .mentorBoardStatus(mentorBoardEntity.getMentorBoardStatus())
                 //.member(MemberDto.toDto(mentorBoardEntity.getMember()))
                 .memberNo(mentorBoardEntity.getMember().getMemberNo())
+                .categoryNo(mentorBoardEntity.getMember().getMentorProfile().getCategory().getCategoryNo())
+                .categoryName(mentorBoardEntity.getMember().getMentorProfile().getCategory().getCategoryName())
                 .build();
     }
 

@@ -2,9 +2,15 @@ import React, { useState } from "react";
 import * as reviewApi from "../../api/reviewApi"; // 리뷰 API
 import { useNavigate } from "react-router-dom";
 import "../../css/review.css"; // 리뷰 폼 스타일
+import { useMemberAuth } from "../../util/AuthContext";
+import { useLocation } from "react-router-dom"; // useLocation 훅 임포트
 
 export default function ReviewWriteFormPage() {
+  const { token, member } = useMemberAuth();
   const navigate = useNavigate();
+  // location에서 전달된 상태값 받기
+  const location = useLocation();
+  const { chatRoomNo, memberNo } = location.state || {}; // state가 없을 경우 기본값
 
   // 초기 리뷰 상태
   const initReview = {
@@ -14,7 +20,8 @@ export default function ReviewWriteFormPage() {
     reviewDate: "",
     reviewScore: 1,
     reviewStatus: 1,
-    chatRoomNo: 1,
+    chatRoomNo: chatRoomNo,
+    memberNo: memberNo,
   };
 
   const [review, setReview] = useState(initReview); // 리뷰 상태
@@ -45,7 +52,7 @@ export default function ReviewWriteFormPage() {
 
     // 리뷰 작성 API 호출
     try {
-      const responseJsonObject = await reviewApi.writeReview(review);
+      const responseJsonObject = await reviewApi.writeReview(review, token);
       console.log(responseJsonObject.data);
       // 리뷰 작성 후 해당 리뷰 상세 페이지로 이동
       navigate(`/review/${responseJsonObject.data.reviewNo}`);
@@ -86,10 +93,15 @@ export default function ReviewWriteFormPage() {
     <div className="review-form-container">
       <form method="POST" className="review-form">
         <h2>리뷰 작성</h2>
-
+        {/* 리뷰 점수 입력 (별점으로 변경) */}
+        <div>
+          <label>점수</label>
+          {renderStars(review.reviewScore)} {/* 별점 표시 */}
+        </div>
         {/* 리뷰 제목 입력 */}
         <div>
           <input
+            className="review-title"
             type="text"
             name="reviewTitle"
             onChange={onChangeReviewForm}
@@ -108,12 +120,6 @@ export default function ReviewWriteFormPage() {
             placeholder="리뷰 내용을 입력하세요"
             required
           />
-        </div>
-
-        {/* 리뷰 점수 입력 (별점으로 변경) */}
-        <div>
-          <label>리뷰 점수 (1~5)</label>
-          {renderStars(review.reviewScore)} {/* 별점 표시 */}
         </div>
 
         {/* 작성 버튼 */}

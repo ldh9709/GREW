@@ -13,6 +13,7 @@ public class MentorProfileDto {
 
     private Long mentorProfileNo; 
     private Long memberNo; 
+    private String memberName;
     private Long categoryNo; 
     private String mentorCareer;
     private String mentorIntroduce; 
@@ -22,7 +23,8 @@ public class MentorProfileDto {
     private Integer mentorMentoringCount; 
     private Integer mentorFollowCount; 
     private Integer mentorActivityCount; 
-
+    private String categoryName;
+    
     /**
      * 엔티티를 DTO로 변환하는 메서드
      * 
@@ -37,6 +39,7 @@ public class MentorProfileDto {
         return MentorProfileDto.builder()
                 .mentorProfileNo(entity.getMentorProfileNo())
                 .memberNo(entity.getMember().getMemberNo())
+                .memberName(entity.getMember().getMemberName())
                 .categoryNo(entity.getCategory().getCategoryNo())
                 .mentorCareer(entity.getMentorCareer())
                 .mentorIntroduce(entity.getMentorIntroduce())
@@ -46,6 +49,7 @@ public class MentorProfileDto {
                 .mentorMentoringCount(entity.getMentorMentoringCount())
                 .mentorFollowCount(entity.getMentorFollowCount())
                 .mentorActivityCount(entity.getMentorActivityCount())
+                .categoryName(entity.getCategory().getCategoryName())
                 .build();
     }
 }

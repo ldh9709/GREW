@@ -107,8 +107,45 @@ public interface MentorProfileRepository extends JpaRepository<MentorProfile, Lo
      Page<MentorProfile> findByOrderByMentorFollowCountDesc(Pageable pageable);
      Page<MentorProfile> findByOrderByMentorMentoringCountDesc(Pageable pageable);
      Page<MentorProfile> findByOrderByMentorActivityCountDesc(Pageable pageable);
+
+     //12/24일 멘토 프로필 카테고리
+  // MentorProfileRepository.java
+     // 팔로우 순으로 소분류 카테고리별 멘토 리스트 조회
+    
+     @Query("SELECT mp FROM MentorProfile mp " +
+    	       "WHERE mp.category.parentCategory.categoryNo = :parentCategoryNo " +
+    	       "ORDER BY mp.mentorFollowCount DESC")
+    	Page<MentorProfile> findByParentCategoryOrderByFollowCount(@Param("parentCategoryNo") Long parentCategoryNo, Pageable pageable);
+
+    	@Query("SELECT mp FROM MentorProfile mp " +
+    	       "WHERE mp.category.parentCategory.categoryNo = :parentCategoryNo " +
+    	       "ORDER BY mp.mentorMentoringCount DESC")
+    	Page<MentorProfile> findByParentCategoryOrderByMentoringCount(@Param("parentCategoryNo") Long parentCategoryNo, Pageable pageable);
+
+    	@Query("SELECT mp FROM MentorProfile mp " +
+    	       "WHERE mp.category.parentCategory.categoryNo = :parentCategoryNo " +
+    	       "ORDER BY mp.mentorActivityCount DESC")
+    	Page<MentorProfile> findByParentCategoryOrderByActivityCount(@Param("parentCategoryNo") Long parentCategoryNo, Pageable pageable);
+     
+     // CATEGORY_NO 별 조회
+     @Query("SELECT mp FROM MentorProfile mp WHERE mp.category.categoryNo = :categoryNo ORDER BY mp.mentorFollowCount DESC")
+     Page<MentorProfile> findByCategoryNoOrderByFollowCount(@Param("categoryNo") Long categoryNo, Pageable pageable);
+
+     @Query("SELECT mp FROM MentorProfile mp WHERE mp.category.categoryNo = :categoryNo ORDER BY mp.mentorMentoringCount DESC")
+     Page<MentorProfile> findByCategoryNoOrderByMentoringCount(@Param("categoryNo") Long categoryNo, Pageable pageable);
+
+     @Query("SELECT mp FROM MentorProfile mp WHERE mp.category.categoryNo = :categoryNo ORDER BY mp.mentorActivityCount DESC")
+     Page<MentorProfile> findByCategoryNoOrderByActivityCount(@Param("categoryNo") Long categoryNo, Pageable pageable);
+     
+     @Query("SELECT c.categoryNo FROM Category c WHERE c.parentCategory.categoryNo = :parentCategoryNo")
+     List<Long> findCategoryNosByParentCategoryNo(@Param("parentCategoryNo") Long parentCategoryNo);
+
+
      //별점 순으로 리스트뽑기(우수멘토)
      List<MentorProfile> findByOrderByMentorRatingDesc();
+
+     
+     MentorProfile findMemberNoByMentorProfileNo(Long mentorProfileNo);
      
 }
 
