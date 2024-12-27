@@ -11,8 +11,16 @@ const ChatRequests = () => {
 
     const chatRoomList = async (page) => {
         const responseJsonObject = await ChattingApi.waitListChatRoom(token, page, 7);
-        setRooms(responseJsonObject.data.content);  // 필터링된 채팅방만 setRooms에 설정
-        setTotalPages(responseJsonObject.data.totalPages);
+        if (responseJsonObject.status === 7010 && Array.isArray(responseJsonObject.data.content)) {
+            // 각 채팅방 상태를 개별적으로 비교하여 필터링
+            const activeRooms = responseJsonObject.data.content.filter((room) => { // filter()는 배열의 각 항목을 하나씩 검사하며, 주어진 콜백 함수에서 true를 반환하는 항목만 새로운 배열에 포함
+                return (
+                    (room.chatRoomStatus === 7000 && room.chatRoomLeaveStatus === 7500) || (room.chatRoomStatus === 7000 && room.chatRoomLeaveStatus === 7600)
+                );
+            });
+            setRooms(activeRooms);  // 필터링된 채팅방만 setRooms에 설정
+            setTotalPages(responseJsonObject.data.totalPages);
+        }
     }
 
     useEffect(() => {
