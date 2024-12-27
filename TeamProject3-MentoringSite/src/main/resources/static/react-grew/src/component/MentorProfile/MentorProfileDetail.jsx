@@ -15,7 +15,6 @@ export default function MentorProfileDetail() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [categoryName, setCategoryName] = useState("카테고리 정보 없음");
-  const [memberName, setMemberName] = useState(""); // 멤버 이름 상태 추가
 
   // 쿠키에서 member 객체를 가져와 JWT 토큰을 추출
   const memberCookie = getCookie("member");
@@ -31,6 +30,8 @@ export default function MentorProfileDetail() {
         const mentorProfileResponse = await getMentorProfileByNo(
           mentorProfileNo
         );
+
+        console.log(mentorProfile)
         setMentorProfile(mentorProfileResponse.data);
 
         console.log("Decoded Token:", decodeToken); // 디코딩된 토큰 정보 확인
@@ -60,9 +61,6 @@ export default function MentorProfileDetail() {
           if (mentorProfile.categoryNo) {
             fetchCategoryName(mentorProfile.categoryNo);
           }
-          if (mentorProfile.memberNo) {
-            fetchMemberName(mentorProfile.memberNo); // 멤버 이름 가져오기
-          }
         }
       } catch (error) {
         setError("멘토 프로필을 가져오는 중 오류가 발생했습니다.");
@@ -91,15 +89,6 @@ export default function MentorProfileDetail() {
     }
   };
 
-  const fetchMemberName = async (memberNo) => {
-    try {
-      const response = await memberApi.getMemberByMemberNo(memberNo); // 멤버 API 호출
-      setMemberName(response.data.memberName);
-    } catch (error) {
-      console.error("멤버 이름 정보를 가져오는 중 오류 발생:", error);
-    }
-  };
-
   if (error) return <p className="error-message">{error}</p>;
 
   return (
@@ -113,8 +102,7 @@ export default function MentorProfileDetail() {
             className="mentor-profile-image-large"
           />
           <div className="mentor-basic-info">
-            <h2>{memberName}</h2> {/* 멤버 이름 표시 */}
-            <p>{mentorProfile?.mentorCareer || "멘토 경력 정보 없음"}</p>
+            <h2>{mentorProfile.memberName} 멘토</h2> {/* 멤버 이름 표시 */}
             <div className="mentor-stats">
               멘토링 성공률:{" "}
               {mentorProfile?.mentorActivityCount

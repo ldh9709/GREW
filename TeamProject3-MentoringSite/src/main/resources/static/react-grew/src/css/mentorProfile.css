@@ -149,7 +149,6 @@
   max-width: 1200px;
   margin: 0 auto;
   padding: 20px;
-  font-family: Arial, sans-serif;
   display: flex;
   flex-direction: column;
   gap: 20px;
@@ -164,11 +163,14 @@
 
 /* 좌측 섹션: 이미지와 기본 정보 */
 .mentor-image-section {
+  width: 30%;
   display: flex;
   flex-direction: column;
   align-items: center;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  padding: 20px 0;
   gap: 10px;
-  width: 40%;
 }
 
 /* 프로필 이미지 */
@@ -185,7 +187,7 @@
 }
 
 .mentor-basic-info h2 {
-  font-size: 24px;
+  font-size: 18px;
   font-weight: bold;
   margin-bottom: 10px;
 }
@@ -206,7 +208,7 @@
 
 /* 우측 섹션: 상세 정보 */
 .mentor-details-section {
-  width: 55%;
+  width: 60%;
   display: flex;
   flex-direction: column;
   gap: 15px;

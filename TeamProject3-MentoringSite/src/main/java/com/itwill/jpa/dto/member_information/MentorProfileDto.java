@@ -13,6 +13,7 @@ public class MentorProfileDto {
 
     private Long mentorProfileNo; 
     private Long memberNo; 
+    private String memberName;
     private Long categoryNo; 
     private String mentorCareer;
     private String mentorIntroduce; 
@@ -38,6 +39,7 @@ public class MentorProfileDto {
         return MentorProfileDto.builder()
                 .mentorProfileNo(entity.getMentorProfileNo())
                 .memberNo(entity.getMember().getMemberNo())
+                .memberName(entity.getMember().getMemberName())
                 .categoryNo(entity.getCategory().getCategoryNo())
                 .mentorCareer(entity.getMentorCareer())
                 .mentorIntroduce(entity.getMentorIntroduce())
