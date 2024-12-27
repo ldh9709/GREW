@@ -97,10 +97,24 @@ public class MemberDto {
 	//아이디 찾기 시 사용
 	public static class findId {
 		
-		private String name;
+		private String memberName;
 		@Email
-		private String email;
+		private String memberEmail;
 	}
+	
+	@Builder
+	@Data
+	@NoArgsConstructor
+	@AllArgsConstructor
+	//아이디 찾기 시 사용
+	public static class certificationCode {
+		
+		@Email
+		private String memberEmail;
+		
+		private Integer inputCode;
+	}
+	
 	
 	@Builder
 	@Data

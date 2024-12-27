@@ -443,8 +443,11 @@ public class MemberRestController {
 	/***** 아이디 찾기: 인증번호 확인 후 아이디 반환 *****/
 	@Operation(summary = "2. 아이디 찾기 : 인증번호 확인 후 아이디 반환 ")
 	@PostMapping("/findId/certificationCode")
-	public ResponseEntity<Response> certificationFindId(@RequestParam(name = "memberEmail") String memberEmail, @RequestParam(name = "inputCode") Integer inputCode) {
+	public ResponseEntity<Response> certificationFindId(@RequestBody MemberDto.certificationCode memberDto) {
 	    
+		String memberEmail = memberDto.getMemberEmail();
+		Integer inputCode = memberDto.getInputCode();
+		
 		Boolean isChecked =	memberService.certificationCodeByFindId(memberEmail, inputCode);
 		
 		Response response = new Response();
@@ -472,9 +475,10 @@ public class MemberRestController {
 		}
 		
 		String memberId = memberService.getMemberByMemberEmail(memberEmail).getMemberId();
+		String maskMemberId = memberService.maskMemberId(memberId);
 		response.setStatus(ResponseStatusCode.INPUTCODE_CONFIRM_SUCCESS);
 		response.setMessage(ResponseMessage.INPUTCODE_CONFIRM_SUCCESS);
-		response.setData(memberId);
+		response.setData(maskMemberId);
 		
 		ResponseEntity<Response> responseEntity = 
 				new ResponseEntity<Response>(response, httpHeaders, HttpStatus.OK);
