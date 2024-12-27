@@ -31,7 +31,8 @@ public class MentorProfileDto {
      * @param entity MentorProfile 엔티티
      * @return MentorProfileDto
      */
-    public static MentorProfileDto toDto(MentorProfile entity) {
+    
+    public static MentorProfileDto toResponseDto(MentorProfile entity) {
         if (entity == null) {
             return null;
         }
@@ -52,4 +53,26 @@ public class MentorProfileDto {
                 .categoryName(entity.getCategory().getCategoryName())
                 .build();
     }
+    public static MentorProfileDto toDto(MentorProfile entity) {
+        if (entity == null) {
+            return null;
+        }
+
+        return MentorProfileDto.builder()
+                .mentorProfileNo(entity.getMentorProfileNo())
+                .memberNo(entity.getMember().getMemberNo())
+                .categoryNo(entity.getCategory().getCategoryNo())
+                .mentorCareer(entity.getMentorCareer())
+                .mentorIntroduce(entity.getMentorIntroduce())
+                .mentorImage(entity.getMentorImage())
+                .mentorStatus(entity.getMentorStatus())
+                .mentorRating(entity.getMentorRating())
+                .mentorMentoringCount(entity.getMentorMentoringCount())
+                .mentorFollowCount(entity.getMentorFollowCount())
+                .mentorActivityCount(entity.getMentorActivityCount())
+                .build();
+    }
+    
+    
+
 }

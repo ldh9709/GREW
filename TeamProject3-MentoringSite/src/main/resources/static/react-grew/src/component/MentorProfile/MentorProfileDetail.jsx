@@ -104,20 +104,32 @@ export default function MentorProfileDetail() {
           <div className="mentor-basic-info">
             <h2>{mentorProfile.memberName} 멘토</h2> {/* 멤버 이름 표시 */}
             <div className="mentor-stats">
-              멘토링 성공률:{" "}
-              {mentorProfile?.mentorActivityCount
+              <span>
+                멘토링 신청
+              </span>
+              <span>
+                {mentorProfile?.mentorMentoringCount || 0}
+              </span>
+              <span>매칭률</span>
+              <span>
+                {mentorProfile?.mentorActivityCount
                 ? Math.round(
                     (mentorProfile.mentorMentoringCount /
                       mentorProfile.mentorActivityCount) *
                       100
                   )
-                : 0}
-              %
-              <span>
-                멘토링 횟수: {mentorProfile?.mentorMentoringCount || 0}
+                  : 0}  
+                    %
               </span>
-              <span>팔로워: {mentorProfile?.mentorFollowCount || 0}</span>
+              <span>
+                만족도
+              </span>
+              <span>
+                {mentorProfile?.mentorRating || 0}
+              </span>
             </div>
+            <span>팔로워:</span>
+            <span>{mentorProfile?.mentorFollowCount || 0}</span>
             {/* 버튼 */}
             <div className="mentor-actions">
               <button className="follow-button">+ 팔로우</button>
