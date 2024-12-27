@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 
 export default function MentorBoardItem({ board }) {
   const navigate = useNavigate();
-
+  console.log('board',board)
   // 멘토 보드 상세 페이지로 이동
   const viewMentorBoard = () => {
     navigate(`/mentor-board/detail/${board.mentorBoardNo}`);

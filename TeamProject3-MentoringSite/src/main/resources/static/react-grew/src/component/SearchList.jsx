@@ -138,7 +138,7 @@ useEffect(() => {
         {mentorBoards.length > 0 ? (
         <div>
            {mentorBoards.map((board) => (
-           <MentorBoardItem key={board.mentorBoardNo} mentorBoard={board} />
+           <MentorBoardItem key={board.mentorBoardNo} board={board} />
          ))}
          <button onClick={handleViewMoreMentorBoards}>멘토 보드 더보기</button>
             </div>
