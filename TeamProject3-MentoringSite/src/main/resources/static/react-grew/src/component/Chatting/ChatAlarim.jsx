@@ -31,12 +31,14 @@ const ChatAlarim = () => {
     }
   };
   useEffect(() => {
+if(member){
 
-      alarmIsReadCount(); // 데이터를 가져오는 함수
+    alarmIsReadCount(); // 데이터를 가져오는 함수
     const intervalId = setInterval(() => {
-      alarmIsReadCount(); // 데이터를 가져오는 함수
+        alarmIsReadCount(); // 데이터를 가져오는 함수
     }, 3000); // 5000ms = 5초
     return () => clearInterval(intervalId);
+}
   }, [member]);
   return (
     <div>
