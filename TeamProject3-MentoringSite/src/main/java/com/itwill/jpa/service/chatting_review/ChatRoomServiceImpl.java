@@ -69,13 +69,13 @@ public class ChatRoomServiceImpl implements ChatRoomService {
 				chatRoom.setMentor(mentor);
 				chatRoom.setMentee(mentee);
 				ChatRoomStatus mentorChatRoomStatus = ChatRoomStatus.builder()
-						.chatRoomName(mentee.getMemberName()+"님 에게서 채팅방 신청이 도착했습니다.")
+						.chatRoomName(mentee.getMemberName()+"님에게서 채팅방 신청이 도착했습니다.")
 						.chatRoomStatus(7500)
 						.chatRoom(chatRoom)
 						.member(mentor)
 						.build();
 				ChatRoomStatus menteeChatRoomStatus = ChatRoomStatus.builder()
-						.chatRoomName(mentor.getMemberName()+"님 에게 채팅방을 신청했습니다.")
+						.chatRoomName(mentor.getMemberName()+"님에게 채팅방을 신청했습니다.")
 						.chatRoomStatus(7500)
 						.chatRoom(chatRoom)
 						.member(mentee)

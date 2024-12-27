@@ -3,10 +3,10 @@ import { useParams } from "react-router-dom";
 import "../../css/mentorProfile.css"; // 🔥 추가된 CSS 파일
 import { getMentorProfileByNo } from "../../api/mentorProfileApi.js";
 import { listReviewByMember } from "../../api/reviewApi.js"; // 리뷰 목록 API 추가
-import { getCookie } from "../../util/cookieUtil.js";
-import { jwtDecode } from "jwt-decode";
+import { useMemberAuth } from '../../util/AuthContext.js';
 import * as categoryApi from "../../api/categoryApi";
 import * as memberApi from "../../api/memberApi";
+import * as ChattingApi from '../../api/chattingApi.js';
 
 export default function MentorProfileDetail() {
   const { mentorProfileNo } = useParams();
@@ -17,9 +17,7 @@ export default function MentorProfileDetail() {
   const [categoryName, setCategoryName] = useState("카테고리 정보 없음");
 
   // 쿠키에서 member 객체를 가져와 JWT 토큰을 추출
-  const memberCookie = getCookie("member");
-  const token = memberCookie ? memberCookie.accessToken : null; // 여기서 accessToken을 정확히 추출해야 함
-  const decodeToken = token ? jwtDecode(token) : null;
+  const { token, memberNo } = useMemberAuth();
 
   useEffect(() => {
     const fetchMentorProfile = async () => {
@@ -34,7 +32,6 @@ export default function MentorProfileDetail() {
         console.log(mentorProfile)
         setMentorProfile(mentorProfileResponse.data);
 
-        console.log("Decoded Token:", decodeToken); // 디코딩된 토큰 정보 확인
 
         // 2. 멘토 프로필 번호로 리뷰 목록 조회 (Authorization 헤더에 JWT 토큰 추가)
         const reviewsResponse = await listReviewByMember(
@@ -91,6 +88,26 @@ export default function MentorProfileDetail() {
 
   if (error) return <p className="error-message">{error}</p>;
 
+  const handleQuestionButtonClick = async () => {
+    if (!memberNo || !mentorProfileNo) {
+      alert("멘토 또는 멘티 정보가 없습니다.");
+      return;
+    }
+
+    try {
+      const response = await ChattingApi.createChatting(memberNo, mentorProfileNo);
+      if (response.success) {
+        alert("멘토와의 채팅이 시작되었습니다!");
+        // 채팅방으로 이동하거나 다른 추가 동작을 구현할 수 있습니다.
+      } else {
+        alert(response.message || "채팅 생성에 실패했습니다.");
+      }
+    } catch (error) {
+      console.error("채팅 생성 중 오류 발생:", error);
+      alert("채팅 생성 중 오류가 발생했습니다.");
+    }
+  };
+
   return (
     <div className="mentor-profile-detail-container">
       <div className="mentor-header">
@@ -133,7 +150,12 @@ export default function MentorProfileDetail() {
             {/* 버튼 */}
             <div className="mentor-actions">
               <button className="follow-button">+ 팔로우</button>
-              <button className="question-button">멘토에게 질문하기</button>
+              <button
+                className="question-button"
+                onClick={handleQuestionButtonClick}
+              >
+                멘토에게 질문하기
+              </button>
             </div>
           </div>
         </div>
