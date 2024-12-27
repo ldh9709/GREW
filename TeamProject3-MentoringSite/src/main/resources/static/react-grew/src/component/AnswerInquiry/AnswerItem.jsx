@@ -82,18 +82,17 @@ export default function AnswerItem({ answer }) {
       alert("API 호출 중 오류 발생: " + error.message); // 사용자에게 오류 메시지 표시
     }
   };
-  
+
   //답변 삭제 버튼
   const handleRemoveAnswer = async () => {
     try {
-      if (!window.confirm('답변을 삭제하시겠습니까?')) return;
-      await answerApi.deleteAnswer(answer.answerNo,token)
+      if (!window.confirm("답변을 삭제하시겠습니까?")) return;
+      await answerApi.deleteAnswer(answer.answerNo, token);
       window.location.reload();
     } catch (error) {
-      console.log('답변 삭제 실패',error)
+      console.log("답변 삭제 실패", error);
     }
-  }
-  
+  };
 
   const handleDownvote = async () => {
     try {
@@ -145,7 +144,9 @@ export default function AnswerItem({ answer }) {
           <div></div>
         )}
 
-        {member && member.memberNo == inquiry.memberNo &&answer.answerAccept==1? (
+        {member &&
+        member.memberNo == inquiry.memberNo &&
+        answer.answerAccept == 1 ? (
           <div className="answer-accept">
             <button className="accept-btn" onClick={handleAccept}>
               채택하기
@@ -172,7 +173,14 @@ export default function AnswerItem({ answer }) {
           </div>
         </button>
 
-        <div className="answer-content">{answer.answerContent}</div>
+        <div
+          className="answer-content"
+          dangerouslySetInnerHTML={{
+            __html: answer.answerContent.replace(/\n/g, "<br/>"),
+          }}
+        >
+        </div>
+
         <div className="answer-date">{answer.answerDate.substring(0, 10)}</div>
         <div className="answer-vote">
           <button
@@ -207,9 +215,7 @@ export default function AnswerItem({ answer }) {
           {member && member.memberNo == answer.memberNo ? (
             <div className="modify-delete-btn">
               <button onClick={handleModify}>수정</button>
-              <button onClick={handleRemoveAnswer}>
-                삭제
-              </button>
+              <button onClick={handleRemoveAnswer}>삭제</button>
             </div>
           ) : (
             <div></div>

@@ -1,5 +1,6 @@
 package com.itwill.jpa.controller.member_information;
 
+import com.itwill.jpa.auth.PrincipalDetails;
 import com.itwill.jpa.dto.chatting_review.ReviewDto;
 import com.itwill.jpa.dto.member_information.MentorProfileDto;
 import com.itwill.jpa.entity.member_information.Category;
@@ -17,6 +18,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -88,9 +90,14 @@ public class MentorProfileController {
 	 * 멘토 프로필을 생성합니다.
 	 */
 	@Operation(summary = "멘토 프로필 생성")
-	@PostMapping("/{memberNo}/create-profile")
-	public ResponseEntity<Response> saveMentorProfile(@PathVariable(name = "memberNo") Long memberNo,
+	@PostMapping("/create-profile")
+	public ResponseEntity<Response> saveMentorProfile(Authentication authentication,
 			@RequestBody MentorProfileDto mentorProfileDto) {
+		
+		//PrincipalDetails에서 memberNo를 가져옴
+		PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
+		Long memberNo = principalDetails.getMemberNo();
+		System.out.println("멘토 프로필 생성 memberNo : " + memberNo);
 		
 		MentorProfile mentorProfile = mentorProfileService.saveMentorProfile(memberNo, mentorProfileDto);
 		
@@ -397,6 +404,8 @@ public class MentorProfileController {
 	public ResponseEntity<Response> getMentorProfileByMemberNo(@PathVariable(name = "memberNo") Long memberNo) {
 		MentorProfileDto mentor = mentorProfileService.getMentorByMemberNo(memberNo);
 		Response response = new Response();
+		response.setStatus(ResponseStatusCode.READ_MENTOR_PROFILE_SUCCESS_CODE);
+		response.setMessage(ResponseMessage.READ_MENTOR_PROFILE_SUCCESS);
 		response.setData(mentor);
 		return ResponseEntity.ok(response);
 

@@ -43,7 +43,7 @@ export default function InquiryItem({ inquiry }) {
             <span> {inquiry.inquiryDate.substring(0, 10)}</span>
           </div>
           <div className="inquiry-title">{inquiry.inquiryTitle}</div>
-          <div className="inquiry-content">{inquiry.inquiryContent.substring(0,100)}</div>
+          <div className="inquiry-content" >{inquiry.inquiryContent.substring(0,127)}</div>
           <div className="inquiry-desc"> 
             <FontAwesomeIcon icon={faEye}  /> {inquiry.inquiryViews} |{" "}
             <FontAwesomeIcon icon={faCommentDots} /> {count}

@@ -23,6 +23,7 @@ public class MentorProfileDto {
     private Integer mentorMentoringCount; 
     private Integer mentorFollowCount; 
     private Integer mentorActivityCount; 
+    private String mentorHeadline;
     private String categoryName;
     
     /**
@@ -50,6 +51,7 @@ public class MentorProfileDto {
                 .mentorMentoringCount(entity.getMentorMentoringCount())
                 .mentorFollowCount(entity.getMentorFollowCount())
                 .mentorActivityCount(entity.getMentorActivityCount())
+                .mentorHeadline(entity.getMentorHeadline())
                 .categoryName(entity.getCategory().getCategoryName())
                 .build();
     }

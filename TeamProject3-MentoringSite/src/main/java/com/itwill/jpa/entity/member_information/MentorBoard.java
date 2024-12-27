@@ -64,8 +64,16 @@ public class MentorBoard {
     
     public static MentorBoard toEntity(MentorBoardDto mentorBoardDto) {
     	
+    	MentorProfile mentorProfile = MentorProfile.builder()
+    			.category(Category.builder()
+    					.categoryNo(mentorBoardDto.getCategoryNo())
+    					.categoryName(mentorBoardDto.getCategoryName())
+    					.build())
+    			.build();
+    	
     	Member member = Member.builder()
 				.memberNo(mentorBoardDto.getMemberNo())
+				.mentorProfile(mentorProfile)
 				.build();
  
     	
