@@ -11,27 +11,38 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHeart, faHeartCircleCheck, faHeartCirclePlus } from '@fortawesome/free-solid-svg-icons';
 
 export default function MentorProfileDetail() {
-  const { token, memberNo } = useMemberAuth();
+  const { token, member } = useMemberAuth();
   const { mentorProfileNo } = useParams();
-  const [mentorProfile, setMentorProfile] = useState(null);
+  const [mentorProfile, setMentorProfile] = useState({});
   const [reviews, setReviews] = useState([]); // 빈 배열로 초기화
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [categoryName, setCategoryName] = useState("카테고리 정보 없음");
-  const [isFollow, setIsfollow] = useState();
+  const [isFollow, setIsfollow] = useState(false);
+  const [follow,setFollow] = useState({})
 
 
-  const checkFollow = async() => {
-    try {
-      const response = await followApi.isExistFollow(token);
-      console.log(response);
-    } catch (error) {
-      console.log('팔로워 여부 체크 실패')
-    }
+  const handleFollowToggle = async () => {
+
+  }
+  //팔로우 여부 체크
+  const checkFollow = async(mentorNo) => {
+    const response = await followApi.isExistFollow(token, mentorNo);
+    console.log(response)
+    setIsfollow(response.data);
   }
 
-  const handleFollow = () => {
-    
+  //팔로우 등록
+  const handleFollow = async() => {
+    try {
+        if (!isFollow) {
+          handleFollow();
+        }
+        const response = await followApi.addfollow(token,follow);
+        console.log(response)
+      }catch (error) {
+      console.log('팔로우가 실패하였습니다')
+    }
   }
 
   const fetchMentorProfile = async () => {
@@ -43,8 +54,8 @@ export default function MentorProfileDetail() {
         mentorProfileNo
       );
 
-      console.log(mentorProfile)
       setMentorProfile(mentorProfileResponse.data);
+      console.log('mentorProfile', mentorProfile)
 
       // 2. 멘토 프로필 번호로 리뷰 목록 조회 (Authorization 헤더에 JWT 토큰 추가)
       const reviewsResponse = await listReviewByMember(
@@ -54,12 +65,12 @@ export default function MentorProfileDetail() {
         token // `token`을 Authorization 헤더에 포함시켜야 함
       );
 
-      console.log("Reviews Response:", reviewsResponse);
-      console.log("Reviews Response Data:", reviewsResponse.data); // 전체 데이터 확인
-      console.log(
-        "Reviews Response Data.content:",
-        reviewsResponse.data?.content
-      ); // content만 따로 확인
+      // console.log("Reviews Response:", reviewsResponse);
+      // console.log("Reviews Response Data:", reviewsResponse.data); // 전체 데이터 확인
+      // console.log(
+      //   "Reviews Response Data.content:",
+      //   reviewsResponse.data?.content
+      // ); // content만 따로 확인
 
       // Check if there are reviews in the response
       if (reviewsResponse.data) {
@@ -72,6 +83,7 @@ export default function MentorProfileDetail() {
           fetchCategoryName(mentorProfile.categoryNo);
         }
       }
+
     } catch (error) {
       setError("멘토 프로필을 가져오는 중 오류가 발생했습니다.");
     } finally {
@@ -80,9 +92,9 @@ export default function MentorProfileDetail() {
   };
 
   useEffect(() => {
-    checkFollow();
     fetchMentorProfile();
-  }, [mentorProfileNo, token]);
+    checkFollow(mentorProfile.memberNo);
+  }, []);
 
   console.log("Reviews:", reviews); // 이 줄을 추가하여 reviews 데이터를 확인
 
@@ -106,13 +118,13 @@ export default function MentorProfileDetail() {
   if (error) return <p className="error-message">{error}</p>;
 
   const handleQuestionButtonClick = async () => {
-    if (!memberNo || !mentorProfileNo) {
+    if (!member || !mentorProfileNo) {
       alert("멘토 또는 멘티 정보가 없습니다.");
       return;
     }
 
     try {
-      const response = await ChattingApi.createChatting(memberNo, mentorProfileNo);
+      const response = await ChattingApi.createChatting(member.memberNo, mentorProfileNo);
       if (response.success) {
         alert("멘토와의 채팅이 시작되었습니다!");
         // 채팅방으로 이동하거나 다른 추가 동작을 구현할 수 있습니다.
@@ -163,7 +175,16 @@ export default function MentorProfileDetail() {
             
             {/* 버튼 */}
             <div className="mentor-actions">
-              <button className="follow-button"><FontAwesomeIcon icon={faHeartCirclePlus}/> 팔로우</button>
+              <button className="follow-button"
+                onClick={{ handleFollowToggle }}
+              >
+                {isFollow ? (
+                  <FontAwesomeIcon icon={faHeart} style={{ color: "red"}} />
+                ): (
+                  <FontAwesomeIcon icon={faHeartCirclePlus} />
+                )}
+                팔로우
+              </button>
               <button
                 className="question-button"
                 onClick={handleQuestionButtonClick}

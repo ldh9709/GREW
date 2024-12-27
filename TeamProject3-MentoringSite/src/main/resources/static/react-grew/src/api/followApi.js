@@ -10,8 +10,8 @@ DELETE  /follow/{followNo}                     :팔로윙 취소
 */
 
 
-export const isExistFollow = async (token) => {
-    const response = await fetch(`{BACKEND_SERVER}/follow/is-exist`, {
+export const isExistFollow = async (token,mentorNo) => {
+    const response = await fetch(`${BACKEND_SERVER}/follow/is-exist?mentorNo=${mentorNo}`, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
@@ -24,11 +24,12 @@ export const isExistFollow = async (token) => {
 
 
 //팔로우 신청
-export const addfollow = async(sendJsonObject)=>{
+export const addfollow = async(token,sendJsonObject)=>{
     const response = await fetch(`${BACKEND_SERVER}/follow`,{
         method: 'POST',
         headers: {
             "Content-Type": "application/json;charset=UTF-8", // 요청 헤더 설정
+            'Authorization': `Bearer ${token}` 
         },
         body: JSON.stringify(sendJsonObject)
     })
