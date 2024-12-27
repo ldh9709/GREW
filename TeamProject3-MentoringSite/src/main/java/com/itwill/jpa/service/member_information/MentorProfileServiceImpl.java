@@ -62,7 +62,7 @@ public class MentorProfileServiceImpl implements MentorProfileService {
         }
 
         // 🔥 엔티티 → DTO 변환
-        return MentorProfileDto.toDto(mentorProfile);
+        return MentorProfileDto.toResponseDto(mentorProfile);
     }
 
     
@@ -204,6 +204,7 @@ public class MentorProfileServiceImpl implements MentorProfileService {
     /**
      * 멘토 프로필 전체 조회
      */
+    @Transactional
     @Override
     public Page<MentorProfileDto> getMentorAll(int page, int size) {
     	try {
@@ -212,7 +213,7 @@ public class MentorProfileServiceImpl implements MentorProfileService {
     		List<MentorProfileDto> mentorProfileDtos = new ArrayList<>();
     		
     		for (MentorProfile mentorProfile : mentorProfiles) {
-    			mentorProfileDtos.add(MentorProfileDto.toDto(mentorProfile));
+    			mentorProfileDtos.add(MentorProfileDto.toResponseDto(mentorProfile));
 			}
     		
     		return new PageImpl<>(mentorProfileDtos, pageable, mentorProfiles.getTotalElements());
@@ -229,7 +230,7 @@ public class MentorProfileServiceImpl implements MentorProfileService {
         try {
             Pageable pageable = PageRequest.of(page, size);
             Page<MentorProfile> mentorProfiles = mentorProfileRepository.findByMentorStatus(status, pageable);
-            return mentorProfiles.map(MentorProfileDto::toDto);
+            return mentorProfiles.map(MentorProfileDto::toResponseDto);
         } catch (Exception e) {
             throw new CustomException(ResponseStatusCode.MENTOR_PROFILE_NOT_FOUND_CODE, ResponseMessage.MENTOR_PROFILE_NOT_FOUND, e);
         }
@@ -243,7 +244,7 @@ public class MentorProfileServiceImpl implements MentorProfileService {
         try {
             Pageable pageable = PageRequest.of(page, size);
             Page<MentorProfile> mentorProfiles = mentorProfileRepository.searchMentorProfiles(search, pageable);
-            return mentorProfiles.map(MentorProfileDto::toDto);
+            return mentorProfiles.map(MentorProfileDto::toResponseDto);
         } catch (Exception e) {
             throw new CustomException(ResponseStatusCode.MENTOR_PROFILE_NOT_FOUND_CODE, ResponseMessage.MENTOR_PROFILE_NOT_FOUND, e);
         }
@@ -257,7 +258,7 @@ public class MentorProfileServiceImpl implements MentorProfileService {
         try {
             Pageable pageable = PageRequest.of(page, size);
             Page<MentorProfile> mentorProfiles = mentorProfileRepository.findByCategoryNo(categoryNo, pageable);
-            return mentorProfiles.map(MentorProfileDto::toDto);
+            return mentorProfiles.map(MentorProfileDto::toResponseDto);
         } catch (Exception e) {
             throw new CustomException(ResponseStatusCode.MENTOR_PROFILE_NOT_FOUND_CODE, ResponseMessage.MENTOR_PROFILE_NOT_FOUND, e);
         }

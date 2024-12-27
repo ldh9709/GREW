@@ -199,8 +199,6 @@
 }
 
 .mentor-stats {
-  display: flex;
-  flex-direction: column;
   gap: 5px;
   font-size: 14px;
   color: #777;

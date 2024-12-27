@@ -4,15 +4,15 @@ import ChattingMessage from "./Chatting.jsx";
 import ChatRoom from "./ChatRoom.jsx";
 import Alarim from "../Alarim.jsx";
 import * as AlarmApi from "../../api/alarmApi.js";
-import { getCookie } from "../../util/cookieUtil.js";
+import "../../css/chatApp.css"; // CSS를 별도 파일로 분리
+import { useMemberAuth } from "../../util/AuthContext.js";
 
 const ChatAlarim = () => {
+  const [alarmCount, setAlarmCount] = useState(null);
   const [activePanel, setActivePanel] = useState(null); //패널을 열때 chat 또는 notification인지 구분하는 용도
   const [roomId, setRoomId] = useState(null); // 선택된 roomId 상태
   const [roomName, setRoomName] = useState(null); // 선택된 roomName 상태
-  const [alarmCount, setAlarmCount] = useState(null);
-  const memberCookie = getCookie("member");
-  const token = memberCookie ? memberCookie.accessToken : null;
+  const { token, member } = useMemberAuth();
 
   const togglePanel = (panel) => {
     //chat 또는 notification를 확인하여 슬라이드 패널을 열고 닫음
@@ -24,18 +24,20 @@ const ChatAlarim = () => {
     setActivePanel("ChattingMessage");
   };
   const alarmIsReadCount = async () => {
-    const response = await AlarmApi.isReadAlarmCount(6);
-    console.log(response.data);
-    setAlarmCount(response.data);
+    if (member.memberNo) {
+      const response = await AlarmApi.isReadAlarmCount(member.memberNo);
+      console.log(response.data);
+      setAlarmCount(response.data);
+    }
   };
   useEffect(() => {
+
+      alarmIsReadCount(); // 데이터를 가져오는 함수
     const intervalId = setInterval(() => {
       alarmIsReadCount(); // 데이터를 가져오는 함수
-    }, 5000); // 5000ms = 5초
-
-    // 컴포넌트가 언마운트될 때 setInterval을 정리
+    }, 3000); // 5000ms = 5초
     return () => clearInterval(intervalId);
-  }, []);
+  }, [member]);
   return (
     <div>
       {token != null ? (
@@ -66,7 +68,11 @@ const ChatAlarim = () => {
             onClick={() => togglePanel("notification")}
           >
             알림
-            <span className="notification-dot">{alarmCount}</span>
+            {alarmCount !== 0 && alarmCount != null ? (
+              <span className="notification-dot">{alarmCount}</span>
+            ) : (
+              <span />
+            )}
           </div>
         </>
       ) : (
