@@ -237,8 +237,8 @@ button {
   display: flex;
 }
 .answer-content {
-  margin: 10px 0 50px 30px;
-  font-size: 18x; /* 내용 글자 크기 */
+  margin: 10px 10px 50px 30px;
+  font-size: 17px; /* 내용 글자 크기 */
   word-wrap: break-word;
 }
 .answer-date {
@@ -388,7 +388,7 @@ button {
 .inquiry-view-content {
   padding: 15px;
   margin-bottom: 50px;
-  font-size: 17px;
+  font-size: 18px;
   white-space: pre-wrap;
   color: #444;
 }
@@ -743,6 +743,7 @@ button {
 .inquiry-view-answer-container .radio-container {
   display: flex;
   justify-content: space-between;
+  margin-bottom: 15px;
 }
 .radio-container div:first-child {
   font-size: 20px;
