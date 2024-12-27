@@ -23,7 +23,6 @@ export default function MentorBoardItem({ board }) {
     if (diffInSeconds < 2419200) return `${Math.floor(diffInSeconds / 604800)}주 전`;
     return `${Math.floor(diffInSeconds / 2419200)}개월 전`;
   };
-
   return (
     <div className="mentor-board-card" onClick={viewMentorBoard}>
       <img

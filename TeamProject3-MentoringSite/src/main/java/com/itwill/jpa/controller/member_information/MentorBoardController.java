@@ -249,19 +249,18 @@ public class MentorBoardController {
 
     
     
-    /* 검색 기능 페이징 */
-    @Operation(summary = "멘토 보드 검색 페이징")
-    @GetMapping("/search")
+    @Operation(summary = "멘토 보드 검색 기능 페이징")
+    @GetMapping("/search/{search}")
     public ResponseEntity<Response> searchMentorBoards(
-            @RequestParam(name = "query") String query,
+            @PathVariable(name = "search") String search, // PathVariable로 변경
             @RequestParam(name = "page", defaultValue = "0") int page,
             @RequestParam(name = "size", defaultValue = "10") int size
     ) {
-        Page<MentorBoardDto> searchedBoards = mentorBoardService.findMentorBoardBySearch(query, page, size);
+        Page<MentorBoardDto> searchedBoards = mentorBoardService.findMentorBoardBySearch(search, page, size);
 
         Response response = new Response();
-        response.setStatus(ResponseStatusCode.READ_MEMBER_LIST_SUCCESS);
-        response.setMessage(ResponseMessage.READ_MEMBER_LIST_SUCCESS);
+        response.setStatus(ResponseStatusCode.READ_MENTOR_BOARD_LIST_SUCCESS); // 멘토 보드 성공 코드로 변경
+        response.setMessage("멘토 보드 검색 성공");
         response.setData(searchedBoards);
 
         HttpHeaders headers = new HttpHeaders();

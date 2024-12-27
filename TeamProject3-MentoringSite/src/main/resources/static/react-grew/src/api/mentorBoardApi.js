@@ -145,9 +145,12 @@ export const increaseViewCount = async (mentorBoardNo) => {
  * @param {number} size - 페이지 크기
  * @returns {Promise} - 검색된 멘토 보드 목록을 포함하는 프로미스
  */
-export const searchMentorBoards = async (keyword, page = 0, size = 10) => {
-  const response = await fetch(`${BACKEND_SERVER}${BASE_URL}/search?query=${encodeURIComponent(keyword)}&page=${page}&size=${size}`);
+export const searchMentorBoards = async (search, page = 0, size = 10) => {
+  const response = await fetch(
+    `${BACKEND_SERVER}${BASE_URL}/search/${search}?page=${page}&size=${size}`
+  );
   const responseJsonObject = await response.json();
+  console.log(responseJsonObject);
   return responseJsonObject;
 };
 
