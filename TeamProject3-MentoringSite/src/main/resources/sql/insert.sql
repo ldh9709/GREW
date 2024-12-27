@@ -494,21 +494,21 @@ values (1, '김진영님과 이도현님의 채팅방', 7600, 1, chat_room_statu
 insert into chat_room_status (chat_room_no, chat_room_name, chat_room_status, member_no, chat_room_status_no) 
 values (1, '김진영님과 이도현님의 채팅방', 7600, 6, chat_room_status_no_SEQ.nextval);
 insert into chat_room_status (chat_room_no, chat_room_name, chat_room_status, member_no, chat_room_status_no) 
-values (2, '이도현님 에게 채팅방을 신청했습니다.', 7500, 4, chat_room_status_no_SEQ.nextval);
+values (2, '이도현님에게 채팅방을 신청했습니다.', 7500, 4, chat_room_status_no_SEQ.nextval);
 insert into chat_room_status (chat_room_no, chat_room_name, chat_room_status, member_no, chat_room_status_no) 
-values (2, '문준형님 에게서 채팅방 신청이 도착했습니다.', 7500, 6, chat_room_status_no_SEQ.nextval);
+values (2, '문준형님에게서 채팅방 신청이 도착했습니다.', 7500, 6, chat_room_status_no_SEQ.nextval);
 insert into chat_room_status (chat_room_no, chat_room_name, chat_room_status, member_no, chat_room_status_no) 
 values (3, '박은미님과 이도현님의 채팅방', 7600, 5, chat_room_status_no_SEQ.nextval);
 insert into chat_room_status (chat_room_no, chat_room_name, chat_room_status, member_no, chat_room_status_no) 
 values (3, '박은미님과 이도현님의 채팅방', 7600, 6, chat_room_status_no_SEQ.nextval);
 insert into chat_room_status (chat_room_no, chat_room_name, chat_room_status, member_no, chat_room_status_no) 
-values (4, '송대현님 에게 채팅방을 신청했습니다.', 7500, 6, chat_room_status_no_SEQ.nextval);
+values (4, '송대현님에게 채팅방을 신청했습니다.', 7500, 6, chat_room_status_no_SEQ.nextval);
 insert into chat_room_status (chat_room_no, chat_room_name, chat_room_status, member_no, chat_room_status_no) 
-values (4, '이도현님 에게서 채팅방 신청이 도착했습니다.', 7500, 8, chat_room_status_no_SEQ.nextval);
+values (4, '이도현님에게서 채팅방 신청이 도착했습니다.', 7500, 8, chat_room_status_no_SEQ.nextval);
 insert into chat_room_status (chat_room_no, chat_room_name, chat_room_status, member_no, chat_room_status_no) 
-values (5, '양한수님 에게 채팅방을 신청했습니다.', 7500, 6, chat_room_status_no_SEQ.nextval);
+values (5, '양한수님에게 채팅방을 신청했습니다.', 7500, 6, chat_room_status_no_SEQ.nextval);
 insert into chat_room_status (chat_room_no, chat_room_name, chat_room_status, member_no, chat_room_status_no) 
-values (5, '이도현님 에게서 채팅방 신청이 도착했습니다.', 7500, 9, chat_room_status_no_SEQ.nextval);
+values (5, '이도현님에게서 채팅방 신청이 도착했습니다.', 7500, 9, chat_room_status_no_SEQ.nextval);
 insert into chat_room_status (chat_room_no, chat_room_name, chat_room_status, member_no, chat_room_status_no) 
 values (6, '이도현님과 이도현님의 채팅방', 7600, 6, chat_room_status_no_SEQ.nextval);
 insert into chat_room_status (chat_room_no, chat_room_name, chat_room_status, member_no, chat_room_status_no) 

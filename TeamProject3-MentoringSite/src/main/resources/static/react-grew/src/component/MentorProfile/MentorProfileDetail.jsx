@@ -1,75 +1,89 @@
+import { useMemberAuth } from "../../util/AuthContext";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import "../../css/mentorProfile.css"; // 🔥 추가된 CSS 파일
 import { getMentorProfileByNo } from "../../api/mentorProfileApi.js";
 import { listReviewByMember } from "../../api/reviewApi.js"; // 리뷰 목록 API 추가
-import { getCookie } from "../../util/cookieUtil.js";
-import { jwtDecode } from "jwt-decode";
 import * as categoryApi from "../../api/categoryApi";
-import * as memberApi from "../../api/memberApi";
+import * as ChattingApi from '../../api/chattingApi.js';
+import * as followApi from "../../api/followApi";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faHeart, faHeartCircleCheck, faHeartCirclePlus } from '@fortawesome/free-solid-svg-icons';
 
 export default function MentorProfileDetail() {
+  const { token, memberNo } = useMemberAuth();
   const { mentorProfileNo } = useParams();
   const [mentorProfile, setMentorProfile] = useState(null);
   const [reviews, setReviews] = useState([]); // 빈 배열로 초기화
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [categoryName, setCategoryName] = useState("카테고리 정보 없음");
+  const [isFollow, setIsfollow] = useState();
 
-  // 쿠키에서 member 객체를 가져와 JWT 토큰을 추출
-  const memberCookie = getCookie("member");
-  const token = memberCookie ? memberCookie.accessToken : null; // 여기서 accessToken을 정확히 추출해야 함
-  const decodeToken = token ? jwtDecode(token) : null;
+
+  const checkFollow = async() => {
+    try {
+      const response = await followApi.isExistFollow(token);
+      console.log(response);
+    } catch (error) {
+      console.log('팔로워 여부 체크 실패')
+    }
+  }
+
+  const handleFollow = () => {
+    
+  }
+
+  const fetchMentorProfile = async () => {
+    try {
+      setLoading(true);
+
+      // 1. 멘토 프로필 조회
+      const mentorProfileResponse = await getMentorProfileByNo(
+        mentorProfileNo
+      );
+
+      console.log(mentorProfile)
+      setMentorProfile(mentorProfileResponse.data);
+
+      // 2. 멘토 프로필 번호로 리뷰 목록 조회 (Authorization 헤더에 JWT 토큰 추가)
+      const reviewsResponse = await listReviewByMember(
+        mentorProfileNo, // memberNo 대신 mentorProfileNo를 바로 사용
+        0,
+        5,
+        token // `token`을 Authorization 헤더에 포함시켜야 함
+      );
+
+      console.log("Reviews Response:", reviewsResponse);
+      console.log("Reviews Response Data:", reviewsResponse.data); // 전체 데이터 확인
+      console.log(
+        "Reviews Response Data.content:",
+        reviewsResponse.data?.content
+      ); // content만 따로 확인
+
+      // Check if there are reviews in the response
+      if (reviewsResponse.data) {
+        setReviews(reviewsResponse.data); // content 배열 처리
+      } else {
+        setReviews([]); // 데이터가 없으면 빈 배열 처리
+
+        // 멘토 프로필 데이터에서 categoryNo와 memberNo 가져오기
+        if (mentorProfile.categoryNo) {
+          fetchCategoryName(mentorProfile.categoryNo);
+        }
+      }
+    } catch (error) {
+      setError("멘토 프로필을 가져오는 중 오류가 발생했습니다.");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
-    const fetchMentorProfile = async () => {
-      try {
-        setLoading(true);
-
-        // 1. 멘토 프로필 조회
-        const mentorProfileResponse = await getMentorProfileByNo(
-          mentorProfileNo
-        );
-
-        console.log(mentorProfile)
-        setMentorProfile(mentorProfileResponse.data);
-
-        console.log("Decoded Token:", decodeToken); // 디코딩된 토큰 정보 확인
-
-        // 2. 멘토 프로필 번호로 리뷰 목록 조회 (Authorization 헤더에 JWT 토큰 추가)
-        const reviewsResponse = await listReviewByMember(
-          mentorProfileNo, // memberNo 대신 mentorProfileNo를 바로 사용
-          0,
-          5,
-          token // `token`을 Authorization 헤더에 포함시켜야 함
-        );
-
-        console.log("Reviews Response:", reviewsResponse);
-        console.log("Reviews Response Data:", reviewsResponse.data); // 전체 데이터 확인
-        console.log(
-          "Reviews Response Data.content:",
-          reviewsResponse.data?.content
-        ); // content만 따로 확인
-
-        // Check if there are reviews in the response
-        if (reviewsResponse.data) {
-          setReviews(reviewsResponse.data); // content 배열 처리
-        } else {
-          setReviews([]); // 데이터가 없으면 빈 배열 처리
-
-          // 멘토 프로필 데이터에서 categoryNo와 memberNo 가져오기
-          if (mentorProfile.categoryNo) {
-            fetchCategoryName(mentorProfile.categoryNo);
-          }
-        }
-      } catch (error) {
-        setError("멘토 프로필을 가져오는 중 오류가 발생했습니다.");
-      } finally {
-        setLoading(false);
-      }
-    };
+    checkFollow();
     fetchMentorProfile();
   }, [mentorProfileNo, token]);
+
   console.log("Reviews:", reviews); // 이 줄을 추가하여 reviews 데이터를 확인
 
   if (loading) return <p>로딩 중...</p>;
@@ -91,6 +105,26 @@ export default function MentorProfileDetail() {
 
   if (error) return <p className="error-message">{error}</p>;
 
+  const handleQuestionButtonClick = async () => {
+    if (!memberNo || !mentorProfileNo) {
+      alert("멘토 또는 멘티 정보가 없습니다.");
+      return;
+    }
+
+    try {
+      const response = await ChattingApi.createChatting(memberNo, mentorProfileNo);
+      if (response.success) {
+        alert("멘토와의 채팅이 시작되었습니다!");
+        // 채팅방으로 이동하거나 다른 추가 동작을 구현할 수 있습니다.
+      } else {
+        alert(response.message || "채팅 생성에 실패했습니다.");
+      }
+    } catch (error) {
+      console.error("채팅 생성 중 오류 발생:", error);
+      alert("채팅 생성 중 오류가 발생했습니다.");
+    }
+  };
+
   return (
     <div className="mentor-profile-detail-container">
       <div className="mentor-header">
@@ -104,25 +138,40 @@ export default function MentorProfileDetail() {
           <div className="mentor-basic-info">
             <h2>{mentorProfile.memberName} 멘토</h2> {/* 멤버 이름 표시 */}
             <div className="mentor-stats">
-              멘토링 성공률:{" "}
-              {mentorProfile?.mentorActivityCount
+              <span className="stats-label">
+                멘토링 신청 </span>
+              <span>
+                {mentorProfile?.mentorMentoringCount || 0}건 {" "}
+              </span>
+              <span className="stats-label">매칭률 </span>
+              <span>
+                {mentorProfile?.mentorActivityCount
                 ? Math.round(
                     (mentorProfile.mentorMentoringCount /
                       mentorProfile.mentorActivityCount) *
                       100
                   )
-                : 0}
-              %
-              <span>
-                멘토링 횟수: {mentorProfile?.mentorMentoringCount || 0}
+                  : 0}  
+                    %{" "}
               </span>
-              <span>팔로워: {mentorProfile?.mentorFollowCount || 0}</span>
+              <span className="stats-label">
+                만족도 </span>
+              <span>
+                {mentorProfile?.mentorRating || 0}
+              </span>
             </div>
+            
             {/* 버튼 */}
             <div className="mentor-actions">
-              <button className="follow-button">+ 팔로우</button>
-              <button className="question-button">멘토에게 질문하기</button>
+              <button className="follow-button"><FontAwesomeIcon icon={faHeartCirclePlus}/> 팔로우</button>
+              <button
+                className="question-button"
+                onClick={handleQuestionButtonClick}
+              >
+                멘토링 신청하기
+              </button>
             </div>
+            <div className="mentor-follow-count">{mentorProfile?.mentorFollowCount || 0}명이 팔로우 하는 중</div>
           </div>
         </div>
         {/* 우측: 상세 정보 */}

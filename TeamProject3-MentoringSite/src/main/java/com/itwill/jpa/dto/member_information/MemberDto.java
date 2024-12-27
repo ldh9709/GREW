@@ -108,6 +108,7 @@ public class MemberDto {
 	@AllArgsConstructor
 	//임시 비밀번호 발급 시 사용
 	public static class findPassword {
+		private String memberName;
 		@Email
 		private String email;
 	}

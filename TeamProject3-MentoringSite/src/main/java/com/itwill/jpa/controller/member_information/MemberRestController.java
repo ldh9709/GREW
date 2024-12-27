@@ -289,9 +289,8 @@ public class MemberRestController {
 	
 	
 	/* 회원 정보 수정 */
-	
 	@Operation(summary = "회원 정보 수정")
-	@PutMapping("/profile/edit")
+	@PutMapping("/profile/modify")
 	@SecurityRequirement(name = "BearerAuth")//API 엔드포인트가 인증을 요구한다는 것을 문서화(Swagger에서 JWT인증을 명시
 	public ResponseEntity<Response> updateMember(
 			@RequestBody MemberDto memberDto,

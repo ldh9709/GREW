@@ -8,6 +8,9 @@ import com.itwill.jpa.dto.member_information.FollowRequestDto;
 import com.itwill.jpa.dto.member_information.FollowResponseDto;
 
 public interface FollowService {
+	
+	//팔로우 여부 체크
+	Boolean isExistFollow(Long menteeNo, Long mentorNo);
 	//팔로우 등록
 	FollowRequestDto createFollow(FollowRequestDto followDto);
 	//팔로우 삭제

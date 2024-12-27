@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { getCookie } from '../../../util/cookieUtil.js';
 import * as ChattingApi from '../../../api/chattingApi.js';
+import { useMemberAuth } from '../../../util/AuthContext.js';
 
 const ChatRoomList = ({ onRoomClick }) => {
     const [isModalOpen, setIsModalOpen] = useState(false);  //tate
@@ -10,8 +10,7 @@ const ChatRoomList = ({ onRoomClick }) => {
     const [currentPage, setCurrentPage] = useState(1); // 현재 페이지
     const [totalPages, setTotalPages] = useState(0); // 총 페이지 수
 
-    const memberCookie = getCookie("member");
-    const token = memberCookie.accessToken;
+    const { token } = useMemberAuth();
 
     const chatRoomList = async (page) => {
         console.log('토큰'+token);

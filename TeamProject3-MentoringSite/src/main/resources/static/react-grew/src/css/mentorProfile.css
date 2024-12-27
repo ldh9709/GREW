@@ -199,13 +199,21 @@
 }
 
 .mentor-stats {
-  display: flex;
-  flex-direction: column;
   gap: 5px;
   font-size: 14px;
   color: #777;
 }
 
+.stats-label{
+  font-weight: 600;
+  color: #333;
+}
+.mentor-follow-count{
+  font-size: 13px;
+  text-align: left;
+  color: #777;
+  margin: 5px 0 0 3px;
+}
 /* 우측 섹션: 상세 정보 */
 .mentor-details-section {
   width: 60%;
@@ -240,23 +248,23 @@
 .follow-button {
   padding: 10px 20px;
   font-size: 16px;
-  border: 1px solid #ff4081;
+  border: 1px solid #28a745;
   background-color: #fff;
-  color: #ff4081;
+  color: #28a745;
   border-radius: 4px;
   cursor: pointer;
   transition: all 0.3s ease;
 }
 
 .follow-button:hover {
-  background-color: #ff4081;
-  color: #fff;
+  border: 1px solid #ff2d2d;
+  background-color: #fafafa;
+  color: #ff2d2d;
 }
 
 .question-button {
   padding: 10px 20px;
   font-size: 16px;
-  border: 1px solid #007bff;
   background-color: #007bff;
   color: #fff;
   border-radius: 4px;

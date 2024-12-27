@@ -32,11 +32,21 @@ public class FollowServiceImpl implements FollowService{
 	@Autowired
 	private MemberRepository memberRepository;
 	
+	/*팔로우 되어 있는지 체크*/
+	public Boolean isExistFollow(Long menteeNo, Long mentorNo) {
+		try {
+			Boolean followExist =followReporitory.existsByMenteeMember_MemberNoAndMentorMember_MemberNo(menteeNo, mentorNo);
+			return followExist;
+		} catch (Exception e) {
+			throw new CustomException(ResponseStatusCode.CHECK_FOLLOW_FAIL, ResponseMessage.CHECK_FOLLOW_FAIL, e);
+		}
+	}
+	
 	/*팔로우 등록*/
 	public FollowRequestDto createFollow(FollowRequestDto followDto) {
 		try {
 			/* 팔로우가 이미 되어있는지 확인 */
-			Boolean followExist = followReporitory.existsByMenteeMember_MemberNoAndMentorMember_MemberNo(followDto.getMenteeMemberNo(), followDto.getMentorMemberNo());
+			Boolean followExist = isExistFollow(followDto.getMenteeMemberNo(), followDto.getMentorMemberNo());
 			
 			/* 팔로우 멘토 follow_count 증가*/
 			Member mentorMember = memberRepository.findById(followDto.getMentorMemberNo()).get();
