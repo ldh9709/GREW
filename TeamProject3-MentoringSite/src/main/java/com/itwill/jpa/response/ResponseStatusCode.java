@@ -32,7 +32,10 @@ public class ResponseStatusCode {
     public static final int MEMBER_IS_NOT_EMAIL = 2060;        // 이메일로 가입한 회원이 아님
     public static final int AUTHENTICATION_FAILED = 2061;        // 토큰과 정보가 일치하지 않음
     public static final int UPDATE_ROLE_FAIL = 2062;     // 회원 권한 수정 실패
-	
+    public static final int DUPLICATION_MENBER_ID = 2063; //아이디 중복
+    public static final int DUPLICATION_MENBER_EMAIL = 2064; //이메일 중복
+    public static final int NOT_FOUND_MEMBER = 2065; //가입하려는 회원정보 null
+    
 	/******************* MEMBER 메시지 ************************/
 	
 	/******************* INTEREST 메시지 ************************/
