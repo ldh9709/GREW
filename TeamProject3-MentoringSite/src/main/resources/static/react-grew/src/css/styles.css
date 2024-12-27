@@ -924,7 +924,8 @@ button {
 .answer-accept-status {
   font-size: 25px;
   font-weight: bold;
-  background-color: #fff676;
+  background-color: #000000;
+  color: #ffffff;
   border-radius: 10px;
   padding: 10px;
 }

@@ -2,11 +2,11 @@ import React, { useEffect, useRef, useState } from "react";
 import * as answerApi from "../../api/answerApi";
 import { useNavigate, useParams } from "react-router-dom";
 import { useMemberAuth } from "../../util/AuthContext";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye } from "@fortawesome/free-regular-svg-icons";
 
 export default function AnswerWriteFormPage() {
-  const {token, member} = useMemberAuth();
+  const { token, member } = useMemberAuth();
   const writeFormRef = useRef();
   const navigate = useNavigate();
   const { inquiryNo } = useParams();
@@ -26,14 +26,23 @@ export default function AnswerWriteFormPage() {
     inquiryState: 1,
     inquiryViews: 0,
     categoryNo: 0,
+    categoryName: "",
     memberNo: 1,
     memberName: "",
   };
   const [answer, setAnswer] = useState(initAnswer);
   const [inquiry, setInquiry] = useState(initInquiry); // inquiry 데이터를 저장할 상태
-
+  if (!member.memberNo) {
+    navigate("/");
+  } else if (member.memberRole == "ROLE_MENTEE") {
+    navigate("/403");
+  } else if (member.memberNo == inquiry.memberNo) {
+    navigate("/403");
+  }
   // 질문 데이터 가져오는 함수
   useEffect(() => {
+   
+
     const fetchInquiryData = async () => {
       try {
         const response = await answerApi.findInquiry(inquiryNo);
@@ -54,7 +63,6 @@ export default function AnswerWriteFormPage() {
     });
     console.log(answer);
   };
-
   const answerWriteAction = async (e) => {
     // answerContent가 비어있는지 확인
     if (!answer.answerContent.trim()) {
@@ -81,16 +89,14 @@ export default function AnswerWriteFormPage() {
           <div>
             {inquiry.memberName} 멘티ㆍ
             {inquiry.inquiryDate.substring(0, 10)}ㆍ
-            <FontAwesomeIcon icon={faEye}/> {inquiry.inquiryViews}
+            <FontAwesomeIcon icon={faEye} /> {inquiry.inquiryViews}
           </div>
         </div>
-        <div className="inquiry-view-content">
-          {inquiry.inquiryContent}
-        </div>
+        <div className="inquiry-view-content">{inquiry.inquiryContent}</div>
       </div>
 
       <div>
-        <form ref={writeFormRef}  className="inquiry-form">
+        <form ref={writeFormRef} className="inquiry-form">
           <div>
             <textarea
               name="answerContent"

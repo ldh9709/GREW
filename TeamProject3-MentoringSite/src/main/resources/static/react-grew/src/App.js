@@ -111,28 +111,28 @@ function App() {
               />{" "}
               {/* 멘토 회원가입 */}
               <Route
-                path="/mentorprofile/list"
+                path="/mentor-profile/list"
                 element={<MentorProfileList />}
               />
-              <Route path="/mentorprofile/add" element={<MentorProfileAdd />} />
+              <Route path="/mentor-profile/add" element={<MentorProfileAdd />} />
               <Route
-                path="/mentorprofile/view"
+                path="/mentor-profile/view"
                 element={<MentorProfileItem />}
               />
               <Route
-                path="/mentorprofile/search"
+                path="/mentor-profile/search"
                 element={<MentorSearchList />}
               />
               <Route
-                path="/mentorprofile/detail/:mentorProfileNo"
+                path="/mentor-profile/detail/:mentorProfileNo"
                 element={<MentorProfileDetail />}
               />
               <Route
-                path="/mentorprofile/detail"
+                path="/mentor-profile/detail"
                 element={<MentorProfileDetail />}
               />
               <Route
-                path="/mentorprofile/search"
+                path="/mentor-profile/search"
                 element={<MentorSearchList />}
               />
               <Route
@@ -140,18 +140,18 @@ function App() {
                 element={<MentorProfileDetail />}
               />
               {/* MentorBoard 페이지 */}
-              <Route path="/mentorboard/find" element={<MentorBoardFind />} />
-              <Route path="/mentorboard/list" element={<MentorBoardList />} />
+              <Route path="/mentor-board/find" element={<MentorBoardFind />} />
+              <Route path="/mentor-board/list" element={<MentorBoardList />} />
               <Route
-                path="/mentorboard/create/:mentorProfileNo"
+                path="/mentor-board/create"
                 element={<MentorBoardCreate />}
               />
               <Route
-                path="/mentorboard/update/:mentorBoardNo"
+                path="/mentor-board/update/:mentorBoardNo"
                 element={<MentorBoardUpdate />}
               />
               <Route
-                path="/mentorboard/detail"
+                path="/mentor-board/detail"
                 element={<MentorBoardDetail />}
               />
               <Route
