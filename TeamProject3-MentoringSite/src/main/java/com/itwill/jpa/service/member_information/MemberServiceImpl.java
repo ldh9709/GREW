@@ -26,7 +26,10 @@ import com.itwill.jpa.entity.member_information.Interest;
 import com.itwill.jpa.entity.member_information.Member;
 import com.itwill.jpa.repository.member_information.InterestRepository;
 import com.itwill.jpa.entity.role.Role;
+import com.itwill.jpa.exception.CustomException;
 import com.itwill.jpa.repository.member_information.MemberRepository;
+import com.itwill.jpa.response.ResponseMessage;
+import com.itwill.jpa.response.ResponseStatusCode;
 import com.itwill.jpa.util.CustomMailSender;
 import com.itwill.jpa.util.JWTUtil;
 
@@ -184,26 +187,6 @@ public class MemberServiceImpl implements MemberService {
 		member.changePassword(newPassword);
 	}
 	
-	/***** 회원 로그인 ****
-	@Override
-	public Member loginMember(String memberId, String memberPassword) {
-		
-		//아이디와 비밀번호로 멤버 객체 찾기
-		Member member = memberRepository.findMemberByMemberIdAndMemberPassword(memberId, memberPassword);
-		
-//		//member가 존재하지 않을 시
-//		if(member == null) {
-//			String msg = "존재하지 않는 아이디입니다.";
-//		}
-//		
-//		//member의 비밀번호가 일치하지 않을 시
-//		if(!member.getMemberPassword().equals(memberPassword)) {
-//			String msg = "비밀번호가 일치하지 않습니다.";
-//		}
-		
-		//다 통과하면 member반환
-		return member;
-	}*/
 	
 	/***** 회원 수정 ****/
 	@Override
@@ -419,6 +402,10 @@ public class MemberServiceImpl implements MemberService {
 	//비밀번호 찾기 이메일 전송
 	public void findPassword(MemberDto.findPassword memberDto) {
 		Member member = memberRepository.findByMemberEmail(memberDto.getEmail());
+		
+		if(!member.getMemberName().equals(memberDto.getMemberName())) {
+			throw new CustomException(ResponseStatusCode.AUTHENTICATION_FAILED, ResponseMessage.AUTHENTICATION_FAILED, null);
+		}
 		
 		UUID uid = UUID.randomUUID();
 		String tempPassword = uid.toString().substring(0, 10) + "p2$";

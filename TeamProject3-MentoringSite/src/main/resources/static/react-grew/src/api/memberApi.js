@@ -71,14 +71,16 @@ export const logout = async () => {
     return response.url;
 };
 
+//비밀번호 찾기 
 export const findPassword = async (member) => {
-    const response = await fetch(`${BACKEND_SERVER}/logout`, {
+    const response = await fetch(`${BACKEND_SERVER}/member/findPassword`, {
         method: 'POST',
         headers: {
            'Content-Type': 'application/json'
         },
         body:JSON.stringify({
-            memberDto : member,
+            memberName : member.memberName,
+            email : member.memberEmail
         })
     });
     const resultJsonObject = await response.json();
