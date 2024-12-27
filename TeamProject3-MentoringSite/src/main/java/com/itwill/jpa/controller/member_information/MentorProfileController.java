@@ -404,6 +404,8 @@ public class MentorProfileController {
 	public ResponseEntity<Response> getMentorProfileByMemberNo(@PathVariable(name = "memberNo") Long memberNo) {
 		MentorProfileDto mentor = mentorProfileService.getMentorByMemberNo(memberNo);
 		Response response = new Response();
+		response.setStatus(ResponseStatusCode.READ_MENTOR_PROFILE_SUCCESS_CODE);
+		response.setMessage(ResponseMessage.READ_MENTOR_PROFILE_SUCCESS);
 		response.setData(mentor);
 		return ResponseEntity.ok(response);
 

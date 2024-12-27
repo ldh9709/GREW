@@ -3,13 +3,14 @@ package com.itwill.jpa.controller.member_information;
 import com.itwill.jpa.auth.PrincipalDetails;
 import com.itwill.jpa.dto.alarm.AlarmDto;
 import com.itwill.jpa.dto.member_information.MentorBoardDto;
-import com.itwill.jpa.entity.member_information.Follow;
-import com.itwill.jpa.entity.member_information.MentorBoard;
+import com.itwill.jpa.dto.member_information.MentorProfileDto;
+import com.itwill.jpa.exception.CustomException;
 import com.itwill.jpa.response.Response;
 import com.itwill.jpa.response.ResponseMessage;
 import com.itwill.jpa.response.ResponseStatusCode;
 import com.itwill.jpa.service.alarm.AlarmService;
 import com.itwill.jpa.service.member_information.MentorBoardService;
+import com.itwill.jpa.service.member_information.MentorProfileService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -25,9 +26,7 @@ import org.springframework.web.multipart.MultipartFile;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 
-import java.net.Authenticator;
 import java.nio.charset.Charset;
-import java.security.Principal;
 import java.util.List;
 
 @RestController
@@ -38,7 +37,8 @@ public class MentorBoardController {
     private MentorBoardService mentorBoardService;
     @Autowired
     private AlarmService alarmService;
-    
+    @Autowired
+    private MentorProfileService mentorProfileService;
     
     
     
@@ -66,9 +66,16 @@ public class MentorBoardController {
     
     
     /* 멘토 보드 등록 */
+    @SecurityRequirement(name = "BearerAuth")
+    @PreAuthorize("hasRole('MENTOR')")
     @Operation(summary = "멘토 보드 등록")
     @PostMapping
-    public ResponseEntity<Response> saveMentorBoard(@RequestBody MentorBoardDto mentorBoardDto) {
+    public ResponseEntity<Response> createMentorBoard(Authentication authentication, @RequestBody MentorBoardDto mentorBoardDto) {
+    	
+    	PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
+    	Long memberNo = principalDetails.getMemberNo();
+    	mentorBoardDto.setMemberNo(memberNo);
+    	
     	MentorBoardDto savedBoard = mentorBoardService.saveMemtorBoard(mentorBoardDto);
     	List<AlarmDto> saveAlarms = alarmService.createAlarmsByMentorBoard(savedBoard);
         Response response = new Response();
@@ -83,15 +90,36 @@ public class MentorBoardController {
     }
 
     /* 멘토 보드 수정 */
+    @SecurityRequirement(name = "BearerAuth")
+    @PreAuthorize("hasRole('MENTOR') or hasRole('ADMIN')")    
     @Operation(summary = "멘토 보드 수정")
     @PutMapping("/{mentorBoardNo}")
     public ResponseEntity<Response> updateMentorBoard(
-            @PathVariable(name = "mentorBoardNo") Long mentorBoardId, 
-            @RequestBody MentorBoardDto mentorBoardDto
+            @PathVariable(name = "mentorBoardNo") Long mentorBoardNo, 
+            @RequestBody MentorBoardDto mentorBoardDto,
+            Authentication authentication
         ) throws Exception {
 
-        // mentorBoardId를 DTO에 설정 (필요한 경우)
-        mentorBoardDto.setMentorBoardNo(mentorBoardId); 
+    	PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
+    	Long memberNo = principalDetails.getMemberNo();
+    	boolean isAdmin = principalDetails.getAuthorities().stream()
+                .anyMatch(grantedAuthority -> grantedAuthority.getAuthority().equals("ROLE_ADMIN"));
+    	
+    	//기존 작성된 mentorboard정보 불러오기
+    	MentorBoardDto existingBoard = mentorBoardService.getMentorBoard(mentorBoardNo);
+    	
+    	// 작성자와 요청자 일치 여부 확인
+        if (!existingBoard.getMemberNo().equals(memberNo) && !isAdmin) {
+            throw new CustomException(
+            		ResponseStatusCode.UPDATE_MENTOR_BOARD_FAIL,
+            		ResponseMessage.UPDATE_MENTOR_BOARD_FAIL,
+            		new Throwable("수정권한이 없습니다.(작성자와 요청자가 다르며 관리자가 아닙니다.)")
+            );
+        }
+    		
+        // mentorBoardNo,memberNo를 수정할 mentorBoardDto에 저장
+        mentorBoardDto.setMentorBoardNo(mentorBoardNo);
+        mentorBoardDto.setMemberNo(memberNo);
 
         // 기존 멘토 보드 수정
         MentorBoardDto updatedBoard = mentorBoardService.updateMemtorBoard(mentorBoardDto);
@@ -111,10 +139,32 @@ public class MentorBoardController {
     }
 
     /* 멘토 보드 삭제(상태 변경, PUT 방식) */
+    @SecurityRequirement(name = "BearerAuth")
+    @PreAuthorize("hasRole('MENTOR') or hasRole('ADMIN')")
     @Operation(summary = "멘토 보드 삭제(상태 변경, PUT 방식)")
     @PutMapping("/{mentorBoardNo}/status")
-    public ResponseEntity<Response> deleteMentorBoard(@PathVariable(name= "mentorBoardNo")Long mentorBoardNo) throws Exception {
-        MentorBoardDto deletedBoard = mentorBoardService.deleteMemtorBoard(
+    public ResponseEntity<Response> deleteMentorBoard(@PathVariable(name= "mentorBoardNo") Long mentorBoardNo, Authentication authentication) throws Exception {
+        
+    	// 인증 객체에서 사용자 정보 가져오기
+        PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
+        Long memberNo = principalDetails.getMemberNo();
+        boolean isAdmin = principalDetails.getAuthorities().stream()
+                                          .anyMatch(grantedAuthority -> grantedAuthority.getAuthority().equals("ROLE_ADMIN"));
+    	
+        //기존 작성된 mentorboard정보 불러오기
+    	MentorBoardDto existingBoard = mentorBoardService.getMentorBoard(mentorBoardNo);
+    	
+    	// 작성자 검증: 작성자가 아니고 관리자가 아닌 경우 삭제 요청 거부
+        if (!existingBoard.getMemberNo().equals(memberNo) && !isAdmin) {
+        	throw new CustomException(
+            		ResponseStatusCode.DELETE_MENTOR_BOARD_FAIL,
+            		ResponseMessage.DELETE_MENTOR_BOARD_FAIL,
+            		new Throwable("삭제권한이 없습니다.(작성자와 요청자가 다르며 관리자가 아닙니다.)")
+            );
+        }
+    	
+        // 삭제 처리 (상태 변경)
+    	MentorBoardDto deletedBoard = mentorBoardService.deleteMemtorBoard(
                 MentorBoardDto.builder().mentorBoardNo(mentorBoardNo).build()
         );
 
@@ -129,14 +179,14 @@ public class MentorBoardController {
 		ResponseEntity<Response> responseEntity = 
 				new ResponseEntity<Response>(response,httpHeaders, HttpStatus.OK);
 		
-		
 		return responseEntity;
     }
+    
     /* 멘토 보드 상세 조회 */
     @Operation(summary = "멘토 보드 상세 조회")
     @GetMapping("/{mentorBoardNo}")
     public ResponseEntity<Response> getMentorBoard(@PathVariable(name= "mentorBoardNo") Long mentorBoardNo) {
-        MentorBoardDto mentorBoard = mentorBoardService.getMemtorBoard(mentorBoardNo);
+        MentorBoardDto mentorBoard = mentorBoardService.getMentorBoard(mentorBoardNo);
 
         Response response = new Response();
         response.setStatus(ResponseStatusCode.READ_MENTOR_BOARD_SUCCESS);
@@ -243,10 +293,9 @@ public class MentorBoardController {
 
     
     
-    /* 특정 사용자와 관련된 게시글 조회 페이징 */
-    @Operation(summary = "특정 사용자와 관련된 게시글 조회 페이징")
+    /* 로그인한 사용자의 게시글 조회 (마이페이지 용도) */
+    @Operation(summary = "로그인한 사용자의 게시글 조회 (마이페이지 용도)")
     @SecurityRequirement(name = "BearerAuth")//API 엔드포인트가 인증을 요구한다는 것을 문서화(Swagger에서 JWT인증을 명시
-	@PreAuthorize("hasRole('MENTEE') or hasRole('MENTOR')")//ROLE이 MENTEE인 사람만 접근 가능
     @GetMapping("/list/member")
     public ResponseEntity<Response> getMentorBoardsByMember(
     		Authentication authentication,
@@ -270,10 +319,38 @@ public class MentorBoardController {
         return new ResponseEntity<>(response, headers, HttpStatus.OK);
     }
     
+
+    /* 특정 멘토의 게시글 조회 (프로필 페이지 용도) */
+    @Operation(summary = "특정 멘토의 게시글 조회 (프로필 페이지 용도)")
+    @GetMapping("/list/{mentorProfileNo}")
+    public ResponseEntity<Response> getMentorBoardsByMentorProfile(
+            @PathVariable(name = "mentorProfileNo") Long mentorProfileNo,
+            @RequestParam(name = "page", defaultValue = "0") int page,
+            @RequestParam(name = "size", defaultValue = "10") int size
+    ) {
+        // mentorProfileNo로 mentorProfile 조회
+        MentorProfileDto mentorProfile = mentorProfileService.getMentorProfileDetail(mentorProfileNo);
+        
+        // mentorProfile에서 memberNo 추출
+        Long memberNo = mentorProfile.getMemberNo();
+
+        // 멘토 보드 조회
+        Page<MentorBoardDto> mentorBoards = mentorBoardService.findByMember(memberNo, page, size);
+
+        // 응답 생성
+        Response response = new Response();
+        response.setStatus(ResponseStatusCode.READ_MEMBER_LIST_SUCCESS);
+        response.setMessage(ResponseMessage.READ_MEMBER_LIST_SUCCESS);
+        response.setData(mentorBoards);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(new MediaType(MediaType.APPLICATION_JSON, Charset.forName("UTF-8")));
+
+        return new ResponseEntity<>(response, headers, HttpStatus.OK);
+    }
     
     
-    
- // **이미지 업로드 엔드포인트**
+    // **이미지 업로드 엔드포인트**
     @PostMapping("/{mentorBoardNo}/upload-image")
     public ResponseEntity<Response> uploadImage(
         @PathVariable("mentorBoardNo") Long mentorBoardNo, 

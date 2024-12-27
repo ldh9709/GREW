@@ -1,7 +1,6 @@
 package com.itwill.jpa.controller.member_information;
 
 import java.nio.charset.Charset;
-import java.security.Principal;
 import java.util.Base64;
 import java.util.HashMap;
 import java.util.List;
@@ -12,12 +11,8 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.AccessDeniedException;
-import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -33,7 +28,6 @@ import com.itwill.jpa.dto.member_information.MemberDto;
 import com.itwill.jpa.dto.member_information.MemberDtoAndTempCode;
 import com.itwill.jpa.entity.member_information.Member;
 import com.itwill.jpa.entity.member_information.MentorProfile;
-import com.itwill.jpa.entity.role.Role;
 import com.itwill.jpa.response.Response;
 import com.itwill.jpa.response.ResponseMessage;
 import com.itwill.jpa.response.ResponseStatusCode;
@@ -45,8 +39,6 @@ import com.itwill.jpa.service.chatting_review.ReviewService;
 import com.itwill.jpa.service.member_information.FollowService;
 import com.itwill.jpa.service.member_information.MemberService;
 import com.itwill.jpa.service.member_information.MentorBoardService;
-import com.itwill.jpa.util.JWTUtil;
-import com.nimbusds.jose.shaded.gson.Gson;
 import com.itwill.jpa.service.member_information.MentorProfileService;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -54,7 +46,6 @@ import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.Parameter;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 @Slf4j

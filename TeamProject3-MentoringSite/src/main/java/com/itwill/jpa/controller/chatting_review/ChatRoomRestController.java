@@ -50,7 +50,7 @@ public class ChatRoomRestController {
 		response.setStatus(ResponseStatusCode.SEND_CHATTING_SUCCESS);
 		response.setMessage(ResponseMessage.SEND_CHATTING_SUCCESS);
 		response.setData(chatRoomDto);
-		
+
 		HttpHeaders httpHeaders = new HttpHeaders();
 		httpHeaders.setContentType(new MediaType(MediaType.APPLICATION_JSON, Charset.forName("UTF-8")));
 		
