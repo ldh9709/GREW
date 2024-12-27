@@ -120,10 +120,21 @@ function MentorProfileList() {
     }
   };
 
-  // 페이지 변경 시 데이터 갱신
+// 페이지 변경 시 데이터 갱신
   const paginate = (pageNumber) => {
     setCurrentPage(pageNumber);
   };
+
+  // 페이지네이션 버튼 표시 (10개씩 끊어서 표시)
+  const pageNumbers = [];
+  const pagesToShow = 10; // 한 번에 보여줄 페이지 수
+  const startPage =
+    Math.floor((currentPage - 1) / pagesToShow) * pagesToShow + 1;
+  const endPage = Math.min(startPage + pagesToShow - 1, totalPages);
+
+  for (let i = startPage; i <= endPage; i++) {
+    pageNumbers.push(i);
+  }
 
   useEffect(() => {
     fetchMentorProfiles(currentPage - 1, itemsPerPage, sortType, selectedCategory);
@@ -224,35 +235,41 @@ function MentorProfileList() {
         ) : (
           <p>멘토 프로필이 없습니다.</p>
         )}
+        {/* 페이지네이션 버튼 */}
+        <div className="common-pagination common-pagination-bottom">
+          {/* 이전 버튼 */}
+          <button
+            className="common-pagination-arrow"
+            disabled={currentPage === 1}
+            onClick={() => paginate(currentPage - 1)}
+          >
+            &lt;
+          </button>
+
+          {/* 페이지 번호 버튼 */}
+          {pageNumbers.map((number) => (
+            <button
+              key={number}
+              className={`common-pagination-number ${
+                currentPage === number ? "active" : ""
+              }`}
+              onClick={() => paginate(number)}
+            >
+              {number}
+            </button>
+          ))}
+
+          {/* 다음 버튼 */}
+          <button
+            className="common-pagination-arrow"
+            disabled={currentPage === totalPages}
+            onClick={() => paginate(currentPage + 1)}
+          >
+            &gt;
+          </button>
+        </div>
       </div>
-      {/* 페이지네이션 */}
-      <div className="pagenation">
-        {totalPages > 0 && (
-          <>
-            {currentPage > 1 && (
-              <button onClick={() => paginate(currentPage - 1)}>이전</button>
-            )}
-            {Array.from(
-              { length: Math.min(10, totalPages) },
-              (_, i) => i + 1
-            ).map((page) => (
-              <button
-                key={page}
-                onClick={() => paginate(page)}
-                style={{
-                  backgroundColor: page === currentPage ? "#006618" : "",
-                  color: page === currentPage ? "white" : "",
-                }}
-              >
-                {page}
-              </button>
-            ))}
-            {currentPage < totalPages && (
-              <button onClick={() => paginate(currentPage + 1)}>다음</button>
-            )}
-          </>
-        )}
-      </div>
+     
     </>
   );
 }
