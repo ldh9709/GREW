@@ -11,7 +11,7 @@ DELETE  /follow/{followNo}                     :팔로윙 취소
 
 
 export const isExistFollow = async (token,mentorNo) => {
-    const response = await fetch(`${BACKEND_SERVER}/follow/is-exist?mentorNo=${mentorNo}`, {
+    const response = await fetch(`${BACKEND_SERVER}/follow/is-exist/${mentorNo}`, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
@@ -58,11 +58,9 @@ export const followList = async (token,page) => {
     return responseJsonObject;
 }
 //팔로잉 취소
-export const deleteFollow = async (followNo) => {
-    const memberCookie = getCookie("member");
-    const token = memberCookie.accessToken;
+export const deleteFollow = async (token,mentorNo) => {
 
-    const response = await fetch(`${BACKEND_SERVER}/follow/${followNo}`,{
+    const response = await fetch(`${BACKEND_SERVER}/follow/cancel/${mentorNo}`,{
         method: 'DELETE',
         headers: {
             'Content-Type': 'application/json',

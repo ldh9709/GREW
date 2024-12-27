@@ -27,7 +27,7 @@ export default function MentorProfileInfo({ mentorProfile }) {
         if (!isFollow) {
             await followApi.addfollow(token, follow);
         } else {
-            await followApi.deleteFollow
+            await followApi.deleteFollow(token, mentorProfile.memberNo);
         } 
       }catch (error) {
       console.log('팔로우가 실패하였습니다')

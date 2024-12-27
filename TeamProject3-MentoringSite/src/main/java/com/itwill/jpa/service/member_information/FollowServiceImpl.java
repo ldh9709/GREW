@@ -66,7 +66,7 @@ public class FollowServiceImpl implements FollowService{
 	public Long deleteFollow(Long menteeNo, Long mentorNo) {
 		try {
 			
-			Follow follow = followReporitory.findByMenteeMember_MemberNoAndMentorMember_MemberNo(mentorNo, mentorNo);
+			Follow follow = followReporitory.findByMenteeMember_MemberNoAndMentorMember_MemberNo(menteeNo, mentorNo);
 			/* 팔로우 멘토 follow_count감소*/
 			followReporitory.findById(follow.getFollowNo()).get();
 			
