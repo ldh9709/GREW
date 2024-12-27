@@ -77,4 +77,17 @@ public class AlarmRestController {
     public void isReadAlarm(@PathVariable(name = "alarmNo") Long alarmNo) {
     	alarmService.isReadAlarm(alarmNo);
     }
+    @Operation(summary = "안읽은 알림 갯수")
+    @PutMapping("/is-read/count")
+    public ResponseEntity<Response> isReadAlarmCount(@RequestParam(name="memberNo")Long memberNo) {
+    	Long count = alarmService.alarmIsReadCount(memberNo);
+    	Response response = new Response();
+    	response.setData(count);
+    	
+    	HttpHeaders httpHeaders = new HttpHeaders();
+		httpHeaders.setContentType(new MediaType(MediaType.APPLICATION_JSON, Charset.forName("UTF-8")));
+		ResponseEntity<Response> responseEntity = new ResponseEntity<Response>(response, httpHeaders,
+				HttpStatus.CREATED);
+		return responseEntity;
+    }
 }

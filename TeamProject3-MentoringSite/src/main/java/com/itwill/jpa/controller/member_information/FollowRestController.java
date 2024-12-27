@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -31,6 +32,7 @@ import com.itwill.jpa.service.alarm.AlarmService;
 import com.itwill.jpa.service.member_information.FollowService;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 
 @RestController
 @RequestMapping("/follow")
@@ -40,6 +42,34 @@ public class FollowRestController {
 	private FollowService followService;
 	@Autowired
 	private AlarmService alarmService;
+	
+	
+	/*팔로우 여부 체크*/
+	@Operation(summary = "팔로우 등록여부 체크")
+	@SecurityRequirement(name = "BearerAuth")//API 엔드포인트가 인증을 요구한다는 것을 문서화(Swagger에서 JWT인증을 명시
+	@PreAuthorize("hasRole('MENTEE')")//ROLE이 MENTEE인 사람만 접근 가능
+	@GetMapping("/is-exist")
+	public ResponseEntity<Response> checkFollow(Authentication authentication, @RequestParam(name="mentorNo") Long mentorNo) throws Exception{
+		
+		PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
+		Long menteeNo = principalDetails.getMemberNo();
+		
+		Boolean checkFollow = followService.isExistFollow(menteeNo, mentorNo);
+		Response response = new Response();
+		response.setStatus(ResponseStatusCode.CHECK_FOLLOW_SUCCESS);
+		response.setMessage(ResponseMessage.CHECK_FOLLOW_SUCCESS);
+		response.setData(checkFollow);
+		
+		HttpHeaders httpHeaders = new HttpHeaders();
+		httpHeaders.setContentType(new MediaType(MediaType.APPLICATION_JSON, Charset.forName("UTF-8")));
+		
+		ResponseEntity<Response> responseEntity =
+				 new ResponseEntity<Response>(response,httpHeaders, HttpStatus.OK);
+		
+		return responseEntity;
+	}
+	
+	
 	/*팔로우 등록*/
 	@Operation(summary = "팔로우 신청")
 	@PostMapping
@@ -79,6 +109,8 @@ public class FollowRestController {
 	}
 	/*팔로잉 리스트 출력(멘토리스트)*/
 	@Operation(summary = "멘티 팔로잉 리스트 출력")
+	@SecurityRequirement(name = "BearerAuth")
+	@PreAuthorize("hasRole('MENTEE')")
 	@GetMapping("/followList")
 	public ResponseEntity<Response> getFollowingMentorList(
 			Authentication authentication,

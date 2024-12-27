@@ -2,11 +2,25 @@ import { getCookie } from "../util/cookieUtil";
 
 const BACKEND_SERVER = "";
 /*
+GET     /follow/is-exist                       :팔로우 했는지 체크
 POST    /follow                                :팔로우 신청
 GET     /follow/mentor/{mentorNo}/follower-count:멘토 팔로워 수 출력
 GET     /followList            :멘티가 팔로잉한 멘토 리스트 출력
 DELETE  /follow/{followNo}                     :팔로윙 취소
 */
+
+
+export const isExistFollow = async (token) => {
+    const response = await fetch(`{BACKEND_SERVER}/follow/is-exist`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}` 
+        }
+    })
+    const responseJsonObject = await response.json();
+    return responseJsonObject;
+}
 
 
 //팔로우 신청

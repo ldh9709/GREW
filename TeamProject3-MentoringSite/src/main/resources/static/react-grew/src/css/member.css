@@ -363,7 +363,7 @@ body {
 
 /* 상담 내역 멘토기준 */
 .mentee-list{
-  width: 80%; height: 420px;
+  width: 80%;
   display: flex;
   justify-content: flex-start;
   flex-wrap: wrap;

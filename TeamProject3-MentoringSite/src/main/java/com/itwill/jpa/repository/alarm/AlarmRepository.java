@@ -20,4 +20,6 @@ public interface AlarmRepository extends JpaRepository<Alarm, Long>{
 	void deleteByMember_MemberNo(Long memberNo);
 	//유저 알림 목록 찾기
 	List<Alarm> findByMember_MemberNo(Long memberNo);
+	
+	Long countByMember_MemberNoAndIsRead(Long memberNo,int isRead);
 }

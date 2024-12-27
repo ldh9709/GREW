@@ -27,7 +27,6 @@ export default function MemberCounselList() {
         const chatRooms = response.data.content;
         const updateRooms = await Promise.all(
           chatRooms.map(async (chat) => {
-            console.log(chat);
             const searchName = await fetchName(chat.mentorNo);
             return {
               ...chat,
@@ -44,15 +43,10 @@ export default function MemberCounselList() {
         const updateRooms = await Promise.all(
           chatRooms.map(async (chat) => {
             const searchName = await fetchName(chat.menteeNo);
-            const reviewList = await reviewApi.listReviewByMember(
-              token,
-              0,
-              100
-            );
+            const reviewList = await reviewApi.listReviewByMember(member.mentorProfileNo, 0, 6, token);
             const isReview = reviewList.data.content.some(
               (review) => review.memberNo === chat.menteeNo
             );
-            console.log(isReview);
             return {
               ...chat,
               searchName,

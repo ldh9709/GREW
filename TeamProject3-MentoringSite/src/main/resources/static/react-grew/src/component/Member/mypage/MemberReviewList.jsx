@@ -1,10 +1,9 @@
-import { getCookie } from "../../../util/cookieUtil"
+import { useMemberAuth } from "../../../util/AuthContext";
 import React, { useState, useEffect } from 'react'
 import * as reviewApi from '../../../api/reviewApi'
 
 export default function MemberReviewList() {
-  const memberCookie = getCookie("member");
-  const token = memberCookie.accessToken;
+    const { token, member } = useMemberAuth();
   
     const [reviewList, setReviewList] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
@@ -13,7 +12,8 @@ export default function MemberReviewList() {
   
   const fetchReview = async (page) => {
     try {
-      const response = await reviewApi.listReviewByMember(token, page, 5);
+      const response = await reviewApi.listReviewByMember(member.mentorProfileNo , page, 5, token);
+      console.log('response',response)
       setReviewList(response.data.content);
       setTotalPages(response.data.totalPages);
     } catch (error) {
