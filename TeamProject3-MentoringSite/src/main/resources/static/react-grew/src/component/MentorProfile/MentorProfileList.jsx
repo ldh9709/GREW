@@ -267,7 +267,7 @@ function MentorProfileList() {
             <MentorProfileItem key={mentor.mentorProfileNo} mentor={mentor} />
           ))
         ) : (
-          <p>멘토 프로필이 없습니다.</p>
+          <p>관련 멘토가 없습니다.</p>
         )}
         {/* 페이지네이션 버튼 */}
         <div className="common-pagination common-pagination-bottom">
