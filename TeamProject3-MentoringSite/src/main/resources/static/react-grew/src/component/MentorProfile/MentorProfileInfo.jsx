@@ -23,14 +23,18 @@ export default function MentorProfileInfo({ mentorProfile }) {
 
   //팔로우 등록
   const handleFollowClick = async() => {
-    try {
-        if (!isFollow) {
-            await followApi.addfollow(token, follow);
+    if(token){
+      if (!isFollow) {
+          await followApi.addfollow(token, follow);
+          setIsfollow(true);
+          mentorProfile.mentorFollowCount += 1;
         } else {
-            await followApi.deleteFollow(token, mentorProfile.memberNo);
-        } 
-      }catch (error) {
-      console.log('팔로우가 실패하였습니다')
+          await followApi.deleteFollow(token, mentorProfile.memberNo);
+          setIsfollow(false);
+          mentorProfile.mentorFollowCount -= 1;
+      } 
+    }else{
+      alert("멘티만 가능한 서비스입니다.")
     }
   }
 
