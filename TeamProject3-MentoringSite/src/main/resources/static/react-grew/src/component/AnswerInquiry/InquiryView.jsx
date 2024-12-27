@@ -6,10 +6,10 @@ import AnswerItem from "./AnswerItem";
 import "../../css/styles.css";
 import { useMemberAuth } from "../../util/AuthContext";
 import ReportModal from "../Report/ReportModal";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye } from "@fortawesome/free-regular-svg-icons";
 import { faPen } from "@fortawesome/free-solid-svg-icons";
-
+import PagenationItem from "../PagenationItem";
 
 function InquiryView() {
   const { token, member } = useMemberAuth();
@@ -28,7 +28,7 @@ function InquiryView() {
   const [itemsPerPage] = useState(5); // 페이지당 항목 수 (예: 한 페이지에 5개 항목)
   const [sortType, setSortType] = useState("latest"); // 기본적으로 'latest'로 설정
   const [isReportHovered, setIsReportHovered] = useState(false);
-  const [isModalOpen,setIsModalOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [report, setreport] = useState({});
 
   useEffect(() => {
@@ -76,8 +76,8 @@ function InquiryView() {
 
   //질문삭제
   const inquiryRemoveAction = async () => {
-    if (!window.confirm('질문을 삭제하시겠습니까?')) return;
-    const responseJsonObject = await inquiryApi.deleteInquiry(inquiryNo,token);
+    if (!window.confirm("질문을 삭제하시겠습니까?")) return;
+    const responseJsonObject = await inquiryApi.deleteInquiry(inquiryNo, token);
     if (responseJsonObject.status === 5200) {
       navigate("/inquiry");
     } else {
@@ -135,9 +135,9 @@ function InquiryView() {
   const handleOpenModal = () => {
     setIsModalOpen(true);
     setreport({
-      type: 'INQUIRY',
-      target: inquiry.inquiryNo
-    })
+      type: "INQUIRY",
+      target: inquiry.inquiryNo,
+    });
   };
 
   const handleCloseModal = () => {
@@ -148,7 +148,7 @@ function InquiryView() {
     <>
       <div style={{ paddingLeft: 10 }}>
         <input type="hidden" name="inquiryNo" value={inquiry.inquiryNo} />
-  
+
         <div className="inquiry-container-inview">
           <div className="inquiry-view-category">{inquiry.categoryName}</div>
           <div className="inquiry-view-title">
@@ -162,14 +162,17 @@ function InquiryView() {
               <FontAwesomeIcon icon={faEye} /> {inquiry.inquiryViews}
             </div>
           </div>
-          <div className="inquiry-view-content">
-            {inquiry.inquiryContent.replace('\n', '<br>')}
-          </div>
+          <div
+            className="inquiry-view-content"
+            dangerouslySetInnerHTML={{
+              __html: inquiry.inquiryContent.replace(/\n/g, "<br/>"),
+            }}
+          ></div>
 
           {member != null && member.memberNo == inquiry.memberNo ? (
             <div className="modify-delete-btn2">
               <button onClick={handleModify}>수정</button>
-  
+
               <button
                 onClick={(e) => {
                   e.preventDefault(); // 폼 제출 방지
@@ -178,13 +181,12 @@ function InquiryView() {
               >
                 삭제
               </button>
-            
             </div>
           ) : (
             <div></div>
           )}
-        {/* 신고하기 버튼 */}
-        <div className="inquiry-report-btn">
+          {/* 신고하기 버튼 */}
+          <div className="inquiry-report-btn">
             {isModalOpen && (
               <ReportModal onClose={handleCloseModal} report={report} />
             )}
@@ -243,39 +245,11 @@ function InquiryView() {
             {answer.map((answer) => (
               <AnswerItem key={answer.answerNo} answer={answer} />
             ))}
-            {/* 페이지네이션 버튼 */}
-            <div className="common-pagination common-pagination-bottom">
-              {/* 이전 버튼 */}
-              <button
-                className="common-pagination-arrow"
-                disabled={currentPage === 1}
-                onClick={() => paginate(currentPage - 1)}
-              >
-                &lt;
-              </button>
-  
-              {/* 페이지 번호 버튼 */}
-              {pageNumbers.map((number) => (
-                <button
-                  key={number}
-                  className={`common-pagination-number ${
-                    currentPage === number ? "active" : ""
-                  }`}
-                  onClick={() => paginate(number)}
-                >
-                  {number}
-                </button>
-              ))}
-  
-              {/* 다음 버튼 */}
-              <button
-                className="common-pagination-arrow"
-                disabled={currentPage === totalPages}
-                onClick={() => paginate(currentPage + 1)}
-              >
-                &gt;
-              </button>
-            </div>
+            <PagenationItem
+              currentPage={currentPage}
+              totalPages={totalPages}
+              paginate={paginate}
+            />
           </>
         ) : (
           <div className="inquiry-write-btn">
