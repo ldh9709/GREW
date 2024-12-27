@@ -83,15 +83,28 @@
   color: white;
 }
 
-.cancel-button {
-  background-color: #dc3545;
-  color: white;
-}
 
 .submit-button:hover,
+.delete-button:hover,
 .cancel-button:hover {
   opacity: 0.8; /* 버튼에 호버 시 약간 투명도 변화 */
 }
+
+.delete-button {
+  background-color: #dc3545; /* 빨간색 */
+  color: white;
+}
+
+.cancel-button {
+  background-color: #6c757d; /* 회색 */
+  color: white;
+}
+
+.delete-button:hover,
+.cancel-button:hover {
+  opacity: 0.8;
+}
+
 
 /* 이미지 미리보기 */
 .image-preview {

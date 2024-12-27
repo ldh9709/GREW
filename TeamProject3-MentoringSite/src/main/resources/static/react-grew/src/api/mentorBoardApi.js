@@ -120,9 +120,13 @@ export const getMentorBoardDetail = async (mentorBoardNo) => {
  * @param {number} mentorBoardNo - 멘토 보드 번호
  * @returns {Promise} - 삭제 성공 메시지를 포함하는 프로미스
  */
-export const deleteMentorBoard = async (mentorBoardNo) => {
+export const deleteMentorBoard = async (token,mentorBoardNo) => {
   const response = await fetch(`${BACKEND_SERVER}${BASE_URL}/${mentorBoardNo}/status`, {
     method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`
+    },
   });
   const responseJsonObject = await response.json();
   return responseJsonObject;

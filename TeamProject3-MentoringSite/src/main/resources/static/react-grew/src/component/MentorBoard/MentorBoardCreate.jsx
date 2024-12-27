@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import * as mentorProfileApi from "../../api/mentorProfileApi";
 import * as mentorBoardApi from "../../api/mentorBoardApi"; // API 호출 부분
+import * as categoryApi from "../../api/categoryApi"; // 카테고리 데이터를 조회하는 API
 import "../../css/mentorBoardForm.css";
 import { useNavigate } from "react-router-dom";  // useNavigate 추가
 import { useMemberAuth } from "../../util/AuthContext"
@@ -47,15 +48,22 @@ function MentorBoardCreate() {
 
         // 프로필 정보 조회
         const profileResponse = await mentorProfileApi.getMentorProfileByMemberNo(memberNo);
-
+        
         // 프로필 정보를 통해 카테고리 번호 조회
         if (profileResponse.status !== 2355 || !profileResponse.data?.categoryNo) {
           setCategoryName("프로필 정보를 불러오지 못했습니다.");
           return;
         }
         
-        setCategoryNo(profileResponse.data.categoryNo);
-        setCategoryName(profileResponse.data.categoryName);
+        // categoryNo에 해당하는 문자열 가져오기
+        const categoryResponse = await categoryApi.childCategory(profileResponse.data.categoryNo);
+        if (categoryResponse.status === 2420 && categoryResponse.data) {
+          setCategoryNo(categoryResponse.data.categoryNo)
+          setCategoryName(categoryResponse.data.categoryName);
+        } else {
+          setCategoryName("카테고리를 불러오지 못했습니다.");
+        }
+        
 
       } catch (err) {
         console.error("카테고리 데이터 로드 중 오류 발생:", err);
@@ -66,7 +74,7 @@ function MentorBoardCreate() {
     if (memberNo) {
       fetchCategory();
     }
-  }, [memberNo, member, navigate]);
+  }, [memberNo]);
 
 
   // 등록 버튼 누를시
@@ -89,12 +97,7 @@ function MentorBoardCreate() {
   
     try {
       // 게시글 등록 API 호출
-      console.log("메소드동작전 token",token);
-      console.log("메소드동작전 formdata",formData);
       const response = await mentorBoardApi.createMentorBoard(token,formData);
-      console.log("메소드동작후 token",token);
-      console.log("메소드동작후 formdata",formData);
-      console.log("생성된 멘토보드:",response);
       const mentorBoardNo = response.data.mentorBoardNo; // 응답에서 mentorBoardNo 추출
       alert("게시글이 성공적으로 등록되었습니다!");
   

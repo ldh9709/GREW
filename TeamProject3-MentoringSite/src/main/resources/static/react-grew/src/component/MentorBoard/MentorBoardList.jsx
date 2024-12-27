@@ -178,7 +178,7 @@ function MentorBoardList() {
 
   const handleWriteButton = () => {
     if (memberCookie) {
-      navigate("/mentor-board/write");
+      navigate("/mentor-board/create");
     } else {
       alert("로그인이 필요한 서비스입니다");
     }

@@ -41,19 +41,17 @@ function MentorBoardUpdate() {
     const fetchBoardData = async () => {
       try {
 
-        console.log("1번번호:",memberRef.current.memberNo);
         const response = await mentorBoardApi.getMentorBoardDetail(mentorBoardNo);
-        console.log("2번번호:",memberRef.current.memberNo);
+        
         // 게시글 작성자 확인 멘토 권한 확인
-        console.log("3번번호:",memberRef.current.memberNo);
         if (memberRef.current.memberNo !== response.data.memberNo) {
           alert("권한이 없습니다. 게시글 작성자만 수정할 수 있습니다.");
-          // navigate(-1, { replace: true });
+          navigate("/mentor-board/list");
           return; // 추가 동작 방지
-        } else if(memberRef.current.memberRole !== "ROLE_MENTOR" && memberRef.current.memberRole !== "ROLE_ADMIN"){
+        } else if(memberRef.current.memberRole !== "ROLE_MENTOR"){
           console.log("4번번호:",memberRef.current.memberNo);
           alert("멘토 상태일 때만 게시글 수정이 가능합니다.");
-          // navigate(-1, { replace: true });
+          navigate("/mentor-board/list");
           return; // 추가 동작 방지
         }
 
@@ -78,7 +76,7 @@ function MentorBoardUpdate() {
       } catch (err) {
         console.error("게시글 데이터 로드 중 오류 발생:", err);
         alert("게시글 정보를 가져오는 데 실패했습니다.");
-        // navigate(-1, { replace: true });
+        navigate("/mentor-board/list");
       }
     };
 
@@ -147,6 +145,19 @@ function MentorBoardUpdate() {
     }
   };
 
+  const handleDelete = async () => {
+    if (window.confirm("정말 삭제하시겠습니까?")) {
+      try {
+        await mentorBoardApi.deleteMentorBoard(mentorBoardNo, token);
+        alert("게시글이 삭제되었습니다.");
+        navigate("/mentor-board/list");
+      } catch (err) {
+        console.error("게시글 삭제 실패:", err);
+        alert("게시글 삭제에 실패했습니다.");
+      }
+    }
+  };
+
   const handleCancel = () => {
     const shouldCancel = window.confirm("게시글 수정을 취소하시겠습니까? 작성된 내용은 저장되지 않습니다.");
     if (shouldCancel) {
@@ -202,6 +213,7 @@ function MentorBoardUpdate() {
       <div className="button-group">
         <button className="submit-button" onClick={handleSubmit}>수정</button>
         <button className="cancel-button" onClick={handleCancel}>취소</button>
+        <button className="delete-button" onClick={handleDelete}>삭제</button>
       </div>
     </div>
   );

@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from 'react'; // React와 필요한 훅들 import
-import { useParams } from 'react-router-dom'; // useParams import
-import { getMentorBoardDetail, increaseViewCount } from '../../api/mentorBoardApi'; // API 함수 import
+import { useNavigate, useParams } from 'react-router-dom'; // useParams import
+import { getMentorBoardDetail, increaseViewCount, deleteMentorBoard } from '../../api/mentorBoardApi'; // API 함수 import
 import '../../css/mentorBoard.css'; // 스타일 import
+import { useMemberAuth } from "../../util/AuthContext"  // 인증객체,쿠키를 가져오기 위한 import
 
 const MentorBoardDetail = () => {
   const { mentorBoardNo } = useParams(); // URL 파라미터에서 mentorBoardNo 가져오기
+  const { token, member } = useMemberAuth(); // 토큰과 멤버 선언하여 Context에 담긴 정보 가져오기
+  const navigate = useNavigate(); // 페이지 이동을 위한 useNavigate
   const [board, setBoard] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -51,6 +54,35 @@ const MentorBoardDetail = () => {
     handleViewCount(); // 조회수 증가 로직 추가
   }, [mentorBoardNo]);
 
+  const handleEdit = () => {
+    navigate(`/mentor-board/update/${mentorBoardNo}`); // 수정 페이지로 이동
+  };
+
+  const handleDelete = async () => {
+    if (!board) {
+      alert("게시글 정보를 불러오는 중입니다. 잠시 후 다시 시도해주세요.");
+      return;
+    }
+  
+    // 게시글 작성자와 현재 로그인한 유저의 memberNo 비교
+    if (member.memberNo !== board.memberNo) {
+      alert("게시글 작성자만 삭제할 수 있습니다.");
+      return;
+    }
+  
+    if (window.confirm("정말 삭제하시겠습니까?")) {
+      try {
+        await deleteMentorBoard(token, mentorBoardNo); // 삭제 API 호출
+        alert("삭제가 완료되었습니다.");
+        navigate("/mentor-board/list"); // 목록 페이지로 이동
+      } catch (err) {
+        alert("삭제 중 오류가 발생했습니다.");
+        console.error(err);
+      }
+    }
+  };
+
+
   if (loading) return <p>로딩 중입니다...</p>;
   if (error) return <p>{error}</p>;
 
@@ -67,6 +99,17 @@ const MentorBoardDetail = () => {
         <span>조회수: {board?.mentorBoardViews}</span>
         <span>작성일: {calculateRelativeDate(board.mentorBoardDate)}</span>
       </div>
+
+      {/* 수정 및 삭제 버튼 */}
+      <div className="board-detail-actions">
+        <button className="edit-button" onClick={handleEdit}>
+          수정
+        </button>
+        <button className="delete-button" onClick={handleDelete}>
+          삭제
+        </button>
+      </div>
+
     </div>
   );
 };
