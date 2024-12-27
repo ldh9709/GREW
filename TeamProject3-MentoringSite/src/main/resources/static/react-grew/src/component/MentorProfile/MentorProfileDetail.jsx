@@ -1,14 +1,16 @@
+import { useMemberAuth } from "../../util/AuthContext";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import "../../css/mentorProfile.css"; // 🔥 추가된 CSS 파일
 import { getMentorProfileByNo } from "../../api/mentorProfileApi.js";
 import { listReviewByMember } from "../../api/reviewApi.js"; // 리뷰 목록 API 추가
-import { getCookie } from "../../util/cookieUtil.js";
-import { jwtDecode } from "jwt-decode";
 import * as categoryApi from "../../api/categoryApi";
 import * as memberApi from "../../api/memberApi";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faHeart, faHeartCircleCheck, faHeartCirclePlus } from '@fortawesome/free-solid-svg-icons';
 
 export default function MentorProfileDetail() {
+  const { token } = useMemberAuth();
   const { mentorProfileNo } = useParams();
   const [mentorProfile, setMentorProfile] = useState(null);
   const [reviews, setReviews] = useState([]); // 빈 배열로 초기화
@@ -16,10 +18,14 @@ export default function MentorProfileDetail() {
   const [error, setError] = useState(null);
   const [categoryName, setCategoryName] = useState("카테고리 정보 없음");
 
-  // 쿠키에서 member 객체를 가져와 JWT 토큰을 추출
-  const memberCookie = getCookie("member");
-  const token = memberCookie ? memberCookie.accessToken : null; // 여기서 accessToken을 정확히 추출해야 함
-  const decodeToken = token ? jwtDecode(token) : null;
+
+  const checkFollow = () => {
+    
+  }
+
+  const handleFollow = () => {
+    
+  }
 
   useEffect(() => {
     const fetchMentorProfile = async () => {
@@ -33,8 +39,6 @@ export default function MentorProfileDetail() {
 
         console.log(mentorProfile)
         setMentorProfile(mentorProfileResponse.data);
-
-        console.log("Decoded Token:", decodeToken); // 디코딩된 토큰 정보 확인
 
         // 2. 멘토 프로필 번호로 리뷰 목록 조회 (Authorization 헤더에 JWT 토큰 추가)
         const reviewsResponse = await listReviewByMember(
@@ -104,13 +108,12 @@ export default function MentorProfileDetail() {
           <div className="mentor-basic-info">
             <h2>{mentorProfile.memberName} 멘토</h2> {/* 멤버 이름 표시 */}
             <div className="mentor-stats">
+              <span className="stats-label">
+                멘토링 신청 </span>
               <span>
-                멘토링 신청
+                {mentorProfile?.mentorMentoringCount || 0}건 {" "}
               </span>
-              <span>
-                {mentorProfile?.mentorMentoringCount || 0}
-              </span>
-              <span>매칭률</span>
+              <span className="stats-label">매칭률 </span>
               <span>
                 {mentorProfile?.mentorActivityCount
                 ? Math.round(
@@ -119,22 +122,21 @@ export default function MentorProfileDetail() {
                       100
                   )
                   : 0}  
-                    %
+                    %{" "}
               </span>
-              <span>
-                만족도
-              </span>
+              <span className="stats-label">
+                만족도 </span>
               <span>
                 {mentorProfile?.mentorRating || 0}
               </span>
             </div>
-            <span>팔로워:</span>
-            <span>{mentorProfile?.mentorFollowCount || 0}</span>
+            
             {/* 버튼 */}
             <div className="mentor-actions">
-              <button className="follow-button">+ 팔로우</button>
-              <button className="question-button">멘토에게 질문하기</button>
+              <button className="follow-button"><FontAwesomeIcon icon={faHeartCirclePlus}/> 팔로우</button>
+              <button className="question-button">멘토링 신청하기</button>
             </div>
+            <div className="mentor-follow-count">{mentorProfile?.mentorFollowCount || 0}명이 팔로우 하는 중</div>
           </div>
         </div>
         {/* 우측: 상세 정보 */}
