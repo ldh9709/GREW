@@ -36,13 +36,15 @@
 /* 멘토 프로필 리스트 */
 .profile-container {
   display: flex;
+  position: relative;
+  flex-wrap: wrap;
   gap: 20px;
-  margin-bottom: 30px;
+  padding-bottom: 80px;
 }
 /* 프로필 카드 스타일 */
 .mentor-profile-card {
   width: 220px; /* 카드의 너비 고정 */
-  height: 330px; /* 카드의 높이 고정 */
+  height: 300px; /* 카드의 높이 고정 */
   background: #fff;
   border: 1px solid #ddd;
   border-radius: 30px;
@@ -53,7 +55,7 @@
 }
 
 .mentor-profile-card:hover {
-  transform: scale(1.05);
+  transform: scale(1.02);
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
 }
 
@@ -105,14 +107,24 @@
 
 
 
-/* 프로필 카드 제목 */
+
+
+/* 프로필 정보 */
+.mentor-profile-card .card-category {
+  margin: 10px auto 0 auto;
+  width: 100px; height: 25px;
+  line-height: 25px;
+  border-radius: 5px;
+  color: #029151;
+  background-color: #f1f1f1;
+  font-size: 14px; font-weight: normal;
+}
 .mentor-profile-card .card-title {
-  font-size: 18px;
+  font-size: 17px;
   font-weight: bold;
-  margin-bottom: 10px;
+  margin: 20px 0;
 }
 
-프로필 카드 내용
 .mentor-profile-card .card-content {
   font-size: 14px;
   color: #555;

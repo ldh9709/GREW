@@ -56,7 +56,12 @@ function MentorProfileList() {
   };
 
   // 멘토 프로필 데이터를 가져오는 함수
-  const fetchMentorProfiles = async (page, size, sortButton, selectedCategory) => {
+  const fetchMentorProfiles = async (
+    page,
+    size,
+    sortButton,
+    selectedCategory
+  ) => {
     try {
       let responseJsonObject;
       const selectedCat = categories.find(
@@ -65,51 +70,62 @@ function MentorProfileList() {
 
       if (!selectedCategory) {
         if (sortButton === "follow") {
-          responseJsonObject = await mentorProfileApi.listMentorsByFollowCount(page, size);
+          responseJsonObject = await mentorProfileApi.listMentorsByFollowCount(
+            page,
+            size
+          );
         } else if (sortButton === "mentoring") {
-          responseJsonObject = await mentorProfileApi.listMentorsByMentoringCount(page, size);
+          responseJsonObject =
+            await mentorProfileApi.listMentorsByMentoringCount(page, size);
         } else if (sortButton === "activity") {
-          responseJsonObject = await mentorProfileApi.listMentorsByActivityCount(page, size);
+          responseJsonObject =
+            await mentorProfileApi.listMentorsByActivityCount(page, size);
         }
       } else if (selectedCat?.categoryDepth === 2) {
         if (sortButton === "follow") {
-          responseJsonObject = await mentorProfileApi.listMentorsByCategoryNoFollow(
-            selectedCategory,
-            page,
-            size
-          );
+          responseJsonObject =
+            await mentorProfileApi.listMentorsByCategoryNoFollow(
+              selectedCategory,
+              page,
+              size
+            );
         } else if (sortButton === "mentoring") {
-          responseJsonObject = await mentorProfileApi.listMentorsByCategoryNoMentoring(
-            selectedCategory,
-            page,
-            size
-          );
+          responseJsonObject =
+            await mentorProfileApi.listMentorsByCategoryNoMentoring(
+              selectedCategory,
+              page,
+              size
+            );
         } else if (sortButton === "activity") {
-          responseJsonObject = await mentorProfileApi.listMentorsByCategoryNoActivity(
-            selectedCategory,
-            page,
-            size
-          );
+          responseJsonObject =
+            await mentorProfileApi.listMentorsByCategoryNoActivity(
+              selectedCategory,
+              page,
+              size
+            );
         }
       } else if (selectedCat?.categoryDepth === 1) {
         if (sortButton === "follow") {
-          responseJsonObject = await mentorProfileApi.listMentorsByParentCategoryFollowCount(
-            selectedCategory,
-            page,
-            size
-          );
+          responseJsonObject =
+            await mentorProfileApi.listMentorsByParentCategoryFollowCount(
+              selectedCategory,
+              page,
+              size
+            );
         } else if (sortButton === "mentoring") {
-          responseJsonObject = await mentorProfileApi.listMentorsByParentCategoryMentoringCount(
-            selectedCategory,
-            page,
-            size
-          );
+          responseJsonObject =
+            await mentorProfileApi.listMentorsByParentCategoryMentoringCount(
+              selectedCategory,
+              page,
+              size
+            );
         } else if (sortButton === "activity") {
-          responseJsonObject = await mentorProfileApi.listMentorsByParentCategoryActivityCount(
-            selectedCategory,
-            page,
-            size
-          );
+          responseJsonObject =
+            await mentorProfileApi.listMentorsByParentCategoryActivityCount(
+              selectedCategory,
+              page,
+              size
+            );
         }
       }
 
@@ -120,21 +136,50 @@ function MentorProfileList() {
     }
   };
 
-  // 페이지 변경 시 데이터 갱신
+// 페이지 변경 시 데이터 갱신
   const paginate = (pageNumber) => {
     setCurrentPage(pageNumber);
   };
 
+  // 페이지네이션 버튼 표시 (10개씩 끊어서 표시)
+  const pageNumbers = [];
+  const pagesToShow = 10; // 한 번에 보여줄 페이지 수
+  const startPage =
+    Math.floor((currentPage - 1) / pagesToShow) * pagesToShow + 1;
+  const endPage = Math.min(startPage + pagesToShow - 1, totalPages);
+
+  for (let i = startPage; i <= endPage; i++) {
+    pageNumbers.push(i);
+  }
+
   useEffect(() => {
-    fetchMentorProfiles(currentPage - 1, itemsPerPage, sortType, selectedCategory);
+    fetchMentorProfiles(
+      currentPage - 1,
+      itemsPerPage,
+      sortType,
+      selectedCategory
+    );
   }, [currentPage, sortType, selectedCategory]);
 
   return (
     <>
       <div className="category-container">
-      <h1>멘토 찾기</h1>
-      {/* 카테고리 버튼들 */}
+        <h1>멘토 찾기</h1>
+        {/* 카테고리 버튼들 */}
         <div className="category-parent">
+          <button
+            className="category-button"
+            onClick={() => {
+              setSelectedCategory(null);
+              setChildCategories(null);
+            }}
+            style={{
+              backgroundColor: selectedCategory === null ? "#28a745" : "", // 선택된 카테고리는 색상 변경
+              color: selectedCategory === null ? "#f3f4f6" : "", // 선택된 카테고리 글자 색상 변경
+            }}
+          >
+            전체
+          </button>
           {categories
             .filter((category) => category.categoryDepth === 1) // categoryDepth가 1인 카테고리만 필터링
             .map((category) => (
@@ -155,7 +200,7 @@ function MentorProfileList() {
         </div>
 
         {/* 하위 카테고리 버튼 렌더링 */}
-        {childCategories.length > 0 && (
+        {childCategories&&childCategories.length > 0 && (
           <div className="category-child">
             {childCategories.map((child) => (
               <button
@@ -224,35 +269,41 @@ function MentorProfileList() {
         ) : (
           <p>멘토 프로필이 없습니다.</p>
         )}
+        {/* 페이지네이션 버튼 */}
+        <div className="common-pagination common-pagination-bottom">
+          {/* 이전 버튼 */}
+          <button
+            className="common-pagination-arrow"
+            disabled={currentPage === 1}
+            onClick={() => paginate(currentPage - 1)}
+          >
+            &lt;
+          </button>
+
+          {/* 페이지 번호 버튼 */}
+          {pageNumbers.map((number) => (
+            <button
+              key={number}
+              className={`common-pagination-number ${
+                currentPage === number ? "active" : ""
+              }`}
+              onClick={() => paginate(number)}
+            >
+              {number}
+            </button>
+          ))}
+
+          {/* 다음 버튼 */}
+          <button
+            className="common-pagination-arrow"
+            disabled={currentPage === totalPages}
+            onClick={() => paginate(currentPage + 1)}
+          >
+            &gt;
+          </button>
+        </div>
       </div>
-      {/* 페이지네이션 */}
-      <div className="pagenation">
-        {totalPages > 0 && (
-          <>
-            {currentPage > 1 && (
-              <button onClick={() => paginate(currentPage - 1)}>이전</button>
-            )}
-            {Array.from(
-              { length: Math.min(10, totalPages) },
-              (_, i) => i + 1
-            ).map((page) => (
-              <button
-                key={page}
-                onClick={() => paginate(page)}
-                style={{
-                  backgroundColor: page === currentPage ? "#006618" : "",
-                  color: page === currentPage ? "white" : "",
-                }}
-              >
-                {page}
-              </button>
-            ))}
-            {currentPage < totalPages && (
-              <button onClick={() => paginate(currentPage + 1)}>다음</button>
-            )}
-          </>
-        )}
-      </div>
+     
     </>
   );
 }
