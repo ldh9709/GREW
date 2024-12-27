@@ -1,7 +1,6 @@
 import React from "react";
 import imageSrc from './Member/mentor-content1.jpg';
 export default function MainMentorBoard({mentorBoard}) {
-    console.log(mentorBoard);
   return (
     
     <div className="tab-boards">

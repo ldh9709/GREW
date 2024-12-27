@@ -36,3 +36,11 @@ export const isReadAlarm = async (alarmNo) => {
     method: "PUT",
   });
 };
+//안읽은 알림 갯수
+export const isReadAlarmCount = async(memberNo)=>{
+  const response =  await fetch(`${BACKEND_SERVER}/alarms/is-read/count?memberNo=${memberNo}`,{
+    method:"PUT",
+  });
+  const responseJsonObject = response.json();
+  return responseJsonObject;
+};

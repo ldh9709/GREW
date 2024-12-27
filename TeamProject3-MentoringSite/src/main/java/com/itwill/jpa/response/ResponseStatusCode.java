@@ -79,11 +79,13 @@ public class ResponseStatusCode {
 	public static final int READ_MENTORLIST_SUCCESS = 2410;
 	public static final int READ_MENTEE_COUNT_SUCCESS = 2420;
 	public static final int DELETE_FOLLOW_SUCCESS = 2430;
+	public static final int CHECK_FOLLOW_SUCCESS = 2440;
 	
 	public static final int CREATE_FOLLOW_FAIL = 2440;
 	public static final int READ_MENTORLIST_FAIL= 2450;
 	public static final int READ_MENTEE_COUNT_FAIL= 2460;
 	public static final int DELETE_FOLLOW_FAIL= 2470;
+	public static final int CHECK_FOLLOW_FAIL= 2480;
 	
 	/******************* CATEGORY 메시지 ************************/
 	public static final int CREATE_CATEGORY_SUCCESS = 2400;

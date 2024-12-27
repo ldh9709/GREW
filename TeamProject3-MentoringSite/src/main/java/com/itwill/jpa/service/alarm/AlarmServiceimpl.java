@@ -191,5 +191,11 @@ public class AlarmServiceimpl implements AlarmService {
 			throw new IllegalArgumentException("Unknown reference type");
 		}
 	}
+	//알림 안읽음 갯수
+	@Override
+	public Long alarmIsReadCount(Long memberNo) {
+		Long count = alarmRepository.countByMember_MemberNoAndIsRead(memberNo, 1);
+		return count;
+	}
 
 }
