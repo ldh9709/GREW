@@ -1112,3 +1112,47 @@ button {
   box-shadow: 0 8px 12px rgba(0, 0, 0, 0.15);
   transform: translateY(-4px);
 }
+.slider-container {
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+}
+
+.slider {
+  display: flex;
+  transition: transform 0.5s ease;
+}
+
+.slide {
+  min-width: 100%;
+  transition: opacity 0.5s ease-in-out;
+}
+
+.slider-container img{
+  width: 100%;
+  height: 500px;
+}
+.slider-container button {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+  border: none;
+  font-size: 2rem;
+  cursor: pointer;
+  padding: 10px;
+  z-index: 10;
+}
+
+.prev {
+  left: 10px;
+}
+
+.next {
+  right: 10px;
+}
+
+.slider-container button:hover {
+  background-color: rgba(0, 0, 0, 0.7);
+}
