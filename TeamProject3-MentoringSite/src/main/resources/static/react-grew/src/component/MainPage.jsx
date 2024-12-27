@@ -47,7 +47,7 @@ export const MainPage = () => {
         style={{ margin: "10px" }}
       />
       <h1>우수 멘토</h1>
-      <div className="profile-grid">
+      <div className="profile-container">
         {mentorProfile && mentorProfile.length > 0 ? (
           mentorProfile
             .slice(0, 4)
