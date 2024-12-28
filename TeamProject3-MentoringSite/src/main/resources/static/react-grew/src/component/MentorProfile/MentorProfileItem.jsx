@@ -25,9 +25,11 @@ export default function MentorProfileItem({ mentor }) {
 
 
   useEffect(() => {
-    fetchMember();
-    fetchAdditionalData();
-  }, []);
+    if (mentor.mentorStatus === 3) { // 상태가 3인 경우에만 데이터 요청
+      fetchMember();
+      fetchAdditionalData();
+    }
+  }, [mentor]);
 
   const fetchMember = async () => {
     const response = await memberApi.getMemberByMemberNo(mentor.memberNo);
@@ -54,7 +56,9 @@ export default function MentorProfileItem({ mentor }) {
   const viewMentorProfile = () => {
     navigate(`/mentor-profile/${mentor.mentorProfileNo}`);
   };
-
+  if (mentor.mentorStatus !== 3) {
+    return null; // 상태가 3이 아닌 경우 아무것도 렌더링하지 않음///////////////////////////
+  }
   return (
     <div
       className="mentor-profile-card"
