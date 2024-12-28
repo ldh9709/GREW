@@ -88,8 +88,8 @@ VALUES(member_no_SEQ.nextval,'eee','eee','eee@naver.com','박은미',9000,1,sysd
 /***** 테스트용 아이디 등록 *****/
 INSERT INTO member (member_no,member_id,member_password,member_email,member_name,member_points,member_status,member_join_date,member_report_count,member_role,member_provider) 
 VALUES (member_no_SEQ.nextval, 'qwer1234', '{bcrypt}$2a$10$2Vj/MwAon9U1UFSHcF8DSe9VtT86qtIFmWo2.tocHk1Px1NAXFU3K', 'zszz5434@gmail.com', '이도현', 500, 1, sysdate, 0, 'ROLE_MENTOR', 'Email');
-INSERT INTO mentor_profile(mentor_profile_no, mentor_introduce, mentor_career, mentor_rating, mentor_mentoring_count, mentor_image, mentor_activity_count, mentor_follow_count, mentor_status, category_no, member_no)
-VALUES (mentor_profile_no_SEQ.NEXTVAL, '안녕하세요, 이도현 멘토입니다.', '경력자입니다', 5, 10, '/images/mentor-profile/15.jpeg', 100, 50, 1, 2, member_no_SEQ.CURRVAL);
+INSERT INTO mentor_profile(mentor_profile_no, mentor_introduce, mentor_career, mentor_rating, mentor_mentoring_count, mentor_image, mentor_activity_count, mentor_follow_count, mentor_status, category_no, member_no, mentor_headline)
+VALUES (mentor_profile_no_SEQ.NEXTVAL, '안녕하세요, 이도현 멘토입니다.', '경력자입니다', 5, 10, '/images/mentor-profile/15.jpeg', 100, 50, 3, 2, member_no_SEQ.CURRVAL, '반갑습니다.');
 
 
 /***** 테스트용 아이디 등록 *****/
@@ -108,66 +108,66 @@ values(interest_no_SEQ.nextval, 6, 4);
 /* 멘토 등록 */
 INSERT INTO member(member_no,member_id,member_password,member_email,member_name,member_points,member_status,member_join_date,member_report_count,member_role,member_provider)
 VALUES(member_no_SEQ.nextval,'fff','fff','fff@naver.com','송대현',5500,1,sysdate,0,'ROLE_MENTEE','');
-INSERT INTO mentor_profile(mentor_profile_no, mentor_introduce, mentor_career, mentor_rating, mentor_mentoring_count, mentor_image, mentor_activity_count, mentor_follow_count, mentor_status, category_no, member_no)
-VALUES (mentor_profile_no_SEQ.NEXTVAL, '안녕하세요, 송대현 멘토입니다.', '경력자입니다', 5, 10, '/images/mentor-profile/1.jpeg', 100, 50, 3, 2, member_no_SEQ.CURRVAL);
+INSERT INTO mentor_profile(mentor_profile_no, mentor_introduce, mentor_career, mentor_rating, mentor_mentoring_count, mentor_image, mentor_activity_count, mentor_follow_count, mentor_status, category_no, member_no, mentor_headline)
+VALUES (mentor_profile_no_SEQ.NEXTVAL, '안녕하세요, 송대현 멘토입니다.', '경력자입니다', 5, 10, '/images/mentor-profile/1.jpeg', 100, 50, 3, 2, member_no_SEQ.CURRVAL, '반갑습니둥');
 
 INSERT INTO member(member_no,member_id,member_password,member_email,member_name,member_points,member_status,member_join_date,member_report_count,member_role,member_provider)
 VALUES(member_no_SEQ.nextval,'ggg','ggg','ggg@naver.com','양한수',6300,1,sysdate,0,'ROLE_MENTOR','');
-INSERT INTO mentor_profile(mentor_profile_no, mentor_introduce, mentor_career, mentor_rating, mentor_mentoring_count, mentor_image, mentor_activity_count, mentor_follow_count, mentor_status, category_no, member_no)
-VALUES (mentor_profile_no_SEQ.NEXTVAL, '안녕하세요, 양한수 멘토입니다.', '경력자입니다', 5, 10, '/images/mentor-profile/2.png', 100, 50, 3, 8, member_no_SEQ.CURRVAL);
+INSERT INTO mentor_profile(mentor_profile_no, mentor_introduce, mentor_career, mentor_rating, mentor_mentoring_count, mentor_image, mentor_activity_count, mentor_follow_count, mentor_status, category_no, member_no, mentor_headline)
+VALUES (mentor_profile_no_SEQ.NEXTVAL, '안녕하세요, 양한수 멘토입니다.', '경력자입니다', 5, 10, '/images/mentor-profile/2.png', 100, 50, 3, 8, member_no_SEQ.CURRVAL, '나도반갑습둥');
 
 INSERT INTO member(member_no,member_id,member_password,member_email,member_name,member_points,member_status,member_join_date,member_report_count,member_role,member_provider)
 VALUES(member_no_SEQ.nextval,'hhh','hhh','hhh@naver.com','이도현',4000,1,sysdate,0,'ROLE_MENTOR','');
-INSERT INTO mentor_profile(mentor_profile_no, mentor_introduce, mentor_career, mentor_rating, mentor_mentoring_count, mentor_image, mentor_activity_count, mentor_follow_count, mentor_status, category_no, member_no)
-VALUES (mentor_profile_no_SEQ.NEXTVAL, '안녕하세요, 이도현 멘토입니다.', '경력자입니다', 5, 10, '/images/mentor-profile/3.jpeg', 100, 50, 3, 12, member_no_SEQ.CURRVAL);
+INSERT INTO mentor_profile(mentor_profile_no, mentor_introduce, mentor_career, mentor_rating, mentor_mentoring_count, mentor_image, mentor_activity_count, mentor_follow_count, mentor_status, category_no, member_no, mentor_headline)
+VALUES (mentor_profile_no_SEQ.NEXTVAL, '안녕하세요, 이도현 멘토입니다.', '경력자입니다', 5, 10, '/images/mentor-profile/3.jpeg', 100, 50, 3, 12, member_no_SEQ.CURRVAL, '반갑습니다람쥐');
 
 INSERT INTO member(member_no, member_id, member_password, member_email, member_name, member_points, member_status, member_join_date, member_report_count, member_role, member_provider)
 VALUES(member_no_SEQ.nextval, 'mentor01', 'pass01', 'mentor01@naver.com', '김민수', 3000, 1, SYSDATE, 0, 'ROLE_MENTOR', '');
 
-INSERT INTO mentor_profile(mentor_profile_no, mentor_introduce, mentor_career, mentor_rating, mentor_mentoring_count, mentor_image, mentor_activity_count, mentor_follow_count, mentor_status, category_no, member_no)
-VALUES(mentor_profile_no_SEQ.nextval, '안녕하세요, 김민수 멘토입니다.', '10년 경력', 5, 25, '/images/mentor-profile/4.jpg', 150, 75, 3, 2, member_no_SEQ.currval);
+INSERT INTO mentor_profile(mentor_profile_no, mentor_introduce, mentor_career, mentor_rating, mentor_mentoring_count, mentor_image, mentor_activity_count, mentor_follow_count, mentor_status, category_no, member_no, mentor_headline)
+VALUES(mentor_profile_no_SEQ.nextval, '안녕하세요, 김민수 멘토입니다.', '10년 경력', 5, 25, '/images/mentor-profile/4.jpg', 150, 75, 3, 2, member_no_SEQ.currval, '집가고싶다.');
 
 INSERT INTO member(member_no, member_id, member_password, member_email, member_name, member_points, member_status, member_join_date, member_report_count, member_role, member_provider)
 VALUES(member_no_SEQ.nextval, 'mentor02', 'pass02', 'mentor02@naver.com', '이서준', 4000, 1, SYSDATE, 0, 'ROLE_MENTOR', '');
 
-INSERT INTO mentor_profile(mentor_profile_no, mentor_introduce, mentor_career, mentor_rating, mentor_mentoring_count, mentor_image, mentor_activity_count, mentor_follow_count, mentor_status, category_no, member_no)
-VALUES(mentor_profile_no_SEQ.nextval, '안녕하세요, 이서준 멘토입니다.', '8년 경력', 4.8, 20, '/images/mentor-profile/5.jpeg', 120, 60, 3, 3, member_no_SEQ.currval);
+INSERT INTO mentor_profile(mentor_profile_no, mentor_introduce, mentor_career, mentor_rating, mentor_mentoring_count, mentor_image, mentor_activity_count, mentor_follow_count, mentor_status, category_no, member_no, mentor_headline)
+VALUES(mentor_profile_no_SEQ.nextval, '안녕하세요, 이서준 멘토입니다.', '8년 경력', 4.8, 20, '/images/mentor-profile/5.jpeg', 120, 60, 3, 3, member_no_SEQ.currval, '너도나도유캔두');
 
 INSERT INTO member(member_no, member_id, member_password, member_email, member_name, member_points, member_status, member_join_date, member_report_count, member_role, member_provider)
 VALUES(member_no_SEQ.nextval, 'mentor03', 'pass03', 'mentor03@naver.com', '박지우', 3500, 1, SYSDATE, 0, 'ROLE_MENTOR', '');
 
-INSERT INTO mentor_profile(mentor_profile_no, mentor_introduce, mentor_career, mentor_rating, mentor_mentoring_count, mentor_image, mentor_activity_count, mentor_follow_count, mentor_status, category_no, member_no)
-VALUES(mentor_profile_no_SEQ.nextval, '안녕하세요, 박지우 멘토입니다.', '6년 경력', 4.5, 15, '/images/mentor-profile/6.jpg', 110, 50, 3, 4, member_no_SEQ.currval);
+INSERT INTO mentor_profile(mentor_profile_no, mentor_introduce, mentor_career, mentor_rating, mentor_mentoring_count, mentor_image, mentor_activity_count, mentor_follow_count, mentor_status, category_no, member_no, mentor_headline)
+VALUES(mentor_profile_no_SEQ.nextval, '안녕하세요, 박지우 멘토입니다.', '6년 경력', 4.5, 15, '/images/mentor-profile/6.jpg', 110, 50, 3, 4, member_no_SEQ.currval '야 너도 집갈 수 있어');
 
 INSERT INTO member(member_no, member_id, member_password, member_email, member_name, member_points, member_status, member_join_date, member_report_count, member_role, member_provider)
 VALUES(member_no_SEQ.nextval, 'mentor04', 'pass04', 'mentor04@naver.com', '정하늘', 3200, 1, SYSDATE, 0, 'ROLE_MENTOR', '');
 
-INSERT INTO mentor_profile(mentor_profile_no, mentor_introduce, mentor_career, mentor_rating, mentor_mentoring_count, mentor_image, mentor_activity_count, mentor_follow_count, mentor_status, category_no, member_no)
-VALUES(mentor_profile_no_SEQ.nextval, '안녕하세요, 정하늘 멘토입니다.', '7년 경력', 4.7, 18, '/images/mentor-profile/7.jpeg', 130, 65, 3, 8, member_no_SEQ.currval);
+INSERT INTO mentor_profile(mentor_profile_no, mentor_introduce, mentor_career, mentor_rating, mentor_mentoring_count, mentor_image, mentor_activity_count, mentor_follow_count, mentor_status, category_no, member_no, mentor_headline)
+VALUES(mentor_profile_no_SEQ.nextval, '안녕하세요, 정하늘 멘토입니다.', '7년 경력', 4.7, 18, '/images/mentor-profile/7.jpeg', 130, 65, 3, 8, member_no_SEQ.currval, '집가자');
 
 INSERT INTO member(member_no, member_id, member_password, member_email, member_name, member_points, member_status, member_join_date, member_report_count, member_role, member_provider)
 VALUES(member_no_SEQ.nextval, 'mentor05', 'pass05', 'mentor05@naver.com', '최예진', 5000, 1, SYSDATE, 0, 'ROLE_MENTOR', '');
 
-INSERT INTO mentor_profile(mentor_profile_no, mentor_introduce, mentor_career, mentor_rating, mentor_mentoring_count, mentor_image, mentor_activity_count, mentor_follow_count, mentor_status, category_no, member_no)
-VALUES(mentor_profile_no_SEQ.nextval, '안녕하세요, 최예진 멘토입니다.', '5년 경력', 4.6, 22, '/images/mentor-profile/8.jpeg', 140, 70, 3, 9, member_no_SEQ.currval);
+INSERT INTO mentor_profile(mentor_profile_no, mentor_introduce, mentor_career, mentor_rating, mentor_mentoring_count, mentor_image, mentor_activity_count, mentor_follow_count, mentor_status, category_no, member_no, mentor_headline)
+VALUES(mentor_profile_no_SEQ.nextval, '안녕하세요, 최예진 멘토입니다.', '5년 경력', 4.6, 22, '/images/mentor-profile/8.jpeg', 140, 70, 3, 9, member_no_SEQ.currval, '嬉しいです');
 
 INSERT INTO member(member_no, member_id, member_password, member_email, member_name, member_points, member_status, member_join_date, member_report_count, member_role, member_provider)
 VALUES(member_no_SEQ.nextval, 'mentor06', 'pass06', 'mentor06@naver.com', '홍서연', 4800, 1, SYSDATE, 0, 'ROLE_MENTOR', '');
 
-INSERT INTO mentor_profile(mentor_profile_no, mentor_introduce, mentor_career, mentor_rating, mentor_mentoring_count, mentor_image, mentor_activity_count, mentor_follow_count, mentor_status, category_no, member_no)
-VALUES(mentor_profile_no_SEQ.nextval, '안녕하세요, 홍서연 멘토입니다.', '9년 경력', 4.9, 30, '/images/mentor-profile/9.png', 160, 80, 3, 12, member_no_SEQ.currval);
+INSERT INTO mentor_profile(mentor_profile_no, mentor_introduce, mentor_career, mentor_rating, mentor_mentoring_count, mentor_image, mentor_activity_count, mentor_follow_count, mentor_status, category_no, member_no, mentor_headline)
+VALUES(mentor_profile_no_SEQ.nextval, '안녕하세요, 홍서연 멘토입니다.', '9년 경력', 4.9, 30, '/images/mentor-profile/9.png', 160, 80, 3, 12, member_no_SEQ.currval, 'HELLO');
 
 INSERT INTO member(member_no, member_id, member_password, member_email, member_name, member_points, member_status, member_join_date, member_report_count, member_role, member_provider)
 VALUES(member_no_SEQ.nextval, 'mentor07', 'pass07', 'mentor07@naver.com', '김도윤', 4500, 1, SYSDATE, 0, 'ROLE_MENTOR', '');
 
-INSERT INTO mentor_profile(mentor_profile_no, mentor_introduce, mentor_career, mentor_rating, mentor_mentoring_count, mentor_image, mentor_activity_count, mentor_follow_count, mentor_status, category_no, member_no)
-VALUES(mentor_profile_no_SEQ.nextval, '안녕하세요, 김도윤 멘토입니다.', '12년 경력', 5, 40, '/images/mentor-profile/10.jpg', 170, 90, 3, 15, member_no_SEQ.currval);
+INSERT INTO mentor_profile(mentor_profile_no, mentor_introduce, mentor_career, mentor_rating, mentor_mentoring_count, mentor_image, mentor_activity_count, mentor_follow_count, mentor_status, category_no, member_no, mentor_headline)
+VALUES(mentor_profile_no_SEQ.nextval, '안녕하세요, 김도윤 멘토입니다.', '12년 경력', 5, 40, '/images/mentor-profile/10.jpg', 170, 90, 3, 15, member_no_SEQ.currval, '하이');
 
 INSERT INTO member(member_no, member_id, member_password, member_email, member_name, member_points, member_status, member_join_date, member_report_count, member_role, member_provider)
 VALUES(member_no_SEQ.nextval, 'mentor08', 'pass08', 'mentor08@naver.com', '김도옌', 4500, 1, SYSDATE, 0, 'ROLE_MENTOR', '');
 
-INSERT INTO mentor_profile(mentor_profile_no, mentor_introduce, mentor_career, mentor_rating, mentor_mentoring_count, mentor_image, mentor_activity_count, mentor_follow_count, mentor_status, category_no, member_no)
-VALUES(mentor_profile_no_SEQ.nextval, '안녕하세요, 김도옌 멘토입니다.', '12년 경력', 5, 40, '/images/mentor-profile/11.jpg', 170, 90, 3, 15, member_no_SEQ.currval);
+INSERT INTO mentor_profile(mentor_profile_no, mentor_introduce, mentor_career, mentor_rating, mentor_mentoring_count, mentor_image, mentor_activity_count, mentor_follow_count, mentor_status, category_no, member_no, mentor_headline)
+VALUES(mentor_profile_no_SEQ.nextval, '안녕하세요, 김도옌 멘토입니다.', '12년 경력', 5, 40, '/images/mentor-profile/11.jpg', 170, 90, 3, 15, member_no_SEQ.currval, '내가 최고 경력자');
 
 
 
@@ -176,22 +176,22 @@ VALUES(mentor_profile_no_SEQ.nextval, '안녕하세요, 김도옌 멘토입니�
 INSERT INTO member(member_no, member_id, member_password, member_email, member_name, member_points, member_status, member_join_date, member_report_count, member_role, member_provider)
 VALUES(member_no_SEQ.nextval, 'mentor09', 'pass09', 'mentor09@naver.com', '김도예', 4500, 1, SYSDATE, 0, 'ROLE_MENTOR', '');
 
-INSERT INTO mentor_profile(mentor_profile_no, mentor_introduce, mentor_career, mentor_rating, mentor_mentoring_count, mentor_image, mentor_activity_count, mentor_follow_count, mentor_status, category_no, member_no)
-VALUES(mentor_profile_no_SEQ.nextval, '안녕하세요, 김도예 멘토입니다.', '17년 경력', 5, 40, '/images/mentor-profile/12.jpg', 170, 90, 3, 15, member_no_SEQ.currval);
+INSERT INTO mentor_profile(mentor_profile_no, mentor_introduce, mentor_career, mentor_rating, mentor_mentoring_count, mentor_image, mentor_activity_count, mentor_follow_count, mentor_status, category_no, member_no, mentor_headline)
+VALUES(mentor_profile_no_SEQ.nextval, '안녕하세요, 김도예 멘토입니다.', '17년 경력', 5, 40, '/images/mentor-profile/12.jpg', 170, 90, 3, 15, member_no_SEQ.currval, '하하하');
 
 
 INSERT INTO member(member_no, member_id, member_password, member_email, member_name, member_points, member_status, member_join_date, member_report_count, member_role, member_provider)
 VALUES(member_no_SEQ.nextval, 'mentor10', 'pass10', 'mentor10@naver.com', '김도요', 4500, 1, SYSDATE, 0, 'ROLE_MENTOR', '');
 
-INSERT INTO mentor_profile(mentor_profile_no, mentor_introduce, mentor_career, mentor_rating, mentor_mentoring_count, mentor_image, mentor_activity_count, mentor_follow_count, mentor_status, category_no, member_no)
-VALUES(mentor_profile_no_SEQ.nextval, '안녕하세요, 김도요 멘토입니다.', '12년 경력', 5, 40, '/images/mentor-profile/13.png', 170, 90, 3, 15, member_no_SEQ.currval);
+INSERT INTO mentor_profile(mentor_profile_no, mentor_introduce, mentor_career, mentor_rating, mentor_mentoring_count, mentor_image, mentor_activity_count, mentor_follow_count, mentor_status, category_no, member_no, mentor_headline)
+VALUES(mentor_profile_no_SEQ.nextval, '안녕하세요, 김도요 멘토입니다.', '12년 경력', 5, 40, '/images/mentor-profile/13.png', 170, 90, 3, 15, member_no_SEQ.currval, '호호호');
 
 
 INSERT INTO member(member_no, member_id, member_password, member_email, member_name, member_points, member_status, member_join_date, member_report_count, member_role, member_provider)
 VALUES(member_no_SEQ.nextval, 'mentor11', 'pass11', 'mentor11@naver.com', '김윤하', 4500, 1, SYSDATE, 0, 'ROLE_MENTOR', '');
 
-INSERT INTO mentor_profile(mentor_profile_no, mentor_introduce, mentor_career, mentor_rating, mentor_mentoring_count, mentor_image, mentor_activity_count, mentor_follow_count, mentor_status, category_no, member_no)
-VALUES(mentor_profile_no_SEQ.nextval, '안녕하세요, 김윤하 멘토입니다.', '12년 경력', 5, 40, '/images/mentor-profile/14.jpg', 170, 90, 3, 15, member_no_SEQ.currval);
+INSERT INTO mentor_profile(mentor_profile_no, mentor_introduce, mentor_career, mentor_rating, mentor_mentoring_count, mentor_image, mentor_activity_count, mentor_follow_count, mentor_status, category_no, member_no, mentor_headline)
+VALUES(mentor_profile_no_SEQ.nextval, '안녕하세요, 김윤하 멘토입니다.', '12년 경력', 5, 40, '/images/mentor-profile/14.jpg', 170, 90, 3, 15, member_no_SEQ.currval, '헤헤헤');
 
 
 
@@ -552,20 +552,57 @@ values (chat_message_SEQ.nextval, 1, sysdate, 2, 1, 'java에서 객체지향이 
 /* 채팅방 나갔는지 여부 확인 */
 
 /* 리뷰 등록 */
-insert into review (review_no, review_title,review_status,review_content,review_score,review_date,chat_room_no) 
-values (review_no_SEQ.nextval, '제목1',1, '그냥그래요', 3, sysdate, 1);
-insert into review (review_no, review_title,review_status, review_content,review_score,review_date,chat_room_no) 
-values (review_no_SEQ.nextval, '제목2',1, '적절해요', 4, sysdate, 1);
-insert into review (review_no, review_title,review_status, review_content,review_score,review_date,chat_room_no) 
-values (review_no_SEQ.nextval, '제목3',1, '최고에요', 5, sysdate, 1);
-insert into review (review_no, review_title,review_status, review_content,review_score,review_date,chat_room_no) 
-values (review_no_SEQ.nextval, '제목4',1, '별로에요', 1, sysdate, 2);
-insert into review (review_no, review_title,review_status, review_content,review_score,review_date,chat_room_no) 
-values (review_no_SEQ.nextval, '제목5',1, '최고에요', 5, sysdate, 2);
-insert into review (review_no, review_title,review_status, review_content,review_score,review_date,chat_room_no) 
-values (review_no_SEQ.nextval, '제목6',1, '그냥그래요', 3, sysdate, 2);
-insert into review (review_no, review_title,review_status, review_content,review_score,review_date,chat_room_no) 
-values (review_no_SEQ.nextval, '제목6',1, '그냥그래요', 4, sysdate, 10);
+insert into review (review_no, review_title, review_status, review_content, review_score, review_date, chat_room_no)
+values (review_no_SEQ.nextval, '정말 만족스러운 경험이었어요!', 1, '멘토님 덕분에 많은 도움이 되었어요. 처음에는 긴장했지만, 멘토님이 친절하게 설명해 주셔서 이해가 잘 됐어요. 정말 감사해요!', 5, sysdate, 1);
+
+insert into review (review_no, review_title, review_status, review_content, review_score, review_date, chat_room_no)
+values (review_no_SEQ.nextval, '좀 아쉬운 부분이 있었어요', 1, '멘토님은 좋은 분이시지만, 제가 기대한 내용과는 조금 달랐어요. 그래도 유익한 시간은 되었어요.', 3, sysdate, 1);
+
+insert into review (review_no, review_title, review_status, review_content, review_score, review_date, chat_room_no)
+values (review_no_SEQ.nextval, '완벽한 멘토링!', 1, '정말 최고였어요! 멘토님의 조언 덕분에 고민이 해결됐고, 실질적인 도움을 많이 받았습니다. 추천드려요!', 5, sysdate, 1);
+
+insert into review (review_no, review_title, review_status, review_content, review_score, review_date, chat_room_no)
+values (review_no_SEQ.nextval, '멘토님이 너무 친절했어요', 1, '멘토님이 너무 친절하고 잘 설명해 주셔서 편하게 질문할 수 있었습니다. 덕분에 많은 도움이 되었어요. 감사합니다!', 4, sysdate, 2);
+
+insert into review (review_no, review_title, review_status, review_content, review_score, review_date, chat_room_no)
+values (review_no_SEQ.nextval, '조금 아쉬웠어요', 1, '멘토님의 경험은 풍부하셨지만, 제 상황에 맞는 구체적인 예시를 더 들어주셨으면 좋았을 것 같아요.', 2, sysdate, 2);
+
+insert into review (review_no, review_title, review_status, review_content, review_score, review_date, chat_room_no)
+values (review_no_SEQ.nextval, '좋은 경험이었어요', 1, '멘토님의 조언이 정말 도움이 되었어요. 다만, 약간의 시간이 부족했던 점은 아쉬웠습니다.', 4, sysdate, 2);
+
+insert into review (review_no, review_title, review_status, review_content, review_score, review_date, chat_room_no)
+values (review_no_SEQ.nextval, '다시 만나고 싶은 멘토!', 1, '멘토님은 정말 따뜻하고 친절하세요. 어려운 질문도 잘 설명해 주셔서 큰 도움이 되었어요.', 5, sysdate, 3);
+
+insert into review (review_no, review_title, review_status, review_content, review_score, review_date, chat_room_no)
+values (review_no_SEQ.nextval, '기대보다 부족했던 멘토링', 1, '멘토님의 말씀이 유익하지 않아서 기대했던 만큼의 도움을 받지 못했습니다. 조금 아쉬워요.', 2, sysdate, 4);
+
+insert into review (review_no, review_title, review_status, review_content, review_score, review_date, chat_room_no)
+values (review_no_SEQ.nextval, '조금 더 구체적인 피드백을 원했어요', 1, '멘토님은 좋으셨지만, 제 상황에 대해 좀 더 구체적인 조언을 듣고 싶었어요. 전반적으로 괜찮은 경험이었습니다.', 3, sysdate, 5);
+
+insert into review (review_no, review_title, review_status, review_content, review_score, review_date, chat_room_no)
+values (review_no_SEQ.nextval, '매우 만족했습니다!', 1, '멘토님의 지도 덕분에 많은 것이 변했습니다. 제가 원하는 방향으로 도움을 주셔서 매우 만족했습니다. 감사해요!', 5, sysdate, 6);
+
+insert into review (review_no, review_title, review_status, review_content, review_score, review_date, chat_room_no)
+values (review_no_SEQ.nextval, '좋은 경험이었어요', 1, '멘토님이 친절하시고 세심하게 도와주셨습니다. 덕분에 많은 도움이 되었습니다.', 4, sysdate, 6);
+
+insert into review (review_no, review_title, review_status, review_content, review_score, review_date, chat_room_no)
+values (review_no_SEQ.nextval, '멘토님 덕분에 자신감을 얻었어요', 1, '멘토님의 격려 덕분에 제가 자신감을 얻었습니다. 제가 고민하던 문제를 해결할 수 있게 도와주셔서 감사해요!', 5, sysdate, 7);
+
+insert into review (review_no, review_title, review_status, review_content, review_score, review_date, chat_room_no)
+values (review_no_SEQ.nextval, '조금 더 상세했으면 좋겠어요', 1, '멘토님의 피드백은 좋았지만, 조금 더 구체적인 피드백을 주셨으면 좋았을 것 같아요. 그래도 유익한 시간이었어요.', 3, sysdate, 7);
+
+insert into review (review_no, review_title, review_status, review_content, review_score, review_date, chat_room_no)
+values (review_no_SEQ.nextval, '멘토링 내용은 좋았지만', 1, '멘토링 내용은 좋았지만, 시간 제약이 있어 충분히 논의하지 못한 점이 아쉬웠습니다. 다음에 더 많은 시간을 갖고 싶어요.', 4, sysdate, 8);
+
+insert into review (review_no, review_title, review_status, review_content, review_score, review_date, chat_room_no)
+values (review_no_SEQ.nextval, '대체로 괜찮았어요', 1, '멘토님은 좋으셨고 대체로 괜찮았지만, 제게 맞는 해결책을 더 많이 제공해 주셨으면 좋았을 것 같습니다.', 3, sysdate, 8);
+
+insert into review (review_no, review_title, review_status, review_content, review_score, review_date, chat_room_no)
+values (review_no_SEQ.nextval, '도움이 많이 되었어요', 1, '멘토님 덕분에 여러 문제를 해결할 수 있었어요. 구체적인 피드백을 통해 많은 것을 배우게 되었습니다.', 5, sysdate, 9);
+
+insert into review (review_no, review_title, review_status, review_content, review_score, review_date, chat_room_no)
+values (review_no_SEQ.nextval, '아쉬운 부분도 있었어요', 1, '멘토님이 좋은 사람임에도 불구하고, 제가 기대한 대로는 진행되지 않아 조금 아쉬웠어요. 하지만 도움이 되는 부분도 있었습니다.', 3, sysdate, 9);
+
 
 /* 추천 등록 */
 insert into vote(vote_no, vote_type, vote_date, answer_no, member_no)

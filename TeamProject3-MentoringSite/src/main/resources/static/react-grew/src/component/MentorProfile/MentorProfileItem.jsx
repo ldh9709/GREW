@@ -31,7 +31,6 @@ export default function MentorProfileItem({ mentor }) {
 
   const fetchMember = async () => {
     const response = await memberApi.getMemberByMemberNo(mentor.memberNo);
-    console.log(response.data);
     setMember(response.data);
   };
 

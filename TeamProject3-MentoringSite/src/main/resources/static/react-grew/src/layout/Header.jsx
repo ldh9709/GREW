@@ -6,28 +6,7 @@ import { logout, memberProfile, getMentorProfile, updateMemberRole } from "../ap
 
 export default function HeaderMenu() {
   const navigate = useNavigate();
-
-  /*
-  const memberCookie = getCookie("member");
-  console.log("멤버 쿠키 : ", memberCookie);
-
-  const token = memberCookie ? memberCookie.accessToken : null; // 안전하게 접근
-  console.log("토큰 : ", token);
-
-  const DecodeToken = token ? jwtDecode(token) : null; // 안전한 접근
-  if (!DecodeToken) {
-    console.error("Decode토큰이 Null입니다.(Token이 널이라 디코딩이 불가하다는 뜻)");
-  } else {
-    console.log("Decode 토큰 : ", DecodeToken);
-  }
-
-  const memberNo = DecodeToken ? DecodeToken.memberNo : null;
-  console.log("멤버 넘버 : ", memberNo);
-
-  const mentorProfileNo = DecodeToken ? DecodeToken.mentorProfileNo : null;
-  console.log("멘토 프로필 넘버 : ", mentorProfileNo);
-  */
-
+  
   const auth = useMemberAuth();
 
   const token = auth?.token || null;
@@ -56,9 +35,11 @@ export default function HeaderMenu() {
     try {
       const isLogout = await logout();
       auth.logout();
+      alert("로그아웃하셨습니다.");
       console.log("로그아웃 성공 여부 : ", isLogout);
       navigate("/main");
     } catch (error) {
+      alert("오류 발생.");
       console.error("로그아웃 실패: ", error);
     }
   };

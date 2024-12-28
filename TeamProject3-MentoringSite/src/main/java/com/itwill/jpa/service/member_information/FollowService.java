@@ -14,7 +14,7 @@ public interface FollowService {
 	//팔로우 등록
 	FollowRequestDto createFollow(FollowRequestDto followDto);
 	//팔로우 삭제
-	Long deleteFollow(Long followNo);
+	Long deleteFollow(Long menteeNo, Long mentorNo);
 	//팔로우 멘토 리스트
 	Page<FollowResponseDto> getMentorList(Long menteeMemberNo, int pageNumber, int pageSize);
 	//팔로워 수

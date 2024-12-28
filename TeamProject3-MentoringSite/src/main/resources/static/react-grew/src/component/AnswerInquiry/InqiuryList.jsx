@@ -8,6 +8,7 @@ import * as categoryApi from "../../api/categoryApi";
 import { useNavigate } from "react-router-dom";
 import { useMemberAuth } from "../../util/AuthContext";
 import { faPen } from "@fortawesome/free-solid-svg-icons";
+import PagenationItem from "../PagenationItem";
 
 function InqiuryList() {
   const { token, member } = useMemberAuth();
@@ -72,7 +73,7 @@ function InqiuryList() {
       const selectedCat = categories.find(
         (cat) => cat.categoryNo === selectedCategory
       );
-      if (selectedCategory==null) {
+      if (selectedCategory == null) {
         if (sortButton === "view") {
           responseJsonObject = await inquiryApi.listInquiryView(page, size);
         } else if (sortButton === "answerCount") {
@@ -178,8 +179,10 @@ function InqiuryList() {
           <div className="category-parent">
             <button
               className="category-button"
-              onClick={() => {setSelectedCategory(null);
-              setChildCategories(null);}}
+              onClick={() => {
+                setSelectedCategory(null);
+                setChildCategories(null);
+              }}
               style={{
                 backgroundColor: selectedCategory === null ? "#28a745" : "", // 선택된 카테고리는 색상 변경
                 color: selectedCategory === null ? "#f3f4f6" : "", // 선택된 카테고리 글자 색상 변경
@@ -220,7 +223,7 @@ function InqiuryList() {
           </div>
         </div>
         {/* 하위 카테고리 버튼 */}
-        {childCategories&&childCategories.length > 0 && (
+        {childCategories && childCategories.length > 0 && (
           <div className="category-child">
             {childCategories.map((child) => (
               <button
@@ -290,49 +293,24 @@ function InqiuryList() {
           <div>
             <p>최근 추천 많이 받은 답변</p>
             <div>
-              {bestAnswer&&bestAnswer.slice(0,10).map((answer, index) => (
-                <BestAnswerItem
-                  key={answer.answerNo}
-                  answer={answer}
-                  index={index}
-                />
-              ))}
+              {bestAnswer &&
+                bestAnswer
+                  .slice(0, 10)
+                  .map((answer, index) => (
+                    <BestAnswerItem
+                      key={answer.answerNo}
+                      answer={answer}
+                      index={index}
+                    />
+                  ))}
             </div>
           </div>
         </div>
-        {/* 페이지네이션 버튼 */}
-        <div className="common-pagination common-pagination-bottom">
-          {/* 이전 버튼 */}
-          <button
-            className="common-pagination-arrow"
-            disabled={currentPage === 1}
-            onClick={() => paginate(currentPage - 1)}
-          >
-            &lt;
-          </button>
-
-          {/* 페이지 번호 버튼 */}
-          {pageNumbers.map((number) => (
-            <button
-              key={number}
-              className={`common-pagination-number ${
-                currentPage === number ? "active" : ""
-              }`}
-              onClick={() => paginate(number)}
-            >
-              {number}
-            </button>
-          ))}
-
-          {/* 다음 버튼 */}
-          <button
-            className="common-pagination-arrow"
-            disabled={currentPage === totalPages}
-            onClick={() => paginate(currentPage + 1)}
-          >
-            &gt;
-          </button>
-        </div>
+        <PagenationItem
+          currentPage={currentPage}
+          totalPages={totalPages}
+          paginate={paginate}
+        />
       </div>
     </>
   );

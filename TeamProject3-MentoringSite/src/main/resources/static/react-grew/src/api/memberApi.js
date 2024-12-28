@@ -71,6 +71,41 @@ export const logout = async () => {
     return response.url;
 };
 
+/* 1. 아이디 찾기 - 인증번호 전송  */
+export const sendMailFindId = async (memberDto) => {
+    const response = await fetch(`${BACKEND_SERVER}/member/findId/sendEmail`, {
+        method: 'POST',
+        headers: {
+            'Content-type': 'application/json'
+        },
+        body:JSON.stringify({
+            memberName:memberDto.memberName,
+            memberEmail:memberDto.memberEmail    
+        })
+    });
+    const resultJsonObject = await response.json();
+
+    return resultJsonObject;
+}
+
+/* 2. 아이디 찾기 - 인증번호 확인  */
+export const certificationCodeFindId = async (memberEmail, inputCode) => {
+    const response = await fetch(`${BACKEND_SERVER}/member/findId/certificationCode`, {
+        method: 'POST',
+        headers: {
+            'Content-type': 'application/json'
+        },
+        body:JSON.stringify({
+            memberEmail:memberEmail, 
+            inputCode:inputCode
+        })
+    });
+    const resultJsonObject = await response.json();
+
+    return resultJsonObject;
+}
+
+
 //비밀번호 찾기 
 export const findPassword = async (member) => {
     const response = await fetch(`${BACKEND_SERVER}/member/findPassword`, {
@@ -133,20 +168,21 @@ export const mentorJoinAction = async (member, tempCode) => {
 }
 
 //멘토 프로필 생성(생성)
-export const mentorProfileCreateAction = async (memberNo, mentor) => {
-    console.log("mentorProfileCreateAction memberNo: ", memberNo);
+export const mentorProfileCreateAction = async (token, mentor) => {
+    console.log("mentorProfileCreateAction token: ", token);
     console.log("mentorProfileCreateAction mentor: ", mentor);
-    const response = await fetch(`${BACKEND_SERVER}/mentor-profile/${memberNo}/create-profile`, {
+    const response = await fetch(`${BACKEND_SERVER}/mentor-profile/create-profile`, {
         method:'POST', 
         headers:{
-            'Content-type':'application/json'
+            'Content-type':'application/json',
+            'Authorization': `Bearer ${token}` // Authorization 헤더에 JWT 토큰 추가
         },
         body: JSON.stringify({
-            memberNo: memberNo,
             categoryNo: mentor.categoryNo,
             mentorIntroduce: mentor.mentorIntroduce,
             mentorCareer: mentor.mentorCareer,
             mentorImage: mentor.mentorImage,
+            mentorHeadline: mentor.mentorHeadline
           })
     });
 
@@ -171,6 +207,7 @@ export const mentorProfileUpdateAction = async (mentorProfileNo, mentor) => {
             mentorIntroduce: mentor.mentorIntroduce,
             mentorCareer: mentor.mentorCareer,
             mentorImage: mentor.mentorImage,
+            mentorHeadline: mentor.mentorHeadline
           })
     });
 
@@ -315,7 +352,7 @@ export const getMemberByMemberNo = async (memberNo) => {
     return responseJsonObject;
 }
 
-
+/* 멘토 프로필 이미지 업로드 */
 export const uploadMentorProfileImage = async (mentorProfileNo, file) => {
     const formData = new FormData();
     formData.append("file", file);

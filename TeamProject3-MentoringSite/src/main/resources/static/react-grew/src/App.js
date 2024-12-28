@@ -11,6 +11,7 @@ import MemberJoinFormPage from "./component/Member/MemberJoinFormPage";
 import MemberLoginFormPage from "./component/Member/MemberLoginFormPage";
 import MemberProfileFormPage from "./component/Member/MemberProfileFormPage";
 import MemberFindPasswordFormPage from "./component/Member/MemberFindPasswordFormPage";
+import MemberFindIdFormPage from "./component/Member/MemberFindIdFormPage";
 
 /* 멘토 페이지 임포트 */
 import MemberMypage from "./component/Member/mypage/MemberMypage";
@@ -49,6 +50,7 @@ import AdminRoutes from "./routes/AdminRoutes";
 
 /* 신고 모달 */
 import ReportModal from "./component/Report/ReportModal";
+import MemberMaskedFindIdFormPage from "./component/Member/MemberMaskedFindIdFormPage";
 
 function App() {
   const location = useLocation(); // 현재 URL 경로를 가져옴
@@ -82,6 +84,8 @@ function App() {
               <Route path="/member/profile" element={<MemberMypage />} />
               <Route path="/member/profile/edit" element={<MemberProfileFormPage />} />
               <Route path="/member/find-password" element={<MemberFindPasswordFormPage />} />
+              <Route path="/member/find-id" element={<MemberFindIdFormPage />} />
+              <Route path="/member/find-id-check" element={<MemberMaskedFindIdFormPage />} />
 
               {/* Mentor페이지 */}
               <Route path="/mentor/join" element={<MentorJoinFormPage />} />
@@ -111,28 +115,28 @@ function App() {
               />{" "}
               {/* 멘토 회원가입 */}
               <Route
-                path="/mentorprofile/list"
+                path="/mentor-profile/list"
                 element={<MentorProfileList />}
               />
-              <Route path="/mentorprofile/add" element={<MentorProfileAdd />} />
+              <Route path="/mentor-profile/add" element={<MentorProfileAdd />} />
               <Route
-                path="/mentorprofile/view"
+                path="/mentor-profile/view"
                 element={<MentorProfileItem />}
               />
               <Route
-                path="/mentorprofile/search"
+                path="/mentor-profile/search"
                 element={<MentorSearchList />}
               />
               <Route
-                path="/mentorprofile/detail/:mentorProfileNo"
+                path="/mentor-profile/detail/:mentorProfileNo"
                 element={<MentorProfileDetail />}
               />
               <Route
-                path="/mentorprofile/detail"
+                path="/mentor-profile/detail"
                 element={<MentorProfileDetail />}
               />
               <Route
-                path="/mentorprofile/search"
+                path="/mentor-profile/search"
                 element={<MentorSearchList />}
               />
               <Route
@@ -140,18 +144,18 @@ function App() {
                 element={<MentorProfileDetail />}
               />
               {/* MentorBoard 페이지 */}
-              <Route path="/mentorboard/find" element={<MentorBoardFind />} />
-              <Route path="/mentorboard/list" element={<MentorBoardList />} />
+              <Route path="/mentor-board/find" element={<MentorBoardFind />} />
+              <Route path="/mentor-board/list" element={<MentorBoardList />} />
               <Route
-                path="/mentorboard/create/:mentorProfileNo"
+                path="/mentor-board/create"
                 element={<MentorBoardCreate />}
               />
               <Route
-                path="/mentorboard/update/:mentorBoardNo"
+                path="/mentor-board/update/:mentorBoardNo"
                 element={<MentorBoardUpdate />}
               />
               <Route
-                path="/mentorboard/detail"
+                path="/mentor-board/detail"
                 element={<MentorBoardDetail />}
               />
               <Route

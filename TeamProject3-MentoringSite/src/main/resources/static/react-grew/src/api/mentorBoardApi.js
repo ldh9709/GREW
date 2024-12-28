@@ -30,11 +30,12 @@ export const listMentorBoardsByStatus = async (status, page = 0, size = 10) => {
 };
 
 // 새로운 멘토 보드를 생성합니다.
-export const createMentorBoard = async (data) => {
+export const createMentorBoard = async (token,data) => {
     const response = await fetch(`${BACKEND_SERVER}${BASE_URL}`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
         },
         body: JSON.stringify(data), // JSON 형식으로 전송
     });
@@ -68,11 +69,12 @@ export const uploadMentorBoardImage = async (id, formData) => {
 
 
 // 멘토 보드 수정
-export const updateMentorBoard = async (id, data) => {
+export const updateMentorBoard = async (id, data, token) => {
     const response = await fetch(`${BACKEND_SERVER}${BASE_URL}/${id}`, {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
         },
         body: JSON.stringify(data), // JSON 형식으로 전송
     });
@@ -118,9 +120,13 @@ export const getMentorBoardDetail = async (mentorBoardNo) => {
  * @param {number} mentorBoardNo - 멘토 보드 번호
  * @returns {Promise} - 삭제 성공 메시지를 포함하는 프로미스
  */
-export const deleteMentorBoard = async (mentorBoardNo) => {
+export const deleteMentorBoard = async (token,mentorBoardNo) => {
   const response = await fetch(`${BACKEND_SERVER}${BASE_URL}/${mentorBoardNo}/status`, {
     method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`
+    },
   });
   const responseJsonObject = await response.json();
   return responseJsonObject;

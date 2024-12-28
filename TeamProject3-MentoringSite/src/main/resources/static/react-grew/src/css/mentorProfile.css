@@ -17,9 +17,9 @@
 .mentorprofile-radio-container {
   display: flex;
   justify-content: flex-end; /* 오른쪽 정렬 */
-  border-top: 1px solid #e4e4e4;
+  border-bottom: 1px solid #e4e4e4;
   margin-bottom: 20px;
-  padding: 10px 0;
+  padding-bottom: 10px;
   gap: 10px; /* 버튼 간 간격 */
 }
 
@@ -52,6 +52,7 @@
   text-align: center;
   transition: transform 0.3s, box-shadow 0.3s;
   overflow: hidden; /* 내용이 넘칠 경우 숨김 처리 */
+  cursor: pointer;
 }
 
 .mentor-profile-card:hover {
@@ -255,11 +256,20 @@
   cursor: pointer;
   transition: all 0.3s ease;
 }
+.follow-button.follow-isexist {
+  color: #ff2d2d;
+  border-color: #ff2d2d;
+}
 
 .follow-button:hover {
   border: 1px solid #ff2d2d;
   background-color: #fafafa;
   color: #ff2d2d;
+}
+
+.follow-button.follow-isexist:hover {
+  color: #ddd;
+  border-color: #ddd;
 }
 
 .question-button {

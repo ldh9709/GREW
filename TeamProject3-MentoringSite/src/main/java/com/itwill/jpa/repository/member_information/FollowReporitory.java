@@ -31,4 +31,6 @@ public interface FollowReporitory extends JpaRepository<Follow, Long>{
 			+ "WHERE f.mentorMember.memberNo = :mentorNo")
 	List<Long> findMenteeByMentor(@Param("mentorNo") Long mentorNo);
 	
+	/* 멘티, 멘토 팔로우 일치하는 팔로우 값 찾기 */
+	public Follow findByMenteeMember_MemberNoAndMentorMember_MemberNo(Long menteeNo, Long MentorNo);
 }

@@ -21,6 +21,7 @@ public class HttpStatusMapper {
     	statusCodeMap.put(ResponseStatusCode.READ_MENTORLIST_FAIL, HttpStatus.NOT_FOUND);
     	statusCodeMap.put(ResponseStatusCode.READ_MENTEE_COUNT_FAIL, HttpStatus.NOT_FOUND);
     	statusCodeMap.put(ResponseStatusCode.DELETE_FOLLOW_FAIL, HttpStatus.BAD_REQUEST);
+    	statusCodeMap.put(ResponseStatusCode.CHECK_FOLLOW_FAIL, HttpStatus.NOT_FOUND);
 
     	// MENTOR BOARD 관련 상태 코드 매핑
     	statusCodeMap.put(ResponseStatusCode.CREATED_MENTOR_BOARD_FAIL, HttpStatus.BAD_REQUEST);

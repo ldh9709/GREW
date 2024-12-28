@@ -107,7 +107,7 @@ public class MentorProfileServiceImpl implements MentorProfileService {
 
             // 4️⃣ 멘토 프로필 생성 및 저장
             MentorProfile mentorProfile = MentorProfile.toEntity(mentorProfileDto, member, category);
-            mentorProfile.setMentorStatus(1); // 초기값 1로 등록
+            mentorProfile.setMentorStatus(2); // 초기값 2로 등록
             mentorProfileRepository.save(mentorProfile);
             
             return mentorProfile; 
@@ -157,6 +157,7 @@ public class MentorProfileServiceImpl implements MentorProfileService {
 				                .mentorMentoringCount(0)
 				                .mentorFollowCount(0)
 				                .mentorActivityCount(0)
+				                .mentorHeadline("한 줄 소개글을 입력해주세요.")
 				                .build();
     	//더미 데이터에 넣은 카테고리 번호로 객체 찾기
     	Category findCategory = categoryRepository.findByCategoryNo(26L);
@@ -303,7 +304,7 @@ public class MentorProfileServiceImpl implements MentorProfileService {
     }
 
     /**
-     * 프로필 이미지 URL 조회 메서드
+     * 멘토 프로필 수정 메소드
      */
     @Override
     public MentorProfile updateMentorProfile(Long mentorProfileNo, MentorProfileDto mentorProfileDto) {
@@ -326,6 +327,7 @@ public class MentorProfileServiceImpl implements MentorProfileService {
             mentorProfile.setMentorCareer(mentorProfileDto.getMentorCareer());
             mentorProfile.setMentorIntroduce(mentorProfileDto.getMentorIntroduce());
             mentorProfile.setMentorImage(mentorProfileDto.getMentorImage());
+            mentorProfile.setMentorStatus(2); // 2로 설정
             System.out.println(">>>>> updateMentorProfile : " + mentorProfileDto.getMentorImage());
             mentorProfile.setCategory(category); // 카테고리 설정
             

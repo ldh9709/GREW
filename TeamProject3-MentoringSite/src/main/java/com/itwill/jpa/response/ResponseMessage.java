@@ -33,6 +33,12 @@ public class ResponseMessage {
 	public static final String MEMBER_IS_NOT_EMAIL = "SNS로 가입한 사용자입니다.";        // 이메일로 가입한 회원이 아님
 	public static final String AUTHENTICATION_FAILED = "로그인 정보와 일치하지 않습니다."; // 토큰과 정보가 일치하지 않음
 	public static final String UPDATE_ROLE_FAIL = "회원 권한 수정 성공";
+	public static final String DUPLICATION_MENBER_ID = "아이디가 중복되었습니다.";
+	public static final String DUPLICATION_MENBER_EMAIL = "이메일이 중복되었습니다.";
+	public static final String NOT_FOUND_MEMBER = "가입하려는 회원을 찾지 못했습니다.";
+	public static final String NOT_AGREEMENT_MEMBER_ID = "회원ID와 정보가 일치하지 않습니다.";
+	public static final String NOT_AGREEMENT_MEMBER_NAME = "회원NAME과 정보가 일치하지 않습니다.";
+    
 	
     /******************* MENTOR BOARD 메시지 ************************/
     public static final String CREATED_MENTOR_BOARD_SUCCESS = "멘토 보드 등록 성공";

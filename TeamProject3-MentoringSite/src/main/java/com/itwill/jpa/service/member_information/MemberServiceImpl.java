@@ -130,35 +130,56 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	@Transactional
 	public Member saveMember(MemberDto memberDto) {
-		
-		//멤버DTO 객체에서 속성 분리
-		String memberId = memberDto.getMemberId();
-		String memberPassword = memberDto.getMemberPassword();
-		String memberEmail = memberDto.getMemberEmail();
-		
-		//ID중복 체크
-		checkIdDupl(memberId);
-		
-		
-		//이메일 중복 체크
-		checkEmailDupl(memberEmail);
-		
-		//멤버 생성
-		Member saveMember = Member.toEntity(memberDto);
-		
-		//비밀번호 암호화 추가
-		saveMember.setMemberPassword(passwordEncoder.encode(memberPassword));
-		
-		//관심사 생성
-		for (InterestDto interest : memberDto.getInterests()) {
+		try {
+			//매개변수가 null이면 오류
+			if(memberDto == null) {
+				throw new CustomException(ResponseStatusCode.NOT_FOUND_MEMBER, ResponseMessage.NOT_FOUND_MEMBER, null);
+			}
 			
-			Interest interestEntity = Interest.toEntity(interest);
-			System.out.println("회원가입 interestEntity : " + interestEntity);
+			//멤버DTO 객체에서 속성 분리
+			String memberId = memberDto.getMemberId();
+			String memberPassword = memberDto.getMemberPassword();
+			String memberEmail = memberDto.getMemberEmail();
 			
-			saveMember.addInterests(interestEntity);
+			//ID중복 체크
+			boolean checkId = checkIdDupl(memberId);
+			
+			//ID중복 시 에러
+			if(checkId) {
+				throw new CustomException(ResponseStatusCode.DUPLICATION_MENBER_ID, ResponseMessage.DUPLICATION_MENBER_ID, null);
+			}
+			
+			//이메일 중복 체크
+			boolean checkEmail = checkEmailDupl(memberEmail);
+			
+			//이메일 중복 시 에러
+			if(!checkEmail) {
+				throw new CustomException(ResponseStatusCode.DUPLICATION_MENBER_EMAIL, ResponseMessage.DUPLICATION_MENBER_EMAIL, null);
+			}
+			
+			//멤버 생성
+			Member saveMember = Member.toEntity(memberDto);
+			
+			//비밀번호 암호화 추가
+			saveMember.setMemberPassword(passwordEncoder.encode(memberPassword));
+			
+			//관심사 생성
+			for (InterestDto interest : memberDto.getInterests()) {
+				
+				Interest interestEntity = Interest.toEntity(interest);
+				System.out.println("회원가입 interestEntity : " + interestEntity);
+				
+				saveMember.addInterests(interestEntity);
+			}
+			
+			System.out.println(">>>>>saveMember : " + saveMember);
+			return memberRepository.save(saveMember);
+			
+		} catch (Exception e) {
+			throw new CustomException(ResponseStatusCode.CREATED_MEMBER_FAIL, ResponseMessage.CREATED_MEMBER_FAIL, e);
 		}
-		System.out.println(">>>>>saveMember : " + saveMember);
-		return memberRepository.save(saveMember);
+		
+		
 	}
 	
 	/***** 아이디 찾기 *****/
@@ -347,14 +368,14 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	//아이디 찾기 시 사용
 	public void findId(MemberDto.findId memberDto) {
-		Member member = memberRepository.findByMemberEmail(memberDto.getEmail());
+		Member member = memberRepository.findByMemberEmail(memberDto.getMemberEmail());
 		
 		if(member == null) {
-			System.out.println("존재하지 않는 계정입니다.");
+			throw new CustomException(ResponseStatusCode.NOT_FOUND_MEMBER, ResponseMessage.NOT_FOUND_MEMBER, null);
 		}
 		
-		if(!member.getMemberName().equals(memberDto.getName())) {
-			System.out.println("성함이 일치하지 않습니다.");
+		if(!member.getMemberName().equals(memberDto.getMemberName())) {
+			throw new CustomException(ResponseStatusCode.NOT_AGREEMENT_MEMBER_NAME, ResponseMessage.NOT_AGREEMENT_MEMBER_NAME, null);
 		}
 		
 		//랜덤 숫자 객체 생성
@@ -364,7 +385,7 @@ public class MemberServiceImpl implements MemberService {
 		Integer tempNo = random.nextInt(900000) + 100000;
 		
 		//인증번호 저장
-		tempCode.put(memberDto.getEmail(), tempNo);
+		tempCode.put(memberDto.getMemberEmail(), tempNo);
 		
 		//메일 발송
 		customMailSender.sendFindIdMail(memberDto, tempNo);
@@ -379,6 +400,7 @@ public class MemberServiceImpl implements MemberService {
 		System.out.println("storedCode : <<<" + storedCode);
 		System.out.println("email : <<<" + email);
 		System.out.println("inputCode : <<<" + inputCode);
+		
 		//유효성 검사 후 안맞으면 false 반환
 		if(storedCode == null || !storedCode.equals(inputCode)) {
 			return false;
