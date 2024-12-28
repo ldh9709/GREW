@@ -117,7 +117,7 @@ public class CustomMailSender {
 			MimeMessage mimeMessage = javaMailSender.createMimeMessage();
 			MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true, "UTF-8");
 
-			helper.setTo(memberDto.getEmail());
+			helper.setTo(memberDto.getMemberEmail());
 			helper.setSubject("[Grew] 인증번호 안내 메일입니다.");
 			helper.setText(htmlMessage, true); // true는 HTML 형식
 			
