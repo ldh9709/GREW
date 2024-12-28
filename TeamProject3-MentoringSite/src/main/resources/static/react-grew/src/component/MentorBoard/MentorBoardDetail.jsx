@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'; // React와 필요한 훅들 import
 import { useNavigate, useParams } from 'react-router-dom'; // useParams import
 import { getMentorBoardDetail, increaseViewCount, deleteMentorBoard } from '../../api/mentorBoardApi'; // API 함수 import
+import * as mentorProfileApi from '../../api/mentorProfileApi'
 import '../../css/mentorBoard.css'; // 스타일 import
 import { useMemberAuth } from "../../util/AuthContext"  // 인증객체,쿠키를 가져오기 위한 import
 
@@ -9,6 +10,7 @@ const MentorBoardDetail = () => {
   const { token, member } = useMemberAuth(); // 토큰과 멤버 선언하여 Context에 담긴 정보 가져오기
   const navigate = useNavigate(); // 페이지 이동을 위한 useNavigate
   const [board, setBoard] = useState(null);
+  const [mentor, setMentor] = useState({});
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -24,35 +26,51 @@ const MentorBoardDetail = () => {
     if (diffInSeconds < 2419200) return `${Math.floor(diffInSeconds / 604800)}주 전`;
     return `${Math.floor(diffInSeconds / 2419200)}개월 전`;
   };
+  
+  const fetchBoardDetail = async () => {
+    try {
+      setLoading(true);
+      const response = await getMentorBoardDetail(mentorBoardNo);
+      console.log(response);
+      setBoard(response.data); // API 응답 데이터 저장
+    } catch (err) {
+      setError('멘토 보드 상세 데이터를 가져오는 중 오류가 발생했습니다.');
+    } finally {
+      setLoading(false);
+    }
+  };
+  
+  const fetchMentorInfo = async() => {
+    try {
+      const response = await mentorProfileApi.getMentorProfileByMemberNo(board.memberNo);
+      setMentor(response.data)
+      console.log('mentor',mentor)
+    } catch (error) {
+      setError('멘티 정보를 가져오는 중 오류가 발생했습니다.');
+    }
+  }
+
+  const handleViewCount = async () => {
+    const lastViewedTime = localStorage.getItem(`mentorBoard-${mentorBoardNo}-lastViewed`);
+    const now = Date.now();
+
+    // 10분 제한 체크
+    if (!lastViewedTime || now - lastViewedTime > 10 * 60 * 1000) {
+      await increaseViewCount(mentorBoardNo); // API 호출
+      localStorage.setItem(`mentorBoard-${mentorBoardNo}-lastViewed`, now);
+    }
+  };
 
   useEffect(() => {
-    const fetchBoardDetail = async () => {
-      try {
-        setLoading(true);
-        const response = await getMentorBoardDetail(mentorBoardNo);
-        console.log(response);
-        setBoard(response.data); // API 응답 데이터 저장
-      } catch (err) {
-        setError('멘토 보드 상세 데이터를 가져오는 중 오류가 발생했습니다.');
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    const handleViewCount = async () => {
-      const lastViewedTime = localStorage.getItem(`mentorBoard-${mentorBoardNo}-lastViewed`);
-      const now = Date.now();
-
-      // 10분 제한 체크
-      if (!lastViewedTime || now - lastViewedTime > 10 * 60 * 1000) {
-        await increaseViewCount(mentorBoardNo); // API 호출
-        localStorage.setItem(`mentorBoard-${mentorBoardNo}-lastViewed`, now);
-      }
-    };
-
     fetchBoardDetail();
     handleViewCount(); // 조회수 증가 로직 추가
   }, [mentorBoardNo]);
+
+  useEffect(()=>{
+    if (board!=null) {
+      fetchMentorInfo();
+    }
+  },[board])
 
   const handleEdit = () => {
     if (!board) {
@@ -98,30 +116,60 @@ const MentorBoardDetail = () => {
   if (error) return <p>{error}</p>;
 
   return (
-    <div className="mentor-board-detail">
-      <h1>{board?.mentorBoardTitle || "제목 없음"}</h1>
+    <div className="mentor-board-detail-container">
+    {/* 카테고리 및 제목 */}
+    <div className="mentor-board-detail-header">
+      <span className="category-badge">{board.categoryName}</span>
+      <h1 className="mentor-board-title">{board.mentorBoardTitle || "제목 없음"}</h1>
+    </div>
+  
+    {/* 작성자 정보 */}
+    <div className="mentor-board-author">
       <img
-        src={board?.mentorBoardImage || '/default-thumbnail.png'}
-        alt="보드 이미지"
-        className="board-detail-image"
+        src={mentor.mentorImage || ""}
+        alt="멘토 프로필 이미지"
+        className="author-image"
       />
-      <p>{board?.mentorBoardContent || "내용 없음"}</p>
-      <div className="board-detail-meta">
-        <span>조회수: {board?.mentorBoardViews}</span>
-        <span>작성일: {calculateRelativeDate(board.mentorBoardDate)}</span>
+      <div className="author-info">
+        <span className="author-name">{mentor.memberName || ""} 멘토</span>
+        <span className="author-meta">
+        {(board?.mentorBoardDate).substring(0,10)}· {calculateRelativeDate(board?.mentorBoardDate)}
+        </span>
       </div>
-
-      {/* 수정 및 삭제 버튼 */}
-      <div className="board-detail-actions">
-        <button className="edit-button" onClick={handleEdit}>
+    </div>
+  
+    {/* 보드 이미지 */}
+    <div className="mentor-board-image-wrapper">
+      {!board.mentorBoardImage==="default.jpg" ? (
+        <img
+        src={board.mentorBoardImage}
+        alt="보드 이미지"
+        className="mentor-board-image"
+      />
+      ): (
+        ""
+      )}
+    </div>
+  
+    {/* 콘텐츠 */}
+    <div className="mentor-board-content">
+      <pre>{board?.mentorBoardContent || "내용 없음"}</pre>
+    </div>
+  
+    {/* 수정 및 삭제 버튼 */}
+    {member.memberNo === mentor.memberNo ? (
+      <div className="mentor-board-actions">
+        <button className="board-edit-button" onClick={handleEdit}>
           수정
         </button>
-        <button className="delete-button" onClick={handleDelete}>
+        <button className="board-delete-button" onClick={handleDelete}>
           삭제
         </button>
       </div>
-
-    </div>
+    ) : (
+      <div></div>
+    )}
+  </div>
   );
 };
 

@@ -232,11 +232,11 @@
   width: 100px;
   font-size: 14px;
   padding: 2px 1px;
-  border: 1px solid #eee;
+  border: 1px solid #f1f1f1;
   border-radius: 5px;
   text-align: center;
-  background-color: #fafafa;
-  color: #28a745;
+  background-color: #f1f1f1;
+  color: #029151;
   font-weight: 600;
 } 
 .mentor-headline {

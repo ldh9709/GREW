@@ -119,10 +119,15 @@
 }
 .board-info{
   position: absolute;
-  right: 10px; bottom: 15px;
+  right: 10px; bottom: 10px;
   text-align: right;
-  padding-top: 15px;
 }
+.board-author {
+  color: #444;
+  font-size: 14px;
+  margin-right: 10px;
+}
+
 .board-date {
   font-size: 14px;
   margin-right: 5px;
@@ -140,62 +145,126 @@
 }
 
 .board-description {
+  height: 60px;
   font-size: 14px;
   color: #555;
   margin: 0px;
 }
 
 
-
-/* 추가 설명 스타일 */
-.mentor-board-meta {
-  font-size: 14px;
-  color: #888; /* 연한 회색 */
-  display: flex;
-  justify-content: space-between; /* 내용들을 양 끝으로 배치 */
-  align-items: center; /* 세로로 가운데 정렬 */
+/* 멘토 콘텐츠 상세페이지 디자인 */
+/* 전체 컨테이너 스타일 */
+.mentor-board-detail-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+  line-height: 1.6;
 }
 
-.mentor-board-meta .mentor-board-category {
-  color: #ff5252; /* 카테고리 강조 */
+/* 카테고리 및 제목 */
+.mentor-board-detail-header {
+  margin-bottom: 20px;
+}
+
+.category-badge {
+  display: inline-block;
+  padding: 4px 10px;
+  background-color: #f1f1f1;
+  color: #029151;
+  border-radius: 5px;
+  font-size: 14px;
+}
+
+.mentor-board-title {
+  font-size: 24px;
   font-weight: bold;
 }
 
-.mentor-board-meta .mentor-board-stats {
-  font-size: 13px;
-  color: #555; /* 어두운 회색 */
-}
-
-/* 작성자 및 날짜 */
-.mentor-board-stats {
+/* 작성자 정보 */
+.mentor-board-author {
   display: flex;
-  gap: 10px; /* 간격 추가 */
+  align-items: center;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #ccc;
 }
 
-.edit-button,
-.delete-button {
-  padding: 10px 15px;
-  margin-left: 10px;
+.author-image {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-right: 15px;
+}
+
+.author-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.author-name {
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.author-meta {
+  font-size: 14px;
+  color: #555;
+}
+
+/* 보드 이미지 */
+.mentor-board-image-wrapper {
+  text-align: center;
+  margin: 20px 0;
+}
+
+.mentor-board-image {
+  width: 100%;
+  max-height: 400px;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+/* 콘텐츠 */
+.mentor-board-content {
+  min-height: 300px;
+  margin: 30px 10px;
+  font-size: 16px;
+  color: #333;
+}
+
+/* 수정 및 삭제 버튼 */
+.mentor-board-actions {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+  margin-top: 20px;
+}
+
+.board-edit-button,
+.board-delete-button {
+  padding: 10px 20px;
+  font-size: 14px;
   border: none;
   cursor: pointer;
-  font-size: 16px;
   border-radius: 5px;
+  transition: background-color 0.3s ease;
 }
 
-.edit-button {
+.board-edit-button {
   background-color: #4caf50;
   color: white;
 }
 
-.delete-button {
-  background-color: #f44336;
-  color: white;
-}
-
-.edit-button:hover {
+.board-edit-button:hover {
   background-color: #45a049;
 }
 
-.delete-button:hover {
-  background-color: #e53935;
+.board-delete-button {
+  background-color: #a2a1a1;
+  color: white;
+}
+
+.board-delete-button:hover {
+  background-color: #818181;
 }

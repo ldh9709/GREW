@@ -1,6 +1,5 @@
 import { useMemberAuth } from "../../../util/AuthContext";
 import React, { useEffect, useState } from "react";
-import image from '../../../image/images.jpeg'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHeart } from '@fortawesome/free-solid-svg-icons';
 import * as followApi from "../../../api/followApi"
@@ -75,7 +74,6 @@ export default function FollowList() {
                             {followList.map((follow, index) => (
                                 <li className="follow-card" key={index}>
                                     <div className="profile">
-                                        
                                         <img src={follow.mentorImage} alt="프로필 이미지" />
                                     </div>
                                     <div className="info">

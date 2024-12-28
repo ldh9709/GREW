@@ -6,8 +6,13 @@ body {
 body {
   font-family: "Noto Sans KR", sans-serif;
 }
-div, pre {
+div {
   font-family: "Noto Sans KR", sans-serif;
+}
+
+pre{
+  font-family: "Noto Sans KR", sans-serif;
+  white-space: pre-wrap; /* 자동 줄바꿈 활성화 */
 }
 textarea {
   font-family: "Noto Sans KR", sans-serif !important;
