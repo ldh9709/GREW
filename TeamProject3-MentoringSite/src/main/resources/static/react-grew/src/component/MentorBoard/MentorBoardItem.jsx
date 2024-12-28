@@ -33,8 +33,9 @@ export default function MentorBoardItem({ board }) {
             <img src={imageSrc} alt="content-image" className="board-image" />
           </div>
           <div className="board-details">
+            <span className="board-category">{board.categoryName}</span>
             <h3 className="board-title">{board.mentorBoardTitle}</h3>
-            <p className="board-description">{board.mentorBoardContent.substring(0,100)}...</p>
+            <p className="board-description">{board.mentorBoardContent.substring(0,100)} ...</p>
             <p className='board-info'>
               <span className="board-date">{board.mentorBoardDate.substring(0,10)}</span>
               <span className="board-views">
