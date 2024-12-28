@@ -193,12 +193,16 @@ function MentorBoardList() {
       <div className="category-container mentor-board-header">
       <h1>멘토 컨텐츠</h1>
 
+      {member && member.memberRole === 'ROLE_MENTOR' ? (
       <div className="btn-mentor-board-write-div">
         <button className="btn-mentor-board-write" onClick={handleWriteButton} >
           <FontAwesomeIcon icon={faPen} />
           <span>글쓰기</span>
         </button>
       </div>
+      ) : (
+        <div></div>
+      )}
 
       {/* 카테고리 버튼 */}
         <div className="category-parent">

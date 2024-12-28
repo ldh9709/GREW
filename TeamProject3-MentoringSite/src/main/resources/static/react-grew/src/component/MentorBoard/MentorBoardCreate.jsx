@@ -6,7 +6,7 @@ import "../../css/mentorBoardForm.css";
 import { useNavigate } from "react-router-dom";  // useNavigate 추가
 import { useMemberAuth } from "../../util/AuthContext"
 
-const DEFAULT_IMAGE_URL = "/images/mentor-board/defaultImage.png"; // 기본이미지 URL 설정
+const DEFAULT_IMAGE_URL = "/images/mentor-board/default.jpg"; // 기본이미지 URL 설정
 
 function MentorBoardCreate() {
   const { token, member } = useMemberAuth(); // 토큰과 멤버 선언하여 Context에 담긴 정보 가져오기
@@ -173,13 +173,14 @@ function MentorBoardCreate() {
       <h1 className="form-title">멘토 콘텐츠 작성하기</h1>
   
       <div className="field">
-        <label htmlFor="category">전문 분야</label>
+        <label>전문 분야</label>
         <span className="category">{categoryName}</span>
       </div>
   
       <div className="field">
         <label htmlFor="mentorBoardTitle">제목</label>
         <input
+          className="field-title"
           type="text"
           id="mentorBoardTitle"
           placeholder="제목을 입력해주세요."
@@ -214,10 +215,10 @@ function MentorBoardCreate() {
       </div>
   
       <div className="button-group">
-        <button className="submit-button" onClick={handleSubmit}>
+        <button className="board-submit-button" onClick={handleSubmit}>
           등록
         </button>
-        <button className="cancel-button" onClick={handleCancel}>
+        <button className="board-cancel-button" onClick={handleCancel}>
           취소
         </button>
       </div>

@@ -155,7 +155,8 @@
 /* 멘토 콘텐츠 상세페이지 디자인 */
 /* 전체 컨테이너 스타일 */
 .mentor-board-detail-container {
-  max-width: 800px;
+  position: relative;
+  max-width: 1024px;
   margin: 0 auto;
   padding: 20px;
   font-family: Arial, sans-serif;
@@ -227,18 +228,99 @@
 
 /* 콘텐츠 */
 .mentor-board-content {
-  min-height: 300px;
+  position: relative;
+  min-height: 350px;
   margin: 30px 10px;
-  font-size: 16px;
+  padding-bottom: px;
+  font-size: 19px;
   color: #333;
 }
 
+.mentor-info-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border: 1px solid #e4e4e4;
+  border-radius: 8px;
+  margin: 10px 0;
+}
+
+.mentor-profile-image {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.mentor-info {
+  flex: 1;
+  margin-left: 20px;
+}
+
+.mentor-name {
+  font-size: 18px;
+  font-weight: bold;
+  margin: 0;
+}
+
+.mentor-title {
+  font-size: 14px;
+  font-weight: normal;
+  color: #888;
+}
+
+.mentor-details {
+  font-size: 14px;
+  color: #666;
+  margin: 5px 0 0;
+}
+
+.mentor-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.follow-button,
+.question-button {
+  padding: 8px 16px;
+  border: 1px solid #e4e4e4;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.3s;
+}
+
+.follow-button {
+  background-color: #fff;
+  color: #333;
+}
+
+.follow-button:hover {
+  background-color: #f0f0f0;
+}
+
+.question-button {
+  background-color: #ff6b6b;
+  color: #fff;
+  border: 1px solid #ff6b6b;
+}
+
+.question-button:hover {
+  background-color: #ff4c4c;
+}
+
+
+
+
 /* 수정 및 삭제 버튼 */
 .mentor-board-actions {
+  position: absolute;
+  bottom: 0px; right: 10px;
   display: flex;
   gap: 10px;
   justify-content: flex-end;
-  margin-top: 20px;
 }
 
 .board-edit-button,

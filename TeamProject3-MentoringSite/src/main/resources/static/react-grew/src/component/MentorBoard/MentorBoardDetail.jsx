@@ -133,42 +133,59 @@ const MentorBoardDetail = () => {
       <div className="author-info">
         <span className="author-name">{mentor.memberName || ""} 멘토</span>
         <span className="author-meta">
-        {(board?.mentorBoardDate).substring(0,10)}· {calculateRelativeDate(board?.mentorBoardDate)}
+        {(board?.mentorBoardDate).substring(0,10)} · {calculateRelativeDate(board?.mentorBoardDate)}
         </span>
       </div>
     </div>
   
     {/* 보드 이미지 */}
     <div className="mentor-board-image-wrapper">
-      {!board.mentorBoardImage==="default.jpg" ? (
         <img
-        src={board.mentorBoardImage}
+        src={board.mentorBoardImage || "default.jpg" }
         alt="보드 이미지"
         className="mentor-board-image"
       />
-      ): (
-        ""
-      )}
     </div>
   
     {/* 콘텐츠 */}
     <div className="mentor-board-content">
       <pre>{board?.mentorBoardContent || "내용 없음"}</pre>
+
+      {/* 수정 및 삭제 버튼 */}
+      {member.memberNo === mentor.memberNo ? (
+        <div className="mentor-board-actions">
+          <button className="board-edit-button" onClick={handleEdit}>
+            수정
+          </button>
+          <button className="board-delete-button" onClick={handleDelete}>
+            삭제
+          </button>
+        </div>
+      ) : (
+        <div></div>
+      )}
     </div>
-  
-    {/* 수정 및 삭제 버튼 */}
-    {member.memberNo === mentor.memberNo ? (
-      <div className="mentor-board-actions">
-        <button className="board-edit-button" onClick={handleEdit}>
-          수정
-        </button>
-        <button className="board-delete-button" onClick={handleDelete}>
-          삭제
-        </button>
+      
+    <div className="mentor-info-card">
+      <img
+        src={mentor.mentorImage || "/default-profile.png"}
+        alt="멘토 프로필 이미지"
+        className="mentor-profile-image"
+      />
+      <div className="mentor-info">
+        <h2 className="mentor-name">
+          {mentor.memberName} <span className="mentor-name">멘토</span>
+        </h2>
       </div>
-    ) : (
-      <div></div>
-    )}
+      <div className="mentor-actions">
+        <button className="follow-button">+ 팔로우</button>
+        <button className="question-button">멘토에게 질문하기</button>
+      </div>
+    </div>
+
+
+
+
   </div>
   );
 };
