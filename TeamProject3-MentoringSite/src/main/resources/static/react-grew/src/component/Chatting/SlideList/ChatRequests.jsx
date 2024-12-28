@@ -10,7 +10,7 @@ const ChatRequests = () => {
     const { token } = useMemberAuth();
 
     const chatRoomList = async (page) => {
-        const responseJsonObject = await ChattingApi.waitListChatRoom(token, page, 7);
+        const responseJsonObject = await ChattingApi.waitListChatRoom(token, page, 8);
         if (responseJsonObject.status === 7010 && Array.isArray(responseJsonObject.data.content)) {
             // 각 채팅방 상태를 개별적으로 비교하여 필터링
             const activeRooms = responseJsonObject.data.content.filter((room) => { // filter()는 배열의 각 항목을 하나씩 검사하며, 주어진 콜백 함수에서 true를 반환하는 항목만 새로운 배열에 포함
@@ -18,10 +18,24 @@ const ChatRequests = () => {
                     (room.chatRoomStatus === 7000 && room.chatRoomLeaveStatus === 7500) || (room.chatRoomStatus === 7000 && room.chatRoomLeaveStatus === 7600)
                 );
             });
+            console.log(activeRooms);
             setRooms(activeRooms);  // 필터링된 채팅방만 setRooms에 설정
             setTotalPages(responseJsonObject.data.totalPages);
         }
     }
+
+    // 채팅방 상태 변경 핸들러
+    const handleChatRoomUpdate = async (chatRoomNo, action) => {
+        if (action === "active") {
+            await ChattingApi.activeChatRoom(chatRoomNo);
+        } else if (action === "reject") {
+            await ChattingApi.rejectedChatRoom(chatRoomNo);
+        } else if (action === "cancel") {
+            await ChattingApi.canceledChatRoom(chatRoomNo);
+        }
+        // 상태 변경 후 채팅방 목록 새로고침
+        chatRoomList(currentPage - 1);
+    };
 
     useEffect(() => {
         chatRoomList(currentPage - 1); // 페이지 번호는 0부터 시작
@@ -51,22 +65,40 @@ const ChatRequests = () => {
                     >
                         <span className="room-name">{room.chatRoomName}</span>
                         <div className="button-container">
+                        {room.chatRoomName.includes("채팅방 신청이 도착했습니다.") ? (
+                            // 조건 1: 신청이 도착했을 때
+                            <>
                             <button
                                 className="edit-button"
                                 onClick={(e) => {
-                                    e.stopPropagation(); // 부모 이벤트 (채팅방 클릭) 전파 방지
+                                e.stopPropagation(); // 부모 이벤트 (채팅방 클릭) 전파 방지
+                                handleChatRoomUpdate(room.chatRoomNo, "active");
                                 }}
                             >
                                 수락
                             </button>
                             <button
-                                className="leave-button" // 나가기 버튼
+                                className="leave-button"
                                 onClick={(e) => {
-                                    e.stopPropagation(); // 부모 이벤트 전파 방지
+                                e.stopPropagation(); // 부모 이벤트 전파 방지
+                                handleChatRoomUpdate(room.chatRoomNo, "reject");
                                 }}
                             >
                                 거절
                             </button>
+                            </>
+                        ) : (
+                            // 조건 2: 채팅방을 신청했을 때
+                            <button
+                            className="leave-button"
+                            onClick={(e) => {
+                                e.stopPropagation(); // 부모 이벤트 전파 방지
+                                handleChatRoomUpdate(room.chatRoomNo, "cancel");
+                            }}
+                            >
+                            신청 취소
+                            </button>
+                        )}
                         </div>
                     </li>
                 ))

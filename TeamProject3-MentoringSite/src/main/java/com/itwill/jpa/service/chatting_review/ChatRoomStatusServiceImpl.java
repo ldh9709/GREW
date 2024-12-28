@@ -43,12 +43,15 @@ public class ChatRoomStatusServiceImpl implements ChatRoomStatusService{
 			chatRoomStatusRepository.save(menteeChatRoomStatus);	
 	}
 	@Override
-	public void ResetChatRoomStatus(Long chatRoomNo) {
-		ChatRoom chatRoom = chatRoomRepository.findById(chatRoomNo).get();
+	public void ResetChatRoomStatus(ChatRoom chatRoom) {
 		for (int i = 0; i < chatRoom.getChatRoomStatusList().size(); i++) {
 			ChatRoomStatus chatRoomStatus = chatRoom.getChatRoomStatusList().get(i);
 			chatRoomStatus.setChatRoomStatus(7500);
-			chatRoomStatus.setChatRoomName(chatRoom.getMentor().getMemberName()+"님과 "+chatRoom.getMentee().getMemberName()+"님의 채팅방");
+			if(chatRoom.getMentee().getMemberNo() == chatRoomStatus.getMember().getMemberNo()) {
+				chatRoomStatus.setChatRoomName(chatRoom.getMentor().getMemberName()+"님에게 채팅방을 신청했습니다.");
+			}else {
+				chatRoomStatus.setChatRoomName(chatRoom.getMentee().getMemberName()+"님에게서 채팅방 신청이 도착했습니다.");
+			}
 			ChatRoomStatus chatRoomStatus1 = chatRoomStatusRepository.save(chatRoomStatus);
 		}
 	}
