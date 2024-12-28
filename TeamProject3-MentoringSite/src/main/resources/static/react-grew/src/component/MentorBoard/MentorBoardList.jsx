@@ -1,15 +1,18 @@
 import "../../css/styles.css";
 import React, { useEffect, useState } from "react";
+import { useMemberAuth } from "../../util/AuthContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import * as mentorBoardApi from "../../api/mentorBoardApi";
-import MentorBoardItem from "./MentorBoardItem";
 import * as categoryApi from "../../api/categoryApi";
+import MentorBoardItem from "./MentorBoardItem";
 import { useNavigate } from "react-router-dom";
-import { getCookie } from "../../util/cookieUtil";
 import { faPen } from "@fortawesome/free-solid-svg-icons";
+import PagenationItem from "../PagenationItem";
 
 
 function MentorBoardList() {
+  /* Context에 저장된 토큰, 멤버정보 */
+  const { token, member } = useMemberAuth()
   const [boards, setBoards] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
@@ -19,7 +22,6 @@ function MentorBoardList() {
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [childCategories, setChildCategories] = useState([]);
   const navigate = useNavigate();
-  const memberCookie = getCookie("member");
   const BACKEND_SERVER = "http://localhost:8080"; // 백엔드 서버 URL
   const BASE_URL = "/mentor-board";
   // 카테고리 목록을 가져오는 함수
@@ -179,10 +181,10 @@ function MentorBoardList() {
   }
 
   const handleWriteButton = () => {
-    if (memberCookie) {
+    if (member.memberRole==='ROLE_MENTOR') {
       navigate("/mentor-board/create");
     } else {
-      alert("로그인이 필요한 서비스입니다");
+      alert("멘토만 가능한 서비스입니다");
     }
   };
 
@@ -282,31 +284,18 @@ function MentorBoardList() {
             <MentorBoardItem key={board.mentorBoardNo} board={board} />
           ))
         ) : (
-          <p>등록된 멘토 보드가 없습니다.</p>
+          <p>등록된 멘토 컨텐츠가 없습니다.</p>
         )}
+
+          {/* 페이지네이션 */}
+          <PagenationItem
+            currentPage={currentPage}
+            totalPages={totalPages}
+            paginate={paginate}
+          />
       </div>
 
-      {/* 페이지네이션 */}
-      <div className="pagination">
-        {startPage > 1 && (
-          <button onClick={() => paginate(startPage - 1)}>이전</button>
-        )}
-        {pageNumbers.map((number) => (
-          <button
-            key={number}
-            onClick={() => paginate(number)}
-            style={{
-              backgroundColor: number === currentPage ? "#006618" : "",
-              color: number === currentPage ? "white" : "",
-            }}
-          >
-            {number}  
-          </button>
-        ))}
-        {endPage < totalPages && (
-          <button onClick={() => paginate(endPage + 1)}>다음</button>
-        )}
-      </div>
+
     </>
   );
 }
