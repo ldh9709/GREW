@@ -50,7 +50,7 @@ export default function MentorProfileDetail() {
 
       // Check if there are reviews in the response
       if (reviewsResponse.data) {
-        setReviews(reviewsResponse.data); // content 배열 처리
+        setReviews(reviewsResponse.data.content); // content 배열 처리
       } else {
         setReviews([]); // 데이터가 없으면 빈 배열 처리
 
