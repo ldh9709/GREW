@@ -20,7 +20,8 @@ export default function MentorProfileItem({ mentor }) {
   const [additionalData, setAdditionalData] = useState({
     mentorIntroduce: "",
     mentorCareer: "",
-    categoryName:""
+    categoryName:"",
+    mentorHeadline:""
   });
 
 
@@ -40,8 +41,7 @@ export default function MentorProfileItem({ mentor }) {
       mentorIntroduce: response.data.mentorIntroduce || "소개 텍스트 없음",
       mentorCareer: response.data.mentorCareer || "경력 정보 없음",
       categoryName:response.data.categoryName || "분야 정보 없음",
-  
-
+      mentorHeadline:response.data.mentorHeadline || "한줄 소개 없음"
     });
   };
 
@@ -72,12 +72,8 @@ export default function MentorProfileItem({ mentor }) {
       {/* 멘토 이름 */}
       <div className="card-title">{member.memberName} 멘토</div>
 
-      {/* 멘토 소개 */}
-      <div className="card-content"> 한줄 소개</div>
-      
-      
-      {/* 멘토 경력 */}
-      {/* <h3 className="mentor-profile-name">{additionalData.mentorCareer}</h3> */}
+      {/* 멘토 한줄 소개 */}
+      <div className="card-content">{additionalData.mentorHeadline}</div>
       
     </div>
     );
