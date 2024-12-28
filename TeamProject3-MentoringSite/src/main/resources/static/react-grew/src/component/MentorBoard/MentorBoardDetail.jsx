@@ -1,9 +1,12 @@
+import { useMemberAuth } from "../../util/AuthContext"  // 인증객체,쿠키를 가져오기 위한 import
 import React, { useEffect, useState } from 'react'; // React와 필요한 훅들 import
 import { useNavigate, useParams } from 'react-router-dom'; // useParams import
 import { getMentorBoardDetail, increaseViewCount, deleteMentorBoard } from '../../api/mentorBoardApi'; // API 함수 import
 import * as mentorProfileApi from '../../api/mentorProfileApi'
+import * as followApi from "../../api/followApi";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import '../../css/mentorBoard.css'; // 스타일 import
-import { useMemberAuth } from "../../util/AuthContext"  // 인증객체,쿠키를 가져오기 위한 import
+import { faHeartCirclePlus,faHeart } from "@fortawesome/free-solid-svg-icons";
 
 const MentorBoardDetail = () => {
   const { mentorBoardNo } = useParams(); // URL 파라미터에서 mentorBoardNo 가져오기
@@ -13,6 +16,7 @@ const MentorBoardDetail = () => {
   const [mentor, setMentor] = useState({});
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [isFollow, setIsfollow] = useState(false);
 
   const calculateRelativeDate = (dateString) => {
     const now = new Date();
@@ -64,7 +68,8 @@ const MentorBoardDetail = () => {
   useEffect(() => {
     fetchBoardDetail();
     handleViewCount(); // 조회수 증가 로직 추가
-  }, [mentorBoardNo]);
+    checkFollow();
+  }, [mentorBoardNo])
 
   useEffect(()=>{
     if (board!=null) {
@@ -110,6 +115,32 @@ const MentorBoardDetail = () => {
       }
     }
   };
+
+  //팔로우 여부 체크
+  const checkFollow = async() => {
+    const response = await followApi.isExistFollow(token, mentor.memberNo);
+    console.log(response)
+    setIsfollow(response.data);
+  }
+
+  //팔로우 등록
+  const handleFollowClick = async() => {
+    if(token && member.memberRole ==='ROLE_MENTEE'){
+      if (!isFollow) {
+          const follow = {
+          menteeMemberNo:member.memberNo,
+          mentorMemberNo:mentor.memberNo
+        }
+          await followApi.addfollow(token, follow);
+          setIsfollow(true);
+        } else {
+          await followApi.deleteFollow(token, mentor.memberNo);
+          setIsfollow(false);
+      } 
+    }else{
+      alert("멘티 회원만 가능한 서비스입니다.")
+    }
+  }
 
 
   if (loading) return <p>로딩 중입니다...</p>;
@@ -176,16 +207,24 @@ const MentorBoardDetail = () => {
         <h2 className="mentor-name">
           {mentor.memberName} <span className="mentor-name">멘토</span>
         </h2>
+        <div className="mentor-headline">
+          {mentor.mentorHeadline}
+        </div>
       </div>
-      <div className="mentor-actions">
-        <button className="follow-button">+ 팔로우</button>
-        <button className="question-button">멘토에게 질문하기</button>
+      <div className="mentor-follow">
+       <button
+          className={`follow-button ${isFollow ? 'follow-isexist' : ''}`}
+          onClick={ handleFollowClick }
+        >
+          {isFollow ? (
+            <FontAwesomeIcon icon={faHeart}/>
+          ): (
+            <FontAwesomeIcon icon={faHeartCirclePlus} />
+          )}
+          팔로우
+        </button>
       </div>
     </div>
-
-
-
-
   </div>
   );
 };

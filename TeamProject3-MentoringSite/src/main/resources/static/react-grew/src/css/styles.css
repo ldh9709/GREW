@@ -750,6 +750,7 @@ button {
   display: flex;
   justify-content: space-between;
   margin-bottom: 15px;
+  border: none;
 }
 .radio-container div:first-child {
   font-size: 20px;
