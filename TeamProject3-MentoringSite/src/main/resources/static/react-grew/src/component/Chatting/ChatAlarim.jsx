@@ -12,7 +12,7 @@ const ChatAlarim = () => {
   const [activePanel, setActivePanel] = useState(null); //패널을 열때 chat 또는 notification인지 구분하는 용도
   const [roomId, setRoomId] = useState(null); // 선택된 roomId 상태
   const [roomName, setRoomName] = useState(null); // 선택된 roomName 상태
-  const { token, member } = useMemberAuth();
+  const { token , member } = useMemberAuth();
 
   const togglePanel = (panel) => {
     //chat 또는 notification를 확인하여 슬라이드 패널을 열고 닫음
@@ -31,15 +31,16 @@ const ChatAlarim = () => {
     }
   };
   useEffect(() => {
-if(member){
+    if(member){
 
-    alarmIsReadCount(); // 데이터를 가져오는 함수
-    const intervalId = setInterval(() => {
         alarmIsReadCount(); // 데이터를 가져오는 함수
-    }, 3000); // 5000ms = 5초
-    return () => clearInterval(intervalId);
-}
+        const intervalId = setInterval(() => {
+            alarmIsReadCount(); // 데이터를 가져오는 함수
+        }, 3000); // 5000ms = 5초
+        return () => clearInterval(intervalId);
+    }
   }, [member]);
+  
   return (
     <div>
       {token != null ? (

@@ -90,7 +90,7 @@ public class ChatRoomServiceImpl implements ChatRoomService {
 					chatRoom1.setChatRoomStatus(7000);
 					chatRoom1.setChatRoomEndDate(null);
 					ChatRoom chatRoom2 = chatRoomRepository.save(chatRoom1);
-					chatRoomStatusService.ResetChatRoomStatus(chatRoom1.getChatRoomNo());
+					chatRoomStatusService.ResetChatRoomStatus(chatRoom2);
 					return ChatRoomDto.toDto(chatRoom2);
 				}
 				
