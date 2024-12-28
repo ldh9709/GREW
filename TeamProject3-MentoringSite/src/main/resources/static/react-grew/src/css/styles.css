@@ -955,6 +955,12 @@ button {
   outline: 1px solid #ccc;
   transition: background-color 0.3s ease;
 }
+
+/* 관리자 버튼 */
+.admin-button {
+  background-color: #444 !important;
+  color: #e4e4e4 !important;
+}
 /* 멘토,멘티 여부 체크 버튼 */
 .rightMenu input {
   width: 90px;

@@ -50,7 +50,7 @@
   border: 1px solid #ddd;
   border-radius: 10px;
   padding: 20px 20px;
-  margin: 0 10px;
+  margin: 5px 10px;
   text-align: center;
   transition: transform 0.3s, box-shadow 0.3s;
   overflow: hidden; /* 내용이 넘칠 경우 숨김 처리 */

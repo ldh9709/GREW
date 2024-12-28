@@ -114,6 +114,7 @@ body {
   display: inline-block;
   width: 180px;
   height: 180px;
+  cursor: pointer;
 }
 
 /* 프로필 이미지 스타일 */

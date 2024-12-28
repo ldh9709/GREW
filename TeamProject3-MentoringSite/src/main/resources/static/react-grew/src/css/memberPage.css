@@ -416,7 +416,7 @@ legend {
 }
 
 /* 탭 스타일 */
-.tabs {
+/* .tabs {
   display: flex;
   justify-content: space-between;
   border-bottom: 1px solid #ccc;
@@ -443,7 +443,7 @@ legend {
 
 .tab:hover {
   background-color: #eeeeee;
-}
+} */
 
 /* 설명 텍스트 */
 .description {
