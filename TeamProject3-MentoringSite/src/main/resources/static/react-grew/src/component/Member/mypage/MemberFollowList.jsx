@@ -28,6 +28,7 @@ export default function FollowList() {
             const { data } = response;
             setFollowList(data.content);
             setTotalPages(data.totalPages);
+            console.log(data.content);
         } catch (error) {
             console.log('팔로우 리스트 조회 실패', error);
         }
@@ -74,7 +75,8 @@ export default function FollowList() {
                             {followList.map((follow, index) => (
                                 <li className="follow-card" key={index}>
                                     <div className="profile">
-                                        <img src={image} alt="프로필 이미지" />
+                                        
+                                        <img src={follow.mentorImage} alt="프로필 이미지" />
                                     </div>
                                     <div className="info">
                                         <p className="name"><strong>{follow.mentorName} 멘토</strong></p>
