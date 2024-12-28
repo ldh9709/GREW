@@ -161,7 +161,19 @@ INSERT INTO member(member_no, member_id, member_password, member_email, member_n
 VALUES(member_no_SEQ.nextval, 'mentor07', 'pass07', 'mentor07@naver.com', '김도윤', 4500, 1, SYSDATE, 0, 'ROLE_MENTOR', '');
 
 INSERT INTO mentor_profile(mentor_profile_no, mentor_introduce, mentor_career, mentor_rating, mentor_mentoring_count, mentor_image, mentor_activity_count, mentor_follow_count, mentor_status, category_no, member_no, mentor_headline)
-VALUES(mentor_profile_no_SEQ.nextval, '안녕하세요, 김도윤 멘토입니다.', '12년 경력', 5, 40, '/images/mentor-profile/10.jpg', 170, 90, 3, 15, member_no_SEQ.currval, '하이');
+VALUES(mentor_profile_no_SEQ.nextval, 
+'- 특성화고 직업상담사의 업무
+- 직업상담사의 직무 역량
+- 대학원 졸업장 없이 심리학 전공을 살릴 수 있었던 방법
+- 계약직 기회를 제대로 활용하는 방법
+- 대학원 진학의 득과 실
+
+등을 드릴 수 있습니다 :)', 
+'현) 한샘 영업시스템 PM팀_ 서비스기획 (2024 ~ )
+전) 한샘 공간설계개발팀_ 서비스 기획(2020~2024)
+전) 한샘 공간설계개발TF팀_서비스 기획 (2019~2020)
+전) 한샘 리하우스 영업관리팀_ 인테리어 설계 (2016~2019)
+', 5, 40, '/images/mentor-profile/10.jpg', 170, 90, 3, 15, member_no_SEQ.currval, '하이');
 
 INSERT INTO member(member_no, member_id, member_password, member_email, member_name, member_points, member_status, member_join_date, member_report_count, member_role, member_provider)
 VALUES(member_no_SEQ.nextval, 'mentor08', 'pass08', 'mentor08@naver.com', '김도옌', 4500, 1, SYSDATE, 0, 'ROLE_MENTOR', '');
@@ -530,42 +542,79 @@ values (9, '이도현님과 박지우님의 채팅방', 7600, 13, chat_room_stat
 
 /* 채팅방 내용 등록 */
 insert into chat_message (chat_message_no, chat_message_check, chat_message_date, chat_room_no, member_no, chat_message_content) 
-values (chat_message_SEQ.nextval, 1, sysdate, 2, 1, '안녕하세요');
+values (chat_message_SEQ.nextval, 1, sysdate, 1, 1, '안녕하세요');
 insert into chat_message (chat_message_no, chat_message_check, chat_message_date, chat_room_no, member_no, chat_message_content) 
-values (chat_message_SEQ.nextval, 1, sysdate, 2, 6, '반가워요');
+values (chat_message_SEQ.nextval, 1, sysdate, 1, 6, '반가워요');
 insert into chat_message (chat_message_no, chat_message_check, chat_message_date, chat_room_no, member_no, chat_message_content) 
-values (chat_message_SEQ.nextval, 1, sysdate, 2, 6, '코딩에 관심이 많으세요?');
+values (chat_message_SEQ.nextval, 1, sysdate, 1, 6, '코딩에 관심이 많으세요?');
 insert into chat_message (chat_message_no, chat_message_check, chat_message_date, chat_room_no, member_no, chat_message_content) 
-values (chat_message_SEQ.nextval, 1, sysdate, 2, 1, '네');
+values (chat_message_SEQ.nextval, 1, sysdate, 1, 1, '네');
 insert into chat_message (chat_message_no, chat_message_check, chat_message_date, chat_room_no, member_no, chat_message_content) 
-values (chat_message_SEQ.nextval, 1, sysdate, 2, 1, '최근에 배우다가 어려운 부분이 있어서 조언을 구하고자 신청했어요!');
+values (chat_message_SEQ.nextval, 1, sysdate, 1, 1, '최근에 배우다가 어려운 부분이 있어서 조언을 구하고자 신청했어요!');
 insert into chat_message (chat_message_no, chat_message_check, chat_message_date, chat_room_no, member_no, chat_message_content) 
-values (chat_message_SEQ.nextval, 1, sysdate, 2, 6, '그렇군요 잘되었네요');
+values (chat_message_SEQ.nextval, 1, sysdate, 1, 6, '그렇군요 잘되었네요');
 insert into chat_message (chat_message_no, chat_message_check, chat_message_date, chat_room_no, member_no, chat_message_content) 
-values (chat_message_SEQ.nextval, 1, sysdate, 2, 6, '제가 이 분야 탑이에요  ㅎㅎ');
+values (chat_message_SEQ.nextval, 1, sysdate, 1, 6, '제가 이 분야 탑이에요  ㅎㅎ');
 insert into chat_message (chat_message_no, chat_message_check, chat_message_date, chat_room_no, member_no, chat_message_content) 
-values (chat_message_SEQ.nextval, 1, sysdate, 2, 1, '아 진짜요? 든든하네요');
+values (chat_message_SEQ.nextval, 1, sysdate, 1, 1, '아 진짜요? 든든하네요');
 insert into chat_message (chat_message_no, chat_message_check, chat_message_date, chat_room_no, member_no, chat_message_content) 
-values (chat_message_SEQ.nextval, 1, sysdate, 2, 6, '좋아요 그럼 먼저 뭐 때문에 신청하셨나요?');
+values (chat_message_SEQ.nextval, 1, sysdate, 1, 6, '좋아요 그럼 먼저 뭐 때문에 신청하셨나요?');
 insert into chat_message (chat_message_no, chat_message_check, chat_message_date, chat_room_no, member_no, chat_message_content) 
-values (chat_message_SEQ.nextval, 1, sysdate, 2, 1, 'java에서 객체지향이 어려워서 질문하려고요');
+values (chat_message_SEQ.nextval, 1, sysdate, 1, 1, 'java에서 객체지향이 어려워서 질문하려고요');
 /* 채팅방 나갔는지 여부 확인 */
 
 /* 리뷰 등록 */
-insert into review (review_no, review_title,review_status,review_content,review_score,review_date,chat_room_no) 
-values (review_no_SEQ.nextval, '제목1',1, '그냥그래요', 3, sysdate, 1);
-insert into review (review_no, review_title,review_status, review_content,review_score,review_date,chat_room_no) 
-values (review_no_SEQ.nextval, '제목2',1, '적절해요', 4, sysdate, 1);
-insert into review (review_no, review_title,review_status, review_content,review_score,review_date,chat_room_no) 
-values (review_no_SEQ.nextval, '제목3',1, '최고에요', 5, sysdate, 1);
-insert into review (review_no, review_title,review_status, review_content,review_score,review_date,chat_room_no) 
-values (review_no_SEQ.nextval, '제목4',1, '별로에요', 1, sysdate, 2);
-insert into review (review_no, review_title,review_status, review_content,review_score,review_date,chat_room_no) 
-values (review_no_SEQ.nextval, '제목5',1, '최고에요', 5, sysdate, 2);
-insert into review (review_no, review_title,review_status, review_content,review_score,review_date,chat_room_no) 
-values (review_no_SEQ.nextval, '제목6',1, '그냥그래요', 3, sysdate, 2);
-insert into review (review_no, review_title,review_status, review_content,review_score,review_date,chat_room_no) 
-values (review_no_SEQ.nextval, '제목6',1, '그냥그래요', 4, sysdate, 10);
+insert into review (review_no, review_title, review_status, review_content, review_score, review_date, chat_room_no)
+values (review_no_SEQ.nextval, '정말 만족스러운 경험이었어요!', 1, '멘토님 덕분에 많은 도움이 되었어요. 처음에는 긴장했지만, 멘토님이 친절하게 설명해 주셔서 이해가 잘 됐어요. 정말 감사해요!', 5, sysdate, 1);
+
+insert into review (review_no, review_title, review_status, review_content, review_score, review_date, chat_room_no)
+values (review_no_SEQ.nextval, '좀 아쉬운 부분이 있었어요', 1, '멘토님은 좋은 분이시지만, 제가 기대한 내용과는 조금 달랐어요. 그래도 유익한 시간은 되었어요.', 3, sysdate, 1);
+
+insert into review (review_no, review_title, review_status, review_content, review_score, review_date, chat_room_no)
+values (review_no_SEQ.nextval, '완벽한 멘토링!', 1, '정말 최고였어요! 멘토님의 조언 덕분에 고민이 해결됐고, 실질적인 도움을 많이 받았습니다. 추천드려요!', 5, sysdate, 1);
+
+insert into review (review_no, review_title, review_status, review_content, review_score, review_date, chat_room_no)
+values (review_no_SEQ.nextval, '멘토님이 너무 친절했어요', 1, '멘토님이 너무 친절하고 잘 설명해 주셔서 편하게 질문할 수 있었습니다. 덕분에 많은 도움이 되었어요. 감사합니다!', 4, sysdate, 2);
+
+insert into review (review_no, review_title, review_status, review_content, review_score, review_date, chat_room_no)
+values (review_no_SEQ.nextval, '조금 아쉬웠어요', 1, '멘토님의 경험은 풍부하셨지만, 제 상황에 맞는 구체적인 예시를 더 들어주셨으면 좋았을 것 같아요.', 2, sysdate, 2);
+
+insert into review (review_no, review_title, review_status, review_content, review_score, review_date, chat_room_no)
+values (review_no_SEQ.nextval, '좋은 경험이었어요', 1, '멘토님의 조언이 정말 도움이 되었어요. 다만, 약간의 시간이 부족했던 점은 아쉬웠습니다.', 4, sysdate, 2);
+
+insert into review (review_no, review_title, review_status, review_content, review_score, review_date, chat_room_no)
+values (review_no_SEQ.nextval, '다시 만나고 싶은 멘토!', 1, '멘토님은 정말 따뜻하고 친절하세요. 어려운 질문도 잘 설명해 주셔서 큰 도움이 되었어요.', 5, sysdate, 3);
+
+insert into review (review_no, review_title, review_status, review_content, review_score, review_date, chat_room_no)
+values (review_no_SEQ.nextval, '기대보다 부족했던 멘토링', 1, '멘토님의 말씀이 유익하지 않아서 기대했던 만큼의 도움을 받지 못했습니다. 조금 아쉬워요.', 2, sysdate, 4);
+
+insert into review (review_no, review_title, review_status, review_content, review_score, review_date, chat_room_no)
+values (review_no_SEQ.nextval, '조금 더 구체적인 피드백을 원했어요', 1, '멘토님은 좋으셨지만, 제 상황에 대해 좀 더 구체적인 조언을 듣고 싶었어요. 전반적으로 괜찮은 경험이었습니다.', 3, sysdate, 5);
+
+insert into review (review_no, review_title, review_status, review_content, review_score, review_date, chat_room_no)
+values (review_no_SEQ.nextval, '매우 만족했습니다!', 1, '멘토님의 지도 덕분에 많은 것이 변했습니다. 제가 원하는 방향으로 도움을 주셔서 매우 만족했습니다. 감사해요!', 5, sysdate, 6);
+
+insert into review (review_no, review_title, review_status, review_content, review_score, review_date, chat_room_no)
+values (review_no_SEQ.nextval, '좋은 경험이었어요', 1, '멘토님이 친절하시고 세심하게 도와주셨습니다. 덕분에 많은 도움이 되었습니다.', 4, sysdate, 6);
+
+insert into review (review_no, review_title, review_status, review_content, review_score, review_date, chat_room_no)
+values (review_no_SEQ.nextval, '멘토님 덕분에 자신감을 얻었어요', 1, '멘토님의 격려 덕분에 제가 자신감을 얻었습니다. 제가 고민하던 문제를 해결할 수 있게 도와주셔서 감사해요!', 5, sysdate, 7);
+
+insert into review (review_no, review_title, review_status, review_content, review_score, review_date, chat_room_no)
+values (review_no_SEQ.nextval, '조금 더 상세했으면 좋겠어요', 1, '멘토님의 피드백은 좋았지만, 조금 더 구체적인 피드백을 주셨으면 좋았을 것 같아요. 그래도 유익한 시간이었어요.', 3, sysdate, 7);
+
+insert into review (review_no, review_title, review_status, review_content, review_score, review_date, chat_room_no)
+values (review_no_SEQ.nextval, '멘토링 내용은 좋았지만', 1, '멘토링 내용은 좋았지만, 시간 제약이 있어 충분히 논의하지 못한 점이 아쉬웠습니다. 다음에 더 많은 시간을 갖고 싶어요.', 4, sysdate, 8);
+
+insert into review (review_no, review_title, review_status, review_content, review_score, review_date, chat_room_no)
+values (review_no_SEQ.nextval, '대체로 괜찮았어요', 1, '멘토님은 좋으셨고 대체로 괜찮았지만, 제게 맞는 해결책을 더 많이 제공해 주셨으면 좋았을 것 같습니다.', 3, sysdate, 8);
+
+insert into review (review_no, review_title, review_status, review_content, review_score, review_date, chat_room_no)
+values (review_no_SEQ.nextval, '도움이 많이 되었어요', 1, '멘토님 덕분에 여러 문제를 해결할 수 있었어요. 구체적인 피드백을 통해 많은 것을 배우게 되었습니다.', 5, sysdate, 9);
+
+insert into review (review_no, review_title, review_status, review_content, review_score, review_date, chat_room_no)
+values (review_no_SEQ.nextval, '아쉬운 부분도 있었어요', 1, '멘토님이 좋은 사람임에도 불구하고, 제가 기대한 대로는 진행되지 않아 조금 아쉬웠어요. 하지만 도움이 되는 부분도 있었습니다.', 3, sysdate, 9);
+
 
 /* 추천 등록 */
 insert into vote(vote_no, vote_type, vote_date, answer_no, member_no)

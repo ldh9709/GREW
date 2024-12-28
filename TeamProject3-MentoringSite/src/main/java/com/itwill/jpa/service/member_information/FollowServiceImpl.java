@@ -63,19 +63,21 @@ public class FollowServiceImpl implements FollowService{
 	}
 	
 	/*팔로우 취소*/
-	public Long deleteFollow(Long followNo) {
+	public Long deleteFollow(Long menteeNo, Long mentorNo) {
 		try {
+			
+			Follow follow = followReporitory.findByMenteeMember_MemberNoAndMentorMember_MemberNo(menteeNo, mentorNo);
 			/* 팔로우 멘토 follow_count감소*/
-			Follow follow = followReporitory.findById(followNo).get();
+			followReporitory.findById(follow.getFollowNo()).get();
 			
 			Member mentorMember = follow.getMentorMember();
 			mentorMember.getMentorProfile().setMentorFollowCount(mentorMember.getMentorProfile().getMentorFollowCount()-1); 
 			memberRepository.save(mentorMember);
 			
 			/* 팔로우 삭제 */
-			followReporitory.deleteById(followNo);
+			followReporitory.deleteById(follow.getFollowNo());
 			
-			return followNo; 
+			return follow.getFollowNo(); 
 		} catch (Exception e) {
 			throw new CustomException(ResponseStatusCode.DELETE_FOLLOW_FAIL, ResponseMessage.DELETE_FOLLOW_FAIL, e);
 		}

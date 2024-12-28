@@ -39,7 +39,6 @@ const ChattingMessage = ({ roomId, roomName }) => {
   // 채팅 메시지 로드
   const chatMessages = async (username) => {
     const responseJsonObject = await ChattingApi.viewChatMessage(roomId);
-    console.log(responseJsonObject);
 
     const backMessage = responseJsonObject.data.map((msg) => ({
       memberName: msg.memberName,
@@ -56,7 +55,6 @@ const ChattingMessage = ({ roomId, roomName }) => {
     const unreadMessages = responseJsonObject.data.filter(
       (msg) => msg.chatMessageCheck === 1 && msg.memberName !== username
     );
-    console.log(unreadMessages);
 
     // 읽음 상태 업데이트 요청
     if (unreadMessages.length > 0) {
@@ -88,7 +86,6 @@ const ChattingMessage = ({ roomId, roomName }) => {
   useEffect(() => {
     const username = decodeToken.memberName;
     if (username) {
-      console.log("username : " + username);
       setUsername(username); // 이름 설정
       setHasUnreadMessages(false); // 다시 초기화
     }
@@ -101,18 +98,11 @@ const ChattingMessage = ({ roomId, roomName }) => {
       // roomId 또는 username이 null일 경우, 아무 작업도 하지 않음
       return;
     }
-    console.log("입력받았었고 등록된 roomId : " + roomId);
-    console.log("등록된 username : " + username);
-    console.log("소켓검사 실시");
     if (roomId && username) {
       const socket = new SockJS(`http://localhost:8080/chat`);
-      console.log("소켓 만들어짐");
-      console.log("소켓에 stomp만들기");
       stompClient.current = new StompClient({
         webSocketFactory: () => socket,
         onConnect: () => {
-          console.log("Connected");
-
           stompClient.current.subscribe(
             `/topic/messages/${roomId}`,
             (response) => {
@@ -121,8 +111,6 @@ const ChattingMessage = ({ roomId, roomName }) => {
               if (!message.chatMessageDate) {
                 message.chatMessageDate = new Date().toISOString(); // ISO 8601 형식으로 현재 시간 설정
               }
-              console.log("message : ");
-              console.log(message);
               const messageType =
                 message.memberName === username ? "sent" : "received";
               setMessages((prevMessages) => [
@@ -148,24 +136,19 @@ const ChattingMessage = ({ roomId, roomName }) => {
           );
           stompClient.current.subscribe(
             `/topic/read-status/${roomId}`,
-            (response) => {
-              const responseJsonObject = JSON.parse(response.body);
-              console.log(responseJsonObject);
+            () => {
               chatMessages(username);
             }
           );
         },
         onDisconnect: () => console.log("Disconnected"),
       });
-      console.log("stomp만들기 종료");
 
       stompClient.current.activate();
-      console.log("클라이언트를 활성화하여 STOMP 연결을 시작합니다.");
 
       return () => {
         if (stompClient.current) {
           stompClient.current.deactivate(); // 소켓이 연결되었다면 일을 끝낸 뒤 다시 연결 종료
-          console.log("WebSocket 연결을 종료");
         }
       };
     }

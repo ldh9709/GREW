@@ -71,6 +71,41 @@ export const logout = async () => {
     return response.url;
 };
 
+/* 1. 아이디 찾기 - 인증번호 전송  */
+export const sendMailFindId = async (memberDto) => {
+    const response = await fetch(`${BACKEND_SERVER}/member/findId/sendEmail`, {
+        method: 'POST',
+        headers: {
+            'Content-type': 'application/json'
+        },
+        body:JSON.stringify({
+            memberName:memberDto.memberName,
+            memberEmail:memberDto.memberEmail    
+        })
+    });
+    const resultJsonObject = await response.json();
+
+    return resultJsonObject;
+}
+
+/* 2. 아이디 찾기 - 인증번호 확인  */
+export const certificationCodeFindId = async (memberEmail, inputCode) => {
+    const response = await fetch(`${BACKEND_SERVER}/member/findId/certificationCode`, {
+        method: 'POST',
+        headers: {
+            'Content-type': 'application/json'
+        },
+        body:JSON.stringify({
+            memberEmail:memberEmail, 
+            inputCode:inputCode
+        })
+    });
+    const resultJsonObject = await response.json();
+
+    return resultJsonObject;
+}
+
+
 //비밀번호 찾기 
 export const findPassword = async (member) => {
     const response = await fetch(`${BACKEND_SERVER}/member/findPassword`, {
@@ -317,7 +352,7 @@ export const getMemberByMemberNo = async (memberNo) => {
     return responseJsonObject;
 }
 
-
+/* 멘토 프로필 이미지 업로드 */
 export const uploadMentorProfileImage = async (mentorProfileNo, file) => {
     const formData = new FormData();
     formData.append("file", file);

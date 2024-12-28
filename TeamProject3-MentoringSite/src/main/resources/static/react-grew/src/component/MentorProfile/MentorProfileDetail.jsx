@@ -1,38 +1,26 @@
 import { useMemberAuth } from "../../util/AuthContext";
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom"; // useNavigate 추가
 import "../../css/mentorProfile.css"; // 🔥 추가된 CSS 파일
 import { getMentorProfileByNo } from "../../api/mentorProfileApi.js";
 import { listReviewByMember } from "../../api/reviewApi.js"; // 리뷰 목록 API 추가
 import * as categoryApi from "../../api/categoryApi";
-import * as ChattingApi from '../../api/chattingApi.js';
-import * as followApi from "../../api/followApi";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faHeart, faHeartCircleCheck, faHeartCirclePlus } from '@fortawesome/free-solid-svg-icons';
+
+import MentorProfileInfo from "./MentorProfileInfo.jsx";
 
 export default function MentorProfileDetail() {
-  const { token, memberNo } = useMemberAuth();
+  const { token, member } = useMemberAuth();
   const { mentorProfileNo } = useParams();
-  const [mentorProfile, setMentorProfile] = useState(null);
+  const navigate = useNavigate(); // navigate 훅 추가
+  const [mentorProfile, setMentorProfile] = useState({});
   const [reviews, setReviews] = useState([]); // 빈 배열로 초기화
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [categoryName, setCategoryName] = useState("카테고리 정보 없음");
-  const [isFollow, setIsfollow] = useState();
 
 
-  const checkFollow = async() => {
-    try {
-      const response = await followApi.isExistFollow(token);
-      console.log(response);
-    } catch (error) {
-      console.log('팔로워 여부 체크 실패')
-    }
-  }
 
-  const handleFollow = () => {
-    
-  }
+
 
   const fetchMentorProfile = async () => {
     try {
@@ -42,8 +30,13 @@ export default function MentorProfileDetail() {
       const mentorProfileResponse = await getMentorProfileByNo(
         mentorProfileNo
       );
-
-      console.log(mentorProfile)
+       // 🔥 데이터 유효성 검사 추가
+    if (!mentorProfileResponse?.data || Object.keys(mentorProfileResponse.data).length === 0) {
+      console.warn("Invalid mentor profile number:", mentorProfileNo);
+      // 프로필 데이터가 없으면 리다이렉트
+      navigate("/mentor-profile/list", { replace: true });
+      return;
+    }
       setMentorProfile(mentorProfileResponse.data);
 
       // 2. 멘토 프로필 번호로 리뷰 목록 조회 (Authorization 헤더에 JWT 토큰 추가)
@@ -54,16 +47,16 @@ export default function MentorProfileDetail() {
         token // `token`을 Authorization 헤더에 포함시켜야 함
       );
 
-      console.log("Reviews Response:", reviewsResponse);
-      console.log("Reviews Response Data:", reviewsResponse.data); // 전체 데이터 확인
-      console.log(
-        "Reviews Response Data.content:",
-        reviewsResponse.data?.content
-      ); // content만 따로 확인
+      // console.log("Reviews Response:", reviewsResponse);
+      // console.log("Reviews Response Data:", reviewsResponse.data); // 전체 데이터 확인
+      // console.log(
+      //   "Reviews Response Data.content:",
+      //   reviewsResponse.data?.content
+      // ); // content만 따로 확인
 
       // Check if there are reviews in the response
       if (reviewsResponse.data) {
-        setReviews(reviewsResponse.data); // content 배열 처리
+        setReviews(reviewsResponse.data.content); // content 배열 처리
       } else {
         setReviews([]); // 데이터가 없으면 빈 배열 처리
 
@@ -72,17 +65,19 @@ export default function MentorProfileDetail() {
           fetchCategoryName(mentorProfile.categoryNo);
         }
       }
+
     } catch (error) {
       setError("멘토 프로필을 가져오는 중 오류가 발생했습니다.");
+      // 오류 발생 시 리다이렉트
+      navigate("/mentor-profile/list", { replace: true });
     } finally {
       setLoading(false);
     }
   };
 
   useEffect(() => {
-    checkFollow();
     fetchMentorProfile();
-  }, [mentorProfileNo, token]);
+  }, []);
 
   console.log("Reviews:", reviews); // 이 줄을 추가하여 reviews 데이터를 확인
 
@@ -105,91 +100,27 @@ export default function MentorProfileDetail() {
 
   if (error) return <p className="error-message">{error}</p>;
 
-  const handleQuestionButtonClick = async () => {
-    if (!memberNo || !mentorProfileNo) {
-      alert("멘토 또는 멘티 정보가 없습니다.");
-      return;
-    }
-
-    try {
-      const response = await ChattingApi.createChatting(memberNo, mentorProfileNo);
-      if (response.success) {
-        alert("멘토와의 채팅이 시작되었습니다!");
-        // 채팅방으로 이동하거나 다른 추가 동작을 구현할 수 있습니다.
-      } else {
-        alert(response.message || "채팅 생성에 실패했습니다.");
-      }
-    } catch (error) {
-      console.error("채팅 생성 중 오류 발생:", error);
-      alert("채팅 생성 중 오류가 발생했습니다.");
-    }
-  };
-
   return (
     <div className="mentor-profile-detail-container">
       <div className="mentor-header">
-        {/* 좌측: 이미지와 기본 정보 */}
-        <div className="mentor-image-section">
-          <img
-            src={mentorProfile?.mentorImage || "/default-profile.png"}
-            alt="프로필 이미지"
-            className="mentor-profile-image-large"
-          />
-          <div className="mentor-basic-info">
-            <h2>{mentorProfile.memberName} 멘토</h2> {/* 멤버 이름 표시 */}
-            <div className="mentor-stats">
-              <span className="stats-label">
-                멘토링 신청 </span>
-              <span>
-                {mentorProfile?.mentorMentoringCount || 0}건 {" "}
-              </span>
-              <span className="stats-label">매칭률 </span>
-              <span>
-                {mentorProfile?.mentorActivityCount
-                ? Math.round(
-                    (mentorProfile.mentorMentoringCount /
-                      mentorProfile.mentorActivityCount) *
-                      100
-                  )
-                  : 0}  
-                    %{" "}
-              </span>
-              <span className="stats-label">
-                만족도 </span>
-              <span>
-                {mentorProfile?.mentorRating || 0}
-              </span>
-            </div>
-            
-            {/* 버튼 */}
-            <div className="mentor-actions">
-              <button className="follow-button"><FontAwesomeIcon icon={faHeartCirclePlus}/> 팔로우</button>
-              <button
-                className="question-button"
-                onClick={handleQuestionButtonClick}
-              >
-                멘토링 신청하기
-              </button>
-            </div>
-            <div className="mentor-follow-count">{mentorProfile?.mentorFollowCount || 0}명이 팔로우 하는 중</div>
-          </div>
-        </div>
+        {/* 좌측: 멘토 개별 정보*/}
+        <MentorProfileInfo mentorProfile={mentorProfile} />
+        
         {/* 우측: 상세 정보 */}
         <div className="mentor-details-section">
-          <div className="mentor-section">
-            <h3>대표 멘토링 분야</h3>
-            <p>
-              {mentorProfile?.mentorSpecialty || "대표 멘토링 분야 정보 없음"}
-            </p>
-            <p>{categoryName}</p>
+          <span className="mentor-category-box">    
+            {mentorProfile.categoryName}
+          </span>
+          <div className="mentor-section mentor-headline">
+            <h2>"{mentorProfile.mentorHeadline}"</h2>
           </div>
           <div className="mentor-section">
-            <h3>멘토 소개</h3>
-            <p>{mentorProfile?.mentorIntroduce || "멘토 소개 정보 없음"}</p>
+            <h2>멘토 소개</h2>
+            <pre>{mentorProfile?.mentorIntroduce || "멘토 소개 정보 없음"}</pre>
           </div>
           <div className="mentor-section">
-            <h3>주요 경력</h3>
-            <p>{mentorProfile?.mentorCareer || "멘토 경력 정보 없음"}</p>
+            <h2>주요 경력</h2>
+            <pre>{mentorProfile?.mentorCareer || "멘토 경력 정보 없음"}</pre>
           </div>
         </div>
       </div>

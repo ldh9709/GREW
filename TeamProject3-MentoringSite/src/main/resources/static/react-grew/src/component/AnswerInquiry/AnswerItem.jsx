@@ -211,6 +211,7 @@ export default function AnswerItem({ answer }) {
         </div>
 
         {/* 답변 수정 삭제 신고 버튼 */}
+        {token ? (
         <div className="inquiry-view-answer-btn">
           {member && member.memberNo == answer.memberNo ? (
             <div className="modify-delete-btn">
@@ -240,6 +241,9 @@ export default function AnswerItem({ answer }) {
             />
           </button>
         </div>
+        ) :(
+          <div></div>
+        )}
       </div>
     </>
   );

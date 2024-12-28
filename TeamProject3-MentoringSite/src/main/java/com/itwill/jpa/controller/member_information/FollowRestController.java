@@ -25,6 +25,7 @@ import com.itwill.jpa.auth.PrincipalDetails;
 import com.itwill.jpa.dto.alarm.AlarmDto;
 import com.itwill.jpa.dto.member_information.FollowRequestDto;
 import com.itwill.jpa.dto.member_information.FollowResponseDto;
+import com.itwill.jpa.exception.GlobalExceptionHandler;
 import com.itwill.jpa.response.Response;
 import com.itwill.jpa.response.ResponseMessage;
 import com.itwill.jpa.response.ResponseStatusCode;
@@ -48,13 +49,14 @@ public class FollowRestController {
 	@Operation(summary = "팔로우 등록여부 체크")
 	@SecurityRequirement(name = "BearerAuth")//API 엔드포인트가 인증을 요구한다는 것을 문서화(Swagger에서 JWT인증을 명시
 	@PreAuthorize("hasRole('MENTEE')")//ROLE이 MENTEE인 사람만 접근 가능
-	@GetMapping("/is-exist")
-	public ResponseEntity<Response> checkFollow(Authentication authentication, @RequestParam(name="mentorNo") Long mentorNo) throws Exception{
+	@GetMapping("/is-exist/{mentorNo}")
+	public ResponseEntity<Response> checkFollow(Authentication authentication, @PathVariable("mentorNo") String mentorNo){
 		
 		PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
 		Long menteeNo = principalDetails.getMemberNo();
 		
-		Boolean checkFollow = followService.isExistFollow(menteeNo, mentorNo);
+		
+		Boolean checkFollow = followService.isExistFollow(menteeNo,Long.parseLong(mentorNo));
 		Response response = new Response();
 		response.setStatus(ResponseStatusCode.CHECK_FOLLOW_SUCCESS);
 		response.setMessage(ResponseMessage.CHECK_FOLLOW_SUCCESS);
@@ -72,8 +74,10 @@ public class FollowRestController {
 	
 	/*팔로우 등록*/
 	@Operation(summary = "팔로우 신청")
+	@SecurityRequirement(name = "BearerAuth")//API 엔드포인트가 인증을 요구한다는 것을 문서화(Swagger에서 JWT인증을 명시
+	@PreAuthorize("hasRole('MENTEE')")//ROLE이 MENTEE인 사람만 접근 가능
 	@PostMapping
-	public ResponseEntity<Response> createFollow(@RequestBody FollowRequestDto followDto) throws Exception{
+	public ResponseEntity<Response> createFollow(@RequestBody FollowRequestDto followDto){
 		followService.createFollow(followDto);
 		AlarmDto alarmDto = alarmService.createAlarmByFollowByMentor(followDto.getMentorMemberNo());
 		Response response = new Response();
@@ -91,9 +95,15 @@ public class FollowRestController {
 	}
 	/*팔로우 취소*/
 	@Operation(summary = "팔로우 취소")
-	@DeleteMapping("/{followNo}")
-	public ResponseEntity<Response> deleteFollow(@PathVariable(name="followNo") Long FollowNo){
-		followService.deleteFollow(FollowNo);
+	@SecurityRequirement(name = "BearerAuth")//API 엔드포인트가 인증을 요구한다는 것을 문서화(Swagger에서 JWT인증을 명시
+	@PreAuthorize("hasRole('MENTEE')")//ROLE이 MENTEE인 사람만 접근 가능
+	@DeleteMapping("/cancel/{mentorNo}")
+	public ResponseEntity<Response> deleteFollow(Authentication authentication, @PathVariable("mentorNo") Long mentorNo){
+		
+		PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
+		Long menteeNo = principalDetails.getMemberNo();
+		
+		followService.deleteFollow(menteeNo, mentorNo);
 		
 		Response response = new Response();
 		response.setStatus(ResponseStatusCode.DELETE_FOLLOW_SUCCESS);

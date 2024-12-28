@@ -1,10 +1,11 @@
 const BACKEND_SERVER = "";
 export const createChatting = async (menteeNo, mentorNo) => {
-    const response = await fetch(`${BACKEND_SERVER}/create/${menteeNo}, ${mentorNo}`, {
-        method: 'POST'
-    });
-    const responseJsonObject = await response.json();
-    return responseJsonObject;
+  const response = await fetch(
+    `${BACKEND_SERVER}/chatroom/create/${menteeNo}, ${mentorNo}`, {
+      method: 'POST'
+  });
+  const responseJsonObject = await response.json();
+  return responseJsonObject;
 };
 
 export const listChatRoom = async (token, page, size) => {
@@ -42,6 +43,39 @@ export const waitListChatRoom = async (token,page,size) => {
       'Authorization': `Bearer ${token}` // Authorization 헤더에 JWT 토큰 추가
     }
   });
+  const responseJsonObject = await response.json();
+  return responseJsonObject;
+};
+
+export const activeChatRoom = async (chatRoomNo) => {
+  const response = await fetch(
+    `${BACKEND_SERVER}/chatroom/active/${chatRoomNo}`,
+    {
+      method: "PUT"
+    }
+  );
+  const responseJsonObject = await response.json();
+  return responseJsonObject;
+};
+
+export const rejectedChatRoom = async (chatRoomNo) => {
+  const response = await fetch(
+    `${BACKEND_SERVER}/chatroom/rejected/${chatRoomNo}`,
+    {
+      method: "PUT"
+    }
+  );
+  const responseJsonObject = await response.json();
+  return responseJsonObject;
+};
+
+export const canceledChatRoom = async (chatRoomNo) => {
+  const response = await fetch(
+    `${BACKEND_SERVER}/chatroom/canceled/${chatRoomNo}`,
+    {
+      method: "PUT"
+    }
+  );
   const responseJsonObject = await response.json();
   return responseJsonObject;
 };

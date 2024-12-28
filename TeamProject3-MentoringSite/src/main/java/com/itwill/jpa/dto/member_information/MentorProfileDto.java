@@ -33,6 +33,7 @@ public class MentorProfileDto {
      * @return MentorProfileDto
      */
     
+    /*출력용 dto변환*/
     public static MentorProfileDto toResponseDto(MentorProfile entity) {
         if (entity == null) {
             return null;
@@ -71,6 +72,7 @@ public class MentorProfileDto {
                 .mentorRating(entity.getMentorRating())
                 .mentorMentoringCount(entity.getMentorMentoringCount())
                 .mentorFollowCount(entity.getMentorFollowCount())
+                .mentorHeadline(entity.getMentorHeadline())
                 .mentorActivityCount(entity.getMentorActivityCount())
                 .build();
     }

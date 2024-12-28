@@ -6,7 +6,7 @@ body {
 body {
   font-family: "Noto Sans KR", sans-serif;
 }
-div {
+div, pre {
   font-family: "Noto Sans KR", sans-serif;
 }
 textarea {
@@ -57,10 +57,10 @@ button {
 .inquiry-radio-container {
   /*정렬을 위한 라디오 버튼css*/
   display: flex;
-  border-top: 1px solid #e4e4e4;
+  border-bottom: 1px solid #e4e4e4;
   justify-content: flex-end; /* 오른쪽 정렬 */
   gap: 10px; /* 라디오 버튼들 간의 간격 */
-  padding: 10px 0;
+  padding-bottom: 10px;
   font-size: 13px;
 }
 
@@ -386,6 +386,7 @@ button {
   border-bottom: 1px solid #dddfe2;
 }
 .inquiry-view-content {
+
   padding: 15px;
   margin-bottom: 50px;
   font-size: 18px;
@@ -812,7 +813,7 @@ button {
 
 /* 검색창 입력 필드 */
 .search-input {
-  width: 500px;
+  width: 400px;
   padding: 10px;
   font-size: 16px;
   border: 1px solid #ccc;
