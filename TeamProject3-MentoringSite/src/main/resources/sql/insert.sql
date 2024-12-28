@@ -161,7 +161,19 @@ INSERT INTO member(member_no, member_id, member_password, member_email, member_n
 VALUES(member_no_SEQ.nextval, 'mentor07', 'pass07', 'mentor07@naver.com', '김도윤', 4500, 1, SYSDATE, 0, 'ROLE_MENTOR', '');
 
 INSERT INTO mentor_profile(mentor_profile_no, mentor_introduce, mentor_career, mentor_rating, mentor_mentoring_count, mentor_image, mentor_activity_count, mentor_follow_count, mentor_status, category_no, member_no, mentor_headline)
-VALUES(mentor_profile_no_SEQ.nextval, '안녕하세요, 김도윤 멘토입니다.', '12년 경력', 5, 40, '/images/mentor-profile/10.jpg', 170, 90, 3, 15, member_no_SEQ.currval, '하이');
+VALUES(mentor_profile_no_SEQ.nextval, 
+'- 특성화고 직업상담사의 업무
+- 직업상담사의 직무 역량
+- 대학원 졸업장 없이 심리학 전공을 살릴 수 있었던 방법
+- 계약직 기회를 제대로 활용하는 방법
+- 대학원 진학의 득과 실
+
+등을 드릴 수 있습니다 :)', 
+'현) 한샘 영업시스템 PM팀_ 서비스기획 (2024 ~ )
+전) 한샘 공간설계개발팀_ 서비스 기획(2020~2024)
+전) 한샘 공간설계개발TF팀_서비스 기획 (2019~2020)
+전) 한샘 리하우스 영업관리팀_ 인테리어 설계 (2016~2019)
+', 5, 40, '/images/mentor-profile/10.jpg', 170, 90, 3, 15, member_no_SEQ.currval, '하이');
 
 INSERT INTO member(member_no, member_id, member_password, member_email, member_name, member_points, member_status, member_join_date, member_report_count, member_role, member_provider)
 VALUES(member_no_SEQ.nextval, 'mentor08', 'pass08', 'mentor08@naver.com', '김도옌', 4500, 1, SYSDATE, 0, 'ROLE_MENTOR', '');
