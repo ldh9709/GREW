@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye } from '@fortawesome/free-regular-svg-icons';
 
 
-export default function MentorBoardItem({ board }) {
+export default function MentorBoardItem({ board, onClick }) {
   const navigate = useNavigate();
   console.log('board',board)
   // 멘토 보드 상세 페이지로 이동
@@ -28,7 +28,7 @@ export default function MentorBoardItem({ board }) {
     return `${Math.floor(diffInSeconds / 2419200)}개월 전`;
   };
   return (
-    <div className="board-card">
+    <div className="board-card" onClick={onClick}>
           <div className="board-image-container">
             <img src={imageSrc} alt="content-image" className="board-image" />
           </div>

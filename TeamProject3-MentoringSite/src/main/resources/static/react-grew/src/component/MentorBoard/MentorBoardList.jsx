@@ -12,7 +12,7 @@ import PagenationItem from "../PagenationItem";
 
 function MentorBoardList() {
   /* Context에 저장된 토큰, 멤버정보 */
-  const { token, member } = useMemberAuth()
+  const { member } = useMemberAuth()
   const [boards, setBoards] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
@@ -281,7 +281,9 @@ function MentorBoardList() {
       <div className="mentor-board-list-main">
         {boards.length > 0 ? (
           boards.map((board) => (
-            <MentorBoardItem key={board.mentorBoardNo} board={board} />
+            <MentorBoardItem key={board.mentorBoardNo}
+            board={board}
+            onClick={() => navigate(`/mentor-board/detail/${board.mentorBoardNo}`)} />
           ))
         ) : (
           <p>등록된 멘토 컨텐츠가 없습니다.</p>
