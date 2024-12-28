@@ -1,18 +1,40 @@
-/* Mentor Board 아이템 컨테이너 스타일 */
-.mentor-board-container {
-  border: 1px solid #ddd; /* 테두리 설정 */
-  padding: 20px; /* 내부 여백 */
-  margin: 15px 0; /* 상하 마진 */
-  background-color: #ffffff; /* 배경색 */
-  width: 100%; /* 컨테이너 너비 */
-  border-radius: 8px; /* 모서리 둥글게 */
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* 그림자 효과 */
-  transition: transform 0.2s, box-shadow 0.2s; /* 애니메이션 효과 */
+/* 상단 탭*/
+.mentor-board-header{
+  position: relative;
+}
+/* 등록 버튼*/
+.btn-mentor-board-write-div {
+  position: absolute;
+  right: 0px;
+  font-size: 16px;
 }
 
-.mentor-board-container:hover {
-  transform: translateY(-3px); /* 호버 시 살짝 올라감 */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15); /* 호버 시 그림자 증가 */
+
+/* 정렬 버튼*/
+.radio-container{
+  display: flex;
+  justify-content: flex-end;
+  border-bottom: 1px solid #e4e4e4;
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+  gap: 10px;
+  font-size: 14px;
+}
+.radio-container input {
+  cursor: pointer;
+}
+
+
+/* 멘토 컨텐츠 아이템 */
+.mentor-board-list-main{
+  width: 994px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 30px;
+  margin: 0 auto;
+}
+.mentor-board-list-main .board-card {
+  width: 480px;
 }
 
 /* 제목 스타일 */

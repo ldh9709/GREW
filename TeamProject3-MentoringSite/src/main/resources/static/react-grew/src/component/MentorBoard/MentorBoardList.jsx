@@ -1,10 +1,12 @@
 import "../../css/styles.css";
 import React, { useEffect, useState } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import * as mentorBoardApi from "../../api/mentorBoardApi";
 import MentorBoardItem from "./MentorBoardItem";
 import * as categoryApi from "../../api/categoryApi";
 import { useNavigate } from "react-router-dom";
 import { getCookie } from "../../util/cookieUtil";
+import { faPen } from "@fortawesome/free-solid-svg-icons";
 
 
 function MentorBoardList() {
@@ -186,28 +188,31 @@ function MentorBoardList() {
 
   return (
     <>
-      <h1>멘토 보드</h1>
+      <div className="category-container mentor-board-header">
+      <h1>멘토 컨텐츠</h1>
 
       <div className="btn-mentor-board-write-div">
-        <button className="btn-mentor-board-write" onClick={handleWriteButton}>
-          <img
-            src="https://img.icons8.com/?size=100&id=98973&format=png&color=000000"
-            alt="Write Icon"
-            style={{
-              width: "20px",
-              height: "20px",
-              marginRight: "5px",
-              marginLeft: "-5px",
-              marginBottom: "-3px",
-            }}
-          />
-          멘토 보드 등록
+        <button className="btn-mentor-board-write" onClick={handleWriteButton} >
+          <FontAwesomeIcon icon={faPen} />
+          <span>글쓰기</span>
         </button>
       </div>
 
       {/* 카테고리 버튼 */}
-      <div className="category-container">
         <div className="category-parent">
+        <button
+            className="category-button"
+            onClick={() => {
+              setSelectedCategory(null);
+              setChildCategories(null);
+            }}
+            style={{
+              backgroundColor: selectedCategory === null ? "#28a745" : "", // 선택된 카테고리는 색상 변경
+              color: selectedCategory === null ? "#f3f4f6" : "", // 선택된 카테고리 글자 색상 변경
+            }}
+          >
+            전체
+          </button>
           {categories
             .filter((category) => category.categoryDepth === 1)
             .map((category) => (
@@ -227,7 +232,7 @@ function MentorBoardList() {
             ))}
         </div>
 
-        {childCategories.length > 0 && (
+        {childCategories&&childCategories.length > 0 && (
           <div className="category-child">
             {childCategories.map((child) => (
               <button

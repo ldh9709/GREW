@@ -4,6 +4,7 @@ import * as mentorBoardApi from '../../../api/mentorBoardApi'
 import imageSrc from '../mentor-content1.jpg'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye } from '@fortawesome/free-regular-svg-icons';
+import PagenationItem from '../../PagenationItem';
 
 export default function MemberMentorContentList() {
     /* Context에 저장된 토큰, 멤버정보 */
@@ -59,37 +60,12 @@ export default function MemberMentorContentList() {
     </div>
     {/* 페이지네이션 버튼 */}
     <div className="common-pagination common-pagination-bottom">
-        {/* 이전 버튼 */}
-        <button
-          className="common-pagination-arrow"
-          disabled={currentPage === 1}
-          onClick={() => paginate(currentPage - 1)}
-        >
-          &lt;
-        </button>
-
-        {/* 페이지 번호 버튼 */}
-        {pageNumbers.map((number) => (
-          <button
-            key={number}
-            className={`common-pagination-number ${
-              currentPage === number ? "active" : ""
-            }`}
-            onClick={() => paginate(number)}
-          >
-            {number}
-          </button>
-        ))}
-
-        {/* 다음 버튼 */}
-        <button
-          className="common-pagination-arrow"
-          disabled={currentPage === totalPages}
-          onClick={() => paginate(currentPage + 1)}
-        >
-          &gt;
-        </button>
-      </div> 
+      <PagenationItem
+        currentPage={currentPage}
+        totalPages={totalPages}
+        paginate={paginate}
+      />
+    </div> 
     </div>
   </>
   )

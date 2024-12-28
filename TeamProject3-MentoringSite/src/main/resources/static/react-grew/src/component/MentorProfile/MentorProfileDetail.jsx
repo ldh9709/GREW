@@ -31,7 +31,6 @@ export default function MentorProfileDetail() {
       );
 
       setMentorProfile(mentorProfileResponse.data);
-      console.log('mentorProfile', mentorProfile)
 
       // 2. 멘토 프로필 번호로 리뷰 목록 조회 (Authorization 헤더에 JWT 토큰 추가)
       const reviewsResponse = await listReviewByMember(
@@ -100,20 +99,19 @@ export default function MentorProfileDetail() {
         
         {/* 우측: 상세 정보 */}
         <div className="mentor-details-section">
-          <div className="mentor-section">
-            <h3>대표 멘토링 분야</h3>
-            <p>
-              {mentorProfile?.mentorSpecialty || "대표 멘토링 분야 정보 없음"}
-            </p>
-            <p>{categoryName}</p>
+          <span className="mentor-category-box">    
+            {mentorProfile.categoryName}
+          </span>
+          <div className="mentor-section mentor-headline">
+            <h2>"{mentorProfile.mentorHeadline}"</h2>
           </div>
           <div className="mentor-section">
-            <h3>멘토 소개</h3>
-            <p>{mentorProfile?.mentorIntroduce || "멘토 소개 정보 없음"}</p>
+            <h2>멘토 소개</h2>
+            <pre>{mentorProfile?.mentorIntroduce || "멘토 소개 정보 없음"}</pre>
           </div>
           <div className="mentor-section">
-            <h3>주요 경력</h3>
-            <p>{mentorProfile?.mentorCareer || "멘토 경력 정보 없음"}</p>
+            <h2>주요 경력</h2>
+            <pre>{mentorProfile?.mentorCareer || "멘토 경력 정보 없음"}</pre>
           </div>
         </div>
       </div>

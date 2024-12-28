@@ -1,6 +1,10 @@
 import React from "react";
 import "../../css/mentorBoard.css";
 import { useNavigate } from "react-router-dom";
+import imageSrc from '../../image/images.jpeg'
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEye } from '@fortawesome/free-regular-svg-icons';
+
 
 export default function MentorBoardItem({ board }) {
   const navigate = useNavigate();
@@ -24,21 +28,20 @@ export default function MentorBoardItem({ board }) {
     return `${Math.floor(diffInSeconds / 2419200)}개월 전`;
   };
   return (
-    <div className="mentor-board-card" onClick={viewMentorBoard}>
-      <img
-        src={board.mentorBoardImage || "/default-thumbnail.png"}
-        alt="보드 이미지"
-        className="mentor-board-thumbnail"
-      />
-      <h3 className="mentor-board-title">{board.mentorBoardTitle || "제목 없음"}</h3>
-      <p className="mentor-board-content">
-        {board.mentorBoardContent?.substring(0, 50) || "내용 없음"}...
-      </p>
-      <div className="mentor-board-meta">
-        <span>카테고리: {board.categoryName}</span>
-        <span>조회수: {board.mentorBoardViews}</span>
-        <span>작성일: {calculateRelativeDate(board.mentorBoardDate)}</span>
-      </div>
-    </div>
+    <div className="board-card">
+          <div className="board-image-container">
+            <img src={imageSrc} alt="content-image" className="board-image" />
+          </div>
+          <div className="board-details">
+            <h3 className="board-title">{board.mentorBoardTitle}</h3>
+            <p className="board-description">{board.mentorBoardContent.substring(0,100)}...</p>
+            <p className='board-info'>
+              <span className="board-date">{board.mentorBoardDate.substring(0,10)}</span>
+              <span className="board-views">
+               <FontAwesomeIcon icon={faEye} /> <span>{board.mentorBoardViews}</span>
+              </span>
+            </p>
+          </div>
+    </div>  
   );
 }

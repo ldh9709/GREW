@@ -6,7 +6,7 @@ body {
 body {
   font-family: "Noto Sans KR", sans-serif;
 }
-div {
+div, pre {
   font-family: "Noto Sans KR", sans-serif;
 }
 textarea {
@@ -386,6 +386,7 @@ button {
   border-bottom: 1px solid #dddfe2;
 }
 .inquiry-view-content {
+
   padding: 15px;
   margin-bottom: 50px;
   font-size: 18px;
