@@ -51,7 +51,7 @@ public class AdminReportController {
 	@SecurityRequirement(name = "BearerAuth")
 	@PreAuthorize("hasRole('ADMIN')")
 	@Operation(summary = "전체 신고 목록 조회")
-	@GetMapping()
+	@GetMapping
 	public ResponseEntity<Response> getAdminReportList(Authentication authentication,
 			@Parameter(name = "filter", description = "필터링 역할(1: 전체, 2: 신고접수 순)", required = true, example = "1")
 	        @RequestParam(name = "filter") Integer filter,
@@ -87,7 +87,7 @@ public class AdminReportController {
 	@PutMapping("{reportNo}/status")
 	public ResponseEntity<Response> updateReportStatusForAdmin(
 	        @PathVariable(name = "reportNo") Long reportNo,
-	        @Parameter(name = "status", description = "변경할 상태(IN_PROGRESS, RESOLVED, FALSE_REPORT)", required = true, example = "IN_PROGRESS")
+	        @Parameter(name = "status", description = "변경할 상태(IN_PROGRESS(접수중), RESOLVED(처리완료), FALSE_REPORT(무고처리))", required = true, example = "IN_PROGRESS")
 	        @RequestParam(name = "status") String status) {
 	    
 	    // 신고 상태 변경: 상태에 따라 '검토중', '완료' 등으로 설정
@@ -95,15 +95,15 @@ public class AdminReportController {
 
 	    // 상태에 따른 로직 분기
 	    switch (status.toUpperCase()) {
-	        case "IN_PROGRESS":
+	        case "IN_PROGRESS(접수중)":
 	            // 신고 상태 '접수중'으로 변경
 	            updatedReport = reportService.updateReportStatusToInProgress(reportNo);
 	            break;
-	        case "RESOLVED":
+	        case "RESOLVED(처리완료)":
 	            // 신고 상태 '처리완료'로 변경
 	            updatedReport = reportService.updateReportStatusToResolved(reportNo);
 	            break;
-	        case "FALSE_REPORT":
+	        case "FALSE_REPORT(무고처리)":
 	            // 신고 상태 '무고처리'로 변경
 	            updatedReport = reportService.updateReportStatusToFalseReport(reportNo);
 	            break;
@@ -125,6 +125,70 @@ public class AdminReportController {
 	    return responseEntity;
 	}
 
+	@SecurityRequirement(name = "BearerAuth")
+	@PreAuthorize("hasRole('ADMIN')")
+	@Operation(summary = "신고 상세 정보 조회")
+	@GetMapping("/{reportNo}")
+	public ResponseEntity<Response> getReportDetails(
+	        @PathVariable(name = "reportNo") Long reportNo) {
+	    try {
+	        // 신고 상세 정보 조회 서비스 호출
+	        ReportDto reportDetails = reportService.getReportByreportNo(reportNo);
+
+	        // 응답 객체 생성
+	        Response response = new Response();
+	        response.setStatus(ResponseStatusCode.READ_REPORT_SUCCESS);
+	        response.setMessage(ResponseMessage.READ_REPORT_SUCCESS);
+	        response.setData(reportDetails);
+
+	        HttpHeaders httpHeaders = new HttpHeaders();
+	        httpHeaders.setContentType(new MediaType(MediaType.APPLICATION_JSON, Charset.forName("UTF-8")));
+
+	        return new ResponseEntity<>(response, httpHeaders, HttpStatus.OK);
+	    } catch (Exception e) {
+	        Response response = new Response();
+	        response.setStatus(ResponseStatusCode.READ_REPORT_FAIL);
+	        response.setMessage(ResponseMessage.READ_REPORT_FAIL);
+	        return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+	    }
+	}
+
+	/**
+     * 신고 목록 필터별 조회 (전체, 신고 접수, 검토 중, 처리 완료)
+     */
+    @SecurityRequirement(name = "BearerAuth")
+    @PreAuthorize("hasRole('ADMIN')")
+    @Operation(summary = "필터별 신고 목록 조회")
+    @GetMapping("/filter")
+    public ResponseEntity<Response> getReportsByFilter(
+            @RequestParam(name = "filter", required = true) Integer filter,
+            @RequestParam(name = "page", defaultValue = "0") int page,
+            @RequestParam(name = "size", defaultValue = "10") int size) {
+
+        try {
+            // 서비스 호출
+            List<ReportDto> reports = reportService.getReportAll(filter, page, size);
+
+            // 응답 객체 생성
+            Response response = new Response();
+            response.setStatus(ResponseStatusCode.READ_REPORT_LIST_SUCCESS);
+            response.setMessage(ResponseMessage.READ_REPORT_LIST_SUCCESS);
+            response.setData(reports);
+
+            // HTTP 헤더 설정
+            HttpHeaders httpHeaders = new HttpHeaders();
+            httpHeaders.setContentType(new MediaType(MediaType.APPLICATION_JSON, Charset.forName("UTF-8")));
+
+            // 응답 반환
+            return new ResponseEntity<>(response, httpHeaders, HttpStatus.OK);
+        } catch (Exception e) {
+            // 오류 응답 반환
+            Response response = new Response();
+            response.setStatus(ResponseStatusCode.READ_REPORT_LIST_FAIL);
+            response.setMessage(ResponseMessage.READ_REPORT_LIST_FAIL);
+            return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 	/************* 답변 ***********
 	@Operation(summary = "답변 게시글 번호로 출력(최신순)")
 	@GetMapping("/answer/{inquiryNo}")
