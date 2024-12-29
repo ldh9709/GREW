@@ -12,8 +12,10 @@ const MentorJoinForm = () => {
   const token = auth?.token || null; // 사용자 인증 토큰
   const member = auth?.member || {}; // 사용자 관련 정보 객체
   const mentorProfileNo = token ? member.mentorProfileNo : null; // 사용자 멘토 프로필 번호
-  const [mentorImage, setMentorImage] = useState(null); // 이미지 파일
   /***** Context 가져오기 END *****/
+  
+  /* 이미지 파일을 위한 메소드 선언 */
+  const [mentorImage, setMentorImage] = useState(null); // 이미지 파일
 
 
   /***** 네비게이트 *****/
