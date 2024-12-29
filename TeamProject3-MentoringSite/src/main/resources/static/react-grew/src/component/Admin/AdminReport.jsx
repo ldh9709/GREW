@@ -48,9 +48,13 @@ export const UserCard = () => {
     // 신고 상태 업데이트 핸들러
     const handleStatusUpdate = async (reportNo, status) => {
         try {
-            const response = await adminApi.updateReportStatusForAdmin(token, reportNo, status);
-            alert(`신고 상태가 '${status}'로 변경되었습니다.`);
-            fetchReports(token, filter, currentPage); // 상태 업데이트 후 목록 새로고침
+            let confirmation;
+            status === 2 ? ( confirmation = window.confirm('신고 처리 하시겠습니까?')) : (confirmation = window.confirm('무고 처리 하시겠습니까?'))
+            if(confirmation){
+                const response = await adminApi.updateReportStatusForAdmin(token, reportNo, status);
+                alert(`신고 상태가 '${reportUtil.reportStatus(status)}'로 변경되었습니다.`);
+                fetchReports(token, filter, currentPage); // 상태 업데이트 후 목록 새로고침
+            }
         } catch (error) {
             console.error("신고 상태 업데이트 실패", error);
             alert("상태 업데이트에 실패했습니다.");
@@ -75,7 +79,7 @@ export const UserCard = () => {
         if (token) {
             fetchReports(filter, currentPage-1); // 초기 데이터 로드
         }
-    }, [filter, currentPage]);
+    }, [filter, currentPage, reports]);
 
     return (
         <>
@@ -117,10 +121,10 @@ export const UserCard = () => {
                                 <td>{maskId(report.memberId)}</td>
                                 <td>
                                     <button className="in-progress"
-                                    onClick={() => handleStatusUpdate(report.id, "IN_PROGRESS")}
+                                    onClick={() => handleStatusUpdate(report.reportNo, 2)}
                                     >처리</button>
                                     <button className="false-report"
-                                    onClick={() => handleStatusUpdate(report.id, "IN_PROGRESS")}
+                                    onClick={() => handleStatusUpdate(report.reportNo, 3)}
                                     >무고</button>
                                 </td>
                             </tr>

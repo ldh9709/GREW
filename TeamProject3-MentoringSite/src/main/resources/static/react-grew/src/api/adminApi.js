@@ -45,10 +45,11 @@ export const getAdminReportList = async (token, filter,page) => {
 }*/}
 
 // 관리자 - 신고 상태 변경
-export const updateReportStatusForAdmin = async (reportNo, status) => {
-  const response = await fetch(`${BACKEND_SERVER}/admin/report/${reportNo}/status?status=${status}`, {
+export const updateReportStatusForAdmin = async (token, reportNo, status) => {
+  const response = await fetch(`${BACKEND_SERVER}/admin/report/${reportNo}/status/${status}`, {
     method: 'PUT', // HTTP 메서드
     headers: {
+      'Authorization': `Bearer ${token}`,
       "Content-Type": "application/json;charset=UTF-8", // 요청 헤더
     },
   });
