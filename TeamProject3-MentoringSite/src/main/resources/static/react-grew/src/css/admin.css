@@ -84,6 +84,12 @@
     font-size: 24px;
 }
 
+/* 드롭다운 스타일 */
+.dropdown {
+  position: relative;
+  height: 30px;
+}
+
 /* 전체 테이블 스타일 */
 .admin-table {
   width: 100%;
@@ -92,45 +98,40 @@
   background-color: #fff;
 }
 
-/* 테이블 헤더 스타일 */
 .admin-table th {
   color: #999;
   font-size: 13px;
   font-weight: bold;
-  text-align: left;
+  text-align: center;
   padding: 12px;
   border-bottom: 1px solid #ddd;
 }
 
-/* 테이블 데이터 셀 스타일 */
 .admin-table td {
   text-align: left;
   font-size: 14px;
+  text-align: center;
   color: #444;
   padding: 12px;
   border-bottom: 1px solid #ddd;
   cursor: pointer;
 }
 
-/* 짝수 행 스타일 */
 .admin-table tr:nth-child(even) {
   background-color: #f9f9f9;
 }
 
-/* 홀수 행 스타일 */
 .admin-table tr:nth-child(odd) {
   background-color: #fff;
 }
 
-/* 테이블 행 hover 효과 */
-.admin-table tr:hover {
+.admin-table tbody tr:hover {
   background-color: #f1f1f1;
 }
 
-/* 체크박스와 버튼 스타일 */
-.admin-table td input[type="checkbox"] {
-  transform: scale(1.2);
-  margin-right: 10px;
+.admin-table td .check {
+  transform: scale(1.0);
+  margin-right: 5px;
 }
 
 .admin-table td button {
@@ -148,11 +149,7 @@
   opacity: 0.9;
 }
 
-/* 드롭다운 스타일 */
-.dropdown {
-  position: relative;
-  height: 30px;
-}
+
 .dropdown select {
   position: absolute;
   right: 20px;
@@ -165,6 +162,9 @@
   cursor: pointer;
 }
 
+.member-table td button.check:hover {
+    opacity: 0.8;
+}
   /*신고처리
   .member-table td button.check {
     background-color: #007bff;
@@ -172,7 +172,3 @@
     border-radius: 4px;
     cursor: pointer;
   }*/
-
-  .member-table td button.check:hover {
-      opacity: 0.8;
-  }

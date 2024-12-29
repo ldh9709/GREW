@@ -56,6 +56,46 @@ export const UserCard = () => {
                 break;
         }
     }
+    //신고 사유
+    const reasonName = (reason) => {
+        switch (reason) {
+            case 1:
+                return '욕설/비속어'
+                break;
+            case 2:
+                return '스팸/광고'
+                break;
+            case 3:
+                return '성적인 내용'
+                break;
+            case 4:
+                return '폭력적인 내용'
+                break;
+            case 5:
+                return '개인정보 유출'
+                break;
+            case 6:
+                return '기타'
+                break;
+        }
+    }
+
+    //신고 상태
+    const reportStatus = (status) => {
+        switch (status) {
+            case 1:
+                return '접수 중'
+                break;
+        
+            case 2:
+                return '신고 처리'
+                break;
+        
+            case 3:
+                return '무고 처리'
+                break;
+        }
+    }
 
     useEffect(() => {
         if (token) {
@@ -94,12 +134,12 @@ export const UserCard = () => {
                             <tr key={index}>
                                 <td>{index + 1}</td>
                                 <td>{typeName(report.reportType)}</td>
-                                <td>{report.reportReason}</td>
-                                <td>{report.reportContent}</td>
+                                <td>{reasonName(report.reportReason)}</td>
+                                <td>{report.reportContent.length > 10 ? (report.reportContent.substring(0,10) + '...' ) : (report.reportContent)}</td>
                                 <td>{report.reportDate.substring(0,10)}</td>
                                 <td>{report.resolvedDate.substring(0,10)}</td>
-                                <td>{report.reportStatus}</td>
-                                <td>{report.memberNo}</td>
+                                <td>{reportStatus(report.reportStatus)}</td>
+                                <td>{report.memberId}</td>
                                 <td>
                                     <button className="check"
                                     onClick={() => handleStatusUpdate(report.id, "IN_PROGRESS")}

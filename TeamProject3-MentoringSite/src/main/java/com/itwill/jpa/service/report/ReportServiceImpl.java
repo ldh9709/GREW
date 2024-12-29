@@ -141,7 +141,7 @@ public class ReportServiceImpl implements ReportService {
 	public ReportDto getReportByreportNo(Long reportNo) {
 		try {
 			Report report = reportRepository.findById(reportNo).get();
-			ReportDto reportDto = ReportDto.toDto(report);
+			ReportDto reportDto = ReportDto.toResponseDto(report);
 			return reportDto;
 		} catch (Exception e) {
 			throw new CustomException(ResponseStatusCode.READ_REPORT_FAIL, ResponseMessage.READ_REPORT_FAIL, e);
@@ -185,7 +185,7 @@ public class ReportServiceImpl implements ReportService {
 			}
 			
 			for (Report report : reports) {
-				reportDtos.add(ReportDto.toDto(report));
+				reportDtos.add(ReportDto.toResponseDto(report));
 			}
 			return reportDtos;
 		} catch (Exception e) {
