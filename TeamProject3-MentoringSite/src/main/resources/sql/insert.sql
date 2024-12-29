@@ -647,15 +647,6 @@ insert into vote(vote_no, vote_type, vote_date, answer_no, member_no)
 values(vote_no_SEQ.nextval, 2, sysdate,1,5);
 
 
-
-/* 관심사 등록 */
-insert into interest (interest_no, member_no, category_no) 
-values(interest_no_SEQ.nextval, 1, 2);
-insert into interest (interest_no, member_no, category_no) 
-values(interest_no_SEQ.nextval, 1, 3);
-insert into interest (interest_no, member_no, category_no) 
-values(interest_no_SEQ.nextval, 1, 4);
-
 /*알림 등록*/
 insert into alarm(is_read,alarm_date,alarm_no,member_no,reference_no,alarm_content,alarm_type,reference_type)
 values(1,sysdate,alarm_no_SEQ.nextval,6,1,'답변이 달렸습니다','answer','question');
