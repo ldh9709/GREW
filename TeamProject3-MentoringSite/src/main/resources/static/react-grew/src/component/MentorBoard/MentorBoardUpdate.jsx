@@ -145,19 +145,6 @@ function MentorBoardUpdate() {
     }
   };
 
-  const handleDelete = async () => {
-    if (window.confirm("정말 삭제하시겠습니까?")) {
-      try {
-        await mentorBoardApi.deleteMentorBoard(mentorBoardNo, token);
-        alert("게시글이 삭제되었습니다.");
-        navigate("/mentor-board/list");
-      } catch (err) {
-        console.error("게시글 삭제 실패:", err);
-        alert("게시글 삭제에 실패했습니다.");
-      }
-    }
-  };
-
   const handleCancel = () => {
     const shouldCancel = window.confirm("게시글 수정을 취소하시겠습니까? 작성된 내용은 저장되지 않습니다.");
     if (shouldCancel) {
@@ -211,9 +198,8 @@ function MentorBoardUpdate() {
       </div>
 
       <div className="button-group">
-        <button className="submit-button" onClick={handleSubmit}>수정</button>
-        <button className="cancel-button" onClick={handleCancel}>취소</button>
-        <button className="delete-button" onClick={handleDelete}>삭제</button>
+        <button className="board-submit-button" onClick={handleSubmit}>수정</button>
+        <button className="board-cancel-button" onClick={handleCancel}>취소</button>
       </div>
     </div>
   );

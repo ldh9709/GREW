@@ -224,7 +224,9 @@ INSERT INTO mentor_board (mentor_board_no, mentor_board_title, mentor_board_cont
 VALUES (mentor_board_no_SEQ.nextval, '효율적인 코딩 학습법', '초보자를 위한 효율적인 코딩 학습 방법을 소개합니다.',  '/images/mentor-board/fuuu.jpeg', TO_DATE('2024-02-26 15:30:00', 'YYYY-MM-DD HH24:MI:SS'), 195, 2, 8);
 
 INSERT INTO mentor_board (mentor_board_no, mentor_board_title, mentor_board_content, mentor_board_image, mentor_board_date, mentor_board_views, mentor_board_status, member_no) 
-VALUES (mentor_board_no_SEQ.nextval, '준형', '더미데이터에요 헤헷.','/images/mentor-board/fuuu.jpeg',TO_DATE('2024-12-11 15:31:01', 'YYYY-MM-DD HH24:MI:SS'), 1500, 1, 9);
+VALUES (mentor_board_no_SEQ.nextval, '공기업 취업, 필기 준비 언제 시작하나요?', '우선은 말씀드리고 싶은 건 서류 전형을 준비하면서 필기시험도 함께 준비를 해야만 합니다.
+작년 기준이나 혹은 이전 기수를 기준으로 유명 공기업 카페에 들어가 보면 대략 합격 스펙은 아실 수 있을 겁니다. 그것과 거의 대동소이하다고 판단이 될 때에는 그때부터는 필기시험을 준비를 하셔야만 해요. 서류 합격하고 필기 준비를 하면 늦어서 떨어질 가능성이 매우 농후합니다.
+','/images/mentor-board/fuuu.jpeg',TO_DATE('2024-12-11 15:31:01', 'YYYY-MM-DD HH24:MI:SS'), 1500, 1, 9);
 
 
 INSERT INTO mentor_board (mentor_board_no, mentor_board_title, mentor_board_content, mentor_board_image, mentor_board_date, mentor_board_views, mentor_board_status, member_no) 

@@ -1,6 +1,6 @@
 import { useMemberAuth } from "../../util/AuthContext";
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom"; // useNavigate 추가
 import "../../css/mentorProfile.css"; // 🔥 추가된 CSS 파일
 import { getMentorProfileByNo } from "../../api/mentorProfileApi.js";
 import { listReviewByMember } from "../../api/reviewApi.js"; // 리뷰 목록 API 추가
@@ -11,6 +11,7 @@ import MentorProfileInfo from "./MentorProfileInfo.jsx";
 export default function MentorProfileDetail() {
   const { token, member } = useMemberAuth();
   const { mentorProfileNo } = useParams();
+  const navigate = useNavigate(); // navigate 훅 추가
   const [mentorProfile, setMentorProfile] = useState({});
   const [reviews, setReviews] = useState([]); // 빈 배열로 초기화
   const [loading, setLoading] = useState(true);
@@ -29,7 +30,13 @@ export default function MentorProfileDetail() {
       const mentorProfileResponse = await getMentorProfileByNo(
         mentorProfileNo
       );
-
+       // 🔥 데이터 유효성 검사 추가
+    if (!mentorProfileResponse?.data || Object.keys(mentorProfileResponse.data).length === 0) {
+      console.warn("Invalid mentor profile number:", mentorProfileNo);
+      // 프로필 데이터가 없으면 리다이렉트
+      navigate("/mentor-profile/list", { replace: true });
+      return;
+    }
       setMentorProfile(mentorProfileResponse.data);
 
       // 2. 멘토 프로필 번호로 리뷰 목록 조회 (Authorization 헤더에 JWT 토큰 추가)
@@ -61,6 +68,8 @@ export default function MentorProfileDetail() {
 
     } catch (error) {
       setError("멘토 프로필을 가져오는 중 오류가 발생했습니다.");
+      // 오류 발생 시 리다이렉트
+      navigate("/mentor-profile/list", { replace: true });
     } finally {
       setLoading(false);
     }
