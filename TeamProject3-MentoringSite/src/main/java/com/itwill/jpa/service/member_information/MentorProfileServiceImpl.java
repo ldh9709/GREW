@@ -149,7 +149,7 @@ public class MentorProfileServiceImpl implements MentorProfileService {
     			MentorProfileDto.builder()
 				                .memberNo(memberNo) // 멤버 정보 설정
 				                .categoryNo(26L) // 카테고리 정보 설정
-				                .mentorCareer("경력을 입력해주세요.")
+//				                .mentorCareer("경력을 입력해주세요.")
 				                .mentorIntroduce("소개글을 입력해주세요.")
 				                .mentorImage(null)
 				                .mentorStatus(2) // 초기 상태가 없으면 2로 설정
@@ -324,7 +324,7 @@ public class MentorProfileServiceImpl implements MentorProfileService {
                     ));
             
             // 🔥 프로필 정보 업데이트
-            mentorProfile.setMentorCareer(mentorProfileDto.getMentorCareer());
+//            mentorProfile.setMentorCareer(mentorProfileDto.getMentorCareer());
             mentorProfile.setMentorIntroduce(mentorProfileDto.getMentorIntroduce());
             mentorProfile.setMentorImage(mentorProfileDto.getMentorImage());
             mentorProfile.setMentorStatus(2); // 2로 설정

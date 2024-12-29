@@ -15,7 +15,6 @@ public class MentorProfileDto {
     private Long memberNo; 
     private String memberName;
     private Long categoryNo; 
-    private String mentorCareer;
     private String mentorIntroduce; 
     private String mentorImage; 
     private Integer mentorStatus; 
@@ -44,7 +43,6 @@ public class MentorProfileDto {
                 .memberNo(entity.getMember().getMemberNo())
                 .memberName(entity.getMember().getMemberName())
                 .categoryNo(entity.getCategory().getCategoryNo())
-                .mentorCareer(entity.getMentorCareer())
                 .mentorIntroduce(entity.getMentorIntroduce())
                 .mentorImage(entity.getMentorImage())
                 .mentorStatus(entity.getMentorStatus())
@@ -65,7 +63,6 @@ public class MentorProfileDto {
                 .mentorProfileNo(entity.getMentorProfileNo())
                 .memberNo(entity.getMember().getMemberNo())
                 .categoryNo(entity.getCategory().getCategoryNo())
-                .mentorCareer(entity.getMentorCareer())
                 .mentorIntroduce(entity.getMentorIntroduce())
                 .mentorImage(entity.getMentorImage())
                 .mentorStatus(entity.getMentorStatus())

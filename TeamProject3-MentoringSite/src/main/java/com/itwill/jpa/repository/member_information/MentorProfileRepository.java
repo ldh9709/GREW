@@ -56,7 +56,7 @@ public interface MentorProfileRepository extends JpaRepository<MentorProfile, Lo
             "JOIN FETCH mp.category " +
             "WHERE mp.mentorStatus = 3 AND " +
             "(LOWER(mp.mentorIntroduce) LIKE LOWER(CONCAT('%', :search, '%')) " +
-            "OR LOWER(mp.mentorCareer) LIKE LOWER(CONCAT('%', :search, '%')) " +
+//            "OR LOWER(mp.mentorCareer) LIKE LOWER(CONCAT('%', :search, '%')) " +
             "OR LOWER(mp.member.memberName) LIKE LOWER(CONCAT('%', :search, '%'))) ")
      Page<MentorProfile> searchMentorProfiles(@Param("search") String search, Pageable pageable);
 
@@ -72,14 +72,14 @@ public interface MentorProfileRepository extends JpaRepository<MentorProfile, Lo
       */
      @Modifying
      @Query("UPDATE MentorProfile mp SET " +
-            "mp.mentorCareer = :mentorCareer, " +
+//            "mp.mentorCareer = :mentorCareer, " +
             "mp.mentorIntroduce = :mentorIntroduce, " +
             "mp.mentorImage = :mentorImage, " +
             "mp.category.categoryNo = :categoryNo " +
             "WHERE mp.mentorProfileNo = :mentorProfileNo")
      int updateMentorProfile(
              Long mentorProfileNo, 
-             String mentorCareer, 
+//             String mentorCareer, 
              String mentorIntroduce, 
              String mentorImage, 
              Long categoryNo
