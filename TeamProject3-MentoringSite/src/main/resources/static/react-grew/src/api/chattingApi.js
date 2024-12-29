@@ -117,11 +117,15 @@ export const viewChatMessage = async (chatRoomNo) => {
   return responseJsonObject;
 };
 
-export const leaveChatRoom = async (chatRoomNo, memberNo) => {
+export const leaveChatRoom = async (chatRoomNo, token) => {
   const response = await fetch(
-    `${BACKEND_SERVER}/chatroom/${chatRoomNo}/leave/${memberNo}`,
+    `${BACKEND_SERVER}/chatroom/leave/${chatRoomNo}`,
     {
       method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`, // Authorization 헤더에 JWT 토큰 추가
+      },
     }
   );
   const responseJsonObject = await response.json();
