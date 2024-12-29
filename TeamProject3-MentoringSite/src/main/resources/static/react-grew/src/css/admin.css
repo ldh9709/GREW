@@ -154,11 +154,11 @@
   border-radius: 4px;
   cursor: pointer;
 }
-.admin-table td .in-progress {
+.admin-table td .to-resolved {
   background-color: #007bff;
 }
 
-.admin-table td .in-progress:hover {
+.admin-table td .to-resolved:hover {
   background-color: #0056b3;
   opacity: 0.9;
 }
@@ -268,11 +268,11 @@
   cursor: pointer;
 }
 
-.report-detail-button .in-progress {
+.report-detail-button .to-resolved {
   background-color: #007bff;
 }
 
-.report-detail-button .in-progress:hover {
+.report-detail-button .to-resolved:hover {
   background-color: #0056b3;
   opacity: 0.9;
 }

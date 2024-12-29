@@ -104,6 +104,7 @@ export const UserCard = () => {
                         <th>처리 일자</th>
                         <th>신고 상태</th>
                         <th>신고자</th>
+                        <th>신고글</th>
                         <th>처리 상황</th>
                     </tr>
                 </thead>
@@ -120,7 +121,12 @@ export const UserCard = () => {
                                 <td>{reportUtil.reportStatus(report.reportStatus)}</td>
                                 <td>{maskId(report.memberId)}</td>
                                 <td>
-                                    <button className="in-progress"
+                                    <button className="to-resolved"
+                                    onClick={() => handleStatusUpdate(report.reportNo, 2)}
+                                    >이동</button>
+                                </td>
+                                <td>
+                                    <button className="to-resolved"
                                     onClick={() => handleStatusUpdate(report.reportNo, 2)}
                                     >처리</button>
                                     <button className="false-report"
@@ -131,7 +137,7 @@ export const UserCard = () => {
                         ))
                     ) : (
                         <tr>
-                            <td colSpan="9">신고 목록이 없습니다.</td>
+                            <td colSpan="10">신고 목록이 없습니다.</td>
                         </tr>
                     )}
                 </tbody>

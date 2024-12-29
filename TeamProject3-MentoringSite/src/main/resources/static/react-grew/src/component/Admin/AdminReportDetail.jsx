@@ -50,7 +50,7 @@ export default function AdminReportDetail({report, onClose}) {
         </div>
         <div className='report-detail-button'>
             <button
-            className='in-progress'
+            className='to-resolved'
             onClick={() => handleStatusUpdate(report.id, "IN_PROGRESS")}
             >처리</button>
             <button
