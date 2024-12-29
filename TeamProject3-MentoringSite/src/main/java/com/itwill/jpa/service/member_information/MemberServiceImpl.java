@@ -312,8 +312,10 @@ public class MemberServiceImpl implements MemberService {
 	
 	/***** 신고 카운트 증가 *****/
 	@Override
-	public Member incrementReportCount(Long MemberNo) {
-		Member member = memberRepository.findById(MemberNo).get();
+	@Transactional
+	public Member incrementReportCount(Long memberNo) {
+		System.out.println("번호넘어오긴함" + memberNo);
+		Member member = memberRepository.findByMemberNo(memberNo);
 		member.setMemberReportCount(member.getMemberReportCount()+1);
 		return memberRepository.save(member);
 	}
