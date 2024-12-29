@@ -37,7 +37,7 @@ export default function FollowList() {
     const onClickHeartBtn = async (followNo) => {
         try {
             console.log(followNo);
-            await followApi.deleteFollow(followNo);
+            await followApi.deleteFollow(token,followNo);
             fetchFollowList(currentPage - 1);
         } catch (error) {
             alert('팔로우 취소 실패');

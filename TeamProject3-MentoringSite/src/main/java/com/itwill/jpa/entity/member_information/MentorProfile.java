@@ -30,7 +30,7 @@ public class MentorProfile {
     @Column(name="mentor_profile_no")
     private Long mentorProfileNo;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY)
     @JsonBackReference
     @JoinColumn(name = "member_no")
     private Member member;
@@ -92,4 +92,6 @@ public class MentorProfile {
                 .mentorHeadline(mentorProfileDto.getMentorHeadline())
                 .build();
     }
+    
+    
 }

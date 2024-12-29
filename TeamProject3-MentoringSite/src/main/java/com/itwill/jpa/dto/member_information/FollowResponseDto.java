@@ -2,6 +2,8 @@ package com.itwill.jpa.dto.member_information;
 
 import com.itwill.jpa.entity.member_information.Category;
 import com.itwill.jpa.entity.member_information.Follow;
+import com.itwill.jpa.entity.member_information.Member;
+import com.itwill.jpa.entity.member_information.MentorProfile;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -21,6 +23,7 @@ public class FollowResponseDto {
 	private String subCategory;
 	
 	public static FollowResponseDto toDto(Follow entity) {
+		
 		return FollowResponseDto.builder()
 				.followNo(entity.getFollowNo())
 				.mentorName(entity.getMentorMember().getMemberName())
