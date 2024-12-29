@@ -5,9 +5,10 @@ import "../../css/mentorProfile.css"; // 🔥 추가된 CSS 파일
 import { getMentorProfileByNo } from "../../api/mentorProfileApi.js";
 import { listReviewByMember } from "../../api/reviewApi.js"; // 리뷰 목록 API 추가
 import * as categoryApi from "../../api/categoryApi";
-
 import MentorProfileInfo from "./MentorProfileInfo.jsx";
 
+
+import MentorBoardItem from "../MentorBoard/MentorBoardItem"; // 올바른 경로로 수정
 export default function MentorProfileDetail() {
   const { token, member } = useMemberAuth();
   const { mentorProfileNo } = useParams();
@@ -44,7 +45,7 @@ export default function MentorProfileDetail() {
         mentorProfileNo, // memberNo 대신 mentorProfileNo를 바로 사용
         0,
         5,
-        token // `token`을 Authorization 헤더에 포함시켜야 함
+        token // token을 Authorization 헤더에 포함시켜야 함
       );
 
       // console.log("Reviews Response:", reviewsResponse);
@@ -60,7 +61,7 @@ export default function MentorProfileDetail() {
       } else {
         setReviews([]); // 데이터가 없으면 빈 배열 처리
 
-        // 멘토 프로필 데이터에서 categoryNo와 memberNo 가져오기
+        // 멘토 프로필 데이터에서 categoryNo와 memberNo  가져오기
         if (mentorProfile.categoryNo) {
           fetchCategoryName(mentorProfile.categoryNo);
         }
@@ -145,6 +146,10 @@ export default function MentorProfileDetail() {
           <p>리뷰가 없습니다.</p> // 리뷰가 없으면 해당 메시지를 표시
         )}
       </div>
+      <div className="mentor-boards">
+  <h3>멘토 보드</h3>
+  <MentorBoardItem memberNo={mentorProfile.memberNo} />
+</div>
     </div>
   );
 }
