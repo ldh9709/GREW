@@ -65,7 +65,7 @@ function AdminMember() {
                     
                 </select>
             </div>
-            <table className="member-table">
+            <table className="admin-table">
                 <thead>
                     <tr>
                         <th>번호</th>

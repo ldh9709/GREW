@@ -40,6 +40,23 @@ export const UserCard = () => {
         }
     };
 
+    //신고 유형 이름
+    const typeName = (type) => {
+        switch (type) {
+            case "MEMBER":
+                return '유저'
+                break;
+        
+            case "ANSWER":
+                return '답변게시글'
+                break;
+                
+                case "INQUIRY":
+                return '질문게시글'
+                break;
+        }
+    }
+
     useEffect(() => {
         if (token) {
             fetchReports(token, filter, page); // 초기 데이터 로드
@@ -57,13 +74,12 @@ export const UserCard = () => {
             </div>
 
             {/* 신고 목록 테이블 */}
-            <table className="member-table">
+            <table className="admin-table">
                 <thead>
                     <tr>
-                        <th>신고번호</th>
-                        <th>타겟 타입</th>
-                        <th>신고 타겟 번호</th>
-                        <th>신고 타입</th>
+                        <th>번호</th>
+                        <th>신고 유형</th>
+                        <th>신고 사유</th>
                         <th>신고 내용</th>
                         <th>신고 일자</th>
                         <th>처리 일자</th>
@@ -77,18 +93,20 @@ export const UserCard = () => {
                         reports.map((report, index) => (
                             <tr key={index}>
                                 <td>{index + 1}</td>
-                                <td>{report.reportType}</td>
-                                <td>{report.reportTarget}</td>
+                                <td>{typeName(report.reportType)}</td>
                                 <td>{report.reportReason}</td>
                                 <td>{report.reportContent}</td>
-                                <td>{report.reportDate}</td>
-                                <td>{report.resolvedDate}</td>
+                                <td>{report.reportDate.substring(0,10)}</td>
+                                <td>{report.resolvedDate.substring(0,10)}</td>
                                 <td>{report.reportStatus}</td>
                                 <td>{report.memberNo}</td>
                                 <td>
                                     <button className="check"
                                     onClick={() => handleStatusUpdate(report.id, "IN_PROGRESS")}
-                                    >접수</button>
+                                    >신고</button>
+                                    <button className="check"
+                                    onClick={() => handleStatusUpdate(report.id, "IN_PROGRESS")}
+                                    >무고</button>
                                 </td>
                             </tr>
                         ))
