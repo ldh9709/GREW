@@ -8,13 +8,7 @@ export default function FollowList() {
     /* Context에 저장된 토큰, 멤버정보 */
     const { token } = useMemberAuth();
 
-    const [followList, setFollowList] = useState([{
-            no: 0,
-            name: '',
-            image: '',
-            primaryCategory: '',
-            subCategory:''
-    }])
+    const [followList, setFollowList] = useState([])
     const [currentPage, setCurrentPage] = useState(1); // 현재 페이지 번호
     const [totalPages, setTotalPages] = useState(0); // 전체 페이지 수
     // const [itemsPerPage] = useState(6); // 페이지당 항목 수 (예: 한 페이지에 6개 항목)

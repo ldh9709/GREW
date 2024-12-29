@@ -29,7 +29,6 @@ export default function Admin() {
     <div className="admin-content">
       {activeTab === "member" && <AdminMember />}
       {activeTab === "report" && <AdminReport />}
-      
     </div>
 </div>
   )

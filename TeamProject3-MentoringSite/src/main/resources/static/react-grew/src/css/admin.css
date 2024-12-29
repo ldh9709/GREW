@@ -6,6 +6,7 @@
 }
 
 .admin-content{
+  position: relative;
   width: 70%; height: 75%;
   margin: 50px 50px;
   padding: 30px 20px;
@@ -84,10 +85,25 @@
     font-size: 24px;
 }
 
+
+/* 테이블 컨테이너 */
+.admin-table-container{
+}
 /* 드롭다운 스타일 */
 .dropdown {
   position: relative;
   height: 30px;
+}
+.dropdown select {
+  position: absolute;
+  right: 20px;
+  padding: 5px 8px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: #fff;
+  margin-bottom: 20px;
+  cursor: pointer;
 }
 
 /* 전체 테이블 스타일 */
@@ -129,46 +145,150 @@
   background-color: #f1f1f1;
 }
 
-.admin-table td .check {
-  transform: scale(1.0);
-  margin-right: 5px;
-}
-
 .admin-table td button {
   padding: 5px 10px;
+  margin: 0 2px;
   font-size: 14px;
   color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.admin-table td .in-progress {
   background-color: #007bff;
+}
+
+.admin-table td .in-progress:hover {
+  background-color: #0056b3;
+  opacity: 0.9;
+}
+.admin-table td .false-report {
+  color: #555;
+  background-color: #d3d3d3 ;
+}
+
+.admin-table td .false-report:hover {
+  background-color: #a8a8a8 ;
+  opacity: 0.9;
+}
+
+/* 어드민 페이지네이션 */
+.admin-pagenation {
+  position: absolute;
+  left: 50%; transform: translateX(-50%);
+  bottom: 20px;
+}
+
+.admin-pagenation .common-pagination-number {
+  background-color: transparent;
+  color: #ccc;
+}
+.admin-pagenation .common-pagination-number.active {
+  font-weight: 600;
+  color: #444;
+}
+.member-table td button.check:hover {
+    opacity: 0.8;
+}
+
+
+/* 신고 목록 */
+/* 신고 상세내역 보기 */
+.report-detail-container {
+  width: 260px; height: 100%;
+  position: absolute;
+  top: 0px; right: -320px;
+  padding: 0px 20px ;
+  border: 1px solid #ccc;
+  background-color: #fff;
+}
+.report-title {
+  text-align: center;
+  font-size: 18px;
+  font-weight: bold;
+  margin: 30px 0 40px 0;
+}
+
+.report-details {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.report-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.report-label {
+  font-size: 15px;
+  font-weight: bold;
+  color: #555;
+}
+
+.report-value {
+  font-size: 15px;
+  color: #333;
+}
+
+.report-value.status {
+  color: white;
+  background-color: #007bff;
+  padding: 3px 7px;
+  font-size: 14px;
+  border-radius: 12px;
+}
+
+.report-textarea {
+  width: 230px;
+  min-height: 200px;
+  padding: 10px;
+  margin-top: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  resize: none;
+  background-color: #f9f9f9;
+  font-size: 14px;
+  color: #333;
+}
+.report-detail-button {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 10px;
+}
+.report-detail-button button {
+  width: 50%;
+  padding: 5px 0;
+  font-size: 14px;
+  color: #fff;
   border: none;
   border-radius: 4px;
   cursor: pointer;
 }
 
-.admin-table td button:hover {
+.report-detail-button .in-progress {
+  background-color: #007bff;
+}
+
+.report-detail-button .in-progress:hover {
   background-color: #0056b3;
   opacity: 0.9;
 }
+.report-detail-button .false-report {
+  color: #555;
+  background-color: #d3d3d3 ;
+}
 
+.report-detail-button .false-report:hover {
+  background-color: #a8a8a8 ;
+  opacity: 0.9;
+}
 
-.dropdown select {
+.cancel-button{
   position: absolute;
-  right: 20px;
-  padding: 8px 10px;
-  font-size: 14px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  background-color: #fff;
-  margin-bottom: 20px;
+  right: 10px;
+  color: #666;
   cursor: pointer;
 }
-
-.member-table td button.check:hover {
-    opacity: 0.8;
-}
-  /*신고처리
-  .member-table td button.check {
-    background-color: #007bff;
-    color: #fff;
-    border-radius: 4px;
-    cursor: pointer;
-  }*/
