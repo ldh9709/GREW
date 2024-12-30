@@ -14,7 +14,7 @@ export const UserCard = () => {
     const [filter, setFilter] = useState(1); // 초기 필터 상태 (1: 전체)
     const [currentPage, setCurrentPage] = useState(1); // 현재 페이지 번호
     const [totalPages, setTotalPages] = useState(0); // 전체 페이지 수
-    const [inquiryNo, setInquiryNo] = useState(0);
+    const [inquiryNo, setInquiryNo] = useState();
     
 
     // 신고 목록 조회
@@ -28,7 +28,7 @@ export const UserCard = () => {
             console.error("신고 목록 조회 실패", error);
         }
     };
-    //답변 번호로 질문 조회
+    //답변 번호로 질문 번호 조회
     const fetchAnswer = async (answerNo) => {
         try {
             const response = await answerApi.viewAnswer(answerNo);
@@ -89,14 +89,14 @@ export const UserCard = () => {
     }
 
     // 게시글 이동 버튼 클릭 시
-    const handleMoveBoard = (type,target) => {
+    const handleMoveBoard = async (type,target) => {
         switch (type) {
             case 'INQUIRY':
                 window.open(`/inquiry/${target}`, '_blank')
                 break;
             case 'ANSWER':
-                fetchAnswer(target);
-                window.open(`/inquiry/${inquiryNo}`)
+                await fetchAnswer(target);
+                if(inquiryNo !=null ) window.open(`/inquiry/${inquiryNo}`)
                 break;
         
             default:
@@ -118,7 +118,9 @@ export const UserCard = () => {
             <div className="dropdown">
                 <select onChange={handleFilterChange} value={filter}>
                     <option value={1}>전체보기</option>
-                    <option value={2}>접수순서</option>                    
+                    <option value={2}>접수중</option>                
+                    <option value={3}>신고처리</option>                
+                    <option value={4}>무고처리</option>                
                 </select>
             </div>
 
@@ -147,7 +149,7 @@ export const UserCard = () => {
                                 <td>{reportUtil.reasonName(report.reportReason)}</td>
                                 <td>{report.reportContent.length > 10 ? (report.reportContent.substring(0,10) + '...' ) : (report.reportContent)}</td>
                                 <td>{report.reportDate.substring(0,10)}</td>
-                                <td>{report.reportDate===report.resolvedDate ? " - " : report.resolvedDate.substring(0,10)}</td>
+                                <td>{report.reportStatus===1 ? " - " : report.resolvedDate.substring(0,10)}</td>
                                 <td>{reportUtil.reportStatus(report.reportStatus)}</td>
                                 <td>{maskId(report.memberId)}</td>
                                 {report.reportType === 'MEMBER' ? <td></td> : 
@@ -157,6 +159,14 @@ export const UserCard = () => {
                                         >이동</button>
                                     </td>
                                 }
+                                {report.reportStatus !== 1 ? (
+                                <td>
+                                    <button className="checked"
+                                    >처리</button>
+                                    <button className="checked"
+                                    >무고</button>
+                                </td>
+                                ) : (
                                 <td>
                                     <button className="to-resolved"
                                     onClick={() => handleStatusUpdate(report.reportNo, 2)}
@@ -165,6 +175,7 @@ export const UserCard = () => {
                                     onClick={() => handleStatusUpdate(report.reportNo, 3)}
                                     >무고</button>
                                 </td>
+                                )}
                             </tr>
                         ))
                     ) : (
