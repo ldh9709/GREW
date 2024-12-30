@@ -1,5 +1,4 @@
 import React from "react";
-import imageSrc from './Member/mentor-content1.jpg';
 export default function MainMentorBoard({mentorBoard}) {
   return (
     
@@ -7,7 +6,7 @@ export default function MainMentorBoard({mentorBoard}) {
       <div className="board-list2">
           <div className="main-board-card">
             <div className="board-image-container">
-              <img src={imageSrc} alt="content-image" className="board-image" />
+              <img src={mentorBoard.mentorBoardImage} alt="content-image" className="board-image" />
             </div>
             <div className="board-details">
               <h3 className="board-title">{mentorBoard.mentorBoardTitle}</h3>

@@ -84,7 +84,8 @@ public class AnswerRestController {
 	@SecurityRequirement(name = "BearerAuth") // API 엔드포인트가 인증을 요구한다는 것을 문서화(Swagger에서 JWT인증을 명시
 	@PreAuthorize("hasRole('MENTOR')") // ROLE이 MENTEE인 사람만 접근 가능 멘토로 변경해야함
 	@PutMapping("/update/{answerNo}")
-	public ResponseEntity<Response> updateAnswer(@PathVariable(name = "answerNo") Long answerNo,@RequestBody AnswerDto answerDto) throws Exception {
+	public ResponseEntity<Response> updateAnswer(@PathVariable(name = "answerNo") Long answerNo,
+			@RequestBody AnswerDto answerDto) throws Exception {
 
 		// 1. 서비스 호출 : 답변 업데이트 메소드 실행
 		answerDto.setAnswerNo(answerDto.getAnswerNo());
@@ -321,7 +322,7 @@ public class AnswerRestController {
 		response.setData(answerCount);
 		response.setStatus(ResponseStatusCode.READ_ANSWER_SUCCESS);
 		response.setMessage(ResponseMessage.READ_ANSWER_SUCCESS);
-		
+
 		HttpHeaders httpHeaders = new HttpHeaders();
 		httpHeaders.setContentType(new MediaType(MediaType.APPLICATION_JSON, Charset.forName("UTF-8")));
 		ResponseEntity<Response> responseEntity = new ResponseEntity<Response>(response, httpHeaders, HttpStatus.OK);
@@ -329,4 +330,21 @@ public class AnswerRestController {
 		return responseEntity;
 	}
 
+	// 질문에 답변 유무 체크
+	@Operation(summary = "질문에 본인 답변 유무")
+	@GetMapping("/isAnswer")
+	public ResponseEntity<Response> getAnswerMemberNo(@RequestParam(name = "inquiryNo") Long inquiryNo,
+			@RequestParam(name = "memberNo") Long memberNo) {
+		boolean answerDto = answerService.inAnswerByMember(inquiryNo, memberNo);
+		Response response = new Response();
+		response.setData(answerDto);
+		response.setStatus(ResponseStatusCode.READ_ANSWER_SUCCESS);
+		response.setMessage(ResponseMessage.READ_ANSWER_SUCCESS);
+
+		HttpHeaders httpHeaders = new HttpHeaders();
+		httpHeaders.setContentType(new MediaType(MediaType.APPLICATION_JSON, Charset.forName("UTF-8")));
+		ResponseEntity<Response> responseEntity = new ResponseEntity<Response>(response, httpHeaders, HttpStatus.OK);
+
+		return responseEntity;
+	}
 }

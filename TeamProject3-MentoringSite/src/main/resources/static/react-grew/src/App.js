@@ -43,7 +43,7 @@ import InqiuryView from "./component/AnswerInquiry/InquiryView";
 import ChatAlarim from "./component/Chatting/ChatAlarim";
 import SearchList from "./component/SearchList";
 import InquirySearchList from "./component/AnswerInquiry/InquirySearchList";
-
+import MentorBoardSearchList from "./component/MentorBoard/MentorBoardSearchList";
 import ReviewWriteFormPage from "./component/Review/ReviewWriteFormPage";
 import ReviewView from "./component/Review/ReviewView";
 import ReviewListPage from "./component/Review/ReviewList";
@@ -92,14 +92,42 @@ function App() {
               <Route path="/summary" element={<MemberSummary />} />
               {/* Member페이지 */}
               <Route path="/member/join" element={<MemberMainJoinFormPage />} />
-              <Route path="/member/join/form" element={<MemberJoinFormPage />} />
+              <Route
+                path="/member/join/form"
+                element={<MemberJoinFormPage />}
+              />
               <Route path="/member/login" element={<MemberLoginFormPage />} />
               <Route path="/member/profile" element={<MemberMypage />} />
-              <Route path="/member/profile/edit" element={<MemberProfileFormPage />} />
-              <Route path="/member/find-password" element={<MemberFindPasswordFormPage />} />
-              <Route path="/member/find-id" element={<MemberFindIdFormPage />} />
-              <Route path="/member/find-id-check" element={<MemberMaskedFindIdFormPage />} />
-
+              <Route
+                path="/member/profile/edit"
+                element={<MemberProfileFormPage />}
+              />
+              <Route
+                path="/member/find-password"
+                element={<MemberFindPasswordFormPage />}
+              />
+              <Route
+                path="/member/find-id"
+                element={<MemberFindIdFormPage />}
+              />
+              <Route
+                path="/member/find-id-check"
+                element={<MemberMaskedFindIdFormPage />}
+              />
+              {/*검색 페이지지*/}
+              <Route path="/searchList" element={<SearchList />} />
+              <Route
+                path="/mentor-board/search"
+                element={<MentorBoardSearchList />}
+              />
+              <Route
+                path="/mentor-profile/search"
+                element={<MentorSearchList />}
+              />
+              <Route
+                path="/inquiry/search"
+                element={<InquirySearchList />}
+              />
               {/* Mentor페이지 */}
               <Route path="/mentor/join" element={<MentorJoinFormPage />} />
               <Route
@@ -131,14 +159,13 @@ function App() {
                 path="/mentor-profile/list"
                 element={<MentorProfileList />}
               />
-              <Route path="/mentor-profile/add" element={<MentorProfileAdd />} />
+              <Route
+                path="/mentor-profile/add"
+                element={<MentorProfileAdd />}
+              />
               <Route
                 path="/mentor-profile/view"
                 element={<MentorProfileItem />}
-              />
-              <Route
-                path="/mentor-profile/search"
-                element={<MentorSearchList />}
               />
               <Route
                 path="/mentor-profile/detail/:mentorProfileNo"
@@ -147,10 +174,6 @@ function App() {
               <Route
                 path="/mentor-profile/detail"
                 element={<MentorProfileDetail />}
-              />
-              <Route
-                path="/mentor-profile/search"
-                element={<MentorSearchList />}
               />
               <Route
                 path="/mentor-profile/:mentorProfileNo"
@@ -178,31 +201,18 @@ function App() {
               {/* inquiry 페이지 */}
               <Route path="/inquiry" element={<InqiuryList />} />
               <Route path="/inquiry/:inquiryNo" element={<InqiuryView />} />
+              <Route path="/inquiry/write" element={<InquiryWriteFormpage />} />
               <Route
-                path="/inquiry/inquiryWrite"
-                element={<InquiryWriteFormpage />}
-              />
-              <Route
-                path="/inquiry/modify/:inquiryNo"
+                path="/inquiry/modify"
                 element={<InquiryModifyFormpage />}
-              />
-              <Route
-                path="/inquirySearchList"
-                element={<InquirySearchList />}
               />
               <Route
                 path="/review/reviewWrite"
                 element={<ReviewWriteFormPage />}
               />
               {/* answer 페이지 */}
-              <Route
-                path="/answer/answerWrite/:inquiryNo"
-                element={<AnswerWriteFormpage />}
-              />
-              <Route
-                path="/answer/modify/:answerNo"
-                element={<AnswerModifyFormpage />}
-              />
+              <Route path="/answer/write" element={<AnswerWriteFormpage />} />
+              <Route path="/answer/modify" element={<AnswerModifyFormpage />} />
               {/* review 페이지 */}
               <Route
                 path="/review/reviewWrite"
@@ -213,27 +223,7 @@ function App() {
               <Route path="/review/reviewList" element={<ReviewListPage />} />
               <Route path="/inquiry" element={<InqiuryList />} />
               <Route path="/inquiry/:inquiryNo" element={<InqiuryView />} />
-              <Route
-                path="/inquiry/inquiryWrite"
-                element={<InquiryWriteFormpage />}
-              />
-              <Route
-                path="/inquiry/modify/:inquiryNo"
-                element={<InquiryModifyFormpage />}
-              />
-              <Route
-                path="/answer/answerWrite/:inquiryNo"
-                element={<AnswerWriteFormpage />}
-              />
-              <Route
-                path="/answer/modify/:answerNo"
-                element={<AnswerModifyFormpage />}
-              />
-              <Route path="/searchList" element={<SearchList />} />
-              <Route
-                path="/inquirySearchList"
-                element={<InquirySearchList />}
-              />
+              <Route path="/inquiry/write" element={<InquiryWriteFormpage />} />
               {/* Admin페이지 */}
               <Route path="/admin/*" element={<AdminRoutes />} />
               {/* 신고 모달 */}

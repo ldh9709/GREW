@@ -139,9 +139,7 @@ public class PrincipalDetails implements UserDetails, OAuth2User {
 		Map<String, Object> dataMap = new HashMap<>();
 		
 		dataMap.put("memberNo", member.getMemberNo());
-		dataMap.put("memberId", member.getMemberId());
 		dataMap.put("memberEmail", member.getMemberEmail());
-		dataMap.put("memberPassword", member.getMemberPassword());
 		dataMap.put("memberName", member.getMemberName());
 		dataMap.put("memberRole", member.getMemberRole());
 		dataMap.put("memberStatus", member.getMemberStatus());

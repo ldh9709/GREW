@@ -183,14 +183,14 @@
   /* 경력 입력 필드 행 */
   .career-row {
     display: flex;
-    gap: 10px; /* 필드 간 간격 */
+    gap: 7px; /* 필드 간 간격 */
     align-items: center; /* 필드와 버튼 높이 맞춤 */
   }
   
   /* 입력 필드 스타일 */
   .career-row input {
     flex: 1; /* 입력 필드 크기를 동일하게 설정 */
-    min-width: 120px; /* 최소 너비 */
+    width: 120px; /* 최소 너비 */
   }
   
   /* 추가 버튼 스타일 */
@@ -208,4 +208,9 @@
   .add-career-button:hover {
     background-color: #0056b3;
   }
-  
+
+.form-group-profileImage {
+    width: 630px !important;
+    margin-right: 70px;
+
+}
