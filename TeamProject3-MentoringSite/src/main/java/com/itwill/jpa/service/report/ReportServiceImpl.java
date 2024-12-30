@@ -154,8 +154,8 @@ public class ReportServiceImpl implements ReportService {
 	
 
 	/* [어드민] 신고 전체 출력 
-	 * 필터링, 기본 순서 date
-	 * 1 : 전체 , 2: 신고접수 
+	 * 필터링, 기본 순서 No
+	 * 1 : 전체 , 2: 신고접수 3: 처리완료 4:무고처리 
 	 * */
 	@Override
 	public Page<ReportDto> getReportAll(Integer filter,int pageNumber, int pageSize) {
@@ -166,23 +166,23 @@ public class ReportServiceImpl implements ReportService {
 			
 			switch (filter) {
 				case 1: {
-					/* 전체 출력 */
-					reports = reportRepository.findAllByOrderByReportDateDesc(pageable);
+					/* 전체 출력 (번호 내림차순)*/
+					reports = reportRepository.findAllByOrderByReportNoDesc(pageable);
 					break;
 				}
 				case 2: {
 					/* 신고 접수 출력 */
-					reports = reportRepository.findByReportStatusOrderByReportDateDesc(1, pageable);
+					reports = reportRepository.findByReportStatusOrderByReportNoDesc(1, pageable);
 					break;
 				}
 				case 3: {
-					/* 검토중인 신고 출력 */
-					reports = reportRepository.findByReportStatusOrderByReportDateDesc(2, pageable);
+					/* 처리완료 신고 출력 */
+					reports = reportRepository.findByReportStatusOrderByReportNoDesc(2, pageable);
 					break;
 				}
 				case 4: {
-					/* 처리완료 신고 출력 */
-					reports = reportRepository.findByReportStatusOrderByReportDateDesc(3, pageable);
+					/* 무고처리 신고 출력 */
+					reports = reportRepository.findByReportStatusOrderByReportNoDesc(3, pageable);
 					break;
 				}
 			}

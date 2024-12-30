@@ -16,9 +16,7 @@ export default function MainInquiryListItem({ inquiry }) {
         inquiry.inquiryNo
       );
       setCount(response.data);
-      console.log(response.data);
     } catch (error) {
-      console.error("답변 가져오기 실패:", error);
     }
   };
   useState(() => {

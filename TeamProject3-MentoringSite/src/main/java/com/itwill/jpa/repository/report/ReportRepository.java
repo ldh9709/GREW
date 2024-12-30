@@ -11,10 +11,10 @@ import java.util.List;
 public interface ReportRepository extends JpaRepository<Report, Long>{
 
 	//전체 리스트 출력(최신순)
-	Page<Report> findAllByOrderByReportDateDesc(Pageable pageable);
+	Page<Report> findAllByOrderByReportNoDesc(Pageable pageable);
 	
 	//신고 접수완료 리스트 출력(최신순)
-	Page<Report> findByReportStatusOrderByReportDateDesc(Integer status, Pageable pageble);
+	Page<Report> findByReportStatusOrderByReportNoDesc(Integer status, Pageable pageble);
     
     //reportNo로 신고자 출력
     Report findByReportNo(Long reportNo);

@@ -20,7 +20,6 @@ export const MainPage = () => {
 
   const fetchMentorBoard = async () => {
     const response = await mentorBoardApi.listMentorBoardsByViews(0, 4);
-    console.log(response.data.content);
     setMentorBoard(response.data.content);
   };
   const fetchInquiry = async () => {
@@ -101,7 +100,7 @@ export const MainPage = () => {
         )}
       </div>
       <div className="view-more">
-        <a href="/mentorprofile/list">
+        <a href="/mentor-profile/list">
           멘토 프로필 더 보기 <FontAwesomeIcon icon={faCircleChevronRight} />
         </a>
       </div>
@@ -136,7 +135,7 @@ export const MainPage = () => {
         )}
       </div>
       <div className="view-more">
-        <a href="/mentorboard/list">
+        <a href="/mentor-board/list">
           멘토 컨텐츠 더 보기 <FontAwesomeIcon icon={faCircleChevronRight} />
         </a>
       </div>

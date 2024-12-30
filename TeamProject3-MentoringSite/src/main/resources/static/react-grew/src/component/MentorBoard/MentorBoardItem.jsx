@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "../../css/mentorBoard.css";
 import { useNavigate } from "react-router-dom";
-import imageSrc from '../../image/images.jpeg'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye } from '@fortawesome/free-regular-svg-icons';
 import * as mentorProfileApi from '../../api/mentorProfileApi'
