@@ -3,6 +3,7 @@ package com.itwill.jpa.service.member_information;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.data.domain.Page;
 import org.springframework.security.core.Authentication;
 
 import com.itwill.jpa.dto.member_information.MemberDto;
@@ -48,7 +49,7 @@ public interface MemberService {
 	Member updateMemberRole(Long memberNo, String role);
 	
 	//회원 전체 출력
-	List<MemberDto> getMemberAll(String roleStr, Integer order);
+	Page<MemberDto> getMemberAll(String roleStr, Integer order, int pageNumber, int pageSize);
 	
 	//회원가입 시 인증번호 메일 발송
 	Integer sendJoinCode(MemberDto.JoinFormDto joinFormDto);

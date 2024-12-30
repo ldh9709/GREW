@@ -13,6 +13,11 @@ export const adminMember = async(token,role,order) =>{
   return responseJsonObject;
 }
 
+//회원 전체 조회
+export const getAdminMemberListAll = async() => {
+  
+}
+
 //게시글 목록 조회
 export const adminInquiry = async(token, category, page, size) => {
   const response = await fetch(`${BACKEND_SERVER}/admin/inquiry?category=${category}&page=${page}&size=${size}`, {
@@ -38,11 +43,6 @@ export const getAdminReportList = async (token, filter,page) => {
     const responseJsonObject = await response.json();
     return responseJsonObject;
 };
-
-//신고 상태 상세 보기
-{/*export const getAdminReportDetails=async(token, filter, page) => {
-
-}*/}
 
 // 관리자 - 신고 상태 변경
 export const updateReportStatusForAdmin = async (token, reportNo, status) => {
