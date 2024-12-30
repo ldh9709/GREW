@@ -35,9 +35,9 @@ export const reportStatus = (status) => {
         case 1:
             return "접수 중";
         case 2:
-            return "신고 처리";
+            return "처리완료";
         case 3:
-            return "무고 처리";
+            return "무고처리";
         default:
             return "알 수 없음";
     }
