@@ -47,12 +47,6 @@ function AdminMember() {
 
     };
 
-    // 지도자 목록
-{/*    const getMentee = () => {
-        setRole("ROLE_MENTOR"); // ROLE_MENTOR로 변경하여 멘토 목록을 조회
-        fetchMembers("ROLE_MENTOR", 1); // 1: 가입 순으로 정렬
-    }*/}
-
     return (
         <div className="admin-table-container">
             {/* 드롭다운 */}
