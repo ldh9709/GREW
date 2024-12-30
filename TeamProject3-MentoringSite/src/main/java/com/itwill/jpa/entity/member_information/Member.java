@@ -214,8 +214,11 @@ public class Member {
 	}
 	
 	//비밀번호 변경
-		public void changePassword(String newPassword) {
-			this.memberPassword = newPassword;
-		}
+	public void changePassword(String newPassword) {
+		System.out.println("this.memberPassword(1) : "+ this.memberPassword);
+		this.memberPassword = newPassword;
+		System.out.println("this.memberPassword(2) : "+ this.memberPassword);
+		System.out.println("newPassword : "+ newPassword);
+	}
 		
 }
