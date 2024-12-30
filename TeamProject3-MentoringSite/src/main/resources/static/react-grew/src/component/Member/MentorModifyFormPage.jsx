@@ -35,7 +35,6 @@ const MentorEditForm = () => {
   const [selectedChild, setSelectedChild] = useState("");
 
   const addCareerField = () => {
-    console.log(mentor);
     setMentor((prevMentor) => ({
       ...prevMentor,
       careerDtos: [
@@ -114,6 +113,16 @@ const MentorEditForm = () => {
       ...prevMentor,
       [e.target.name]: e.target.value,
     }));
+  };
+
+  const handleFocus = (e) => {
+    e.target.type = "date"; // 포커스되면 type을 date로 변경
+  };
+
+  const handleBlur = (e) => {
+    if (!e.target.value) {
+      e.target.type = "text"; // 값이 없으면 type을 다시 text로 변경
+    }
   };
 
   const fetchMentorInfo = async () => {
@@ -272,16 +281,25 @@ const MentorEditForm = () => {
                   required
                 />
                 <input
-                  type="date"
+                  type="text"
+                  name="startDate"
+                  onFocus={handleFocus}
+                  onBlur={handleBlur}
                   value={career.careerStartDate}
                   onChange={(e) => handleCareerChange(index, "startDate", e.target.value)}
+                  placeholder="입사년월"
                   required
                 />
-                <input
-                  type="date"
-                  value={career.careerEndDate}
-                  onChange={(e) => handleCareerChange(index, "endDate", e.target.value)}
-                />
+                  <input
+                    type="text"
+                    name="endDate"
+                    onFocus={handleFocus}
+                    onBlur={handleBlur}
+                    value={career.careerEndDate}
+                    onChange={(e) => handleCareerChange(index, "endDate", e.target.value)}
+                    placeholder="퇴사년월"
+                    required
+                  />
               </div>
                 ))}
                 {/* 추가 버튼을 필드 목록 외부로 이동 */}

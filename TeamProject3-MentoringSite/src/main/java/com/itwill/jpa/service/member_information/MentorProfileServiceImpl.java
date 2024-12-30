@@ -49,7 +49,9 @@ public class MentorProfileServiceImpl implements MentorProfileService {
     private CategoryRepository categoryRepository;
     @Autowired
     private CareerRepository careerRepository;
-
+    @Autowired
+    private CareerService careerService;
+  
     
     
     //상세보기 12-19일
@@ -336,6 +338,7 @@ public class MentorProfileServiceImpl implements MentorProfileService {
             mentorProfile.setMentorStatus(2); // 2로 설정
             System.out.println(">>>>> updateMentorProfile : " + mentorProfileDto.getMentorImage());
             mentorProfile.setCategory(category); // 카테고리 설정
+            careerService.updateCareer(mentorProfileDto.getCareerDtos());
             
             // 🔥 저장
             return mentorProfileRepository.save(mentorProfile);
@@ -521,15 +524,5 @@ public class MentorProfileServiceImpl implements MentorProfileService {
         Pageable pageable = PageRequest.of(page, size);
         Page<MentorProfile> mentors = mentorProfileRepository.findByCategoryNoOrderByActivityCount(categoryNo, pageable);
         return mentors.map(MentorProfileDto::toResponseDto);
-    }
-    
-    @Override
-    public List<CareerDto> getCareerByMentorProfileNo(Long mentorProfileNo){
-    	List<Career> careers = careerRepository.findByMentorProfile_MentorProfileNo(mentorProfileNo);
-    	List<CareerDto> careerDtos = new ArrayList<>();
-    	for (int i = 0; i < careers.size(); i++) {
-    		careerDtos.add(CareerDto.toDto(careers.get(i)));
-		}
-    	return careerDtos;
     }
 }
