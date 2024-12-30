@@ -159,8 +159,7 @@ export default function AnswerItem({ answer }) {
           <div className="answer-img">
             <img
               src={
-                mentorProfile?.mentorImage ||
-                "/images/mentor-profile/defaultimg.jpeg"
+                mentorProfile?.mentorImage||null
               }
               alt="Mentor Profile"
             />

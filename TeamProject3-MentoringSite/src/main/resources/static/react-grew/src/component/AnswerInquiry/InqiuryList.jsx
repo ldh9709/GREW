@@ -63,7 +63,6 @@ function InqiuryList() {
   }, []);
   const fetchBestAnswer = async () => {
     const responseJsonObject = await inquiryApi.bestAnswerList();
-    console.log(responseJsonObject.data);
     setBestAnswer(responseJsonObject.data);
   };
   // 문의 목록을 페이지네이션과 함께 가져오는 함수

@@ -8,7 +8,6 @@ export default function InquiryItem({ answer, index }) {
   const fetchInquiry = async () => {
     const inquiry = await inquiryApi.viewInquiry(answer.inquiryNo);
     setInquiry(inquiry.data);
-    console.log(inquiry);
   };
   useEffect(() => {
     fetchInquiry();

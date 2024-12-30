@@ -35,5 +35,7 @@ public interface AnswerService {
 	
 	//답변 수 
 	Long getAnswerCount(Long inquiryNo);
+	//질문에 답변을 남겼는지 여부
+	boolean inAnswerByMember(Long inquiryNo,Long memberNo);
 	
 }
