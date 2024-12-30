@@ -43,7 +43,7 @@ import InqiuryView from "./component/AnswerInquiry/InquiryView";
 import ChatAlarim from "./component/Chatting/ChatAlarim";
 import SearchList from "./component/SearchList";
 import InquirySearchList from "./component/AnswerInquiry/InquirySearchList";
-
+import MentorBoardSearchList from "./component/MentorBoard/MentorBoardSearchList";
 import ReviewWriteFormPage from "./component/Review/ReviewWriteFormPage";
 import ReviewView from "./component/Review/ReviewView";
 import ReviewListPage from "./component/Review/ReviewList";
@@ -114,6 +114,20 @@ function App() {
                 path="/member/find-id-check"
                 element={<MemberMaskedFindIdFormPage />}
               />
+              {/*검색 페이지지*/}
+              <Route path="/searchList" element={<SearchList />} />
+              <Route
+                path="/mentor-board/search"
+                element={<MentorBoardSearchList />}
+              />
+              <Route
+                path="/mentor-profile/search"
+                element={<MentorSearchList />}
+              />
+              <Route
+                path="/inquiry/search"
+                element={<InquirySearchList />}
+              />
               {/* Mentor페이지 */}
               <Route path="/mentor/join" element={<MentorJoinFormPage />} />
               <Route
@@ -154,20 +168,12 @@ function App() {
                 element={<MentorProfileItem />}
               />
               <Route
-                path="/mentor-profile/search"
-                element={<MentorSearchList />}
-              />
-              <Route
                 path="/mentor-profile/detail/:mentorProfileNo"
                 element={<MentorProfileDetail />}
               />
               <Route
                 path="/mentor-profile/detail"
                 element={<MentorProfileDetail />}
-              />
-              <Route
-                path="/mentor-profile/search"
-                element={<MentorSearchList />}
               />
               <Route
                 path="/mentor-profile/:mentorProfileNo"
@@ -201,10 +207,6 @@ function App() {
                 element={<InquiryModifyFormpage />}
               />
               <Route
-                path="/inquirySearchList"
-                element={<InquirySearchList />}
-              />
-              <Route
                 path="/review/reviewWrite"
                 element={<ReviewWriteFormPage />}
               />
@@ -222,7 +224,6 @@ function App() {
               <Route path="/inquiry" element={<InqiuryList />} />
               <Route path="/inquiry/:inquiryNo" element={<InqiuryView />} />
               <Route path="/inquiry/write" element={<InquiryWriteFormpage />} />
-              <Route path="/searchList" element={<SearchList />} />
               {/* Admin페이지 */}
               <Route path="/admin/*" element={<AdminRoutes />} />
               {/* 신고 모달 */}
