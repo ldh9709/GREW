@@ -55,7 +55,7 @@ export const UserCard = () => {
     const handleFilterChange = (event) => {
         const selectedFilter = parseInt(event.target.value, 10); // 드롭다운에서 선택된 필터 값
         setFilter(selectedFilter);
-        fetchReports(token, selectedFilter, currentPage); // 선택된 필터 값에 맞는 신고 목록 조회
+        fetchReports(selectedFilter, currentPage-1); // 선택된 필터 값에 맞는 신고 목록 조회
     };
 
     // 신고 상태 업데이트 핸들러
@@ -66,7 +66,7 @@ export const UserCard = () => {
             if(confirmation){
                 const response = await adminApi.updateReportStatusForAdmin(token, reportNo, status);
                 alert(`신고 상태가 '${reportUtil.reportStatus(status)}'로 변경되었습니다.`);
-                fetchReports(token, filter, currentPage); // 상태 업데이트 후 목록 새로고침
+                await fetchReports(filter, currentPage-1); // 상태 업데이트 후 목록 새로고침
             }
         } catch (error) {
             console.error("신고 상태 업데이트 실패", error);
