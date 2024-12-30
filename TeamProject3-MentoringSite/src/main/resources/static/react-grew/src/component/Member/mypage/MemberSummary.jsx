@@ -134,7 +134,7 @@ export default function MemberSummary() {
 
   //이미지 클릭시 멘토프로필 수정폼 이동
   const handleClickImage = () => {
-    navigate(`/mentor/join`);
+    navigate(`/mentor/modify`);
   };
 
   useEffect(() => {
