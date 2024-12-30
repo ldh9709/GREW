@@ -31,12 +31,13 @@ export default function MentorProfileDetail() {
         mentorProfileNo
       );
        // 🔥 데이터 유효성 검사 추가
-    if (!mentorProfileResponse?.data || Object.keys(mentorProfileResponse.data).length === 0) {
-      console.warn("Invalid mentor profile number:", mentorProfileNo);
-      // 프로필 데이터가 없으면 리다이렉트
-      navigate("/mentor-profile/list", { replace: true });
-      return;
-    }
+      if (!mentorProfileResponse?.data || Object.keys(mentorProfileResponse.data).length === 0) {
+        console.warn("Invalid mentor profile number:", mentorProfileNo);
+        // 프로필 데이터가 없으면 리다이렉트
+        navigate("/mentor-profile/list", { replace: true });
+        return;
+      }
+      console.log(mentorProfileResponse.data);
       setMentorProfile(mentorProfileResponse.data);
 
       // 2. 멘토 프로필 번호로 리뷰 목록 조회 (Authorization 헤더에 JWT 토큰 추가)
@@ -120,7 +121,19 @@ export default function MentorProfileDetail() {
           </div>
           <div className="mentor-section">
             <h2>주요 경력</h2>
-            <pre>{mentorProfile?.mentorCareer || "멘토 경력 정보 없음"}</pre>
+            {mentorProfile?.careerDtos && mentorProfile.careerDtos.length > 0 ? (
+              <ul>
+                {mentorProfile.careerDtos.map((career, index) => (
+                  <li key={index}>
+                    <strong>회사:</strong> {career.careerCompanyName} <br />
+                    <strong>직책:</strong> {career.careerJobTitle} <br />
+                    <strong>기간:</strong> {career.careerStartDate} ~ {career.careerEndDate || "현재"} <br />
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <pre>멘토 경력 정보 없음</pre>
+            )}
           </div>
         </div>
       </div>
