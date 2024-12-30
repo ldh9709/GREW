@@ -5,6 +5,10 @@ import Footer from "./layout/Footer";
 import Navigate from "./layout/Navigate";
 import { MainPage } from "./component/MainPage";
 import { AuthProvider } from "./util/AuthContext";
+/* 토스트 메시지 임포트 */
+import "./css/toast.css";
+import { ToastContainer } from "react-toastify";
+
 /* 멤버 페이지 임포트 */
 import MemberMainJoinFormPage from "./component/Member/MemberMainJoinFormPage";
 import MemberJoinFormPage from "./component/Member/MemberJoinFormPage";
@@ -61,6 +65,15 @@ function App() {
   return (
     <>
       <AuthProvider>
+        {/* 토스트 메시지 컨테이너 */}
+        <ToastContainer
+          autoClose={3000}
+          position="top-center"
+          toastClassName="custom-toast" // 토스트 스타일
+          progressClassName="custom-progress" // 프로그레스 바 스타일
+          hideProgressBar={true} // 프로그레스 바 숨기기
+          closeOnClick={true} // 클릭하면 닫히도록 설정
+        />
         {/* 어드민 경로가 아닌 경우에만 공통 레이아웃 표시 */}
         {!isAdminRoute && <Header />}
         {!isAdminRoute && <Navigate />}

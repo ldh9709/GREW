@@ -162,16 +162,25 @@
   background-color: #0056b3;
   opacity: 0.9;
 }
-.admin-table td .false-report,
-.move-report-board{
+.admin-table td .false-report{
   color: #555;
   background-color: #d3d3d3 ;
 }
 
-.admin-table td .false-report:hover,
-.move-report-board:hover {
+.admin-table td .false-report:hover {
   background-color: #a8a8a8 ;
   opacity: 0.9;
+}
+.move-report-board{
+
+}
+.move-report-board:hover{
+
+}
+.admin-table .checked {
+  background-color: #ccc;
+  color: #fff;
+  cursor: not-allowed;
 }
 
 /* 어드민 페이지네이션 */
@@ -242,7 +251,7 @@
   border-radius: 12px;
 }
 
-.report-textarea {
+.admin-report-textarea{
   width: 230px;
   min-height: 200px;
   padding: 10px;

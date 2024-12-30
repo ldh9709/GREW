@@ -172,19 +172,40 @@
     font-family: "nanumsquare";
     box-sizing: border-box;
 }
-
-/* 경력 추가 버튼 스타일 */
-.add-career-button {
-    padding: 8px 20px;
+/***** 경력 컨테이너 *****/
+/* 경력 입력 필드 컨테이너 */
+.career-container {
+    display: flex;
+    flex-direction: column; /* 각 경력 행을 세로로 정렬 */
+    gap: 10px; /* 각 경력 행 간격 */
+  }
+  
+  /* 경력 입력 필드 행 */
+  .career-row {
+    display: flex;
+    gap: 10px; /* 필드 간 간격 */
+    align-items: center; /* 필드와 버튼 높이 맞춤 */
+  }
+  
+  /* 입력 필드 스타일 */
+  .career-row input {
+    flex: 1; /* 입력 필드 크기를 동일하게 설정 */
+    min-width: 120px; /* 최소 너비 */
+  }
+  
+  /* 추가 버튼 스타일 */
+  .add-career-button {
+    flex-shrink: 0; /* 버튼 크기를 고정 */
+    padding: 8px 20px; /* 버튼 패딩 */
     font-size: 14px;
     background-color: #007bff;
     color: white;
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    height: 50px; /* 텍스트 필드 높이와 동일하게 설정 */
-}
-
-.add-career-button:hover {
+  }
+  
+  .add-career-button:hover {
     background-color: #0056b3;
-}
+  }
+  

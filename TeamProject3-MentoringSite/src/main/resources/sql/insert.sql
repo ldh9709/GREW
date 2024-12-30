@@ -599,6 +599,8 @@ values (review_no_SEQ.nextval, '정말 만족스러운 경험이었어요!', 1, 
 
 insert into review (review_no, review_title, review_status, review_content, review_score, review_date, chat_room_no)
 values (review_no_SEQ.nextval, '좀 아쉬운 부분이 있었어요', 1, '멘토님은 좋은 분이시지만, 제가 기대한 내용과는 조금 달랐어요. 그래도 유익한 시간은 되었어요.', 3, sysdate, 1);
+insert into review (review_no, review_title, review_status, review_content, review_score, review_date, chat_room_no)
+values (review_no_SEQ.nextval, '좀 아쉬운 부분이 많았어요', 1, '멘토님은 좋은 분이시지만, 제가 기대한 내용과는 조금 달랐어요. 그래도 유익한 시간은 되었어요.', 3, sysdate, 1);
 
 insert into review (review_no, review_title, review_status, review_content, review_score, review_date, chat_room_no)
 values (review_no_SEQ.nextval, '완벽한 멘토링!', 1, '정말 최고였어요! 멘토님의 조언 덕분에 고민이 해결됐고, 실질적인 도움을 많이 받았습니다. 추천드려요!', 5, sysdate, 1);
