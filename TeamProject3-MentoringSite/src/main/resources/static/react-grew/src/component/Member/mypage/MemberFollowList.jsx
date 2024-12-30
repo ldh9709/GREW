@@ -7,7 +7,6 @@ import * as followApi from "../../../api/followApi"
 export default function FollowList() {
     /* Context에 저장된 토큰, 멤버정보 */
     const { token } = useMemberAuth();
-
     const [followList, setFollowList] = useState([])
     const [currentPage, setCurrentPage] = useState(1); // 현재 페이지 번호
     const [totalPages, setTotalPages] = useState(0); // 전체 페이지 수

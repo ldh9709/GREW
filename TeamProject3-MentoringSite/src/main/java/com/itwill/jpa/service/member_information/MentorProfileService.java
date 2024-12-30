@@ -1,6 +1,7 @@
 package com.itwill.jpa.service.member_information;
 
 import com.itwill.jpa.dto.chatting_review.ReviewDto;
+import com.itwill.jpa.dto.member_information.CareerDto;
 import com.itwill.jpa.dto.member_information.MentorProfileDto;
 import com.itwill.jpa.entity.member_information.Category;
 import com.itwill.jpa.entity.member_information.MentorProfile;
@@ -122,6 +123,7 @@ public interface MentorProfileService {
     
     Long getMemberNoByMentorNo(Long mentorProfileNo);
     
+    List<CareerDto> getCareerByMentorProfileNo(Long mentorProfileNo);
     
 }
 

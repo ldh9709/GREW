@@ -2,12 +2,15 @@ package com.itwill.jpa.service.member_information;
 
 import com.itwill.jpa.dto.chatting_review.ChatRoomDto;
 import com.itwill.jpa.dto.chatting_review.ReviewDto;
+import com.itwill.jpa.dto.member_information.CareerDto;
 import com.itwill.jpa.dto.member_information.MentorProfileDto;
 import com.itwill.jpa.entity.chatting_review.ChatRoom;
+import com.itwill.jpa.entity.member_information.Career;
 import com.itwill.jpa.entity.member_information.Category;
 import com.itwill.jpa.entity.member_information.Member;
 import com.itwill.jpa.entity.member_information.MentorProfile;
 import com.itwill.jpa.exception.CustomException;
+import com.itwill.jpa.repository.member_information.CareerRepository;
 import com.itwill.jpa.repository.member_information.CategoryRepository;
 import com.itwill.jpa.repository.member_information.MemberRepository;
 import com.itwill.jpa.repository.member_information.MentorProfileRepository;
@@ -43,6 +46,8 @@ public class MentorProfileServiceImpl implements MentorProfileService {
     private MemberRepository memberRepository;
     @Autowired
     private CategoryRepository categoryRepository;
+    @Autowired
+    private CareerRepository careerRepository;
 
     
     
@@ -149,7 +154,7 @@ public class MentorProfileServiceImpl implements MentorProfileService {
     			MentorProfileDto.builder()
 				                .memberNo(memberNo) // 멤버 정보 설정
 				                .categoryNo(26L) // 카테고리 정보 설정
-				                .mentorCareer("경력을 입력해주세요.")
+//				                .mentorCareer("경력을 입력해주세요.")
 				                .mentorIntroduce("소개글을 입력해주세요.")
 				                .mentorImage(null)
 				                .mentorStatus(2) // 초기 상태가 없으면 2로 설정
@@ -324,7 +329,7 @@ public class MentorProfileServiceImpl implements MentorProfileService {
                     ));
             
             // 🔥 프로필 정보 업데이트
-            mentorProfile.setMentorCareer(mentorProfileDto.getMentorCareer());
+//            mentorProfile.setMentorCareer(mentorProfileDto.getMentorCareer());
             mentorProfile.setMentorIntroduce(mentorProfileDto.getMentorIntroduce());
             mentorProfile.setMentorImage(mentorProfileDto.getMentorImage());
             mentorProfile.setMentorStatus(2); // 2로 설정
@@ -515,5 +520,12 @@ public class MentorProfileServiceImpl implements MentorProfileService {
         Pageable pageable = PageRequest.of(page, size);
         Page<MentorProfile> mentors = mentorProfileRepository.findByCategoryNoOrderByActivityCount(categoryNo, pageable);
         return mentors.map(MentorProfileDto::toResponseDto);
+    }
+    
+    @Override
+    public List<CareerDto> getCareerByMentorProfileNo(Long mentorProfileNo){
+    	System.out.println(careerRepository.findById(mentorProfileNo));
+    	List<CareerDto> careerDtos = new ArrayList<>();
+    	return careerDtos;
     }
 }
