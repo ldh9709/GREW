@@ -202,12 +202,11 @@ export const mentorProfileUpdateAction = async (mentorProfileNo, mentor) => {
             'Content-type':'application/json'
         },
         body: JSON.stringify({
-            mentorProfileNo: mentorProfileNo,
             categoryNo: mentor.categoryNo,
+            careerDtos: mentor.careerDtos,
             mentorIntroduce: mentor.mentorIntroduce,
-            mentorCareer: mentor.mentorCareer,
             mentorImage: mentor.mentorImage,
-            mentorHeadline: mentor.mentorHeadline
+            mentorHeadline: mentor.mentorHeadline,
           })
     });
 
