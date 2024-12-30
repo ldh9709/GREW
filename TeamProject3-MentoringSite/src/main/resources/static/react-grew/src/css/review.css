@@ -87,8 +87,9 @@
 /* 리뷰 상세 페이지 스타일 */
 .review-detail-container {
   padding: 30px;
-  max-width: 800px; /* 화면 크기에 맞는 최대 너비 */
+  border: 1px solid #ddd;
   margin: 0 auto;
+  border-radius: 16px;
   background-color: #fff;
   font-family: Arial, sans-serif;
   border-radius: 15px; /* 부드러운 둥근 모서리 */
@@ -98,29 +99,28 @@
 
 .review-detail h2 {
   text-align: center;
-  font-size: 2.8rem; /* 제목 크기 조정 */
+  font-size: 14px; /* 제목 크기 조정 */
   font-weight: bold;
   margin-bottom: 25px;
   color: #333; /* 제목 색상 */
 }
 
 .review-detail h3 {
-  font-size: 2rem; /* 제목 크기 조정 */
+  font-size: 18px; /* 제목 크기 조정 */
   font-weight: bold;
   margin-bottom: 15px;
   color: #444; /* 제목 색상 */
 }
 
 .review-detail p {
-  font-size: 1.2rem;
+  font-size: 20px;
   color: #555;
   margin-bottom: 20px;
-  word-wrap: break-word; /* 긴 단어가 끊어지도록 */
 }
 
 .review-score {
   margin: 20px 0;
-  font-size: 1.2rem;
+  font-size: 14px;
   display: flex;
   align-items: center;
   justify-content: flex-start; /* 별점 왼쪽 정렬 */
@@ -138,7 +138,7 @@
 
 /* 별점 스타일 (상세 페이지) */
 .review-detail .star {
-  font-size: 1.8rem; /* 별 크기 줄이기 */
+  font-size: 20px; /* 별 크기 줄이기 */
   margin-right: 4px;
   color: #ddd; /* 기본 회색 */
 }
@@ -150,7 +150,7 @@
 /* 리뷰 작성일과 작성자는 오른쪽 정렬 (명확하게 스타일링) */
 .review-detail .review-date,
 .review-detail .review-author {
-  font-size: 1.1rem;
+  font-size: 10px;
   color: #777; /* 날짜와 작성자 색상 */
   margin-top: 10px;
   text-align: right; /* 오른쪽 정렬 */
@@ -160,31 +160,31 @@
   font-weight: normal;
 }
 
-/* 리뷰 상세 페이지에서 별점이 호버될 때 색 변경 */
-.review-detail .star:hover {
-  color: #f39c12; /* 별을 hover하면 노란색으로 */
-}
 /* 리뷰 목록 스타일 */
 .mentor-reviews {
-  padding: 20px;
-  margin-top: 50px;
-  background-color: #fff;
-  border-radius: 10px;
-  box-shadow: 0 4px 6px #fff(0, 0, 0, 0.1);
+  position: relative;
+  justify-content: flex-start;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  padding: 30px 0 50px 0;
+  gap: 16px;
 }
 
 /* 리뷰 항목 스타일 */
 .mentor-review-item {
-  background-color: #fff;
-  border-radius: 10px;
-  padding: 20px;
-  margin-bottom: 20px;
-  text-align: left; /* 왼쪽 정렬로 변경 */
+  background-color: #f9f9f9;
+  border: 1px solid #fff;
+  border-radius: 8px;
+  padding: 16px;
+  margin: 0 auto;
+  margin-bottom: 15px;
+  text-align: left;
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
 }
 
 /* 리뷰 항목의 텍스트 스타일 */
 .mentor-review-item p {
-  font-size: 0.5rem;
+  font-size: 12px;
   color: #555;
   line-height: 1.1;
   margin: 8px 0; /* 각 항목 간의 간격을 조정 */
@@ -207,7 +207,7 @@
 
 /* 리뷰가 없을 때 */
 .mentor-reviews p {
-  font-size: 1.2rem;
+  font-size: 14px;
   color: #777;
   text-align: left; /* 텍스트가 왼쪽에 정렬되도록 수정 */
 }
@@ -217,4 +217,11 @@
   font-weight: bold;
   color: #333;
   margin-top: 10px; /* 평점과 내용 간 여백 */
+}
+.pagenation1 {
+  display: flex; /* flexbox 사용 */
+  justify-content: center; /* 가로 방향으로 중앙 정렬 */
+  align-items: center; /* 세로 방향으로 중앙 정렬 */
+  gap: 10px; /* 버튼 간 간격 */
+  margin-top: 20px; /* 페이지네이션 상단 여백 */
 }
