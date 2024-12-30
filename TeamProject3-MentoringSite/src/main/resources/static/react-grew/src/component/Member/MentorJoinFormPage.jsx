@@ -62,6 +62,17 @@ const MentorJoinForm = () => {
     updatedCareers[index][field] = value;
     setCareers(updatedCareers);
   };
+
+  const handleFocus = (e) => {
+    e.target.type = "date"; // 포커스되면 type을 date로 변경
+  };
+
+  const handleBlur = (e) => {
+    if (!e.target.value) {
+      e.target.type = "text"; // 값이 없으면 type을 다시 text로 변경
+    }
+  };
+
   /********** 경력 관련 메소드 END ***********/
 
   /********** 카테고리 트리 구조 불러오기 START ***********/
@@ -290,15 +301,24 @@ const MentorJoinForm = () => {
                   required
                 />
                 <input
-                  type="date"
+                  type="text"
+                  name="startDate"
+                  onFocus={handleFocus}
+                  onBlur={handleBlur}
                   value={career.startDate}
                   onChange={(e) => handleCareerChange(index, "startDate", e.target.value)}
+                  placeholder="입사년월"
                   required
                 />
                   <input
-                    type="date"
+                    type="text"
+                    name="endDate"
+                    onFocus={handleFocus}
+                    onBlur={handleBlur}
                     value={career.endDate}
                     onChange={(e) => handleCareerChange(index, "endDate", e.target.value)}
+                    placeholder="퇴사년월"
+                    required
                   />
                 </div>
               ))}

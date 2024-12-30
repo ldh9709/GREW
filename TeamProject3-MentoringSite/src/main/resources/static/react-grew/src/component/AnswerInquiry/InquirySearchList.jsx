@@ -65,7 +65,11 @@ function InquirySearchList() {
             <button
               key={number}
               onClick={() => paginate(number)}
-              className={`${number === currentPage ? 'pagenation-btn-active ' : 'pagenation-btn'}`}
+              className={`${
+                number === currentPage
+                  ? "pagenation-btn-active "
+                  : "pagenation-btn"
+              }`}
             >
               {number}
             </button>

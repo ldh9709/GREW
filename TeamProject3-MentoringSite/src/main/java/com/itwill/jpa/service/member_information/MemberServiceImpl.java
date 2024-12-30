@@ -439,6 +439,8 @@ public class MemberServiceImpl implements MemberService {
 		
 		member.changePassword(tempPassword);
 		
+		memberRepository.save(member);
+		
 	}
 	
 	

@@ -20,7 +20,7 @@ export default function MentorProfileDetail() {
   const [categoryName, setCategoryName] = useState("카테고리 정보 없음");
   const [currentPage, setCurrentPage] = useState(1); // 현재 페이지 번호
   const [totalPages, setTotalPages] = useState(0); // 전체 페이지 수
-  const [itemsPerPage] = useState(5); // 페이지당 항목 수 (예: 한 페이지에 5개 항목)
+  const [itemsPerPage] = useState(3); // 페이지당 항목 수 (예: 한 페이지에 3개 항목)
 
   const fetchMentorProfile = async () => {
     try {
@@ -53,17 +53,19 @@ export default function MentorProfileDetail() {
       setLoading(false);
     }
   };
+  useEffect(() => {
+    fetchMentorProfile();
+  }, []);
 
   const fetchReview = async (page) => {
     try {
       console.log("Requesting page:", page); // page 값 확인
-      console.log("Using token:", token); // 토큰 값 확인
       setLoading(true);
 
-      // (page - 1) * itemsPerPage 로 시작 인덱스 계산
+      // (page - 1)로 시작 인덱스를 계산하여 서버에 전달
       const reviewsResponse = await listReviewByMember(
         mentorProfileNo, // mentorProfileNo를 바로 사용
-        (page - 1) * itemsPerPage, // 시작 인덱스 (0부터 시작, 1페이지는 0, 2페이지는 5)
+        page - 1, // 페이지 번호는 0부터 시작해야 할 수 있음
         itemsPerPage, // 한 페이지에 표시할 리뷰 수
         token // Authorization 헤더에 포함시켜야 함
       );
@@ -85,8 +87,6 @@ export default function MentorProfileDetail() {
       } else {
         setReviews([]); // 데이터가 없으면 빈 배열 처리
       }
-
-      // totalPages가 이미 업데이트 되었을 수 있기 때문에, 중복 호출 제거
     } catch (error) {
       setError("리뷰 가져오는 중 오류가 발생했습니다.");
       navigate("/mentor-profile/list", { replace: true }); // 오류 발생 시 리다이렉트
@@ -96,10 +96,8 @@ export default function MentorProfileDetail() {
   };
 
   useEffect(() => {
-    fetchMentorProfile();
     fetchReview(currentPage);
-  }, [currentPage]);
-
+  }, [currentPage, itemsPerPage]);
   if (loading) return <p>로딩 중...</p>;
   const fetchCategoryName = async (categoryNo) => {
     try {
@@ -116,6 +114,7 @@ export default function MentorProfileDetail() {
       setCategoryName("카테고리 정보 없음");
     }
   };
+
   // 리뷰 클릭 시 상세 페이지로 이동
   const handleReviewClick = (reviewNo) => {
     navigate(`/review/${reviewNo}`); // reviewNo를 URL로 넘겨서 상세 페이지로 이동
@@ -142,9 +141,14 @@ export default function MentorProfileDetail() {
     return stars;
   };
 
+  // 페이지 변경 시 데이터 갱신
+  const paginate = (pageNumber) => {
+    console.log("Paginate to page:", pageNumber);
+    setCurrentPage(pageNumber);
+  };
   // 페이지네이션 버튼 표시 (5개씩 끊어서 표시)
   const pageNumbers = [];
-  const pagesToShow = 5; // 한 번에 보여줄 페이지 수
+  const pagesToShow = 10; // 한 번에 보여줄 페이지 수
   const startPage =
     Math.floor((currentPage - 1) / pagesToShow) * pagesToShow + 1;
   const endPage = Math.min(startPage + pagesToShow - 1, totalPages);
@@ -152,11 +156,6 @@ export default function MentorProfileDetail() {
   for (let i = startPage; i <= endPage; i++) {
     pageNumbers.push(i);
   }
-  // 페이지 변경 시 데이터 갱신
-  const paginate = (pageNumber) => {
-    console.log("Paginate to page:", pageNumber);
-    setCurrentPage(pageNumber);
-  };
 
   if (error) return <p className="error-message">{error}</p>;
 
@@ -225,11 +224,40 @@ export default function MentorProfileDetail() {
           <p>리뷰가 없습니다.</p>
         )}
       </div>
-      <PagenationItem
-        currentPage={currentPage}
-        totalPages={totalPages}
-        paginate={paginate}
-      />
+      {/* 페이지네이션 버튼 */}
+      <div className="pagenation1">
+        {/* 이전 버튼 */}
+        <button
+          className="common-pagination-arrow"
+          disabled={currentPage === 1}
+          onClick={() => paginate(currentPage - 1)}
+        >
+          &lt;
+        </button>
+        {startPage > 1 && (
+          <button onClick={() => paginate(startPage - 1)}>이전</button>
+        )}{" "}
+        {/* 페이지 번호 버튼 */}
+        {pageNumbers.map((number) => (
+          <button
+            key={number}
+            className={`common-pagination-number ${
+              currentPage === number ? "active" : ""
+            }`}
+            onClick={() => paginate(number)}
+          >
+            {number}
+          </button>
+        ))}
+        {/* 다음 버튼 */}
+        <button
+          className="common-pagination-arrow"
+          disabled={currentPage === totalPages}
+          onClick={() => paginate(currentPage + 1)}
+        >
+          &gt;
+        </button>
+      </div>
     </div>
   );
 }

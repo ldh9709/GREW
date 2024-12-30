@@ -145,8 +145,6 @@ public class JWTCheckFilter extends OncePerRequestFilter {
           // 클레임에서 사용자 정보를 추출
           //filterChain.doFilter(request, response); //이하 추가
           Long memberNo = ((Number) claims.get("memberNo")).longValue(); // Integer -> Long 변환
-          String memberId = (String) claims.get("memberId");
-          String memberPassword = (String) claims.get("memberPassword");
           String memberEmail = (String) claims.get("memberEmail");
           String memberName = (String) claims.get("memberName");
           Integer memberStatus = (Integer) claims.get("memberStatus");
@@ -160,8 +158,6 @@ public class JWTCheckFilter extends OncePerRequestFilter {
           //사용자 정보를 담은 DTO 생성
           MemberSecurityDto memberDto = MemberSecurityDto.builder()
                   .memberNo(memberNo)
-                  .memberId(memberId)
-                  .memberPassword(memberPassword)
                   .memberEmail(memberEmail)
                   .memberName(memberName)
                   .memberStatus(memberStatus)
@@ -180,7 +176,7 @@ public class JWTCheckFilter extends OncePerRequestFilter {
           log.info(principalDetails.getAuthorities());
           // 인증 객체 생성
           UsernamePasswordAuthenticationToken authenticationToken
-          = new UsernamePasswordAuthenticationToken(principalDetails, memberPassword, principalDetails.getAuthorities());
+          = new UsernamePasswordAuthenticationToken(principalDetails, null, principalDetails.getAuthorities());
           // Spring Security의 SecurityContext에 인증 객체 설정
           SecurityContextHolder.getContext().setAuthentication(authenticationToken);
           

@@ -124,7 +124,7 @@ public class ReviewServiceImpl implements ReviewService {
 
             // 멘토 번호로 리뷰 조회 (페이징 처리)
             Page<Review> mentorReviews = reviewRepository.findReviewByChatRoom_Mentor_MemberNoAndReviewStatus(memberNo, 1,pageable);
-
+            System.out.println("mentorReviews.getTotalElements() = " + mentorReviews.getTotalElements());
             // 멘티와 멘토의 리뷰를 합침 (합치기 전에 두 페이지를 병합할 필요가 있음)
             List<Review> allReviews = new ArrayList<>();
             allReviews.addAll(mentorReviews.getContent());
