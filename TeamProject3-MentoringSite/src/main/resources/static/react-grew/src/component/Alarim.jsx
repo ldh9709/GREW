@@ -18,7 +18,6 @@ const Alarim = () => {
     if (member) {
       const response = await alarmApi.findByMemberNo(member.memberNo); // API 호출
       setNotifications(response.data); // 받은 데이터로 notifications 상태 업데이트
-      console.log(response);
     } else {
       setNotifications(null);
     }

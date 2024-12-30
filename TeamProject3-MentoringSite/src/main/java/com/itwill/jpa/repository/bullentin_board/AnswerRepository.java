@@ -110,6 +110,6 @@ public interface AnswerRepository extends JpaRepository<Answer, Long>{
     //질문의 답변 수
     Long countByInquiry_InquiryNoAndAnswerStatus(Long inquiryNo, Integer answerStatus);
 
-
+    Answer findByInquiry_InquiryNoAndMember_MemberNo(Long inquiryNo,Long memberNo);
 
 }
