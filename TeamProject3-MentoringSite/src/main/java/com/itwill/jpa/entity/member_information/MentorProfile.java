@@ -2,6 +2,8 @@ package com.itwill.jpa.entity.member_information;
 
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.hibernate.annotations.ColumnDefault;
 
@@ -30,7 +32,7 @@ public class MentorProfile {
     @Column(name="mentor_profile_no")
     private Long mentorProfileNo;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY)
     @JsonBackReference
     @JoinColumn(name = "member_no")
     private Member member;
@@ -40,8 +42,8 @@ public class MentorProfile {
     @JoinColumn(name = "category_no")
     private Category category;
 
-    @Column(name="mentor_career")
-    private String mentorCareer;
+    @OneToMany(mappedBy = "mentorProfile", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
+    private List<Career> careers = new ArrayList<>();
 
     @Column(name="mentor_introduce")
     private String mentorIntroduce;
@@ -81,7 +83,6 @@ public class MentorProfile {
                 .mentorProfileNo(mentorProfileDto.getMentorProfileNo())
                 .member(member) // 멤버 정보 설정
                 .category(category) // 카테고리 정보 설정
-                .mentorCareer(mentorProfileDto.getMentorCareer())
                 .mentorIntroduce(mentorProfileDto.getMentorIntroduce())
                 .mentorImage(mentorProfileDto.getMentorImage())
                 .mentorStatus(mentorProfileDto.getMentorStatus() != null ? mentorProfileDto.getMentorStatus() : 1) // 초기 상태가 없으면 1로 설정
@@ -92,4 +93,6 @@ public class MentorProfile {
                 .mentorHeadline(mentorProfileDto.getMentorHeadline())
                 .build();
     }
+    
+    
 }

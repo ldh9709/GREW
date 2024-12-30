@@ -49,8 +49,8 @@ public class FollowRestController {
 	@Operation(summary = "팔로우 등록여부 체크")
 	@SecurityRequirement(name = "BearerAuth")//API 엔드포인트가 인증을 요구한다는 것을 문서화(Swagger에서 JWT인증을 명시
 	@PreAuthorize("hasRole('MENTEE')")//ROLE이 MENTEE인 사람만 접근 가능
-	@GetMapping("/is-exist")
-	public ResponseEntity<Response> checkFollow(Authentication authentication, @RequestParam("mentorNo") String mentorNo){
+	@GetMapping("/is-exist/{mentorNo}")
+	public ResponseEntity<Response> checkFollow(Authentication authentication, @PathVariable("mentorNo") String mentorNo){
 		
 		PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
 		Long menteeNo = principalDetails.getMemberNo();
@@ -95,9 +95,12 @@ public class FollowRestController {
 	}
 	/*팔로우 취소*/
 	@Operation(summary = "팔로우 취소")
-	@DeleteMapping("/{followNo}")
-	public ResponseEntity<Response> deleteFollow(@PathVariable(name="followNo") Long FollowNo){
-		followService.deleteFollow(FollowNo);
+	@SecurityRequirement(name = "BearerAuth")//API 엔드포인트가 인증을 요구한다는 것을 문서화(Swagger에서 JWT인증을 명시
+	@PreAuthorize("hasRole('MENTEE')")//ROLE이 MENTEE인 사람만 접근 가능
+	@DeleteMapping("/cancel/{followNo}")
+	public ResponseEntity<Response> deleteFollow(@PathVariable("followNo") Long followNo){
+		
+		followService.deleteFollow(followNo);
 		
 		Response response = new Response();
 		response.setStatus(ResponseStatusCode.DELETE_FOLLOW_SUCCESS);

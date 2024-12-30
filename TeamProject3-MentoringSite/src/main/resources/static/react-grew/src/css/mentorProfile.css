@@ -17,9 +17,9 @@
 .mentorprofile-radio-container {
   display: flex;
   justify-content: flex-end; /* 오른쪽 정렬 */
-  border-top: 1px solid #e4e4e4;
+  border-bottom: 1px solid #e4e4e4;
   margin-bottom: 20px;
-  padding: 10px 0;
+  padding-bottom: 10px;
   gap: 10px; /* 버튼 간 간격 */
 }
 
@@ -35,10 +35,11 @@
 
 /* 멘토 프로필 리스트 */
 .profile-container {
+  width: 1128px;
+  margin: 0 auto;
   display: flex;
   position: relative;
   flex-wrap: wrap;
-  gap: 20px;
   padding-bottom: 80px;
 }
 /* 프로필 카드 스타일 */
@@ -47,11 +48,13 @@
   height: 300px; /* 카드의 높이 고정 */
   background: #fff;
   border: 1px solid #ddd;
-  border-radius: 30px;
+  border-radius: 10px;
   padding: 20px 20px;
+  margin: 5px 10px;
   text-align: center;
   transition: transform 0.3s, box-shadow 0.3s;
   overflow: hidden; /* 내용이 넘칠 경우 숨김 처리 */
+  cursor: pointer;
 }
 
 .mentor-profile-card:hover {
@@ -163,7 +166,7 @@
 
 /* 좌측 섹션: 이미지와 기본 정보 */
 .mentor-image-section {
-  width: 30%;
+  width: 30%; height: 330px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -219,20 +222,34 @@
   width: 60%;
   display: flex;
   flex-direction: column;
-  gap: 15px;
 }
 
 .mentor-section {
   margin-bottom: 10px;
 }
-
-.mentor-section h3 {
-  font-size: 18px;
-  margin-bottom: 5px;
+.mentor-section h2 {
+  margin: 10px 0;
 }
-
-.mentor-section p {
+.mentor-category-box{
+  width: 100px;
   font-size: 14px;
+  padding: 2px 1px;
+  border: 1px solid #f1f1f1;
+  border-radius: 5px;
+  text-align: center;
+  background-color: #f1f1f1;
+  color: #029151;
+  font-weight: 600;
+} 
+.mentor-headline {
+  margin-bottom: 0px;
+}
+.mentor-headline > h2 {
+  font-style: italic;
+  text-decoration: underline #777 0.9px;
+}
+.mentor-section p {
+  font-size: 16px;
   line-height: 1.5;
   color: #555;
 }
@@ -255,11 +272,20 @@
   cursor: pointer;
   transition: all 0.3s ease;
 }
+.follow-button.follow-isexist {
+  color: #ff2d2d;
+  border-color: #ff2d2d;
+}
 
 .follow-button:hover {
   border: 1px solid #ff2d2d;
   background-color: #fafafa;
   color: #ff2d2d;
+}
+
+.follow-button.follow-isexist:hover {
+  color: #ddd;
+  border-color: #ddd;
 }
 
 .question-button {

@@ -130,7 +130,7 @@ function InquiryView() {
   // 이름 마스킹
   const maskName = (name) => {
     if (name.length <= 2) {
-      return name[0] + "*".repeat(name.length - 1);
+      return name[0] + "*".repeat(name.length);
     }
     return name[0] + "*".repeat(name.length - 2) + name[name.length - 1];
   };
@@ -161,7 +161,7 @@ function InquiryView() {
           </div>
           <div className="inquiry-view-desc">
             <div>
-              {inquiry.memberName} 멘티ㆍ
+              {maskName(inquiry.memberName)} 멘티ㆍ
               {inquiry.inquiryDate.substring(0, 10)}ㆍ
               <FontAwesomeIcon icon={faEye} /> {inquiry.inquiryViews}
             </div>
@@ -190,6 +190,7 @@ function InquiryView() {
             <div></div>
           )}
           {/* 신고하기 버튼 */}
+          {token ? (
           <div className="inquiry-report-btn">
             {isModalOpen && (
               <ReportModal onClose={handleCloseModal} report={report} />
@@ -211,6 +212,9 @@ function InquiryView() {
               />
             </button>
           </div>
+          ):(
+            <div></div>
+          )}
           <button className="answer-notify-btn" onClick={handleWriteButton}>
             <FontAwesomeIcon icon={faPen} />
             <span>답변하기</span>

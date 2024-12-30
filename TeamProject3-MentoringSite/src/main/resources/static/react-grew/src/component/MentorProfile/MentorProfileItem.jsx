@@ -20,14 +20,17 @@ export default function MentorProfileItem({ mentor }) {
   const [additionalData, setAdditionalData] = useState({
     mentorIntroduce: "",
     mentorCareer: "",
-    categoryName:""
+    categoryName:"",
+    mentorHeadline:""
   });
 
 
   useEffect(() => {
-    fetchMember();
-    fetchAdditionalData();
-  }, []);
+    if (mentor.mentorStatus === 3) { // 상태가 3인 경우에만 데이터 요청
+      fetchMember();
+      fetchAdditionalData();
+    }
+  }, [mentor]);
 
   const fetchMember = async () => {
     const response = await memberApi.getMemberByMemberNo(mentor.memberNo);
@@ -40,8 +43,7 @@ export default function MentorProfileItem({ mentor }) {
       mentorIntroduce: response.data.mentorIntroduce || "소개 텍스트 없음",
       mentorCareer: response.data.mentorCareer || "경력 정보 없음",
       categoryName:response.data.categoryName || "분야 정보 없음",
-  
-
+      mentorHeadline:response.data.mentorHeadline || "한줄 소개 없음"
     });
   };
 
@@ -54,7 +56,9 @@ export default function MentorProfileItem({ mentor }) {
   const viewMentorProfile = () => {
     navigate(`/mentor-profile/${mentor.mentorProfileNo}`);
   };
-
+  if (mentor.mentorStatus !== 3) {
+    return null; // 상태가 3이 아닌 경우 아무것도 렌더링하지 않음///////////////////////////
+  }
   return (
     <div
       className="mentor-profile-card"
@@ -72,12 +76,8 @@ export default function MentorProfileItem({ mentor }) {
       {/* 멘토 이름 */}
       <div className="card-title">{member.memberName} 멘토</div>
 
-      {/* 멘토 소개 */}
-      <div className="card-content"> 한줄 소개</div>
-      
-      
-      {/* 멘토 경력 */}
-      {/* <h3 className="mentor-profile-name">{additionalData.mentorCareer}</h3> */}
+      {/* 멘토 한줄 소개 */}
+      <div className="card-content">{additionalData.mentorHeadline}</div>
       
     </div>
     );

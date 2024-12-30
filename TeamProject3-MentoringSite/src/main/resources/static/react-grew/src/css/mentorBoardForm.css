@@ -1,18 +1,13 @@
 .mentor-board-form-container {
-  margin: 40px auto; /* 여백 */
-  max-width: 800px; /* 너비 제한 */
+  margin: 0px auto; /* 여백 */
+  max-width: 1024px; /* 너비 제한 */
   padding: 20px; /* 내부 여백 */
-  background-color: #fff; /* 배경색 */
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* 박스 그림자 */
-  border: 2px solid #aaa; /* 더 진하고 두꺼운 외곽선 */
-  border-radius: 8px; /* 모서리 둥글게 */
   box-sizing: border-box; /* 전체 박스 크기를 포함하도록 설정 */
 }
 
 .mentor-board-form-container h1 {
-  font-size: 24px;
   font-weight: bold;
-  text-align: center;
+  text-align: left;
   margin-bottom: 20px;
 }
 
@@ -20,11 +15,12 @@
   text-align: center;  /* 제목을 가운데 정렬 */
   font-size: 2rem;     /* 제목 글자 크기 */
   font-weight: bold;   /* 제목 두껍게 */
-  margin-bottom: 30px; /* 제목과 폼 간의 간격 */
+  margin: 0px;/* 제목과 폼 간의 간격 */
   color: #333;         /* 제목 텍스트 색상 */
 }
 
 .field {
+  font-size: 17px;
   margin-bottom: 20px;
 }
 
@@ -41,12 +37,14 @@
   padding: 10px; /* 내부 여백 */
   border: 1px solid #ddd; /* 테두리 */
   border-radius: 4px; /* 모서리 둥글게 */
-  font-size: 14px;
+  font-size: 16px;
   box-sizing: border-box; /* 박스 크기 설정 */
 }
-
+.field-title {
+  background-color: #f5f6f8;
+}
 .field textarea {
-  min-height: 150px;
+  min-height: 300px;
   resize: none;
 }
 
@@ -55,20 +53,20 @@
   padding: 6px 12px;
   background-color: #f0f0f0;
   border-radius: 4px;
-  font-size: 14px;
+  font-size: 16px;
   color: #555;
 }
 
 .button-group {
   display: flex;
-  justify-content: center; /* 버튼을 가운데 정렬 */
+  justify-content: right; /* 버튼을 가운데 정렬 */
   gap: 10px; /* 버튼들 사이의 간격을 설정 */
   margin-top: 20px; /* 버튼과 그 위 요소들 간의 간격 */
 }
 
-.submit-button,
-.cancel-button {
-  padding: 8px 16px; /* 버튼 크기 조정 */
+.board-submit-button,
+.board-cancel-button {
+  padding: 10px 15px;
   font-size: 14px; /* 글씨 크기 조정 */
   border: none;
   border-radius: 4px;
@@ -78,38 +76,34 @@
   transition: background-color 0.3s ease; /* 호버 효과를 부드럽게 처리 */
 }
 
-.submit-button {
+.board-submit-button {
   background-color: #28a745;
   color: white;
 }
-
-
-.submit-button:hover,
-.delete-button:hover,
-.cancel-button:hover {
-  opacity: 0.8; /* 버튼에 호버 시 약간 투명도 변화 */
+.board-submit-button:hover {
+  background-color: #228c3b;
 }
 
-.delete-button {
-  background-color: #dc3545; /* 빨간색 */
+.board-delete-button {
+  background-color: #b4b4b4; /* 빨간색 */
   color: white;
 }
+.board-delete-button:hover {
+  background-color: #9d9d9d;
+}
 
-.cancel-button {
-  background-color: #6c757d; /* 회색 */
+.board-cancel-button {
+  background-color: #b4b4b4; /* 회색 */
   color: white;
 }
-
-.delete-button:hover,
-.cancel-button:hover {
-  opacity: 0.8;
+.board-cancel-button:hover {
+  background-color: #9d9d9d; /* 회색 */
+  color: white;
 }
-
 
 /* 이미지 미리보기 */
 .image-preview {
   margin-top: 10px;
-  max-width: 100%;
   text-align: center;
 }
 

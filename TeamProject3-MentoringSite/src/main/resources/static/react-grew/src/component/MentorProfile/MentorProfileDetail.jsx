@@ -1,6 +1,6 @@
 import { useMemberAuth } from "../../util/AuthContext";
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom"; // useNavigate 추가
 import "../../css/mentorProfile.css"; // 🔥 추가된 CSS 파일
 import { getMentorProfileByNo } from "../../api/mentorProfileApi.js";
 import { listReviewByMember } from "../../api/reviewApi.js"; // 리뷰 목록 API 추가
@@ -11,6 +11,7 @@ import MentorProfileInfo from "./MentorProfileInfo.jsx";
 export default function MentorProfileDetail() {
   const { token, member } = useMemberAuth();
   const { mentorProfileNo } = useParams();
+  const navigate = useNavigate(); // navigate 훅 추가
   const [mentorProfile, setMentorProfile] = useState({});
   const [reviews, setReviews] = useState([]); // 빈 배열로 초기화
   const [loading, setLoading] = useState(true);
@@ -29,9 +30,15 @@ export default function MentorProfileDetail() {
       const mentorProfileResponse = await getMentorProfileByNo(
         mentorProfileNo
       );
-
+       // 🔥 데이터 유효성 검사 추가
+      if (!mentorProfileResponse?.data || Object.keys(mentorProfileResponse.data).length === 0) {
+        console.warn("Invalid mentor profile number:", mentorProfileNo);
+        // 프로필 데이터가 없으면 리다이렉트
+        navigate("/mentor-profile/list", { replace: true });
+        return;
+      }
+      console.log(mentorProfileResponse.data);
       setMentorProfile(mentorProfileResponse.data);
-      console.log('mentorProfile', mentorProfile)
 
       // 2. 멘토 프로필 번호로 리뷰 목록 조회 (Authorization 헤더에 JWT 토큰 추가)
       const reviewsResponse = await listReviewByMember(
@@ -50,7 +57,7 @@ export default function MentorProfileDetail() {
 
       // Check if there are reviews in the response
       if (reviewsResponse.data) {
-        setReviews(reviewsResponse.data); // content 배열 처리
+        setReviews(reviewsResponse.data.content); // content 배열 처리
       } else {
         setReviews([]); // 데이터가 없으면 빈 배열 처리
 
@@ -62,6 +69,8 @@ export default function MentorProfileDetail() {
 
     } catch (error) {
       setError("멘토 프로필을 가져오는 중 오류가 발생했습니다.");
+      // 오류 발생 시 리다이렉트
+      navigate("/mentor-profile/list", { replace: true });
     } finally {
       setLoading(false);
     }
@@ -100,20 +109,31 @@ export default function MentorProfileDetail() {
         
         {/* 우측: 상세 정보 */}
         <div className="mentor-details-section">
-          <div className="mentor-section">
-            <h3>대표 멘토링 분야</h3>
-            <p>
-              {mentorProfile?.mentorSpecialty || "대표 멘토링 분야 정보 없음"}
-            </p>
-            <p>{categoryName}</p>
+          <span className="mentor-category-box">    
+            {mentorProfile.categoryName}
+          </span>
+          <div className="mentor-section mentor-headline">
+            <h2>"{mentorProfile.mentorHeadline}"</h2>
           </div>
           <div className="mentor-section">
-            <h3>멘토 소개</h3>
-            <p>{mentorProfile?.mentorIntroduce || "멘토 소개 정보 없음"}</p>
+            <h2>멘토 소개</h2>
+            <pre>{mentorProfile?.mentorIntroduce || "멘토 소개 정보 없음"}</pre>
           </div>
           <div className="mentor-section">
-            <h3>주요 경력</h3>
-            <p>{mentorProfile?.mentorCareer || "멘토 경력 정보 없음"}</p>
+            <h2>주요 경력</h2>
+            {mentorProfile?.careerDtos && mentorProfile.careerDtos.length > 0 ? (
+              <ul>
+                {mentorProfile.careerDtos.map((career, index) => (
+                  <li key={index}>
+                    <strong>회사:</strong> {career.careerCompanyName} <br />
+                    <strong>직책:</strong> {career.careerJobTitle} <br />
+                    <strong>기간:</strong> {career.careerStartDate} ~ {career.careerEndDate || "현재"} <br />
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <pre>멘토 경력 정보 없음</pre>
+            )}
           </div>
         </div>
       </div>

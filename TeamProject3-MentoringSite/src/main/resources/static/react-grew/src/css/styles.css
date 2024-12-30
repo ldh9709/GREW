@@ -9,6 +9,11 @@ body {
 div {
   font-family: "Noto Sans KR", sans-serif;
 }
+
+pre{
+  font-family: "Noto Sans KR", sans-serif;
+  white-space: pre-wrap; /* 자동 줄바꿈 활성화 */
+}
 textarea {
   font-family: "Noto Sans KR", sans-serif !important;
 }
@@ -57,10 +62,10 @@ button {
 .inquiry-radio-container {
   /*정렬을 위한 라디오 버튼css*/
   display: flex;
-  border-top: 1px solid #e4e4e4;
+  border-bottom: 1px solid #e4e4e4;
   justify-content: flex-end; /* 오른쪽 정렬 */
   gap: 10px; /* 라디오 버튼들 간의 간격 */
-  padding: 10px 0;
+  padding-bottom: 10px;
   font-size: 13px;
 }
 
@@ -69,7 +74,7 @@ button {
   display: flex;
   position: absolute;
   left: 50%; transform: translateX(-50%);
-  bottom: 20px;
+  bottom: 0px;
   justify-content: center; /* 중앙 정렬 */
   align-items: center;
   gap: 10px; /* 버튼 간격 */
@@ -386,6 +391,7 @@ button {
   border-bottom: 1px solid #dddfe2;
 }
 .inquiry-view-content {
+
   padding: 15px;
   margin-bottom: 50px;
   font-size: 18px;
@@ -744,6 +750,7 @@ button {
   display: flex;
   justify-content: space-between;
   margin-bottom: 15px;
+  border: none;
 }
 .radio-container div:first-child {
   font-size: 20px;
@@ -812,7 +819,7 @@ button {
 
 /* 검색창 입력 필드 */
 .search-input {
-  width: 500px;
+  width: 400px;
   padding: 10px;
   font-size: 16px;
   border: 1px solid #ccc;
@@ -834,7 +841,7 @@ button {
 .view-more {
   display: flex;
   justify-content: right;
-  margin-right: 30px;
+  margin-right: 15px;
 }
 .view-more a{
   font-weight: bold;
@@ -948,6 +955,12 @@ button {
   outline: 1px solid #ccc;
   transition: background-color 0.3s ease;
 }
+
+/* 관리자 버튼 */
+.admin-button {
+  background-color: #444 !important;
+  color: #e4e4e4 !important;
+}
 /* 멘토,멘티 여부 체크 버튼 */
 .rightMenu input {
   width: 90px;
@@ -1037,6 +1050,17 @@ button {
   object-fit: cover; /* 이미지를 비율에 맞게 잘라서 채우기 */
   border-radius: 50%;
 }
+
+/*메인 우수멘토 */
+.main-profile-container {
+  padding-bottom: 5px !important;
+}
+
+/* 메인 관심많은 질문 */
+.main-inquiry .inquiry-list-item {
+  width: 100%;
+  margin-bottom: 10px;
+}
 .handle-mentor-profile-btn {
   padding: 10px 20px;
   font-size: 16px;
@@ -1114,6 +1138,7 @@ button {
   box-shadow: 0 8px 12px rgba(0, 0, 0, 0.15);
   transform: translateY(-4px);
 }
+
 .slider-container {
   width: 100%;
   overflow: hidden;

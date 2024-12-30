@@ -33,11 +33,11 @@ export default function HeaderMenu() {
   // 로그아웃 처리
   const handleLogoutAction = async () => {
     try {
+      navigate("/main");
       const isLogout = await logout();
       auth.logout();
       alert("로그아웃하셨습니다.");
       console.log("로그아웃 성공 여부 : ", isLogout);
-      navigate("/main");
     } catch (error) {
       alert("오류 발생.");
       console.error("로그아웃 실패: ", error);
@@ -112,7 +112,9 @@ export default function HeaderMenu() {
         }
     };
 
-
+    const handleAdminNavigate = () =>{
+      navigate(`/admin`);
+    }
 
   // 스타일 정의
   const navStyle = {
@@ -127,49 +129,68 @@ export default function HeaderMenu() {
   };
 
   return (
-  <div className="header" style={navStyle}>
-    <div className="rightMenu" style={rightMenuBarStyle}>
-      {token ? (
-        // 로그인 상태
-        <>
-          <input
-            type="button"
-            className="profile-button"
-            onClick={handleProfileNavigate}
-            value="마이페이지"
-          />
-          <input
-            type="button"
-            className="logout-button"
-            onClick={handleLogoutAction}
-            value="로그아웃"
+    <div className="header" style={navStyle}>
+      <div className="rightMenu" style={rightMenuBarStyle}>
+        {token ? (
+          member.memberRole === 'ROLE_ADMIN' ? ( // 관리자일 때
+            <>
+              <input
+                type="button"
+                className="admin-button"
+                onClick={handleAdminNavigate}
+                value="관리자"
+              />
+              <input
+                type="button"
+                className="logout-button"
+                onClick={handleLogoutAction}
+                value="로그아웃"
+              />
+            </>
+          ) : ( // 일반 사용자일 때
+            <>
+              <input
+                type="button"
+                className="profile-button"
+                onClick={handleProfileNavigate}
+                value="마이페이지"
+              />
+              <input
+                type="button"
+                className="logout-button"
+                onClick={handleLogoutAction}
+                value="로그아웃"
+              />
+              <input
+                type="button"
+                className="header-role"
+                onClick={() => {
+                  member.memberRole === "ROLE_MENTEE"
+                    ? handleUpdateRole("ROLE_MENTOR")
+                    : handleUpdateRole("ROLE_MENTEE");
+                }}
+                value={member.memberRole === "ROLE_MENTEE" ? "멘티" : "멘토"}
+              />
+            </>
+          )
+        ) : (
+          // 비로그인 상태
+          <>
+            <input
+              type="button"
+              className="login-button"
+              onClick={handleLoginNavigate}
+              value="로그인"
             />
-          <input
-            type="button"
-            className="header-role"
-            onClick={()=>{member.memberRole === "ROLE_MENTEE" ? handleUpdateRole('ROLE_MENTOR') : handleUpdateRole('ROLE_MENTEE')}}
-            value={member.memberRole === "ROLE_MENTEE" ? "멘티" : "멘토"}
-          />
-        </>
-      ) : (
-        // 비로그인 상태
-        <>
-
-          <input
-            type="button"
-            className="login-button"
-            onClick={handleLoginNavigate}
-            value="로그인"
-          />
-          <input
-            type="button"
-            className="join-button"
-            onClick={handleJoinNavigate}
-            value="회원가입"
-          />
-        </>
-      )}
+            <input
+              type="button"
+              className="join-button"
+              onClick={handleJoinNavigate}
+              value="회원가입"
+            />
+          </>
+        )}
+      </div>
     </div>
-  </div>
   );
 }

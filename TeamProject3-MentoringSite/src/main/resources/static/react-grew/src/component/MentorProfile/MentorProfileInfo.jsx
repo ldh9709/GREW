@@ -8,28 +8,37 @@ import { faHeart, faHeartCircleCheck, faHeartCirclePlus } from '@fortawesome/fre
 export default function MentorProfileInfo({ mentorProfile }) {
     const { token, member } = useMemberAuth();
     const [isFollow, setIsfollow] = useState(false);
-    const [follow,setFollow] = useState({})
+    // const [follow, setFollow] = useState({
+    //     followNo:0,
+    //     menteeMemberNo:member.memberNo,
+    //     mentorMemberNo:mentorProfile.memberNo
+    // })
 
-  const handleFollowToggle = async () => {
-
-  }
   //팔로우 여부 체크
-  const checkFollow = async(mentorNo) => {
-    const response = await followApi.isExistFollow(token, mentorNo);
+  const checkFollow = async() => {
+    const response = await followApi.isExistFollow(token, mentorProfile.memberNo);
     console.log(response)
     setIsfollow(response.data);
   }
 
   //팔로우 등록
-  const handleFollow = async() => {
-    try {
-        if (!isFollow) {
-          handleFollow();
-        }
-        const response = await followApi.addfollow(token,follow);
-        console.log(response)
-      }catch (error) {
-      console.log('팔로우가 실패하였습니다')
+  const handleFollowClick = async() => {
+    if(token && member.memberRole==='ROLE_MENTEE'){
+      if (!isFollow) {
+          const follow = {
+            menteeMemberNo:member.memberNo,
+            mentorMemberNo:mentorProfile.memberNo
+          }
+          await followApi.addfollow(token, follow);
+          setIsfollow(true);
+          mentorProfile.mentorFollowCount += 1;
+        } else {
+          await followApi.deleteFollow(token, mentorProfile.memberNo);
+          setIsfollow(false);
+          mentorProfile.mentorFollowCount -= 1;
+      } 
+    }else{
+      alert("멘티 회원만 가능한 서비스입니다.")
     }
   }
 
@@ -41,11 +50,15 @@ export default function MentorProfileInfo({ mentorProfile }) {
         await ChattingApi.createChatting(member.memberNo, mentorProfile.memberNo);
         
         }else {
-        alert("멘티만 가능한 서비스입니다.");
+        alert("멘티 회원만 가능한 서비스입니다.");
         }
         
     };
     
+    useEffect(() => {
+        checkFollow();
+    },[])
+
   return (
       <>
         {/* 좌측: 이미지와 기본 정보 */}
@@ -83,11 +96,12 @@ export default function MentorProfileInfo({ mentorProfile }) {
             
             {/* 버튼 */}
             <div className="mentor-actions">
-              <button className="follow-button"
-                onClick={{ handleFollowToggle }}
+            <button
+                className={`follow-button ${isFollow ? 'follow-isexist' : ''}`}
+                onClick={ handleFollowClick }
               >
                 {isFollow ? (
-                  <FontAwesomeIcon icon={faHeart} style={{ color: "red"}} />
+                  <FontAwesomeIcon icon={faHeart}/>
                 ): (
                   <FontAwesomeIcon icon={faHeartCirclePlus} />
                 )}

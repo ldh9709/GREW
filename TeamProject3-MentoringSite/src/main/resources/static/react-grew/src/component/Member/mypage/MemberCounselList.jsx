@@ -5,6 +5,7 @@ import * as chattingApi from "../../../api/chattingApi";
 import * as memberApi from "../../../api/memberApi";
 import * as reviewApi from "../../../api/reviewApi";
 import { useNavigate } from "react-router-dom";
+import { getMentorProfileByMemberNo } from "../../../api/answerApi";
 
 export default function MemberCounselList() {
   /* Context에 저장된 토큰, 멤버정보 */
@@ -16,6 +17,7 @@ export default function MemberCounselList() {
 
   const fetchName = async (memberNo) => {
     const response = await memberApi.memberInfo(token, memberNo);
+    console.log(response.data);  ////////////////////////////////////////////////////////
     return response.data.memberName;
   };
 
@@ -25,20 +27,32 @@ export default function MemberCounselList() {
       if (member.memberRole === "ROLE_MENTEE") {
         const response = await chattingApi.listChatRoom(token, page, 4);
         const chatRooms = response.data.content;
+
         const updateRooms = await Promise.all(
           chatRooms.map(async (chat) => {
             const searchName = await fetchName(chat.mentorNo);
+
+            // 멘토 프로필 조회
+          const mentorProfileResponse = await getMentorProfileByMemberNo(chat.mentorNo); ///////////////
+          const mentorProfileNo = mentorProfileResponse?.data?.mentorProfileNo || null;////////////////////////////
+          const mentorImage = mentorProfileResponse?.data?.mentorImage || "/default-image.png";///////////
             return {
               ...chat,
               searchName,
+              mentorProfileNo, // 멘토 프로필 번호 추가/////////////////////
+              mentorImage, // 멘토 프로필 이미지 추가
             };
           })
         );
+
+
         setCounselList(updateRooms);
         setTotalPages(response.data.totalPages);
       } else if (member.memberRole === "ROLE_MENTOR") {
         const response = await chattingApi.listChatRoom(token, page, 6);
         const chatRooms = response.data.content;
+
+
         console.log(chatRooms);
         const updateRooms = await Promise.all(
           chatRooms.map(async (chat) => {
@@ -47,10 +61,18 @@ export default function MemberCounselList() {
             const isReview = reviewList.data.content.some(
               (review) => review.memberNo === chat.menteeNo
             );
+
+            // 멘티의 멘토 프로필 조회
+              const menteeProfileResponse = await getMentorProfileByMemberNo(chat.menteeNo);/////////////
+              const mentorProfileNo = menteeProfileResponse?.data?.mentorProfileNo || null;///////////////
+              const mentorImage = menteeProfileResponse?.data?.mentorImage || "/default-image.png";
+
             return {
               ...chat,
               searchName,
               isReview,
+              mentorProfileNo, // 멘티의 멘토 프로필 번호 추가    ///////////////////
+              mentorImage, // 멘티의 멘토 프로필 이미지 추가
             };
           })
         );
@@ -118,12 +140,14 @@ export default function MemberCounselList() {
       ) : member.memberRole === "ROLE_MENTEE" ? (
         <ul className="mentor-list">
           {counselList.map((counsel, index) => (
+            
             <li className="mentor-counsel-item" key={index}>
               <div>
-                <img src={image} alt="프로필 이미지" />
+                <img src={counsel.mentorImage} alt="프로필 이미지" />
               </div>
               <div>
-                <p className="mentor-name">{counsel.searchName} 멘토</p>
+                <p className="mentor-name">{counsel.searchName} 멘토{console.log(counsel)}</p>
+                <p>멘토 프로필 번호: {counsel.mentorProfileNo || "없음"}</p>
                 <p className="mentor-status">
                   상담 상태: {counselStatus(counsel.chatRoomStatus)}
                 </p>

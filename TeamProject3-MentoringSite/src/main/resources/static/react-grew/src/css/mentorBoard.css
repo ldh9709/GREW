@@ -1,86 +1,355 @@
-/* Mentor Board 아이템 컨테이너 스타일 */
-.mentor-board-container {
-  border: 1px solid #ddd; /* 테두리 설정 */
-  padding: 20px; /* 내부 여백 */
-  margin: 15px 0; /* 상하 마진 */
-  background-color: #ffffff; /* 배경색 */
-  width: 100%; /* 컨테이너 너비 */
-  border-radius: 8px; /* 모서리 둥글게 */
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* 그림자 효과 */
-  transition: transform 0.2s, box-shadow 0.2s; /* 애니메이션 효과 */
+/* 상단 탭*/
+.mentor-board-header{
+  position: relative;
 }
-
-.mentor-board-container:hover {
-  transform: translateY(-3px); /* 호버 시 살짝 올라감 */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15); /* 호버 시 그림자 증가 */
+/* 등록 버튼*/
+.btn-mentor-board-write-div {
+  position: absolute;
+  right: 0px;
+  font-size: 17px;
 }
-
-/* 제목 스타일 */
-.mentor-board-title {
-  font-size: 22px;
-  font-weight: bold;
-  margin-bottom: 10px;
-  color: #0073e6; /* 파란색 텍스트 */
-}
-
-/* 내용 스타일 */
-.mentor-board-content {
-  font-size: 16px;
-  color: #555; /* 어두운 회색 */
-  margin-bottom: 15px; /* 아래 여백 */
-  line-height: 1.5; /* 줄 간격 */
-  word-wrap: break-word; /* 단어 줄 바꿈 */
-}
-
-/* 추가 설명 스타일 */
-.mentor-board-meta {
-  font-size: 14px;
-  color: #888; /* 연한 회색 */
-  display: flex;
-  justify-content: space-between; /* 내용들을 양 끝으로 배치 */
-  align-items: center; /* 세로로 가운데 정렬 */
-}
-
-.mentor-board-meta .mentor-board-category {
-  color: #ff5252; /* 카테고리 강조 */
-  font-weight: bold;
-}
-
-.mentor-board-meta .mentor-board-stats {
-  font-size: 13px;
-  color: #555; /* 어두운 회색 */
-}
-
-/* 작성자 및 날짜 */
-.mentor-board-stats {
-  display: flex;
-  gap: 10px; /* 간격 추가 */
-}
-
-.edit-button,
-.delete-button {
-  padding: 10px 15px;
-  margin-left: 10px;
-  border: none;
-  cursor: pointer;
-  font-size: 16px;
+.btn-mentor-board-write {
+  padding: 10px 18px;
   border-radius: 5px;
 }
 
-.edit-button {
+.btn-mentor-board-write:hover {
+  background-color: #438642;
+}
+
+/* 정렬 버튼*/
+.radio-container{
+  display: flex;
+  justify-content: flex-end;
+  border-bottom: 1px solid #e4e4e4;
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+  gap: 10px;
+  font-size: 14px;
+}
+.radio-container input {
+  cursor: pointer;
+}
+
+
+/* 멘토 컨텐츠 아이템 */
+.mentor-board-list-main{
+  display: flex;
+  position: relative;
+  flex-wrap: wrap;
+  gap: 30px;
+  margin: 0 auto;
+  padding-bottom: 100px;
+}
+.mentor-board-list-main .board-card {
+  width: 550px;
+}
+
+/* 멘토 컨텐츠 */
+.tab-boards {
+  position: relative;
+  width: 95%;
+  margin: 0 auto;
+  padding-bottom: 25px;
+  align-items: center;
+}
+
+.board-list {
+  padding-bottom: 100px;
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 20px; 
+}
+.board-list2 {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 20px; 
+}
+
+.board-list p{
+  margin: 0px;
+}
+.board-card {
+  width: 48%;
+  flex-direction: column;
+  text-align: left;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  background-color: #fff;
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+  cursor: pointer;
+}
+
+.board-card:hover{
+  box-shadow: 0 8px 12px rgba(0, 0, 0, 0.15);
+  transform: translateY(-4px);
+}
+
+.board-image-container {
+  width: 100%;
+  height: 250px;
+  overflow: hidden;
+}
+
+.board-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.board-details {
+  position: relative;
+  height: 150px;
+  padding: 15px;
+}
+
+.board-category {
+  font-size: 14px;
+  background-color: #f1f1f1;
+  padding: 2px 5px;
+  border-radius: 5px;
+  color: #029151;
+}
+.board-info{
+  position: absolute;
+  right: 10px; bottom: 10px;
+  text-align: right;
+}
+.board-author {
+  color: #444;
+  font-size: 14px;
+  margin-right: 10px;
+}
+
+.board-date {
+  font-size: 14px;
+  margin-right: 5px;
+  color: #888;
+}
+
+.board-views{
+  font-size: 13px;
+  color: #888;
+}
+.board-title {
+  font-size: 18px;
+  font-weight: bold;
+  margin: 10px 0;
+}
+
+.board-description {
+  height: 60px;
+  font-size: 14px;
+  color: #555;
+  margin: 0px;
+}
+
+
+/* 멘토 콘텐츠 상세페이지 디자인 */
+/* 전체 컨테이너 스타일 */
+.mentor-board-detail-container {
+  position: relative;
+  max-width: 1024px;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+  line-height: 1.6;
+}
+
+/* 카테고리 및 제목 */
+.mentor-board-detail-header {
+  margin-bottom: 20px;
+}
+
+.category-badge {
+  display: inline-block;
+  padding: 4px 10px;
+  background-color: #f1f1f1;
+  color: #029151;
+  border-radius: 5px;
+  font-size: 14px;
+}
+
+.mentor-board-title {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+/* 작성자 정보 */
+.mentor-board-author {
+  display: flex;
+  align-items: center;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #ccc;
+}
+
+.author-image {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-right: 15px;
+}
+
+.author-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.author-name {
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.author-meta {
+  font-size: 14px;
+  color: #555;
+}
+
+/* 보드 이미지 */
+.mentor-board-image-wrapper {
+  text-align: center;
+  margin: 20px 0;
+}
+
+.mentor-board-image {
+  width: 100%;
+  max-height: 400px;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+/* 콘텐츠 */
+.mentor-board-content {
+  position: relative;
+  min-height: 350px;
+  margin: 30px 10px;
+  padding-bottom: px;
+  font-size: 19px;
+  color: #333;
+}
+
+.mentor-info-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border: 1px solid #e4e4e4;
+  border-radius: 8px;
+  margin: 10px 0;
+  cursor: pointer;
+}
+
+.mentor-profile-image {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.mentor-info {
+  flex: 1;
+  margin-left: 20px;
+}
+
+.mentor-name {
+  font-size: 18px;
+  font-weight: bold;
+  margin: 0;
+}
+.mentor-headline{
+  font-size: 14px;
+  color: #666;
+}
+.mentor-title {
+  font-size: 14px;
+  font-weight: normal;
+  color: #888;
+}
+
+.mentor-details {
+  font-size: 14px;
+  color: #666;
+  margin: 5px 0 0;
+}
+
+.mentor-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.follow-button,
+.question-button {
+  padding: 8px 16px;
+  border: 1px solid #e4e4e4;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.3s;
+}
+
+.follow-button {
+  background-color: #fff;
+  color: #333;
+}
+
+.follow-button:hover {
+  background-color: #f0f0f0;
+}
+
+.question-button {
+  background-color: #3579f6;
+  color: #fff;
+  border: 1px solid #3579f6;
+}
+
+.question-button:hover {
+  background-color: #2c62c8;
+}
+
+
+
+
+/* 수정 및 삭제 버튼 */
+.mentor-board-actions {
+  position: absolute;
+  bottom: 0px; right: 10px;
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+}
+
+.board-edit-button,
+.board-delete-button {
+  padding: 10px 20px;
+  font-size: 14px;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+.board-edit-button {
   background-color: #4caf50;
   color: white;
 }
 
-.delete-button {
-  background-color: #f44336;
-  color: white;
-}
-
-.edit-button:hover {
+.board-edit-button:hover {
   background-color: #45a049;
 }
 
-.delete-button:hover {
-  background-color: #e53935;
+.board-delete-button {
+  background-color: #a2a1a1;
+  color: white;
+}
+
+.board-delete-button:hover {
+  background-color: #818181;
 }

@@ -2,12 +2,15 @@ package com.itwill.jpa.service.member_information;
 
 import com.itwill.jpa.dto.chatting_review.ChatRoomDto;
 import com.itwill.jpa.dto.chatting_review.ReviewDto;
+import com.itwill.jpa.dto.member_information.CareerDto;
 import com.itwill.jpa.dto.member_information.MentorProfileDto;
 import com.itwill.jpa.entity.chatting_review.ChatRoom;
+import com.itwill.jpa.entity.member_information.Career;
 import com.itwill.jpa.entity.member_information.Category;
 import com.itwill.jpa.entity.member_information.Member;
 import com.itwill.jpa.entity.member_information.MentorProfile;
 import com.itwill.jpa.exception.CustomException;
+import com.itwill.jpa.repository.member_information.CareerRepository;
 import com.itwill.jpa.repository.member_information.CategoryRepository;
 import com.itwill.jpa.repository.member_information.MemberRepository;
 import com.itwill.jpa.repository.member_information.MentorProfileRepository;
@@ -28,6 +31,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.UUID;
 
@@ -43,6 +47,8 @@ public class MentorProfileServiceImpl implements MentorProfileService {
     private MemberRepository memberRepository;
     @Autowired
     private CategoryRepository categoryRepository;
+    @Autowired
+    private CareerRepository careerRepository;
 
     
     
@@ -149,7 +155,7 @@ public class MentorProfileServiceImpl implements MentorProfileService {
     			MentorProfileDto.builder()
 				                .memberNo(memberNo) // 멤버 정보 설정
 				                .categoryNo(26L) // 카테고리 정보 설정
-				                .mentorCareer("경력을 입력해주세요.")
+//				                .mentorCareer("경력을 입력해주세요.")
 				                .mentorIntroduce("소개글을 입력해주세요.")
 				                .mentorImage(null)
 				                .mentorStatus(2) // 초기 상태가 없으면 2로 설정
@@ -324,7 +330,7 @@ public class MentorProfileServiceImpl implements MentorProfileService {
                     ));
             
             // 🔥 프로필 정보 업데이트
-            mentorProfile.setMentorCareer(mentorProfileDto.getMentorCareer());
+//            mentorProfile.setMentorCareer(mentorProfileDto.getMentorCareer());
             mentorProfile.setMentorIntroduce(mentorProfileDto.getMentorIntroduce());
             mentorProfile.setMentorImage(mentorProfileDto.getMentorImage());
             mentorProfile.setMentorStatus(2); // 2로 설정
@@ -424,21 +430,21 @@ public class MentorProfileServiceImpl implements MentorProfileService {
     public Page<MentorProfileDto> getMentorsByFollowCount(int page, int size) {
         Pageable pageable = PageRequest.of(page, size);
         Page<MentorProfile> mentorProfiles = mentorProfileRepository.findByOrderByMentorFollowCountDesc(pageable);
-        return mentorProfiles.map(MentorProfileDto::toDto);
+        return mentorProfiles.map(MentorProfileDto::toResponseDto);
     }
 
     @Override
     public Page<MentorProfileDto> getMentorsByMentoringCount(int page, int size) {
         Pageable pageable = PageRequest.of(page, size);
         Page<MentorProfile> mentorProfiles = mentorProfileRepository.findByOrderByMentorMentoringCountDesc(pageable);
-        return mentorProfiles.map(MentorProfileDto::toDto);
+        return mentorProfiles.map(MentorProfileDto::toResponseDto);
     }
 
     @Override
     public Page<MentorProfileDto> getMentorsByActivityCount(int page, int size) {
         Pageable pageable = PageRequest.of(page, size);
         Page<MentorProfile> mentorProfiles = mentorProfileRepository.findByOrderByMentorActivityCountDesc(pageable);
-        return mentorProfiles.map(MentorProfileDto::toDto);
+        return mentorProfiles.map(MentorProfileDto::toResponseDto);
     }
 
 
@@ -448,7 +454,7 @@ public class MentorProfileServiceImpl implements MentorProfileService {
 	@Override
 	public MentorProfileDto getMentorByMemberNo(Long memberNo) {
 		MentorProfile mentor = mentorProfileRepository.findByMember_MemberNo(memberNo);
-		return MentorProfileDto.toDto(mentor);
+		return MentorProfileDto.toResponseDto(mentor);
 	}
 
 
@@ -460,7 +466,7 @@ public class MentorProfileServiceImpl implements MentorProfileService {
 		List<MentorProfile> profiles= mentorProfileRepository.findByOrderByMentorRatingDesc();
 		List<MentorProfileDto> profileDtos = new ArrayList<>();
 		for(MentorProfile profile : profiles) {
-			profileDtos.add(MentorProfileDto.toDto(profile));
+			profileDtos.add(MentorProfileDto.toResponseDto(profile));
 		}
 		return profileDtos;
 	}
@@ -478,21 +484,21 @@ public class MentorProfileServiceImpl implements MentorProfileService {
 	public Page<MentorProfileDto> getByParentCategoryOrderByFollowCount(Long parentCategoryNo, int page, int size) {
 	    Pageable pageable = PageRequest.of(page, size);
 	    Page<MentorProfile> mentorProfiles = mentorProfileRepository.findByParentCategoryOrderByFollowCount(parentCategoryNo, pageable);
-	    return mentorProfiles.map(MentorProfileDto::toDto);
+	    return mentorProfiles.map(MentorProfileDto::toResponseDto);
 	}
 
 	@Override
 	public Page<MentorProfileDto> getByParentCategoryOrderByMentoringCount(Long parentCategoryNo, int page, int size) {
 	    Pageable pageable = PageRequest.of(page, size);
 	    Page<MentorProfile> mentorProfiles = mentorProfileRepository.findByParentCategoryOrderByMentoringCount(parentCategoryNo, pageable);
-	    return mentorProfiles.map(MentorProfileDto::toDto);
+	    return mentorProfiles.map(MentorProfileDto::toResponseDto);
 	}
 
 	@Override
 	public Page<MentorProfileDto> getByParentCategoryOrderByActivityCount(Long parentCategoryNo, int page, int size) {
 	    Pageable pageable = PageRequest.of(page, size);
 	    Page<MentorProfile> mentorProfiles = mentorProfileRepository.findByParentCategoryOrderByActivityCount(parentCategoryNo, pageable);
-	    return mentorProfiles.map(MentorProfileDto::toDto);
+	    return mentorProfiles.map(MentorProfileDto::toResponseDto);
 	}
 
 
@@ -500,20 +506,30 @@ public class MentorProfileServiceImpl implements MentorProfileService {
     public Page<MentorProfileDto> getByCategoryNoOrderByFollowCount(Long categoryNo, int page, int size) {
         Pageable pageable = PageRequest.of(page, size);
         Page<MentorProfile> mentors = mentorProfileRepository.findByCategoryNoOrderByFollowCount(categoryNo, pageable);
-        return mentors.map(MentorProfileDto::toDto);
+        return mentors.map(MentorProfileDto::toResponseDto);
     }
 
     @Override
     public Page<MentorProfileDto> getByCategoryNoOrderByMentoringCount(Long categoryNo, int page, int size) {
         Pageable pageable = PageRequest.of(page, size);
         Page<MentorProfile> mentors = mentorProfileRepository.findByCategoryNoOrderByMentoringCount(categoryNo, pageable);
-        return mentors.map(MentorProfileDto::toDto);
+        return mentors.map(MentorProfileDto::toResponseDto);
     }
 
     @Override
     public Page<MentorProfileDto> getByCategoryNoOrderByActivityCount(Long categoryNo, int page, int size) {
         Pageable pageable = PageRequest.of(page, size);
         Page<MentorProfile> mentors = mentorProfileRepository.findByCategoryNoOrderByActivityCount(categoryNo, pageable);
-        return mentors.map(MentorProfileDto::toDto);
+        return mentors.map(MentorProfileDto::toResponseDto);
+    }
+    
+    @Override
+    public List<CareerDto> getCareerByMentorProfileNo(Long mentorProfileNo){
+    	List<Career> careers = careerRepository.findByMentorProfile_MentorProfileNo(mentorProfileNo);
+    	List<CareerDto> careerDtos = new ArrayList<>();
+    	for (int i = 0; i < careers.size(); i++) {
+    		careerDtos.add(CareerDto.toDto(careers.get(i)));
+		}
+    	return careerDtos;
     }
 }

@@ -1,21 +1,34 @@
 import React, { useEffect, useState } from 'react';
 import * as ChattingApi from '../../../api/chattingApi.js';
 import { useMemberAuth } from '../../../util/AuthContext.js';
+import ReportModal from '../../Report/ReportModal.jsx';
 
 const ChatRoomList = ({ onRoomClick }) => {
-    const [isModalOpen, setIsModalOpen] = useState(false);  //tate
+    const [isModalOpen1, setIsModalOpen1] = useState(false);  //tate
+    const [isModalOpen2, setIsModalOpen2] = useState(false);
     const [newRoomName, setNewRoomName] = useState('');     // 수정할 채팅방 이름을 저장 모달창의 열림/닫힘 상태를 관리하기 위한 state
     const [rooms, setRooms] = useState([]);
     const [currentRoom, setCurrentRoom] = useState(null);   // 수정 중인 채팅방 정보를 담는 s하는 state
     const [currentPage, setCurrentPage] = useState(1); // 현재 페이지
     const [totalPages, setTotalPages] = useState(0); // 총 페이지 수
+    const [isReportHovered, setIsReportHovered] = useState(false);
+    const [report, setreport] = useState({});
 
-    const { token } = useMemberAuth();
+    const { token, member } = useMemberAuth();
 
     const chatRoomList = async (page) => {
         const responseJsonObject = await ChattingApi.activeListChatRoom(token, page, 7);
-        setRooms(responseJsonObject.data.content);  // 필터링된 채팅방만 setRooms에 설정
-        setTotalPages(responseJsonObject.data.totalPages);
+        if (responseJsonObject.status === 7010 && Array.isArray(responseJsonObject.data.content)) {
+            // 각 채팅방 상태를 개별적으로 비교하여 필터링
+            const activeRooms = responseJsonObject.data.content.filter((room) => { // filter()는 배열의 각 항목을 하나씩 검사하며, 주어진 콜백 함수에서 true를 반환하는 항목만 새로운 배열에 포함
+                return (
+                    (room.chatRoomStatus === 7100 && (room.chatRoomLeaveStatus === 7500 || room.chatRoomLeaveStatus === 7600)) || (room.chatRoomStatus === 7200 && (room.chatRoomLeaveStatus === 7500 || room.chatRoomLeaveStatus === 7600))
+                );
+            });
+            console.log(activeRooms);
+            setRooms(activeRooms);  // 필터링된 채팅방만 setRooms에 설정
+            setTotalPages(responseJsonObject.data.totalPages);
+        }
     }
 
     useEffect(() => {
@@ -25,7 +38,7 @@ const ChatRoomList = ({ onRoomClick }) => {
     const openEditModal = (room) => {                       // 특정 채팅방을 수정하기 위해 모달을 열고, 해당 채팅방의 정보를 저장하는 함수
         setCurrentRoom(room);                               // 현재 수정 중인 채팅방 정보를 저장
         setNewRoomName(room.chatRoomName);                          // 수정할 채팅방 이름을 입력창에 보여줌
-        setIsModalOpen(true);                               // 모달창 열기
+        setIsModalOpen1(true);                               // 모달창 열기
     };
 
     const saveRoomName = async ()=>{                            // 채팅방 이름을 저장하는 함수 (모달창에서 이름 수정 후 저장 버튼 클릭 시 호출됨)
@@ -33,7 +46,7 @@ const ChatRoomList = ({ onRoomClick }) => {
             const responseJsonObject = await ChattingApi.changeChatRoomName(currentRoom.chatRoomNo, token, newRoomName.trim());
             console.log(responseJsonObject.data);
             await chatRoomList(currentPage - 1); // 현재 페이지 갱신
-            setIsModalOpen(false); // 닫기
+            setIsModalOpen1(false); // 닫기
         }
     };
     
@@ -54,6 +67,25 @@ const ChatRoomList = ({ onRoomClick }) => {
         pageNumbers.push(i);
     };
 
+    //신고 하기 창 열고 닫기
+    const handleOpenModal = (room) => {
+        let memberNo;
+        setIsModalOpen2(true);
+        if(member.memberNo == room.menteeNo){
+            memberNo = room.mentorNo;
+        }else {
+            memberNo = room.menteeNo;
+        }
+        setreport({
+        type: "MEMBER",
+        target: memberNo
+        });
+    };
+
+    const handleCloseModal = () => {
+        setIsModalOpen2(false);
+    };
+
     return (
         <div>
             <ul className="chat-room-list">
@@ -63,7 +95,7 @@ const ChatRoomList = ({ onRoomClick }) => {
                         key={room.chatRoomNo} // 고유 키 설정 (React에서 반복문에 필수)
                         className="chat-room-item"
                         onClick={() => onRoomClick(room.chatRoomNo, room.chatRoomName)} // 채팅방 클릭 시 부모 컴포넌트에 해당 채팅방 id 전달
-                    >
+                    >       
                         <span className="room-name">{room.chatRoomName}</span>
                         <div className="button-container">
                             <button
@@ -84,6 +116,33 @@ const ChatRoomList = ({ onRoomClick }) => {
                             >
                                 방 나가기
                             </button>
+                            <div className="inquiry-report-btn">
+                                {isModalOpen2 && (
+                                    <div onClick={(e) => e.stopPropagation()}  // 클릭 이벤트 전파 방지
+                                    >
+                                        <ReportModal onClose={handleCloseModal} report={report} />
+                                    </div>
+                                )}
+                                <button
+                                    onClick={(e) => {
+                                        e.stopPropagation();
+                                        handleOpenModal(room)
+                                    }}
+                                    onMouseEnter={() => setIsReportHovered(true)}
+                                    onMouseLeave={() => setIsReportHovered(false)}
+                                    className={`hover-button ${isReportHovered ? "hovered" : ""}`}
+                                >
+                                <img
+                                    src={
+                                    isReportHovered
+                                        ? "https://img.icons8.com/?size=100&id=jy7dy2jsJ5UR&format=png&color=ed1515"
+                                        : "https://img.icons8.com/?size=100&id=t5aOnHwCycmN&format=png&color=000000"
+                                    }
+                                    alt="Button Image"
+                                    className="button-image"
+                                />
+                                </button>
+                            </div>
                         </div>
                     </li>
                 ))
@@ -107,8 +166,8 @@ const ChatRoomList = ({ onRoomClick }) => {
             </div>
 
             {/* 채팅방 이름 수정 panel */}
-            {isModalOpen && (
-                <div className={`modal ${isModalOpen ? 'active' : ''}`}>
+            {isModalOpen1 && (
+                <div className={`modal ${isModalOpen1 ? 'active' : ''}`}>
                     <div
                         className="modal-content"
                         onClick={(e) => e.stopPropagation()}  // 클릭 이벤트 전파 방지
@@ -123,7 +182,7 @@ const ChatRoomList = ({ onRoomClick }) => {
                         <button onClick={saveRoomName}>저장</button>
                         <button
                             className="close-button"
-                            onClick={() => setIsModalOpen(false)} // 닫기 버튼
+                            onClick={() => setIsModalOpen1(false)} // 닫기 버튼
                         >
                             닫기
                         </button>
