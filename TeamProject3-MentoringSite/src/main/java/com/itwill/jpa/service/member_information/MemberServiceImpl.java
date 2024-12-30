@@ -32,6 +32,7 @@ import com.itwill.jpa.repository.member_information.InterestRepository;
 import com.itwill.jpa.entity.role.Role;
 import com.itwill.jpa.exception.CustomException;
 import com.itwill.jpa.repository.member_information.MemberRepository;
+import com.itwill.jpa.repository.member_information.MentorProfileRepository;
 import com.itwill.jpa.response.ResponseMessage;
 import com.itwill.jpa.response.ResponseStatusCode;
 import com.itwill.jpa.util.CustomMailSender;
@@ -308,7 +309,7 @@ public class MemberServiceImpl implements MemberService {
 					if(role == null) {
 						memberList = memberRepository.findAllByOrderByMemberNoDesc(pageable);
 					}else {
-						memberList = memberRepository.findByMemberRoleOrderByMembeNoDesc(role, pageable);
+						memberList = memberRepository.findByMemberRoleOrderByMemberNoDesc(role, pageable);
 					}
 					break;
 				}
@@ -334,6 +335,23 @@ public class MemberServiceImpl implements MemberService {
 		
 	}
 	
+	/******회원 멘토 상태별 회원 목록 조회******/
+	public Page<MemberDto> getMemberAllByMentorStatus(Integer status, int pageNumber, int pageSize){
+		try {
+			Pageable pageable = PageRequest.of(pageNumber, pageSize);
+			Page<Member> members = memberRepository.findByMentorProfile_MentorStatus(status,pageable);
+			
+			List<MemberDto> memberDtoList = new ArrayList<>();
+			
+			for (Member member : members) {
+				memberDtoList.add(MemberDto.toDtoWithMentorProfile(member));
+			}
+			
+			return new PageImpl<>(memberDtoList, pageable, members.getTotalElements());
+		} catch (Exception e) {
+			throw new CustomException(ResponseStatusCode.READ_MEMBER_FAIL, ResponseMessage.READ_MEMBER_FAIL, e);
+		}
+	}
 	
 	/***** 신고 카운트 증가 *****/
 	@Override

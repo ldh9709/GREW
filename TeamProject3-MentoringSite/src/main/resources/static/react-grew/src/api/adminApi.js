@@ -1,11 +1,11 @@
 const BACKEND_SERVER = ""; // 백엔드 서버 URL 정의
 
 //회원 목록 조회
-export const adminMember = async(token,role,order) =>{
-  const response = await fetch(`${BACKEND_SERVER}/admin/member?role=${role}&order=${order}`, {
+export const adminMember = async(token,role,order,page,size) =>{
+  const response = await fetch(`${BACKEND_SERVER}/admin/member?role=${role}&order=${order}&page=${page}&size=${size}`, {
   method: 'GET',
   headers: {
-    'Authorization': `Bearer ${token}`, // 전달받은 JWT 토큰 사용
+    'Authorization': `Bearer ${token}`, 
     'Content-Type': 'application/json'
   }
   });
@@ -13,9 +13,17 @@ export const adminMember = async(token,role,order) =>{
   return responseJsonObject;
 }
 
-//회원 전체 조회
-export const getAdminMemberListAll = async() => {
-  
+//멘토 상태별 목록 조회 
+export const adminMentorByStatus = async (token,status,page,size) => {
+  const response = await fetch(`${BACKEND_SERVER}/admin/mentor/status/${status}?page=${page}&size=${size}`, {
+  method: 'GET',
+  headers: {
+    'Authorization': `Bearer ${token}`,
+    'Content-Type': 'application/json'
+  }
+  });
+  const responseJsonObject= await response.json();
+  return responseJsonObject;
 }
 
 //게시글 목록 조회

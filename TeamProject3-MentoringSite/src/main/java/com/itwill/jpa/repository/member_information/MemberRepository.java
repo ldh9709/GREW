@@ -49,11 +49,14 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
 			+ "WHERE m.memberNo = :memberNo")
 	public void incrementReportCount(@Param("memberNo") Long memberNo);
 	
+	//멤버 조회 + 멘토프로필 특정 상태값
+	Page<Member> findByMentorProfile_MentorStatus(Integer status, Pageable pageable);
+	
 	//멤버 전체 조회 회원번호 순
 	// 1. 회원전체
 	// 2. 역할에 따라  
-	Page<Member> findAllByOrderBymemberNoDesc(Pageable pageable);
-	Page<Member> findByMemberRoleOrderBymembeNoDesc(Role memberRole,Pageable pageable); 
+	Page<Member> findAllByOrderByMemberNoDesc(Pageable pageable);
+	Page<Member> findByMemberRoleOrderByMemberNoDesc(Role memberRole,Pageable pageable); 
 	
 	//멤버 전체 이름 순
 	//1. 회원전체

@@ -46,7 +46,7 @@ public class AdminMemberController {
 	@Operation(summary = "회원 전체 출력")
 	@GetMapping("/member")
 	public ResponseEntity<Response> getMemberAll(
-			@Parameter(name = "role", description = "필터링할 역할 (null(전체),ROLE_MENTEE, ROLE_MENTOR)", required = true, example = "ROLE_MENTEE") 
+			@Parameter(name = "role", description = "필터링할 역할 (ALL(전체),ROLE_MENTEE, ROLE_MENTOR)", required = true, example = "ROLE_MENTEE") 
 			@RequestParam(name ="role") String role, 
 			@Parameter(name = "order", description = "정렬 종류 (1: 가입 순, 2: 이름 순)", required = true, example = "1") 
 			@RequestParam(name ="order") Integer order,
@@ -92,28 +92,52 @@ public class AdminMemberController {
 
         return new ResponseEntity<>(response, headers, HttpStatus.OK);
     }
-    
+	
 	@SecurityRequirement(name = "BearerAuth")
 	@PreAuthorize("hasRole('ADMIN')")
     @Operation(summary = "멘토 프로필 리스트 출력(상태별)")
     @GetMapping("/mentor/status/{status}")
-    public ResponseEntity<Response> getMentorsByStatus(
+	public ResponseEntity<Response> getMemberByMentorStatus(
             @PathVariable(name = "status") int status,
             @RequestParam(name = "page", defaultValue = "0") int page,
             @RequestParam(name = "size", defaultValue = "10") int size
-    ) {
-        Page<MentorProfileDto> mentors = mentorProfileService.getMentorsByStatus(status, page, size);
+            ){
+		
+		Page<MemberDto> members = memberService.getMemberAllByMentorStatus(status, page, size);
 
         Response response = new Response();
         response.setStatus(ResponseStatusCode.READ_MENTOR_PROFILE_LIST_SUCCESS_CODE);
         response.setMessage(ResponseMessage.READ_MENTOR_PROFILE_LIST_SUCCESS);
-        response.setData(mentors);
+        response.setData(members);
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(new MediaType(MediaType.APPLICATION_JSON, Charset.forName("UTF-8")));
 
         return new ResponseEntity<>(response, headers, HttpStatus.OK);
-    }
+	}
+	
+	
+//	@SecurityRequirement(name = "BearerAuth")
+//	@PreAuthorize("hasRole('ADMIN')")
+//    @Operation(summary = "멘토 프로필 리스트 출력(상태별)")
+//    @GetMapping("/mentor/status/{status}")
+//    public ResponseEntity<Response> getMentorsByStatus(
+//            @PathVariable(name = "status") int status,
+//            @RequestParam(name = "page", defaultValue = "0") int page,
+//            @RequestParam(name = "size", defaultValue = "10") int size
+//    ) {
+//        Page<MentorProfileDto> mentors = mentorProfileService.getMentorsByStatus(status, page, size);
+//
+//        Response response = new Response();
+//        response.setStatus(ResponseStatusCode.READ_MENTOR_PROFILE_LIST_SUCCESS_CODE);
+//        response.setMessage(ResponseMessage.READ_MENTOR_PROFILE_LIST_SUCCESS);
+//        response.setData(mentors);
+//
+//        HttpHeaders headers = new HttpHeaders();
+//        headers.setContentType(new MediaType(MediaType.APPLICATION_JSON, Charset.forName("UTF-8")));
+//
+//        return new ResponseEntity<>(response, headers, HttpStatus.OK);
+//    }
 	
 	@SecurityRequirement(name = "BearerAuth")
 	@PreAuthorize("hasRole('ADMIN')")
