@@ -8,11 +8,11 @@ import { faHeart, faHeartCircleCheck, faHeartCirclePlus } from '@fortawesome/fre
 export default function MentorProfileInfo({ mentorProfile }) {
     const { token, member } = useMemberAuth();
     const [isFollow, setIsfollow] = useState(false);
-    const [follow, setFollow] = useState({
-        followNo:0,
-        menteeMemberNo:member.memberNo,
-        mentorMemberNo:mentorProfile.memberNo
-    })
+    // const [follow, setFollow] = useState({
+    //     followNo:0,
+    //     menteeMemberNo:member.memberNo,
+    //     mentorMemberNo:mentorProfile.memberNo
+    // })
 
   //팔로우 여부 체크
   const checkFollow = async() => {
@@ -23,8 +23,12 @@ export default function MentorProfileInfo({ mentorProfile }) {
 
   //팔로우 등록
   const handleFollowClick = async() => {
-    if(token){
+    if(token && member.memberRole==='ROLE_MENTEE'){
       if (!isFollow) {
+          const follow = {
+            menteeMemberNo:member.memberNo,
+            mentorMemberNo:mentorProfile.memberNo
+          }
           await followApi.addfollow(token, follow);
           setIsfollow(true);
           mentorProfile.mentorFollowCount += 1;
@@ -34,7 +38,7 @@ export default function MentorProfileInfo({ mentorProfile }) {
           mentorProfile.mentorFollowCount -= 1;
       } 
     }else{
-      alert("멘티만 가능한 서비스입니다.")
+      alert("멘티 회원만 가능한 서비스입니다.")
     }
   }
 
@@ -46,13 +50,13 @@ export default function MentorProfileInfo({ mentorProfile }) {
         await ChattingApi.createChatting(member.memberNo, mentorProfile.memberNo);
         
         }else {
-        alert("멘티만 가능한 서비스입니다.");
+        alert("멘티 회원만 가능한 서비스입니다.");
         }
         
     };
     
     useEffect(() => {
-        checkFollow()
+        checkFollow();
     },[])
 
   return (

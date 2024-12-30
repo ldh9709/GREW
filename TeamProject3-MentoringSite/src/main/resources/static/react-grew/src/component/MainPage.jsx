@@ -11,7 +11,7 @@ import { useEffect, useState } from "react";
 import MainInquiryListItem from "./AnswerInquiry/MainInquiryListItem";
 import MainMentorBoard from "./MainMentorBoard";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faRightLong } from "@fortawesome/free-solid-svg-icons";
+import { faCircleChevronRight, faRightLong } from "@fortawesome/free-solid-svg-icons";
 export const MainPage = () => {
   const [currentIndex, setCurrentIndex] = useState([]);
   const [mentorProfile, setMentorProFile] = useState([]);
@@ -89,7 +89,7 @@ export const MainPage = () => {
         </button>
       </div>
       <h1>우수 멘토</h1>
-      <div className="profile-container">
+      <div className="profile-container main-profile-container">
         {mentorProfile && mentorProfile.length > 0 ? (
           mentorProfile
             .slice(0, 4)
@@ -102,11 +102,11 @@ export const MainPage = () => {
       </div>
       <div className="view-more">
         <a href="/mentorprofile/list">
-          멘토 프로필 더 보기 <FontAwesomeIcon icon={faRightLong} />
+          멘토 프로필 더 보기 <FontAwesomeIcon icon={faCircleChevronRight} />
         </a>
       </div>
       <h1>관심 많은 질문</h1>
-      <div>
+      <div className="main-inquiry">
         {inquiry && inquiry.length > 0 ? (
           inquiry.map((inquiry) => (
             <MainInquiryListItem key={inquiry.inquiryNo} inquiry={inquiry} />
@@ -117,7 +117,7 @@ export const MainPage = () => {
       </div>
       <div className="view-more">
         <a href="/inquiry">
-          질문 더 보기 <FontAwesomeIcon icon={faRightLong} />
+          질문 더 보기 <FontAwesomeIcon icon={faCircleChevronRight} />
         </a>
       </div>
       <h1>멘토들의 꿀팁 방출</h1>
@@ -132,12 +132,12 @@ export const MainPage = () => {
               />
             ))
         ) : (
-          <p>게시글글이 없습니다</p>
+          <p>게시글이 없습니다</p>
         )}
       </div>
       <div className="view-more">
         <a href="/mentorboard/list">
-          멘토 컨텐츠 더 보기 <FontAwesomeIcon icon={faRightLong} />
+          멘토 컨텐츠 더 보기 <FontAwesomeIcon icon={faCircleChevronRight} />
         </a>
       </div>
     </>

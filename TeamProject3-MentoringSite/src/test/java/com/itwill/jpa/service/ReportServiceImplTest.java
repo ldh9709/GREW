@@ -27,9 +27,9 @@ class ReportServiceImplTest {
 	}
 
 //	@Test
-	void updateReportStatusToInProgress() {
-		reportService.updateReportStatusToInProgress(2L);
-	}
+//	void updateReportStatusToInProgress() {
+//		reportService.updateReportStatusToInProgress(2L);
+//	}
 	@Test
 	void updateReportStatusToResolved() {
 		reportService.updateReportStatusToResolved(2L);

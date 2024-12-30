@@ -1,4 +1,3 @@
-import { getCookie } from "../../util/cookieUtil";
 import { useMemberAuth } from "../../util/AuthContext"
 import React, { useEffect, useState } from 'react'
 import * as adminApi from '../../api/adminApi';
@@ -55,7 +54,7 @@ function AdminMember() {
     }*/}
 
     return (
-        <div className="admin-member-container">
+        <div className="admin-table-container">
             {/* 드롭다운 */}
             <div className="dropdown">
                 <select onChange={handleRoleChange} value={role}>
@@ -65,7 +64,7 @@ function AdminMember() {
                     
                 </select>
             </div>
-            <table className="member-table">
+            <table className="admin-table">
                 <thead>
                     <tr>
                         <th>번호</th>

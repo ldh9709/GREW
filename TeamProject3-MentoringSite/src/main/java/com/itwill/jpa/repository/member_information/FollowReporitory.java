@@ -20,7 +20,7 @@ public interface FollowReporitory extends JpaRepository<Follow, Long>{
 	boolean existsByMenteeMember_MemberNoAndMentorMember_MemberNo(Long menteeMemberNo, Long mentorMemberNo);
 
 	/* 팔로워 리스트 */
-	Page<Follow> findByMentorMember_MemberNo(Long memberNo,Pageable pageable);
+	Page<Follow> findBymenteeMember_MemberNo(Long memberNo,Pageable pageable);
 	
 	/* 팔로워 멘티 수 찾기 */
 	public Integer countBymentorMember_MemberNo(Long mentorMemberNo);

@@ -16,7 +16,7 @@ function MentorBoardList() {
   const [boards, setBoards] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
-  const [itemsPerPage] = useState(5);
+  const [itemsPerPage] = useState(6); // 한페이지당 데이터 출력 개수
   const [sortType, setSortType] = useState("latest");
   const [categories, setCategories] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState(null);
@@ -193,12 +193,16 @@ function MentorBoardList() {
       <div className="category-container mentor-board-header">
       <h1>멘토 컨텐츠</h1>
 
+      {member && member.memberRole === 'ROLE_MENTOR' ? (
       <div className="btn-mentor-board-write-div">
         <button className="btn-mentor-board-write" onClick={handleWriteButton} >
           <FontAwesomeIcon icon={faPen} />
           <span>글쓰기</span>
         </button>
       </div>
+      ) : (
+        <div></div>
+      )}
 
       {/* 카테고리 버튼 */}
         <div className="category-parent">

@@ -27,7 +27,23 @@ public class ReportDto {
 	@Builder.Default
 	private Integer reportStatus = 1 ;
 	private Long memberNo;
+	private String memberId;
 	
+	public static ReportDto toResponseDto(Report entity) {
+		
+		return ReportDto.builder()
+				.reportNo(entity.getReportNo())
+				.reportType(entity.getReportType())
+				.reportTarget(entity.getReportTarget())
+				.reportReason(entity.getReportReason())
+				.reportContent(entity.getReportContent())
+				.reportDate(entity.getReportDate())
+				.resolvedDate(entity.getResolvedDate())
+				.reportStatus(entity.getReportStatus())
+				.memberNo(entity.getMember().getMemberNo())
+				.memberId(entity.getMember().getMemberId())
+				.build();
+	}
 	public static ReportDto toDto(Report entity) {
 		
 		return ReportDto.builder()

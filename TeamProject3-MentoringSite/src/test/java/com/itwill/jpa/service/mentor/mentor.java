@@ -13,12 +13,17 @@ public class mentor {
 	@Autowired
 	private MentorProfileService mentorProfileService;
 	
-		@Transactional
-		@Test
+		//@Transactional
+		//@Test
 		void updateChattingName() {
 			mentorProfileService.updateMentorRating(1L);
 		}
-	
+		@Test
+		void getcareer() {
+			System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"+mentorProfileService.getMentorProfileDetail(11L));
+//			System.out.println(mentorProfileService.getCareerByMentorProfileNo(11L));
+			
+		}
 	
 	
 }

@@ -1,6 +1,5 @@
 import { useMemberAuth } from "../../../util/AuthContext";
 import React, { useEffect, useState } from "react";
-import image from '../../../image/images.jpeg'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHeart } from '@fortawesome/free-solid-svg-icons';
 import * as followApi from "../../../api/followApi"
@@ -8,14 +7,7 @@ import * as followApi from "../../../api/followApi"
 export default function FollowList() {
     /* Context에 저장된 토큰, 멤버정보 */
     const { token } = useMemberAuth();
-
-    const [followList, setFollowList] = useState([{
-            no: 0,
-            name: '',
-            image: '',
-            primaryCategory: '',
-            subCategory:''
-    }])
+    const [followList, setFollowList] = useState([])
     const [currentPage, setCurrentPage] = useState(1); // 현재 페이지 번호
     const [totalPages, setTotalPages] = useState(0); // 전체 페이지 수
     // const [itemsPerPage] = useState(6); // 페이지당 항목 수 (예: 한 페이지에 6개 항목)
@@ -38,7 +30,7 @@ export default function FollowList() {
     const onClickHeartBtn = async (followNo) => {
         try {
             console.log(followNo);
-            await followApi.deleteFollow(followNo);
+            await followApi.deleteFollow(token,followNo);
             fetchFollowList(currentPage - 1);
         } catch (error) {
             alert('팔로우 취소 실패');
@@ -75,7 +67,6 @@ export default function FollowList() {
                             {followList.map((follow, index) => (
                                 <li className="follow-card" key={index}>
                                     <div className="profile">
-                                        
                                         <img src={follow.mentorImage} alt="프로필 이미지" />
                                     </div>
                                     <div className="info">
