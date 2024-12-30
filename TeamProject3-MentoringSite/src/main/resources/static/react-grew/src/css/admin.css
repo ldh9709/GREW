@@ -162,12 +162,14 @@
   background-color: #0056b3;
   opacity: 0.9;
 }
-.admin-table td .false-report {
+.admin-table td .false-report,
+.move-report-board{
   color: #555;
   background-color: #d3d3d3 ;
 }
 
-.admin-table td .false-report:hover {
+.admin-table td .false-report:hover,
+.move-report-board:hover {
   background-color: #a8a8a8 ;
   opacity: 0.9;
 }
@@ -267,7 +269,6 @@
   border-radius: 4px;
   cursor: pointer;
 }
-
 .report-detail-button .to-resolved {
   background-color: #007bff;
 }
