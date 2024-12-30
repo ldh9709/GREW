@@ -295,19 +295,17 @@ const MentorJoinForm = () => {
                   onChange={(e) => handleCareerChange(index, "startDate", e.target.value)}
                   required
                 />
-                <input
-                  type="date"
-                  value={career.endDate}
-                  onChange={(e) => handleCareerChange(index, "endDate", e.target.value)}
-                />
-              </div>
-            ))}
-            {/* 추가 버튼을 별도의 행으로 추가 */}
-            <div className="add-button-row">
+                  <input
+                    type="date"
+                    value={career.endDate}
+                    onChange={(e) => handleCareerChange(index, "endDate", e.target.value)}
+                  />
+                </div>
+              ))}
+              {/* 추가 버튼을 필드 목록 외부로 이동 */}
               <button type="button" className="add-career-button" onClick={addCareerField}>
                 + 추가
               </button>
-            </div>
           </div>
         </div>
         {/* 경력 END*/}
