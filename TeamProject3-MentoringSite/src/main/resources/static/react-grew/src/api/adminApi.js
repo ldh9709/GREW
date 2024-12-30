@@ -15,7 +15,7 @@ export const adminMember = async(token,role,order) =>{
 
 //게시글 목록 조회
 export const adminInquiry = async(token, category, page, size) => {
-  const response = await fetch(`${BACKEND_SERVER}/admin/inquiry?category=${category}&page=${page}&size=${size}`, {
+  const response = await fetch(`${BACKEND_SERVER}/admin/inquiry/board?page=${page}&size=${size}`, {
     method: 'GET',
     headers: {
       'Authorization': `Bearer ${token}`,
