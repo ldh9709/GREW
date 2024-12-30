@@ -26,7 +26,7 @@ export default function MentorProfileDetail() {
     try {
       setLoading(true);
 
-      // 멘토 프로필 조회
+      // 1. 멘토 프로필 조회
       const mentorProfileResponse = await getMentorProfileByNo(mentorProfileNo);
       // 🔥 데이터 유효성 검사 추가
       if (
@@ -38,6 +38,7 @@ export default function MentorProfileDetail() {
         navigate("/mentor-profile/list", { replace: true });
         return;
       }
+      console.log(mentorProfileResponse.data);
       setMentorProfile(mentorProfileResponse.data);
 
       // 멘토 프로필 데이터에서 categoryNo와 memberNo 가져오기
@@ -179,7 +180,21 @@ export default function MentorProfileDetail() {
           </div>
           <div className="mentor-section">
             <h2>주요 경력</h2>
-            <pre>{mentorProfile?.mentorCareer || "멘토 경력 정보 없음"}</pre>
+            {mentorProfile?.careerDtos &&
+            mentorProfile.careerDtos.length > 0 ? (
+              <ul>
+                {mentorProfile.careerDtos.map((career, index) => (
+                  <li key={index}>
+                    <strong>회사:</strong> {career.careerCompanyName} <br />
+                    <strong>직책:</strong> {career.careerJobTitle} <br />
+                    <strong>기간:</strong> {career.careerStartDate} ~{" "}
+                    {career.careerEndDate || "현재"} <br />
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <pre>멘토 경력 정보 없음</pre>
+            )}
           </div>
         </div>
       </div>

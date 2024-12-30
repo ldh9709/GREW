@@ -2,6 +2,7 @@ package com.itwill.jpa.controller.member_information;
 
 import com.itwill.jpa.auth.PrincipalDetails;
 import com.itwill.jpa.dto.chatting_review.ReviewDto;
+import com.itwill.jpa.dto.member_information.CareerDto;
 import com.itwill.jpa.dto.member_information.MentorProfileDto;
 import com.itwill.jpa.entity.member_information.Category;
 import com.itwill.jpa.entity.member_information.MentorProfile;
@@ -35,13 +36,15 @@ public class MentorProfileController {
 
 	@Autowired
 	private MentorProfileService mentorProfileService;
-
+	
 	@Operation(summary = "멘토 프로필 상세보기")
 	@GetMapping("/{mentorProfileNo}")
 	public ResponseEntity<Response> getMentorProfileDetail(@PathVariable("mentorProfileNo") Long mentorProfileNo) {
 		try {
 			// 🔥 서비스 호출하여 DTO 반환
 			MentorProfileDto mentorProfileDto = mentorProfileService.getMentorProfileDetail(mentorProfileNo);
+			List<CareerDto> careerDtos = mentorProfileService.getCareerByMentorProfileNo(mentorProfileNo);
+			mentorProfileDto.setCareerDtos(careerDtos);
 
 			// 🔥 응답 생성
 			Response response = new Response();

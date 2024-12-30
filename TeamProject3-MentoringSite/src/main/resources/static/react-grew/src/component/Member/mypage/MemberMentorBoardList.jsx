@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
+import { useNavigate } from "react-router-dom"; 
 import { useMemberAuth } from "../../../util/AuthContext"
 import * as mentorBoardApi from '../../../api/mentorBoardApi'
-import imageSrc from '../mentor-content1.jpg'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye } from '@fortawesome/free-regular-svg-icons';
 import PagenationItem from '../../PagenationItem';
@@ -9,10 +9,11 @@ import PagenationItem from '../../PagenationItem';
 export default function MemberMentorContentList() {
     /* Context에 저장된 토큰, 멤버정보 */
     const { token, member } = useMemberAuth();
-
     const [boardList, setBoardList] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(0);
+
+    const navigate = useNavigate(); // useNavigate 훅 사용
 
     const fetchBoardList = async(page,size) => {
         const response = await mentorBoardApi.listBoardContentsByMemberNo(token,page,size);
@@ -41,7 +42,7 @@ export default function MemberMentorContentList() {
   <div className='tab-boards'>
     <div className="board-list">
       {boardList.map((board, index) => (
-        <div className="board-card" key={index}>
+        <div className="board-card" key={index} onClick={() => navigate(`/mentor-board/detail/${board.mentorBoardNo}`)} style={{ cursor: "pointer" }}>
           <div className="board-image-container">
             <img src={board.mentorBoardImage} alt="content-image" className="board-image" />
           </div>

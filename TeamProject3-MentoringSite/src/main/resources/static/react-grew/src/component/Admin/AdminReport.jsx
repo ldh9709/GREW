@@ -1,18 +1,21 @@
 import { useMemberAuth } from "../../util/AuthContext";
 import React, { useEffect, useState } from 'react';
 import * as adminApi from '../../api/adminApi';
+import * as answerApi from '../../api/answerApi';
 import PagenationItem from '../PagenationItem';
 import AdminReportDetail from "./AdminReportDetail";
 import * as reportUtil from '../../util/reportUtil'
+import { useNavigate } from "react-router-dom";
 
 export const UserCard = () => {
     const { token } = useMemberAuth();
-
     const [reports, setReports] = useState([]); // 신고 목록
     const [selectReport ,setSelectReport] = useState(null)
     const [filter, setFilter] = useState(1); // 초기 필터 상태 (1: 전체)
     const [currentPage, setCurrentPage] = useState(1); // 현재 페이지 번호
     const [totalPages, setTotalPages] = useState(0); // 전체 페이지 수
+    const [inquiryNo, setInquiryNo] = useState(0);
+    
 
     // 신고 목록 조회
     const fetchReports = async (filter, page) => {
@@ -25,6 +28,16 @@ export const UserCard = () => {
             console.error("신고 목록 조회 실패", error);
         }
     };
+    //답변 번호로 질문 조회
+    const fetchAnswer = async (answerNo) => {
+        try {
+            const response = await answerApi.viewAnswer(answerNo);
+            setInquiryNo(response.data.inquiryNo)
+        } catch (error) {
+            console.error('답변목록 조회 실패',error)
+        }
+    }
+
 
     // 페이지 변경 시 데이터 갱신
     const paginate = (pageNumber) => {
@@ -42,7 +55,7 @@ export const UserCard = () => {
     const handleFilterChange = (event) => {
         const selectedFilter = parseInt(event.target.value, 10); // 드롭다운에서 선택된 필터 값
         setFilter(selectedFilter);
-        fetchReports(token, selectedFilter, currentPage); // 선택된 필터 값에 맞는 신고 목록 조회
+        fetchReports(selectedFilter, currentPage-1); // 선택된 필터 값에 맞는 신고 목록 조회
     };
 
     // 신고 상태 업데이트 핸들러
@@ -53,7 +66,7 @@ export const UserCard = () => {
             if(confirmation){
                 const response = await adminApi.updateReportStatusForAdmin(token, reportNo, status);
                 alert(`신고 상태가 '${reportUtil.reportStatus(status)}'로 변경되었습니다.`);
-                fetchReports(token, filter, currentPage); // 상태 업데이트 후 목록 새로고침
+                await fetchReports(filter, currentPage-1); // 상태 업데이트 후 목록 새로고침
             }
         } catch (error) {
             console.error("신고 상태 업데이트 실패", error);
@@ -75,11 +88,28 @@ export const UserCard = () => {
         setSelectReport(report)
     }
 
+    // 게시글 이동 버튼 클릭 시
+    const handleMoveBoard = (type,target) => {
+        switch (type) {
+            case 'INQUIRY':
+                window.open(`/inquiry/${target}`, '_blank')
+                break;
+            case 'ANSWER':
+                fetchAnswer(target);
+                window.open(`/inquiry/${inquiryNo}`)
+                break;
+        
+            default:
+                break;
+        }
+    }
+
+
     useEffect(() => {
         if (token) {
             fetchReports(filter, currentPage-1); // 초기 데이터 로드
         }
-    }, [filter, currentPage, reports]);
+    }, [filter, currentPage]);
 
     return (
         <>
@@ -112,7 +142,7 @@ export const UserCard = () => {
                     {reports && reports.length > 0 ? (
                         reports.map((report, index) => (
                             <tr key={index} onClick={ () => {handleReportClick(report)}}>
-                                <td>{index + 1}</td>
+                                <td>{report.reportNo}</td>
                                 <td>{reportUtil.typeName(report.reportType)}</td>
                                 <td>{reportUtil.reasonName(report.reportReason)}</td>
                                 <td>{report.reportContent.length > 10 ? (report.reportContent.substring(0,10) + '...' ) : (report.reportContent)}</td>
@@ -120,11 +150,13 @@ export const UserCard = () => {
                                 <td>{report.reportDate===report.resolvedDate ? " - " : report.resolvedDate.substring(0,10)}</td>
                                 <td>{reportUtil.reportStatus(report.reportStatus)}</td>
                                 <td>{maskId(report.memberId)}</td>
-                                <td>
-                                    <button className="to-resolved"
-                                    onClick={() => handleStatusUpdate(report.reportNo, 2)}
-                                    >이동</button>
-                                </td>
+                                {report.reportType === 'MEMBER' ? <td></td> : 
+                                    <td>
+                                        <button className="move-report-board"
+                                        onClick={() => handleMoveBoard(report.reportType, report.reportTarget)}
+                                        >이동</button>
+                                    </td>
+                                }
                                 <td>
                                     <button className="to-resolved"
                                     onClick={() => handleStatusUpdate(report.reportNo, 2)}
