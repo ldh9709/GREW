@@ -31,6 +31,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.UUID;
 
@@ -524,8 +525,11 @@ public class MentorProfileServiceImpl implements MentorProfileService {
     
     @Override
     public List<CareerDto> getCareerByMentorProfileNo(Long mentorProfileNo){
-    	System.out.println(careerRepository.findById(mentorProfileNo));
+    	List<Career> careers = careerRepository.findByMentorProfile_MentorProfileNo(mentorProfileNo);
     	List<CareerDto> careerDtos = new ArrayList<>();
+    	for (int i = 0; i < careers.size(); i++) {
+    		careerDtos.add(CareerDto.toDto(careers.get(i)));
+		}
     	return careerDtos;
     }
 }
