@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import * as inquiryApi from "../../api/inquiryApi";
 import * as answerApi from "../../api/answerApi";
+import * as mentorProfileApi from "../../api/mentorProfileApi";
 import AnswerItem from "./AnswerItem";
 import "../../css/styles.css";
 import { useMemberAuth } from "../../util/AuthContext";
@@ -31,6 +32,17 @@ function InquiryView() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [report, setreport] = useState({});
   const [isAnswer, setisAnswer] = useState([false]);
+  const [mentorProfileStatus, setMentorProFileStatus] = useState([]);
+
+  //멘토프로필 상태체크
+  const mentorProfileCheck = async () => {
+    if (member.memberNo) {
+      const response = await mentorProfileApi.getMentorProfileByMemberNo(
+        member.memberNo
+      );
+      setMentorProFileStatus(response.data.mentorStatus);
+    }
+  };
   useEffect(() => {
     (async () => {
       const responseJsonObject = await inquiryApi.viewInquiry(inquiryNo);
@@ -47,9 +59,8 @@ function InquiryView() {
     })();
   }, [inquiryNo, navigate]);
   useEffect(() => {
-    if(inquiryNo){
+    if (inquiryNo) {
       increaseView(inquiryNo);
-
     }
   }, []);
   const increaseView = async (inquiryNo) => {
@@ -130,7 +141,8 @@ function InquiryView() {
     pageNumbers.push(i);
   }
   const handleWriteButton = () => {
-    if (!token) {
+    mentorProfileCheck();
+    if (!member.memberNo) {
       alert("로그인이 필요한 서비스입니다.");
       return;
     } else if (member.memberRole == "ROLE_MENTEE") {
@@ -143,14 +155,18 @@ function InquiryView() {
       alert("한 질문에 하나의 답변만 작성할 수 있습니다.");
       return;
     } else if (member.memberRole == "ROLE_MENTOR") {
-      navigate('/answer/write', {
-        state: { inquiryNo: inquiryNo }
-      });
+      if (mentorProfileStatus != 3) {
+        alert("멘토 심사중입니다.");
+      } else {
+        navigate("/answer/write", {
+          state: { inquiryNo: inquiryNo },
+        });
+      }
     }
   };
   const handleModify = () => {
-    navigate('/inquiry/modify', {
-      state: { inquiryNo: inquiryNo }
+    navigate("/inquiry/modify", {
+      state: { inquiryNo: inquiryNo },
     });
   };
 
