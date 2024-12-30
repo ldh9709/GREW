@@ -5,100 +5,83 @@ import "../../css/mentorProfile.css"; // 🔥 추가된 CSS 파일
 import { getMentorProfileByNo } from "../../api/mentorProfileApi.js";
 import { listReviewByMember } from "../../api/reviewApi.js"; // 리뷰 목록 API 추가
 import * as categoryApi from "../../api/categoryApi";
+import * as mentorBoardApi from "../../api/mentorBoardApi";
 import MentorProfileInfo from "./MentorProfileInfo.jsx";
+import MentorBoardItem from "../MentorBoard/MentorBoardItem";
 
-
-import MentorBoardItem from "../MentorBoard/MentorBoardItem"; // 올바른 경로로 수정
 export default function MentorProfileDetail() {
-  const { token, member } = useMemberAuth();
+  const { token } = useMemberAuth();
   const { mentorProfileNo } = useParams();
   const navigate = useNavigate(); // navigate 훅 추가
   const [mentorProfile, setMentorProfile] = useState({});
   const [reviews, setReviews] = useState([]); // 빈 배열로 초기화
+  const [boards, setBoards] = useState([]); // 멘토 보드 상태
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [categoryName, setCategoryName] = useState("카테고리 정보 없음");
 
-
-
-
-
+  // 멘토 프로필 데이터 가져오기
   const fetchMentorProfile = async () => {
     try {
       setLoading(true);
 
       // 1. 멘토 프로필 조회
-      const mentorProfileResponse = await getMentorProfileByNo(
-        mentorProfileNo
-      );
-       // 🔥 데이터 유효성 검사 추가
-    if (!mentorProfileResponse?.data || Object.keys(mentorProfileResponse.data).length === 0) {
-      console.warn("Invalid mentor profile number:", mentorProfileNo);
-      // 프로필 데이터가 없으면 리다이렉트
-      navigate("/mentor-profile/list", { replace: true });
-      return;
-    }
+      const mentorProfileResponse = await getMentorProfileByNo(mentorProfileNo);
+      if (!mentorProfileResponse?.data || Object.keys(mentorProfileResponse.data).length === 0) {
+        console.warn("Invalid mentor profile number:", mentorProfileNo);
+        navigate("/mentor-profile/list", { replace: true });
+        return;
+      }
       setMentorProfile(mentorProfileResponse.data);
 
-      // 2. 멘토 프로필 번호로 리뷰 목록 조회 (Authorization 헤더에 JWT 토큰 추가)
-      const reviewsResponse = await listReviewByMember(
-        mentorProfileNo, // memberNo 대신 mentorProfileNo를 바로 사용
-        0,
-        5,
-        token // token을 Authorization 헤더에 포함시켜야 함
-      );
-
-      // console.log("Reviews Response:", reviewsResponse);
-      // console.log("Reviews Response Data:", reviewsResponse.data); // 전체 데이터 확인
-      // console.log(
-      //   "Reviews Response Data.content:",
-      //   reviewsResponse.data?.content
-      // ); // content만 따로 확인
-
-      // Check if there are reviews in the response
-      if (reviewsResponse.data) {
-        setReviews(reviewsResponse.data.content); // content 배열 처리
+      // 2. 리뷰 목록 조회
+      const reviewsResponse = await listReviewByMember(mentorProfileNo, 0, 5, token);
+      if (reviewsResponse?.data) {
+        setReviews(reviewsResponse.data.content);
       } else {
-        setReviews([]); // 데이터가 없으면 빈 배열 처리
-
-        // 멘토 프로필 데이터에서 categoryNo와 memberNo  가져오기
-        if (mentorProfile.categoryNo) {
-          fetchCategoryName(mentorProfile.categoryNo);
-        }
+        setReviews([]);
       }
 
+      // 3. 카테고리 이름 가져오기
+      if (mentorProfileResponse.data.categoryNo) {
+        fetchCategoryName(mentorProfileResponse.data.categoryNo);
+      }
     } catch (error) {
       setError("멘토 프로필을 가져오는 중 오류가 발생했습니다.");
-      // 오류 발생 시 리다이렉트
       navigate("/mentor-profile/list", { replace: true });
     } finally {
       setLoading(false);
     }
   };
 
+  // 멘토 보드 데이터 가져오기
+  const fetchMentorBoards = async () => {
+    try {
+      const response = await mentorBoardApi.listMentorBoardsByProfile(mentorProfileNo, 0, 5);
+      setBoards(response?.data?.content || []);
+    } catch (error) {
+      console.error("멘토 보드 데이터를 가져오는 중 오류 발생:", error);
+    }
+  };
+
   useEffect(() => {
     fetchMentorProfile();
-  }, []);
+    fetchMentorBoards();
+  }, [mentorProfileNo]);
 
-  console.log("Reviews:", reviews); // 이 줄을 추가하여 reviews 데이터를 확인
-
-  if (loading) return <p>로딩 중...</p>;
   const fetchCategoryName = async (categoryNo) => {
     try {
       const response = await categoryApi.ListCategory();
       const allCategories = response.data || [];
-      const matchingCategory = allCategories.find(
-        (cat) => cat.categoryNo === categoryNo
-      );
-      setCategoryName(
-        matchingCategory ? matchingCategory.categoryName : "카테고리 정보 없음"
-      );
+      const matchingCategory = allCategories.find((cat) => cat.categoryNo === categoryNo);
+      setCategoryName(matchingCategory ? matchingCategory.categoryName : "카테고리 정보 없음");
     } catch (error) {
       console.error("카테고리 정보를 가져오는 중 오류 발생:", error);
       setCategoryName("카테고리 정보 없음");
     }
   };
 
+  if (loading) return <p>로딩 중...</p>;
   if (error) return <p className="error-message">{error}</p>;
 
   return (
@@ -106,12 +89,10 @@ export default function MentorProfileDetail() {
       <div className="mentor-header">
         {/* 좌측: 멘토 개별 정보*/}
         <MentorProfileInfo mentorProfile={mentorProfile} />
-        
+
         {/* 우측: 상세 정보 */}
         <div className="mentor-details-section">
-          <span className="mentor-category-box">    
-            {mentorProfile.categoryName}
-          </span>
+          <span className="mentor-category-box">{categoryName}</span>
           <div className="mentor-section mentor-headline">
             <h2>"{mentorProfile.mentorHeadline}"</h2>
           </div>
@@ -134,8 +115,7 @@ export default function MentorProfileDetail() {
             {reviews.map((review) => (
               <li key={review.reviewNo}>
                 <p>
-                  <strong>{review.menteeName || "작성자 이름"}</strong> 님의
-                  리뷰
+                  <strong>{review.menteeName || "작성자 이름"}</strong> 님의 리뷰
                 </p>
                 <p>{review.reviewContent || "리뷰 내용이 없습니다."}</p>
                 <p>평점: {review.reviewScore || "없음"}</p>
@@ -143,13 +123,25 @@ export default function MentorProfileDetail() {
             ))}
           </ul>
         ) : (
-          <p>리뷰가 없습니다.</p> // 리뷰가 없으면 해당 메시지를 표시
+          <p>리뷰가 없습니다.</p>
         )}
       </div>
+
+      {/* 멘토 보드 목록 */}
       <div className="mentor-boards">
-  <h3>멘토 보드</h3>
-  <MentorBoardItem memberNo={mentorProfile.memberNo} />
-</div>
+        <h3>멘토 보드</h3>
+        {boards.length > 0 ? (
+          boards.map((board) => (
+            <MentorBoardItem
+              key={board.mentorBoardNo}
+              board={board}
+              onClick={() => navigate(`/mentor-board/detail/${board.mentorBoardNo}`)}
+            />
+          ))
+        ) : (
+          <p>등록된 멘토 보드가 없습니다.</p>
+        )}
+      </div>
     </div>
   );
 }
