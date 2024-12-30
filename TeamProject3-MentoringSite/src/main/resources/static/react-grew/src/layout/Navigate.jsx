@@ -67,7 +67,7 @@ export default function Navigate() {
           placeholder="궁금한 내용을 검색해보세요!"
           className="search-input"
         />
-        <FontAwesomeIcon icon={faSearch} className="search-icon" />
+        <FontAwesomeIcon icon={faSearch} className="search-icon" onClick={handleSearchClick} style={{ cursor: "pointer" }} />
       </div>
     </div>
 
