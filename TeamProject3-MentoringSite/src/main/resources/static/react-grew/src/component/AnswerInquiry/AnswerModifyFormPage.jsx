@@ -1,17 +1,22 @@
 import React, { useEffect, useRef, useState } from "react";
 import * as answerApi from "../../api/answerApi";
-import { useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useMemberAuth } from "../../util/AuthContext";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye } from "@fortawesome/free-regular-svg-icons";
 import * as inquiryApi from "../../api/inquiryApi";
 
 export default function AnswerModifyFormPage() {
-
-  const { answerNo } = useParams();
-  const {token, member} = useMemberAuth();
-  const modifyFormRef = useRef();
   const navigate = useNavigate();
+  const location = useLocation();
+  useEffect(() => {
+    if (!location || !location.state) {
+      navigate("/403");
+    }
+  }, [location, navigate]);
+  const { answerNo } = location?.state || {};
+  const { token, member } = useMemberAuth();
+  const modifyFormRef = useRef();
   const initAnswer = {
     answerNo: 0,
     answerContent: "",
@@ -52,14 +57,17 @@ export default function AnswerModifyFormPage() {
   }, [answer.inquiryNo]); // inquiryNo가 변경될 때마다 실행
   useEffect(() => {
     const a = async () => {
-      const responseJsonObject = await answerApi.viewAnswer(answerNo);
-      console.log(responseJsonObject.data);
-      if (member.memberNo != responseJsonObject.data.memberNo) {
-        navigate("/403");
-      }
-      setAnswer(responseJsonObject.data);
-    };
-    a();
+      if(answerNo){
+
+        const responseJsonObject = await answerApi.viewAnswer(answerNo);
+        console.log(responseJsonObject.data);
+        if (member.memberNo != responseJsonObject.data.memberNo) {
+          navigate("/403");
+        }
+        setAnswer(responseJsonObject.data);
+      };
+      a();
+    }
   }, [answerNo]);
 
   const onChangeAnswerForm = (e) => {
@@ -70,26 +78,26 @@ export default function AnswerModifyFormPage() {
   };
 
   const answerModifyAction = async () => {
-    console.log('answer',answer)
-    const responseJsonObject = await answerApi.updateAnswer(answer,token);
+    console.log("answer", answer);
+    const responseJsonObject = await answerApi.updateAnswer(answer, token);
     console.log(responseJsonObject);
     navigate(`/inquiry/${answer.inquiryNo}`);
   };
 
   const answerRemoveAction = async () => {
     try {
-      const confirmation = window.confirm('답변을 삭제하시겠습니까?')
+      const confirmation = window.confirm("답변을 삭제하시겠습니까?");
       if (!confirmation) return;
-    
+
       const responseJsonObject = await answerApi.deleteAnswer(answerNo, token);
       if (responseJsonObject.status === 6300) {
         navigate("/inquiry");
       }
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
   };
-  
+
   return (
     <>
       <div>
@@ -106,12 +114,10 @@ export default function AnswerModifyFormPage() {
               <div>
                 {inquiry.memberName} 멘티ㆍ
                 {inquiry.inquiryDate.substring(0, 10)}ㆍ
-                <FontAwesomeIcon icon={faEye}/> {inquiry.inquiryViews}
+                <FontAwesomeIcon icon={faEye} /> {inquiry.inquiryViews}
               </div>
             </div>
-            <div className="inquiry-view-content">
-              {inquiry.inquiryContent}
-            </div>
+            <div className="inquiry-view-content">{inquiry.inquiryContent}</div>
           </div>
         </div>
       </div>

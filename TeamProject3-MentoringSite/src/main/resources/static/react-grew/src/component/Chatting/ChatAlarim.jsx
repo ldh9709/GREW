@@ -26,7 +26,6 @@ const ChatAlarim = () => {
   const alarmIsReadCount = async () => {
     if (member.memberNo) {
       const response = await AlarmApi.isReadAlarmCount(member.memberNo);
-      console.log(response.data);
       setAlarmCount(response.data);
     }
   };

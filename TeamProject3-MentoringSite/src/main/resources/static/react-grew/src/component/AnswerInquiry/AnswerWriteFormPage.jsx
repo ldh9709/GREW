@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import * as answerApi from "../../api/answerApi";
-import { useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useMemberAuth } from "../../util/AuthContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye } from "@fortawesome/free-regular-svg-icons";
@@ -9,7 +9,13 @@ export default function AnswerWriteFormPage() {
   const { token, member } = useMemberAuth();
   const writeFormRef = useRef();
   const navigate = useNavigate();
-  const { inquiryNo } = useParams();
+  const location = useLocation();
+  useEffect(() => {
+    if (!location || !location.state) {
+      navigate("/403");
+    }
+  }, [location, navigate]);
+  const { inquiryNo } = location?.state || {};
   const initAnswer = {
     answerNo: 0,
     answerContent: "",
@@ -32,24 +38,27 @@ export default function AnswerWriteFormPage() {
   };
   const [answer, setAnswer] = useState(initAnswer);
   const [inquiry, setInquiry] = useState(initInquiry); // inquiry 데이터를 저장할 상태
-  if (!member.memberNo) {
-    navigate("/");
-  } else if (member.memberRole == "ROLE_MENTEE") {
-    navigate("/403");
-  } else if (member.memberNo == inquiry.memberNo) {
-    navigate("/403");
-  }
+  useEffect(()=>{
+
+    if (!member.memberNo) {
+      navigate("/");
+    } else if (member.memberRole == "ROLE_MENTEE") {
+      navigate("/403");
+    } else if (member.memberNo == inquiry.memberNo) {
+      navigate("/403");
+    }
+  },[])
   // 질문 데이터 가져오는 함수
   useEffect(() => {
-   
-
     const fetchInquiryData = async () => {
-      try {
-        const response = await answerApi.findInquiry(inquiryNo);
-        console.log(response.data);
-        setInquiry(response.data); // 받아온 데이터를 상태로 설정
-      } catch (error) {
-        console.error("Error fetching inquiry data", error);
+      if(inquiryNo){
+
+        try {
+          const response = await answerApi.findInquiry(inquiryNo);
+          setInquiry(response.data); // 받아온 데이터를 상태로 설정
+        } catch (error) {
+          console.error("Error fetching inquiry data", error);
+        }
       }
     };
 

@@ -20,7 +20,6 @@ export const MainPage = () => {
 
   const fetchMentorBoard = async () => {
     const response = await mentorBoardApi.listMentorBoardsByViews(0, 4);
-    console.log(response.data.content);
     setMentorBoard(response.data.content);
   };
   const fetchInquiry = async () => {

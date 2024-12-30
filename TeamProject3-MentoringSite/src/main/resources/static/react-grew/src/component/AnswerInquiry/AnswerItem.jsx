@@ -62,7 +62,9 @@ export default function AnswerItem({ answer }) {
 
   //답변 수정 버튼
   const handleModify = async () => {
-    navigate(`/answer/modify/${answer.answerNo}`);
+    navigate('/answer/modify', {
+      state: { answerNo: answer.answerNo }
+    });
   };
   const handleUpvote = async () => {
     try {

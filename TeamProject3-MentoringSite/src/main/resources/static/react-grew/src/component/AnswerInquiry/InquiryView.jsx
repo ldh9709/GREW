@@ -143,11 +143,15 @@ function InquiryView() {
       alert("한 질문에 하나의 답변만 작성할 수 있습니다.");
       return;
     } else if (member.memberRole == "ROLE_MENTOR") {
-      navigate(`/answer/answerWrite/${inquiryNo}`);
+      navigate('/answer/write', {
+        state: { inquiryNo: inquiryNo }
+      });
     }
   };
   const handleModify = () => {
-    navigate(`/inquiry/modify/${inquiryNo}`);
+    navigate('/inquiry/modify', {
+      state: { inquiryNo: inquiryNo }
+    });
   };
 
   // 이름 마스킹
