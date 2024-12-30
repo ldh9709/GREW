@@ -136,11 +136,13 @@ useEffect(() => {
           {loading && <div>로딩 중...</div>}
           {error && <div>{error}</div>}
         {mentorBoards.length > 0 ? (
-        <div>
+        <div className="mentor-board-list-main">
            {mentorBoards.map((board) => (
-           <MentorBoardItem key={board.mentorBoardNo} board={board} />
+           <MentorBoardItem key={board.mentorBoardNo} board={board} className="board-card" />
          ))}
-         <button onClick={handleViewMoreMentorBoards}>멘토 보드 더보기</button>
+         <div>
+         <button className="view-more-button" onClick={handleViewMoreMentorBoards}>멘토 보드 더보기</button>
+         </div>
             </div>
         ) : (
         <p>검색 결과가 없습니다.</p>
