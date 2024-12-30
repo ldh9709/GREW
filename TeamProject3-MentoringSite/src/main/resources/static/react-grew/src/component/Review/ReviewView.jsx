@@ -46,10 +46,14 @@ export default function ReviewDetailPage() {
     return (
       <div>
         {[...Array(filledStars)].map((_, index) => (
-          <span key={index} className="star filled">★</span>
+          <span key={index} className="star filled">
+            ★
+          </span>
         ))}
         {[...Array(emptyStars)].map((_, index) => (
-          <span key={index + filledStars} className="star">★</span>
+          <span key={index + filledStars} className="star">
+            ★
+          </span>
         ))}
       </div>
     );
@@ -59,23 +63,20 @@ export default function ReviewDetailPage() {
     <div className="review-detail-container">
       <h2>리뷰 자세히 보기</h2>
       <div className="review-detail">
-        <h3>{review.reviewTitle}</h3> {/* 리뷰 제목 */}
-        <p>{review.reviewContent}</p> {/* 리뷰 내용 */}
         <div className="review-score">
           <span>점수: </span>
           {renderStars(review.reviewScore)} {/* 별점 표시 */}
         </div>
+        <h3>{review.reviewTitle}</h3> {/* 리뷰 제목 */}
+        <p>{review.reviewContent}</p> {/* 리뷰 내용 */}
         <div>
-          <span>상태: {review.reviewStatus === 1 ? "활성" : "비활성"}</span> {/* 리뷰 상태 */}
+          <span>
+            작성일: {new Date(review.reviewDate).toLocaleDateString()}
+          </span>{" "}
+          {/* 리뷰 작성일 */}
         </div>
         <div>
-          <span>작성일: {new Date(review.reviewDate).toLocaleDateString()}</span> {/* 리뷰 작성일 */}
-        </div>
-        <div>
-          <span>작성자 번호: {review.memberNo}</span> {/* 작성자 번호 */}
-        </div>
-        <div>
-          <span>멘티 이름: {review.menteeName}</span> {/* 멘티 이름 */}
+          <span>작성자: {review.menteeName}</span> {/* 멘티 이름 */}
         </div>
       </div>
     </div>
