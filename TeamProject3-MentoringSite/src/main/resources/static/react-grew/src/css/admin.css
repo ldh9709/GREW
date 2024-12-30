@@ -7,7 +7,7 @@
 
 .admin-content{
   position: relative;
-  width: 70%; height: 75%;
+  width: 70%; height: 70%;
   margin: 50px 50px;
   padding: 30px 20px;
   background-color: #fff;
@@ -270,13 +270,13 @@
   margin-top: 10px;
 }
 .report-detail-button button {
-  width: 50%;
-  padding: 5px 0;
+  padding: 10px 50px;
   font-size: 14px;
   color: #fff;
   border: none;
   border-radius: 4px;
   cursor: pointer;
+  margin: 0px 2px;
 }
 .report-detail-button .to-resolved {
   background-color: #007bff;
@@ -296,6 +296,11 @@
   opacity: 0.9;
 }
 
+.report-detail-button .checked {
+  background-color: #ccc;
+  color: #fff;
+  cursor: not-allowed;
+}
 .cancel-button{
   position: absolute;
   right: 10px;

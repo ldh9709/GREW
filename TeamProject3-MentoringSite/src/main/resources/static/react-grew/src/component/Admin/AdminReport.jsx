@@ -5,7 +5,6 @@ import * as answerApi from '../../api/answerApi';
 import PagenationItem from '../PagenationItem';
 import AdminReportDetail from "./AdminReportDetail";
 import * as reportUtil from '../../util/reportUtil'
-import { useNavigate } from "react-router-dom";
 
 export const UserCard = () => {
     const { token } = useMemberAuth();
@@ -119,7 +118,7 @@ export const UserCard = () => {
                 <select onChange={handleFilterChange} value={filter}>
                     <option value={1}>전체보기</option>
                     <option value={2}>접수중</option>                
-                    <option value={3}>처리완료</option>                
+                    <option value={3}>신고처리</option>                
                     <option value={4}>무고처리</option>                
                 </select>
             </div>
@@ -186,7 +185,9 @@ export const UserCard = () => {
                 </tbody>
             </table>
             
-            { selectReport && (<AdminReportDetail report={selectReport} onClose={() => setSelectReport(null)}/> )}
+            { selectReport && (<AdminReportDetail report={selectReport}
+                onClose={() => setSelectReport(null)}
+                fetchReports={() => fetchReports(filter, currentPage - 1)}/> )}
 
             <div className="admin-pagenation">
                 <PagenationItem
