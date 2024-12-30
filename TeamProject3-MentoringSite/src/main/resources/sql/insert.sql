@@ -33,7 +33,7 @@ VALUES(category_no_SEQ.nextval,'연기/연극',2,9);
 INSERT INTO category(category_no, category_name, category_depth, parent_category_no)
 VALUES(category_no_SEQ.nextval,'창업/비즈니스',1,null);
 INSERT INTO category(category_no, category_name, category_depth, parent_category_no)
-VALUES(category_no_SEQ.nextval,'스타트업 아이디어',2,15);
+VALUES(category_no_SEQ.nextval,'스타트업',2,15);
 INSERT INTO category(category_no, category_name, category_depth, parent_category_no)
 VALUES(category_no_SEQ.nextval,'마케팅 전략',2,15);
 INSERT INTO category(category_no, category_name, category_depth, parent_category_no)
@@ -180,7 +180,7 @@ VALUES(mentor_profile_no_SEQ.nextval,
 - 계약직 기회를 제대로 활용하는 방법
 - 대학원 진학의 득과 실
 
-등을 드릴 수 있습니다 :)', 5, 40, '/images/mentor-profile/10.jpg', 170, 90, 3, 15, member_no_SEQ.currval, '하이');
+등을 드릴 수 있습니다 :)', 5, 40, '/images/mentor-profile/10.jpg', 170, 90, 3, 12, member_no_SEQ.currval, '하이');
 INSERT INTO career(CAREER_NO, CAREER_COMPANY_NAME, CAREER_JOB_TITLE, CAREER_START_DATE, CAREER_END_DATE, MENTOR_PROFILE_NO)
 VALUES(career_no_SEQ.nextval, '한샘', '영업시스템 PM팀_ 서비스기획', '2024.01.01', null, 11);
 INSERT INTO career(CAREER_NO, CAREER_COMPANY_NAME, CAREER_JOB_TITLE, CAREER_START_DATE, CAREER_END_DATE, MENTOR_PROFILE_NO)
