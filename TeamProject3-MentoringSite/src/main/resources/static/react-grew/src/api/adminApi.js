@@ -13,6 +13,22 @@ export const adminMember = async(token,role,order) =>{
   return responseJsonObject;
 }
 
+//mentor 목록 조회
+export const adminMentorBoard = async(token, page, size)=>{
+  const response = await fetch(`${BACKEND_SERVER}/admin/mentor-board?page=${page}&size=${size}`,{
+    method: "GET",
+    headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+    },
+  });
+  if (!response.ok) {
+    throw new Error("API 호출 실패");
+  }
+  const responseJsonObject= await response.json();
+  return responseJsonObject;
+}
+
 //게시글 목록 조회
 export const adminInquiry = async(token, page, size) => {
   try {

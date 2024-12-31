@@ -3,6 +3,7 @@ import "../../css/admin.css";
 import AdminMember from './AdminMember';
 import AdminReport from './AdminReport';
 import AdminInquiry from './AdminInquiry';
+import AdminMentorBoard from './AdminMentorBoard';
 
 export default function Admin() {
 
@@ -20,7 +21,7 @@ export default function Admin() {
         <ul>
           <li onClick={() => handleTabClick("member")}>회원</li>
           <li onClick={() => handleTabClick("board")}>질문 게시글</li>
-          <li onClick={() =>("") }>멘토 게시글</li>
+          <li onClick={() =>handleTabClick("mentor") }>멘토 게시글</li>
           <li onClick={() => handleTabClick("report")}>신고 목록</li>
         </ul>
     </div>
@@ -30,7 +31,8 @@ export default function Admin() {
     <div className="admin-content">
       {activeTab === "member" && <AdminMember />}
       {activeTab === "report" && <AdminReport />}
-      {activeTab === "board" && <AdminInquiry />}
+      {activeTab === "board" && <AdminInquiry />}      
+      {activeTab === "mentor" && <AdminMentorBoard />}      
     </div>
 </div>
   )
