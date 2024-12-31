@@ -137,7 +137,7 @@ public class AlarmServiceimpl implements AlarmService {
 	@Override
 	public AlarmDto createAlarmByFollowByMentor(Long MentorMemberNo) {
 		AlarmDto alarmDto = new AlarmDto();
-		alarmDto.setAlarmContent("멘토님을 팔로우하는 멘티가 증가했습니다.");
+		alarmDto.setAlarmContent("멘티가 회원님을 팔로우하기 시작했습니다.");
 		alarmDto.setAlarmType("follower");
 		alarmDto.setMemberNo(MentorMemberNo);
 		return AlarmDto.toDto(alarmRepository.save(Alarm.toEntity(alarmDto)));
@@ -184,7 +184,7 @@ public class AlarmServiceimpl implements AlarmService {
 		case "question":
 			return "/inquiry/" + alarmDto.getReferenceNo();
 		case "mentorBoard":
-			return "/mentorBoard/" + alarmDto.getReferenceNo();
+			return "/mentor-board/detail/" + alarmDto.getReferenceNo();
 		case "review":
 			return "/review/" + alarmDto.getReferenceNo();
 		default:
