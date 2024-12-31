@@ -13,9 +13,7 @@
   border-radius: 5px;
 }
 
-.btn-mentor-board-write:hover {
-  background-color: #438642;
-}
+
 
 /* 정렬 버튼*/
 .radio-container{
@@ -32,6 +30,24 @@
 }
 
 
+.view-more-button {
+  position: absolute;
+  bottom: 0;
+  right: 0; /* 왼쪽에서 오른쪽으로 변경 */
+  margin: 10px;
+  padding: 2px 10px;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  font-size: 17px;
+}
+
+
+.view-more-button:hover {
+  background-color: #45a049;
+}
 /* 멘토 컨텐츠 아이템 */
 .mentor-board-list-main{
   display: flex;
