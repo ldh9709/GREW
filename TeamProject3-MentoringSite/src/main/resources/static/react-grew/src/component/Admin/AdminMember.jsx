@@ -10,9 +10,9 @@ function AdminMember() {
     const [memberCount, setMemberCount] = useState(0);
     const [mentorRegisterCount, setMentorRegisterCount] = useState(0);
     const [state, setState] = useState({
-        role: "ALL",
-        order: 1,
-        mentorStatus: 2,
+        role: "",
+        order: 0,
+        mentorStatus: 0,
         activeTab: ""
     });
     // const [role, setRole] = useState("ALL");
@@ -28,6 +28,7 @@ function AdminMember() {
             setMember(response.data.content);
             setTotalPages(response.data.totalPages);
             setMemberCount(response.data.totalElements);
+            console.log('state',state)
         } catch (error) {
             console.log("회원 목록 조회 실패", error);
         }
@@ -48,8 +49,8 @@ function AdminMember() {
     const fetchMentorByStatus = async(status, order, page, size) => {
         try {
             const response = await adminApi.adminMentorByStatus(token, status, order, page, size)
-            console.log(response.data)
             setMember(response.data.content)
+            console.log(response.data);
         } catch (error) {
             console.log("멘토 상태별 조회 실패",error)
         }
@@ -64,43 +65,50 @@ function AdminMember() {
 
     //탭 변경 시
     const handleTabClick = (tab) => {
-        if (state.activeTab === tab) return; // 이미 활성화된 탭 클릭 시 무시
-    
-        const updatedState = {};
-        switch (tab) {
-            case "전체회원":
-                updatedState.role = "ALL";
-                updatedState.order = 1;
-                updatedState.mentorStatus = 0;
-                break;
-            case "멘티회원":
-                updatedState.role = "ROLE_MENTEE";
-                updatedState.order = 1;
-                updatedState.mentorStatus = 0;
-                break;
-            case "멘토회원":
-                updatedState.role = "";
-                updatedState.order = 1;
-                updatedState.mentorStatus = 3;
-                break;
-            case "멘토신청":
-                updatedState.role = "";
-                updatedState.order = 1;
-                updatedState.mentorStatus = 2;
-                break;
-            default:
-                break;
-        }
-    
-        setState((prev) => ({
-            ...prev,
-            ...updatedState,
-            activeTab: tab,
-        }));
+        setState((prev) => {
+            let newState = { ...prev };
+            switch (tab) {
+                case "전체회원":
+                    newState = {
+                        ...newState,
+                        role: "ALL",
+                        order: 1,
+                        activeTab: tab,
+                    };
+                    break;
+                case "멘티회원":
+                    newState = {
+                        ...newState,
+                        role: "ROLE_MENTEE",
+                        order: 1,
+                        activeTab: tab,
+                    };
+                    break;
+                case "멘토회원":
+                    newState = {
+                        ...newState,
+                        role: "ROLE_MENTOR",
+                        order: 1,
+                        mentorStatus: 3,
+                        activeTab: tab,
+                    };
+                    break;
+                case "멘토신청":
+                    newState = {
+                        ...newState,
+                        role: "ROLE_MENTOR",
+                        order: 1,
+                        mentorStatus: 2,
+                        activeTab: tab,
+                    };
+                    break;
+                default:
+                    break;
+            }
+            return newState;
+        });
         paginate(1);
-    };
-
-
+    }
     const handleMentorDetail = () => {
         
     }
@@ -123,25 +131,23 @@ function AdminMember() {
     // }, []);
 
     // 실행 함수
-   useEffect(() => {
-    const fetchData = async () => {
-        setLoading(true);
-        try {
-            if (state.activeTab === "멘토신청" || state.activeTab === "멘토회원") {
-                await fetchMentorByStatus(state.mentorStatus, state.order, currentPage - 1, 10);
-            } else {
-                await fetchMembers(state.role, state.order, currentPage - 1, 10);
+    useEffect(() => {
+        const fetchData = async () => {
+            setLoading(true);
+            try {
+                if (state.activeTab === "멘토신청") {
+                    await fetchMentorByStatus(state.mentorStatus, state.order, currentPage - 1, 10);
+                } else {
+                    await fetchMembers(state.role, state.order, currentPage - 1, 10);
+                }
+            } catch (error) {
+                console.error("데이터 로딩 실패", error);
+            } finally {
+                setLoading(false);
             }
-        } catch (error) {
-            console.error("데이터 로딩 실패", error);
-        } finally {
-            setLoading(false);
-        }
-    };
-
-    fetchData();
-   }, [state, currentPage]);
-    
+        };
+        fetchData();
+    }, [state,currentPage]);
     
     return (
         <>
@@ -215,7 +221,7 @@ function AdminMember() {
                                             : "탈퇴"}
                                     </td>
                                     <td>{member.memberReportCount}</td>
-                                    {state.activeTab ==="멘토신청" ?
+                                    {state.activeTab === '멘토신청' ?
                                     (
                                     <td>
                                         <button className="check"
