@@ -14,8 +14,8 @@ export const adminMember = async(token,role,order,page,size) =>{
 }
 
 //멘토 상태별 목록 조회 
-export const adminMentorByStatus = async (token,status,page,size) => {
-  const response = await fetch(`${BACKEND_SERVER}/admin/mentor/status/${status}?page=${page}&size=${size}`, {
+export const adminMentorByStatus = async (token,status,order,page,size) => {
+  const response = await fetch(`${BACKEND_SERVER}/admin/mentor/status?status=${status}&order=${order}&page=${page}&size=${size}`, {
   method: 'GET',
   headers: {
     'Authorization': `Bearer ${token}`,
