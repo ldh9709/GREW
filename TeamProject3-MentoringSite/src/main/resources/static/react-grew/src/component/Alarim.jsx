@@ -6,13 +6,10 @@ import { useMemberAuth } from "../util/AuthContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
 const Alarim = () => {
-  const {token, member} = useMemberAuth();
+  const { token, member } = useMemberAuth();
   const [notifications, setNotifications] = useState([]);
   const navigate = useNavigate();
-  useEffect(() => {
-    setInterval(fetchNotifications, 10000); // 5초마다 폴링
-    fetchNotifications();
-  }, []); 
+
   const fetchNotifications = async () => {
     if (member) {
       const response = await alarmApi.findByMemberNo(member.memberNo); // API 호출
@@ -21,11 +18,15 @@ const Alarim = () => {
       setNotifications(null);
     }
   };
-  const allIsReadNotificationByMember=async(memberNo)=>{
+  useEffect(() => {
+    setInterval(fetchNotifications, 10000); // 5초마다 폴링
+    fetchNotifications();
+  }, []);
+  const allIsReadNotificationByMember = async (memberNo) => {
     await alarmApi.isReadAllAlarm(memberNo);
 
     fetchNotifications();
-  }
+  };
   const deleteNotification = async (alarmNo) => {
     await alarmApi.deleteAlarm(alarmNo);
 
@@ -63,7 +64,7 @@ const Alarim = () => {
         {member && notifications.length > 0 ? (
           notifications.map((notification) => (
             <div key={notification.alarmNo} className="notification">
-              {notification.isRead == 1 ? (
+              {notification.isRead === 1 ? (
                 <button
                   className="notification-main-btn"
                   onClick={() => {
@@ -94,7 +95,9 @@ const Alarim = () => {
                 >
                   <div className="notification">
                     <div className="notification-icon">🔔</div>
-                    <div className="notification-content">{notification.alarmContent}</div>
+                    <div className="notification-content">
+                      {notification.alarmContent}
+                    </div>
                   </div>
 
                   <div
