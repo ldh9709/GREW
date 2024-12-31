@@ -19,10 +19,10 @@ export default function Admin() {
       case "member":
         return "회원목록"
         break;
-      case "inquiry":
+      case "board":
         return "질문게시글"
         break;
-      case "board":
+      case "mentor":
         return "멘토게시글"
         break;
       case "report":
@@ -49,9 +49,9 @@ export default function Admin() {
     </div>
     <div className="admin-content">
       {activeTab === "member" && <AdminMember />}
-      {activeTab === "report" && <AdminReport />}
       {activeTab === "board" && <AdminInquiry />}      
       {activeTab === "mentor" && <AdminMentorBoard />}      
+      {activeTab === "report" && <AdminReport />}
     </div>
 </div>
   )

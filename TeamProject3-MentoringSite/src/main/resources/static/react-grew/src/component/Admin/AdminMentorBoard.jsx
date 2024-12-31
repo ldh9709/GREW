@@ -42,7 +42,7 @@ export default function AdminMentorBoard () {
 
     return(
         <div className="admin-table-container">
-            <div className="dropdwon">{/* 드롭다운 */}
+           {/* <div className="dropdwon"> //드롭다운 
                 <select className="dropdown-style" 
                 value={role} onChange={(e)=> setRole(e.target.value)}>
                     <option value="ALL">전체 보기</option>
@@ -51,20 +51,19 @@ export default function AdminMentorBoard () {
                     <option value="3">예술 / 창작</option>
                     <option value="4">창업 / 비즈니스</option>
                 </select>
-            </div>
+            </div>*/}
             <table className="admin-table">
                 <thead>
                     <tr>
-                        <th>#</th>
+                        <th>    </th>
                         <th>제목</th>
-                        <th>내용</th>
-                        <th>이미지</th>
+                        {/*<th>내용</th>*/}
                         <th>작성일</th>
                         <th>조회수</th>
-                        <th>상태</th>
+                       
                         <th>회원 번호</th>
-                        <th>카테고리 번호</th>
-                        <th>카테고리 이름</th>
+                        
+                        <th>카테고리</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -72,14 +71,13 @@ export default function AdminMentorBoard () {
                         mentors.map((mentor, index) => (
                             <tr key={index}>
                                 <td>{index + 1}</td>
-                                <td>{mentor.mentorBoardTitle}</td>
-                                <td>{mentor.mentorBoardContent}</td>
-                                <td>{mentor.mentorBoardImage}</td>
-                                <td>{mentor.mentorBoardDate}</td>
+                                {/*<td>{mentor.mentorBoardTitle}</td>*/}
+                                <td>{mentor.mentorBoardContent.substring(0,50)}</td>
+                                <td>{mentor.mentorBoardDate.substring(0,10)}</td>
                                 <td>{mentor.mentorBoardViews}</td>
-                                <td>{mentor.mentorBoardStatus}</td>
+                                
                                 <td>{mentor.memberNo}</td>
-                                <td>{mentor.categoryNo}</td>
+                                
                                 <td>{mentor.categoryName}</td>
                             </tr>
                             ))
@@ -91,11 +89,11 @@ export default function AdminMentorBoard () {
                 </tbody>
             </table>
             <div className="admin-pagenation">
-                {/*<PagenationItem
+                <PagenationItem
                     currentPage={currentPage}
                     totalPages={totalPages}
                     paginate={paginate}
-                />*/}
+                />
             </div>
         </div>
     )
