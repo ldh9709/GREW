@@ -2,6 +2,7 @@ import { useMemberAuth } from "../../util/AuthContext";
 import React, { useEffect, useState } from "react";
 import * as adminApi from "../../api/adminApi";
 import PagenationItem from "../PagenationItem";
+import AdminMemberDetail from "./AdminMemberDetail";
 
 function AdminMember() {
     const { token } = useMemberAuth();
@@ -15,12 +16,10 @@ function AdminMember() {
         mentorStatus: 0,
         activeTab: ""
     });
-    // const [role, setRole] = useState("ALL");
-    // const [order, setOrder] =useState(1);
-    // const [mentorStatus, setmentorStatus] =useState(0);
-    // const [activeTab, setActiveTab] = useState("전체회원");
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(0); 
+    const [selectMentor, setSelectMentor] = useState(null);
+
 
     const fetchMembers = async (role, order, page, size) => {
         try {
@@ -40,6 +39,7 @@ function AdminMember() {
         try {
             const response = await adminApi.adminMentorByStatus(token, status, order, 0, 1);
             setMentorRegisterCount(response.data.totalElements);
+            console.log(response)
         } catch (error) {
             console.error("멘토 상태별 조회 실패", error);
         }
@@ -55,13 +55,6 @@ function AdminMember() {
             console.log("멘토 상태별 조회 실패",error)
         }
     }
-
-    // const updateState = (key, value) => {
-    //     setState((prevState) => ({
-    //         ...prevState,
-    //         [key]: value,
-    //     }));
-    // };
 
     //탭 변경 시
     const handleTabClick = (tab) => {
@@ -125,10 +118,16 @@ function AdminMember() {
     const paginate = (pageNumber) => {
         setCurrentPage(pageNumber);
     };
+
+    //신청 회원 행 클릭
+    const handleRegisterMentor = (mentor) => {
+        setSelectMentor(mentor);
+    }
+
     // 실행 함수
-    // useEffect(() => {
-    //     fetchMentorRegisterCount(2,1)
-    // }, []);
+    useEffect(() => {
+        fetchMentorRegisterCount(2,1)
+    }, []);
 
     // 실행 함수
     useEffect(() => {
@@ -204,7 +203,9 @@ function AdminMember() {
                     {loading ? <tbody></tbody> :
                         <tbody>
                             {members && members.map((member, index) => (
-                                <tr key={index}>
+                                <tr key={index}
+                                    onClick={()=>(handleRegisterMentor(member.mentorProfile))}
+                                >
                                     <td>{member.memberNo}</td>
                                     <td>{member.memberName}</td>
                                     <td>{member.memberId}</td>
@@ -238,6 +239,14 @@ function AdminMember() {
                 <span className="member-count">
                     총 : {state.activeTab === "멘토신청" ? mentorRegisterCount :memberCount}
                 </span>
+                {selectMentor && (
+                    <AdminMemberDetail
+                        onClose={()=>{setSelectMentor(null)}}
+                        mentor={selectMentor}
+                    />
+                )}
+
+
                 <div className="admin-pagenation">
                 <PagenationItem 
                     currentPage={currentPage}
