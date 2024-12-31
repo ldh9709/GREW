@@ -137,7 +137,7 @@ public class AlarmServiceimpl implements AlarmService {
 	@Override
 	public AlarmDto createAlarmByFollowByMentor(Long MentorMemberNo) {
 		AlarmDto alarmDto = new AlarmDto();
-		alarmDto.setAlarmContent("멘토님을 팔로우하는 멘티가 증가했습니다.");
+		alarmDto.setAlarmContent("멘티가 회원님을 팔로우하기 시작했습니다.");
 		alarmDto.setAlarmType("follower");
 		alarmDto.setMemberNo(MentorMemberNo);
 		return AlarmDto.toDto(alarmRepository.save(Alarm.toEntity(alarmDto)));
@@ -150,13 +150,13 @@ public class AlarmServiceimpl implements AlarmService {
 		Answer answer = answerRepository.findById(answerNo).get();
 		String inquiryTitle = answer.getInquiry().getInquiryTitle();
 		String answerContent = answer.getAnswerContent();
-		if(answerContent.length()>10) {
-			answerContent =answerContent.substring(0,10)+"...";
+		if (answerContent.length() > 10) {
+			answerContent = answerContent.substring(0, 10) + "...";
 		}
 		if (inquiryTitle.length() > 10) {
 			inquiryTitle = inquiryTitle.substring(0, 10) + "..."; // 길이를 초과하면 '...' 추가
 		}
-		alarmDto.setAlarmContent("질문'" + inquiryTitle + "'에 대한 회원님의 답변'"+answerContent+"'에 추천이 달렸습니다");
+		alarmDto.setAlarmContent("질문'" + inquiryTitle + "'에 대한 회원님의 답변'" + answerContent + "'에 추천이 달렸습니다");
 		alarmDto.setAlarmType("vote");
 		alarmDto.setMemberNo(answer.getMember().getMemberNo());
 		alarmDto.setReferenceNo(answer.getInquiry().getInquiryNo());
@@ -176,6 +176,19 @@ public class AlarmServiceimpl implements AlarmService {
 		return alarmDtoList;
 	}
 
+	// 멤버 한명 알림 전체 읽음 처리
+	@Override
+	public List<AlarmDto> setAlarmIsReadByMember(Long memberNo) {
+		List<AlarmDto> alarmDtoList = new ArrayList<>();
+		List<Alarm> alarmList = alarmRepository.findByMember_MemberNo(memberNo);
+		for (Alarm alarm : alarmList) {
+			alarm.setIsRead(2);
+			alarmRepository.save(alarm);
+			alarmDtoList.add(AlarmDto.toDto(alarm));
+		}
+		return alarmDtoList;
+	}
+
 	// 알림 클릭시 URl전송
 	@Override
 	public String alarmRedirectURL(AlarmDto alarmDto) {
@@ -184,14 +197,15 @@ public class AlarmServiceimpl implements AlarmService {
 		case "question":
 			return "/inquiry/" + alarmDto.getReferenceNo();
 		case "mentorBoard":
-			return "/mentorBoard/" + alarmDto.getReferenceNo();
+			return "/mentor-board/detail/" + alarmDto.getReferenceNo();
 		case "review":
 			return "/review/" + alarmDto.getReferenceNo();
 		default:
 			throw new IllegalArgumentException("Unknown reference type");
 		}
 	}
-	//알림 안읽음 갯수
+
+	// 알림 안읽음 갯수
 	@Override
 	public Long alarmIsReadCount(Long memberNo) {
 		Long count = alarmRepository.countByMember_MemberNoAndIsRead(memberNo, 1);

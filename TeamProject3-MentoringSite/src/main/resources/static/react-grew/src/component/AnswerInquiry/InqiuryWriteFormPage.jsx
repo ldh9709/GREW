@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import * as inquiryApi from "../../api/inquiryApi";
 import { useNavigate } from "react-router-dom";
-import { getCookie } from "../../util/cookieUtil";
 import * as categoryApi from "../../api/categoryApi";
 import {useMemberAuth} from '../../util/AuthContext';
 export default function InqiuryWriteFormPage() {

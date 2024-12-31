@@ -18,12 +18,15 @@ public class mentor {
 		void updateChattingName() {
 			mentorProfileService.updateMentorRating(1L);
 		}
-		@Test
-		void getcareer() {
-//			System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"+mentorProfileService.getMentorProfileDetail(11L));
-			System.out.println(mentorProfileService.getCareerByMentorProfileNo(11L));
-			
-		}
+
+//		@Test
+//		void getcareer() {
+//		System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"+mentorProfileService.getMentorProfileDetail(11L));
+//		System.out.println(mentorProfileService.getCareerByMentorProfileNo(11L));
+//			
+//		}
+
+
 	
 	
 }

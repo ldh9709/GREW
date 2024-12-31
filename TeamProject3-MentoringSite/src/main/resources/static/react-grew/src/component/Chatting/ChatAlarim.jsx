@@ -26,7 +26,6 @@ const ChatAlarim = () => {
   const alarmIsReadCount = async () => {
     if (member.memberNo) {
       const response = await AlarmApi.isReadAlarmCount(member.memberNo);
-      console.log(response.data);
       setAlarmCount(response.data);
     }
   };
@@ -43,7 +42,7 @@ const ChatAlarim = () => {
   
   return (
     <div>
-      {token != null ? (
+      {member&&member.memberNo != null ? (
         <>
           {/* Panel */}
           <div className={`chat-panel ${activePanel ? "open" : ""}`}>

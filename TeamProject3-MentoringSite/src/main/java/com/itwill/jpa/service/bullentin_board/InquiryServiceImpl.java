@@ -35,30 +35,30 @@ public class InquiryServiceImpl implements InquiryService {
 	private InquiryIpViewRepository inquiryIpViewRepository; // Repository를 통해 조회 기록을 관리
 
 	private final ClientIp clientIpUtil = new ClientIp();// ip
-	
+
 	// 질문등록
 	@Override
 	public InquiryDto createInquiry(InquiryDto inquiryDto) {
-	    try {
-	    	Inquiry inquiry = Inquiry.toEntity(inquiryDto);
-	        return InquiryDto.toDto(inquiryRepository.save(inquiry));
-	    } catch (Exception e) {
-	        throw new CustomException(ResponseStatusCode.CREATED_INQUIRY_FAIL, ResponseMessage.CREATED_INQUIRY_FAIL, e);
-	    }
+		try {
+			Inquiry inquiry = Inquiry.toEntity(inquiryDto);
+			return InquiryDto.toDto(inquiryRepository.save(inquiry));
+		} catch (Exception e) {
+			throw new CustomException(ResponseStatusCode.CREATED_INQUIRY_FAIL, ResponseMessage.CREATED_INQUIRY_FAIL, e);
+		}
 	}
 
 	// 질문수정
 	@Override
 	public InquiryDto updateInquiry(InquiryDto inquiryDto) {
 		try {
-			//질문이 존재하는지 확인
+			// 질문이 존재하는지 확인
 			Inquiry inquiry = inquiryRepository.findById(inquiryDto.getInquiryNo()).get();
-			
+
 			inquiry.setInquiryTitle(inquiryDto.getInquiryTitle());
 			inquiry.setInquiryContent(inquiryDto.getInquiryContent());
 			inquiry.setInquiryDate(LocalDateTime.now());
 			return InquiryDto.toDto(inquiryRepository.save(inquiry));
-		}catch (Exception e) {
+		} catch (Exception e) {
 			throw new CustomException(ResponseStatusCode.UPDATE_INQUIRY_FAIL, ResponseMessage.UPDATE_INQUIRY_FAIL, e);
 		}
 	}
@@ -67,12 +67,12 @@ public class InquiryServiceImpl implements InquiryService {
 	@Override
 	public InquiryDto deleteInquiry(Long inquiryNo) {
 		try {
-			//질문이 존재하는지 확인
+			// 질문이 존재하는지 확인
 			Inquiry inquiry = inquiryRepository.findById(inquiryNo).get();
-			
+
 			inquiry.setInquiryStatus(2); // 삭제 상태로 변경
 			return InquiryDto.toDto(inquiryRepository.save(inquiry));
-		}catch (Exception e) {
+		} catch (Exception e) {
 			throw new CustomException(ResponseStatusCode.DELETE_INQUIRY_FAIL, ResponseMessage.DELETE_INQUIRY_FAIL, e);
 		}
 	}
@@ -82,43 +82,46 @@ public class InquiryServiceImpl implements InquiryService {
 	public InquiryDto getInquiry(Long InquiryNo) {
 		try {
 			return InquiryDto.toDto(inquiryRepository.findById(InquiryNo).get());
-		}catch (Exception e) {
+		} catch (Exception e) {
 			throw new CustomException(ResponseStatusCode.READ_INQUIRY_FAIL, ResponseMessage.READ_INQUIRY_FAIL, e);
 		}
 	}
 
-	// 조회수 증가 제한: IP별로 일정 시간 내에 조회수 증가 제한
 	@Override
 	public InquiryDto increaseViewInquiry(Long inquiryNo, String ipAddress) {
 		try {
 			// Inquiry 조회 질문이 없으면 예외처리
-			Inquiry inquiry = inquiryRepository.findById(inquiryNo).get();
-	
+			Inquiry inquiry = inquiryRepository.findById(inquiryNo).orElseThrow(
+					() -> new CustomException(ResponseStatusCode.INCREASE_VIEW_INQUIRY_FAIL, ResponseMessage.INCREASE_VIEW_INQUIRY_FAIL, null));
+
 			// IP 조회 기록을 DB에서 확인
 			InquiryIpView lastView = inquiryIpViewRepository.findByIpAddressAndInquiry_InquiryNo(ipAddress, inquiryNo);
-	
+
 			long currentTime = System.currentTimeMillis();
 			long lastViewTime = lastView != null
 					? lastView.getLastViewed().atZone(ZoneId.systemDefault()).toInstant().toEpochMilli()
 					: 0;
-	
+
 			// 조회수 증가 제한 시간 (1시간)
-			if (lastViewTime != 0 && currentTime - lastViewTime < 30 * 60 * 1000) {
-				System.out.println("제한시간이 지나지않음");
+			if (lastViewTime != 0 && currentTime - lastViewTime < 60 * 60 * 1000) { // 1시간
+				System.out.println("제한시간이 지나지 않음");
 			} else {
 				// 조회수 증가
 				inquiry.setInquiryViews(inquiry.getInquiryViews() + 1);
 				inquiryRepository.save(inquiry);
-	
+
 				// IP 조회 기록 업데이트
 				InquiryIpViewDto updatedIpView = new InquiryIpViewDto(null, ipAddress, inquiryNo, LocalDateTime.now());
 				inquiryIpViewRepository.save(InquiryIpView.toEntity(updatedIpView));
 			}
-	
+
 			// DTO로 변환하여 반환
 			return InquiryDto.toDto(inquiry);
-		}catch (Exception e) {
-			throw new CustomException(ResponseStatusCode.INCREASE_VIEW_INQUIRY_FAIL, ResponseMessage.INCREASE_VIEW_INQUIRY_FAIL, e);
+		} catch (Exception e) {
+			// 예외 로그 추가
+			e.printStackTrace();
+			throw new CustomException(ResponseStatusCode.INCREASE_VIEW_INQUIRY_FAIL,
+					ResponseMessage.INCREASE_VIEW_INQUIRY_FAIL, e);
 		}
 	}
 
@@ -128,29 +131,34 @@ public class InquiryServiceImpl implements InquiryService {
 	public Page<InquiryDto> getByCategoryInquiryOrderByAnswer(Long categoryNo, int pageNumber, int pageSize) {
 		try {
 			Pageable pageable = PageRequest.of(pageNumber, pageSize);
-			Page<Inquiry> inquiryEntityList = inquiryRepository.findByCategoryInquiryOrderByAnswer(categoryNo, pageable);
+			Page<Inquiry> inquiryEntityList = inquiryRepository.findByCategoryInquiryOrderByAnswer(categoryNo,
+					pageable);
 			List<InquiryDto> inquiryDtoList = new ArrayList<>();
 			for (Inquiry inquiryEntity : inquiryEntityList) {
 				inquiryDtoList.add(InquiryDto.toDto(inquiryEntity));
 			}
 			return new PageImpl<>(inquiryDtoList, pageable, inquiryEntityList.getTotalElements());
 		} catch (Exception e) {
-			throw new CustomException(ResponseStatusCode.READ_INQUIRY_LIST_FAIL, ResponseMessage.READ_INQUIRY_LIST_FAIL, e);
+			throw new CustomException(ResponseStatusCode.READ_INQUIRY_LIST_FAIL, ResponseMessage.READ_INQUIRY_LIST_FAIL,
+					e);
 		}
 	}
+
 	// 답변갯수순(대분류)
 	@Override
 	public Page<InquiryDto> getByParentCategoryInquiryOrderByAnswer(Long categoryNo, int pageNumber, int pageSize) {
 		try {
 			Pageable pageable = PageRequest.of(pageNumber, pageSize);
-			Page<Inquiry> inquiryEntityList = inquiryRepository.findByParentCategoryInquiryOrderByAnswer(categoryNo, pageable);
+			Page<Inquiry> inquiryEntityList = inquiryRepository.findByParentCategoryInquiryOrderByAnswer(categoryNo,
+					pageable);
 			List<InquiryDto> inquiryDtoList = new ArrayList<>();
 			for (Inquiry inquiryEntity : inquiryEntityList) {
 				inquiryDtoList.add(InquiryDto.toDto(inquiryEntity));
 			}
 			return new PageImpl<>(inquiryDtoList, pageable, inquiryEntityList.getTotalElements());
 		} catch (Exception e) {
-			throw new CustomException(ResponseStatusCode.READ_INQUIRY_LIST_FAIL, ResponseMessage.READ_INQUIRY_LIST_FAIL, e);
+			throw new CustomException(ResponseStatusCode.READ_INQUIRY_LIST_FAIL, ResponseMessage.READ_INQUIRY_LIST_FAIL,
+					e);
 		}
 	}
 
@@ -165,23 +173,27 @@ public class InquiryServiceImpl implements InquiryService {
 				inquiryDtoList.add(InquiryDto.toDto(inquiryEntity));
 			}
 			return new PageImpl<>(inquiryDtoList, pageable, inquiryEntityList.getTotalElements());
-		}catch (Exception e) {
-			throw new CustomException(ResponseStatusCode.READ_INQUIRY_LIST_FAIL, ResponseMessage.READ_INQUIRY_LIST_FAIL, e);
+		} catch (Exception e) {
+			throw new CustomException(ResponseStatusCode.READ_INQUIRY_LIST_FAIL, ResponseMessage.READ_INQUIRY_LIST_FAIL,
+					e);
 		}
 	}
+
 	// 조회순(카테고리대분류)
 	@Override
 	public Page<InquiryDto> getByParentCategoryInquiryOrderByView(Long categoryNo, int pageNumber, int pageSize) {
 		try {
 			Pageable pageable = PageRequest.of(pageNumber, pageSize);
-			Page<Inquiry> inquiryEntityList = inquiryRepository.findByParentCategoryInquiryOrderByView(categoryNo, pageable);
+			Page<Inquiry> inquiryEntityList = inquiryRepository.findByParentCategoryInquiryOrderByView(categoryNo,
+					pageable);
 			List<InquiryDto> inquiryDtoList = new ArrayList<>();
 			for (Inquiry inquiryEntity : inquiryEntityList) {
 				inquiryDtoList.add(InquiryDto.toDto(inquiryEntity));
 			}
 			return new PageImpl<>(inquiryDtoList, pageable, inquiryEntityList.getTotalElements());
 		} catch (Exception e) {
-			throw new CustomException(ResponseStatusCode.READ_INQUIRY_LIST_FAIL, ResponseMessage.READ_INQUIRY_LIST_FAIL, e);
+			throw new CustomException(ResponseStatusCode.READ_INQUIRY_LIST_FAIL, ResponseMessage.READ_INQUIRY_LIST_FAIL,
+					e);
 		}
 	}
 
@@ -196,24 +208,27 @@ public class InquiryServiceImpl implements InquiryService {
 				inquiryDtoList.add(InquiryDto.toDto(inquiryEntity));
 			}
 			return new PageImpl<>(inquiryDtoList, pageable, inquiryEntityList.getTotalElements());
-		}catch (Exception e) {
-			throw new CustomException(ResponseStatusCode.READ_INQUIRY_LIST_FAIL, ResponseMessage.READ_INQUIRY_LIST_FAIL, e);
+		} catch (Exception e) {
+			throw new CustomException(ResponseStatusCode.READ_INQUIRY_LIST_FAIL, ResponseMessage.READ_INQUIRY_LIST_FAIL,
+					e);
 		}
 	}
-	
+
 	// 최신순(대분류)
 	@Override
 	public Page<InquiryDto> getByParentCategoryInquiryOrderByDate(Long categoryNo, int pageNumber, int pageSize) {
 		try {
 			Pageable pageable = PageRequest.of(pageNumber, pageSize);
-			Page<Inquiry> inquiryEntityList = inquiryRepository.findByParentCategoryInquiryOrderByDate(categoryNo, pageable);
+			Page<Inquiry> inquiryEntityList = inquiryRepository.findByParentCategoryInquiryOrderByDate(categoryNo,
+					pageable);
 			List<InquiryDto> inquiryDtoList = new ArrayList<>();
 			for (Inquiry inquiryEntity : inquiryEntityList) {
 				inquiryDtoList.add(InquiryDto.toDto(inquiryEntity));
 			}
 			return new PageImpl<>(inquiryDtoList, pageable, inquiryEntityList.getTotalElements());
 		} catch (Exception e) {
-			throw new CustomException(ResponseStatusCode.READ_INQUIRY_LIST_FAIL, ResponseMessage.READ_INQUIRY_LIST_FAIL, e);
+			throw new CustomException(ResponseStatusCode.READ_INQUIRY_LIST_FAIL, ResponseMessage.READ_INQUIRY_LIST_FAIL,
+					e);
 		}
 	}
 
@@ -229,8 +244,9 @@ public class InquiryServiceImpl implements InquiryService {
 				inquiryDtoList.add(InquiryDto.toDto(inquiryEntity));
 			}
 			return new PageImpl<>(inquiryDtoList, pageable, inquiryEntityList.getTotalElements());
-		}catch (Exception e) {
-			throw new CustomException(ResponseStatusCode.READ_INQUIRY_LIST_FAIL, ResponseMessage.READ_INQUIRY_LIST_FAIL, e);
+		} catch (Exception e) {
+			throw new CustomException(ResponseStatusCode.READ_INQUIRY_LIST_FAIL, ResponseMessage.READ_INQUIRY_LIST_FAIL,
+					e);
 		}
 	}
 
@@ -244,11 +260,12 @@ public class InquiryServiceImpl implements InquiryService {
 			for (Inquiry inquiryEntity : inquiryEntityList) {
 				inquiryDtoList.add(InquiryDto.toDto(inquiryEntity));
 			}
-	
+
 			// PageImpl을 사용해 Page<InquiryDto> 반환
 			return new PageImpl<>(inquiryDtoList, pageable, inquiryEntityList.getTotalElements());
-		}catch (Exception e) {
-			throw new CustomException(ResponseStatusCode.READ_INQUIRY_LIST_FAIL, ResponseMessage.READ_INQUIRY_LIST_FAIL, e);
+		} catch (Exception e) {
+			throw new CustomException(ResponseStatusCode.READ_INQUIRY_LIST_FAIL, ResponseMessage.READ_INQUIRY_LIST_FAIL,
+					e);
 		}
 	}
 
@@ -262,12 +279,13 @@ public class InquiryServiceImpl implements InquiryService {
 			for (Inquiry inquiryEntity : inquiryEntityList) {
 				inquiryDtoList.add(InquiryDto.toDto(inquiryEntity));
 			}
-	
+
 			// PageImpl을 사용해 Page<InquiryDto> 반환
 			return new PageImpl<>(inquiryDtoList, pageable, inquiryEntityList.getTotalElements());
-		}catch (Exception e) {
-			throw new CustomException(ResponseStatusCode.READ_INQUIRY_LIST_FAIL, ResponseMessage.READ_INQUIRY_LIST_FAIL, e);
-		} 
+		} catch (Exception e) {
+			throw new CustomException(ResponseStatusCode.READ_INQUIRY_LIST_FAIL, ResponseMessage.READ_INQUIRY_LIST_FAIL,
+					e);
+		}
 	}
 
 	// 검색기능
@@ -281,8 +299,9 @@ public class InquiryServiceImpl implements InquiryService {
 				inquiryDtoList.add(InquiryDto.toDto(inquiryEntity));
 			}
 			return new PageImpl<>(inquiryDtoList, pageable, inquiryEntityList.getTotalElements());
-		}catch (Exception e) {
-			throw new CustomException(ResponseStatusCode.READ_INQUIRY_LIST_FAIL, ResponseMessage.READ_INQUIRY_LIST_FAIL, e);
+		} catch (Exception e) {
+			throw new CustomException(ResponseStatusCode.READ_INQUIRY_LIST_FAIL, ResponseMessage.READ_INQUIRY_LIST_FAIL,
+					e);
 		}
 	}
 
@@ -292,7 +311,7 @@ public class InquiryServiceImpl implements InquiryService {
 		try {
 			String clientIp = clientIpUtil.getClientIp(httpServletRequest);
 			return clientIp;
-		}catch (Exception e) {
+		} catch (Exception e) {
 			throw new CustomException(ResponseStatusCode.READ_IPCHECK_FAIL, ResponseMessage.READ_IPCHECK_FAIL, e);
 		}
 	}
@@ -309,14 +328,16 @@ public class InquiryServiceImpl implements InquiryService {
 				inquiryDtoList.add(InquiryDto.toDto(inquiryEntity));
 			}
 			return new PageImpl<>(inquiryDtoList, pageable, inquiryEntityList.getTotalElements());
-		}catch (Exception e) {
-			throw new CustomException(ResponseStatusCode.READ_INQUIRY_LIST_FAIL, ResponseMessage.READ_INQUIRY_LIST_FAIL, e);
+		} catch (Exception e) {
+			throw new CustomException(ResponseStatusCode.READ_INQUIRY_LIST_FAIL, ResponseMessage.READ_INQUIRY_LIST_FAIL,
+					e);
 		}
 	}
-	//번호로 질문 DTO 찾기
+
+	// 번호로 질문 DTO 찾기
 	@Override
 	public InquiryDto getInquiryByInquiryNo(Long inquiryNo) {
-		InquiryDto inquiryDto = InquiryDto.toDto(inquiryRepository.findById(inquiryNo).get()); 
+		InquiryDto inquiryDto = InquiryDto.toDto(inquiryRepository.findById(inquiryNo).get());
 		return inquiryDto;
 	}
 

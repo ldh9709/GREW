@@ -63,16 +63,6 @@ const MemberFindPasswordForm = () => {
                 />
             </div>
             <div className="form-group">
-            <label htmlFor="birthDate">생년월일</label>
-                <input 
-                type="text" 
-                id="memberBirthDay" 
-                name="memberBirthDay"
-                placeholder="YYYY/MM/DD" 
-                onChange={handleChangeFindPasswordForm}
-                />
-            </div>
-            <div className="form-group">
             <label htmlFor="email">이메일 주소</label>
             <div className="email-group">
                 <input

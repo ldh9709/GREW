@@ -123,7 +123,5 @@ public interface MentorProfileService {
     
     Long getMemberNoByMentorNo(Long mentorProfileNo);
     
-    List<CareerDto> getCareerByMentorProfileNo(Long mentorProfileNo);
-    
 }
 

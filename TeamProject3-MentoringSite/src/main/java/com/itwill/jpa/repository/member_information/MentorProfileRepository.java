@@ -51,13 +51,15 @@ public interface MentorProfileRepository extends JpaRepository<MentorProfile, Lo
         "WHERE mp.member.memberNo = :memberNo" )
     void updateMentorRatingByMemberNo(@Param("memberNo") Long memberNo);
     
-    @Query("SELECT mp FROM MentorProfile mp " +
+    @Query("SELECT DISTINCT mp FROM MentorProfile mp " +
             "JOIN FETCH mp.member " +
             "JOIN FETCH mp.category " +
-            "WHERE mp.mentorStatus = 3 AND " +
-            "(LOWER(mp.mentorIntroduce) LIKE LOWER(CONCAT('%', :search, '%')) " +
-//            "OR LOWER(mp.mentorCareer) LIKE LOWER(CONCAT('%', :search, '%')) " +
-            "OR LOWER(mp.member.memberName) LIKE LOWER(CONCAT('%', :search, '%'))) ")
+            "LEFT JOIN FETCH mp.careers c " + // MentorProfile의 careers를 직접 조인
+            "WHERE mp.mentorStatus = 3 AND (" +
+            "LOWER(mp.mentorIntroduce) LIKE LOWER(CONCAT('%', :search, '%')) " +
+            "OR LOWER(mp.member.memberName) LIKE LOWER(CONCAT('%', :search, '%')) " +
+            "OR LOWER(c.careerCompanyName) LIKE LOWER(CONCAT('%', :search, '%')) " +
+            "OR LOWER(c.careerJobTitle) LIKE LOWER(CONCAT('%', :search, '%')))")
      Page<MentorProfile> searchMentorProfiles(@Param("search") String search, Pageable pageable);
 
      @Query("SELECT mp FROM MentorProfile mp WHERE mp.category.categoryNo = :categoryNo")

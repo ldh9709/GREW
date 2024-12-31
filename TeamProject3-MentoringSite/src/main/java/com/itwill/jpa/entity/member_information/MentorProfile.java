@@ -94,5 +94,10 @@ public class MentorProfile {
                 .build();
     }
     
-    
+    //경력 추가
+    public void addCareers(Career career) {
+    	careers.add(career);
+    	career.setMentorProfile(this);
+    	
+    }
 }

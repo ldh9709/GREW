@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import * as inquiryApi from "../../api/inquiryApi";
 import * as answerApi from "../../api/answerApi";
+import * as mentorProfileApi from "../../api/mentorProfileApi";
 import AnswerItem from "./AnswerItem";
 import "../../css/styles.css";
 import { useMemberAuth } from "../../util/AuthContext";
@@ -30,25 +31,44 @@ function InquiryView() {
   const [isReportHovered, setIsReportHovered] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [report, setreport] = useState({});
+  const [isAnswer, setisAnswer] = useState([false]);
+  const [mentorProfileStatus, setMentorProFileStatus] = useState([]);
 
+  //멘토프로필 상태체크
+  const mentorProfileCheck = async () => {
+    if (member.memberNo&&member.memberRole == "ROLE_MENTOR") {
+      const response = await mentorProfileApi.getMentorProfileByMemberNo(
+        member.memberNo
+      );
+      setMentorProFileStatus(response.data.mentorStatus);
+      console.log(response.data.mentorStatus);
+    }
+  };
   useEffect(() => {
     (async () => {
       const responseJsonObject = await inquiryApi.viewInquiry(inquiryNo);
-      console.log(responseJsonObject);
 
       if (
         responseJsonObject.status === 5500 &&
         responseJsonObject.data.inquiryStatus === 1
       ) {
         setInquiry(responseJsonObject.data);
-        await inquiryApi.increaseView(inquiryNo);
       } else {
         alert("게시물이 존재하지 않습니다");
         navigate("/inquiry");
       }
     })();
   }, [inquiryNo, navigate]);
-
+  useEffect(() => {
+    if (inquiryNo) {
+      increaseView(inquiryNo);
+    }
+  }, []);
+  const increaseView = async (inquiryNo) => {
+    if (inquiryNo) {
+      await inquiryApi.increaseView(inquiryNo);
+    }
+  };
   const fetchAnswers = async (inquiryNo, page, size, sortButton) => {
     try {
       let responseJsonObject;
@@ -65,7 +85,6 @@ function InquiryView() {
           size
         );
       }
-      console.log(responseJsonObject.data);
       setAnswer(responseJsonObject.data.content); // 답변 목록 상태에 저장
       setTotalPages(responseJsonObject.data.totalPages);
     } catch (error) {
@@ -73,7 +92,22 @@ function InquiryView() {
       console.error("답변 목록 가져오기 실패:", error);
     }
   };
-
+  //질문에 본인 답변 유무
+  const isAnswerByInquiryNo = async () => {
+    const responseJsonObject = await answerApi.isAnswerByInquiryNo(
+      inquiryNo,
+      member.memberNo
+    );
+    if (member.memberNo && inquiryNo) {
+      setisAnswer(responseJsonObject.data);
+    }
+  };
+  useEffect(() => {
+    if (member.memberNo && inquiryNo) {
+      isAnswerByInquiryNo();
+      mentorProfileCheck();
+    }
+  }, [member.memberNo && inquiryNo]);
   //질문삭제
   const inquiryRemoveAction = async () => {
     if (!window.confirm("질문을 삭제하시겠습니까?")) return;
@@ -109,22 +143,32 @@ function InquiryView() {
     pageNumbers.push(i);
   }
   const handleWriteButton = () => {
-    if (member.memberRole == "ROLE_MENTEE") {
-      alert("멘토만 답변 작성이 가능합니다");
-      return;
-    } else if(!member){
+    if (!member.memberNo) {
       alert("로그인이 필요한 서비스입니다.");
       return;
-    }else if(inquiry.memberNo==member.memberNo){
+    } else if (member.memberRole == "ROLE_MENTEE") {
+      alert("멘토만 답변 작성이 가능합니다");
+      return;
+    } else if (inquiry.memberNo == member.memberNo) {
       alert("본인의 질문엔 답변을 남길 수 없습니다.");
       return;
-
-    }else if (member.memberRole == "ROLE_MENTOR") {
-      navigate(`/answer/answerWrite/${inquiryNo}`);
+    } else if (isAnswer == true) {
+      alert("한 질문에 하나의 답변만 작성할 수 있습니다.");
+      return;
+    } else if (member.memberRole == "ROLE_MENTOR") {
+      if (mentorProfileStatus != 3) {
+        alert("멘토 심사중입니다.");
+      } else {
+        navigate("/answer/write", {
+          state: { inquiryNo: inquiryNo },
+        });
+      }
     }
   };
   const handleModify = () => {
-    navigate(`/inquiry/modify/${inquiryNo}`);
+    navigate("/inquiry/modify", {
+      state: { inquiryNo: inquiryNo },
+    });
   };
 
   // 이름 마스킹
@@ -191,28 +235,28 @@ function InquiryView() {
           )}
           {/* 신고하기 버튼 */}
           {token ? (
-          <div className="inquiry-report-btn">
-            {isModalOpen && (
-              <ReportModal onClose={handleCloseModal} report={report} />
-            )}
-            <button
-              onClick={handleOpenModal}
-              onMouseEnter={() => setIsReportHovered(true)}
-              onMouseLeave={() => setIsReportHovered(false)}
-              className={`hover-button ${isReportHovered ? "hovered" : ""}`}
-            >
-              <img
-                src={
-                  isReportHovered
-                    ? "https://img.icons8.com/?size=100&id=jy7dy2jsJ5UR&format=png&color=ed1515"
-                    : "https://img.icons8.com/?size=100&id=t5aOnHwCycmN&format=png&color=000000"
-                }
-                alt="Button Image"
-                className="button-image"
-              />
-            </button>
-          </div>
-          ):(
+            <div className="inquiry-report-btn">
+              {isModalOpen && (
+                <ReportModal onClose={handleCloseModal} report={report} />
+              )}
+              <button
+                onClick={handleOpenModal}
+                onMouseEnter={() => setIsReportHovered(true)}
+                onMouseLeave={() => setIsReportHovered(false)}
+                className={`hover-button ${isReportHovered ? "hovered" : ""}`}
+              >
+                <img
+                  src={
+                    isReportHovered
+                      ? "https://img.icons8.com/?size=100&id=jy7dy2jsJ5UR&format=png&color=ed1515"
+                      : "https://img.icons8.com/?size=100&id=t5aOnHwCycmN&format=png&color=000000"
+                  }
+                  alt="Button Image"
+                  className="button-image"
+                />
+              </button>
+            </div>
+          ) : (
             <div></div>
           )}
           <button className="answer-notify-btn" onClick={handleWriteButton}>
