@@ -909,11 +909,18 @@ button {
   border: 1px solid #ddd; /* 버튼의 테두리 추가 */
   display: flex; /* flexbox를 사용하여 알림 내용과 클로즈 버튼을 배치 */
   justify-content: space-between; /* 알림 내용과 클로즈 버튼을 양쪽 끝으로 정렬 */
+  align-items: center; /* 세로로 가운데 정렬 */
   font-size: 13px;
 }
 .notification-main-btn:hover,
 .notification-main-btn-isread:hover {
   background-color: #adadad; /* 호버 시 배경색 변화 */
+}
+.notification-content{
+  display: flex;
+  text-align: left;
+  width: 210px;
+  justify-content: first baseline;
 }
 .notification-icon {
   font-size: 18px;

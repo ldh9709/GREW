@@ -36,7 +36,7 @@ function InquiryView() {
 
   //멘토프로필 상태체크
   const mentorProfileCheck = async () => {
-    if (member.memberNo) {
+    if (member.memberNo&&member.memberRole == "ROLE_MENTOR") {
       const response = await mentorProfileApi.getMentorProfileByMemberNo(
         member.memberNo
       );

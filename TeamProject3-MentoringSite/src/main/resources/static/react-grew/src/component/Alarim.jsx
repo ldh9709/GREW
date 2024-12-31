@@ -94,7 +94,7 @@ const Alarim = () => {
                 >
                   <div className="notification">
                     <div className="notification-icon">🔔</div>
-                    <div>{notification.alarmContent}</div>
+                    <div className="notification-content">{notification.alarmContent}</div>
                   </div>
 
                   <div
