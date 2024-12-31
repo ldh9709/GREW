@@ -150,12 +150,13 @@ function SearchList() {
         {loading && <div>로딩 중...</div>}
         {error && <div>{error}</div>}
         {mentorBoards.length > 0 ? (
-          <div className="mentor-board">
+
+          <div className="mentor-board-list-main">
             {mentorBoards.map((board) => (
               <MentorBoardItem key={board.mentorBoardNo} board={board} />
             ))}
             <div className="view-more">
-              <a href="" onClick={handleViewMoreMentorBoards}>
+              <a className="view-more-button" href="" onClick={handleViewMoreMentorBoards}>
                 멘토 컨텐츠 검색 내용 더 보기{" "}
                 <FontAwesomeIcon icon={faCircleChevronRight} />
               </a>

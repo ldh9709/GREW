@@ -239,3 +239,16 @@ export const getMentorBoardsSortedByViews = async (status, page = 0, size = 10) 
   const responseJsonObject = await response.json();
   return responseJsonObject;
 };
+
+export const listMentorBoardsByProfile = async (mentorProfileNo, page, size) => {
+  const response = await fetch(
+    `/mentor-board/list/${mentorProfileNo}?page=${page}&size=${size}`,
+    {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }
+  );
+  return response.json();
+};////////////////////////// 12/30일추가

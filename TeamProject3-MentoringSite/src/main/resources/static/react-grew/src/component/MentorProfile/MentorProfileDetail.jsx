@@ -5,16 +5,19 @@ import "../../css/mentorProfile.css"; // 🔥 추가된 CSS 파일
 import { getMentorProfileByNo } from "../../api/mentorProfileApi.js";
 import { listReviewByMember } from "../../api/reviewApi.js"; // 리뷰 목록 API 추가
 import * as categoryApi from "../../api/categoryApi";
+import * as mentorBoardApi from "../../api/mentorBoardApi";
 import PagenationItem from "../PagenationItem";
 
 import MentorProfileInfo from "./MentorProfileInfo.jsx";
+import MentorBoardItem from "../MentorBoard/MentorBoardItem";
 
 export default function MentorProfileDetail() {
   const { token, member } = useMemberAuth();
   const { mentorProfileNo } = useParams();
   const navigate = useNavigate(); // navigate 훅 추가
   const [mentorProfile, setMentorProfile] = useState({});
-  const [reviews, setReviews] = useState([]); // 빈 배열로 초기화
+  const [reviews, setReviews] = useState([]); // 리뷰 상태
+  const [boards, setBoards] = useState([]); // 멘토 보드 상태
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [categoryName, setCategoryName] = useState("카테고리 정보 없음");
@@ -25,102 +28,89 @@ export default function MentorProfileDetail() {
   const fetchMentorProfile = async () => {
     try {
       setLoading(true);
-
-      // 1. 멘토 프로필 조회
       const mentorProfileResponse = await getMentorProfileByNo(mentorProfileNo);
-      // 🔥 데이터 유효성 검사 추가
-      if (
-        !mentorProfileResponse?.data ||
-        Object.keys(mentorProfileResponse.data).length === 0
-      ) {
+      if (!mentorProfileResponse?.data || Object.keys(mentorProfileResponse.data).length === 0) {
         console.warn("Invalid mentor profile number:", mentorProfileNo);
-        // 프로필 데이터가 없으면 리다이렉트
         navigate("/mentor-profile/list", { replace: true });
         return;
       }
-      console.log(mentorProfileResponse.data);
       setMentorProfile(mentorProfileResponse.data);
 
-      // 멘토 프로필 데이터에서 categoryNo와 memberNo 가져오기
-      if (mentorProfile.categoryNo) {
-        fetchCategoryName(mentorProfile.categoryNo);
+      if (mentorProfileResponse.data.categoryNo) {
+        fetchCategoryName(mentorProfileResponse.data.categoryNo);
       }
     } catch (error) {
       setError("멘토 프로필을 가져오는 중 오류가 발생했습니다.");
-      // 오류 발생 시 리다이렉트
       navigate("/mentor-profile/list", { replace: true });
     } finally {
       setLoading(false);
     }
   };
-  useEffect(() => {
-    fetchMentorProfile();
-  }, []);
+
+  const fetchMentorBoards = async () => {
+    try {
+      const response = await mentorBoardApi.listMentorBoardsByProfile(mentorProfileNo, 0, 5);
+      setBoards(response?.data?.content || []);
+    } catch (error) {
+      console.error("멘토 보드 데이터를 가져오는 중 오류 발생:", error);
+    }
+  };
 
   const fetchReview = async (page) => {
     try {
-      console.log("Requesting page:", page); // page 값 확인
       setLoading(true);
-
-      // (page - 1)로 시작 인덱스를 계산하여 서버에 전달
       const reviewsResponse = await listReviewByMember(
-        mentorProfileNo, // mentorProfileNo를 바로 사용
-        page - 1, // 페이지 번호는 0부터 시작해야 할 수 있음
-        itemsPerPage, // 한 페이지에 표시할 리뷰 수
-        token // Authorization 헤더에 포함시켜야 함
+        mentorProfileNo,
+        page - 1,
+        itemsPerPage,
+        token
       );
 
-      console.log("reviewsResponse :", reviewsResponse); // 서버 응답 로그 출력
-
-      if (reviewsResponse.data) {
-        console.log("reviewsResponse data:", reviewsResponse.data); // 데이터 확인
-
+      if (reviewsResponse?.data) {
         const reviewsData = reviewsResponse.data.content;
 
-        // 데이터가 있으면 리뷰를 설정, 없으면 빈 배열로 처리
         if (reviewsData.length > 0) {
-          setReviews(reviewsData); // content 배열 처리
-          setTotalPages(reviewsResponse.data.totalPages); // 전체 페이지 수 업데이트
+          setReviews(reviewsData);
+          setTotalPages(reviewsResponse.data.totalPages);
         } else {
-          setReviews([]); // 데이터가 없으면 빈 배열 처리
+          setReviews([]);
         }
       } else {
-        setReviews([]); // 데이터가 없으면 빈 배열 처리
+        setReviews([]);
       }
     } catch (error) {
       setError("리뷰 가져오는 중 오류가 발생했습니다.");
-      navigate("/mentor-profile/list", { replace: true }); // 오류 발생 시 리다이렉트
+      navigate("/mentor-profile/list", { replace: true });
     } finally {
       setLoading(false);
     }
   };
 
   useEffect(() => {
+    fetchMentorProfile();
+    fetchMentorBoards();
+  }, [mentorProfileNo]);
+
+  useEffect(() => {
     fetchReview(currentPage);
   }, [currentPage, itemsPerPage]);
-  if (loading) return <p>로딩 중...</p>;
+
   const fetchCategoryName = async (categoryNo) => {
     try {
       const response = await categoryApi.ListCategory();
       const allCategories = response.data || [];
-      const matchingCategory = allCategories.find(
-        (cat) => cat.categoryNo === categoryNo
-      );
-      setCategoryName(
-        matchingCategory ? matchingCategory.categoryName : "카테고리 정보 없음"
-      );
+      const matchingCategory = allCategories.find((cat) => cat.categoryNo === categoryNo);
+      setCategoryName(matchingCategory ? matchingCategory.categoryName : "카테고리 정보 없음");
     } catch (error) {
       console.error("카테고리 정보를 가져오는 중 오류 발생:", error);
       setCategoryName("카테고리 정보 없음");
     }
   };
 
-  // 리뷰 클릭 시 상세 페이지로 이동
   const handleReviewClick = (reviewNo) => {
-    navigate(`/review/${reviewNo}`); // reviewNo를 URL로 넘겨서 상세 페이지로 이동
+    navigate(`/review/${reviewNo}`);
   };
 
-  // 별점 생성 함수
   const renderStars = (score) => {
     const stars = [];
     for (let i = 0; i < 5; i++) {
@@ -141,35 +131,20 @@ export default function MentorProfileDetail() {
     return stars;
   };
 
-  // 페이지 변경 시 데이터 갱신
   const paginate = (pageNumber) => {
-    console.log("Paginate to page:", pageNumber);
     setCurrentPage(pageNumber);
   };
-  // 페이지네이션 버튼 표시 (5개씩 끊어서 표시)
-  const pageNumbers = [];
-  const pagesToShow = 10; // 한 번에 보여줄 페이지 수
-  const startPage =
-    Math.floor((currentPage - 1) / pagesToShow) * pagesToShow + 1;
-  const endPage = Math.min(startPage + pagesToShow - 1, totalPages);
 
-  for (let i = startPage; i <= endPage; i++) {
-    pageNumbers.push(i);
-  }
-
+  if (loading) return <p>로딩 중...</p>;
   if (error) return <p className="error-message">{error}</p>;
 
   return (
     <div className="mentor-profile-detail-container">
       <div className="mentor-header">
-        {/* 좌측: 멘토 개별 정보*/}
         <MentorProfileInfo mentorProfile={mentorProfile} />
 
-        {/* 우측: 상세 정보 */}
         <div className="mentor-details-section">
-          <span className="mentor-category-box">
-            {mentorProfile.categoryName}
-          </span>
+          <span className="mentor-category-box">{categoryName}</span>
           <div className="mentor-section mentor-headline">
             <h2>"{mentorProfile.mentorHeadline}"</h2>
           </div>
@@ -198,7 +173,6 @@ export default function MentorProfileDetail() {
         </div>
       </div>
 
-      {/* 리뷰 목록 */}
       <div className="mentor-reviews">
         <h3>멘토 리뷰</h3>
         {reviews.length > 0 ? (
@@ -213,9 +187,7 @@ export default function MentorProfileDetail() {
                   <strong>{review.reviewTitle}</strong>
                 </p>
                 <p>{review.reviewContent || "리뷰 내용이 없습니다."}</p>
-                <p className="review-stars">
-                  평점: {renderStars(review.reviewScore || 0)}
-                </p>
+                <p className="review-stars">{renderStars(review.reviewScore || 0)}</p>
                 <p>{review.menteeName || "작성자 이름"} 님의 리뷰</p>
               </li>
             ))}
@@ -224,39 +196,20 @@ export default function MentorProfileDetail() {
           <p>리뷰가 없습니다.</p>
         )}
       </div>
-      {/* 페이지네이션 버튼 */}
-      <div className="pagenation1">
-        {/* 이전 버튼 */}
-        <button
-          className="common-pagination-arrow"
-          disabled={currentPage === 1}
-          onClick={() => paginate(currentPage - 1)}
-        >
-          &lt;
-        </button>
-        {startPage > 1 && (
-          <button onClick={() => paginate(startPage - 1)}>이전</button>
-        )}{" "}
-        {/* 페이지 번호 버튼 */}
-        {pageNumbers.map((number) => (
-          <button
-            key={number}
-            className={`common-pagination-number ${
-              currentPage === number ? "active" : ""
-            }`}
-            onClick={() => paginate(number)}
-          >
-            {number}
-          </button>
-        ))}
-        {/* 다음 버튼 */}
-        <button
-          className="common-pagination-arrow"
-          disabled={currentPage === totalPages}
-          onClick={() => paginate(currentPage + 1)}
-        >
-          &gt;
-        </button>
+
+      <div className="mentor-boards">
+        <h3>멘토 보드</h3>
+        {boards.length > 0 ? (
+          boards.map((board) => (
+            <MentorBoardItem
+              key={board.mentorBoardNo}
+              board={board}
+              onClick={() => navigate(`/mentor-board/detail/${board.mentorBoardNo}`)}
+            />
+          ))
+        ) : (
+          <p>등록된 멘토 보드가 없습니다.</p>
+        )}
       </div>
     </div>
   );
