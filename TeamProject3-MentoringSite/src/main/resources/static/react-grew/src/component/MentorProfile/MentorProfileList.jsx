@@ -4,6 +4,7 @@ import * as mentorProfileApi from "../../api/mentorProfileApi";
 import MentorProfileItem from "./MentorProfileItem";
 import * as categoryApi from "../../api/categoryApi";
 import { useNavigate } from "react-router-dom";
+import PagenationItem from "../PagenationItem";
 
 function MentorProfileList() {
   const [mentorProfiles, setMentorProfiles] = useState([]);
@@ -136,7 +137,7 @@ function MentorProfileList() {
     }
   };
 
-// 페이지 변경 시 데이터 갱신
+  // 페이지 변경 시 데이터 갱신
   const paginate = (pageNumber) => {
     setCurrentPage(pageNumber);
   };
@@ -200,7 +201,7 @@ function MentorProfileList() {
         </div>
 
         {/* 하위 카테고리 버튼 렌더링 */}
-        {childCategories&&childCategories.length > 0 && (
+        {childCategories && childCategories.length > 0 && (
           <div className="category-child">
             {childCategories.map((child) => (
               <button
@@ -218,7 +219,9 @@ function MentorProfileList() {
             ))}
           </div>
         )}
+        
       </div>
+          
       {/* 정렬 라디오 버튼 */}
       <div className="mentorprofile-radio-container">
         <label>
@@ -269,41 +272,13 @@ function MentorProfileList() {
         ) : (
           <p>관련 멘토가 없습니다.</p>
         )}
-        {/* 페이지네이션 버튼 */}
-        <div className="common-pagination common-pagination-bottom">
-          {/* 이전 버튼 */}
-          <button
-            className="common-pagination-arrow"
-            disabled={currentPage === 1}
-            onClick={() => paginate(currentPage - 1)}
-          >
-            &lt;
-          </button>
-
-          {/* 페이지 번호 버튼 */}
-          {pageNumbers.map((number) => (
-            <button
-              key={number}
-              className={`common-pagination-number ${
-                currentPage === number ? "active" : ""
-              }`}
-              onClick={() => paginate(number)}
-            >
-              {number}
-            </button>
-          ))}
-
-          {/* 다음 버튼 */}
-          <button
-            className="common-pagination-arrow"
-            disabled={currentPage === totalPages}
-            onClick={() => paginate(currentPage + 1)}
-          >
-            &gt;
-          </button>
-        </div>
+        
       </div>
-     
+        <PagenationItem
+            currentPage={currentPage}
+            totalPages={totalPages}
+            paginate={paginate}
+          />
     </>
   );
 }

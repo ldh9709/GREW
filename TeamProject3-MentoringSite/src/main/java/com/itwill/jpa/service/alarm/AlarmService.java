@@ -37,4 +37,6 @@ public interface AlarmService{
 	String alarmRedirectURL(AlarmDto alarmDto);
 	//안읽음 알림 갯수
 	Long alarmIsReadCount(Long memberNo);
+	//알림 전체 읽음 처리
+	List<AlarmDto> setAlarmIsReadByMember(Long memberNo); 
 }

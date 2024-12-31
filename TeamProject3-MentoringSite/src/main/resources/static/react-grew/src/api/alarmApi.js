@@ -44,3 +44,9 @@ export const isReadAlarmCount = async(memberNo)=>{
   const responseJsonObject = response.json();
   return responseJsonObject;
 };
+//멤버 알림 전체 읽음 처리
+export const isReadAllAlarm = async(memberNo)=>{
+  await fetch(`${BACKEND_SERVER}/alarms/all/isread?memberNo=${memberNo}`,{
+    method:"PUT",
+  });
+}

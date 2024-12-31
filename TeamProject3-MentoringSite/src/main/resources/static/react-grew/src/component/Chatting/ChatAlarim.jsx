@@ -42,7 +42,7 @@ const ChatAlarim = () => {
   
   return (
     <div>
-      {token != null ? (
+      {member&&member.memberNo != null ? (
         <>
           {/* Panel */}
           <div className={`chat-panel ${activePanel ? "open" : ""}`}>
