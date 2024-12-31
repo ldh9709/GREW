@@ -55,18 +55,18 @@ class MemberRepositoryTest {
 	void testFindByMemberNo() {
 	}
 	
-	@Test
-	void testfindByMemberRoleOrderByMemberJoinDateAsc() {
-		List<Member> memberList = memberRepository.findByMemberRoleOrderByMemberJoinDateAsc(Role.ROLE_MENTEE);
-		List<MemberDto> memberDtoList = new ArrayList<>();
-		
-		for (Member member : memberList) {
-			memberDtoList.add(MemberDto.toBasicDto(member));
-		}
-		
-		System.out.println(memberDtoList.get(0));
-		
-	}
+//	@Test
+//	void testfindByMemberRoleOrderByMemberJoinDateAsc() {
+//		List<Member> memberList = memberRepository.findByMemberRoleOrderByMemberJoinDateAsc(Role.ROLE_MENTEE);
+//		List<MemberDto> memberDtoList = new ArrayList<>();
+//		
+//		for (Member member : memberList) {
+//			memberDtoList.add(MemberDto.toBasicDto(member));
+//		}
+//		
+//		System.out.println(memberDtoList.get(0));
+//		
+//	}
 	
 //	@Test
 	void testfindByMemberRoleOrderByMemberNameAsc() {

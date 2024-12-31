@@ -45,9 +45,7 @@
 }
 
 
-.view-more-button:hover {
-  background-color: #45a049;
-}
+
 /* 멘토 컨텐츠 아이템 */
 .mentor-board-list-main{
   display: flex;
