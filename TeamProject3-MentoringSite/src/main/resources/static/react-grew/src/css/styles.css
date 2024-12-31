@@ -75,7 +75,6 @@ button {
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
-  bottom: 0px;
   justify-content: center; /* 중앙 정렬 */
   align-items: center;
   gap: 10px; /* 버튼 간격 */
