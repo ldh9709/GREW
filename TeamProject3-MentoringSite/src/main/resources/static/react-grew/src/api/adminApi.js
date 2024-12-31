@@ -116,3 +116,31 @@ export const adminCategoryInquiry = async (categoryNo, page, token, size) => {
     throw error;
   }
 };
+
+export const adminMentorBoardWithSearch = async (token, search, page, size) => {
+  const url = `${BACKEND_SERVER}/admin/mentor-board/search?search=${encodeURIComponent(search)}&page=${page}&size=${size}`;
+  const config = {
+      method: "GET", // HTTP 메서드
+      headers: {
+          "Authorization": `Bearer ${token}`, // 토큰 헤더 추가
+          "Content-Type": "application/json", // 요청 데이터 타입
+      },
+  };
+
+  try {
+      const response = await fetch(url, config);
+
+      // HTTP 응답이 성공적이지 않을 경우 처리
+      if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      // JSON 응답 데이터를 반환
+      const data = await response.json();
+      return data;
+  } catch (error) {
+      console.error("데이터 가져오는 중 오류 발생:", error);
+      throw error; // 오류를 호출한 곳으로 전달
+  }
+};
+

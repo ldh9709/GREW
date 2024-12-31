@@ -52,7 +52,7 @@ export function AdminInquiry() {
 
     return (
         <div className="admin-board-container">
-            {/*<div className="dropdown">
+            <div className="dropdown">
                 <select className="dropdown-style" value={category} onChange={handleCategoryChange}>
                     <option value="ALL">전체 보기</option>
                     <option value="1">직무 상담</option>
@@ -60,7 +60,7 @@ export function AdminInquiry() {
                     <option value="3">예술 / 창작</option>
                     <option value="4">창업 / 비즈니스</option>
                 </select>
-            </div>*/}
+            </div>
 
             <table className="admin-table">
                 <thead>
@@ -81,7 +81,7 @@ export function AdminInquiry() {
                             <td>{index + 1}</td>
                             <td>{board.inquiryTitle}</td>
                            {/* <td>{board.inquiryContent}</td>*/}
-                            <td>{board.inquiryDate}</td>
+                            <td>{board.inquiryDate.substring(0.10)}</td>
                             
                             <td>{board.inquiryViews}</td>
                             <td>{board.categoryName}</td>
@@ -90,14 +90,13 @@ export function AdminInquiry() {
                     ))}
                 </tbody>
             </table>
-
-            <div className="admin-pagenation">
+    {/*        <div className="admin-pagenation">
                 <PagenationItem
                     currentPage={currentPage}
                     totalPages={totalPages}
                     paginate={paginate}
                 />
-            </div>
+            </div>*/}
         </div>
     );
 }
