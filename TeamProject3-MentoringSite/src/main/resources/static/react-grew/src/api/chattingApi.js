@@ -150,3 +150,15 @@ export const sendImage = async (token, chatRoomNo, imageBlob) => {
   const responseJsonObject = await response.json();
   return responseJsonObject; // 서버로부터 반환된 이미지 처리 결과
 };
+//채팅방 안읽은갯수
+export const countMessageChatRoom = async (chatRoomNo) => {
+  const response = await fetch(
+    `${BACKEND_SERVER}/chatmessage/count/message?chatRoomNo=${chatRoomNo}`,
+    {
+      method: "GET",
+    }
+  );
+
+  const responseJsonObject = await response.json();
+  return responseJsonObject; // 서버로부터 반환된 이미지 처리 결과
+};

@@ -1,5 +1,6 @@
 package com.itwill.jpa.service.alarm;
 
+import java.nio.channels.AlreadyBoundException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -135,11 +136,11 @@ public class AlarmServiceimpl implements AlarmService {
 
 	// 팔로우 시 멘토에게 팔로워 증가 알림
 	@Override
-	public AlarmDto createAlarmByFollowByMentor(Long MentorMemberNo) {
+	public AlarmDto createAlarmByFollowByMentor(Long mentorMemberNo) {
 		AlarmDto alarmDto = new AlarmDto();
 		alarmDto.setAlarmContent("멘티가 회원님을 팔로우하기 시작했습니다.");
 		alarmDto.setAlarmType("follower");
-		alarmDto.setMemberNo(MentorMemberNo);
+		alarmDto.setMemberNo(mentorMemberNo);
 		return AlarmDto.toDto(alarmRepository.save(Alarm.toEntity(alarmDto)));
 	}
 
@@ -163,7 +164,19 @@ public class AlarmServiceimpl implements AlarmService {
 		alarmDto.setReferenceType("question");
 		return AlarmDto.toDto(alarmRepository.save(Alarm.toEntity(alarmDto)));
 	}
-
+	//멘토 심사 완료시 신청자에게 알림
+	@Override
+	public AlarmDto createAlarmByEvaluationByMentor(Long memberNo, int status) {
+		AlarmDto alarmDto = new AlarmDto();
+		alarmDto.setAlarmType("Evaluation");
+		alarmDto.setMemberNo(memberNo);
+		if(status==3) {
+		alarmDto.setAlarmContent("멘토 심사 성공 : 멘토가 되었습니다.");
+		}else if(status ==4) {
+		alarmDto.setAlarmContent("멘토 심사 실패 : 재심사를 받아주세요.");
+		}
+		return AlarmDto.toDto(alarmRepository.save(Alarm.toEntity(alarmDto)));
+	}
 	// 멤버한명의 알림 출력
 	@Override
 	public List<AlarmDto> findAlarmByMember(Long memberNo) {
@@ -211,5 +224,12 @@ public class AlarmServiceimpl implements AlarmService {
 		Long count = alarmRepository.countByMember_MemberNoAndIsRead(memberNo, 1);
 		return count;
 	}
+	//알림 넘버로 알림 뽑기
+	@Override
+	public AlarmDto findAlarm(Long alarmNo) {
+		return AlarmDto.toDto(alarmRepository.findById(alarmNo).get());
+	}
+	
+	
 
 }
