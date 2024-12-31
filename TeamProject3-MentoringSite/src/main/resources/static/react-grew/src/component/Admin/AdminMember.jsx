@@ -5,12 +5,20 @@ import PagenationItem from "../PagenationItem";
 
 function AdminMember() {
     const { token } = useMemberAuth();
+    const [loading, setLoading] = useState(false);
     const [members, setMember] = useState([]);
     const [memberCount, setMemberCount] = useState(0);
     const [mentorRegisterCount, setMentorRegisterCount] = useState(0);
-    const [role, setRole] = useState("ALL");
-    const [order, setOrder] =useState(1);
-    const [activeTab, setActiveTab] = useState("전체회원");
+    const [state, setState] = useState({
+        role: "ALL",
+        order: 1,
+        mentorStatus: 2,
+        activeTab: ""
+    });
+    // const [role, setRole] = useState("ALL");
+    // const [order, setOrder] =useState(1);
+    // const [mentorStatus, setmentorStatus] =useState(0);
+    // const [activeTab, setActiveTab] = useState("전체회원");
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(0); 
 
@@ -20,6 +28,7 @@ function AdminMember() {
             setMember(response.data.content);
             setTotalPages(response.data.totalPages);
             setMemberCount(response.data.totalElements);
+            console.log('state',state)
         } catch (error) {
             console.log("회원 목록 조회 실패", error);
         }
@@ -29,7 +38,7 @@ function AdminMember() {
     // 멘토 상태별 회원 수를 조회 (목록은 업데이트하지 않음)
     const fetchMentorRegisterCount = async (status,order) => {
         try {
-            const response = await adminApi.adminMentorByStatus(token, status, order, 0, 1); 
+            const response = await adminApi.adminMentorByStatus(token, status, order, 0, 1);
             setMentorRegisterCount(response.data.totalElements);
         } catch (error) {
             console.error("멘토 상태별 조회 실패", error);
@@ -46,42 +55,73 @@ function AdminMember() {
             console.log("멘토 상태별 조회 실패",error)
         }
     }
-    
-    
+
+    // const updateState = (key, value) => {
+    //     setState((prevState) => ({
+    //         ...prevState,
+    //         [key]: value,
+    //     }));
+    // };
+
+    //탭 변경 시
     const handleTabClick = (tab) => {
-        setActiveTab(tab); // 클릭된 탭을 활성화
         switch (tab) {
             case "전체회원":
-                setRole("ALL")
-                setOrder(1)
+                setState((prev) => ({
+                        ...prev,
+                        role: "ALL",
+                        order: 1,
+                        activeTab:tab
+                }))
                 paginate(1);
-                fetchMembers(role, order, 0, 10);
+                fetchMembers(state.role, state.order, 0, 10);
                 break;
                 case "멘티회원":
-                setRole("ROLE_MENTEE")
-                setOrder(1)
+                setState((prev) => ({
+                    ...prev,
+                    role: "ROLE_MENTEE",
+                    order: 1,
+                    activeTab:tab
+                }))
                 paginate(1);
-                fetchMembers(role, order, 0,10);
+                fetchMembers(state.role, state.order, 0,10);
                 break;
                 case "멘토회원":
-                setRole("ROLE_MENTOR")
-                setOrder(1)
+                setState((prev) => ({
+                    ...prev,
+                    role: "ROLE_MENTOR",
+                    order: 1,
+                    mentorStatus: 3,
+                    activeTab:tab
+                }))
                 paginate(1);
-                fetchMentorByStatus(3,order,0,10);
+                fetchMentorByStatus(state.mentorStatus, state.order,0,10);
                 break;
                 case "멘토신청":
-                setOrder(1)
-                paginate(1);
-                fetchMentorByStatus(2,order,0,10);
+                setState((prev) => ({
+                    ...prev,
+                    role: "ROLE_MENTOR",
+                    order: 1,
+                    mentorStatus: 2,
+                    activeTab:tab
+                }))
+                fetchMentorByStatus(state.mentorStatus, state.order,0,10);
                 break;
             default:
                 break;
         }
     };
-    
+
+    const handleMentorDetail = () => {
+        
+    }
+
+    //필터링 변경 시
     const handleFilterChange = (event) => {
-        setOrder(event.target.value);
-        fetchMembers(role, order, 0, 10);
+        setState((prev) => ({
+            ...prev,
+            order: event.target.value
+        }))
     }
 
     // 페이지 변경 시 데이터 갱신
@@ -89,39 +129,54 @@ function AdminMember() {
         setCurrentPage(pageNumber);
     };
     // 실행 함수
-    useEffect(() => {
-        fetchMembers(role,order,currentPage-1,10);
-    }, [currentPage,role,order]);
+    // useEffect(() => {
+    //     fetchMentorRegisterCount(2,1)
+    // }, []);
 
     // 실행 함수
     useEffect(() => {
-        fetchMentorRegisterCount(2,1);
-    }, []);
-
+        const fetchData = async () => {
+            setLoading(true);
+            try {
+                if (state.activeTab === "멘토신청") {
+                    await fetchMentorByStatus(state.mentorStatus, state.order, currentPage - 1, 10);
+                } else {
+                    await fetchMembers(state.role, state.order, currentPage - 1, 10);
+                }
+            } catch (error) {
+                console.error("데이터 로딩 실패", error);
+            } finally {
+                setLoading(false);
+            }
+        };
+    
+        fetchData();
+    }, [state]);
+    
     return (
         <>
             <div className="admin-member-submenu">
                 <ul className="submenu">
                     <li
-                        className={`submenu-item ${activeTab === "전체회원" ? "active" : ""}`}
+                        className={`submenu-item ${state.activeTab === "전체회원" ? "active" : ""}`}
                         onClick={() => handleTabClick("전체회원")}
                     >
                         전체회원
                     </li>
                     <li
-                        className={`submenu-item ${activeTab === "멘티회원" ? "active" : ""}`}
+                        className={`submenu-item ${state.activeTab === "멘티회원" ? "active" : ""}`}
                         onClick={() => handleTabClick("멘티회원")}
                     >
                         멘티회원
                     </li>
                     <li
-                        className={`submenu-item ${activeTab === "멘토회원" ? "active" : ""}`}
+                        className={`submenu-item ${state.activeTab === "멘토회원" ? "active" : ""}`}
                         onClick={() => handleTabClick("멘토회원")}
                     >
                         멘토회원
                     </li>
                     <li
-                        className={`submenu-item ${activeTab === "멘토신청" ? "active" : ""}`}
+                        className={`submenu-item ${state.activeTab === "멘토신청" ? "active" : ""}`}
                         onClick={() => handleTabClick("멘토신청")}
                     >
                         멘토신청
@@ -129,13 +184,13 @@ function AdminMember() {
                     </li>
                 </ul>
                 <div className="dropdown">
-                    <select onChange={handleFilterChange} value={order}>
+                    <select onChange={handleFilterChange} value={state.order}>
                         <option value={1}>최신순</option>
                         <option value={2}>이름순</option>                
                     </select>
                 </div>
             </div>
-            <div className="admin-table-container">
+            <div className="admin-table-container member-table-container">
                 <table className="admin-table">
                     <thead>
                         <tr>
@@ -147,41 +202,45 @@ function AdminMember() {
                             <th>가입방식</th>
                             <th>회원상태</th>
                             <th>누적신고 수</th>
-                            { activeTab === '멘토신청' ? (<th>회원상세</th>) : ("")}
+                            { state.activeTab === '멘토신청' ? (<th>신청내용</th>) : ("")}
                         </tr>
                     </thead>
-                    <tbody>
-                        {members && members.map((member, index) => (
-                            <tr key={index}>
-                                <td>{member.memberNo}</td>
-                                <td>{member.memberName}</td>
-                                <td>{member.memberId}</td>
-                                <td>{member.memberEmail}</td>
-                                <td>{member.memberJoinDate.substring(0,10)}</td>
-                                <td>
-                                    {member.memberProvider === 'Email'
-                                        ? "일반가입"
-                                        : member.memberProvider}
-                                </td>
-                                <td>
-                                    {member.memberStatus === 1
-                                        ? "정상"
-                                        : "탈퇴"}
-                                </td>
-                                <td>{member.memberReportCount}</td>
-                                {activeTab === '멘토신청' ?
-                                (
-                                <td>
-                                    <button className="check">상세</button>
-                                </td>
-                                ): ("")}
+                    {loading ? <tbody></tbody> :
+                        <tbody>
+                            {members && members.map((member, index) => (
+                                <tr key={index}>
+                                    <td>{member.memberNo}</td>
+                                    <td>{member.memberName}</td>
+                                    <td>{member.memberId}</td>
+                                    <td>{member.memberEmail}</td>
+                                    <td>{member.memberJoinDate.substring(0,10)}</td>
+                                    <td>
+                                        {member.memberProvider === 'Email'
+                                            ? "일반가입"
+                                            : member.memberProvider}
+                                    </td>
+                                    <td>
+                                        {member.memberStatus === 1
+                                            ? "정상"
+                                            : "탈퇴"}
+                                    </td>
+                                    <td>{member.memberReportCount}</td>
+                                    {state.activeTab === '멘토신청' ?
+                                    (
+                                    <td>
+                                        <button className="check"
+                                        onClick={handleMentorDetail}
+                                        >상세</button>
+                                    </td>
+                                    ): ("")}
 
-                            </tr>
-                        ))}
-                    </tbody>
+                                </tr>
+                            ))}
+                        </tbody>
+                    }
                 </table>
                 <span className="member-count">
-                    총 : {activeTab === '멘토신청' ? mentorRegisterCount :memberCount}
+                    총 : {state.activeTab === "멘토신청" ? mentorRegisterCount :memberCount}
                 </span>
                 <div className="admin-pagenation">
                 <PagenationItem 

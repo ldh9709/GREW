@@ -135,14 +135,6 @@
   cursor: pointer;
 }
 
-.admin-table tr:nth-child(even) {
-  background-color: #f9f9f9;
-}
-
-.admin-table tr:nth-child(odd) {
-  background-color: #fff;
-}
-
 .admin-table tbody tr:hover {
   background-color: #f1f1f1;
 }
@@ -189,7 +181,7 @@
 .admin-pagenation {
   position: absolute;
   left: 50%; transform: translateX(-50%);
-  bottom: -42px;
+  bottom: 10px;
 }
 
 .admin-pagenation .common-pagination-number {
@@ -242,6 +234,10 @@
   position: absolute;
   right: 10px; top: 50%; transform: translateY(-50%);
   font-size: 14px;
+}
+
+.member-table-container tbody tr:hover {
+  background-color: none !important;
 }
 /* 신청 멘토 배지 스타일 */
 .member-notification-badge {
