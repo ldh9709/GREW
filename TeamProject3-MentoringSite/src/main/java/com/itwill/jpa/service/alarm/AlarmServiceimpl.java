@@ -150,13 +150,13 @@ public class AlarmServiceimpl implements AlarmService {
 		Answer answer = answerRepository.findById(answerNo).get();
 		String inquiryTitle = answer.getInquiry().getInquiryTitle();
 		String answerContent = answer.getAnswerContent();
-		if(answerContent.length()>10) {
-			answerContent =answerContent.substring(0,10)+"...";
+		if (answerContent.length() > 10) {
+			answerContent = answerContent.substring(0, 10) + "...";
 		}
 		if (inquiryTitle.length() > 10) {
 			inquiryTitle = inquiryTitle.substring(0, 10) + "..."; // 길이를 초과하면 '...' 추가
 		}
-		alarmDto.setAlarmContent("질문'" + inquiryTitle + "'에 대한 회원님의 답변'"+answerContent+"'에 추천이 달렸습니다");
+		alarmDto.setAlarmContent("질문'" + inquiryTitle + "'에 대한 회원님의 답변'" + answerContent + "'에 추천이 달렸습니다");
 		alarmDto.setAlarmType("vote");
 		alarmDto.setMemberNo(answer.getMember().getMemberNo());
 		alarmDto.setReferenceNo(answer.getInquiry().getInquiryNo());
@@ -171,6 +171,19 @@ public class AlarmServiceimpl implements AlarmService {
 		List<AlarmDto> alarmDtoList = new ArrayList<>();
 		List<Alarm> alarmList = alarmRepository.findByMember_MemberNo(memberNo);
 		for (Alarm alarm : alarmList) {
+			alarmDtoList.add(AlarmDto.toDto(alarm));
+		}
+		return alarmDtoList;
+	}
+
+	// 멤버 한명 알림 전체 읽음 처리
+	@Override
+	public List<AlarmDto> setAlarmIsReadByMember(Long memberNo) {
+		List<AlarmDto> alarmDtoList = new ArrayList<>();
+		List<Alarm> alarmList = alarmRepository.findByMember_MemberNo(memberNo);
+		for (Alarm alarm : alarmList) {
+			alarm.setIsRead(2);
+			alarmRepository.save(alarm);
 			alarmDtoList.add(AlarmDto.toDto(alarm));
 		}
 		return alarmDtoList;
@@ -191,7 +204,8 @@ public class AlarmServiceimpl implements AlarmService {
 			throw new IllegalArgumentException("Unknown reference type");
 		}
 	}
-	//알림 안읽음 갯수
+
+	// 알림 안읽음 갯수
 	@Override
 	public Long alarmIsReadCount(Long memberNo) {
 		Long count = alarmRepository.countByMember_MemberNoAndIsRead(memberNo, 1);

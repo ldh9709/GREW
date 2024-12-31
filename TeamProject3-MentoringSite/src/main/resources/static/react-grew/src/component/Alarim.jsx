@@ -10,10 +10,9 @@ const Alarim = () => {
   const [notifications, setNotifications] = useState([]);
   const navigate = useNavigate();
   useEffect(() => {
-    // 폴링을 위해 setInterval 사용 (5초마다 알림을 가져옴)
     setInterval(fetchNotifications, 10000); // 5초마다 폴링
     fetchNotifications();
-  }, []); // 빈 배열을 넣으면 컴포넌트가 마운트될 때만 실행됨
+  }, []); 
   const fetchNotifications = async () => {
     if (member) {
       const response = await alarmApi.findByMemberNo(member.memberNo); // API 호출
@@ -22,7 +21,11 @@ const Alarim = () => {
       setNotifications(null);
     }
   };
+  const allIsReadNotificationByMember=async(memberNo)=>{
+    await alarmApi.isReadAllAlarm(memberNo);
 
+    fetchNotifications();
+  }
   const deleteNotification = async (alarmNo) => {
     await alarmApi.deleteAlarm(alarmNo);
 
@@ -43,6 +46,12 @@ const Alarim = () => {
     <div>
       <div className="notification-header">알림</div>
       <div className="all-delete-btn-div">
+        <button
+          className="notification-all-delete-btn"
+          onClick={() => allIsReadNotificationByMember(member.memberNo)}
+        >
+          전체 읽음
+        </button>
         <button
           className="notification-all-delete-btn"
           onClick={() => deleteNotificationByMember(member.memberNo)}
