@@ -96,14 +96,15 @@ public class AdminMemberController {
 	@SecurityRequirement(name = "BearerAuth")
 	@PreAuthorize("hasRole('ADMIN')")
     @Operation(summary = "멘토 프로필 리스트 출력(상태별)")
-    @GetMapping("/mentor/status/{status}")
+    @GetMapping("/mentor/status")
 	public ResponseEntity<Response> getMemberByMentorStatus(
-            @PathVariable(name = "status") int status,
+			@RequestParam(name = "status") Integer status,
+            @RequestParam(name = "order") Integer order,
             @RequestParam(name = "page", defaultValue = "0") int page,
             @RequestParam(name = "size", defaultValue = "10") int size
             ){
 		
-		Page<MemberDto> members = memberService.getMemberAllByMentorStatus(status, page, size);
+		Page<MemberDto> members = memberService.getMemberAllByMentorStatus(status, order, page, size);
 
         Response response = new Response();
         response.setStatus(ResponseStatusCode.READ_MENTOR_PROFILE_LIST_SUCCESS_CODE);

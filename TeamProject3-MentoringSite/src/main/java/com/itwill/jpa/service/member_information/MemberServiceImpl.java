@@ -325,7 +325,7 @@ public class MemberServiceImpl implements MemberService {
 			}
 			
 			for (Member member : memberList) {
-				memberDtoList.add(MemberDto.toBasicDto(member));
+				memberDtoList.add(MemberDto.toDtoWithMentorProfile(member));
 			}
 			
 			return new PageImpl<>(memberDtoList, pageable, memberList.getTotalElements());
@@ -336,10 +336,19 @@ public class MemberServiceImpl implements MemberService {
 	}
 	
 	/******회원 멘토 상태별 회원 목록 조회******/
-	public Page<MemberDto> getMemberAllByMentorStatus(Integer status, int pageNumber, int pageSize){
+	public Page<MemberDto> getMemberAllByMentorStatus(Integer status, Integer order, int pageNumber, int pageSize){
 		try {
 			Pageable pageable = PageRequest.of(pageNumber, pageSize);
-			Page<Member> members = memberRepository.findByMentorProfile_MentorStatus(status,pageable);
+			Page<Member> members = null;
+			
+			switch (order) {
+				case 1: {
+					members = memberRepository.findByMentorProfile_MentorStatusOrderByMemberNoDesc(status,pageable);
+				}
+				case 2: {
+					members = memberRepository.findByMentorProfile_MentorStatusOrderByMemberNameAsc(status,pageable);
+				}
+			}
 			
 			List<MemberDto> memberDtoList = new ArrayList<>();
 			

@@ -49,7 +49,7 @@ public interface MemberService {
 	Member updateMemberRole(Long memberNo, String role);
 	
 	//멘토 상태별 회원 조회
-	public Page<MemberDto> getMemberAllByMentorStatus(Integer status, int pageNumber, int pageSize);
+	public Page<MemberDto> getMemberAllByMentorStatus(Integer status, Integer order, int pageNumber, int pageSize);
 	
 	//회원 전체 출력
 	Page<MemberDto> getMemberAll(String roleStr, Integer order, int pageNumber, int pageSize);

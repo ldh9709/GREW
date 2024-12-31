@@ -6,6 +6,7 @@ import PagenationItem from "../PagenationItem";
 function AdminMember() {
     const { token } = useMemberAuth();
     const [members, setMember] = useState([]);
+    const [memberCount, setMemberCount] = useState(0);
     const [mentorRegisterCount, setMentorRegisterCount] = useState(0);
     const [role, setRole] = useState("ALL");
     const [order, setOrder] =useState(1);
@@ -13,12 +14,12 @@ function AdminMember() {
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(0); 
 
-    const fetchMembers = async (role, order, currentPage, size) => {
+    const fetchMembers = async (role, order, page, size) => {
         try {
-            const response = await adminApi.adminMember(token, role, order, currentPage-1, size);
+            const response = await adminApi.adminMember(token, role, order, page, size);
             setMember(response.data.content);
             setTotalPages(response.data.totalPages);
-            console.log(response)
+            setMemberCount(response.data.totalElements);
         } catch (error) {
             console.log("회원 목록 조회 실패", error);
         }
@@ -26,9 +27,9 @@ function AdminMember() {
     
 
     // 멘토 상태별 회원 수를 조회 (목록은 업데이트하지 않음)
-    const fetchMentorRegisterCount = async (status) => {
+    const fetchMentorRegisterCount = async (status,order) => {
         try {
-            const response = await adminApi.adminMentorByStatus(token, status, 0, 1); 
+            const response = await adminApi.adminMentorByStatus(token, status, order, 0, 1); 
             setMentorRegisterCount(response.data.totalElements);
         } catch (error) {
             console.error("멘토 상태별 조회 실패", error);
@@ -36,9 +37,9 @@ function AdminMember() {
     };
 
     //멘토 상태별 회원 목록 조회
-    const fetchMentorRegister = async(status, currentPage, size) => {
+    const fetchMentorByStatus = async(status, order, page, size) => {
         try {
-            const response = await adminApi.adminMentorByStatus(token, status, currentPage-1, size)
+            const response = await adminApi.adminMentorByStatus(token, status, order, page, size)
             setMember(response.data.content)
             console.log(response.data);
         } catch (error) {
@@ -51,38 +52,51 @@ function AdminMember() {
         setActiveTab(tab); // 클릭된 탭을 활성화
         switch (tab) {
             case "전체회원":
-                fetchMembers("ALL", 1,1,10);
+                setRole("ALL")
+                setOrder(1)
+                paginate(1);
+                fetchMembers(role, order, 0, 10);
                 break;
-            case "멘티회원":
-                fetchMembers("ROLE_MENTEE", 1,1,10);
+                case "멘티회원":
+                setRole("ROLE_MENTEE")
+                setOrder(1)
+                paginate(1);
+                fetchMembers(role, order, 0,10);
                 break;
-            case "멘토회원":
-                fetchMembers("ROLE_MENTOR", 1,1,10);
+                case "멘토회원":
+                setRole("ROLE_MENTOR")
+                setOrder(1)
+                paginate(1);
+                fetchMentorByStatus(3,order,0,10);
                 break;
-            case "멘토신청":
-                fetchMentorRegister(2,1,10);
+                case "멘토신청":
+                setOrder(1)
+                paginate(1);
+                fetchMentorByStatus(2,order,0,10);
                 break;
             default:
                 break;
         }
     };
+    
+    const handleFilterChange = (event) => {
+        setOrder(event.target.value);
+        fetchMembers(role, order, 0, 10);
+    }
 
     // 페이지 변경 시 데이터 갱신
     const paginate = (pageNumber) => {
         setCurrentPage(pageNumber);
     };
-
-    // 페이지 번호 버튼 표시
-    const pageNumbers = [];
-    for (let i = 1; i <= totalPages; i++) {
-        pageNumbers.push(i);
-    }
+    // 실행 함수
+    useEffect(() => {
+        fetchMembers(role,order,currentPage-1,10);
+    }, [currentPage,role,order]);
 
     // 실행 함수
     useEffect(() => {
-        fetchMembers(role,order,currentPage - 1,10);
-        fetchMentorRegisterCount(2);
-    }, [currentPage]);
+        fetchMentorRegisterCount(2,1);
+    }, []);
 
     return (
         <>
@@ -114,20 +128,26 @@ function AdminMember() {
                         <span className="member-notification-badge">{mentorRegisterCount}</span>
                     </li>
                 </ul>
+                <div className="dropdown">
+                    <select onChange={handleFilterChange} value={order}>
+                        <option value={1}>최신순</option>
+                        <option value={2}>이름순</option>                
+                    </select>
+                </div>
             </div>
             <div className="admin-table-container">
                 <table className="admin-table">
                     <thead>
                         <tr>
-                            <th>번호</th>
+                            <th>회원번호</th>
                             <th>이름</th>
                             <th>아이디</th>
                             <th>이메일</th>
                             <th>가입일자</th>
                             <th>가입방식</th>
                             <th>회원상태</th>
-                            <th>권한</th>
                             <th>누적신고 수</th>
+                            { activeTab === '멘토신청' ? (<th>회원상세</th>) : ("")}
                         </tr>
                     </thead>
                     <tbody>
@@ -148,19 +168,21 @@ function AdminMember() {
                                         ? "정상"
                                         : "탈퇴"}
                                 </td>
-                                <td>
-                                    {member.mentorProfile
-                                        ? "멘토, 멘티"
-                                        : "멘티"}
-                                </td>
                                 <td>{member.memberReportCount}</td>
+                                {activeTab === '멘토신청' ?
+                                (
                                 <td>
                                     <button className="check">상세</button>
                                 </td>
+                                ): ("")}
+
                             </tr>
                         ))}
                     </tbody>
                 </table>
+                <span className="member-count">
+                    총 : {activeTab === '멘토신청' ? mentorRegisterCount :memberCount}
+                </span>
                 <div className="admin-pagenation">
                 <PagenationItem 
                     currentPage={currentPage}
