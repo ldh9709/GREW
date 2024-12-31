@@ -63,7 +63,7 @@ const MentorSearchList = () => {
         {error && <p style={{ color: "red" }}>{error}</p>}
 
         {searchResults.length > 0 ? (
-          <div>
+          <div className="profile-container">
             {searchResults.map((mentor) => (
               <MentorProfileItem key={mentor} mentor={mentor} />
             ))}
