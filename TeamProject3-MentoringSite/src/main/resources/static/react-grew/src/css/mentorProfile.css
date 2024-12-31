@@ -44,7 +44,7 @@
 }
 /* 프로필 카드 스타일 */
 .mentor-profile-card {
-  width: 220px; /* 카드의 너비 고정 */
+  width: 219px; /* 카드의 너비 고정 */
   height: 300px; /* 카드의 높이 고정 */
   background: #fff;
   border: 1px solid #ddd;

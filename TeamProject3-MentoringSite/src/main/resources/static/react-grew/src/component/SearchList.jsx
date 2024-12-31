@@ -24,7 +24,7 @@ function SearchList() {
   const fetchMentorProfiles = async (query) => {
     setLoading(true);
     try {
-      const response = await mentorProfileApi.searchMentorProfiles(query, 0, 3);
+      const response = await mentorProfileApi.searchMentorProfiles(query, 0, 4);
       setMentorProfiles(response.data.content);
       setError(null);
     } catch (err) {
@@ -38,7 +38,7 @@ function SearchList() {
   const fetchMentorBoards = async (query) => {
     setLoading(true); // 멘토 보드 검색에 대한 로딩 상태
     try {
-      const response = await mentorBoardApi.searchMentorBoards(query, 0, 3);
+      const response = await mentorBoardApi.searchMentorBoards(query, 0, 4);
       console.log("멘토 보드 API 응답 데이터:", response.data); // 여기서 API 응답 확인
       setMentorBoards(response.data.content); // 응답 데이터에서 content만 저장
       setError(null); // 에러 상태 초기화

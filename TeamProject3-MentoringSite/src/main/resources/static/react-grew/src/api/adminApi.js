@@ -26,18 +26,45 @@ export const adminMentorByStatus = async (token,status,order,page,size) => {
   return responseJsonObject;
 }
 
-//게시글 목록 조회
-export const adminInquiry = async(token, category, page, size) => {
-  const response = await fetch(`${BACKEND_SERVER}/admin/inquiry?category=${category}&page=${page}&size=${size}`, {
-    method: 'GET',
+//mentor 목록 조회
+export const adminMentorBoard = async(token, page, size)=>{
+  const response = await fetch(`${BACKEND_SERVER}/admin/mentor-board?page=${page}&size=${size}`,{
+    method: "GET",
     headers: {
-      'Authorization': `Bearer ${token}`,
-      'Content-Type': 'application/json'
-    }
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+    },
   });
-  const responseJsonObject = await response.json();
+  if (!response.ok) {
+    throw new Error("API 호출 실패");
+  }
+  const responseJsonObject= await response.json();
   return responseJsonObject;
 }
+
+//게시글 목록 조회
+export const adminInquiry = async(token, page, size) => {
+  try {
+    const response = await fetch(
+        `${BACKEND_SERVER}/admin/inquiry/board?page=${page}&size=${size}`,
+        {
+            method: "GET",
+            headers: {
+                Authorization: `Bearer ${token}`,
+                "Content-Type": "application/json",
+            },
+        }
+    );
+    if (!response.ok) {
+        throw new Error(`API 요청 실패: ${response.status}`);
+    }
+    return await response.json();
+} catch (error) {
+    console.error("전체 게시글 API 호출 오류:", error);
+    throw error;
+}
+};
+
 
 // 관리자 - 신고 목록 조회
 export const getAdminReportList = async (token, filter,page) => {
@@ -66,4 +93,26 @@ export const updateReportStatusForAdmin = async (token, reportNo, status) => {
   return responseJson;  // 상태 업데이트 응답 반환
 };
 
+//category별 게시판 목록 가져오기
+export const adminCategoryInquiry = async (categoryNo, page, token, size) => {
+  try {
+    const response = await fetch(
+      `${BACKEND_SERVER}/admin/inquiry/category/${categoryNo}?page=${page}&size=${size}`,{
+        method: 'GET',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        }
+      }
+    );
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
 
+    const responseJsonObject = await response.json();
+    return responseJsonObject;
+  } catch (error) {
+    console.error("API 호출 오류 : ", error);
+    throw error;
+  }
+};
