@@ -38,10 +38,13 @@ const Alarim = () => {
   };
   const handleAlarmButton = async (alarmNo) => {
     await alarmApi.isReadAlarm(alarmNo);
-    const responsejsonObject = await alarmApi.urlAlarm(alarmNo);
-    console.log(responsejsonObject.data);
-    navigate(responsejsonObject.data);
+    const response = await alarmApi.findAlarm(alarmNo);
+    if(response.data.referenceType!=null){
+      const responsejsonObject = await alarmApi.urlAlarm(alarmNo);
+      navigate(responsejsonObject.data);
+    }
     fetchNotifications();
+
   };
   return (
     <div>

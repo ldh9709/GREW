@@ -139,6 +139,7 @@ function AdminMember() {
         }
     };
 
+
     fetchData();
    }, [state, currentPage]);
     

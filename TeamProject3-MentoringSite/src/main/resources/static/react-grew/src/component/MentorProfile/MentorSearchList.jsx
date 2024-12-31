@@ -9,7 +9,7 @@ const MentorSearchList = () => {
   const [searchResults, setSearchResults] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
-  const [itemsPerPage] = useState(5);
+  const [itemsPerPage] = useState(8);
   const [error, setError] = useState(null);
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
