@@ -172,12 +172,12 @@ public class AnswerServiceImpl implements AnswerService {
 	/* 최근 3일간 추천 많은 답변 */
 	@Override
 	public List<AnswerDto> getByAnswerOrderByVoteDate() {
-			List<Answer> answerEntityList = answerRepository.findByAnswerOrderByVoteDate();
-			List<AnswerDto> answerDtoList = new ArrayList<>();
-			for (Answer answerEntity : answerEntityList) {
-				answerDtoList.add(AnswerDto.toDto(answerEntity));
-			}
-			return answerDtoList;
+		List<Answer> answerEntityList = answerRepository.findByAnswerOrderByVoteDate();
+		List<AnswerDto> answerDtoList = new ArrayList<>();
+		for (Answer answerEntity : answerEntityList) {
+			answerDtoList.add(AnswerDto.toDto(answerEntity));
+		}
+		return answerDtoList;
 	}
 
 	// 내가 작성한 답변내역
@@ -200,9 +200,20 @@ public class AnswerServiceImpl implements AnswerService {
 
 	@Override
 	public Long getAnswerCount(Long inquiryNo) {
-		Long answerCount = answerRepository.countByInquiry_InquiryNoAndAnswerStatus(inquiryNo,1);
+		Long answerCount = answerRepository.countByInquiry_InquiryNoAndAnswerStatus(inquiryNo, 1);
 		return answerCount;
 
+	}
+
+	// 질문에 답변을 남겼는지 여부
+	@Override
+	public boolean inAnswerByMember(Long inquiryNo, Long memberNo) {
+		Answer answer = answerRepository.findByInquiry_InquiryNoAndMember_MemberNo(inquiryNo, memberNo);
+		if (answer != null) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 }

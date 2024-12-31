@@ -35,6 +35,7 @@ public class JWTUtil {
 			throw new RuntimeException(e.getMessage());
 		}
     	
+    	
         String jwtStr = Jwts.builder()
         		//헤더에 "typ": "JWT"를 설정하여 이 토큰이 JWT임을 명시
                 .setHeader(Map.of("typ","JWT"))

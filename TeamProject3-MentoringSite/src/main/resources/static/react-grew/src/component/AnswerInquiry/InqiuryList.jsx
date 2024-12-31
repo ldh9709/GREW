@@ -43,7 +43,6 @@ function InqiuryList() {
   // 카테고리 버튼 클릭 시 호출되는 함수
   const handleCategoryClick = async (categoryNo) => {
     setSelectedCategory(categoryNo); // 새 카테고리 선택
-    console.log("선택된 상위 카테고리", categoryNo);
 
     const selectedCategory = categories.find(
       (cat) => cat.categoryNo === categoryNo
@@ -63,7 +62,6 @@ function InqiuryList() {
   }, []);
   const fetchBestAnswer = async () => {
     const responseJsonObject = await inquiryApi.bestAnswerList();
-    console.log(responseJsonObject.data);
     setBestAnswer(responseJsonObject.data);
   };
   // 문의 목록을 페이지네이션과 함께 가져오는 함수
@@ -154,7 +152,7 @@ function InqiuryList() {
 
   const handleWriteButton = () => {
     if (member.memberRole == "ROLE_MENTEE") {
-      navigate("/inquiry/inquiryWrite");
+      navigate("/inquiry/write");
     } else if (member.memberRole == "ROLE_MENTOR") {
       alert("멘티만 질문을 등록할 수 있습니다.");
       return;
@@ -287,6 +285,11 @@ function InqiuryList() {
               <div>아직 등록된 질문이 없습니다.</div>
             </div>
           )}
+        <PagenationItem
+              currentPage={currentPage}
+              totalPages={totalPages}
+              paginate={paginate}
+            />
         </div>
         {/* 왼쪽 작은 리스트 */}
         <div className="small-list">
@@ -306,11 +309,7 @@ function InqiuryList() {
             </div>
           </div>
         </div>
-        <PagenationItem
-          currentPage={currentPage}
-          totalPages={totalPages}
-          paginate={paginate}
-        />
+            
       </div>
     </>
   );

@@ -12,8 +12,10 @@ const MentorJoinForm = () => {
   const token = auth?.token || null; // 사용자 인증 토큰
   const member = auth?.member || {}; // 사용자 관련 정보 객체
   const mentorProfileNo = token ? member.mentorProfileNo : null; // 사용자 멘토 프로필 번호
-  const [mentorImage, setMentorImage] = useState(null); // 이미지 파일
   /***** Context 가져오기 END *****/
+  
+  /* 이미지 파일을 위한 메소드 선언 */
+  const [mentorImage, setMentorImage] = useState(null); // 이미지 파일
 
 
   /***** 네비게이트 *****/
@@ -40,24 +42,37 @@ const MentorJoinForm = () => {
 
   /**** 카테고리 선언 END ****/
 
+  
   /********** 경력 관련 메소드 START ***********/
-  const [careerFields, setCareerFields] = useState([""]);
+  const [careers, setCareers] = useState([
+    {
+    companyName: "", 
+    jobTitle: "", 
+    startDate: "", 
+    endDate: ""
+    }
+  ]);
 
   const addCareerField = () => {
-    setCareerFields((prev) => [...prev, ""]);
+    setCareers((prev) => [...prev, { companyName: "", jobTitle: "", startDate: "", endDate: "" }]);
   };
 
-  const handleCareerChange = (index, value) => {
-    const updatedFields = [...careerFields];
-    updatedFields[index] = value;
-    setCareerFields(updatedFields);
-
-    // 줄바꿈으로 합친 값을 mentor 객체에 저장
-    setMentor((prev) => ({
-      ...prev,
-      mentorCareer: updatedFields.join("\n"),
-    }));
+  const handleCareerChange = (index, field, value) => {
+    const updatedCareers = [...careers];
+    updatedCareers[index][field] = value;
+    setCareers(updatedCareers);
   };
+
+  const handleFocus = (e) => {
+    e.target.type = "date"; // 포커스되면 type을 date로 변경
+  };
+
+  const handleBlur = (e) => {
+    if (!e.target.value) {
+      e.target.type = "text"; // 값이 없으면 type을 다시 text로 변경
+    }
+  };
+
   /********** 경력 관련 메소드 END ***********/
 
   /********** 카테고리 트리 구조 불러오기 START ***********/
@@ -185,6 +200,7 @@ const MentorJoinForm = () => {
 
   }
   
+  
   return (
     <div className="mentor-join-container">
       <h1 className="form-title">회원가입</h1>
@@ -262,37 +278,57 @@ const MentorJoinForm = () => {
           ></textarea>
         </div>
 
-        {/* 경력 */}
+        {/* 경력 START*/}
         <div className="form-group-profile horizontal">
-          <label htmlFor="mentorCareer">
+          <label>
             경력<span className="red-text">필수</span>
           </label>
-          <div className="textarea-container">
-            {careerFields.map((career, index) => (
-              <div key={index} className="textarea-row">
-                <textarea
-                  value={career}
-                  placeholder="경력 입력"
-                  rows="1"
-                  onChange={(e) => handleCareerChange(index, e.target.value)}
+          <div className="career-container">
+            {careers.map((career, index) => (
+              <div key={index} className="career-row">
+                <input
+                  type="text"
+                  placeholder="회사명"
+                  value={career.companyName}
+                  onChange={(e) => handleCareerChange(index, "companyName", e.target.value)}
                   required
-                ></textarea>
-                <div className="button-container">
-                  {index === careerFields.length - 1 ? (
-                    <button
-                      type="button"
-                      onClick={addCareerField}
-                      className="add-career-button"
-                    >
-                      + 추가
-                    </button>
-                  ) : null}
+                />
+                <input
+                  type="text"
+                  placeholder="직책"
+                  value={career.jobTitle}
+                  onChange={(e) => handleCareerChange(index, "jobTitle", e.target.value)}
+                  required
+                />
+                <input
+                  type="text"
+                  name="startDate"
+                  onFocus={handleFocus}
+                  onBlur={handleBlur}
+                  value={career.startDate}
+                  onChange={(e) => handleCareerChange(index, "startDate", e.target.value)}
+                  placeholder="입사년월"
+                  required
+                />
+                  <input
+                    type="text"
+                    name="endDate"
+                    onFocus={handleFocus}
+                    onBlur={handleBlur}
+                    value={career.endDate}
+                    onChange={(e) => handleCareerChange(index, "endDate", e.target.value)}
+                    placeholder="퇴사년월"
+                    required
+                  />
                 </div>
-              </div>
-            ))}
+              ))}
+              {/* 추가 버튼을 필드 목록 외부로 이동 */}
+              <button type="button" className="add-career-button" onClick={addCareerField}>
+                + 추가
+              </button>
           </div>
         </div>
-        
+        {/* 경력 END*/}
          
 
         {/* 프로필 사진 첨부 */}

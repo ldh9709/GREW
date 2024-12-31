@@ -119,7 +119,6 @@ public class SecurityConfig {
 		//SNS로그인
 		httpSecurity.oauth2Login((config) -> {
 			config.loginPage("/login")//로그인 페이지 경로
-			 //.defaultSuccessUrl("http://localhost:3000/main", true)//로그인 성공 후 리다이렉트 경로
 			 .userInfoEndpoint((userInfoEndpointConfig) -> {
 			 /***
 			  * Spring Security의 OAuth2 사용자 정보 처리는 userInfoEndpoint를 통해 수행된다.
@@ -149,8 +148,6 @@ public class SecurityConfig {
 		httpSecurity.logout((t) -> {
 			t.logoutUrl("/logout")//로그아웃
 			.deleteCookies("member")//쿠키삭제
-			//.invalidateHttpSession(true)//세션 무효화
-			//.clearAuthentication(true)//인증 정보 삭제
 			.addLogoutHandler(new SecurityContextLogoutHandler()); // SecurityContext 초기화
 		});
 

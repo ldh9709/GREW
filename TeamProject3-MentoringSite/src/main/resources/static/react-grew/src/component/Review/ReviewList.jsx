@@ -53,9 +53,17 @@ export default function ReviewListPage() {
     const stars = [];
     for (let i = 0; i < 5; i++) {
       if (i < score) {
-        stars.push(<span key={i} className="star filled">★</span>);
+        stars.push(
+          <span key={i} className="star filled">
+            ★
+          </span>
+        );
       } else {
-        stars.push(<span key={i} className="star">★</span>);
+        stars.push(
+          <span key={i} className="star">
+            ★
+          </span>
+        );
       }
     }
     return stars;
@@ -77,8 +85,7 @@ export default function ReviewListPage() {
               {renderStars(review.reviewScore)} {/* 별점 표시 */}
             </div>
             <p>작성일: {new Date(review.reviewDate).toLocaleDateString()}</p>
-            <p>작성자 번호: {review.memberNo}</p>
-            <p>멘티 이름: {review.menteeName}</p>
+            <p>작성자: {review.menteeName}</p>
           </li>
         ))}
       </ul>

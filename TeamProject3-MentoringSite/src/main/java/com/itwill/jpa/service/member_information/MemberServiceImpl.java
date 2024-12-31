@@ -11,6 +11,10 @@ import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -28,6 +32,7 @@ import com.itwill.jpa.repository.member_information.InterestRepository;
 import com.itwill.jpa.entity.role.Role;
 import com.itwill.jpa.exception.CustomException;
 import com.itwill.jpa.repository.member_information.MemberRepository;
+import com.itwill.jpa.repository.member_information.MentorProfileRepository;
 import com.itwill.jpa.response.ResponseMessage;
 import com.itwill.jpa.response.ResponseStatusCode;
 import com.itwill.jpa.util.CustomMailSender;
@@ -278,37 +283,84 @@ public class MemberServiceImpl implements MemberService {
 
 	/********************************* Interest CRUD **************************************/
 	/***** 회원 전체 출력 ****
-	 * 필터 : 멘티, 멘토 
+	 * 필터 : 전체,멘티, 멘토 
 	 * 정렬 : 1(초기) - 가입 순, 2-이름 순 
 	 * */
-	public List<MemberDto> getMemberAll(String roleStr, Integer order){
-		
-		Role role = Role.ROLE_MENTEE; 
-		if(roleStr.equals("ROLE_MENTOR")) {
-			role = Role.ROLE_MENTOR;
-		}
-		
-		List<Member> memberList = new ArrayList<>();
-		List<MemberDto> memberDtoList = new ArrayList<>();
-		
-		switch (order) {
-			case 1: {
-				memberList = memberRepository.findByMemberRoleOrderByMemberJoinDateAsc(role);
-				break;
+	public Page<MemberDto> getMemberAll(String roleStr, Integer order, int pageNumber, int pageSize){
+		try {
+			
+			Pageable pageable = PageRequest.of(pageNumber, pageSize);
+			
+			 Role role = null; 
+	        if (!roleStr.equals("ALL")) { 
+	            if (roleStr.equals("ROLE_MENTOR")) {
+	                role = Role.ROLE_MENTOR;
+	            } else {
+	                role = Role.ROLE_MENTEE;
+	            }
+	        }
+			
+			Page<Member> memberList = null;
+			List<MemberDto> memberDtoList = new ArrayList<>();
+			
+			switch (order) {
+				// 가입순(회원번호순)
+				case 1: {
+					if(role == null) {
+						memberList = memberRepository.findAllByOrderByMemberNoDesc(pageable);
+					}else {
+						memberList = memberRepository.findByMemberRoleOrderByMemberNoDesc(role, pageable);
+					}
+					break;
+				}
+				// 가입순(이름 순)
+				case 2: {
+					if(role == null) {
+						memberList = memberRepository.findAllByOrderByMemberNameAsc(pageable);
+					}else {
+						memberList = memberRepository.findByMemberRoleOrderByMemberNameAsc(role, pageable);
+					}
+					break;
+				}
 			}
-			case 2: {
-				memberList = memberRepository.findByMemberRoleOrderByMemberNameAsc(role);
-				break;
+			
+			for (Member member : memberList) {
+				memberDtoList.add(MemberDto.toDtoWithMentorProfile(member));
 			}
+			
+			return new PageImpl<>(memberDtoList, pageable, memberList.getTotalElements());
+		} catch (Exception e) {
+			throw new CustomException(ResponseStatusCode.READ_MEMBER_FAIL, ResponseMessage.READ_MEMBER_FAIL, e);
 		}
 		
-		for (Member member : memberList) {
-			memberDtoList.add(MemberDto.toBasicDto(member));
-		}
-		
-		return memberDtoList;
 	}
 	
+	/******회원 멘토 상태별 회원 목록 조회******/
+	public Page<MemberDto> getMemberAllByMentorStatus(Integer status, Integer order, int pageNumber, int pageSize){
+		try {
+			Pageable pageable = PageRequest.of(pageNumber, pageSize);
+			Page<Member> members = null;
+			
+			switch (order) {
+				case 1: {
+					members = memberRepository.findByMentorProfile_MentorStatusOrderByMemberNoDesc(status,pageable);
+				}
+				case 2: {
+					members = memberRepository.findByMentorProfile_MentorStatusOrderByMemberNameAsc(status,pageable);
+				}
+			}
+			
+			List<MemberDto> memberDtoList = new ArrayList<>();
+			
+			for (Member member : members) {
+				memberDtoList.add(MemberDto.toDtoWithMentorProfile(member));
+			}
+			
+			return new PageImpl<>(memberDtoList, pageable, members.getTotalElements());
+		} catch (Exception e) {
+			throw new CustomException(ResponseStatusCode.READ_MEMBER_FAIL, ResponseMessage.READ_MEMBER_FAIL, e);
+		}
+	}
 	
 	/***** 신고 카운트 증가 *****/
 	@Override
@@ -438,6 +490,8 @@ public class MemberServiceImpl implements MemberService {
 		tempPassword = passwordEncoder.encode(tempPassword);
 		
 		member.changePassword(tempPassword);
+		
+		memberRepository.save(member);
 		
 	}
 	

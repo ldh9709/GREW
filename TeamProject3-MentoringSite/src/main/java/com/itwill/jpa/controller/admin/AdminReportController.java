@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.itwill.jpa.auth.PrincipalDetails;
+import com.itwill.jpa.dto.alarm.AlarmDto;
 import com.itwill.jpa.dto.bulletin_board.AnswerDto;
 import com.itwill.jpa.dto.bulletin_board.InquiryDto;
 import com.itwill.jpa.dto.member_information.MentorBoardDto;
@@ -27,6 +28,7 @@ import com.itwill.jpa.repository.bullentin_board.AnswerRepository;
 import com.itwill.jpa.response.Response;
 import com.itwill.jpa.response.ResponseMessage;
 import com.itwill.jpa.response.ResponseStatusCode;
+import com.itwill.jpa.service.alarm.AlarmService;
 import com.itwill.jpa.service.bullentin_board.AnswerService;
 import com.itwill.jpa.service.bullentin_board.InquiryService;
 import com.itwill.jpa.service.member_information.MemberService;
@@ -44,7 +46,8 @@ public class AdminReportController {
 
 	@Autowired
 	private ReportService reportService;
-
+	@Autowired
+	private AlarmService alarmService;
 	/************************* 신고 *******************************/
 
 	/* 신고 출력(전체회원) */
@@ -53,7 +56,7 @@ public class AdminReportController {
 	@Operation(summary = "전체 신고 목록 조회")
 	@GetMapping
 	public ResponseEntity<Response> getAdminReportList(Authentication authentication,
-			@Parameter(name = "filter", description = "필터링 역할(1: 전체, 2: 신고접수 순)", required = true, example = "1")
+			@Parameter(name = "filter", description = "필터링 역할(1: 전체, 2: 신고접수 3:처리완료 4:무고처리 )", required = true, example = "1")
 	        @RequestParam(name = "filter") Integer filter,
 	        @RequestParam(name = "page", defaultValue = "0") int page,
 	        @RequestParam(name = "size", defaultValue = "10") int size) {
@@ -90,11 +93,14 @@ public class AdminReportController {
     
 		ReportDto updatedReport = null;
 
+		Response response = new Response();
 	    // 상태에 따른 로직 분기
 	    switch (status) {
 	        case 2:
 	            // 신고 상태 '처리완료'로 변경
 	            updatedReport = reportService.updateReportStatusToResolved(reportNo);
+	            AlarmDto alarmDto = alarmService.createAlarmByReport(reportNo); 
+	            response.setAddData(alarmDto);
 	            break;
 	        case 3:
 	            // 신고 상태 '무고처리'로 변경
@@ -103,7 +109,6 @@ public class AdminReportController {
 	    }
 
 	    // 응답 객체 생성
-	    Response response = new Response();
 	    response.setStatus(ResponseStatusCode.UPDATE_REPORT_SUCCESS);
 	    response.setMessage("신고 상태가 '" + status + "'으로 변경되었습니다.");
 	    response.setData(updatedReport);

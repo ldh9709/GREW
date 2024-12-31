@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import * as memberApi from "../../api/memberApi";
 import * as responseStatus from "../../api/responseStatusCode";
+import { toast } from "react-toastify";
+import {toastMessage} from "../../util/toastUtil";
 import "../../css/memberPage.css"
 import google from '../../image/google.png';
 import naver from '../../image/naver.png';
@@ -110,7 +112,7 @@ export const MemberJoinFormPage = () => {
   const sendJoinCode = async () => {
     const response = await memberApi.sendJoinCode(member.memberEmail);
     setTempCode(response.data);
-    alert("이메일이 발송되었습니다.");
+    toast.success("인증메일이 발송되었습니다.");
   };
 
   /* 관심사 선택 시 배열 업데이트 */
@@ -142,32 +144,32 @@ export const MemberJoinFormPage = () => {
   // 회원가입 액션
   const MemberJoinAction = async () => {
     if (!member.memberId) {
-      alert("아이디를 입력하세요.");
+      toast.error("아이디를 입력해주세요.");
       return;
     }
 
     if(!member.memberPassword) {
-      alert("비밀번호를 입력하세요.");
+      toast.error("비밀번호를 입력해주세요.");
       return;
     }
 
     if(member.memberPassword !== member.memberPassword2) {
-      alert("비밀번호와 일치하지 않습니다다.");
+      toast.error("비밀번호가 일치하지 않습니다.");
       return;
     }
 
     if(!member.memberName) {
-      alert("이름을 입력하세요.");
+      toast.error("이름을 입력해주세요.");
       return;
     }
 
     if(!member.memberEmail) {
-      alert("이메일 형식을 올바르게 입력해주세요.");
+      toast.error("이메일 형식을 올바르게 입력해주세요.");
       return;
     }
 
     if(!member.interests || member.interests.length !== 3) {
-      alert("3개의 관심사를 선택하세요.");
+      toast.error("3개의 관심사를 선택해주세요.");
       return;
     }
 
@@ -181,10 +183,10 @@ export const MemberJoinFormPage = () => {
           navigate('/member/login');
           break;
         case responseStatus.CREATED_MEMBER_FAIL:
-          alert("가입 실패");
+          toast.error("가입이 실패하였습니다.");
           break;
         default:
-          alert("에러 발생");
+          toast.error("에러가 발생하였습니다..");
           break;
       }
 
@@ -196,10 +198,10 @@ export const MemberJoinFormPage = () => {
           navigate('/member/login');
           break;
         case responseStatus.CREATED_MEMBER_FAIL:
-          alert("가입 실패");
+          toast.error("가입이 실패하였습니다.");
           break;
         default:
-          alert("에러 발생");
+          toast.error("에러가 발생하였습니다..");
           break;
       }
      

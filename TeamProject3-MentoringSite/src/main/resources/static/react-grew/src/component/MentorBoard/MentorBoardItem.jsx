@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "../../css/mentorBoard.css";
 import { useNavigate } from "react-router-dom";
-import imageSrc from '../../image/images.jpeg'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye } from '@fortawesome/free-regular-svg-icons';
 import * as mentorProfileApi from '../../api/mentorProfileApi'
@@ -43,7 +42,7 @@ export default function MentorBoardItem({ board, onClick }) {
   return (
     <div className="board-card" onClick={onClick}>
           <div className="board-image-container">
-            <img src={imageSrc} alt="content-image" className="board-image" />
+            <img src={board.mentorBoardImage} alt="content-image" className="board-image" />
           </div>
           <div className="board-details">
             <span className="board-category">{board.categoryName}</span>

@@ -292,6 +292,7 @@ function MentorBoardList() {
         ) : (
           <p>등록된 멘토 컨텐츠가 없습니다.</p>
         )}
+      </div>
 
           {/* 페이지네이션 */}
           <PagenationItem
@@ -299,7 +300,6 @@ function MentorBoardList() {
             totalPages={totalPages}
             paginate={paginate}
           />
-      </div>
 
 
     </>

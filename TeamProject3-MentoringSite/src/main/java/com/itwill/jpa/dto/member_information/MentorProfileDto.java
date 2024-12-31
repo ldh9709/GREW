@@ -1,5 +1,7 @@
 package com.itwill.jpa.dto.member_information;
 
+import java.util.List;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.itwill.jpa.entity.member_information.MentorProfile;
 import lombok.*;
@@ -24,6 +26,8 @@ public class MentorProfileDto {
     private Integer mentorActivityCount; 
     private String mentorHeadline;
     private String categoryName;
+    
+    private List<CareerDto> careerDtos;
     
     /**
      * 엔티티를 DTO로 변환하는 메서드

@@ -29,8 +29,15 @@ const MemberLoginFormPage = () => {
 
       login(responseJsonObject.accessToken);
 
-      /* 로그인 성공 시 이동 */
-      navigate("/main");
+      /* 멘토 프로필 START */
+      const mentorProfileResponse = await memberApi.getMentorProfile(responseJsonObject.mentorProfileNo);
+
+      // categoryNo가 26인지 확인
+      if (mentorProfileResponse?.data?.categoryNo === 26) {
+        navigate("/mentor/join"); // 멘토 가입 페이지로 이동
+      } else {
+        navigate("/main"); // 기본 메인 페이지로 이동
+      }
     } else {
       console.log("responseJsonObject.status : ", responseJsonObject.status);
       alert("회원정보가 일치하지 않습니다.");

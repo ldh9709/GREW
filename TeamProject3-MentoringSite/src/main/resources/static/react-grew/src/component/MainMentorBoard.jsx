@@ -1,13 +1,20 @@
 import React from "react";
-import imageSrc from './Member/mentor-content1.jpg';
+import { useNavigate } from "react-router-dom";
+
 export default function MainMentorBoard({mentorBoard}) {
+  const navigate = useNavigate();
+
+  const handleNavigate = () => {
+    navigate(`/mentor-board/detail/${mentorBoard.mentorBoardNo}`);
+  };
+
   return (
     
-    <div className="tab-boards">
+    <div className="tab-boards" onClick={handleNavigate} style={{ cursor: "pointer" }}>
       <div className="board-list2">
           <div className="main-board-card">
             <div className="board-image-container">
-              <img src={imageSrc} alt="content-image" className="board-image" />
+              <img src={mentorBoard.mentorBoardImage} alt="content-image" className="board-image" />
             </div>
             <div className="board-details">
               <h3 className="board-title">{mentorBoard.mentorBoardTitle}</h3>

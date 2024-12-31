@@ -15,10 +15,12 @@ export default function MentorProfileInfo({ mentorProfile }) {
     // })
 
   //팔로우 여부 체크
-  const checkFollow = async() => {
-    const response = await followApi.isExistFollow(token, mentorProfile.memberNo);
-    console.log(response)
-    setIsfollow(response.data);
+  const checkFollow = async () => {
+    if (member.memberRole === 'ROLE_MENTEE') {
+      const response = await followApi.isExistFollow(token, mentorProfile.memberNo);
+      console.log(response)
+      setIsfollow(response.data);
+    }
   }
 
   //팔로우 등록

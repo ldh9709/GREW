@@ -118,7 +118,6 @@ export default function HeaderMenu() {
 
   // 스타일 정의
   const navStyle = {
-    fontFamily: "'Noto Sans KR', sans-serif",
     padding: "10px 20px",
   };
 
