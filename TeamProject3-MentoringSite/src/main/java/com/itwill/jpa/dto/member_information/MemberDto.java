@@ -39,15 +39,15 @@ public class MemberDto {
 	private Role memberRole;
 	private String memberProvider;
 	private Long mentorProfileNo;
-	
+	private MentorProfileDto mentorProfile;
 	private List<InterestDto> interests;
 	
-	/* 관심사 포함 */
+	/* 기본 정보 + 관심사 포함 */
 	public static MemberDto toDto(Member memberEntity) {
 		return MemberDto.builder()
 				.memberNo(memberEntity.getMemberNo())
 	            .memberId(memberEntity.getMemberId())
-	            .memberPassword(memberEntity.getMemberPassword())
+//	            .memberPassword(memberEntity.getMemberPassword())
 	            .memberEmail(memberEntity.getMemberEmail())
 	            .memberName(memberEntity.getMemberName())
 	            .memberStatus(memberEntity.getMemberStatus())
@@ -64,12 +64,12 @@ public class MemberDto {
 	}
 	
 	
-	/* 관심사 미포함 */
+	/* 기본정보만 (관심사 미포함) */
 	public static MemberDto toBasicDto(Member memberEntity) {
 		return MemberDto.builder()
 				.memberNo(memberEntity.getMemberNo())
 	            .memberId(memberEntity.getMemberId())
-	            .memberPassword(memberEntity.getMemberPassword())
+//	            .memberPassword(memberEntity.getMemberPassword())
 	            .memberEmail(memberEntity.getMemberEmail())
 	            .memberName(memberEntity.getMemberName())
 	            .memberStatus(memberEntity.getMemberStatus())
@@ -89,6 +89,21 @@ public class MemberDto {
 	            .build();
 	}
 	
+	public static MemberDto toDtoWithMentorProfile(Member memberEntity) {
+		return MemberDto.builder()
+				.memberNo(memberEntity.getMemberNo())
+	            .memberId(memberEntity.getMemberId())
+	            .memberEmail(memberEntity.getMemberEmail())
+	            .memberName(memberEntity.getMemberName())
+	            .memberStatus(memberEntity.getMemberStatus())
+	            .memberPoint(memberEntity.getMemberPoints())
+	            .memberJoinDate(memberEntity.getMemberJoinDate())
+	            .memberReportCount(memberEntity.getMemberReportCount())
+	            .memberRole(memberEntity.getMemberRole())
+	            .memberProvider(memberEntity.getMemberProvider())
+	            .mentorProfile(memberEntity.getMentorProfile() != null ? MentorProfileDto.toDto(memberEntity.getMentorProfile()) : null)
+				.build();
+	}
 
 	@Builder
 	@Data

@@ -127,7 +127,7 @@ function SearchList() {
         {loading && <div>로딩 중...</div>}
         {error && <div>{error}</div>}
         {mentorProfiles.length > 0 ? (
-          <div>
+          <div className="profile-container">
             {mentorProfiles.map((profile) => (
               <MentorProfileItem
                 key={profile.mentorProfileNo}
@@ -135,7 +135,7 @@ function SearchList() {
               />
             ))}
             <div className="view-more">
-              <a href="" onClick={handleViewMoreMentorProfiles}>
+              <a className="view-more-button" href="" onClick={handleViewMoreMentorProfiles}>
                 멘토 프로필 검색 내용 더 보기{" "}
                 <FontAwesomeIcon icon={faCircleChevronRight} />
               </a>

@@ -1,8 +1,16 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
+
 export default function MainMentorBoard({mentorBoard}) {
+  const navigate = useNavigate();
+
+  const handleNavigate = () => {
+    navigate(`/mentor-board/detail/${mentorBoard.mentorBoardNo}`);
+  };
+
   return (
     
-    <div className="tab-boards">
+    <div className="tab-boards" onClick={handleNavigate} style={{ cursor: "pointer" }}>
       <div className="board-list2">
           <div className="main-board-card">
             <div className="board-image-container">

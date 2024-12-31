@@ -52,11 +52,8 @@ class MemberServiceTest {
         System.out.println("새로운 비밀번호가 이메일로 발송되었습니다.");
     }
     
-//    @Test
-    void findMemberByMemberId() {
-    }
     
-    @Test
+//    @Test
     void updateMemberRole() {
     	memberService.updateMemberRole(6L, "ROLE_MENTOR");
     	

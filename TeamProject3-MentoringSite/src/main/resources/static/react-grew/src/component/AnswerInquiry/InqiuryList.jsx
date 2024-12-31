@@ -285,6 +285,11 @@ function InqiuryList() {
               <div>아직 등록된 질문이 없습니다.</div>
             </div>
           )}
+        <PagenationItem
+              currentPage={currentPage}
+              totalPages={totalPages}
+              paginate={paginate}
+            />
         </div>
         {/* 왼쪽 작은 리스트 */}
         <div className="small-list">
@@ -304,11 +309,7 @@ function InqiuryList() {
             </div>
           </div>
         </div>
-        <PagenationItem
-          currentPage={currentPage}
-          totalPages={totalPages}
-          paginate={paginate}
-        />
+            
       </div>
     </>
   );
