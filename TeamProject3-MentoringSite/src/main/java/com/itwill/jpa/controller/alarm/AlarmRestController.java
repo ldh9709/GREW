@@ -109,4 +109,17 @@ public class AlarmRestController {
 				HttpStatus.CREATED);
 		return responseEntity;
 	}
+	@Operation(summary = "알람 찾기")
+	@GetMapping("find-alarm")
+	public ResponseEntity<Response> findByAlarm(@RequestParam(name = "alarmNo") Long alarmNo) {
+		AlarmDto alarmDto = alarmService.findAlarm(alarmNo);
+		Response response = new Response();
+		response.setData(alarmDto);
+
+		HttpHeaders httpHeaders = new HttpHeaders();
+		httpHeaders.setContentType(new MediaType(MediaType.APPLICATION_JSON, Charset.forName("UTF-8")));
+		ResponseEntity<Response> responseEntity = new ResponseEntity<Response>(response, httpHeaders,
+				HttpStatus.CREATED);
+		return responseEntity;
+	}
 }
