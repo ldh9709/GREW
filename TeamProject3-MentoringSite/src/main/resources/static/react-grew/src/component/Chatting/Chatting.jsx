@@ -94,65 +94,45 @@ const ChattingMessage = ({ roomId, roomName }) => {
 
   // stompClient 초기화 및 WebSocket 연결
   useEffect(() => {
-    if (!roomId || !username) {
-      // roomId 또는 username이 null일 경우, 아무 작업도 하지 않음
-      return;
-    }
-    if (roomId && username) {
-      const socket = new SockJS(`http://localhost:8080/chat`);
-      stompClient.current = new StompClient({
-        webSocketFactory: () => socket,
-        onConnect: () => {
-          stompClient.current.subscribe(
-            `/topic/messages/${roomId}`,
-            (response) => {
-              // 서버에서 소켓내용을 받아옴
-              const message = JSON.parse(response.body);
-              if (!message.chatMessageDate) {
-                message.chatMessageDate = new Date().toISOString(); // ISO 8601 형식으로 현재 시간 설정
-              }
-              const messageType =
-                message.memberName === username ? "sent" : "received";
-              setMessages((prevMessages) => [
-                ...prevMessages,
-                {
-                  chatMessageNo: message.chatMessageNo,
-                  chatMessageContent: message.chatMessageContent,
-                  chatMessageDate: message.chatMessageDate,
-                  chatMessageCheck: message.chatMessageCheck,
-                  memberName: message.memberName,
-                  imageData: message.imageData || null,
-                  type: messageType,
-                },
-              ]);
-              // 읽음 상태 업데이트 요청
-              if (message.memberName !== username) {
-                stompClient.current.publish({
-                  destination: `/app/chat/read/${roomId}`,
-                  body: JSON.stringify(message),
-                });
-              }
-            }
-          );
-          stompClient.current.subscribe(
-            `/topic/read-status/${roomId}`,
-            () => {
-              chatMessages(username);
-            }
-          );
-        },
-        onDisconnect: () => console.log("Disconnected"),
-      });
+    if (!roomId || !username) return;
 
-      stompClient.current.activate();
+    const socket = new SockJS(`http://localhost:8080/chat`);
+    stompClient.current = new StompClient({
+      webSocketFactory: () => socket,
+      onConnect: () => {
+        stompClient.current.subscribe(
+          `/topic/messages/${roomId}`,
+          (response) => {
+            const message = JSON.parse(response.body);
+            if (!message.chatMessageDate) {
+              message.chatMessageDate = new Date().toISOString();
+            }
 
-      return () => {
-        if (stompClient.current) {
-          stompClient.current.deactivate(); // 소켓이 연결되었다면 일을 끝낸 뒤 다시 연결 종료
-        }
-      };
-    }
-    console.log("소켓검사 종료");
+            const messageType =
+              message.memberName === username ? "sent" : "received";
+
+            // 이전 메시지 배열을 기반으로 새로운 메시지를 추가하는 방식
+            setMessages((prevMessages) => [
+              ...prevMessages,
+              {
+                ...message,
+                type: messageType,
+                isImageLoaded: !!message.imageData, // 이미지가 있으면 로드된 상태로 설정
+              },
+            ]);
+          }
+        );
+      },
+      onDisconnect: () => console.log("Disconnected"),
+    });
+
+    stompClient.current.activate();
+
+    return () => {
+      if (stompClient.current) {
+        stompClient.current.deactivate();
+      }
+    };
   }, [roomId, username]);
 
   // 메시지 전송 후 스크롤 제어
@@ -162,43 +142,6 @@ const ChattingMessage = ({ roomId, roomName }) => {
         chatContainerRef.current.scrollHeight;
     }
   }, [messages]); // 메시지가 추가될 때만 스크롤 이동
-
-  // 이미지 데이터를 서버에서 가져오는 함수
-  const fetchImageData = async (chatMessageNo) => {
-    try {
-      const response = await fetch(
-        `http://localhost:8080/image/${chatMessageNo}`
-      );
-      if (response.ok) {
-        const base64Image = await response.text();
-        return base64Image;
-      } else {
-        console.error("이미지 로딩 실패");
-        return null;
-      }
-    } catch (error) {
-      console.error("이미지 요청 오류", error);
-      return null;
-    }
-  };
-
-  // 이미지 로딩 처리
-  useEffect(() => {
-    const loadImages = async () => {
-      const updatedMessages = await Promise.all(
-        messages.map(async (msg) => {
-          if (msg.chatMessageContent === "이미지" && msg.chatMessageNo) {
-            const base64Image = await fetchImageData(msg.chatMessageNo);
-            return { ...msg, imageData: base64Image };
-          }
-          return msg;
-        })
-      );
-      setMessages(updatedMessages);
-    };
-
-    loadImages();
-  }, [messages.length]); // 메시지 배열의 길이가 바뀔 때만 실행하도록 변경
 
   // 메시지 전송 처리
   const handleSendMessage = (event) => {
@@ -224,45 +167,150 @@ const ChattingMessage = ({ roomId, roomName }) => {
   // 이미지 전송 처리
   const handleSendImage = (event) => {
     event.preventDefault();
-    if (selectedImage && stompClient.current) {
+
+    // STOMP 연결 확인
+    if (!stompClient.current || !stompClient.current.connected) {
+      console.error("STOMP 연결이 되지 않았습니다.");
+      alert("서버와의 연결이 끊어졌습니다. 다시 시도해주세요.");
+      return;
+    }
+
+    if (selectedImage) {
       const reader = new FileReader();
       reader.onloadend = () => {
-        const base64Image = reader.result.split(",")[1];
-        console.log("Base64 Image:", base64Image);
+        const img = new Image();
+        img.onload = () => {
+          // 최대 파일 크기 (5MB 이하로 제한)
+          const MAX_FILE_SIZE_KB = 50;
+          const imageSizeInMB = selectedImage.size / (128 * 128); // 이미지 크기(MB)
 
-        const imageData = {
-          imageBlob: base64Image,
-          chatMessageNo: Date.now(),
-          chatRoomNo: roomId,
-          memberNo: decodeToken.memberNo,
+          if (imageSizeInMB > MAX_FILE_SIZE_KB) {
+            alert(
+              "이미지가 너무 큽니다. 최대 50KB 이하의 이미지만 업로드 가능합니다."
+            );
+            return;
+          }
+
+          // 리사이즈할 크기 설정 (예: 최대 500px)
+          const MAX_WIDTH = 500;
+          const MAX_HEIGHT = 500;
+
+          const canvas = document.createElement("canvas");
+          const ctx = canvas.getContext("2d");
+
+          let width = img.width;
+          let height = img.height;
+
+          // 비율 유지하며 크기 조정
+          if (width > height) {
+            if (width > MAX_WIDTH) {
+              height = Math.round((height * MAX_WIDTH) / width);
+              width = MAX_WIDTH;
+            }
+          } else {
+            if (height > MAX_HEIGHT) {
+              width = Math.round((width * MAX_HEIGHT) / height);
+              height = MAX_HEIGHT;
+            }
+          }
+
+          canvas.width = width;
+          canvas.height = height;
+          ctx.drawImage(img, 0, 0, width, height);
+
+          const base64Image = canvas.toDataURL("image/png"); // 리사이즈된 이미지
+          console.log("Resized Base64 Image:", base64Image);
+
+          const imageData = {
+            imageBlob: base64Image.split(",")[1],
+            chatRoomNo: roomId,
+            memberNo: decodeToken.memberNo,
+          };
+
+          // 이미지 전송
+          stompClient.current.publish({
+            destination: `/app/sendImage/${roomId}`,
+            body: JSON.stringify(imageData),
+          });
+
+          // 채팅 메시지로 추가
+          setMessages((prevMessages) => [
+            ...prevMessages,
+            {
+              chatMessageNo: imageData.chatMessageNo,
+              chatMessageContent: "이미지",
+              chatMessageDate: new Date().toISOString(),
+              chatMessageCheck: 1,
+              memberName: username,
+              imageData: imageData.imageBlob,
+              type: "sent",
+            },
+          ]);
         };
-
-        stompClient.current.publish({
-          destination: `/app/sendImage/${roomId}`,
-          body: JSON.stringify(imageData),
-        });
-        // 채팅 메시지로 추가
-        setMessages((prevMessages) => [
-          ...prevMessages,
-          {
-            chatMessageNo: imageData.chatMessageNo,
-            chatMessageContent: "이미지",
-            chatMessageDate: new Date().toISOString(),
-            chatMessageCheck: 1,
-            memberName: username,
-            imageData: base64Image,
-            type: "sent",
-          },
-        ]);
+        img.src = reader.result;
       };
-      reader.readAsDataURL(selectedImage);
+      reader.readAsDataURL(selectedImage); // 이미지를 base64로 읽어오기
+    }
+  };
+  // 이미지 데이터 서버에서 가져오기
+  const fetchImageData = async (chatMessageNo, retryCount = 0) => {
+    try {
+      const response = await fetch(
+        `http://localhost:8080/image/${chatMessageNo}`
+      );
+      if (response.ok) {
+        const base64Image = await response.text();
+        return base64Image;
+      } else {
+        console.error("이미지 로딩 실패");
+        if (retryCount < 3) {
+          // 실패 시 1초 후에 재시도
+          await new Promise((resolve) => setTimeout(resolve, 500));
+          return fetchImageData(chatMessageNo, retryCount + 1); // 재시도
+        }
+        return null; // 재시도 3번 실패시 null 반환
+      }
+    } catch (error) {
+      console.error("이미지 요청 오류", error);
+      if (retryCount < 3) {
+        await new Promise((resolve) => setTimeout(resolve, 500));
+        return fetchImageData(chatMessageNo, retryCount + 1); // 재시도
+      }
+      return null;
     }
   };
 
+  // 메시지 업데이트 시 이미지 로딩 처리
+  useEffect(() => {
+    const loadImages = async () => {
+      const updatedMessages = await Promise.all(
+        messages.map(async (msg) => {
+          if (msg.chatMessageContent === "이미지" && msg.chatMessageNo) {
+            if (!msg.imageData) {
+              // 이미지를 로딩 중으로 설정
+              msg.isLoadingImage = true;
+            }
+            const base64Image = await fetchImageData(msg.chatMessageNo);
+            if (base64Image) {
+              return { ...msg, imageData: base64Image, isLoadingImage: false }; // 로딩 완료
+            }
+          }
+          return msg; // 이미지가 없으면 그대로 반환
+        })
+      );
+      setMessages(updatedMessages); // 이미지가 업데이트된 메시지 배열을 상태로 설정
+    };
+
+    loadImages(); // 이미지 로딩 실행
+  }, [messages.length]); // 메시지 배열의 길이가 바뀔 때마다 실행
   // 이미지 파일 선택 처리
   const handleImageSelect = (event) => {
     const file = event.target.files[0];
-    if (file) {
+    const MAX_FILE_SIZE_KB = 50000;
+    if (file && file.size > MAX_FILE_SIZE_KB) {
+      console.log(file.size);
+      alert("이미지 크기가 너무 큽니다. 50KB 이하의 이미지를 선택해주세요.");
+    } else {
       setSelectedImage(file);
     }
   };
@@ -297,21 +345,29 @@ const ChattingMessage = ({ roomId, roomName }) => {
                   <span className={`chat-message-status-${msg.type}`}>
                     {msg.chatMessageCheck === 1 ? "1" : null}
                   </span>
-                  <div className={`chat-message-${msg.type}`}>
-                    {msg.type === "sent"
-                      ? `${msg.memberName}: ${msg.chatMessageContent}`
-                      : `${msg.memberName}: ${msg.chatMessageContent}`}
-                  </div>
-                  {/* 이미지가 포함된 메시지 처리 */}
-                  {msg.chatMessageContent === "이미지" && msg.imageData && (
-                    <div>
-                      <img
-                        src={`data:image/png;base64,${msg.imageData}`}
-                        alt="chat image"
-                        className="chat-image"
-                      />
+                  {/* 텍스트 메시지 처리 */}
+                  {msg.chatMessageContent !== "이미지" ? (
+                    <div className={`chat-message-${msg.type}`}>
+                      {msg.type === "sent"
+                        ? `${msg.memberName}: ${msg.chatMessageContent}`
+                        : `${msg.memberName}: ${msg.chatMessageContent}`}
                     </div>
-                  )}
+                  ) : null}
+
+                  {/* 이미지 처리 */}
+                  {msg.chatMessageContent === "이미지" && msg.imageData ? (
+                    <div className={`chat-image-container-${msg.type}`}>
+                      {msg.isLoadingImage ? (
+                        <div className="loading-spinner">로딩 중...</div> // 로딩 중일 때 스피너 또는 메시지
+                      ) : (
+                        <img
+                          src={`data:image/png;base64,${msg.imageData}`}
+                          alt="chat image"
+                          className="chat-image"
+                        />
+                      )}
+                    </div>
+                  ) : null}
                   <div className={`chat-message-time-${msg.type}`}>
                     {formatTime(msg.chatMessageDate)}
                   </div>

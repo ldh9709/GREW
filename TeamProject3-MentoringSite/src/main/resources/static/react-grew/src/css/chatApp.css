@@ -398,3 +398,17 @@ body {
 .chat-panel.open ~ .notification-button {
   right: 320px; /* 패널이 열렸을 때 버튼 이동 */
 }
+/* 이미지 메시지 스타일 */
+.chat-image-container-sent {
+  text-align: right;
+}
+
+.chat-image-container-received {
+  text-align: left;
+}
+
+.chat-image {
+  max-width: 200px; /* 이미지 크기 조정 */
+  max-height: 200px;
+  border-radius: 10px;
+}
