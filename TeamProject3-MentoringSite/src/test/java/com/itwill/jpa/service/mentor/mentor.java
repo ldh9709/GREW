@@ -21,7 +21,7 @@ public class mentor {
 		@Test
 		void getcareer() {
 //			System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"+mentorProfileService.getMentorProfileDetail(11L));
-			System.out.println(mentorProfileService.getCareerByMentorProfileNo(11L));
+//			System.out.println(mentorProfileService.getCareerByMentorProfileNo(11L));
 			
 		}
 	
