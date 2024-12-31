@@ -41,6 +41,7 @@ function InquiryView() {
         member.memberNo
       );
       setMentorProFileStatus(response.data.mentorStatus);
+      console.log(response.data.mentorStatus);
     }
   };
   useEffect(() => {
@@ -104,6 +105,7 @@ function InquiryView() {
   useEffect(() => {
     if (member.memberNo && inquiryNo) {
       isAnswerByInquiryNo();
+      mentorProfileCheck();
     }
   }, [member.memberNo && inquiryNo]);
   //질문삭제
@@ -141,7 +143,6 @@ function InquiryView() {
     pageNumbers.push(i);
   }
   const handleWriteButton = () => {
-    mentorProfileCheck();
     if (!member.memberNo) {
       alert("로그인이 필요한 서비스입니다.");
       return;
