@@ -5,6 +5,7 @@ import java.nio.charset.Charset;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -68,7 +69,7 @@ public class ReportRestController {
 		return responseEntity;
 	}
 	
-	/* [어드민] 신고 상태변경(검토중) */
+	/* [어드민] 신고 상태변경(검토중)
 	@Operation(summary = "신고 상태 '검토중'으로 변경")
 	@PutMapping("{report_no}/in-progress")
 	public ResponseEntity<Response> updateReportStatusToInPorgress(@PathVariable (value="report_no") Long reportNo){
@@ -86,6 +87,7 @@ public class ReportRestController {
 		
 		return responseEntity;
 	}
+	*/
 	
 	/* [어드민] 신고 상태변경(처리완료) */
 	@Operation(summary = "신고 상태 '처리완료'로 변경")
@@ -144,7 +146,7 @@ public class ReportRestController {
 		
 		return responseEntity;
 	}
-	
+
 	/* [어드민] 신고 출력(전체회원) */
 	@Operation(summary = "[어드민] 전체 신고 목록 조회")
 	@GetMapping()
@@ -153,7 +155,7 @@ public class ReportRestController {
 			@RequestParam(name="filter") Integer filter,
 			@RequestParam(name = "page", defaultValue ="0") int page,
 			@RequestParam(name = "size", defaultValue ="10") int size){
-		List<ReportDto> reports = reportService.getReportAll(filter, page, size);
+		Page<ReportDto> reports = reportService.getReportAll(filter, page, size);
 		
 		Response response = new Response();
 		response.setStatus(ResponseStatusCode.READ_REPORT_LIST_SUCCESS);

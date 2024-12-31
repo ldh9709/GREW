@@ -31,6 +31,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.UUID;
 
@@ -48,7 +49,9 @@ public class MentorProfileServiceImpl implements MentorProfileService {
     private CategoryRepository categoryRepository;
     @Autowired
     private CareerRepository careerRepository;
-
+    @Autowired
+    private CareerService careerService;
+  
     
     
     //상세보기 12-19일
@@ -335,6 +338,7 @@ public class MentorProfileServiceImpl implements MentorProfileService {
             mentorProfile.setMentorStatus(2); // 2로 설정
             System.out.println(">>>>> updateMentorProfile : " + mentorProfileDto.getMentorImage());
             mentorProfile.setCategory(category); // 카테고리 설정
+            careerService.updateCareer(mentorProfileDto.getCareerDtos());
             
             // 🔥 저장
             return mentorProfileRepository.save(mentorProfile);
@@ -520,12 +524,5 @@ public class MentorProfileServiceImpl implements MentorProfileService {
         Pageable pageable = PageRequest.of(page, size);
         Page<MentorProfile> mentors = mentorProfileRepository.findByCategoryNoOrderByActivityCount(categoryNo, pageable);
         return mentors.map(MentorProfileDto::toResponseDto);
-    }
-    
-    @Override
-    public List<CareerDto> getCareerByMentorProfileNo(Long mentorProfileNo){
-    	System.out.println(careerRepository.findById(mentorProfileNo));
-    	List<CareerDto> careerDtos = new ArrayList<>();
-    	return careerDtos;
     }
 }

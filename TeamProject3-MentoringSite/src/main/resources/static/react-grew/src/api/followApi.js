@@ -58,9 +58,9 @@ export const followList = async (token,page) => {
     return responseJsonObject;
 }
 //팔로잉 취소
-export const deleteFollow = async (token,mentorNo) => {
+export const deleteFollow = async (token,followNo) => {
 
-    const response = await fetch(`${BACKEND_SERVER}/follow/cancel/${mentorNo}`,{
+    const response = await fetch(`${BACKEND_SERVER}/follow/cancel/${followNo}`,{
         method: 'DELETE',
         headers: {
             'Content-Type': 'application/json',

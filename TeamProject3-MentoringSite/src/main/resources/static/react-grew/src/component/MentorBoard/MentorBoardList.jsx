@@ -16,7 +16,7 @@ function MentorBoardList() {
   const [boards, setBoards] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
-  const [itemsPerPage] = useState(5);
+  const [itemsPerPage] = useState(6); // 한페이지당 데이터 출력 개수
   const [sortType, setSortType] = useState("latest");
   const [categories, setCategories] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState(null);

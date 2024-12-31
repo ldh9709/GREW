@@ -7,6 +7,8 @@ import java.util.List;
 import javax.swing.undo.CannotUndoException;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -54,7 +56,7 @@ public class ReportServiceImpl implements ReportService {
 		}
 	} 
 
-	/* [어드민] 신고 상태 변경 : 접수중 */
+	/* [어드민] 신고 상태 변경 : 접수중 
 	@Transactional
 	@Override
 	public ReportDto updateReportStatusToInProgress(Long reportNo) {
@@ -67,19 +69,20 @@ public class ReportServiceImpl implements ReportService {
 			throw new CustomException(ResponseStatusCode.UPDATE_REPORT_FAIL, ResponseMessage.UPDATE_REPORT_FAIL, e);
 		}
 	}
-	
+	*/
 	/* [어드민] 신고 상태 변경 : 처리완료 */
 	@Transactional
 	@Override
 	public ReportDto updateReportStatusToResolved(Long reportNo) {
 		try {
 			Report report = reportRepository.findById(reportNo).get();
-			
+			System.out.println("처리완료" + report.getReportType());
+			System.out.println("처리완료" + report.getReportTarget());
 			if(report == null) {
 				throw new IllegalArgumentException("report 생성 오류");
 			}
 			
-			report.setReportStatus(3);
+			report.setReportStatus(2);
 			
 			/* type:MEMBER인 경우 
 			 * - 해당 멤버 신고 카운트 증가 
@@ -128,7 +131,7 @@ public class ReportServiceImpl implements ReportService {
 	public ReportDto updateReportStatusToFalseReport(Long reportNo) {
 		try {
 			Report report = reportRepository.findById(reportNo).get();
-			report.setReportStatus(4);
+			report.setReportStatus(3);
 			report.setResolvedDate(LocalDateTime.now());
 			return ReportDto.toDto(reportRepository.findById(reportNo).get());
 		} catch (Exception e) {
@@ -141,7 +144,7 @@ public class ReportServiceImpl implements ReportService {
 	public ReportDto getReportByreportNo(Long reportNo) {
 		try {
 			Report report = reportRepository.findById(reportNo).get();
-			ReportDto reportDto = ReportDto.toDto(report);
+			ReportDto reportDto = ReportDto.toResponseDto(report);
 			return reportDto;
 		} catch (Exception e) {
 			throw new CustomException(ResponseStatusCode.READ_REPORT_FAIL, ResponseMessage.READ_REPORT_FAIL, e);
@@ -151,46 +154,47 @@ public class ReportServiceImpl implements ReportService {
 	
 
 	/* [어드민] 신고 전체 출력 
-	 * 필터링, 기본 순서 date
-	 * 1 : 전체 , 2: 신고접수 
+	 * 필터링, 기본 순서 No
+	 * 1 : 전체 , 2: 신고접수 3: 처리완료 4:무고처리 
 	 * */
 	@Override
-	public List<ReportDto> getReportAll(Integer filter,int pageNumber, int pageSize) {
+	public Page<ReportDto> getReportAll(Integer filter,int pageNumber, int pageSize) {
 		try {
 			Pageable pageable = PageRequest.of(pageNumber, pageSize);
-			List<Report> reports = new ArrayList<>();
+			Page<Report> reports = null;
 			List<ReportDto> reportDtos = new ArrayList<>();
 			
 			switch (filter) {
-			case 1: {
-				/* 전체 출력 */
-				reports = reportRepository.findAllByOrderByReportDateDesc(pageable);
-				break;
-			}
-			case 2: {
-				/* 신고 접수 출력 */
-				reports = reportRepository.findByReportStatusOrderByReportDateDesc(1, pageable);
-				break;
-			}
-			case 3: {
-				/* 검토중인 신고 출력 */
-				reports = reportRepository.findByReportStatusOrderByReportDateDesc(2, pageable);
-				break;
-			}
-			case 4: {
-				/* 처리완료 신고 출력 */
-				reports = reportRepository.findByReportStatusOrderByReportDateDesc(3, pageable);
-				break;
-			}
+				case 1: {
+					/* 전체 출력 (번호 내림차순)*/
+					reports = reportRepository.findAllByOrderByReportNoDesc(pageable);
+					break;
+				}
+				case 2: {
+					/* 신고 접수 출력 */
+					reports = reportRepository.findByReportStatusOrderByReportNoDesc(1, pageable);
+					break;
+				}
+				case 3: {
+					/* 처리완료 신고 출력 */
+					reports = reportRepository.findByReportStatusOrderByReportNoDesc(2, pageable);
+					break;
+				}
+				case 4: {
+					/* 무고처리 신고 출력 */
+					reports = reportRepository.findByReportStatusOrderByReportNoDesc(3, pageable);
+					break;
+				}
 			}
 			
 			for (Report report : reports) {
-				reportDtos.add(ReportDto.toDto(report));
+				reportDtos.add(ReportDto.toResponseDto(report));
 			}
-			return reportDtos;
+			return new PageImpl<>(reportDtos, pageable, reports.getTotalElements());
 		} catch (Exception e) {
 			throw new CustomException(ResponseStatusCode.READ_REPORT_LIST_FAIL, ResponseMessage.READ_REPORT_LIST_FAIL, e);
 		}
 	}
+
 }
 

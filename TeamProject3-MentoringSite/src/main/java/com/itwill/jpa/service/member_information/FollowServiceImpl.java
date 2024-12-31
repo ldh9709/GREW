@@ -63,10 +63,10 @@ public class FollowServiceImpl implements FollowService{
 	}
 	
 	/*팔로우 취소*/
-	public Long deleteFollow(Long menteeNo, Long mentorNo) {
+	public Long deleteFollow(Long followNo) {
 		try {
 			
-			Follow follow = followReporitory.findByMenteeMember_MemberNoAndMentorMember_MemberNo(menteeNo, mentorNo);
+			Follow follow = followReporitory.findById(followNo).get();
 			/* 팔로우 멘토 follow_count감소*/
 			followReporitory.findById(follow.getFollowNo()).get();
 			
@@ -87,13 +87,14 @@ public class FollowServiceImpl implements FollowService{
 	public Page<FollowResponseDto> getMentorList(Long memberNo, int pageNumber, int pageSize){
 		try {
 			Pageable pageable = PageRequest.of(pageNumber, pageSize);
-			Page<Follow> follows = followReporitory.findByMentorMember_MemberNo(memberNo,pageable);
+			Page<Follow> follows = followReporitory.findBymenteeMember_MemberNo(memberNo,pageable);
 			List<FollowResponseDto> followList = new ArrayList<>();
+			
+			System.out.println(follows.getTotalElements());
 			
 			for (Follow follow : follows) {
 				followList.add(FollowResponseDto.toDto(follow));
 			}
-			
 			return new PageImpl<>(followList, pageable,follows.getTotalElements());
 		} catch (Exception e) {
 			throw new CustomException(ResponseStatusCode.READ_MENTORLIST_FAIL, ResponseMessage.READ_MENTORLIST_FAIL, e);

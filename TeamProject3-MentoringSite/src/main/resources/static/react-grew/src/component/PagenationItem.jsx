@@ -1,12 +1,12 @@
 import React from "react";
 
 export default function PagenationItem({ currentPage, totalPages, paginate }) {
-   // 페이지 번호 배열 만들기
-   const pageNumbers = [];
-   for (let i = 1; i <= totalPages; i++) {
-     pageNumbers.push(i);
-   }
-    return (
+  // 페이지 번호 배열 만들기
+  const pageNumbers = [];
+  for (let i = 1; i <= totalPages; i++) {
+    pageNumbers.push(i);
+  }
+  return (
     <>
       {/* 페이지네이션 버튼 */}
       <div className="common-pagination common-pagination-bottom">

@@ -33,11 +33,11 @@ export default function HeaderMenu() {
   // 로그아웃 처리
   const handleLogoutAction = async () => {
     try {
+      navigate("/main");
       const isLogout = await logout();
       auth.logout();
       alert("로그아웃하셨습니다.");
       console.log("로그아웃 성공 여부 : ", isLogout);
-      navigate("/main");
     } catch (error) {
       alert("오류 발생.");
       console.error("로그아웃 실패: ", error);
@@ -118,7 +118,6 @@ export default function HeaderMenu() {
 
   // 스타일 정의
   const navStyle = {
-    fontFamily: "'Noto Sans KR', sans-serif",
     padding: "10px 20px",
   };
 

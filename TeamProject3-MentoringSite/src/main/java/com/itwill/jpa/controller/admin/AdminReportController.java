@@ -51,22 +51,20 @@ public class AdminReportController {
 	@SecurityRequirement(name = "BearerAuth")
 	@PreAuthorize("hasRole('ADMIN')")
 	@Operation(summary = "전체 신고 목록 조회")
-	@GetMapping()
+	@GetMapping
 	public ResponseEntity<Response> getAdminReportList(Authentication authentication,
-			@Parameter(name = "filter", description = "필터링 역할(1: 전체, 2: 신고접수 순)", required = true, example = "1")
+			@Parameter(name = "filter", description = "필터링 역할(1: 전체, 2: 신고접수 3:처리완료 4:무고처리 )", required = true, example = "1")
 	        @RequestParam(name = "filter") Integer filter,
 	        @RequestParam(name = "page", defaultValue = "0") int page,
 	        @RequestParam(name = "size", defaultValue = "10") int size) {
 	    
 	    // 신고 목록을 가져오는 서비스 메서드 호출
-	    List<ReportDto> reports = reportService.getReportAll(filter, page, size); 
+	    Page<ReportDto> reports = reportService.getReportAll(filter, page, size); 
 
 	    // 응답 객체 생성
 	    Response response = new Response();
 	    response.setStatus(ResponseStatusCode.READ_REPORT_LIST_SUCCESS);
 	    response.setMessage(ResponseMessage.READ_REPORT_LIST_SUCCESS);
-		PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
-
 	    response.setData(reports);
 
 	    // HTTP 헤더 설정
@@ -84,26 +82,21 @@ public class AdminReportController {
 	@SecurityRequirement(name = "BearerAuth")
 	@PreAuthorize("hasRole('ADMIN')")
 	@Operation(summary = "신고상태 변경")
-	@PutMapping("{reportNo}/status")
+	@PutMapping("{reportNo}/status/{status}")
 	public ResponseEntity<Response> updateReportStatusForAdmin(
-	        @PathVariable(name = "reportNo") Long reportNo,
-	        @Parameter(name = "status", description = "변경할 상태(IN_PROGRESS, RESOLVED, FALSE_REPORT)", required = true, example = "IN_PROGRESS")
-	        @RequestParam(name = "status") String status) {
-	    
-	    // 신고 상태 변경: 상태에 따라 '검토중', '완료' 등으로 설정
+        @PathVariable(value = "reportNo") Long reportNo,
+        @Parameter(name = "status", description = "상태변경(2: 신고처리, 3: 무고처리)", required = true, example = "1")
+        @PathVariable(value = "status") Integer status) {
+    
 		ReportDto updatedReport = null;
 
 	    // 상태에 따른 로직 분기
-	    switch (status.toUpperCase()) {
-	        case "IN_PROGRESS":
-	            // 신고 상태 '접수중'으로 변경
-	            updatedReport = reportService.updateReportStatusToInProgress(reportNo);
-	            break;
-	        case "RESOLVED":
+	    switch (status) {
+	        case 2:
 	            // 신고 상태 '처리완료'로 변경
 	            updatedReport = reportService.updateReportStatusToResolved(reportNo);
 	            break;
-	        case "FALSE_REPORT":
+	        case 3:
 	            // 신고 상태 '무고처리'로 변경
 	            updatedReport = reportService.updateReportStatusToFalseReport(reportNo);
 	            break;
@@ -123,6 +116,34 @@ public class AdminReportController {
 	    ResponseEntity<Response> responseEntity = new ResponseEntity<>(response, httpHeaders, HttpStatus.OK);
 
 	    return responseEntity;
+	}
+
+	@SecurityRequirement(name = "BearerAuth")
+	@PreAuthorize("hasRole('ADMIN')")
+	@Operation(summary = "신고 상세 정보 조회")
+	@GetMapping("/{reportNo}")
+	public ResponseEntity<Response> getReportDetails(
+	        @PathVariable(name = "reportNo") Long reportNo) {
+	    try {
+	        // 신고 상세 정보 조회 서비스 호출
+	        ReportDto reportDetails = reportService.getReportByreportNo(reportNo);
+
+	        // 응답 객체 생성
+	        Response response = new Response();
+	        response.setStatus(ResponseStatusCode.READ_REPORT_SUCCESS);
+	        response.setMessage(ResponseMessage.READ_REPORT_SUCCESS);
+	        response.setData(reportDetails);
+
+	        HttpHeaders httpHeaders = new HttpHeaders();
+	        httpHeaders.setContentType(new MediaType(MediaType.APPLICATION_JSON, Charset.forName("UTF-8")));
+
+	        return new ResponseEntity<>(response, httpHeaders, HttpStatus.OK);
+	    } catch (Exception e) {
+	        Response response = new Response();
+	        response.setStatus(ResponseStatusCode.READ_REPORT_FAIL);
+	        response.setMessage(ResponseMessage.READ_REPORT_FAIL);
+	        return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+	    }
 	}
 
 	/************* 답변 ***********

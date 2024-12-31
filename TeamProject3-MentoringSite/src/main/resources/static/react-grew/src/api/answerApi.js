@@ -158,3 +158,14 @@ export const getMentorProfileByMemberNo = async (memberNo) => {
   const responseJsonObject = await response.json();
   return responseJsonObject;
 };
+//질문에 본인 답변 유무
+export const isAnswerByInquiryNo = async (inquiryNo,memberNo) => {
+  const response = await fetch(`${BACKEND_SERVER}/answer/isAnswer?inquiryNo=${inquiryNo}&memberNo=${memberNo}`, {
+    method: 'GET',
+    headers: {
+      "Content-Type": "application/json;charset=UTF-8", // 요청 헤더 설정
+    }
+  })
+  const responseJsonObject = await response.json();
+  return responseJsonObject;
+};

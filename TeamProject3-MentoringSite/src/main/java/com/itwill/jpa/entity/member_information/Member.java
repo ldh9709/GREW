@@ -143,7 +143,7 @@ public class Member {
 	
 	/* (멘토)한 명의 유저가 팔로우는 여러개 보유 가능 */
 	@OneToMany(mappedBy = "menteeMember", fetch = FetchType.LAZY)
-	private List<Follow> followMestees = new ArrayList<>();
+	private List<Follow> followMentees = new ArrayList<>();
 	
 	/* (멘티)한 명의 유저가 팔로우는 여러개 보유 가능 */
 	@OneToMany(mappedBy = "mentorMember", fetch = FetchType.LAZY)
@@ -206,7 +206,6 @@ public class Member {
 	}
 	
 	
-	
 	//흥미 추가
 	public void addInterests(Interest interest) {
 		interests.add(interest);
@@ -215,8 +214,11 @@ public class Member {
 	}
 	
 	//비밀번호 변경
-		public void changePassword(String newPassword) {
-			this.memberPassword = newPassword;
-		}
+	public void changePassword(String newPassword) {
+		System.out.println("this.memberPassword(1) : "+ this.memberPassword);
+		this.memberPassword = newPassword;
+		System.out.println("this.memberPassword(2) : "+ this.memberPassword);
+		System.out.println("newPassword : "+ newPassword);
+	}
 		
 }
