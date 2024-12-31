@@ -21,5 +21,6 @@ public interface ChatMessageRepository extends JpaRepository<ChatMessage, Long>{
 	
 //	@Query("SELECT cm FROM ChatMessage cm WHERE cm.chatRoom.chatRoomNo = :chatRoomNo ORDER BY cm.messageNo ASC")
 //    List<ChatMessage> findByChatRoomNoOrderByMessageNoAsc(@Param("chatRoomNo") Long chatRoomNo);
-	
+	//채팅방 안읽은 메시지 갯수
+	int countChatMessageByChatMessageCheckAndChatRoom_ChatRoomNo(int ChatMessageCheck, Long chatRoomNo);
 }
