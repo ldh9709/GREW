@@ -105,8 +105,15 @@ body {
 }
 
 .role-change:hover {
-  color: #fff;
-  background-color: #167a2e;
+  opacity: 0.8; /* hover 시 80% 불투명도 */
+}
+
+.role-change:active {
+  opacity: 0.6; /* 클릭(활성화) 시 60% 불투명도 */
+}
+
+.role-change:focus {
+  opacity: 1; /* 포커스 상태에서 완전 불투명 */
 }
 /* 멘토 프로필 이미지 */
 .summary_image_container {
@@ -640,3 +647,15 @@ body {
   color: #555;
 }
 
+/* 마이페이지 멘티전환 버튼 CSS */
+.mentor-apply {
+  background-color: #007bff; /* 파란색 */
+}
+
+.mentor-review {
+  background-color: #f6ab1c; /* 주황색 */
+}
+
+.mentee-convert {
+  background-color: #28a745; /* 초록색 */
+}
