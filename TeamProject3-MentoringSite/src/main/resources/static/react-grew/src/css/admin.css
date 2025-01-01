@@ -255,6 +255,107 @@
   font-size: 13px;
 }
 
+
+
+/* 회원 목록 디테일 조회 */
+.mentor-detail-container {
+  position: absolute; 
+  top: -120px; right: -390px;
+  max-width: 320px;
+  margin: 20px auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  background-color: #fff;
+}
+
+.mentor-title {
+  font-size: 18px;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.mentor-details {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.mentor-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 20px;
+}
+
+.mentor-label {
+  font-weight: bold;
+  color: #555;
+}
+
+.mentor-value {
+  flex: 1;
+  font-size: 14px;
+  color: #333;
+}
+
+.mentor-profile-pic {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background-color: #ddd;
+}
+
+.mentor-textarea {
+  width: 100%;
+  min-height: 100px;
+  flex: 0 0 230px;
+  resize: none;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 10px;
+  font-size: 14px;
+  color: #333;
+  background-color: #f9f9f9;
+}
+
+.mentor-experience {
+  font-size: 14px;
+  line-height: 1.4;
+  color: #333;
+}
+
+.mentor-actions {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.approve-btn, .reject-btn {
+  padding: 10px 20px;
+  font-size: 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.approve-btn {
+  background-color: #4caf50;
+  color: #fff;
+}
+
+.reject-btn {
+  background-color: #f44336;
+  color: #fff;
+}
+
+.approve-btn:hover, .reject-btn:hover {
+  opacity: 0.9;
+}
+
+
+
 /* 신고 목록 조회 */
 /* 신고 상세내역 보기 */
 .report-detail-container {
