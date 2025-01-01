@@ -23,7 +23,7 @@ export const LOGIN_MEMBER_FAIL = 2056; // 회원 로그인 실패
 export const PASSWORD_RESET_FAIL = 2057; // 비밀번호 재설정 실패
 export const EMAIL_SEND_FAIL = 2058; // 이메일 발송 실패
 export const INPUTCODE_CONFIRM_FAIL = 2059; // 인증 코드 확인 실패
-export const MEMBER_IS_NOT_EMAIL = 2060; // 이메일로 가입한 회원이 아님
+export const MEMBER_PROVIDER_IS_NOT_EMAIL = 2060; // 이메일로 가입한 회원이 아님
 export const AUTHENTICATION_FAILED = 2061;        // 토큰과 정보가 일치하지 않음
 
 //MENTOR 성공 코드

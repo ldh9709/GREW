@@ -1,5 +1,7 @@
 /* 공통 컨테이너 스타일 */
 .mentor-edit-container {
+  width: 100%;
+  min-width: 100%;
   max-width: 100%;
   width: 500px;
   margin: 0 auto;
@@ -23,6 +25,7 @@
   margin-bottom: 20px;
   display: flex;
   flex-direction: column;
+  max-width: 600px;
   min-width: 600px;
   flex: 1; /* 남은 공간을 모두 채움 */
   opacity: 1; /* 초기 렌더링 시 보이게 설정 */

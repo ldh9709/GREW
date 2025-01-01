@@ -1,10 +1,11 @@
 import "../../css/memberPage.css";
 import React, { useEffect, useState } from "react";
 import { getCookie } from "../../util/cookieUtil";
-import { memberProfile, updateAction } from "../../api/memberApi";
+import { memberProfile, updateAction, sendVerificationCode, verificationCode } from "../../api/memberApi";
 import * as categoryApi from "../../api/categoryApi";
 import * as responseStatus from "../../api/responseStatusCode";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 
 const MemberProfileFormPage = () => {
@@ -12,14 +13,21 @@ const MemberProfileFormPage = () => {
   const memberCookie = getCookie("member");
   const token = memberCookie.accessToken;
 
-  /* 왼쪽 사이드 바 CSS */
-  const [activeTab, setActiveTab] = useState("profile");
-
   /* 관심사 start */
   const [interests, setInterests] = useState([]); // 관심사 데이터
   const [selectedInterests, setSelectedInterests] = useState([]); // 선택된 관심사
   /* 관심사 end */
 
+  /* 이메일 인증 관련 상태 */
+  const [originalEmail, setOriginalEmail] = useState("");
+  const [isEmailChanged, setIsEmailChanged] = useState(false);
+  const [isEmailVerified, setIsEmailVerified] = useState(false); // 이메일 인증 성공 여부
+  const [verificationCode, setVerificationCode] = useState("");
+  const [sentCode, setSentCode] = useState(false); // 인증번호 전송 여부
+
+
+
+  /* 멤버 start */
   const [member, setMember] = useState({
     memberNo: "",
     memberName: "",
@@ -29,6 +37,53 @@ const MemberProfileFormPage = () => {
     memberPassword2: "",
     interests: [],
   });
+  /* 멤버 end */
+
+  /* 이메일 변경 핸들러 */
+  const handleEmailChange = (e) => {
+    const newEmail = e.target.value;
+
+    setMember((prevMember) => ({
+      ...prevMember,
+      memberEmail: newEmail,
+    }));
+
+    setIsEmailChanged(newEmail !== originalEmail);
+    setIsEmailVerified(false); // 이메일 변경 시 인증 초기화
+  };
+  
+   /* 인증번호 요청 핸들러 */
+   const handleSendVerificationCode = async () => {
+    try {
+      alert("인증번호가 이메일로 전송되었습니다.");
+      await sendVerificationCode(member.memberEmail); // 서버에 이메일 전송 요청
+      setSentCode(true); // 인증번호 전송 여부 업데이트
+    } catch (error) {
+      alert("인증번호 전송에 실패했습니다. 다시 시도해주세요.");
+    }
+  };
+
+  /* 인증번호 검증 핸들러 */
+  const handleVerifyCode = async () => {
+    try {
+      const response = await verificationCode(member.memberEmail, verificationCode); // 서버에 인증번호 검증 요청
+      switch(response.status)  {
+        case responseStatus.INPUTCODE_CONFIRM_FAIL:
+          toast.error("인증번호가 올바르지 않습니다.");
+          break;
+        case responseStatus.MEMBER_PROVIDER_IS_NOT_EMAIL:
+          toast.error("SNS사용자는 이메일을 수정할 수 없습니다.")
+          break;
+        case responseStatus.INPUTCODE_CONFIRM_SUCCESS:
+          toast.success("이메일이 인증되었습니다.");
+        default:
+          toast.error("default에러가 발생하였습니다.");
+
+      }
+    } catch (error) {
+        toast.error("catch에러가 발생하였습니다.");
+    }
+  };
 
   /***** 사용자 정보 가져오기 *****/
   const fetchProfileData = async () => {
@@ -52,6 +107,8 @@ const MemberProfileFormPage = () => {
       interests: filteredInterests || [],
     });
 
+    //기존 이메일을 setOriginalEmail에 설정
+    setOriginalEmail(data.memberEmail);
     // 기존 관심사를 selectedInterests에 설정
     setSelectedInterests(filteredInterests.map((interest) => interest.categoryNo));
   };
@@ -77,7 +134,6 @@ const MemberProfileFormPage = () => {
       ...member,
       [e.target.name]: e.target.value,
     });
-    console.log(e.target.value);
   };
 
   /***** 업데이트 액션 *****/
@@ -205,15 +261,47 @@ const MemberProfileFormPage = () => {
             <p className="profile-form-label">
               이메일<span className="red-star">*</span>
             </p>
-            <input
-              type="email"
-              name="memberEmail"
-              placeholder="이메일을 입력하세요"
-              value={member.memberEmail || ""}
-              onChange={onChangeMemberModifyForm}
-              required
-            />
+            <div className="email-verification-wrapper">
+              <input
+                type="email"
+                name="memberEmail"
+                placeholder="이메일을 입력하세요"
+                value={member.memberEmail || ""}
+                onChange={handleEmailChange}
+                required
+              />
+              <button
+                type="button"
+                className="email-verification-button"
+                onClick={handleSendVerificationCode}
+                disabled={!isEmailChanged || sentCode}
+              >
+                이메일 인증
+              </button>
+            </div>
           </div>
+
+          {sentCode && (
+              <div className="profile-form-group">
+                <div className="email-verification-wrapper">
+                <input
+                  type="text"
+                  placeholder="인증번호를 입력하세요"
+                  value={verificationCode}
+                  onChange={(e) => setVerificationCode(e.target.value)} // 상태와 연결
+                />
+                <button
+                  type="button"
+                  className="email-verification-button"
+                  onClick={handleVerifyCode}
+                  disabled={isEmailVerified}
+                >
+                  인증번호 확인
+                </button>
+                </div>
+              </div>
+            )}
+            
 
           <div className="profile-interest-group">
             <p className="profile-interest-label">
@@ -244,6 +332,7 @@ const MemberProfileFormPage = () => {
               className="profile-button"
               onClick={updateMember}
               value="수정완료"
+              disabled={!isEmailVerified}
             />
           </div>
         </form>

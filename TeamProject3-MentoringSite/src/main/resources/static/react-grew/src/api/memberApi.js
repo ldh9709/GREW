@@ -105,6 +105,38 @@ export const certificationCodeFindId = async (memberEmail, inputCode) => {
     return resultJsonObject;
 }
 
+/* 1. 이메일 인증 - 인증번호 전송  */
+export const sendVerificationCode = async (memberEmail) => {
+    const response = await fetch(`${BACKEND_SERVER}/member/sendVerificationCode`, {
+        method: 'POST',
+        headers: {
+            'Content-type': 'application/json'
+        },
+        body:JSON.stringify({
+            email:memberEmail    
+        })
+    });
+    const resultJsonObject = await response.json();
+
+    return resultJsonObject;
+}
+
+/* 2. 이메일 인증 - 인증번호 확인  */
+export const verificationCode = async (memberEmail, inputCode) => {
+    const response = await fetch(`${BACKEND_SERVER}/member/findId/certificationCode`, {
+        method: 'POST',
+        headers: {
+            'Content-type': 'application/json'
+        },
+        body:JSON.stringify({
+            memberEmail:memberEmail, 
+            inputCode:inputCode
+        })
+    });
+    const resultJsonObject = await response.json();
+
+    return resultJsonObject;
+}
 
 //비밀번호 찾기 
 export const findPassword = async (member) => {

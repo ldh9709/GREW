@@ -574,6 +574,8 @@ legend {
   display: flex;
   margin: 0 auto;
   width: 100%;
+  min-width: 100%;
+  max-width: 100%;
   font-family: "nanumsquare", Arial, sans-serif;
   gap: 10px; /* 사이드바와 콘텐츠 간격 */
   min-height: 500px; /* 전체 높이를 고정 */
@@ -582,6 +584,7 @@ legend {
 /* 사이드 메뉴 스타일 */
 .profile-sidebar {
   width: 50%;
+  max-width: 15%;
   min-width: 15%;
   background-color: #ffffff;
   padding: 10px;
@@ -726,4 +729,37 @@ legend {
 
 .profile-button:hover {
   background-color: #45a049;
+}
+
+/* 이메일 추가 CSS */
+.email-verification-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 10px; /* 입력 필드와 버튼 사이의 간격 */
+}
+
+.email-verification-button {
+  background-color: #5c85d6;
+  width: 200px;
+  height: 40px;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.3s;
+  
+}
+
+.email-verification-button:hover {
+  background-color: #0056b3;
+}
+
+.email-verification-button:active {
+  background-color: #003f7f;
+}
+
+.email-verification-button:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
 }
