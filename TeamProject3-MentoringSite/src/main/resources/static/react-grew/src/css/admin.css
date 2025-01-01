@@ -267,7 +267,7 @@
 .mentor-detail-container {
   position: absolute; 
   top: -120px; right: -390px;
-  max-width: 320px;
+  min-width: 320px;
   margin: 20px auto;
   padding: 20px;
   border: 1px solid #ccc;
@@ -313,9 +313,9 @@
 }
 
 .mentor-textarea {
-  width: 100%;
-  min-height: 100px;
+  width: 100%;;
   flex: 0 0 230px;
+  min-height: 100px;
   resize: none;
   border: 1px solid #ccc;
   border-radius: 4px;
@@ -326,8 +326,8 @@
 }
 
 .mentor-experience {
-  font-size: 14px;
-  line-height: 1.4;
+  font-size: 13px;
+  line-height: 0.8;
   color: #333;
 }
 
