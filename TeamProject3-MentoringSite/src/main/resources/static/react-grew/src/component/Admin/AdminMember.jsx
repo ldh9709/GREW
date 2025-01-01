@@ -11,10 +11,10 @@ function AdminMember() {
     const [memberCount, setMemberCount] = useState(0);
     const [mentorRegisterCount, setMentorRegisterCount] = useState(0);
     const [state, setState] = useState({
-        role: "",
-        order: 0,
+        role: "ALL",
+        order: 1,
         mentorStatus: 0,
-        activeTab: ""
+        activeTab: "전체회원"
     });
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(0); 
@@ -50,11 +50,38 @@ function AdminMember() {
         try {
             const response = await adminApi.adminMentorByStatus(token, status, order, page, size)
             setMember(response.data.content)
-            console.log(response.data);
+            setTotalPages(response.data.totalPages);
+            setMemberCount(response.data.totalElements);
+            console.log('status',status);
+            console.log(response);
         } catch (error) {
             console.log("멘토 상태별 조회 실패",error)
         }
     }
+    //멘토 데이터 갱신
+    const refreshMentorData = async() => {
+        try {
+            await fetchMentorRegisterCount(2,1);
+            await fetchMentorByStatus(state.mentorStatus, state.order, currentPage - 1, 10);
+        } catch (error) {
+            console.error("멘토 데이터 갱신 실패", error)
+        }
+    }
+    //전체 데이터 목록 조회
+    const fetchData = async () => {
+        setLoading(true);
+        try {
+            if (state.activeTab === "멘토회원" ||  state.activeTab === "멘토신청") {
+                await fetchMentorByStatus(state.mentorStatus, state.order, currentPage - 1, 10);
+            } else {
+                await fetchMembers(state.role, state.order, currentPage - 1, 10);
+            }
+        } catch (error) {
+            console.error("데이터 로딩 실패", error);
+        } finally {
+            setLoading(false);
+        }
+    };
 
     //탭 변경 시
     const handleTabClick = (tab) => {
@@ -102,9 +129,6 @@ function AdminMember() {
         });
         paginate(1);
     }
-    const handleMentorDetail = () => {
-        
-    }
 
     //필터링 변경 시
     const handleFilterChange = (event) => {
@@ -129,22 +153,7 @@ function AdminMember() {
         fetchMentorRegisterCount(2,1)
     }, []);
 
-    // 실행 함수
     useEffect(() => {
-        const fetchData = async () => {
-            setLoading(true);
-            try {
-                if (state.activeTab === "멘토신청") {
-                    await fetchMentorByStatus(state.mentorStatus, state.order, currentPage - 1, 10);
-                } else {
-                    await fetchMembers(state.role, state.order, currentPage - 1, 10);
-                }
-            } catch (error) {
-                console.error("데이터 로딩 실패", error);
-            } finally {
-                setLoading(false);
-            }
-        };
         fetchData();
     }, [state,currentPage]);
     
@@ -189,8 +198,9 @@ function AdminMember() {
                 <table className="admin-table">
                     <thead>
                         <tr>
-                            <th>회원번호</th>
+                            <th>번호</th>
                             <th>이름</th>
+                            <th>회원번호</th>
                             <th>아이디</th>
                             <th>이메일</th>
                             <th>가입일자</th>
@@ -203,11 +213,10 @@ function AdminMember() {
                     {loading ? <tbody></tbody> :
                         <tbody>
                             {members && members.map((member, index) => (
-                                <tr key={index}
-                                    onClick={()=>(handleRegisterMentor(member.mentorProfile))}
-                                >
-                                    <td>{member.memberNo}</td>
+                                <tr key={index}>
+                                    <td>{(currentPage-1) * 10 + index + 1}</td>
                                     <td>{member.memberName}</td>
+                                    <td>{member.memberNo}</td>
                                     <td>{member.memberId}</td>
                                     <td>{member.memberEmail}</td>
                                     <td>{member.memberJoinDate.substring(0,10)}</td>
@@ -226,7 +235,7 @@ function AdminMember() {
                                     (
                                     <td>
                                         <button className="check"
-                                        onClick={handleMentorDetail}
+                                         onClick={()=>(handleRegisterMentor(member.mentorProfile))}
                                         >상세</button>
                                     </td>
                                     ): ("")}
@@ -243,6 +252,7 @@ function AdminMember() {
                     <AdminMemberDetail
                         onClose={()=>{setSelectMentor(null)}}
                         mentor={selectMentor}
+                        refreshMentorData ={refreshMentorData}
                     />
                 )}
 
@@ -252,6 +262,7 @@ function AdminMember() {
                     currentPage={currentPage}
                     totalPages={totalPages}
                     paginate={paginate}
+                    
                 />
                 </div>
 

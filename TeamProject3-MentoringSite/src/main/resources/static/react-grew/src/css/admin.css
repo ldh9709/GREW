@@ -242,9 +242,11 @@
   font-size: 14px;
 }
 
-.member-table-container tbody tr:hover {
+.member-table-container tbody td:hover {
   background-color: none !important;
+  cursor: auto;
 }
+
 /* 신청 멘토 배지 스타일 */
 .member-notification-badge {
   padding: 3px 8px;

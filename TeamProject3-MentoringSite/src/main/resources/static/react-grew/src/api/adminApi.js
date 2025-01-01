@@ -26,7 +26,20 @@ export const adminMentorByStatus = async (token,status,order,page,size) => {
   return responseJsonObject;
 }
 
-//mentor 목록 조회
+//멘토 상태 변경
+export const adminUpdateMentorStatus = async(token, memberNo, statusNo) =>{
+    const response = await fetch(`${BACKEND_SERVER}/admin/mentor/update-state/${memberNo}?status=${statusNo}`, {
+  method: 'PUT',
+  headers: {
+    'Authorization': `Bearer ${token}`,
+    'Content-Type': 'application/json'
+  }
+  });
+  const responseJsonObject= await response.json();
+  return responseJsonObject;
+}
+
+//멘토컨텐츠 목록 조회
 export const adminMentorBoard = async(token, page, size)=>{
   const response = await fetch(`${BACKEND_SERVER}/admin/mentor-board?page=${page}&size=${size}`,{
     method: "GET",
@@ -93,7 +106,7 @@ export const updateReportStatusForAdmin = async (token, reportNo, status) => {
   return responseJson;  // 상태 업데이트 응답 반환
 };
 
-//category별 게시판 목록 가져오기
+//카테고리별 게시판 목록 가져오기
 export const adminCategoryInquiry = async (categoryNo, page, token, size) => {
   try {
     const response = await fetch(
