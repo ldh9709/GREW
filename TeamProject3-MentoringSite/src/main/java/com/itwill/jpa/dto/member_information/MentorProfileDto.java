@@ -1,8 +1,10 @@
 package com.itwill.jpa.dto.member_information;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.itwill.jpa.entity.member_information.Career;
 import com.itwill.jpa.entity.member_information.MentorProfile;
 import lombok.*;
 
@@ -41,7 +43,12 @@ public class MentorProfileDto {
         if (entity == null) {
             return null;
         }
-
+       
+        List<CareerDto> careers = new ArrayList<>();
+        for (Career career : entity.getCareers()) {
+        	careers.add(CareerDto.toDto(career));
+		}
+        
         return MentorProfileDto.builder()
                 .mentorProfileNo(entity.getMentorProfileNo())
                 .memberNo(entity.getMember().getMemberNo())
@@ -56,6 +63,7 @@ public class MentorProfileDto {
                 .mentorActivityCount(entity.getMentorActivityCount())
                 .mentorHeadline(entity.getMentorHeadline())
                 .categoryName(entity.getCategory().getCategoryName())
+                .careerDtos(careers)
                 .build();
     }
     public static MentorProfileDto toDto(MentorProfile entity) {
