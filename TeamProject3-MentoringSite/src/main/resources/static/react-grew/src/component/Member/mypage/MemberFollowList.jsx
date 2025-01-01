@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHeart } from '@fortawesome/free-solid-svg-icons';
 import * as followApi from "../../../api/followApi"
+import { useNavigate } from "react-router-dom";
 
 export default function FollowList() {
     /* Context에 저장된 토큰, 멤버정보 */
@@ -10,8 +11,7 @@ export default function FollowList() {
     const [followList, setFollowList] = useState([])
     const [currentPage, setCurrentPage] = useState(1); // 현재 페이지 번호
     const [totalPages, setTotalPages] = useState(0); // 전체 페이지 수
-    // const [itemsPerPage] = useState(6); // 페이지당 항목 수 (예: 한 페이지에 6개 항목)
-
+    const navigate = useNavigate();
 
 
     const fetchFollowList = async (page) => {
@@ -64,11 +64,15 @@ export default function FollowList() {
                     <>
                         <ul className="follow-list">
                             {followList.map((follow, index) => (
-                                <li className="follow-card" key={index}>
+                                <li className="follow-card"
+                                key={index}
+                                >
                                     <div className="profile">
                                         <img src={follow.mentorImage} alt="프로필 이미지" />
                                     </div>
-                                    <div className="info">
+                                    <div className="info"
+                                     onClick={() => navigate(`/mentor-profile/${follow.mentorNo}`)}
+                                    >
                                         <p className="name"><strong>{follow.mentorName} 멘토</strong></p>
                                         <p>{follow.primaryCategory}</p>
                                         <p>{follow.subCategory}</p>
