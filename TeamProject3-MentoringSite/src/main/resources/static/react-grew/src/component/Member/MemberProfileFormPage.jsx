@@ -1,15 +1,19 @@
+import "../../css/memberPage.css";
 import React, { useEffect, useState } from "react";
 import { getCookie } from "../../util/cookieUtil";
 import { memberProfile, updateAction } from "../../api/memberApi";
 import * as categoryApi from "../../api/categoryApi";
 import * as responseStatus from "../../api/responseStatusCode";
-import "../../css/memberPage.css";
 import { useNavigate } from "react-router-dom";
+
 
 const MemberProfileFormPage = () => {
   const navigate = useNavigate();
   const memberCookie = getCookie("member");
   const token = memberCookie.accessToken;
+
+  /* 왼쪽 사이드 바 CSS */
+  const [activeTab, setActiveTab] = useState("profile");
 
   /* 관심사 start */
   const [interests, setInterests] = useState([]); // 관심사 데이터
@@ -141,110 +145,109 @@ const MemberProfileFormPage = () => {
   console.log(member.interests);
 
   return (
-    <div className="member-signup-container">
-      <h2 className="member-signup-title">회원정보 수정</h2>
+    <div className="profile-layout">
+      {/* 오른쪽 프로필 수정 폼 */}
+      <div className="profile-content">
+        <h2 className="profile-title">회원정보 수정</h2>
+        <form className="profile-form">
+          <div className="profile-form-group">
+            <p className="profile-form-label">
+              이름<span className="red-star">*</span>
+            </p>
+            <input
+              type="text"
+              name="memberName"
+              placeholder="이름을 입력하세요"
+              value={member.memberName || ""}
+              onChange={onChangeMemberModifyForm}
+              required
+            />
+          </div>
 
-      <form className="member-signup-form">
-        <div className="member-form-join-group">
-          <p className="member-form-join-p">
-            이름<span className="red-star">*</span>
-          </p>
-          <input
-            type="text"
-            name="memberName"
-            placeholder="이름을 입력하세요"
-            value={member.memberName || ""}
-            onChange={onChangeMemberModifyForm}
-            required
-          />
-        </div>
+          <div className="profile-form-group">
+            <p className="profile-form-label">
+              아이디<span className="red-star">*</span>
+            </p>
+            <input
+              type="text"
+              name="memberId"
+              value={member.memberId || ""}
+              readOnly
+              disabled
+            />
+          </div>
 
-        <div className="member-form-join-group">
-          <p className="member-form-join-p">
-            아이디<span className="red-star">*</span>
-          </p>
-          <input
-            type="text"
-            name="memberId"
-            value={member.memberId || ""}
-            readOnly
-            disabled
-          />
-        </div>
+          <div className="profile-form-group">
+            <p className="profile-form-label">
+              비밀번호<span className="red-star">*</span>
+            </p>
+            <input
+              type="password"
+              name="memberPassword"
+              placeholder="비밀번호 입력"
+              onChange={onChangeMemberModifyForm}
+            />
+          </div>
 
-        <div className="member-form-join-group">
-          <p className="member-form-join-p">
-            비밀번호<span className="red-star">*</span>
-          </p>
-          <input
-            type="password"
-            name="memberPassword"
-            placeholder="비밀번호 입력"
-            onChange={onChangeMemberModifyForm}
-          />
-        </div>
+          <div className="profile-form-group">
+            <p className="profile-form-label">
+              비밀번호 확인<span className="red-star">*</span>
+            </p>
+            <input
+              type="password"
+              name="memberPassword2"
+              placeholder="비밀번호 확인"
+              onChange={onChangeMemberModifyForm}
+            />
+          </div>
 
-        <div className="member-form-join-group">
-          <p className="member-form-join-p">
-            비밀번호 확인<span className="red-star">*</span>
-          </p>
-          <input
-            type="password"
-            name="memberPassword2"
-            placeholder="비밀번호 확인"
-            onChange={onChangeMemberModifyForm}
-          />
-        </div>
+          <div className="profile-form-group">
+            <p className="profile-form-label">
+              이메일<span className="red-star">*</span>
+            </p>
+            <input
+              type="email"
+              name="memberEmail"
+              placeholder="이메일을 입력하세요"
+              value={member.memberEmail || ""}
+              onChange={onChangeMemberModifyForm}
+              required
+            />
+          </div>
 
-        <div className="member-form-join-group">
-          <p className="member-form-join-p">
-            이메일<span className="red-star">*</span>
-          </p>
-          <input
-            type="email"
-            name="memberEmail"
-            placeholder="이메일을 입력하세요"
-            value={member.memberEmail || ""}
-            onChange={onChangeMemberModifyForm}
-            required
-          />
-        </div>
+          <div className="profile-interest-group">
+            <p className="profile-interest-label">
+              관심사<span className="red-star">*</span>
+            </p>
+            {interests.length > 0 ? (
+              interests.map((interest) => (
+                <div
+                  key={interest.categoryNo}
+                  className={`profile-interest-item ${
+                    selectedInterests.includes(interest.categoryNo)
+                      ? "selected"
+                      : ""
+                  }`}
+                  onClick={() => handleInterestClick(interest.categoryNo)}
+                >
+                  {interest.categoryName}
+                </div>
+              ))
+            ) : (
+              <p>관심사를 불러오는 중입니다...</p>
+            )}
+          </div>
 
-        {/* 관심사 그룹 */}
-        <div className="member-form-interest-group">
-          <p>
-            관심사<span className="red-star">*</span>
-          </p>
-
-          {/* 관심사 목록 렌더링 */}
-          {interests.length > 0 ? (
-            interests.map((interest) => (
-              <div
-                key={interest.categoryNo}
-                className={`interest-item ${
-                  selectedInterests.includes(interest.categoryNo)
-                    ? "selected"
-                    : ""
-                }`}
-                onClick={() => handleInterestClick(interest.categoryNo)}
-              >
-                {interest.categoryName}
-              </div>
-            ))
-          ) : (
-            <p>관심사를 불러오는 중입니다...</p>
-          )}
-        </div>
-
-        <div className="member-button-group">
-          <input
-            type="button"
-            className="member-signup-button"
-            onClick={updateMember}
-            value="수정완료"
-          />
-        </div>
-      </form>
+          <div className="profile-button-group">
+            <input
+              type="button"
+              className="profile-button"
+              onClick={updateMember}
+              value="수정완료"
+            />
+          </div>
+        </form>
+      </div>
     </div>
   );
 };

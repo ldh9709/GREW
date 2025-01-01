@@ -172,7 +172,7 @@ export default function MemberSummary() {
           <>
             <h1>
               {summary.name}님 안녕하세요{" "}
-              <a href="/member/profile/edit">
+              <a href="/profile/memberProfile">
                 <FontAwesomeIcon icon={faGear} /> 개인정보 변경
               </a>
             </h1>
@@ -220,7 +220,7 @@ export default function MemberSummary() {
           <>
             <h1>
               {summary.name}님 안녕하세요{" "}
-              <a href="/member/profile/edit">
+              <a href="/profile/memberProfile">
                 <FontAwesomeIcon icon={faGear} /> 개인정보 변경
               </a>
             </h1>

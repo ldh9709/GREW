@@ -1,5 +1,5 @@
+import "../../css/mentorJoin.css";
 import React, { useEffect, useState } from "react";
-import "../../css/mentor.css";
 import * as responseStatus from "../../api/responseStatusCode";
 import * as memberApi from "../../api/memberApi";
 import * as categoryApi from "../../api/categoryApi";
