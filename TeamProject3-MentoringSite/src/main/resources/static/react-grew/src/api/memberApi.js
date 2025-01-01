@@ -203,10 +203,10 @@ export const mentorProfileUpdateAction = async (mentorProfileNo, mentor) => {
         },
         body: JSON.stringify({
             categoryNo: mentor.categoryNo,
-            careerDtos: mentor.careerDtos,
             mentorIntroduce: mentor.mentorIntroduce,
-            mentorImage: mentor.mentorImage,
             mentorHeadline: mentor.mentorHeadline,
+            careerDtos: mentor.careerDtos,
+            mentorImage: mentor.mentorImage,
           })
     });
 
@@ -364,3 +364,12 @@ export const uploadMentorProfileImage = async (mentorProfileNo, file) => {
     const responseJson = await response.json();
     return responseJson;
   };
+
+export const getCareer = async (mentorProfileNo) => {
+    const response = await fetch(`${BACKEND_SERVER}/mentor-profile/career/${mentorProfileNo}`, {
+        method:'GET'
+    });
+    
+    const responseJsonObject = await response.json();
+    return responseJsonObject;
+};
