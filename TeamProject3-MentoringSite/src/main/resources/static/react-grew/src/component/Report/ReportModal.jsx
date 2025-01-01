@@ -32,9 +32,8 @@ const ReportModal = ({ onClose = () => { }, report }) => {
         alert("신고 사유와 내용을 모두 입력해주세요.");
         return;
       }
-
-      console.log('reportData',reportData)
       await reportApi.createReport(token,reportData);
+      alert('신고가 완료되었습니다.')
       onClose(); // 모달 닫기
     };
 

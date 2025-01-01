@@ -11,6 +11,7 @@ import PagenationItem from "../../PagenationItem";
 export default function MemberCounselList() {
   /* Context에 저장된 토큰, 멤버정보 */
   const { token, member } = useMemberAuth();
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const [counselList, setCounselList] = useState([{}]);
   const [currentPage, setCurrentPage] = useState(1);
@@ -18,13 +19,14 @@ export default function MemberCounselList() {
 
   const fetchName = async (memberNo) => {
     const response = await memberApi.memberInfo(token, memberNo);
-    console.log(response.data); ////////////////////////////////////////////////////////
+    console.log(response.data);
     return response.data.memberName;
   };
 
   //상담 내역 조회
   const fetchCounselList = async (page) => {
     try {
+      setLoading(true);
       if (member.memberRole === "ROLE_MENTEE") {
         const response = await chattingApi.listChatRoom(token, page, 4);
         const chatRooms = response.data.content;
@@ -36,16 +38,16 @@ export default function MemberCounselList() {
             // 멘토 프로필 조회
             const mentorProfileResponse = await getMentorProfileByMemberNo(
               chat.mentorNo
-            ); ///////////////
+            ); 
             const mentorProfileNo =
-              mentorProfileResponse?.data?.mentorProfileNo || null; ////////////////////////////
+              mentorProfileResponse?.data?.mentorProfileNo || null; 
             const mentorImage =
-              mentorProfileResponse?.data?.mentorImage || "/default-image.png"; ///////////
+              mentorProfileResponse?.data?.mentorImage || "/default-image.png"; 
             return {
               ...chat,
               searchName,
-              mentorProfileNo, // 멘토 프로필 번호 추가/////////////////////
-              mentorImage, // 멘토 프로필 이미지 추가
+              mentorProfileNo, 
+              mentorImage,
             };
           })
         );
@@ -70,12 +72,11 @@ export default function MemberCounselList() {
               (review) => review.memberNo === chat.menteeNo
             );
 
-            // 멘티의 멘토 프로필 조회
             const menteeProfileResponse = await getMentorProfileByMemberNo(
               chat.menteeNo
-            ); /////////////
+            );
             const mentorProfileNo =
-              menteeProfileResponse?.data?.mentorProfileNo || null; ///////////////
+              menteeProfileResponse?.data?.mentorProfileNo || null;
             const mentorImage =
               menteeProfileResponse?.data?.mentorImage || "/default-image.png";
 
@@ -83,16 +84,19 @@ export default function MemberCounselList() {
               ...chat,
               searchName,
               isReview,
-              mentorProfileNo, // 멘티의 멘토 프로필 번호 추가    ///////////////////
-              mentorImage, // 멘티의 멘토 프로필 이미지 추가
+              mentorProfileNo, 
+              mentorImage, 
             };
           })
         );
         setCounselList(updateRooms);
         setTotalPages(response.data.totalPages);
+       
       }
     } catch (error) {
       console.log("상담내역 조회 실패", error);
+    }finally{
+      setLoading(false);
     }
   };
 
@@ -147,6 +151,7 @@ export default function MemberCounselList() {
 
   return (
     <>
+      {loading ? <div></div>  :
       <div className="tab-counsel">
         {counselList.length === 0 ? (
           <p> 진행한 상담내역이 없습니다. </p>
@@ -211,6 +216,7 @@ export default function MemberCounselList() {
           </ul>
         )}
       </div>
+      }
       <PagenationItem
         currentPage={currentPage}
         totalPages={totalPages}

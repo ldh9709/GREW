@@ -17,6 +17,7 @@ import lombok.NoArgsConstructor;
 public class FollowResponseDto {
 	/*출력 데이터 : 멘토이름, 대분류 카테고리이름, 소분류 카테고리이름 */
 	private Long followNo;
+	private Long mentorProfileNo;
 	private String mentorName;
 	private String mentorImage;
 	private String primaryCategory;
@@ -26,6 +27,7 @@ public class FollowResponseDto {
 		
 		return FollowResponseDto.builder()
 				.followNo(entity.getFollowNo())
+				.mentorProfileNo(entity.getMentorMember().getMentorProfile().getMentorProfileNo())
 				.mentorName(entity.getMentorMember().getMemberName())
 				.mentorImage(entity.getMentorMember().getMentorProfile().getMentorImage())
 				.primaryCategory(entity.getMentorMember().getMentorProfile().getCategory().getParentCategory().getCategoryName())

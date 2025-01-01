@@ -101,7 +101,7 @@ public class MemberDto {
 	            .memberReportCount(memberEntity.getMemberReportCount())
 	            .memberRole(memberEntity.getMemberRole())
 	            .memberProvider(memberEntity.getMemberProvider())
-	            .mentorProfile(memberEntity.getMentorProfile() != null ? MentorProfileDto.toDto(memberEntity.getMentorProfile()) : null)
+	            .mentorProfile(memberEntity.getMentorProfile() != null ? MentorProfileDto.toResponseDto(memberEntity.getMentorProfile()) : null)
 				.build();
 	}
 

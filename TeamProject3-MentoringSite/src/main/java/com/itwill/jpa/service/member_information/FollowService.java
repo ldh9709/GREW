@@ -17,6 +17,8 @@ public interface FollowService {
 	Long deleteFollow(Long followNo);
 	//팔로우 멘토 리스트
 	Page<FollowResponseDto> getMentorList(Long menteeMemberNo, int pageNumber, int pageSize);
+	//팔로우 찾기(멘티,멘토번호)
+	FollowResponseDto getFollow(Long menteeNo, Long mentorNo);
 	//팔로워 수
 	Integer countFollower(Long mentorMemberNo);
 }

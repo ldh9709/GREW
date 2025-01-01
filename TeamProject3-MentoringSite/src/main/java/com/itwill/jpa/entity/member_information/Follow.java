@@ -1,6 +1,8 @@
 package com.itwill.jpa.entity.member_information;
 
 
+import java.time.LocalDateTime;
+
 import com.itwill.jpa.dto.member_information.FollowRequestDto;
 
 import jakarta.persistence.*;
