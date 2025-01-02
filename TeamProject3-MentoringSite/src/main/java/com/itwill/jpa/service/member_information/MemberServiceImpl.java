@@ -447,12 +447,12 @@ public class MemberServiceImpl implements MemberService {
 	
 	//아이디 찾기 인증번호 확인
 	@Override
-	public boolean certificationCodeByFindId(String email, Integer inputCode) {
+	public boolean certificationCodeByFindId(String memberEmail, Integer inputCode) {
 		//입력받은 이메일로 저장된 인증번호 반환
-		Integer storedCode = tempCode.get(email);
+		Integer storedCode = tempCode.get(memberEmail);
 		
 		System.out.println("storedCode : <<<" + storedCode);
-		System.out.println("email : <<<" + email);
+		System.out.println("email : <<<" + memberEmail);
 		System.out.println("inputCode : <<<" + inputCode);
 		
 		//유효성 검사 후 안맞으면 false 반환
@@ -461,7 +461,7 @@ public class MemberServiceImpl implements MemberService {
 		}
 		
 		//맞으면 데이터 삭제 후 true 반환
-		tempCode.remove(email);
+		tempCode.remove(memberEmail);
 		
 		return true;
 		
@@ -472,6 +472,24 @@ public class MemberServiceImpl implements MemberService {
 	public Member getMemberByMemberEmail(String memberEmail) {
 		return memberRepository.findByMemberEmail(memberEmail);
 	}
+	
+	//이메일로 인증번호 발송
+	@Override
+	public void sendVerificationCode(String memberEmail) {
+		//랜덤 숫자 객체 생성
+		Random random = new Random();
+		
+		//6자리 숫자 임시번호 발급
+		Integer tempNo = random.nextInt(900000) + 100000;
+		
+		//인증번호 저장
+		tempCode.put(memberEmail, tempNo);
+		
+		//메일 발송
+		customMailSender.sendVerificationCode(memberEmail, tempNo);
+		
+	}
+	
     /**************************************************************************************/
 	
 	@Override
@@ -515,5 +533,7 @@ public class MemberServiceImpl implements MemberService {
 
         return tokens;
 	}
+
+	
 	
 }
