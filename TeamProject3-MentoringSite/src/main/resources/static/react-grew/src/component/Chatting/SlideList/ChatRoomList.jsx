@@ -126,45 +126,51 @@ const ChatRoomList = ({ onRoomClick }) => {
             >
               <div className="chat-room-first">
                 <span className="room-name">{room.chatRoomName}</span>{" "}
-                <div className="chat-is-read">{room.countIsRead}</div>
-              <div className="button-container">
-                {/* 우측 상단 메뉴 버튼 */}
-                <spa className="chat-button-container">
-                  <button
-                    className="chat-menu-button"
-                    onClick={(e) => {
-                      e.stopPropagation(); // 부모 이벤트 전파 방지
-                      toggleMenu(room.chatRoomNo); // 메뉴 열기/닫기
-                    }}
-                  >
-                    &#8942; {/* 메뉴 아이콘 (일반적으로 세로로 3개의 점) */}
-                  </button>
-                  {room.isMenuOpen && (
-                    <div className="chat-menu-dropdown">
-                      <button
-                        className="edit-button"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          openEditModal(room); // 채팅방 이름 수정 모달 열기
-                        }}
-                      >
-                        이름 수정
-                      </button>
-                      <button
-                        className="leave-button"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          leaveRoom(room.chatRoomNo); // 방 나가기 기능 호출
-                        }}
-                      >
-                        방 나가기
-                      </button>
-                    </div>
-                  )}
-                   </spa>
+                {room.countIsRead === 0 ? null : (
+                  <div className="chat-is-read">{room.countIsRead}</div>
+                )}
+                <div className="button-container">
+                  {/* 우측 상단 메뉴 버튼 */}
+                  <span className="chat-button-container">
+                    <button
+                      className="chat-menu-button"
+                      onClick={(e) => {
+                        e.stopPropagation(); // 부모 이벤트 전파 방지
+                        toggleMenu(room.chatRoomNo); // 메뉴 열기/닫기
+                      }}
+                    >
+                      &#8942; {/* 메뉴 아이콘 (일반적으로 세로로 3개의 점) */}
+                    </button>
+                    {room.isMenuOpen && (
+                      <div className="chat-menu-dropdown">
+                        <button
+                          className="edit-button"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            openEditModal(room); // 채팅방 이름 수정 모달 열기
+                          }}
+                        >
+                          이름 수정
+                        </button>
+                        <button
+                          className="leave-button"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            leaveRoom(room.chatRoomNo); // 방 나가기 기능 호출
+                          }}
+                        >
+                          방 나가기
+                        </button>
+                      </div>
+                    )}
+                  </span>
                 </div>
               </div>
-                  
+              <div className="chat-last-message">
+                {room.lastedMessage
+                  ? room.lastedMessage.substring(0, 14)
+                  : null}
+              </div>
             </li>
           ))
         ) : (

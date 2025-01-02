@@ -408,10 +408,12 @@ body {
   right: 0;
   display: flex;
   border-radius: 50%;
-  background-color: red;
+  background-color: rgb(255, 38, 0);
+  font-size: 15px;
+  font-weight: bold;
   color: #ffffff;
-  height: 25px;
-  width: 28px;
+  height: 19px;
+  width: 22px;
   justify-content: center;
   align-items: center;
   padding-bottom: 3px;
@@ -456,11 +458,13 @@ body {
 .chat-menu-dropdown button:hover {
   background-color: #f0f0f0;
 }
-.edit-button,
-.leave-button {
+.edit-button1,
+.leave-button1 {
   border-radius: 4px;
   padding: 5px 10px;
   cursor: pointer;
   font-size: 14px;
-  width: 200px;
+}
+.chat-last-message{
+  font-size: 15px;
 }

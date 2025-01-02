@@ -69,7 +69,7 @@ const ChatRequests = () => {
                             // 조건 1: 신청이 도착했을 때
                             <>
                             <button
-                                className="edit-button"
+                                className="edit-button1"
                                 onClick={(e) => {
                                 e.stopPropagation(); // 부모 이벤트 (채팅방 클릭) 전파 방지
                                 handleChatRoomUpdate(room.chatRoomNo, "active");
@@ -78,7 +78,7 @@ const ChatRequests = () => {
                                 수락
                             </button>
                             <button
-                                className="leave-button"
+                                className="leave-button1"
                                 onClick={(e) => {
                                 e.stopPropagation(); // 부모 이벤트 전파 방지
                                 handleChatRoomUpdate(room.chatRoomNo, "reject");
