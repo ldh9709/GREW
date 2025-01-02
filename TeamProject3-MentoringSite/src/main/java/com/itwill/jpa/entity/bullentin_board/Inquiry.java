@@ -17,6 +17,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.PrePersist;
@@ -47,8 +48,7 @@ public class Inquiry {
     @Column(name = "inquiry_title")
     private String inquiryTitle;
     
-    
-    @Column(name = "inquiry_content", length = 500)
+    @Column(name = "inquiry_content" ,length = 4000)
     private String inquiryContent;
     
     @Column(name = "inquiry_date")

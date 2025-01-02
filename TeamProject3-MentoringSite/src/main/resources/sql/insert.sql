@@ -53,8 +53,6 @@ VALUES(category_no_SEQ.nextval, '피트니스', 2, 22);
 INSERT INTO category(category_no, category_name, category_depth, parent_category_no)
 VALUES(category_no_SEQ.nextval, '요가/필라테스', 2, 22);
 INSERT INTO category(category_no, category_name, category_depth, parent_category_no)
-VALUES(category_no_SEQ.nextval, '재활 운동', 2, 22);
-INSERT INTO category(category_no, category_name, category_depth, parent_category_no)
 VALUES(category_no_SEQ.nextval, '식단/영양 상담', 2, 22);
 INSERT INTO category(category_no, category_name, category_depth, parent_category_no)
 VALUES(category_no_SEQ.nextval, '관심사를 선택해주세요', 3, null);

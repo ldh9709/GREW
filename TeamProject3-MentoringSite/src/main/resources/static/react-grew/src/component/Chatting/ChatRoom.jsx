@@ -13,13 +13,13 @@ const ChatRoom = ({ onRoomClick }) => {
                 className={`chat-tab ${activeTab === 'rooms' ? 'active' : ''}`}
                 onClick={() => setActiveTab('rooms')}
                 >
-                채팅
+                채팅방
                 </div>
                 <div
                 className={`chat-tab ${activeTab === 'requests' ? 'active' : ''}`}
                 onClick={() => setActiveTab('requests')}
                 >
-                채팅 신청
+                채팅방 신청
                 </div>
             </div>
             {activeTab === 'rooms' ? (
