@@ -115,10 +115,13 @@ export default function MentorProfileInfo({ mentorProfile }) {
                     %{" "}
               </span>
               <span className="stats-label">
-                만족도
+                만족도{" "}
               </span>
               <span>
-                {mentorProfile?.mentorRating.toFixed(1) || 0}/5.0
+                {typeof mentorProfile.mentorRating === "number" ?
+                mentorProfile?.mentorRating.toFixed(1)  :
+                0.0}
+                /5.0
               </span>
             </div>
             

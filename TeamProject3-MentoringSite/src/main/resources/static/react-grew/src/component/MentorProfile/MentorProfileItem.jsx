@@ -44,11 +44,11 @@ export default function MentorProfileItem({ mentor }) {
   };
 
 
-  // // 🔥 멘토 프로필 클릭 시 상세 페이지로 이동하는 함수
+  // 멘토 프로필 클릭 시 상세 페이지로 이동하는 함수
   // const mentorname = () => {
   //   navigate(`/mentor-profile/${mentor.mentorProfileNo}`);
   // };
-  // 🔥 멘토 프로필 클릭 시 상세 페이지로 이동하는 함수
+  // 멘토 프로필 클릭 시 상세 페이지로 이동하는 함수
   const viewMentorProfile = () => {
     navigate(`/mentor-profile/${mentor.mentorProfileNo}`);
   };
