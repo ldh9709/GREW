@@ -56,7 +56,6 @@ const MentorJoinForm = () => {
   };
 
   const handleCareerChange = (index, field, value) => {
-    console.log(mentor.careerDtos);
     setMentor((prevMentor) => {
       const updatedCareers = [...prevMentor.careerDtos];
       updatedCareers[index][field] = value;
@@ -195,8 +194,11 @@ const MentorJoinForm = () => {
   /***** 멘토 생성 버튼 END *****/
   
   const handleImageChange = (e) => {
-    const file = e.target.files[0];
-    setMentorImage(file);
+    setMentorImage(e.target.files[0]);
+    setMentor((prevMentor) => ({
+      ...prevMentor,
+      [e.target.name]: `/upload/mentor-profile/${mentorProfileNo}/${e.target.files[0].name}`,
+    }));
   }
 
   const uploadImage= async (mentorProfileNo) => {
