@@ -47,7 +47,7 @@ export default function AdminMentorBoard () {
     };
 
     //게시글 이동
-    const handleMoveMentor = async (mentorBoardNo) => {
+    const handleMoveMentor = async (mentorBoardNo) => {///mentor-board/detail/5
         const url = `/mentor-board/detail/${mentorBoardNo}`;// mentorBoardNo를 사용하여 URL
         window.open(url, "_blank"); // 새 탭에서 열기
     }
@@ -58,7 +58,7 @@ export default function AdminMentorBoard () {
     }
     return(
         <div className="admin-table-container">
-           {/* <div className="dropdwon"> //드롭다운 
+            {/*<div className="dropdwon"> 
                 <select className="dropdown-style" 
                 value={role} onChange={(e)=> setRole(e.target.value)}>
                     <option value="ALL">전체 보기</option>
@@ -67,13 +67,13 @@ export default function AdminMentorBoard () {
                     <option value="3">예술 / 창작</option>
                     <option value="4">창업 / 비즈니스</option>
                 </select>
-            </div>*/}
-            <div className="dropdwon">{/* 검색 입력란 */}
+            </div>
+            <div className="dropdwon">
                 <input type="text" onChange={handleSearch}
                 placeholder="검색어"
                 className="search-input"
                 value={search}/>
-            </div>
+            </div>*/}
             <table className="admin-table">
                 <thead>
                     <tr>
@@ -88,18 +88,13 @@ export default function AdminMentorBoard () {
                 <tbody>
                     {mentors && mentors.length > 0 ? (
                         mentors.map((mentor, index) => (
-                            <tr key={index}>                                
-                                <td onClick={() => handleMoveMentor(mentor.mentorBoardNo)}
-                                >{mentor.memberNo}</td>
-                                <td onClick={() => handleMoveMentor(mentor.mentorBoardNo)}
-                                >{mentor.mentorBoardTitle}</td>
+                            <tr key={index} onClick={() => handleMoveMentor(mentor.mentorBoardNo)}>                                
+                                <td>{mentor.memberNo}</td>
+                                <td>{mentor.mentorBoardTitle}</td>
                                 {/*<td>{mentor.mentorBoardContent.substring(0,50)}</td>*/}
-                                <td onClick={() => handleMoveMentor(mentor.mentorBoardNo)}
-                                >{mentor.mentorBoardDate.substring(0,10)}</td>
-                                <td onClick={() => handleMoveMentor(mentor.mentorBoardNo)}
-                                >{mentor.mentorBoardViews}</td>
-                                <td onClick={() => handleMoveMentor(mentor.mentorBoardNo)}
-                                >{mentor.categoryName}</td>
+                                <td>{mentor.mentorBoardDate.substring(0,10)}</td>
+                                <td>{mentor.mentorBoardViews}</td>
+                                <td>{mentor.categoryName}</td>
                             </tr>
                             ))
                         ) : (
