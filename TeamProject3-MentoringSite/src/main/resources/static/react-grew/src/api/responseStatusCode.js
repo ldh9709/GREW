@@ -35,6 +35,7 @@ export const NOT_AGREEMENT_MEMBER_ID = 2066; // 회원 ID와 정보가 일치하
 export const NOT_AGREEMENT_MEMBER_NAME = 2067; // 회원 NAME과 정보가 일치하지 않음
 export const INPUT_NULL = 2068; // NULL 값 입력
 
+
 //MENTOR 성공 코드
 export const CREATED_MENTOR_PROFILE_SUCCESS_CODE = 2350; //멘토 가입 성공
 export const UPDATE_MENTOR_PROFILE_SUCCESS_CODE = 2365

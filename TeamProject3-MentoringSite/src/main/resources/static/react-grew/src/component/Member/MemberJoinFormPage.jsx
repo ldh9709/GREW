@@ -61,7 +61,7 @@ export const MemberJoinFormPage = () => {
   /* 이메일 중복 확인 */
   const checkEmail = async () => {
     const response = await memberApi.checkEmailDupl({memberEmail: member.memberEmail});
-    if(response?.status === responseStatus.DUPLICATION_MENBER_EMAIL) {
+    if(response?.status === responseStatus.DUPLICATION_MEMBER_EMAIL) {
       setMemberEmailError("사용 불가능한 이메일입니다.");
       setIsIdAvailable(false);
     } else {
