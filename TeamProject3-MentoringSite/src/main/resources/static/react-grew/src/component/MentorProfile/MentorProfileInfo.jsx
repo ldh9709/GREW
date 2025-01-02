@@ -92,7 +92,7 @@ export default function MentorProfileInfo({ mentorProfile }) {
               <span className="stats-label">
                 만족도 </span>
               <span>
-                {mentorProfile?.mentorRating || 0}
+                {mentorProfile?.mentorRating || 0} / 5.0
               </span>
             </div>
             

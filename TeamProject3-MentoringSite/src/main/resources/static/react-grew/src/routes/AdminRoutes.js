@@ -2,6 +2,7 @@ import { Routes, Route } from "react-router-dom";
 import Admin from "../component/Admin/Admin";
 
 function AdminRoutes() {
+  
     return (
       <Routes>
         {/* 어드민 라우트 보호 */}
