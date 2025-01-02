@@ -2,8 +2,6 @@ package com.itwill.jpa.entity.member_information;
 
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.itwill.jpa.dto.member_information.MentorBoardDto;
@@ -29,10 +27,10 @@ public class MentorBoard {
     private Long mentorBoardNo; //PK 시퀀스로 자동생성 
 
     @Column(name = "mentor_board_title")
-    private String mentorBoardTitle; // 글
+    private String mentorBoardTitle; // 글 제목
     
-    @Column(name = "mentor_board_content")
-    private String mentorBoardContent; // 글
+    @Column(name = "mentor_board_content", length = 4000)
+    private String mentorBoardContent; // 글 본문
     
     @Column(name = "mentor_board_image")
     private String mentorBoardImage;   // **이미지 경로(URL) 저장**

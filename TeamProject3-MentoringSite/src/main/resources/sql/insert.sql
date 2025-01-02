@@ -307,40 +307,57 @@ VALUES (mentor_board_no_SEQ.nextval, '효율적인 코딩 학습법', '초보자
 
 INSERT INTO mentor_board (mentor_board_no, mentor_board_title, mentor_board_content, mentor_board_image, mentor_board_date, mentor_board_views, mentor_board_status, member_no) 
 VALUES (mentor_board_no_SEQ.nextval, '공기업 취업, 필기 준비 언제 시작하나요?', '우선은 말씀드리고 싶은 건 서류 전형을 준비하면서 필기시험도 함께 준비를 해야만 합니다.
-작년 기준이나 혹은 이전 기수를 기준으로 유명 공기업 카페에 들어가 보면 대략 합격 스펙은 아실 수 있을 겁니다. 그것과 거의 대동소이하다고 판단이 될 때에는 그때부터는 필기시험을 준비를 하셔야만 해요. 서류 합격하고 필기 준비를 하면 늦어서 떨어질 가능성이 매우 농후합니다.
+작년 기준이나 혹은 이전 기수를 기준으로 유명 공기업 카페에 들어가 보면 대략 합격 스펙은 아실 수 있을 겁니다.
+그것과 거의 대동소이하다고 판단이 될 때에는 그때부터는 필기시험을 준비를 하셔야만 해요. 
+서류 합격하고 필기 준비를 하면 늦어서 떨어질 가능성이 매우 농후합니다.
 ','/images/mentor-board/image03.jpg',TO_DATE('2024-12-11 15:31:01', 'YYYY-MM-DD HH24:MI:SS'), 1500, 1, 9);
 
 
 INSERT INTO mentor_board (mentor_board_no, mentor_board_title, mentor_board_content, mentor_board_image, mentor_board_date, mentor_board_views, mentor_board_status, member_no) 
-VALUES (mentor_board_no_SEQ.nextval, '이미지 리터러시와 시각적 해석_미술을 통한 이미지 소통의 본질', '이미지 리터러시와 시각적 해석은 미술을 통한 이미지 소통의 본질 이미지 리터러시와 시각적 해석은 현대 사회에서 더욱 중요한 역할을 맡고 있습니다. 미술은 이러한 관점에서 특히 이미지를 통한 소통의 핵심을 형성하고 있습니다. ',  '/images/mentor-board/image04.jpg', TO_DATE('2024-12-10 12:00:00', 'YYYY-MM-DD HH24:MI:SS'), 105, 1, 10);
+VALUES (mentor_board_no_SEQ.nextval, '이미지 리터러시와 시각적 해석_미술을 통한 이미지 소통의 본질', '이미지 리터러시와 시각적 해석은 미술을 통한 이미지 소통의 본질 이미지 리터러시와 시각적 해석은 현대 사회에서 더욱 중요한 역할을 맡고 있습니다. 
+미술은 이러한 관점에서 특히 이미지를 통한 소통의 핵심을 형성하고 있습니다. ',  '/images/mentor-board/image04.jpg', TO_DATE('2024-12-10 12:00:00', 'YYYY-MM-DD HH24:MI:SS'), 105, 1, 10);
 INSERT INTO mentor_board (mentor_board_no, mentor_board_title, mentor_board_content, mentor_board_image, mentor_board_date, mentor_board_views, mentor_board_status, member_no) 
 VALUES (mentor_board_no_SEQ.nextval, '핵심만 콕! 바로쓰는 총무 실무', '"핵심만 뽑아 쓰는 총무 업무의 모든 것!" NCS 학습모듈 집필위원이 알려주는 학습포인트와 현업 꿀팁!',  '/images/mentor-board/image05.jpg', TO_DATE('2024-12-13 15:30:00', 'YYYY-MM-DD HH24:MI:SS'), 185, 1, 11);
 INSERT INTO mentor_board (mentor_board_no, mentor_board_title, mentor_board_content, mentor_board_image, mentor_board_date, mentor_board_views, mentor_board_status, member_no) 
-VALUES (mentor_board_no_SEQ.nextval, '영업 관리의 기본 - 성과를 높이기 위한 팁!', '"영업 관리"는 광범위한 업무처럼 보이지만, 영업팀의 일반적인 업무를 말하는 것은 아닙니다.영업 관리는 다시 말해 하나의 큰 선박을 안내하는 역할입니다. 
+VALUES (mentor_board_no_SEQ.nextval, '영업 관리의 기본 - 성과를 높이기 위한 팁!', '"영업 관리"는 광범위한 업무처럼 보이지만, 영업팀의 일반적인 업무를 말하는 것은 아닙니다.
+영업 관리는 다시 말해 하나의 큰 선박을 안내하는 역할입니다. 
 한마디로 영업관리는 전략적으로 지원하여 영업 프로세스에서 마찰을 줄임으로써 영업팀이 보다 효율적으로 업무를 수행할 수 있도록 하는 것입니다.',  '/images/mentor-board/image06.jpg', TO_DATE('2024-12-11 15:31:01', 'YYYY-MM-DD HH24:MI:SS'), 150, 1, 12);
 INSERT INTO mentor_board (mentor_board_no, mentor_board_title, mentor_board_content, mentor_board_image, mentor_board_date, mentor_board_views, mentor_board_status, member_no) 
-VALUES (mentor_board_no_SEQ.nextval, '개발 직군, 다른 직무부터 시작해도 될까요?', '멘티님, 산다는 게 참 어려운 결정의 연속인 것 같습니다. 당연하게도 제가 뭔가 해답을 제시해 드리기는 어렵겠지만 제 경우의 경험을 말씀드려보자면, 저는 고등학교는 문과를 졸업했어요',  '/images/mentor-board/image07.jpg', TO_DATE('2024-12-10 12:00:00', 'YYYY-MM-DD HH24:MI:SS'), 105, 1, 13);
+VALUES (mentor_board_no_SEQ.nextval, '개발 직군, 다른 직무부터 시작해도 될까요?', '멘티님, 산다는 게 참 어려운 결정의 연속인 것 같습니다. 
+당연하게도 제가 뭔가 해답을 제시해 드리기는 어렵겠지만 제 경우의 경험을 말씀드려보자면, 
+저는 고등학교는 문과를 졸업했어요',  '/images/mentor-board/image07.jpg', TO_DATE('2024-12-10 12:00:00', 'YYYY-MM-DD HH24:MI:SS'), 105, 1, 13);
 INSERT INTO mentor_board (mentor_board_no, mentor_board_title, mentor_board_content, mentor_board_image, mentor_board_date, mentor_board_views, mentor_board_status, member_no) 
 VALUES (mentor_board_no_SEQ.nextval, '대학입시 꿀팁과 도움되는 추천 사이트 한눈에 알아보기~!', '진로진학전문가가 알려주는 대학입시 면접 전형 기초 가이드',  '/images/mentor-board/image08.jpg', TO_DATE('2024-10-02 15:30:00', 'YYYY-MM-DD HH24:MI:SS'), 175, 1, 14);
 INSERT INTO mentor_board (mentor_board_no, mentor_board_title, mentor_board_content, mentor_board_image, mentor_board_date, mentor_board_views, mentor_board_status, member_no) 
 VALUES (mentor_board_no_SEQ.nextval, '스타트업 A to Z', '스타트업은 고수익과 고성장에 이미지가 강하지만, 고위험에 대한 얘기들이 많이 없습니다. 스타트업은 야생이고, 여기서 살아남기 위한 생존전략이 필요합니다.',  '/images/mentor-board/image09.jpg', TO_DATE('2024-12-11 15:31:01', 'YYYY-MM-DD HH24:MI:SS'), 1800, 1, 15);
 INSERT INTO mentor_board (mentor_board_no, mentor_board_title, mentor_board_content, mentor_board_image, mentor_board_date, mentor_board_views, mentor_board_status, member_no) 
 VALUES (mentor_board_no_SEQ.nextval, 'UIUX 포트폴리오, 유저리서치를 넣어야 할까요?', '포트폴리오를 준비하면서 유저 리서치를 어떻게 넣을지, 꼭 넣어야할지 등에 대해 고민이 많으실 겁니다. 
-말 그대로 UXUI디자인 포트폴리오에는 UX와 UI가 꼭 구성이 되어야합니다. 모든 결과물이 UX 인사이트를 근거로 설계가 되었다는 과정을 보여주는 것이 중요하기 때문이죠. 실무에서는 정해진 업무 기한 또는 다양한 이유로 인해.',  '/images/mentor-board/image10.jpg', TO_DATE('2024-12-10 12:00:00', 'YYYY-MM-DD HH24:MI:SS'), 105, 1, 16);
+말 그대로 UXUI디자인 포트폴리오에는 UX와 UI가 꼭 구성이 되어야합니다. 
+모든 결과물이 UX 인사이트를 근거로 설계가 되었다는 과정을 보여주는 것이 중요하기 때문이죠. 
+실무에서는 정해진 업무 기한 또는 다양한 이유로 인해 유저 리서치를 충분히 하지 못한 상태에서도 디자인을 진행해야 하는 경우가 많습니다. 
+하지만 포트폴리오에서는 이러한 제약이 없기 때문에, 가능한 한 유저 리서치를 포함하여 사용자 중심의 문제 해결 과정을 명확히 보여주는 것이 좋습니다.',  '/images/mentor-board/image10.jpg', TO_DATE('2024-12-10 12:00:00', 'YYYY-MM-DD HH24:MI:SS'), 105, 1, 16);
 INSERT INTO mentor_board (mentor_board_no, mentor_board_title, mentor_board_content, mentor_board_image, mentor_board_date, mentor_board_views, mentor_board_status, member_no) 
-VALUES (mentor_board_no_SEQ.nextval, '입시미술 개꿀팁, 미대가는방법', '안녕하세요! 입시미술을 준비하는 학생을 위한 꿀팁을 소개해드릴게요. 입시미술을 준비하는 것은 정말 중요한 과정이죠. 많은 학생들이 입시미술을 준비하면서 고민하는 부분을 도와드리기 위해 다양한 팁을 준비했어. 이 팁들을 참고하시면 미술 공부에 큰 도움이 될 거예요.', '/images/mentor-board/image11.jpg', TO_DATE('2023-12-11 15:30:00', 'YYYY-MM-DD HH24:MI:SS'), 165, 1, 17);
+VALUES (mentor_board_no_SEQ.nextval, '입시미술 개꿀팁, 미대가는방법', '안녕하세요! 입시미술을 준비하는 학생을 위한 꿀팁을 소개해드릴게요. 
+입시미술을 준비하는 것은 정말 중요한 과정이죠. 
+많은 학생들이 입시미술을 준비하면서 고민하는 부분을 도와드리기 위해 다양한 팁을 준비했어요. 
+이 팁들을 참고하시면 미술 공부에 큰 도움이 될 거예요.', '/images/mentor-board/image11.jpg', TO_DATE('2023-12-11 15:30:00', 'YYYY-MM-DD HH24:MI:SS'), 165, 1, 17);
 INSERT INTO mentor_board (mentor_board_no, mentor_board_title, mentor_board_content, mentor_board_image, mentor_board_date, mentor_board_views, mentor_board_status, member_no) 
-VALUES (mentor_board_no_SEQ.nextval, '변리사 무료 상담, 범위, 절차, 팁 설명해드립니다.', '첨단 기술의 발전은 이제 기업을 넘어 국가의 경쟁력까지 좌우하는 중요한 요소가 되었습니다. 이러한 흐름 속에서, 기업들은 자신들이 개발한 기술을 보호하기 위해 지식 재산권 확보에 더욱 관심을 기울이고 있습니다.',  '/images/mentor-board/image12.png', TO_DATE('2024-12-11 15:31:01', 'YYYY-MM-DD HH24:MI:SS'), 2000, 1, 18);
+VALUES (mentor_board_no_SEQ.nextval, '변리사 무료 상담, 범위, 절차, 팁 설명해드립니다.', '첨단 기술의 발전은 이제 기업을 넘어 국가의 경쟁력까지 좌우하는 중요한 요소가 되었습니다. 
+이러한 흐름 속에서, 기업들은 자신들이 개발한 기술을 보호하기 위해 지식 재산권 확보에 더욱 관심을 기울이고 있습니다.',  '/images/mentor-board/image12.png', TO_DATE('2024-12-11 15:31:01', 'YYYY-MM-DD HH24:MI:SS'), 2000, 1, 18);
 INSERT INTO mentor_board(mentor_board_no, mentor_board_title, mentor_board_content, mentor_board_image, mentor_board_date, mentor_board_views, mentor_board_status, member_no)
-VALUES(mentor_board_no_SEQ.nextval, '중학생을 위한 학습 노하우', '중학생들이 효율적으로 공부할 수 있는 방법을 알려드립니다. 스터디 플랜과 학습 습관을 형성하는 팁을 제공합니다.', '/images/mentor-board/image13.jpg', SYSDATE, 0, 1, (SELECT member_no FROM mentor_profile WHERE category_no = 6));
+VALUES(mentor_board_no_SEQ.nextval, '중학생을 위한 학습 노하우', '중학생들이 효율적으로 공부할 수 있는 방법을 알려드립니다. 
+스터디 플랜과 학습 습관을 형성하는 팁을 제공합니다.', '/images/mentor-board/image13.jpg', SYSDATE, 0, 1, (SELECT member_no FROM mentor_profile WHERE category_no = 6));
 INSERT INTO mentor_board(mentor_board_no, mentor_board_title, mentor_board_content, mentor_board_image, mentor_board_date, mentor_board_views, mentor_board_status, member_no)
 VALUES(mentor_board_no_SEQ.nextval, '고등학생 학습법과 대학입시 준비', '고등학생들이 학업 성취를 극대화하고 대학 입시에 성공하기 위한 실질적인 가이드를 제공합니다.', '/images/mentor-board/image14.jpg', SYSDATE, 0, 1, (SELECT member_no FROM mentor_profile WHERE category_no = 7));
 INSERT INTO mentor_board(mentor_board_no, mentor_board_title, mentor_board_content, mentor_board_image, mentor_board_date, mentor_board_views, mentor_board_status, member_no)
-VALUES(mentor_board_no_SEQ.nextval, '음악 이론과 실기 완벽 가이드', '음악을 배우고자 하는 학생들을 위한 이론과 실기 학습법을 소개합니다. 기초부터 고급 단계까지 다룹니다.', '/images/mentor-board/image15.jpg', SYSDATE, 0, 1, (SELECT member_no FROM mentor_profile WHERE category_no = 10));
+VALUES(mentor_board_no_SEQ.nextval, '음악 이론과 실기 완벽 가이드', '음악을 배우고자 하는 학생들을 위한 이론과 실기 학습법을 소개합니다. 
+기초부터 고급 단계까지 다룹니다.', '/images/mentor-board/image15.jpg', SYSDATE, 0, 1, (SELECT member_no FROM mentor_profile WHERE category_no = 10));
 INSERT INTO mentor_board(mentor_board_no, mentor_board_title, mentor_board_content, mentor_board_image, mentor_board_date, mentor_board_views, mentor_board_status, member_no)
-VALUES(mentor_board_no_SEQ.nextval, '연기와 연극의 세계', '연극과 연기 수업을 통해 자신을 표현하는 방법을 배워보세요. 전문적인 팁과 실질적인 조언을 제공합니다.', '/images/mentor-board/image16.jpg', SYSDATE, 0, 1, (SELECT member_no FROM mentor_profile WHERE category_no = 14));
+VALUES(mentor_board_no_SEQ.nextval, '연기와 연극의 세계', '연극과 연기 수업을 통해 자신을 표현하는 방법을 배워보세요. 
+전문적인 팁과 실질적인 조언을 제공합니다.', '/images/mentor-board/image16.jpg', SYSDATE, 0, 1, (SELECT member_no FROM mentor_profile WHERE category_no = 14));
 INSERT INTO mentor_board(mentor_board_no, mentor_board_title, mentor_board_content, mentor_board_image, mentor_board_date, mentor_board_views, mentor_board_status, member_no)
-VALUES(mentor_board_no_SEQ.nextval, '건강한 식단과 영양 상담', '건강한 몸을 유지하기 위한 식단 설계와 영양학적 조언을 제공합니다. 목표 달성을 돕는 맞춤형 가이드입니다.', '/images/mentor-board/image17.jpg', SYSDATE, 0, 1, (SELECT member_no FROM mentor_profile WHERE category_no = 26));
+VALUES(mentor_board_no_SEQ.nextval, '건강한 식단과 영양 상담', '건강한 몸을 유지하기 위한 식단 설계와 영양학적 조언을 제공합니다. 
+목표 달성을 돕는 맞춤형 가이드입니다.', '/images/mentor-board/image17.jpg', SYSDATE, 0, 1, (SELECT member_no FROM mentor_profile WHERE category_no = 26));
 INSERT INTO mentor_board(mentor_board_no, mentor_board_title, mentor_board_content, mentor_board_image, mentor_board_date, mentor_board_views, mentor_board_status, member_no)
 VALUES(mentor_board_no_SEQ.nextval, '창의적인 글쓰기 비법', '창의적인 글쓰기를 위한 아이디어 발굴 방법과 실질적인 글쓰기 노하우를 제공합니다.', '/images/mentor-board/image18.jpg', SYSDATE, 0, 1, (SELECT member_no FROM mentor_profile WHERE category_no = 11));
 INSERT INTO mentor_board(mentor_board_no, mentor_board_title, mentor_board_content, mentor_board_image, mentor_board_date, mentor_board_views, mentor_board_status, member_no)
@@ -352,7 +369,8 @@ VALUES(mentor_board_no_SEQ.nextval, '운동 성과를 극대화하는 피트니�
 INSERT INTO mentor_board(mentor_board_no, mentor_board_title, mentor_board_content, mentor_board_image, mentor_board_date, mentor_board_views, mentor_board_status, member_no)
 VALUES(mentor_board_no_SEQ.nextval, '요가와 필라테스로 건강한 몸 만들기', '요가와 필라테스의 기초와 자세 교정을 통해 건강과 유연성을 개선하는 방법을 공유합니다.', '/images/mentor-board/image22.jpg', SYSDATE, 0, 1, (SELECT member_no FROM mentor_profile WHERE category_no = 24));
 INSERT INTO mentor_board(mentor_board_no, mentor_board_title, mentor_board_content, mentor_board_image, mentor_board_date, mentor_board_views, mentor_board_status, member_no)
-VALUES(mentor_board_no_SEQ.nextval, '재활 운동으로 건강 회복하기', '부상 후 건강 회복을 위한 맞춤형 재활 운동 프로그램을 소개합니다. 단계별 가이드와 효과적인 재활 전략을 통해 건강을 되찾으세요.', '/images/mentor-board/image23.jpg', SYSDATE, 0, 1, (SELECT member_no FROM mentor_profile WHERE category_no = 25));
+VALUES(mentor_board_no_SEQ.nextval, '재활 운동으로 건강 회복하기', '부상 후 건강 회복을 위한 맞춤형 재활 운동 프로그램을 소개합니다. 
+단계별 가이드와 효과적인 재활 전략을 통해 건강을 되찾으세요.', '/images/mentor-board/image23.jpg', SYSDATE, 0, 1, (SELECT member_no FROM mentor_profile WHERE category_no = 25));
 
 
 
