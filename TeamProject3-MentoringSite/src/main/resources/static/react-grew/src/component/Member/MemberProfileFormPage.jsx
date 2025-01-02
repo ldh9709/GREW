@@ -50,9 +50,6 @@ const MemberProfileFormPage = () => {
 
     setIsEmailChanged(newEmail !== originalEmail); // 이메일 변경 여부 확인
     setIsEmailVerified(false); // 이메일 변경 시 인증 완료 상태 초기화
-    console.log("isEmailChanged:", isEmailChanged);
-    console.log("isEmailVerified:", isEmailVerified);
-    console.log("Disabled 상태:", isEmailChanged && !isEmailVerified);
   };
   
    /* 인증번호 요청 핸들러 */

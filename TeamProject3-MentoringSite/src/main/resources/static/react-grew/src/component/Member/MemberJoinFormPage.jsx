@@ -58,6 +58,19 @@ export const MemberJoinFormPage = () => {
     }
   }
 
+  /* 이메일 중복 확인 */
+  const checkEmail = async () => {
+    const response = await memberApi.checkEmailDupl({memberEmail: member.memberEmail});
+    if(response?.status === responseStatus.DUPLICATION_MENBER_EMAIL) {
+      setMemberEmailError("사용 불가능한 이메일입니다.");
+      setIsIdAvailable(false);
+    } else {
+      setMemberEmailError("");
+      setIsIdAvailable(true);
+    }
+  
+  }
+
   // 입력 필드 업데이트 핸들러
   const handleChangeJoinForm = (e) => {
     setMember({ ...member, [e.target.name]: e.target.value });
@@ -296,8 +309,10 @@ export const MemberJoinFormPage = () => {
             <input
                 type="email"
                 name="memberEmail"
+                className={memberEmailError ? "member-input-error" : ""}
                 placeholder="이메일을 입력하세요"
                 onChange={handleChangeJoinForm}
+                onBlur={checkEmail}
                 required
             />
          <p className={`member-form-join-check ${memberEmailError ? "visible" : ""}`}>

@@ -17,6 +17,7 @@ public class ResponseMessage {
 	public static final String EMAIL_SEND_SUCCESS = "이메일 발송 성공";
 	public static final String INPUTCODE_CONFIRM_SUCCESS = "인증번호 인증 성공";
 	public static final String UPDATE_ROLE_SUCCESS = "회원 권한 수정 성공";
+	public static final String CONFIRM_EMAIL_SUCCESS = "이메일 중복 검사 성공";
 	
 	
 	// 실패 메시지

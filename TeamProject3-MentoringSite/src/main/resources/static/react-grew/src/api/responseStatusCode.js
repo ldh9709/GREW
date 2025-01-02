@@ -10,7 +10,9 @@ export const ACTIVATE_MEMBER_SUCCESS = 2007; // 회원 활성화 성공
 export const DEACTIVATE_MEMBER_SUCCESS = 2008; // 회원 비활성화 성공
 export const PASSWORD_RESET_SUCCESS = 2009; // 비밀번호 재설정 성공
 export const EMAIL_SEND_SUCCESS = 2010; // 이메일 발송 성공
-export const INPUTCODE_CONFIRM_SUCCESS = 2011; // 인증 코드 확인 성공
+export const INPUTCODE_CONFIRM_SUCCESS = 2011;     // 인증번호 인증 성공
+export const UPDATE_ROLE_SUCCESS = 2012; // 회원 권한 수정 성공
+export const CONFIRM_EMAIL_SUCCESS = 2013; // 이메일 중복 검사 성공
 
 // MEMBER 실패 코드
 export const CREATED_MEMBER_FAIL = 2050; // 회원 생성 실패
@@ -24,7 +26,10 @@ export const PASSWORD_RESET_FAIL = 2057; // 비밀번호 재설정 실패
 export const EMAIL_SEND_FAIL = 2058; // 이메일 발송 실패
 export const INPUTCODE_CONFIRM_FAIL = 2059; // 인증 코드 확인 실패
 export const MEMBER_PROVIDER_IS_NOT_EMAIL = 2060; // 이메일로 가입한 회원이 아님
-export const AUTHENTICATION_FAILED = 2061;        // 토큰과 정보가 일치하지 않음
+export const AUTHENTICATION_FAILED = 2061; // 토큰과 정보가 일치하지 않음
+export const UPDATE_ROLE_FAIL = 2062; // 회원 권한 수정 실패
+export const DUPLICATION_MENBER_ID = 2063; //아이디 중복
+export const DUPLICATION_MENBER_EMAIL = 2064; //이메일 중복
 
 //MENTOR 성공 코드
 export const CREATED_MENTOR_PROFILE_SUCCESS_CODE = 2350; //멘토 가입 성공
