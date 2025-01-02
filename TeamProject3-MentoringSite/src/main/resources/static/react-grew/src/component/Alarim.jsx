@@ -6,14 +6,10 @@ import { useMemberAuth } from "../util/AuthContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
 const Alarim = () => {
-  const {token, member} = useMemberAuth();
+  const { token, member } = useMemberAuth();
   const [notifications, setNotifications] = useState([]);
   const navigate = useNavigate();
-  useEffect(() => {
-    // 폴링을 위해 setInterval 사용 (5초마다 알림을 가져옴)
-    setInterval(fetchNotifications, 10000); // 5초마다 폴링
-    fetchNotifications();
-  }, []); // 빈 배열을 넣으면 컴포넌트가 마운트될 때만 실행됨
+
   const fetchNotifications = async () => {
     if (member) {
       const response = await alarmApi.findByMemberNo(member.memberNo); // API 호출
@@ -22,7 +18,15 @@ const Alarim = () => {
       setNotifications(null);
     }
   };
+  useEffect(() => {
+    setInterval(fetchNotifications, 10000); // 5초마다 폴링
+    fetchNotifications();
+  }, []);
+  const allIsReadNotificationByMember = async (memberNo) => {
+    await alarmApi.isReadAllAlarm(memberNo);
 
+    fetchNotifications();
+  };
   const deleteNotification = async (alarmNo) => {
     await alarmApi.deleteAlarm(alarmNo);
 
@@ -34,15 +38,24 @@ const Alarim = () => {
   };
   const handleAlarmButton = async (alarmNo) => {
     await alarmApi.isReadAlarm(alarmNo);
-    const responsejsonObject = await alarmApi.urlAlarm(alarmNo);
-    console.log(responsejsonObject.data);
-    navigate(responsejsonObject.data);
+    const response = await alarmApi.findAlarm(alarmNo);
+    if(response.data.referenceType!=null){
+      const responsejsonObject = await alarmApi.urlAlarm(alarmNo);
+      navigate(responsejsonObject.data);
+    }
     fetchNotifications();
+
   };
   return (
     <div>
       <div className="notification-header">알림</div>
       <div className="all-delete-btn-div">
+        <button
+          className="notification-all-delete-btn"
+          onClick={() => allIsReadNotificationByMember(member.memberNo)}
+        >
+          전체 읽음
+        </button>
         <button
           className="notification-all-delete-btn"
           onClick={() => deleteNotificationByMember(member.memberNo)}
@@ -54,7 +67,7 @@ const Alarim = () => {
         {member && notifications.length > 0 ? (
           notifications.map((notification) => (
             <div key={notification.alarmNo} className="notification">
-              {notification.isRead == 1 ? (
+              {notification.isRead === 1 ? (
                 <button
                   className="notification-main-btn"
                   onClick={() => {
@@ -85,7 +98,9 @@ const Alarim = () => {
                 >
                   <div className="notification">
                     <div className="notification-icon">🔔</div>
-                    <div>{notification.alarmContent}</div>
+                    <div className="notification-content">
+                      {notification.alarmContent}
+                    </div>
                   </div>
 
                   <div

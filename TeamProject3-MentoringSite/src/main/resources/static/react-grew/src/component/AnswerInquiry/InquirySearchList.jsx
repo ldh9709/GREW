@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom"; // URL 파라미터를 가져오기 위한 useLocation
 import * as inquiryApi from "../../api/inquiryApi"; // API 호출
 import InquiryItem from "./InquiryItem";
+import PagenationItem from "../PagenationItem";
 
 function InquirySearchList() {
   const [searchResults, setSearchResults] = useState([]);
@@ -56,27 +57,12 @@ function InquirySearchList() {
           <div>검색 결과가 없습니다.</div>
         )}
         {/* 페이지네이션 버튼 */}
-        <div className="pagenation1">
-          {startPage > 1 && (
-            <button onClick={() => paginate(startPage - 1)}>이전</button>
-          )}{" "}
-          {/* 이전 그룹 */}
-          {pageNumbers.map((number) => (
-            <button
-              key={number}
-              onClick={() => paginate(number)}
-              className={`${
-                number === currentPage
-                  ? "pagenation-btn-active "
-                  : "pagenation-btn"
-              }`}
-            >
-              {number}
-            </button>
-          ))}
-          {endPage < totalPages && (
-            <button onClick={() => paginate(endPage + 1)}>다음</button> // 다음 그룹
-          )}
+        <div>
+          <PagenationItem
+            currentPage={currentPage}
+            totalPages={totalPages}
+            paginate={paginate}
+          />
         </div>
       </div>
     </>

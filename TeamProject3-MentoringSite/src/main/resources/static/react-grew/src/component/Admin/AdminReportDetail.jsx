@@ -1,12 +1,27 @@
+import { useMemberAuth } from "../../util/AuthContext";
 import React from 'react'
 import * as reportUtil from '../../util/reportUtil'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faXmark } from '@fortawesome/free-solid-svg-icons'
-export default function AdminReportDetail({report, onClose}) {
+import * as adminApi from '../../api/adminApi';
+export default function AdminReportDetail({report, onClose, fetchReports}) {
+    const { token } = useMemberAuth();
 
-    const handleStatusUpdate = () => {
-
-    }
+    // 신고 상태 업데이트 핸들러
+    const handleStatusUpdate = async (reportNo, status) => {
+        try {
+            let confirmation;
+            status === 2 ? ( confirmation = window.confirm('신고 처리 하시겠습니까?')) : (confirmation = window.confirm('무고 처리 하시겠습니까?'))
+            if(confirmation){
+                const response = await adminApi.updateReportStatusForAdmin(token, reportNo, status);
+                alert(`신고 상태가 '${reportUtil.reportStatus(status)}'로 변경되었습니다.`);
+                fetchReports();
+                onClose();
+            }
+        } catch (error) {
+            console.error("신고 상태 업데이트 실패", error);
+        }
+    };
 
     const handleCancel = () => {    
         onClose();
@@ -49,14 +64,23 @@ export default function AdminReportDetail({report, onClose}) {
             </div>
         </div>
         <div className='report-detail-button'>
-            <button
-            className='to-resolved'
-            onClick={() => handleStatusUpdate(report.id, "IN_PROGRESS")}
-            >처리</button>
-            <button
-            className='false-report'
-            onClick={() => handleStatusUpdate(report.id, "IN_PROGRESS")}
-            >무고</button>
+        {report.reportStatus !== 1 ? (
+            <div>
+                <button className="checked"
+                >처리</button>
+                <button className="checked"
+                >무고</button>
+            </div>
+            ) : (
+            <div>
+                <button className="to-resolved"
+                onClick={() => handleStatusUpdate(report.reportNo, 2)}
+                >처리</button>
+                <button className="false-report"
+                onClick={() => handleStatusUpdate(report.reportNo, 3)}
+                >무고</button>
+            </div>
+            )}
         </div>
   </div>
   )

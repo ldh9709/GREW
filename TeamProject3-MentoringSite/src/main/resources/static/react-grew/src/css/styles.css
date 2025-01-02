@@ -75,7 +75,6 @@ button {
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
-  bottom: 0px;
   justify-content: center; /* 중앙 정렬 */
   align-items: center;
   gap: 10px; /* 버튼 간격 */
@@ -854,6 +853,10 @@ button {
   text-decoration: underline;
   color: #000;
 }
+.alarm-main {
+  max-height: 100vh; /* 화면 높이의 70%만큼 표시 */
+  overflow-y: auto;  /* 세로 스크롤이 필요할 때만 활성화 */
+}
 .notification {
   margin-bottom: 10px; /* 각 알림 사이 간격을 추가 */
   height: 80px;
@@ -911,6 +914,12 @@ button {
 .notification-main-btn:hover,
 .notification-main-btn-isread:hover {
   background-color: #adadad; /* 호버 시 배경색 변화 */
+}
+.notification-content{
+  display: flex;
+  text-align: left;
+  width: 210px;
+  justify-content: first baseline;
 }
 .notification-icon {
   font-size: 18px;

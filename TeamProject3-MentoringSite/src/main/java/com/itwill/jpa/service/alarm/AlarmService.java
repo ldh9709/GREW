@@ -27,9 +27,12 @@ public interface AlarmService{
 	//신고 제재 시 신고자에게 알림
 	AlarmDto createAlarmByReport(Long reportNo);
 	//팔로우시 멘토에게 팔로워 증가 알림
-	AlarmDto createAlarmByFollowByMentor(Long MentorMemberNo);
+	AlarmDto createAlarmByFollowByMentor(Long mentorMemberNo);
 	//추천시 답글 작성자에게 추천 증가 알림
 	AlarmDto createAlarmByVoteByMentor(Long answerNo);
+	//멘토 심사 완료시 신청자에게 알림
+	AlarmDto createAlarmByEvaluationByMentor(Long memberNo,int status);
+	
 	//멤버한명의 알림 리스트
 	List<AlarmDto> findAlarmByMember(Long memberNo);
 	
@@ -37,4 +40,8 @@ public interface AlarmService{
 	String alarmRedirectURL(AlarmDto alarmDto);
 	//안읽음 알림 갯수
 	Long alarmIsReadCount(Long memberNo);
+	//알림 전체 읽음 처리
+	List<AlarmDto> setAlarmIsReadByMember(Long memberNo); 
+	//알림 넘버로 알림 뽑기
+	AlarmDto findAlarm(Long alarmNo);
 }

@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -590,10 +591,12 @@ public class MemberRestController {
 			@Parameter(name = "role", description = "필터링할 역할 (ROLE_MENTEE, ROLE_MENTOR)", required = true, example = "ROLE_MENTEE") 
 			@RequestParam(name ="role") String role, 
 			@Parameter(name = "order", description = "정렬 종류 (1: 가입 순, 2: 이름 순)", required = true, example = "1") 
-			@RequestParam(name ="order") Integer order
+			@RequestParam(name ="order") Integer order,
+			@RequestParam(name = "page", defaultValue = "0") int page,
+	        @RequestParam(name = "size", defaultValue = "10") int size
 			){
 		
-		List<MemberDto> memberList = memberService.getMemberAll(role, order);
+		Page<MemberDto> memberList = memberService.getMemberAll(role, order, page, size);
 		
 		Response response = new Response();
 		

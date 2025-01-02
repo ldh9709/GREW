@@ -11,7 +11,7 @@ import { useEffect, useState } from "react";
 import MainInquiryListItem from "./AnswerInquiry/MainInquiryListItem";
 import MainMentorBoard from "./MainMentorBoard";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCircleChevronRight, faRightLong } from "@fortawesome/free-solid-svg-icons";
+import { faCircleChevronRight } from "@fortawesome/free-solid-svg-icons";
 export const MainPage = () => {
   const [currentIndex, setCurrentIndex] = useState([]);
   const [mentorProfile, setMentorProFile] = useState([]);

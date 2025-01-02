@@ -17,12 +17,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.itwill.jpa.dto.alarm.AlarmDto;
 import com.itwill.jpa.dto.member_information.MemberDto;
 import com.itwill.jpa.dto.member_information.MentorProfileDto;
 import com.itwill.jpa.exception.CustomException;
 import com.itwill.jpa.response.Response;
 import com.itwill.jpa.response.ResponseMessage;
 import com.itwill.jpa.response.ResponseStatusCode;
+import com.itwill.jpa.service.alarm.AlarmService;
 import com.itwill.jpa.service.member_information.MemberService;
 import com.itwill.jpa.service.member_information.MentorProfileService;
 
@@ -40,19 +42,23 @@ public class AdminMemberController {
 	@Autowired
 	private MentorProfileService mentorProfileService;
 	
+	@Autowired
+	private AlarmService alarmService;
 	/* 회원 전체 정보 */
 	@SecurityRequirement(name = "BearerAuth")
-	//@PreAuthorize("hasRole('ADMIN')")
+	@PreAuthorize("hasRole('ADMIN')")
 	@Operation(summary = "회원 전체 출력")
 	@GetMapping("/member")
 	public ResponseEntity<Response> getMemberAll(
-			@Parameter(name = "role", description = "필터링할 역할 (ROLE_MENTEE, ROLE_MENTOR)", required = true, example = "ROLE_MENTEE") 
+			@Parameter(name = "role", description = "필터링할 역할 (ALL(전체),ROLE_MENTEE, ROLE_MENTOR)", required = true, example = "ROLE_MENTEE") 
 			@RequestParam(name ="role") String role, 
 			@Parameter(name = "order", description = "정렬 종류 (1: 가입 순, 2: 이름 순)", required = true, example = "1") 
-			@RequestParam(name ="order") Integer order
+			@RequestParam(name ="order") Integer order,
+			@RequestParam(name = "page", defaultValue = "0") int page,
+	        @RequestParam(name = "size", defaultValue = "10") int size
 			){
 		
-		List<MemberDto> memberList = memberService.getMemberAll(role, order);
+		Page<MemberDto> memberList = memberService.getMemberAll(role, order, page, size);
 		
 		Response response = new Response();
 		
@@ -71,7 +77,7 @@ public class AdminMemberController {
 	
 	/* 멘토 전체 정보 */ 
 	@SecurityRequirement(name = "BearerAuth")
-	//@PreAuthorize("hasRole('ADMIN')")
+	@PreAuthorize("hasRole('ADMIN')")
     @Operation(summary = "멘토 프로필 전체 리스트 조회")
     @GetMapping("/mentor")
     public ResponseEntity<Response> getMentorsByStatus(
@@ -90,31 +96,56 @@ public class AdminMemberController {
 
         return new ResponseEntity<>(response, headers, HttpStatus.OK);
     }
-    
+	
 	@SecurityRequirement(name = "BearerAuth")
-	//@PreAuthorize("hasRole('ADMIN')")
+	@PreAuthorize("hasRole('ADMIN')")
     @Operation(summary = "멘토 프로필 리스트 출력(상태별)")
-    @GetMapping("/mentor/status/{status}")
-    public ResponseEntity<Response> getMentorsByStatus(
-            @PathVariable(name = "status") int status,
+    @GetMapping("/mentor/status")
+	public ResponseEntity<Response> getMemberByMentorStatus(
+			@RequestParam(name = "status") Integer status,
+            @RequestParam(name = "order") Integer order,
             @RequestParam(name = "page", defaultValue = "0") int page,
             @RequestParam(name = "size", defaultValue = "10") int size
-    ) {
-        Page<MentorProfileDto> mentors = mentorProfileService.getMentorsByStatus(status, page, size);
+            ){
+		
+		Page<MemberDto> members = memberService.getMemberAllByMentorStatus(status, order, page, size);
 
         Response response = new Response();
         response.setStatus(ResponseStatusCode.READ_MENTOR_PROFILE_LIST_SUCCESS_CODE);
         response.setMessage(ResponseMessage.READ_MENTOR_PROFILE_LIST_SUCCESS);
-        response.setData(mentors);
+        response.setData(members);
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(new MediaType(MediaType.APPLICATION_JSON, Charset.forName("UTF-8")));
 
         return new ResponseEntity<>(response, headers, HttpStatus.OK);
-    }
+	}
+	
+	
+//	@SecurityRequirement(name = "BearerAuth")
+//	@PreAuthorize("hasRole('ADMIN')")
+//    @Operation(summary = "멘토 프로필 리스트 출력(상태별)")
+//    @GetMapping("/mentor/status/{status}")
+//    public ResponseEntity<Response> getMentorsByStatus(
+//            @PathVariable(name = "status") int status,
+//            @RequestParam(name = "page", defaultValue = "0") int page,
+//            @RequestParam(name = "size", defaultValue = "10") int size
+//    ) {
+//        Page<MentorProfileDto> mentors = mentorProfileService.getMentorsByStatus(status, page, size);
+//
+//        Response response = new Response();
+//        response.setStatus(ResponseStatusCode.READ_MENTOR_PROFILE_LIST_SUCCESS_CODE);
+//        response.setMessage(ResponseMessage.READ_MENTOR_PROFILE_LIST_SUCCESS);
+//        response.setData(mentors);
+//
+//        HttpHeaders headers = new HttpHeaders();
+//        headers.setContentType(new MediaType(MediaType.APPLICATION_JSON, Charset.forName("UTF-8")));
+//
+//        return new ResponseEntity<>(response, headers, HttpStatus.OK);
+//    }
 	
 	@SecurityRequirement(name = "BearerAuth")
-	//@PreAuthorize("hasRole('ADMIN')")
+	@PreAuthorize("hasRole('ADMIN')")
     @Operation(summary = "멘토 프로필 리스트 출력(카테고리)")
     @GetMapping("/mentor/category/{categoryNo}")
     public ResponseEntity<Response> getMentorProfilesByCategoryNo(
@@ -138,7 +169,7 @@ public class AdminMemberController {
     
     /* 멘토 상태 변경 */
 	@SecurityRequirement(name = "BearerAuth")
-	//@PreAuthorize("hasRole('ADMIN')")
+	@PreAuthorize("hasRole('ADMIN')")
     @Operation(summary = "멘토 프로필 상태변경")
     @PutMapping("/mentor/update-state/{memberNo}")
     public ResponseEntity<Response> setMentorStatus(
@@ -146,10 +177,14 @@ public class AdminMemberController {
         @RequestParam("status") int status
     ) {
         Response response = new Response();
-        // 🔥 멘토 상태 변경 서비스 호출
+        // 멘토 상태 변경 서비스 호출
         mentorProfileService.updateMentorStatus(memberNo, status);
-
-        // 🔥 성공 응답 생성
+        if(status==3||status==4) {
+        	AlarmDto alarmDto = alarmService.createAlarmByEvaluationByMentor(memberNo, status);
+        	response.setAddData(alarmDto);
+        }
+        	
+        // 성공 응답 생성
         response.setStatus(ResponseStatusCode.UPDATE_MENTOR_PROFILE_SUCCESS_CODE);
         response.setMessage(ResponseMessage.UPDATE_MENTOR_PROFILE_SUCCESS);
         response.setData(null);

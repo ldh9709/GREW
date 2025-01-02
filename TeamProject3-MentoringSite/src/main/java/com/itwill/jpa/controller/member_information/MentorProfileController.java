@@ -10,6 +10,7 @@ import com.itwill.jpa.exception.CustomException;
 import com.itwill.jpa.response.Response;
 import com.itwill.jpa.response.ResponseMessage;
 import com.itwill.jpa.response.ResponseStatusCode;
+import com.itwill.jpa.service.member_information.CareerService;
 import com.itwill.jpa.service.member_information.MentorProfileService;
 import com.itwill.jpa.util.HttpStatusMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +37,8 @@ public class MentorProfileController {
 
 	@Autowired
 	private MentorProfileService mentorProfileService;
+	@Autowired
+	private CareerService careerService;
 	
 	@Operation(summary = "멘토 프로필 상세보기")
 	@GetMapping("/{mentorProfileNo}")
@@ -43,7 +46,7 @@ public class MentorProfileController {
 		try {
 			// 🔥 서비스 호출하여 DTO 반환
 			MentorProfileDto mentorProfileDto = mentorProfileService.getMentorProfileDetail(mentorProfileNo);
-			List<CareerDto> careerDtos = mentorProfileService.getCareerByMentorProfileNo(mentorProfileNo);
+			List<CareerDto> careerDtos = careerService.getCareerByMentorProfileNo(mentorProfileNo);
 			mentorProfileDto.setCareerDtos(careerDtos);
 
 			// 🔥 응답 생성
@@ -289,6 +292,7 @@ public class MentorProfileController {
 		try {
 			// 🔥 멘토 프로필 수정 서비스 호출
 			mentorProfileService.updateMentorProfile(mentorProfileNo, mentorProfileDto);
+			
 
 			// 🔥 성공 응답 생성
 			response.setStatus(ResponseStatusCode.UPDATE_MENTOR_PROFILE_SUCCESS_CODE);
@@ -571,5 +575,22 @@ public class MentorProfileController {
 
 		return new ResponseEntity<>(response, httpHeaders, HttpStatus.OK);
 	}
+	
+	@Operation(summary = "경력 데이터 가져오기")
+	@GetMapping("/career/{mentorProfileNo}")
+	public ResponseEntity<Response> getCareer(@PathVariable("mentorProfileNo") Long mentorProfileNo) {
+		List<CareerDto> careerDtos = careerService.getCareerByMentorProfileNo(mentorProfileNo);
+
+		Response response = new Response();
+		response.setStatus(900);
+		response.setMessage("경력 출력 성공");
+		response.setData(careerDtos);
+
+		HttpHeaders httpHeaders = new HttpHeaders();
+		httpHeaders.setContentType(new MediaType(MediaType.APPLICATION_JSON, Charset.forName("UTF-8")));
+
+		return new ResponseEntity<>(response, httpHeaders, HttpStatus.OK);
+	}
+	
 
 }

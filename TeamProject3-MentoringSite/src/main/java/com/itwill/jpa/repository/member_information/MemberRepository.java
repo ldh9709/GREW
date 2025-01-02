@@ -3,6 +3,8 @@ package com.itwill.jpa.repository.member_information;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -47,9 +49,21 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
 			+ "WHERE m.memberNo = :memberNo")
 	public void incrementReportCount(@Param("memberNo") Long memberNo);
 	
-	// 멤버의 역할(Role)로 필터링 및 정렬
-    List<Member> findByMemberRoleOrderByMemberJoinDateAsc(Role memberRole); // 가입 순 정렬
-    
-    List<Member> findByMemberRoleOrderByMemberNameAsc(Role memberRole); // 이름 순 정렬
+	//멤버 조회 + 멘토프로필 특정 상태값
+	//1.회원번호 순
+	//2.이름 오름차순
+	Page<Member> findByMentorProfile_MentorStatusOrderByMemberNoDesc(Integer status, Pageable pageable);
+	Page<Member> findByMentorProfile_MentorStatusOrderByMemberNameAsc(Integer status, Pageable pageable);
 	
+	//멤버 전체 조회 회원번호 순
+	// 1. 회원전체
+	// 2. 역할에 따라  
+	Page<Member> findAllByOrderByMemberNoDesc(Pageable pageable);
+	Page<Member> findByMemberRoleOrderByMemberNoDesc(Role memberRole,Pageable pageable); 
+	
+	//멤버 전체 이름 오름차순
+	//1. 회원전체
+	//2. 역할에 따라 
+	Page<Member> findAllByOrderByMemberNameAsc(Pageable pageable);
+    Page<Member> findByMemberRoleOrderByMemberNameAsc(Role memberRole,Pageable pageable);
 }
