@@ -9,63 +9,82 @@ export default function MentorProfileInfo({ mentorProfile }) {
     const { token, member } = useMemberAuth();
     const [isFollow, setIsfollow] = useState(false);
     const [follow, setFollow] = useState({});
-    console.log('멘토',mentorProfile)
+    const [loading, setLoding] = useState(false);
+
   //팔로우 여부 체크
   const checkFollow = async () => {
     if (member.memberRole === 'ROLE_MENTEE') {
       const response = await followApi.isExistFollow(token, mentorProfile.memberNo);
-      console.log('참거짓',response.data)
       setIsfollow(response.data);
     }
   }
   //팔로우 목록 조회
   const fetchGetFollow = async () => {
-    if (member.memberRole === 'ROLE_MENTEE') {
+    if (member.memberRole === 'ROLE_MENTEE' && isFollow===true) {
       const response = await followApi.getfollow(token, mentorProfile.memberNo);
       setFollow(response.data)
     }
   }
 
-  //팔로우 등록, 삭제
-  const handleFollowClick = async() => {
-    if(token && member.memberRole==='ROLE_MENTEE'){
-      if (!isFollow) {
-          const followItem = {
-            menteeMemberNo:member.memberNo,
-            mentorMemberNo:mentorProfile.memberNo
-          }
-          await followApi.addfollow(token, followItem);
-          setIsfollow(followItem);
-          mentorProfile.mentorFollowCount += 1;
-        } else {
-          await followApi.deleteFollow(token, follow.followNo);
-          setIsfollow(null);
-          mentorProfile.mentorFollowCount -= 1;
-      } 
-    }else if(member.memberRole==='ROLE_MENTOR'){
-      alert("멘티회원만 가능한 서비스 입니다.")
-    }else {
-      alert("로그인이 필요한 서비스 입니다.")
-    }
+  //팔로우 등록, 취소
+  const toggleFollow = async() => {
+    if (!isFollow) {
+      const followItem = {
+        menteeMemberNo: member.memberNo,
+        mentorMemberNo: mentorProfile.memberNo
+      };
+      await followApi.addfollow(token, followItem);
+      mentorProfile.mentorFollowCount += 1;
+      setIsfollow(true);
+    } else {
+      await followApi.deleteFollow(token, follow.followNo);
+      mentorProfile.mentorFollowCount -= 1;
+      setIsfollow(false);
+    } 
   }
 
-    const handleQuestionButtonClick = async () => {
-        if(member.memberRole === "ROLE_MENTEE"){
-        console.log("member.memberNo : "+member.memberNo);
-        console.log("mentorProfile.memberNo : "+mentorProfile.memberNo);
+  //팔로우 버튼 클릭
+  const handleFollowClick = async () => {
+    //로딩이 실행 중이면 클릭이벤트 무시
+    if (loading) return;
+    setLoding(true)
+    try {
+      if (!token) {
+        alert("로그인이 필요한 서비스 입니다.")
+        return;
+      }
 
-        await ChattingApi.createChatting(member.memberNo, mentorProfile.memberNo);
+      if (member.memberRole !== 'ROLE_MENTEE') {
+        alert("멘티회원만 가능한 서비스 입니다.");
+        return;
+      }
+
+      await toggleFollow();
+    } catch (error) {
+      console.error('팔로우 등록 및 취소 실패', error);
+    } finally {
+      setLoding(false);
+    }
+  };
+
+
+  //상담 신청하기 버튼 클릭
+  const handleQuestionButtonClick = async () => {
+      if(member.memberRole === "ROLE_MENTEE"){
+      await ChattingApi.createChatting(member.memberNo, mentorProfile.memberNo);
+      
+      }else {
+      alert("멘티 회원만 가능한 서비스입니다.");
+      }
         
-        }else {
-        alert("멘티 회원만 가능한 서비스입니다.");
-        }
-        
-    };
-    
-    useEffect(() => {
-        checkFollow();
-        fetchGetFollow();
-    },[isFollow])
+  };
+  
+  useEffect(() => {
+    checkFollow();
+    if (isFollow) {
+      fetchGetFollow();
+    }
+  },[isFollow])
 
   return (
       <>
@@ -96,9 +115,10 @@ export default function MentorProfileInfo({ mentorProfile }) {
                     %{" "}
               </span>
               <span className="stats-label">
-                만족도 </span>
+                만족도
+              </span>
               <span>
-                {mentorProfile?.mentorRating || 0} / 5.0
+                {mentorProfile?.mentorRating.toFixed(1) || 0}/5.0
               </span>
             </div>
             
@@ -106,7 +126,7 @@ export default function MentorProfileInfo({ mentorProfile }) {
             <div className="mentor-actions">
             <button
                 className={`follow-button ${isFollow ? 'follow-isexist' : ''}`}
-                onClick={ handleFollowClick }
+                onClick={handleFollowClick}
               >
                 {isFollow ? (
                   <FontAwesomeIcon icon={faHeart}/>
@@ -122,8 +142,8 @@ export default function MentorProfileInfo({ mentorProfile }) {
                 멘토링 신청하기
               </button>
             </div>
-            <div className="mentor-follow-count">{mentorProfile?.mentorFollowCount || 0}명이 팔로우 하는 중</div>
-          </div>
+              <div className="mentor-follow-count">{mentorProfile?.mentorFollowCount || 0}명이 팔로우 하는 중</div>
+            </div>
         </div>
     </>
   )

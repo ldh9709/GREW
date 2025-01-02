@@ -26,7 +26,7 @@ class FollowServiceTest {
 	
 	@Test
 	void test4() {
-		System.out.println(followReporitory.existsByMenteeMember_MemberNoAndMentorMember_MemberNo(1L, 6L));
+		System.out.println(followReporitory.existsByMenteeMember_MemberNoAndMentorMember_MemberNo(6L, 8L));
 	}
 	
 }

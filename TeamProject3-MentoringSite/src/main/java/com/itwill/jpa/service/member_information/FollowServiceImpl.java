@@ -47,16 +47,18 @@ public class FollowServiceImpl implements FollowService{
 	public FollowRequestDto createFollow(FollowRequestDto followDto) {
 		try {
 			/* 팔로우가 이미 되어있는지 확인 */
-			Boolean followExist = isExistFollow(followDto.getMenteeMemberNo(), followDto.getMentorMemberNo())!=null ? true : false;
+			Boolean followExist = isExistFollow(followDto.getMenteeMemberNo(), followDto.getMentorMemberNo());
 			
 			/* 팔로우 멘토 follow_count 증가*/
-			Member mentorMember = memberRepository.findById(followDto.getMentorMemberNo()).get();
-			mentorMember.getMentorProfile().setMentorFollowCount(mentorMember.getMentorProfile().getMentorFollowCount()+1); 
-			memberRepository.save(mentorMember);
-			
-			/* 팔로우 저장 */
-			Follow follow = Follow.toEntity(followDto);
-			followReporitory.save(follow);
+			if(!followExist) {
+				Member mentorMember = memberRepository.findById(followDto.getMentorMemberNo()).get();
+				mentorMember.getMentorProfile().setMentorFollowCount(mentorMember.getMentorProfile().getMentorFollowCount()+1); 
+				memberRepository.save(mentorMember);
+				
+				/* 팔로우 저장 */
+				Follow follow = Follow.toEntity(followDto);
+				followReporitory.save(follow);
+			}
 			return followDto;
 			
 		} catch (Exception e) {
