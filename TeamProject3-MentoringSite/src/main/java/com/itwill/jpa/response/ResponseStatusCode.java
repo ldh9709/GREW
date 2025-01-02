@@ -15,8 +15,9 @@ public class ResponseStatusCode {
     public static final int DEACTIVATE_MEMBER_SUCCESS = 2008; // 회원 비활성화 성공
     public static final int PASSWORD_RESET_SUCCESS = 2009; // 비밀번호 재설정 성공
     public static final int EMAIL_SEND_SUCCESS = 2010;     // 이메일 발송 성공
-    public static final int INPUTCODE_CONFIRM_SUCCESS = 2011;     // 이메일 발송 성공
+    public static final int INPUTCODE_CONFIRM_SUCCESS = 2011;     // 인증번호 인증 성공
     public static final int UPDATE_ROLE_SUCCESS = 2012;     // 회원 권한 수정 성공
+    public static final int CONFIRM_EMAIL_SUCCESS = 2013;     // 이메일 중복 검사 성공
 
     // 실패 코드 (2050번대 ~ )
     public static final int CREATED_MEMBER_FAIL = 2050;    // 회원 생성 실패

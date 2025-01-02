@@ -12,6 +12,7 @@ export const PASSWORD_RESET_SUCCESS = 2009; // 비밀번호 재설정 성공
 export const EMAIL_SEND_SUCCESS = 2010; // 이메일 발송 성공
 export const INPUTCODE_CONFIRM_SUCCESS = 2011; // 인증 코드 확인 성공
 export const UPDATE_ROLE_SUCCESS = 2012; // 회원 권한 수정 성공
+export const CONFIRM_EMAIL_SUCCESS = 2013;
 
 // 실패 코드 (2050 ~ )
 export const CREATED_MEMBER_FAIL = 2050; // 회원 생성 실패

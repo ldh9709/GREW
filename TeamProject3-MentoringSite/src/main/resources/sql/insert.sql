@@ -46,15 +46,16 @@ VALUES(category_no_SEQ.nextval,'관심사를 선택해주세요 (2)',3, null);
 INSERT INTO category(category_no, category_name, category_depth, parent_category_no)
 VALUES(category_no_SEQ.nextval,'관심사를 선택해주세요 (3)',3, null);
 
+INSERT INTO category(category_no, category_name, category_depth, parent_category_no)
 VALUES(category_no_SEQ.nextval, '건강/운동', 1, null);
 INSERT INTO category(category_no, category_name, category_depth, parent_category_no)
-VALUES(category_no_SEQ.nextval, '피트니스', 2, 19);
+VALUES(category_no_SEQ.nextval, '피트니스', 2, 22);
 INSERT INTO category(category_no, category_name, category_depth, parent_category_no)
-VALUES(category_no_SEQ.nextval, '요가/필라테스', 2, 19);
+VALUES(category_no_SEQ.nextval, '요가/필라테스', 2, 22);
 INSERT INTO category(category_no, category_name, category_depth, parent_category_no)
-VALUES(category_no_SEQ.nextval, '재활 운동', 2, 19);
+VALUES(category_no_SEQ.nextval, '재활 운동', 2, 22);
 INSERT INTO category(category_no, category_name, category_depth, parent_category_no)
-VALUES(category_no_SEQ.nextval, '식단/영양 상담', 2, 19);
+VALUES(category_no_SEQ.nextval, '식단/영양 상담', 2, 22);
 INSERT INTO category(category_no, category_name, category_depth, parent_category_no)
 VALUES(category_no_SEQ.nextval, '관심사를 선택해주세요', 3, null);
 INSERT INTO category(category_no, category_name, category_depth, parent_category_no)
@@ -218,13 +219,82 @@ VALUES(mentor_profile_no_SEQ.nextval, '안녕하세요, 김윤하 멘토입니�
 INSERT INTO career(CAREER_NO, CAREER_COMPANY_NAME, CAREER_JOB_TITLE, CAREER_START_DATE, CAREER_END_DATE, MENTOR_PROFILE_NO)
 VALUES(career_no_SEQ.nextval, '한샘', '12년 경력', '2024.01.01', null, 15);
 
+INSERT INTO member(member_no, member_id, member_password, member_email, member_name, member_points, member_status, member_join_date, member_report_count, member_role, member_provider)
+VALUES(member_no_SEQ.nextval, 'mentor12', 'pass12', 'mentor12@naver.com', '김태윤', 3500, 1, SYSDATE, 0, 'ROLE_MENTOR', '');
+INSERT INTO mentor_profile(mentor_profile_no, mentor_introduce, mentor_rating, mentor_mentoring_count, mentor_image, mentor_activity_count, mentor_follow_count, mentor_status, category_no, member_no, mentor_headline)
+VALUES(mentor_profile_no_SEQ.nextval, '안녕하세요, 김태윤 멘토입니다. 중학생들을 위한 학습 및 진로 상담 전문가입니다.', 4.8, 25, '/images/mentor-profile/16.jpg', 90, 40, 3, 6, member_no_SEQ.currval, '중학생 상담 전문가');
+INSERT INTO career(CAREER_NO, CAREER_COMPANY_NAME, CAREER_JOB_TITLE, CAREER_START_DATE, CAREER_END_DATE, MENTOR_PROFILE_NO)
+VALUES(career_no_SEQ.nextval, '스마트러닝 교육센터', '중학생 학습 프로그램 개발자', '2015-03-01', '2023-12-01', (SELECT mentor_profile_no FROM mentor_profile WHERE member_no = (SELECT member_no FROM member WHERE member_id = 'mentor12')));
 
+INSERT INTO member(member_no, member_id, member_password, member_email, member_name, member_points, member_status, member_join_date, member_report_count, member_role, member_provider)
+VALUES(member_no_SEQ.nextval, 'mentor13', 'pass13', 'mentor13@naver.com', '이지훈', 4000, 1, SYSDATE, 0, 'ROLE_MENTOR', '');
+INSERT INTO mentor_profile(mentor_profile_no, mentor_introduce, mentor_rating, mentor_mentoring_count, mentor_image, mentor_activity_count, mentor_follow_count, mentor_status, category_no, member_no, mentor_headline)
+VALUES(mentor_profile_no_SEQ.nextval, '안녕하세요, 이지훈 멘토입니다. 고등학생들의 진학 및 학습 방법에 대해 전문적으로 상담합니다.', 4.7, 30, '/images/mentor-profile/17.jpg', 120, 60, 3, 7, member_no_SEQ.currval, '고등학생 상담 전문가');
+INSERT INTO career(CAREER_NO, CAREER_COMPANY_NAME, CAREER_JOB_TITLE, CAREER_START_DATE, CAREER_END_DATE, MENTOR_PROFILE_NO)
+VALUES(career_no_SEQ.nextval, '입시 전문가 협회', '고등학생 진학 컨설턴트', '2010-01-01', '2024-01-01', (SELECT mentor_profile_no FROM mentor_profile WHERE member_no = (SELECT member_no FROM member WHERE member_id = 'mentor13')));
 
+INSERT INTO member(member_no, member_id, member_password, member_email, member_name, member_points, member_status, member_join_date, member_report_count, member_role, member_provider)
+VALUES(member_no_SEQ.nextval, 'mentor14', 'pass14', 'mentor14@naver.com', '박수민', 5000, 1, SYSDATE, 0, 'ROLE_MENTOR', '');
+INSERT INTO mentor_profile(mentor_profile_no, mentor_introduce, mentor_rating, mentor_mentoring_count, mentor_image, mentor_activity_count, mentor_follow_count, mentor_status, category_no, member_no, mentor_headline)
+VALUES(mentor_profile_no_SEQ.nextval, '안녕하세요, 박수민 멘토입니다. 음악 이론과 실기에 대해 전문적으로 가르칩니다.', 5, 50, '/images/mentor-profile/18.jpg', 150, 70, 3, 10, member_no_SEQ.currval, '음악 멘토링 전문가');
+INSERT INTO career(CAREER_NO, CAREER_COMPANY_NAME, CAREER_JOB_TITLE, CAREER_START_DATE, CAREER_END_DATE, MENTOR_PROFILE_NO)
+VALUES(career_no_SEQ.nextval, '국립음악원', '음악 이론 강사', '2012-05-01', '2024-01-01', (SELECT mentor_profile_no FROM mentor_profile WHERE member_no = (SELECT member_no FROM member WHERE member_id = 'mentor14')));
 
+INSERT INTO member(member_no, member_id, member_password, member_email, member_name, member_points, member_status, member_join_date, member_report_count, member_role, member_provider)
+VALUES(member_no_SEQ.nextval, 'mentor15', 'pass15', 'mentor15@naver.com', '정해인', 4800, 1, SYSDATE, 0, 'ROLE_MENTOR', '');
+INSERT INTO mentor_profile(mentor_profile_no, mentor_introduce, mentor_rating, mentor_mentoring_count, mentor_image, mentor_activity_count, mentor_follow_count, mentor_status, category_no, member_no, mentor_headline)
+VALUES(mentor_profile_no_SEQ.nextval, '안녕하세요, 정해인 멘토입니다. 연기와 연극에 대한 전문 지식을 제공합니다.', 4.9, 35, '/images/mentor-profile/19.jpg', 100, 50, 3, 14, member_no_SEQ.currval, '연기 전문가');
+INSERT INTO career(CAREER_NO, CAREER_COMPANY_NAME, CAREER_JOB_TITLE, CAREER_START_DATE, CAREER_END_DATE, MENTOR_PROFILE_NO)
+VALUES(career_no_SEQ.nextval, '서울연극협회', '연극 연출 및 배우 지도', '2010-02-01', '2024-01-01', (SELECT mentor_profile_no FROM mentor_profile WHERE member_no = (SELECT member_no FROM member WHERE member_id = 'mentor15')));
 
+INSERT INTO member(member_no, member_id, member_password, member_email, member_name, member_points, member_status, member_join_date, member_report_count, member_role, member_provider)
+VALUES(member_no_SEQ.nextval, 'mentor16', 'pass16', 'mentor16@naver.com', '이현아', 4500, 1, SYSDATE, 0, 'ROLE_MENTOR', '');
+INSERT INTO mentor_profile(mentor_profile_no, mentor_introduce, mentor_rating, mentor_mentoring_count, mentor_image, mentor_activity_count, mentor_follow_count, mentor_status, category_no, member_no, mentor_headline)
+VALUES(mentor_profile_no_SEQ.nextval, '안녕하세요, 이현아 멘토입니다. 건강한 식단과 영양 상담을 전문적으로 도와드립니다.', 4.8, 28, '/images/mentor-profile/20.jpg', 110, 55, 3, 26, member_no_SEQ.currval, '영양 상담 전문가');
+INSERT INTO career(CAREER_NO, CAREER_COMPANY_NAME, CAREER_JOB_TITLE, CAREER_START_DATE, CAREER_END_DATE, MENTOR_PROFILE_NO)
+VALUES(career_no_SEQ.nextval, '영양학 연구소', '임상 영양사', '2015-07-01', '2024-01-01', (SELECT mentor_profile_no FROM mentor_profile WHERE member_no = (SELECT member_no FROM member WHERE member_id = 'mentor16')));
 
+INSERT INTO member(member_no, member_id, member_password, member_email, member_name, member_points, member_status, member_join_date, member_report_count, member_role, member_provider)
+VALUES(member_no_SEQ.nextval, 'mentor17', 'pass17', 'mentor17@naver.com', '손민호', 4200, 1, SYSDATE, 0, 'ROLE_MENTOR', '');
+INSERT INTO mentor_profile(mentor_profile_no, mentor_introduce, mentor_rating, mentor_mentoring_count, mentor_image, mentor_activity_count, mentor_follow_count, mentor_status, category_no, member_no, mentor_headline)
+VALUES(mentor_profile_no_SEQ.nextval, '안녕하세요, 손민호 멘토입니다. 글쓰기와 창작에 대한 멘토링을 제공합니다.', 4.6, 20, '/images/mentor-profile/21.jpg', 130, 65, 3, 11, member_no_SEQ.currval, '글쓰기 멘토링 전문가');
+INSERT INTO career(CAREER_NO, CAREER_COMPANY_NAME, CAREER_JOB_TITLE, CAREER_START_DATE, CAREER_END_DATE, MENTOR_PROFILE_NO)
+VALUES(career_no_SEQ.nextval, '창작 글쓰기 워크숍', '글쓰기 강사', '2013-09-01', '2024-01-01', (SELECT mentor_profile_no FROM mentor_profile WHERE member_no = (SELECT member_no FROM member WHERE member_id = 'mentor17')));
 
+INSERT INTO member(member_no, member_id, member_password, member_email, member_name, member_points, member_status, member_join_date, member_report_count, member_role, member_provider)
+VALUES(member_no_SEQ.nextval, 'mentor18', 'pass18', 'mentor18@naver.com', '이강민', 4700, 1, SYSDATE, 0, 'ROLE_MENTOR', '');
+INSERT INTO mentor_profile(mentor_profile_no, mentor_introduce, mentor_rating, mentor_mentoring_count, mentor_image, mentor_activity_count, mentor_follow_count, mentor_status, category_no, member_no, mentor_headline)
+VALUES(mentor_profile_no_SEQ.nextval, '안녕하세요, 이강민 멘토입니다. 사진과 영상 제작에 대한 전문적인 상담을 제공합니다.', 5, 40, '/images/mentor-profile/22.jpg', 170, 80, 3, 13, member_no_SEQ.currval, '사진/영상 제작 전문가');
+INSERT INTO career(CAREER_NO, CAREER_COMPANY_NAME, CAREER_JOB_TITLE, CAREER_START_DATE, CAREER_END_DATE, MENTOR_PROFILE_NO)
+VALUES(career_no_SEQ.nextval, '크리에이티브 스튜디오', '영상 제작자', '2011-04-01', '2024-01-01', (SELECT mentor_profile_no FROM mentor_profile WHERE member_no = (SELECT member_no FROM member WHERE member_id = 'mentor18')));
 
+INSERT INTO member(member_no, member_id, member_password, member_email, member_name, member_points, member_status, member_join_date, member_report_count, member_role, member_provider)
+VALUES(member_no_SEQ.nextval, 'mentor19', 'pass19', 'mentor19@naver.com', '최유진', 5500, 1, SYSDATE, 0, 'ROLE_MENTOR', '');
+INSERT INTO mentor_profile(mentor_profile_no, mentor_introduce, mentor_rating, mentor_mentoring_count, mentor_image, mentor_activity_count, mentor_follow_count, mentor_status, category_no, member_no, mentor_headline)
+VALUES(mentor_profile_no_SEQ.nextval, '안녕하세요, 최유진 멘토입니다. 마케팅 전략과 성공 사례를 전문적으로 상담합니다.', 5, 50, '/images/mentor-profile/23.jpg', 200, 100, 3, 17, member_no_SEQ.currval, '마케팅 전략 전문가');
+INSERT INTO career(CAREER_NO, CAREER_COMPANY_NAME, CAREER_JOB_TITLE, CAREER_START_DATE, CAREER_END_DATE, MENTOR_PROFILE_NO)
+VALUES(career_no_SEQ.nextval, '마케팅 솔루션 기업', '마케팅 컨설턴트', '2009-03-01', '2024-01-01', (SELECT mentor_profile_no FROM mentor_profile WHERE member_no = (SELECT member_no FROM member WHERE member_id = 'mentor19')));
+
+INSERT INTO member(member_no, member_id, member_password, member_email, member_name, member_points, member_status, member_join_date, member_report_count, member_role, member_provider)
+VALUES(member_no_SEQ.nextval, 'mentor20', 'pass20', 'mentor20@naver.com', '이정훈', 4600, 1, SYSDATE, 0, 'ROLE_MENTOR', '');
+INSERT INTO mentor_profile(mentor_profile_no, mentor_introduce, mentor_rating, mentor_mentoring_count, mentor_image, mentor_activity_count, mentor_follow_count, mentor_status, category_no, member_no, mentor_headline)
+VALUES(mentor_profile_no_SEQ.nextval, '안녕하세요, 이정훈 멘토입니다. 피트니스와 운동 프로그램 설계 전문가입니다.', 4.9, 35, '/images/mentor-profile/24.jpg', 140, 70, 3, 23, member_no_SEQ.currval, '피트니스 전문가');
+INSERT INTO career(CAREER_NO, CAREER_COMPANY_NAME, CAREER_JOB_TITLE, CAREER_START_DATE, CAREER_END_DATE, MENTOR_PROFILE_NO)
+VALUES(career_no_SEQ.nextval, '헬스 퍼스널 트레이닝 센터', '피트니스 트레이너', '2012-06-01', '2024-01-01', (SELECT mentor_profile_no FROM mentor_profile WHERE member_no = (SELECT member_no FROM member WHERE member_id = 'mentor20')));
+
+INSERT INTO member(member_no, member_id, member_password, member_email, member_name, member_points, member_status, member_join_date, member_report_count, member_role, member_provider)
+VALUES(member_no_SEQ.nextval, 'mentor21', 'pass21', 'mentor21@naver.com', '박지연', 4500, 1, SYSDATE, 0, 'ROLE_MENTOR', '');
+INSERT INTO mentor_profile(mentor_profile_no, mentor_introduce, mentor_rating, mentor_mentoring_count, mentor_image, mentor_activity_count, mentor_follow_count, mentor_status, category_no, member_no, mentor_headline)
+VALUES(mentor_profile_no_SEQ.nextval, '안녕하세요, 박지연 멘토입니다. 요가와 필라테스 전문가로서 여러분의 건강을 도와드립니다.', 4.8, 30, '/images/mentor-profile/25.jpg', 120, 60, 3, 24, member_no_SEQ.currval, '요가/필라테스 전문가');
+INSERT INTO career(CAREER_NO, CAREER_COMPANY_NAME, CAREER_JOB_TITLE, CAREER_START_DATE, CAREER_END_DATE, MENTOR_PROFILE_NO)
+VALUES(career_no_SEQ.nextval, '요가 웰니스 센터', '요가 및 필라테스 강사', '2014-08-01', '2024-01-01', (SELECT mentor_profile_no FROM mentor_profile WHERE member_no = (SELECT member_no FROM member WHERE member_id = 'mentor21')));
+
+INSERT INTO member(member_no, member_id, member_password, member_email, member_name, member_points, member_status, member_join_date, member_report_count, member_role, member_provider)
+VALUES(member_no_SEQ.nextval, 'mentor22', 'pass22', 'mentor22@naver.com', '한상우', 4700, 1, SYSDATE, 0, 'ROLE_MENTOR', '');
+INSERT INTO mentor_profile(mentor_profile_no, mentor_introduce, mentor_rating, mentor_mentoring_count, mentor_image, mentor_activity_count, mentor_follow_count, mentor_status, category_no, member_no, mentor_headline)
+VALUES(mentor_profile_no_SEQ.nextval, '안녕하세요, 한상우 멘토입니다. 재활 운동과 물리치료를 전문적으로 상담합니다.', 4.9, 28, '/images/mentor-profile/26.jpg', 130, 65, 3, 25, member_no_SEQ.currval, '재활 운동 전문가');
+INSERT INTO career(CAREER_NO, CAREER_COMPANY_NAME, CAREER_JOB_TITLE, CAREER_START_DATE, CAREER_END_DATE, MENTOR_PROFILE_NO)
+VALUES(career_no_SEQ.nextval, '재활 트레이닝 센터', '재활 운동 전문가', '2015-09-01', '2024-01-01', (SELECT mentor_profile_no FROM mentor_profile WHERE member_no = (SELECT member_no FROM member WHERE member_id = 'mentor22')));
 
 
 
@@ -258,9 +328,32 @@ INSERT INTO mentor_board (mentor_board_no, mentor_board_title, mentor_board_cont
 VALUES (mentor_board_no_SEQ.nextval, 'UIUX 포트폴리오, 유저리서치를 넣어야 할까요?', '포트폴리오를 준비하면서 유저 리서치를 어떻게 넣을지, 꼭 넣어야할지 등에 대해 고민이 많으실 겁니다. 
 말 그대로 UXUI디자인 포트폴리오에는 UX와 UI가 꼭 구성이 되어야합니다. 모든 결과물이 UX 인사이트를 근거로 설계가 되었다는 과정을 보여주는 것이 중요하기 때문이죠. 실무에서는 정해진 업무 기한 또는 다양한 이유로 인해.',  '/images/mentor-board/image10.jpg', TO_DATE('2024-12-10 12:00:00', 'YYYY-MM-DD HH24:MI:SS'), 105, 1, 16);
 INSERT INTO mentor_board (mentor_board_no, mentor_board_title, mentor_board_content, mentor_board_image, mentor_board_date, mentor_board_views, mentor_board_status, member_no) 
-VALUES (mentor_board_no_SEQ.nextval, '그림 그리기의 정석', '그림은 자신의 상상을 자유롭게 표현하는 도구입니다.', '/images/mentor-board/image11.jpg', TO_DATE('2023-12-11 15:30:00', 'YYYY-MM-DD HH24:MI:SS'), 165, 1, 17);
+VALUES (mentor_board_no_SEQ.nextval, '입시미술 개꿀팁, 미대가는방법', '안녕하세요! 입시미술을 준비하는 학생을 위한 꿀팁을 소개해드릴게요. 입시미술을 준비하는 것은 정말 중요한 과정이죠. 많은 학생들이 입시미술을 준비하면서 고민하는 부분을 도와드리기 위해 다양한 팁을 준비했어. 이 팁들을 참고하시면 미술 공부에 큰 도움이 될 거예요.', '/images/mentor-board/image11.jpg', TO_DATE('2023-12-11 15:30:00', 'YYYY-MM-DD HH24:MI:SS'), 165, 1, 17);
 INSERT INTO mentor_board (mentor_board_no, mentor_board_title, mentor_board_content, mentor_board_image, mentor_board_date, mentor_board_views, mentor_board_status, member_no) 
 VALUES (mentor_board_no_SEQ.nextval, '변리사 무료 상담, 범위, 절차, 팁 설명해드립니다.', '첨단 기술의 발전은 이제 기업을 넘어 국가의 경쟁력까지 좌우하는 중요한 요소가 되었습니다. 이러한 흐름 속에서, 기업들은 자신들이 개발한 기술을 보호하기 위해 지식 재산권 확보에 더욱 관심을 기울이고 있습니다.',  '/images/mentor-board/image12.png', TO_DATE('2024-12-11 15:31:01', 'YYYY-MM-DD HH24:MI:SS'), 2000, 1, 18);
+INSERT INTO mentor_board(mentor_board_no, mentor_board_title, mentor_board_content, mentor_board_image, mentor_board_date, mentor_board_views, mentor_board_status, member_no)
+VALUES(mentor_board_no_SEQ.nextval, '중학생을 위한 학습 노하우', '중학생들이 효율적으로 공부할 수 있는 방법을 알려드립니다. 스터디 플랜과 학습 습관을 형성하는 팁을 제공합니다.', '/images/mentor-board/image13.jpg', SYSDATE, 0, 1, (SELECT member_no FROM mentor_profile WHERE category_no = 6));
+INSERT INTO mentor_board(mentor_board_no, mentor_board_title, mentor_board_content, mentor_board_image, mentor_board_date, mentor_board_views, mentor_board_status, member_no)
+VALUES(mentor_board_no_SEQ.nextval, '고등학생 학습법과 대학입시 준비', '고등학생들이 학업 성취를 극대화하고 대학 입시에 성공하기 위한 실질적인 가이드를 제공합니다.', '/images/mentor-board/image14.jpg', SYSDATE, 0, 1, (SELECT member_no FROM mentor_profile WHERE category_no = 7));
+INSERT INTO mentor_board(mentor_board_no, mentor_board_title, mentor_board_content, mentor_board_image, mentor_board_date, mentor_board_views, mentor_board_status, member_no)
+VALUES(mentor_board_no_SEQ.nextval, '음악 이론과 실기 완벽 가이드', '음악을 배우고자 하는 학생들을 위한 이론과 실기 학습법을 소개합니다. 기초부터 고급 단계까지 다룹니다.', '/images/mentor-board/image15.jpg', SYSDATE, 0, 1, (SELECT member_no FROM mentor_profile WHERE category_no = 10));
+INSERT INTO mentor_board(mentor_board_no, mentor_board_title, mentor_board_content, mentor_board_image, mentor_board_date, mentor_board_views, mentor_board_status, member_no)
+VALUES(mentor_board_no_SEQ.nextval, '연기와 연극의 세계', '연극과 연기 수업을 통해 자신을 표현하는 방법을 배워보세요. 전문적인 팁과 실질적인 조언을 제공합니다.', '/images/mentor-board/image16.jpg', SYSDATE, 0, 1, (SELECT member_no FROM mentor_profile WHERE category_no = 14));
+INSERT INTO mentor_board(mentor_board_no, mentor_board_title, mentor_board_content, mentor_board_image, mentor_board_date, mentor_board_views, mentor_board_status, member_no)
+VALUES(mentor_board_no_SEQ.nextval, '건강한 식단과 영양 상담', '건강한 몸을 유지하기 위한 식단 설계와 영양학적 조언을 제공합니다. 목표 달성을 돕는 맞춤형 가이드입니다.', '/images/mentor-board/image17.jpg', SYSDATE, 0, 1, (SELECT member_no FROM mentor_profile WHERE category_no = 26));
+INSERT INTO mentor_board(mentor_board_no, mentor_board_title, mentor_board_content, mentor_board_image, mentor_board_date, mentor_board_views, mentor_board_status, member_no)
+VALUES(mentor_board_no_SEQ.nextval, '창의적인 글쓰기 비법', '창의적인 글쓰기를 위한 아이디어 발굴 방법과 실질적인 글쓰기 노하우를 제공합니다.', '/images/mentor-board/image18.jpg', SYSDATE, 0, 1, (SELECT member_no FROM mentor_profile WHERE category_no = 11));
+INSERT INTO mentor_board(mentor_board_no, mentor_board_title, mentor_board_content, mentor_board_image, mentor_board_date, mentor_board_views, mentor_board_status, member_no)
+VALUES(mentor_board_no_SEQ.nextval, '사진과 영상 제작의 모든 것', '사진 촬영과 영상 제작의 기초부터 고급 기술까지 실질적인 조언과 팁을 제공합니다.', '/images/mentor-board/image19.jpg', SYSDATE, 0, 1, (SELECT member_no FROM mentor_profile WHERE category_no = 13));
+INSERT INTO mentor_board(mentor_board_no, mentor_board_title, mentor_board_content, mentor_board_image, mentor_board_date, mentor_board_views, mentor_board_status, member_no)
+VALUES(mentor_board_no_SEQ.nextval, '효과적인 마케팅 전략', '마케팅 전략의 기본과 실제 성공 사례를 통해 효과적인 전략을 설계하는 방법을 제공합니다.', '/images/mentor-board/image20.jpg', SYSDATE, 0, 1, (SELECT member_no FROM mentor_profile WHERE category_no = 17));
+INSERT INTO mentor_board(mentor_board_no, mentor_board_title, mentor_board_content, mentor_board_image, mentor_board_date, mentor_board_views, mentor_board_status, member_no)
+VALUES(mentor_board_no_SEQ.nextval, '운동 성과를 극대화하는 피트니스 팁', '효과적인 피트니스 계획 수립 및 운동 루틴 조정을 통해 성과를 높이는 방법을 소개합니다.', '/images/mentor-board/image21.jpg', SYSDATE, 0, 1, (SELECT member_no FROM mentor_profile WHERE category_no = 23));
+INSERT INTO mentor_board(mentor_board_no, mentor_board_title, mentor_board_content, mentor_board_image, mentor_board_date, mentor_board_views, mentor_board_status, member_no)
+VALUES(mentor_board_no_SEQ.nextval, '요가와 필라테스로 건강한 몸 만들기', '요가와 필라테스의 기초와 자세 교정을 통해 건강과 유연성을 개선하는 방법을 공유합니다.', '/images/mentor-board/image22.jpg', SYSDATE, 0, 1, (SELECT member_no FROM mentor_profile WHERE category_no = 24));
+INSERT INTO mentor_board(mentor_board_no, mentor_board_title, mentor_board_content, mentor_board_image, mentor_board_date, mentor_board_views, mentor_board_status, member_no)
+VALUES(mentor_board_no_SEQ.nextval, '재활 운동으로 건강 회복하기', '부상 후 건강 회복을 위한 맞춤형 재활 운동 프로그램을 소개합니다. 단계별 가이드와 효과적인 재활 전략을 통해 건강을 되찾으세요.', '/images/mentor-board/image23.jpg', SYSDATE, 0, 1, (SELECT member_no FROM mentor_profile WHERE category_no = 25));
+
 
 
 /* 팔로우 등록 */

@@ -575,5 +575,22 @@ public class MentorProfileController {
 
 		return new ResponseEntity<>(response, httpHeaders, HttpStatus.OK);
 	}
+	
+	@Operation(summary = "경력 데이터 가져오기")
+	@GetMapping("/career/{mentorProfileNo}")
+	public ResponseEntity<Response> getCareer(@PathVariable("mentorProfileNo") Long mentorProfileNo) {
+		List<CareerDto> careerDtos = careerService.getCareerByMentorProfileNo(mentorProfileNo);
+
+		Response response = new Response();
+		response.setStatus(900);
+		response.setMessage("경력 출력 성공");
+		response.setData(careerDtos);
+
+		HttpHeaders httpHeaders = new HttpHeaders();
+		httpHeaders.setContentType(new MediaType(MediaType.APPLICATION_JSON, Charset.forName("UTF-8")));
+
+		return new ResponseEntity<>(response, httpHeaders, HttpStatus.OK);
+	}
+	
 
 }

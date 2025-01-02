@@ -105,6 +105,45 @@ public class MemberRestController {
 				
 	}
 	
+	/* 이메일 중복 */
+	@Operation(summary = "이메일 중복 검사")
+	@GetMapping("/check-memberEmail")
+	public ResponseEntity<Response> checkEmailDupl(@RequestParam(name = "memberEmail") String memberEmail){
+		
+		Boolean checkEmailDupl = memberService.checkEmailDupl(memberEmail);
+
+		Response response = new Response();
+		
+		//응답 객체 생성
+		
+		if(checkEmailDupl == false) {
+			//응답객체에 코드, 메시지, 객체 설정
+			response.setStatus(ResponseStatusCode.DUPLICATION_MENBER_EMAIL);
+			response.setMessage(ResponseMessage.DUPLICATION_MENBER_EMAIL);
+			response.setData(null);
+		}
+		
+		if(checkEmailDupl == true) {
+			//응답객체에 코드, 메시지, 객체 설정
+			response.setStatus(ResponseStatusCode.CONFIRM_EMAIL_SUCCESS);
+			response.setMessage(ResponseMessage.CONFIRM_EMAIL_SUCCESS);
+			response.setData(null);
+		}
+		
+		//인코딩 타입 설정
+		HttpHeaders httpHeaders = new HttpHeaders();
+		httpHeaders.setContentType(new MediaType(MediaType.APPLICATION_JSON, Charset.forName("UTF-8")));
+		
+		//반환할 응답Entity 생성
+		ResponseEntity<Response> responseEntity =
+				 new ResponseEntity<Response>(response, httpHeaders, HttpStatus.OK);
+		
+		//반환
+		return responseEntity;
+				
+	}
+	
+	
 	@Autowired
 	private EmailService emailService;
 	
@@ -537,6 +576,10 @@ public class MemberRestController {
 		String memberEmail = memberDto.getMemberEmail();
 		Integer inputCode = memberDto.getInputCode();
 		
+		System.out.println("요청 데이터: " + memberDto);
+	    System.out.println("memberEmail: " + memberDto.getMemberEmail());
+	    System.out.println("inputCode: " + memberDto.getInputCode());
+	    
 		Boolean isChecked =	memberService.certificationCodeByFindId(memberEmail, inputCode);
 		
 		Response response = new Response();
@@ -549,15 +592,6 @@ public class MemberRestController {
 		if(!isChecked) {
 			response.setStatus(ResponseStatusCode.INPUTCODE_CONFIRM_FAIL);
 			response.setMessage(ResponseMessage.INPUTCODE_CONFIRM_FAIL);
-			ResponseEntity<Response> responseEntity = 
-					new ResponseEntity<Response>(response, httpHeaders, HttpStatus.OK);
-			return responseEntity;
-		}
-		
-		//인증 제공자가 Email이 아니면
-		if(!memberService.getMemberByMemberEmail(memberEmail).getMemberProvider().equals("Email")) {
-			response.setStatus(ResponseStatusCode.MEMBER_PROVIDER_IS_NOT_EMAIL);
-			response.setMessage(ResponseMessage.MEMBER_PROVIDER_IS_NOT_EMAIL);
 			ResponseEntity<Response> responseEntity = 
 					new ResponseEntity<Response>(response, httpHeaders, HttpStatus.OK);
 			return responseEntity;

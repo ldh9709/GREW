@@ -27,7 +27,7 @@ export default function AnswerItem({ answer }) {
     navigate(`/mentor-profile/${mentorProfile.mentorProfileNo}`);
   };
   const fetchCategories = async () => {
-    const response = await categoryApi.getCategory(mentorProfile.categoryNo);
+    const response = await categoryApi.childCategory(mentorProfile.categoryNo);
     setCategories(response.data);
   };
 

@@ -30,6 +30,18 @@ export const checkIdDupl = async (sendJsonObject) => {
     return responseJsonObject;
 };
 
+//이메일 중복 체크
+export const checkEmailDupl = async (sendJsonObject) => {
+    const response = await fetch(`${BACKEND_SERVER}/member/check-memberEmail?memberEmail=${encodeURIComponent(sendJsonObject.memberEmail)}`, {
+        method: 'GET',
+        headers: {
+            'Content-type': 'application/json'
+        },
+    });
+    const responseJsonObject = await response.json();
+    return responseJsonObject;
+}
+
 //팔로잉 리스트 조회
 export const followList = async()=>{
     const response = await fetch(`${BACKEND_SERVER}/follow/mentee`,{
@@ -49,12 +61,7 @@ export const loginAction = async (sendJsonObject) => {
     form.append('username', sendJsonObject.memberId)
     form.append('password', sendJsonObject.memberPassword)
 
-    console.log("memberId : " , sendJsonObject.memberId);
-    console.log("memberPassword : ", sendJsonObject.memberPassword);
-
     const response = await axios.post("http://localhost:8080/login", form, header,);
-
-    console.log("response : " , response)
 
     return response.data;
 }
@@ -70,6 +77,28 @@ export const logout = async () => {
     console.log("로그아웃 시 반환객체 : ",response);
     return response.url;
 };
+
+//멘티 회원가입
+export const menteeJoinAction = async (member, tempCode) => {
+    console.log("Request Data: ", member);
+    console.log("Request Data: ", tempCode);
+
+    const response = await fetch(`${BACKEND_SERVER}/member/createMember`, {
+        method:'POST', 
+        headers:{
+            'Content-type':'application/json'
+        },
+        body:JSON.stringify({
+            memberDto : member,
+            tempCode: tempCode
+        })
+    });
+
+    const resultJsonObject = await response.json();
+    console.log("Response Data:", resultJsonObject);
+    return resultJsonObject;
+
+}
 
 /* 1. 아이디 찾기 - 인증번호 전송  */
 export const sendMailFindId = async (memberDto) => {
@@ -105,6 +134,23 @@ export const certificationCodeFindId = async (memberEmail, inputCode) => {
     return resultJsonObject;
 }
 
+/* 비밀번호 찾기 */
+export const findPassword = async (member) => {
+    const response = await fetch(`${BACKEND_SERVER}/member/findPassword`, {
+        method: 'POST',
+        headers: {
+           'Content-Type': 'application/json'
+        },
+        body:JSON.stringify({
+            memberName : member.memberName,
+            email : member.memberEmail
+        })
+    });
+    const resultJsonObject = await response.json();
+    console.log("Response Data:", resultJsonObject);
+    return resultJsonObject;
+}
+
 /* 1. 이메일 인증 - 인증번호 전송  */
 export const sendVerificationCode = async (memberEmail) => {
     const response = await fetch(`${BACKEND_SERVER}/member/sendVerificationCode`, {
@@ -122,8 +168,11 @@ export const sendVerificationCode = async (memberEmail) => {
 }
 
 /* 2. 이메일 인증 - 인증번호 확인  */
-export const verificationCode = async (memberEmail, inputCode) => {
-    const response = await fetch(`${BACKEND_SERVER}/member/findId/certificationCode`, {
+export const verificationInputCode = async (memberEmail, inputCode) => {
+    console.log("요청 URL:", `${BACKEND_SERVER}/sendVerificationCode/verificationCode`);
+    console.log("요청 데이터:", { memberEmail, inputCode });
+
+    const response = await fetch(`${BACKEND_SERVER}/member/sendVerificationCode/verificationCode`, {
         method: 'POST',
         headers: {
             'Content-type': 'application/json'
@@ -134,50 +183,11 @@ export const verificationCode = async (memberEmail, inputCode) => {
         })
     });
     const resultJsonObject = await response.json();
-
+    console.log("인증번호 resultJsonObject:", resultJsonObject);
     return resultJsonObject;
 }
 
-//비밀번호 찾기 
-export const findPassword = async (member) => {
-    const response = await fetch(`${BACKEND_SERVER}/member/findPassword`, {
-        method: 'POST',
-        headers: {
-           'Content-Type': 'application/json'
-        },
-        body:JSON.stringify({
-            memberName : member.memberName,
-            email : member.memberEmail
-        })
-    });
-    const resultJsonObject = await response.json();
-    console.log("Response Data:", resultJsonObject);
-    return resultJsonObject;
-}
-
-//멘티 회원가입
-export const menteeJoinAction = async (member, tempCode) => {
-    console.log("Request Data: ", member);
-    console.log("Request Data: ", tempCode);
-
-    const response = await fetch(`${BACKEND_SERVER}/member/createMember`, {
-        method:'POST', 
-        headers:{
-            'Content-type':'application/json'
-        },
-        body:JSON.stringify({
-            memberDto : member,
-            tempCode: tempCode
-        })
-    });
-
-    const resultJsonObject = await response.json();
-    console.log("Response Data:", resultJsonObject);
-    return resultJsonObject;
-
-}
-
-//멘티 회원가입
+//멘토 회원가입
 export const mentorJoinAction = async (member, tempCode) => {
     console.log("Request Data: ", member);
     console.log("Request Data: ", tempCode);
@@ -235,10 +245,10 @@ export const mentorProfileUpdateAction = async (mentorProfileNo, mentor) => {
         },
         body: JSON.stringify({
             categoryNo: mentor.categoryNo,
-            careerDtos: mentor.careerDtos,
             mentorIntroduce: mentor.mentorIntroduce,
-            mentorImage: mentor.mentorImage,
             mentorHeadline: mentor.mentorHeadline,
+            careerDtos: mentor.careerDtos,
+            mentorImage: mentor.mentorImage,
           })
     });
 
@@ -396,3 +406,12 @@ export const uploadMentorProfileImage = async (mentorProfileNo, file) => {
     const responseJson = await response.json();
     return responseJson;
   };
+
+export const getCareer = async (mentorProfileNo) => {
+    const response = await fetch(`${BACKEND_SERVER}/mentor-profile/career/${mentorProfileNo}`, {
+        method:'GET'
+    });
+    
+    const responseJsonObject = await response.json();
+    return responseJsonObject;
+};
