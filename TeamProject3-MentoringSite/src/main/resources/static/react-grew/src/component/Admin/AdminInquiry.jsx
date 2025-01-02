@@ -8,32 +8,25 @@ export function AdminInquiry() {
     const [boards, setBoards] = useState([]); // 게시판 목록
     const [currentPage, setCurrentPage] = useState(0); // 현재 페이지
     const [totalPages, setTotalPages] = useState(0); // 전체 페이지 수
-    const [category, setCategory] = useState("ALL"); // 카테고리 필터   
+    const [category, setCategory] = useState("ALL"); // 카테고리 필터 
+    const [page, setPage] = useState(0); // 페이지 번호
 
     // 게시판 목록 가져오기
-    const fetchBoards = async (categoryNo, page = 0, size = 10) => {
-        try {
-            console.log("데이터 요청 시작:", { categoryNo, page, size });
-            console.log("Token 확인:", token);
-
-            let response;
-            if (categoryNo === "ALL") {
-                response = await adminApi.adminInquiry(token, page, size);
-            } else {
-                response = await adminApi.adminCategoryInquiry(token, categoryNo, page, size);
-            }
-
-            console.log("API 응답 데이터:", response);
-
-            if (response && response.data) {
-                setBoards(response.data.content || []);
-                setTotalPages(response.data.totalPages || 0);
-            } else {
-                throw new Error("응답 데이터가 유효하지 않습니다.");
-            }
-        } catch (error) {
-            console.error("게시판 목록 가져오기 실패:", error);
+    const fetchBoards = async (categoryNo, page = 0, size = 10) => {       
+        console.log("데이터 요청 시작:", { categoryNo, page, size });
+        console.log("Token 확인:", token);
+        let response;
+        if (categoryNo === "ALL") {
+            response = await adminApi.adminInquiry(token, page, size);
+        } else {
+            response = await adminApi.adminCategoryInquiry(token, categoryNo, page, size);
         }
+        if (response && response.data) {
+            setBoards(response.data.content || []);
+            setTotalPages(response.data.totalPages || 0);
+        } else {
+            throw new Error("응답 데이터가 유효하지 않습니다.");
+        }        
     };
 
     const handleCategoryChange = (event) => {
@@ -44,6 +37,7 @@ export function AdminInquiry() {
 
     const paginate = (pageNumber) => {
         setCurrentPage(pageNumber);
+        setPage(pageNumber - 1);
     };
 
     useEffect(() => {
@@ -56,37 +50,21 @@ export function AdminInquiry() {
         window.open(url, "_blank");
     }
 
-    const handleHideInquiry = async (inquiryNo) => {// "가려두기" 상태
-        try {
-            // API 호출을 통해 해당 질문 상태 변경
-            const response = await adminApi.hideInquiry(token, inquiryNo);
-            if (response.data.success) {
-                // 상태 변경 성공 시 게시판 목록을 새로 고침
-                fetchBoards(category, currentPage, 10);
-            }
-        } catch (error) {
-            console.error("가려두기 실패:", error);
-        }
+    const handleHideInquiry = async (inquiryNo) => {// "가려두기" 상태        
+        const response = await adminApi.hideInquiry(token, inquiryNo);
+        if (response.data.success) {
+            // 상태 변경 성공 시 게시판 목록을 새로 고침
+            fetchBoards(category, currentPage, 10);
+        }        
     }
 
     return (
-        <div className="admin-board-container">
-            {/*<div className="dropdown">
-                <select className="dropdown-style" value={category} onChange={handleCategoryChange}>
-                    <option value="ALL">전체 보기</option>
-                    <option value="1">직무 상담</option>
-                    <option value="2">학습 / 교육</option>
-                    <option value="3">예술 / 창작</option>
-                    <option value="4">창업 / 비즈니스</option>
-                </select>
-            </div>*/}
-
+        <div className="admin-board-container">            
             <table className="admin-table">
                 <thead>
                     <tr>
-                        <th>번호</th>
+                        <th>질문번호</th>
                         <th>제목</th>
-                       {/* <th>내용</th>*/}
                         <th>작성일</th>
                         <th>조회수</th>
                         <th>카테고리</th>
@@ -96,14 +74,13 @@ export function AdminInquiry() {
                 </thead>
                 <tbody>
                     {boards.map((board, index) => (
-                        <tr key={board.id || index}  onClick={() => handleMoveInquiry(board.inquiryNo)}>
-                            <td>{index + 1}</td>
-                            <td>{board.inquiryTitle}</td>
-                           {/* <td>{board.inquiryContent}</td>*/}
-                            <td>{board.inquiryDate.substring(0.10)}</td>
-                            <td>{board.inquiryViews}</td>
-                            <td>{board.categoryName}</td>
-                            <td>{board.memberName}</td>
+                        <tr key={board.id || index}>
+                            <td onClick={() => handleMoveInquiry(board.inquiryNo)}>{board.inquiryNo}</td>
+                            <td onClick={() => handleMoveInquiry(board.inquiryNo)}>{board.inquiryTitle}</td>
+                            <td onClick={() => handleMoveInquiry(board.inquiryNo)}>{board.inquiryDate.substring(0.10)}</td>
+                            <td onClick={() => handleMoveInquiry(board.inquiryNo)}>{board.inquiryViews}</td>
+                            <td onClick={() => handleMoveInquiry(board.inquiryNo)}>{board.categoryName}</td>
+                            <td onClick={() => handleMoveInquiry(board.inquiryNo)}>{board.memberName}</td>
                             <td><button className="hide-button" onClick={(e) => { 
                                     e.stopPropagation(); // 클릭 이벤트가 부모(tr)로 전파되지 않도록 함
                                     handleHideInquiry(board.inquiryNo);
@@ -114,12 +91,11 @@ export function AdminInquiry() {
                     ))}
                 </tbody>
             </table>
-           <div className="admin-pagenation">
-                <PagenationItem
-                    currentPage={currentPage}
-                    totalPages={totalPages}
-                    paginate={paginate}
-                />
+            <div className="admin-pagenation">
+                    <PagenationItem
+                        currentPage={currentPage}
+                        totalPages={totalPages}
+                        paginate={paginate}/>
             </div>
         </div>
     );
