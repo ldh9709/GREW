@@ -122,7 +122,7 @@ const MentorEditForm = () => {
     setMentorImage(e.target.files[0]);
     setMentor((prevMentor) => ({
       ...prevMentor,
-      [e.target.name]: `/images/mentor-profile/${e.target.files[0].name}`,
+      [e.target.name]: `/upload/mentor-profile/${mentorProfileNo}/${e.target.files[0].name}`,
     }));
   }
 

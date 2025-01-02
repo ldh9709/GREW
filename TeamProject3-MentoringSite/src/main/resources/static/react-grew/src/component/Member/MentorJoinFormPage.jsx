@@ -56,9 +56,9 @@ const MentorJoinForm = () => {
   };
 
   const handleCareerChange = (index, field, value) => {
-    console.log(mentor.careerDtos);
     setMentor((prevMentor) => {
       const updatedCareers = [...prevMentor.careerDtos];
+      console.log(updatedCareers);
       updatedCareers[index][field] = value;
       return {
         ...prevMentor,
@@ -195,8 +195,11 @@ const MentorJoinForm = () => {
   /***** 멘토 생성 버튼 END *****/
   
   const handleImageChange = (e) => {
-    const file = e.target.files[0];
-    setMentorImage(file);
+    setMentorImage(e.target.files[0]);
+    setMentor((prevMentor) => ({
+      ...prevMentor,
+      [e.target.name]: `/upload/mentor-profile/${mentorProfileNo}/${e.target.files[0].name}`,
+    }));
   }
 
   const uploadImage= async (mentorProfileNo) => {
@@ -299,13 +302,13 @@ const MentorJoinForm = () => {
                 <input
                   type="text"
                   placeholder="회사명"
-                  onChange={(e) => handleCareerChange(index, "companyName", e.target.value)}
+                  onChange={(e) => handleCareerChange(index, "careerCompanyName", e.target.value)}
                   required
                 />
                 <input
                   type="text"
                   placeholder="직책"
-                  onChange={(e) => handleCareerChange(index, "jobTitle", e.target.value)}
+                  onChange={(e) => handleCareerChange(index, "careerJobTitle", e.target.value)}
                   required
                 />
                 <input
@@ -313,7 +316,7 @@ const MentorJoinForm = () => {
                   name="startDate"
                   onFocus={handleFocus}
                   onBlur={handleBlur}
-                  onChange={(e) => handleCareerChange(index, "startDate", e.target.value)}
+                  onChange={(e) => handleCareerChange(index, "careerStartDate", e.target.value)}
                   placeholder="입사년월"
                   required
                 />
@@ -322,7 +325,7 @@ const MentorJoinForm = () => {
                   name="endDate"
                   onFocus={handleFocus}
                   onBlur={handleBlur}
-                  onChange={(e) => handleCareerChange(index, "endDate", e.target.value)}
+                  onChange={(e) => handleCareerChange(index, "careerEndDate", e.target.value)}
                   placeholder="퇴사년월"
                   required
                 />

@@ -13,7 +13,6 @@ const ChatRoomList = ({ onRoomClick }) => {
   const [totalPages, setTotalPages] = useState(0); // 총 페이지 수
   const [isReportHovered, setIsReportHovered] = useState(false);
   const [report, setreport] = useState({});
-  const [countChatRoom, setCountChatRoom] = useState(0);
   const { token, member } = useMemberAuth();
 
   const chatRoomList = async (page) => {
@@ -29,6 +28,7 @@ const ChatRoomList = ({ onRoomClick }) => {
       // 각 채팅방 상태를 개별적으로 비교하여 필터링
       const activeRooms = responseJsonObject.data.content.filter((room) => {
         // filter()는 배열의 각 항목을 하나씩 검사하며, 주어진 콜백 함수에서 true를 반환하는 항목만 새로운 배열에 포함
+
         return (
           (room.chatRoomStatus === 7100 &&
             (room.chatRoomLeaveStatus === 7500 ||
@@ -43,9 +43,7 @@ const ChatRoomList = ({ onRoomClick }) => {
       setTotalPages(responseJsonObject.data.totalPages);
     }
   };
-  useEffect(() => {
-    countIsReadChatRoom(1);
-  }, []);
+
   useEffect(() => {
     chatRoomList(currentPage - 1); // 페이지 번호는 0부터 시작
   }, [currentPage]);
@@ -105,11 +103,6 @@ const ChatRoomList = ({ onRoomClick }) => {
   const handleCloseModal = () => {
     setIsModalOpen2(false);
   };
-  const countIsReadChatRoom = async (chatRoomNo) => {
-    const response = await ChattingApi.countMessageChatRoom(chatRoomNo);
-    console.log(response);
-    setCountChatRoom(response.data);
-  };
   return (
     <div>
       <ul className="chat-room-list">
@@ -118,11 +111,12 @@ const ChatRoomList = ({ onRoomClick }) => {
             <li
               key={room.chatRoomNo} // 고유 키 설정 (React에서 반복문에 필수)
               className="chat-room-item"
-              onClick={() => onRoomClick(room.chatRoomNo, room.chatRoomName)} // 채팅방 클릭 시 부모 컴포넌트에 해당 채팅방 id 전달
+              onClick={() => onRoomClick(room.chatRoomNo, room.chatRoomName)}
+               // 채팅방 클릭 시 부모 컴포넌트에 해당 채팅방 id 전달
             >
               <span className="room-name">{room.chatRoomName}</span>
               <div className="button-container">
-                <div>{countChatRoom}</div>
+                <div>{room.countIsRead}</div>
                 <button
                   className="edit-button"
                   onClick={(e) => {
