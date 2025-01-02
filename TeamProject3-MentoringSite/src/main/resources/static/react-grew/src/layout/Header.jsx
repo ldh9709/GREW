@@ -100,13 +100,8 @@ export default function HeaderMenu() {
 
             const response = await updateMemberRole(token, role);
             if (response.status === 2012) {
-                // 기존 쿠키 삭제
-                // document.cookie = "member=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
                 login(response.data.accessToken);
               }
-                //강제 리로드
-                // window.location.reload();
-                // //성공 후 메인으로 이동
                 navigate(`/main`);
         } catch (error) {
           console.error('회원 권한 변경 실패', error);

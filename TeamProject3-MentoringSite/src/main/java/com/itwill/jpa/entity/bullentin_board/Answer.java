@@ -15,6 +15,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.PrePersist;
@@ -38,8 +39,7 @@ public class Answer {
     @SequenceGenerator(name = "answer_no_SEQ", allocationSize = 1, initialValue = 1)
     @Column(name = "answer_no")
     private Long answerNo;  // PK, 시퀀스로 자동 생성
-
-    @Column(name = "answer_content", length = 500)
+    @Column(name = "answer_content" ,length = 4000)
     private String answerContent;  // 답변 내용
     
     @CreationTimestamp

@@ -42,6 +42,17 @@ public class ChatController {
     @Autowired
     private ChatRoomService chatRoomService;
 
+    @MessageMapping("/chat/member/{memberNo}") 	
+    @SendTo("/topic/messages/member/{memberNo}")
+    public ChatRoomDto sendMessageMember(@DestinationVariable("memberNo") Long memberNo, @Payload ChatRoomDto chatRoom) {
+    	if (chatRoom.getChatRoomNo()!=null) {
+    		
+    		System.out.println(chatRoom);
+    		System.out.println(chatRoom.getCountIsRead());
+    		System.out.println(chatRoom.getLastedMessage());
+    	}
+    	return chatRoom;
+    }
 	@MessageMapping("/chat/{roomId}") 	// html에서 정보를 받음
 	@SendTo("/topic/messages/{roomId}")	// roomid로 정보를 다시 보냄
 	public ChatMessageDto sendMessage(@DestinationVariable("roomId") String roomId, @Payload ChatMessageDto message) {

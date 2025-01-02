@@ -25,7 +25,7 @@ const MentorJoinForm = () => {
   /**** 멘토 선언 START ****/
   const [mentor, setMentor] = useState({
       categoryNo: "",
-      mentorStatus: "",
+      mentorStatus: 2,
       mentorIntroduce: "",
       mentorHeadline: "",
       careerDtos: [{ careerCompanyName: "", careerJobTitle: "", careerStartDate: "", careerEndDate: "", mentorProfileNo: mentorProfileNo}],
@@ -58,7 +58,6 @@ const MentorJoinForm = () => {
   const handleCareerChange = (index, field, value) => {
     setMentor((prevMentor) => {
       const updatedCareers = [...prevMentor.careerDtos];
-      console.log(updatedCareers);
       updatedCareers[index][field] = value;
       return {
         ...prevMentor,
@@ -84,9 +83,6 @@ const MentorJoinForm = () => {
   const getCategories = async () => {
     // 서버에서 이미 대분류 객체의 childCategories에 소분류가 들어있는 구조를 내려준다고 가정
     const res = await categoryApi.ListCategory();
-    console.log("category res : ", res);
-    const data = await res.data;
-    console.log("category data : ", data);
     // 여기서는 별도의 필터를 안 합니다. 
     // data 예: [
     //   { categoryNo:1, categoryName:'직무 상담', categoryDepth:1, childCategories:[
@@ -96,21 +92,17 @@ const MentorJoinForm = () => {
     //   { categoryNo:5, categoryName:'학습/교육', categoryDepth:1, childCategories:[...], ...},
     //   ...
     // ]
-    setCategories(data);
+    setCategories(res.data);
   }
 
   const getCareer = async () => {
-    console.log("mentorProfileNo : "+mentorProfileNo);
-    if(mentorProfileNo){
-      const res = await memberApi.getCareer(mentorProfileNo);
-      console.log(res.data);
-      const careerDtos = res.data;
-      setMentor({ careerDtos: careerDtos || []});
-    }
+    const res = await memberApi.getCareer(mentorProfileNo);
+    const careerDtos = res.data;
+    setMentor({ careerDtos: careerDtos || []});
   }
 
   useEffect(() => {
-    if(mentorProfileNo){
+    if(mentorProfileNo || mentorProfileNo == 0){
       getCategories();
       getCareer();
     }
@@ -167,20 +159,22 @@ const MentorJoinForm = () => {
   
     try {
       // Step 1: 멘토 프로필 생성
-      console.log(mentor);
-      const responseJsonObject = await memberApi.mentorProfileUpdateAction(mentorProfileNo, mentor);
-      if (responseJsonObject.status === responseStatus.UPDATE_MENTOR_PROFILE_SUCCESS_CODE) {
+      let responseJsonObject = null;
+      if(mentorProfileNo === 0){
+        responseJsonObject = await memberApi.mentorProfileCreateAction(token, mentor);
+      }else{
+        responseJsonObject = await memberApi.mentorProfileUpdateAction(mentorProfileNo, mentor);
+      }
+      if (responseJsonObject.status === responseStatus.UPDATE_MENTOR_PROFILE_SUCCESS_CODE || responseJsonObject.status === responseStatus.CREATED_MENTOR_PROFILE_SUCCESS_CODE) {
         alert("멘토 정보 등록 성공");
         navigate("/member/profile");
       } else {
         alert("등록 실패");
       }
   
-        // Step 2: 생성된 프로필 번호 확인
-        console.log("createdProfileNo : ", mentorProfileNo);
         // Step 3: 이미지 업로드 (필수 이미지가 있다면)
         if (mentorImage) {
-          await uploadImage(mentorProfileNo); // 생성된 번호로 이미지 업로드
+          await uploadImage(responseJsonObject.data.mentorProfileNo); // 생성된 번호로 이미지 업로드
         } else {
           alert("이미지 없이 멘토 프로필이 저장되었습니다.");
         }

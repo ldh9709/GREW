@@ -116,8 +116,8 @@ public class MentorProfileServiceImpl implements MentorProfileService {
             // 4️⃣ 멘토 프로필 생성 및 저장
             MentorProfile mentorProfile = MentorProfile.toEntity(mentorProfileDto, member, category);
             mentorProfile.setMentorStatus(2); // 초기값 2로 등록
-            mentorProfileRepository.save(mentorProfile);
-            careerService.save_updateCareer(mentorProfileDto.getCareerDtos());
+            MentorProfile mentorProfile2 = mentorProfileRepository.save(mentorProfile);
+            careerService.save_updateCareer(mentorProfileDto.getCareerDtos(), mentorProfile2.getMentorProfileNo());
             
             return mentorProfile; 
         } catch (Exception e) {
@@ -340,7 +340,7 @@ public class MentorProfileServiceImpl implements MentorProfileService {
             mentorProfile.setMentorHeadline(mentorProfileDto.getMentorHeadline());
             System.out.println(">>>>> updateMentorProfile : " + mentorProfileDto.getMentorImage());
             mentorProfile.setCategory(category); // 카테고리 설정
-            careerService.save_updateCareer(mentorProfileDto.getCareerDtos());
+            careerService.save_updateCareer(mentorProfileDto.getCareerDtos(), mentorProfileNo);
             
             // 🔥 저장
             return mentorProfileRepository.save(mentorProfile);
