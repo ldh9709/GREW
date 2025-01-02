@@ -45,9 +45,9 @@ export default function Admin() {
     </div>
     <div className="admin-content">
       {activeTab === "member" && <AdminMember />}
-      {activeTab === "report" && <AdminReport />}
       {activeTab === "board" && <AdminInquiry />}      
       {activeTab === "mentor" && <AdminMentorBoard />}      
+      {activeTab === "report" && <AdminReport />}
     </div>
 </div>
   )

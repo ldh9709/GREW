@@ -159,7 +159,6 @@ const MentorJoinForm = () => {
   
     try {
       // Step 1: 멘토 프로필 생성
-      console.log(mentor);
       let responseJsonObject = null;
       if(mentorProfileNo === 0){
         responseJsonObject = await memberApi.mentorProfileCreateAction(token, mentor);
@@ -167,7 +166,6 @@ const MentorJoinForm = () => {
         responseJsonObject = await memberApi.mentorProfileUpdateAction(mentorProfileNo, mentor);
       }
       if (responseJsonObject.status === responseStatus.UPDATE_MENTOR_PROFILE_SUCCESS_CODE || responseJsonObject.status === responseStatus.CREATED_MENTOR_PROFILE_SUCCESS_CODE) {
-        console.log(responseJsonObject);
         alert("멘토 정보 등록 성공");
         navigate("/member/profile");
       } else {
