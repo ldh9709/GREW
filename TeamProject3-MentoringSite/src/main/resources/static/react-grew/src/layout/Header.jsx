@@ -86,6 +86,7 @@ export default function HeaderMenu() {
                     return;
                 }
                 navigate(`/mentor/join`);
+                return;
             } else {
                 const confirmation = window.confirm(
                     member.memberRole === "ROLE_MENTEE" 

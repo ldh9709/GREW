@@ -49,7 +49,6 @@ function MentorBoardUpdate() {
           navigate("/mentor-board/list");
           return; // 추가 동작 방지
         } else if(memberRef.current.memberRole !== "ROLE_MENTOR"){
-          console.log("4번번호:",memberRef.current.memberNo);
           alert("멘토 상태일 때만 게시글 수정이 가능합니다.");
           navigate("/mentor-board/list");
           return; // 추가 동작 방지

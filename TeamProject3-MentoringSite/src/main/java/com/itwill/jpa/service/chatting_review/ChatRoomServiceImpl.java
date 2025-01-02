@@ -39,7 +39,9 @@ public class ChatRoomServiceImpl implements ChatRoomService {
 	private MemberRepository memberRepository;
 	@Autowired
 	private MentorProfileService mentorProfileService;
-	
+	@Autowired
+	private ChatMessageService chatMessageService;
+
 	
 	/*활동 상태 확인*/
 	@Override
@@ -246,7 +248,14 @@ public class ChatRoomServiceImpl implements ChatRoomService {
 				ChatRoomDto chatRoomDto = ChatRoomDto.toDto(chatRoom);
 				chatRoomDto.setChatRoomName(chatRoomName);
 				chatRoomDto.setChatRoomLeaveStatus(chatRoomLeaveStatus);
-				chatRoomDto.setCountIsRead(chatMessageRepository.countChatMessageByChatMessageCheckAndChatRoom_ChatRoomNo(1, chatRoomNo)); 
+				chatRoomDto.setCountIsRead(chatMessageRepository.countChatMessageByChatMessageCheckAndChatRoom_ChatRoomNoAndMember_MemberNoNotEqual(1, chatRoomNo,memberNo)); 
+				Pageable pageable2 = PageRequest.of(0, 1);
+				List<ChatMessage> recentMessages=chatMessageRepository.findRecentMessagesByChatRoom(chatRoomNo, pageable2);
+				if(!recentMessages.isEmpty()) {
+					String message=recentMessages.get(0).getChatMessageContent();
+					chatRoomDto.setLastedMessage(message);
+					
+				}
 				chatRoomDtos.add(chatRoomDto);
 				
 			}

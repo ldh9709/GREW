@@ -16,6 +16,7 @@ import MemberLoginFormPage from "./component/Member/MemberLoginFormPage";
 import MemberProfileFormPage from "./component/Member/MemberProfileFormPage";
 import MemberFindPasswordFormPage from "./component/Member/MemberFindPasswordFormPage";
 import MemberFindIdFormPage from "./component/Member/MemberFindIdFormPage";
+import MemberProfileLayoutFormPage from "./component/Member/MemberProfileLayoutFormPage";
 
 /* 멘토 페이지 임포트 */
 import MemberMypage from "./component/Member/mypage/MemberMypage";
@@ -55,6 +56,7 @@ import AdminRoutes from "./routes/AdminRoutes";
 /* 신고 모달 */
 import ReportModal from "./component/Report/ReportModal";
 import MemberMaskedFindIdFormPage from "./component/Member/MemberMaskedFindIdFormPage";
+
 
 function App() {
   const location = useLocation(); // 현재 URL 경로를 가져옴
@@ -98,6 +100,7 @@ function App() {
               />
               <Route path="/member/login" element={<MemberLoginFormPage />} />
               <Route path="/member/profile" element={<MemberMypage />} />
+              <Route path="//profile/:tab" element={<MemberProfileLayoutFormPage />} />
               <Route
                 path="/member/profile/edit"
                 element={<MemberProfileFormPage />}
