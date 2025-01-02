@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import * as adminApi from "../../api/adminApi";
 import PagenationItem from "../PagenationItem";
 import AdminMemberDetail from "./AdminMemberDetail";
+import { useNavigate } from "react-router-dom";
 
 function AdminMember() {
     const { token, member } = useMemberAuth();
@@ -19,7 +20,7 @@ function AdminMember() {
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(0); 
     const [selectMentor, setSelectMentor] = useState(null);
-
+    const navigator = useNavigate();
 
     const fetchMembers = async (role, order, page, size) => {
         try {
@@ -159,10 +160,7 @@ function AdminMember() {
     
     if (!token || member?.memberRole !== "ROLE_ADMIN") {
         return (
-            <div className="no-access">
-                <h2>접근할 수 없는 페이지입니다.</h2>
-                <p>관리자 권한이 필요합니다.</p>
-            </div>
+            navigator(`/main`)
         );
     }
 
