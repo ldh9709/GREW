@@ -24,6 +24,7 @@ import com.itwill.jpa.auth.PrincipalDetails;
 import com.itwill.jpa.dto.chatting_review.ChatMessageDto;
 import com.itwill.jpa.dto.chatting_review.ChatRoomDto;
 import com.itwill.jpa.dto.chatting_review.ChatRoomStatusDto;
+import com.itwill.jpa.repository.chatting_review.ChatMessageRepository;
 import com.itwill.jpa.response.Response;
 import com.itwill.jpa.response.ResponseMessage;
 import com.itwill.jpa.response.ResponseStatusCode;
@@ -40,7 +41,8 @@ public class ChatRoomRestController {
 	private ChatRoomService chatRoomService;
 	@Autowired
 	private ChatRoomStatusService chatRoomStatusService;
-	
+	@Autowired
+	private ChatMessageRepository chatMessageRepository;
 	@Operation(summary = "채팅방 신청")
 	@PostMapping("create/{menteeNo}, {mentorNo}")
 	public ResponseEntity<Response> createInitialChatRoom(@PathVariable (value = "menteeNo") Long menteeNo, @PathVariable (value = "mentorNo") Long mentorNo){
@@ -308,6 +310,22 @@ public class ChatRoomRestController {
 		
 		return responseEntity;
 	}
+//	@Operation(summary = "멤버의 안읽은 채팅")
+//	@GetMapping("count/is-read")
+//	public ResponseEntity<Response> chatRoomIsReadCountByMemberNo(@RequestParam(name = "memberNo")Long memberNo){
+//		Long count =chatMessageRepository.countChatMessageByChatMessageCheckAndMember_MemberNoNotEqual(1, memberNo);
+//		Response response = new Response();
+//		response.setStatus(ResponseStatusCode.CHATTING_NAME_CHANGE);
+//		response.setMessage(ResponseMessage.CHATTING_NAME_CHANGE);
+//		response.setData(count);
+//		HttpHeaders httpHeaders = new HttpHeaders();
+//		httpHeaders.setContentType(new MediaType(MediaType.APPLICATION_JSON, Charset.forName("UTF-8")));
+//		
+//		ResponseEntity<Response> responseEntity = 
+//				new ResponseEntity<Response>(response,httpHeaders, HttpStatus.OK);
+//		
+//		return responseEntity;
+//	}
 	
 	
 }

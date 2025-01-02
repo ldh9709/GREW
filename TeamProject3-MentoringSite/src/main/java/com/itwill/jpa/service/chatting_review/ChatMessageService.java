@@ -17,5 +17,5 @@ public interface ChatMessageService {
 	public List<ChatMessageDto> getChatMessageAll();
 
 	public ChatMessage createChatMessageWithImage(ChatMessage chatMessage, ChatMessageImage chatMessageImage);
-	public int countChatMessageIsRead(Long chatRoomNo);
+	public int countChatMessageIsRead(Long chatRoomNo,Long memberNo);
 }
