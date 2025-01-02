@@ -8,7 +8,7 @@ import AdminMentorBoard from './AdminMentorBoard';
 export default function Admin() {
 
   const [activeTab, setActiveTab] = useState("member");
-
+  console.log("Active Tab:", activeTab);
   // //탭 클릭시 실행되는 함수
     const handleTabClick = (tab) => {
       setActiveTab(tab);
@@ -18,16 +18,12 @@ export default function Admin() {
     switch (tab) {
       case "member":
         return "회원목록"
-        break;
-      case "board":
+      case "inquiry":
         return "질문게시글"
-        break;
-      case "mentor":
+      case "board":
         return "멘토게시글"
-        break;
       case "report":
         return "신고목록"
-        break;
     }
   }
 

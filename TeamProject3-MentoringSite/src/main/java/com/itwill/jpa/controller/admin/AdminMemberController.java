@@ -17,12 +17,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.itwill.jpa.dto.alarm.AlarmDto;
 import com.itwill.jpa.dto.member_information.MemberDto;
 import com.itwill.jpa.dto.member_information.MentorProfileDto;
 import com.itwill.jpa.exception.CustomException;
 import com.itwill.jpa.response.Response;
 import com.itwill.jpa.response.ResponseMessage;
 import com.itwill.jpa.response.ResponseStatusCode;
+import com.itwill.jpa.service.alarm.AlarmService;
 import com.itwill.jpa.service.member_information.MemberService;
 import com.itwill.jpa.service.member_information.MentorProfileService;
 
@@ -40,6 +42,8 @@ public class AdminMemberController {
 	@Autowired
 	private MentorProfileService mentorProfileService;
 	
+	@Autowired
+	private AlarmService alarmService;
 	/* 회원 전체 정보 */
 	@SecurityRequirement(name = "BearerAuth")
 	@PreAuthorize("hasRole('ADMIN')")
@@ -175,7 +179,11 @@ public class AdminMemberController {
         Response response = new Response();
         // 멘토 상태 변경 서비스 호출
         mentorProfileService.updateMentorStatus(memberNo, status);
-
+        if(status==3||status==4) {
+        	AlarmDto alarmDto = alarmService.createAlarmByEvaluationByMentor(memberNo, status);
+        	response.setAddData(alarmDto);
+        }
+        	
         // 성공 응답 생성
         response.setStatus(ResponseStatusCode.UPDATE_MENTOR_PROFILE_SUCCESS_CODE);
         response.setMessage(ResponseMessage.UPDATE_MENTOR_PROFILE_SUCCESS);

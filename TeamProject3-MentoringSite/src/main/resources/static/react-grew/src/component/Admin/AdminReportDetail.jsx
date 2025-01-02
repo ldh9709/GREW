@@ -20,7 +20,6 @@ export default function AdminReportDetail({report, onClose, fetchReports}) {
             }
         } catch (error) {
             console.error("신고 상태 업데이트 실패", error);
-            alert("상태 업데이트에 실패했습니다.");
         }
     };
 

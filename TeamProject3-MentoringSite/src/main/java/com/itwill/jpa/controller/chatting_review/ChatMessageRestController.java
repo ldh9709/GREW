@@ -7,13 +7,17 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.itwill.jpa.auth.PrincipalDetails;
 import com.itwill.jpa.dto.chatting_review.ChatMessageDto;
 import com.itwill.jpa.dto.chatting_review.ChatMessageImageDto;
 import com.itwill.jpa.entity.chatting_review.ChatMessage;
@@ -89,6 +93,23 @@ public class ChatMessageRestController {
 		
 		return responseEntity;
 		
+	}
+	@GetMapping("count/message")
+	@Operation(summary = "안읽은메시지갯수(채팅방)")
+	public ResponseEntity<Response> getMessageCount(Authentication authentication,@RequestParam(name = "chatRoomNo")Long chatRoomNo){
+		Response response = new Response();
+		PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
+		int count = chatMessageService.countChatMessageIsRead(chatRoomNo,principalDetails.getMemberNo());
+		response.setStatus(ResponseStatusCode.CHATTING_LIST_SUCCESS);
+		response.setMessage(ResponseMessage.CHATTING_LIST_SUCCESS);
+		response.setData(count);
+		HttpHeaders httpHeaders = new HttpHeaders();
+		httpHeaders.setContentType(new MediaType(MediaType.APPLICATION_JSON, Charset.forName("UTF-8")));
+		
+		ResponseEntity<Response> responseEntity = new ResponseEntity<Response>(response, httpHeaders,
+				HttpStatus.CREATED);
+		
+		return responseEntity;
 	}
 	
 }

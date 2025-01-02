@@ -10,12 +10,18 @@ import * as mentorProfileApi from "../../../api/mentorProfileApi"; /////////////
 import { useNavigate } from "react-router-dom";
 
 export default function MemberSummary() {
+
+  /* 멘토 프로필 선언 */
+  const [mentorProfile, setMentorProFile] = useState({});
+
   /* Context에 저장된 토큰, 멤버정보 */
   const { token, member, login } = useMemberAuth();
+
   const navigate = useNavigate();
 
   console.log("token쳌", token);
   console.log("member쳌", member);
+  console.log("mentor쳌", mentorProfile);
 
   // State로 회원정보를 저장
   const [summary, setSummary] = useState({
@@ -88,6 +94,11 @@ export default function MemberSummary() {
   const fetchMentorInfo = async (mentorProfileNo) => {
     try {
       const response = await memberApi.getMentorProfile(mentorProfileNo);
+      
+      /***** 멘토 프로필 저장 *****/
+      setMentorProFile(response.data);
+      console.log("멘토 프로필 세팅 : ", response.data);
+
       setSummary((prev) => ({
         ...prev,
         mentorCategoryNo: response.data.categoryNo,
@@ -96,6 +107,11 @@ export default function MemberSummary() {
       console.log("멘토정보 조회 실패");
     }
   };
+
+  const underReview = () => {
+    alert("심사 중입니다.");
+    return;
+  }
 
   //회원 권한 변경
   const handleUpdateRole = async (role) => {
@@ -106,11 +122,12 @@ export default function MemberSummary() {
           return;
         }
         navigate(`/mentor/join`);
+        return;
       } else {
         const confirmation = window.confirm(
           member.memberRole === "ROLE_MENTEE"
-            ? "멘티로 변경하시겠습니까?"
-            : "멘토로 변경하시겠습니까?"
+            ? "멘토로 변경하시겠습니까?"
+            : "멘티로 변경하시겠습니까?"
         );
         if (!confirmation) {
           return;
@@ -132,15 +149,53 @@ export default function MemberSummary() {
     }
   };
 
+  //회원 권한 변경
+  const handleUpdateRoleButton = async (role) => {
+    try {
+      if (member.mentorProfileNo === 0) {
+        const confirmation = window.confirm("멘토를 신청 하시겠습니까?");
+        if (!confirmation) {
+          return;
+        }
+        navigate(`/mentor/join`);
+        return;
+      } else {
+        const confirmation = window.confirm(
+          member.memberRole === "ROLE_MENTEE"
+            ? "멘토로 변경하시겠습니까?"
+            : "멘티로 변경하시겠습니까?"
+        );
+        if (!confirmation) {
+          return;
+        }
+      }
+
+      
+      const response = await memberApi.updateMemberRole(token, role);
+      if (response.status === 2012) {
+        // 기존 쿠키 삭제
+        // document.cookie = "member=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+        login(response.data.accessToken);
+      }
+      //강제 리로드
+      // window.location.reload();
+      // //성공 후 메인으로 이동
+      navigate(`/main`);
+    } catch (error) {
+      console.error("회원 권한 변경 실패", error);
+    }
+  };
+
   //이미지 클릭시 멘토프로필 수정폼 이동
   const handleClickImage = () => {
-    navigate(`/mentor/modify`);
+    navigate(`/profile/mentorProfile`);
   };
 
   useEffect(() => {
     if (member && token) {
       fetchMemberSummary();
       fetchCountSummary();
+      fetchMentorInfo(member.mentorProfileNo);
     }
     if (member.memberRole === "ROLE_MENTOR") {
       fetchMentorInfo(member.mentorProfileNo);
@@ -155,7 +210,7 @@ export default function MemberSummary() {
           <>
             <h1>
               {summary.name}님 안녕하세요{" "}
-              <a href="/member/profile/edit">
+              <a href="/profile/memberProfile">
                 <FontAwesomeIcon icon={faGear} /> 개인정보 변경
               </a>
             </h1>
@@ -175,19 +230,35 @@ export default function MemberSummary() {
               </div>
             </div>
             <button
-              className="role-change"
-              onClick={() => {
-                handleUpdateRole("ROLE_MENTOR");
-              }}
+              className={`role-change ${
+                member.mentorProfileNo === 0
+                ? "mentor-apply"
+                : mentorProfile.mentorStatus === 2
+                ? "mentor-review"
+                : "mentee-convert"
+              }`}
+              onClick={() =>
+                mentorProfile.mentorStatus === 2
+                  ? underReview() // 심사 중 알림
+                  : handleUpdateRole("ROLE_MENTOR") // 멘토 전환
+              }
             >
-              멘토전환
+              {
+              member.mentorProfileNo === 0 
+              ? "멘토 신청"
+              : mentorProfile.mentorStatus === 2 
+              ? "심사 중"
+              : member.mentorProfileNo !== 0
+              ? "멘토 전환"
+              : ""
+              }
             </button>
           </>
         ) : (
           <>
             <h1>
               {summary.name}님 안녕하세요{" "}
-              <a href="/member/profile/edit">
+              <a href="/profile/memberProfile">
                 <FontAwesomeIcon icon={faGear} /> 개인정보 변경
               </a>
             </h1>
@@ -234,7 +305,7 @@ export default function MemberSummary() {
                 handleUpdateRole("ROLE_MENTEE");
               }}
             >
-              멘티전환
+            멘티 전환
             </button>
           </>
         )}

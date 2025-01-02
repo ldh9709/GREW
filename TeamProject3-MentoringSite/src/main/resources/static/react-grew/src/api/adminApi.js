@@ -26,7 +26,36 @@ export const adminMentorByStatus = async (token,status,order,page,size) => {
   return responseJsonObject;
 }
 
-//질문문게시글 목록 조회
+//멘토 상태 변경
+export const adminUpdateMentorStatus = async(token, memberNo, statusNo) =>{
+    const response = await fetch(`${BACKEND_SERVER}/admin/mentor/update-state/${memberNo}?status=${statusNo}`, {
+  method: 'PUT',
+  headers: {
+    'Authorization': `Bearer ${token}`,
+    'Content-Type': 'application/json'
+  }
+  });
+  const responseJsonObject= await response.json();
+  return responseJsonObject;
+}
+
+//멘토컨텐츠 목록 조회
+export const adminMentorBoard = async(token, page, size)=>{
+  const response = await fetch(`${BACKEND_SERVER}/admin/mentor-board?page=${page}&size=${size}`,{
+    method: "GET",
+    headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+    },
+  });
+  if (!response.ok) {
+    throw new Error("API 호출 실패");
+  }
+  const responseJsonObject= await response.json();
+  return responseJsonObject;
+}
+
+//게시글 목록 조회
 export const adminInquiry = async(token, page, size) => {
   try {
     const response = await fetch(
@@ -70,45 +99,7 @@ export const hideInquiry = async(token, inquiryNo)=>{
     throw error;
   }
 };
-//category별 질문게시판 목록 가져오기
-export const adminCategoryInquiry = async (categoryNo, page, token, size) => {
-  try {
-    const response = await fetch(
-      `${BACKEND_SERVER}/admin/inquiry/category/${categoryNo}?page=${page}&size=${size}`,{
-        method: 'GET',
-        headers: {
-          'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json'
-        }
-      }
-    );
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
-    }
 
-    const responseJsonObject = await response.json();
-    return responseJsonObject;
-  } catch (error) {
-    console.error("API 호출 오류 : ", error);
-    throw error;
-  }
-};
-
-//mentor 목록 조회
-export const adminMentorBoard = async(token, page, size)=>{
-  const response = await fetch(`${BACKEND_SERVER}/admin/mentor-board?page=${page}&size=${size}`,{
-    method: "GET",
-    headers: {
-        Authorization: `Bearer ${token}`,
-        "Content-Type": "application/json",
-    },
-  });
-  if (!response.ok) {
-    throw new Error("API 호출 실패");
-  }
-  const responseJsonObject= await response.json();
-  return responseJsonObject;
-};
 export const adminMentorBoardWithSearch = async (token, search, page, size) => {//mentorBoardSearch
   const url = `${BACKEND_SERVER}/admin/mentor-board/search?search=${encodeURIComponent(search)}&page=${page}&size=${size}`;
   const config = {
@@ -161,4 +152,28 @@ export const updateReportStatusForAdmin = async (token, reportNo, status) => {
 
   const responseJson = await response.json();
   return responseJson;  // 상태 업데이트 응답 반환
+};
+
+//카테고리별 게시판 목록 가져오기
+export const adminCategoryInquiry = async (categoryNo, page, token, size) => {
+  try {
+    const response = await fetch(
+      `${BACKEND_SERVER}/admin/inquiry/category/${categoryNo}?page=${page}&size=${size}`,{
+        method: 'GET',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        }
+      }
+    );
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    const responseJsonObject = await response.json();
+    return responseJsonObject;
+  } catch (error) {
+    console.error("API 호출 오류 : ", error);
+    throw error;
+  }
 };

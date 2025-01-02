@@ -1,15 +1,33 @@
+import "../../css/memberPage.css";
 import React, { useEffect, useState } from "react";
 import { getCookie } from "../../util/cookieUtil";
-import { memberProfile, updateAction } from "../../api/memberApi";
+import { memberProfile, updateAction, sendVerificationCode, verificationInputCode } from "../../api/memberApi";
+import * as categoryApi from "../../api/categoryApi";
 import * as responseStatus from "../../api/responseStatusCode";
-import "../../css/memberPage.css";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+
 
 const MemberProfileFormPage = () => {
   const navigate = useNavigate();
   const memberCookie = getCookie("member");
   const token = memberCookie.accessToken;
 
+  /* 관심사 start */
+  const [interests, setInterests] = useState([]); // 관심사 데이터
+  const [selectedInterests, setSelectedInterests] = useState([]); // 선택된 관심사
+  /* 관심사 end */
+
+  /* 이메일 인증 관련 상태 */
+  const [originalEmail, setOriginalEmail] = useState("");
+  const [isEmailChanged, setIsEmailChanged] = useState(false);
+  const [isEmailVerified, setIsEmailVerified] = useState(false); // 이메일 인증 성공 여부
+  const [verificationCode, setVerificationCode] = useState("");
+  const [sentCode, setSentCode] = useState(false); // 인증번호 전송 여부
+
+
+
+  /* 멤버 start */
   const [member, setMember] = useState({
     memberNo: "",
     memberName: "",
@@ -19,6 +37,55 @@ const MemberProfileFormPage = () => {
     memberPassword2: "",
     interests: [],
   });
+  /* 멤버 end */
+
+  /* 이메일 변경 핸들러 */
+  const handleEmailChange = (e) => {
+    const newEmail = e.target.value;
+
+    setMember((prevMember) => ({
+      ...prevMember,
+      memberEmail: newEmail,
+    }));
+
+    setIsEmailChanged(newEmail !== originalEmail); // 이메일 변경 여부 확인
+    setIsEmailVerified(false); // 이메일 변경 시 인증 완료 상태 초기화
+  };
+  
+   /* 인증번호 요청 핸들러 */
+   const handleSendVerificationCode = async () => {
+    try {
+      alert("인증번호가 이메일로 전송되었습니다.");
+      await sendVerificationCode(member.memberEmail); // 서버에 이메일 전송 요청
+      setSentCode(true); // 인증번호 전송 여부 업데이트
+    } catch (error) {
+      alert("인증번호 전송에 실패했습니다. 다시 시도해주세요.");
+    }
+  };
+
+  /* 인증번호 검증 핸들러 */
+  const handleVerifyCode = async () => {
+    try {
+      const response = await verificationInputCode(member.memberEmail, verificationCode); // 서버에 인증번호 검증 요청
+      switch(response.status)  {
+        case responseStatus.INPUTCODE_CONFIRM_FAIL:
+          toast.error("인증번호가 올바르지 않습니다.");
+          break;
+        case responseStatus.MEMBER_PROVIDER_IS_NOT_EMAIL:
+          toast.error("SNS사용자는 이메일을 수정할 수 없습니다.")
+          break;
+        case responseStatus.INPUTCODE_CONFIRM_SUCCESS:
+          toast.success("이메일이 인증되었습니다.");
+          setIsEmailVerified(true); // 인증 완료 상태 업데이트
+          break;
+        default:
+          toast.error("default에러가 발생하였습니다.");
+          break;
+      }
+    } catch (error) {
+        toast.error("catch에러가 발생하였습니다.");
+    }
+  };
 
   /***** 사용자 정보 가져오기 *****/
   const fetchProfileData = async () => {
@@ -27,7 +94,7 @@ const MemberProfileFormPage = () => {
 
     const { data } = response;
 
-    //기본 관심사 필터링
+    // 기본 관심사 필터링
     const filteredInterests = data.interests.filter(
       (interest) => ![19, 20, 21].includes(interest.categoryNo) // categoryNo가 19, 20, 21이 아닌 항목만 필터링
     );
@@ -41,46 +108,26 @@ const MemberProfileFormPage = () => {
       memberPassword2: data.memberPassword,
       interests: filteredInterests || [],
     });
+
+    //기존 이메일을 setOriginalEmail에 설정
+    setOriginalEmail(data.memberEmail);
+    // 기존 관심사를 selectedInterests에 설정
+    setSelectedInterests(filteredInterests.map((interest) => interest.categoryNo));
   };
 
+  // 관심사 클릭 이벤트 핸들러
   const handleInterestClick = (categoryNo) => {
-    setMember((prevState) => {
-      const updatedInterests = prevState.interests.map((interest) => {
-        if (interest.categoryNo === parseInt(categoryNo)) {
-          // 이미 선택된 경우: 선택 해제
-          return null;
-        }
-        return interest;
-      }).filter(Boolean); // `null` 값을 필터링하여 제외
-  
-      // 선택되지 않은 경우 새로운 관심사 추가
-      const alreadySelected = prevState.interests.some(
-        (interest) => interest.categoryNo === parseInt(categoryNo)
-      );
-  
-      if (!alreadySelected) {
-        // 새로운 categoryNo 추가, interestNo는 기존과 동일하게 유지
-        const newInterestNo =
-          prevState.interests.length > 0
-            ? Math.max(...prevState.interests.map((i) => i.interestNo)) + 1
-            : 1;
-  
-        updatedInterests.push({
-          interestNo: newInterestNo, // 새 interestNo 생성
-          memberNo: prevState.memberNo,
-          categoryNo: parseInt(categoryNo),
-        });
-      }
-  
-      return { ...prevState, interests: updatedInterests };
-    });
-  };
-  
-  /***** 관심사 선택 *****/
-  const isInterestSelected = (categoryNo) => {
-    return member.interests.some(
-      (interest) => interest.categoryNo === parseInt(categoryNo)
-    );
+    const updatedSelectedInterests = selectedInterests.includes(categoryNo)
+      ? selectedInterests.filter((interest) => interest !== categoryNo)
+      : [...selectedInterests, categoryNo];
+
+    setSelectedInterests(updatedSelectedInterests);
+
+    // member.interests 동기화
+    setMember((prevMember) => ({
+      ...prevMember,
+      interests: updatedSelectedInterests.map((no) => ({ categoryNo: no })),
+    }));
   };
 
   /***** 수정폼 핸들러 *****/
@@ -89,24 +136,29 @@ const MemberProfileFormPage = () => {
       ...member,
       [e.target.name]: e.target.value,
     });
-    console.log(e.target.value);
   };
 
   /***** 업데이트 액션 *****/
   const updateMember = () => {
     console.log("업데이트 시 멤버 : ", member);
-    
-    if(member.memberPassword !== member.memberPassword2) {
+
+    if (member.memberPassword !== member.memberPassword2) {
       alert("비밀번호를 다시 확인해주세요.");
       return;
     }
 
-    if(member.interests.length !== 3) {
+    if (selectedInterests.length !== 3) {
       alert("3개의 관심사를 선택해주세요.");
       return;
     }
 
-    updateAction(member, token).then((responseJsonObject) => {
+    // 관심사를 업데이트 전에 동기화
+    const updatedMember = {
+      ...member,
+      interests: selectedInterests.map((categoryNo) => ({ categoryNo })),
+    };
+
+    updateAction(updatedMember, token).then((responseJsonObject) => {
       console.log("Server response:", responseJsonObject);
       switch (responseJsonObject.status) {
         case responseStatus.UPDATE_MEMBER_SUCCESS:
@@ -128,187 +180,162 @@ const MemberProfileFormPage = () => {
   };
 
   useEffect(() => {
+    async function fetchInterests() {
+      try {
+        const response = await categoryApi.ListCategory();
+        const data = response.data;
+
+        // categoryDepth가 2인 항목만 필터링
+        const filteredInterests = data.filter(
+          (category) => category.categoryDepth === 2
+        );
+
+        setInterests(filteredInterests);
+      } catch (error) {
+        console.error("관심사 데이터를 가져오는 중 오류 발생:", error);
+      }
+    }
+
+    fetchInterests();
     fetchProfileData();
   }, []);
 
   console.log(member.interests);
 
   return (
-    <div className="member-profile-container">
-      <div className="member-profile-form">
-        <form>
-          <h3 className="member-profile-title">회원정보</h3>
-
-          <div className="member-form-group">
-            <label>이름</label>
-            <span>{member.memberName}</span>
+    <div className="profile-layout">
+      {/* 오른쪽 프로필 수정 폼 */}
+      <div className="profile-content">
+        <h2 className="profile-title">회원정보 수정</h2>
+        <form className="profile-form">
+          <div className="profile-form-group">
+            <p className="profile-form-label">
+              이름<span className="red-star">*</span>
+            </p>
+            <input
+              type="text"
+              name="memberName"
+              placeholder="이름을 입력하세요"
+              value={member.memberName || ""}
+              onChange={onChangeMemberModifyForm}
+              required
+            />
           </div>
 
-          <div className="member-form-group">
-            <label>아이디</label>
-            <span>{member.memberId}</span>
+          <div className="profile-form-group">
+            <p className="profile-form-label">
+              아이디<span className="red-star">*</span>
+            </p>
+            <input
+              type="text"
+              name="memberId"
+              value={member.memberId || ""}
+              readOnly
+              disabled
+            />
           </div>
 
-          <div className="member-form-group">
-            <label>비밀번호</label>
+          <div className="profile-form-group">
+            <p className="profile-form-label">
+              비밀번호<span className="red-star">*</span>
+            </p>
             <input
               type="password"
-              placeholder="비밀번호 입력"
               name="memberPassword"
-              className="member-form-password"
+              placeholder="비밀번호 입력"
               onChange={onChangeMemberModifyForm}
             />
           </div>
 
-          <div className="member-form-group">
-            <label>비밀번호 확인</label>
+          <div className="profile-form-group">
+            <p className="profile-form-label">
+              비밀번호 확인<span className="red-star">*</span>
+            </p>
             <input
               type="password"
-              placeholder="비밀번호 확인"
               name="memberPassword2"
-              className="member-form-password"
+              placeholder="비밀번호 확인"
               onChange={onChangeMemberModifyForm}
             />
           </div>
 
-          <div className="member-form-group">
-            <label>이메일</label>
-            <div className="email-group">
+          <div className="profile-form-group">
+            <p className="profile-form-label">
+              이메일<span className="red-star">*</span>
+            </p>
+            <div className="email-verification-wrapper">
               <input
-                type="text"
-                placeholder="이메일"
+                type="email"
                 name="memberEmail"
-                value={member.memberEmail}
-                onChange={onChangeMemberModifyForm}
-                className="member-form-email"
+                placeholder="이메일을 입력하세요"
+                value={member.memberEmail || ""}
+                onChange={handleEmailChange}
+                required
               />
+              <button
+                type="button"
+                className="email-verification-button"
+                onClick={handleSendVerificationCode}
+                disabled={!isEmailChanged || sentCode}
+              >
+                이메일 인증
+              </button>
             </div>
           </div>
 
-          <div className="member-form-group">
-            <label>관심사</label>
-            <div className="member-form-interest-group">
-              <div
-                className={`interest-item ${isInterestSelected("2") ? "selected" : ""}`}
-                onClick={() => handleInterestClick("2")}
-              >
-                인사/총무/노무
+          {sentCode && (
+              <div className="profile-form-group">
+                <div className="email-verification-wrapper">
+                <input
+                  type="text"
+                  placeholder="인증번호를 입력하세요"
+                  value={verificationCode}
+                  onChange={(e) => setVerificationCode(e.target.value)} // 상태와 연결
+                />
+                <button
+                  type="button"
+                  className="email-verification-button"
+                  onClick={handleVerifyCode}
+                  disabled={isEmailVerified}
+                >
+                  인증번호 확인
+                </button>
+                </div>
               </div>
-              <div
-                className={`interest-item ${isInterestSelected("3") ? "selected" : ""}`}
-                onClick={() => handleInterestClick("3")}
-              >
-                영업/영업관리
-              </div>
-              <div
-                className={`interest-item ${isInterestSelected("4") ? "selected" : ""}`}
-                onClick={() => handleInterestClick("4")}
-              >
-                IT개발/데이터
-              </div>
-              <div
-                className={`interest-item ${isInterestSelected("6") ? "selected" : ""}`}
-                onClick={() => handleInterestClick("6")}
-              >
-                중학생
-              </div>
-              <div
-                className={`interest-item ${isInterestSelected("7") ? "selected" : ""}`}
-                onClick={() => handleInterestClick("7")}
-              >
-                고등학생
-              </div>
-              <div
-                className={`interest-item ${isInterestSelected("8") ? "selected" : ""}`}
-                onClick={() => handleInterestClick("8")}
-              >
-                대학입시상담
-              </div>
-              <div
-                className={`interest-item ${isInterestSelected("10") ? "selected" : ""}`}
-                onClick={() => handleInterestClick("10")}
-              >
-                음악
-              </div>
-              <div
-                className={`interest-item ${isInterestSelected("11") ? "selected" : ""}`}
-                onClick={() => handleInterestClick("11")}
-              >
-                글쓰기
-              </div>
-              <div
-                className={`interest-item ${isInterestSelected("12") ? "selected" : ""}`}
-                onClick={() => handleInterestClick("12")}
-              >
-                미술
-              </div>
-              <div
-                className={`interest-item ${isInterestSelected("13") ? "selected" : ""}`}
-                onClick={() => handleInterestClick("13")}
-              >
-                사진/영상 제작
-              </div>
-              <div
-                className={`interest-item ${isInterestSelected("14") ? "selected" : ""}`}
-                onClick={() => handleInterestClick("14")}
-              >
-                연기/연극
-              </div>
-              <div
-                className={`interest-item ${isInterestSelected("16") ? "selected" : ""}`}
-                onClick={() => handleInterestClick("16")}
-              >
-                스타트업 아이디어
-              </div>
-              <div
-                className={`interest-item ${isInterestSelected("17") ? "selected" : ""}`}
-                onClick={() => handleInterestClick("17")}
-              >
-                마케팅 전략
-              </div>
-              <div
-                className={`interest-item ${isInterestSelected("18") ? "selected" : ""}`}
-                onClick={() => handleInterestClick("18")}
-              >
-                법률 특허 상담
-              </div>
-              <div
-                className={`interest-item ${isInterestSelected("22") ? "selected" : ""}`}
-                onClick={() => handleInterestClick("22")}
-              >
-                피트니스
-              </div>
-              <div
-                className={`interest-item ${isInterestSelected("23") ? "selected" : ""}`}
-                onClick={() => handleInterestClick("23")}
-              >
-                요가/필라테스
-              </div>
-              <div
-                className={`interest-item ${isInterestSelected("24") ? "selected" : ""}`}
-                onClick={() => handleInterestClick("24")}
-              >
-                재활 운동
-              </div>
-              <div
-                className={`interest-item ${isInterestSelected("25") ? "selected" : ""}`}
-                onClick={() => handleInterestClick("25")}
-              >
-                식단/영양 상담
-              </div>
-            </div>
+            )}
+            
+
+          <div className="profile-interest-group">
+            <p className="profile-interest-label">
+              관심사<span className="red-star">*</span>
+            </p>
+            {interests.length > 0 ? (
+              interests.map((interest) => (
+                <div
+                  key={interest.categoryNo}
+                  className={`profile-interest-item ${
+                    selectedInterests.includes(interest.categoryNo)
+                      ? "selected"
+                      : ""
+                  }`}
+                  onClick={() => handleInterestClick(interest.categoryNo)}
+                >
+                  {interest.categoryName}
+                </div>
+              ))
+            ) : (
+              <p>관심사를 불러오는 중입니다...</p>
+            )}
           </div>
 
-          <div className="member-button-group">
+          <div className="profile-button-group">
             <input
               type="button"
-              className="member-submit-button"
+              className="profile-button"
               onClick={updateMember}
               value="수정완료"
+              disabled={isEmailChanged && !isEmailVerified} // 조건 추가
             />
-            <button type="button" className="member-delete-button">
-              계정탈퇴
-            </button>
           </div>
         </form>
       </div>

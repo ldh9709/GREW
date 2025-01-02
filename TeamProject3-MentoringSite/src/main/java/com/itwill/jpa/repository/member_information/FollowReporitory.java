@@ -17,7 +17,7 @@ import com.itwill.jpa.entity.member_information.Follow;
 public interface FollowReporitory extends JpaRepository<Follow, Long>{
 	
 	/* 멘티, 멘토 번호가 존재하는지 확인 */ 
-	boolean existsByMenteeMember_MemberNoAndMentorMember_MemberNo(Long menteeMemberNo, Long mentorMemberNo);
+	Boolean existsByMenteeMember_MemberNoAndMentorMember_MemberNo(Long menteeMemberNo, Long mentorMemberNo);
 
 	/* 팔로워 리스트 */
 	Page<Follow> findBymenteeMember_MemberNo(Long memberNo,Pageable pageable);

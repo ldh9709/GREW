@@ -1,5 +1,5 @@
+import "../../css/mentorJoin.css";
 import React, { useEffect, useState } from "react";
-import "../../css/mentor.css";
 import * as responseStatus from "../../api/responseStatusCode";
 import * as memberApi from "../../api/memberApi";
 import * as categoryApi from "../../api/categoryApi";
@@ -24,12 +24,13 @@ const MentorJoinForm = () => {
 
   /**** 멘토 선언 START ****/
   const [mentor, setMentor] = useState({
-    categoryNo: "", // 전문분야 번호(소분류 최종 선택값)
-    mentorIntroduce: "",
-    mentorCareer: "",
-    mentorImage: "",
-    mentorHeadline: ""
-  });
+      categoryNo: "",
+      mentorStatus: 2,
+      mentorIntroduce: "",
+      mentorHeadline: "",
+      careerDtos: [{ careerCompanyName: "", careerJobTitle: "", careerStartDate: "", careerEndDate: "", mentorProfileNo: mentorProfileNo}],
+      mentorImage: "",
+    });
   /**** 멘토 선언 END ****/
 
 
@@ -43,24 +44,26 @@ const MentorJoinForm = () => {
   /**** 카테고리 선언 END ****/
 
   
-  /********** 경력 관련 메소드 START ***********/
-  const [careers, setCareers] = useState([
-    {
-    companyName: "", 
-    jobTitle: "", 
-    startDate: "", 
-    endDate: ""
-    }
-  ]);
 
   const addCareerField = () => {
-    setCareers((prev) => [...prev, { companyName: "", jobTitle: "", startDate: "", endDate: "" }]);
+    setMentor((prevMentor) => ({
+      ...prevMentor,
+      careerDtos: [
+        ...prevMentor.careerDtos,
+        { careerCompanyName: "", careerJobTitle: "", careerStartDate: "", careerEndDate: "", mentorProfileNo: mentorProfileNo},
+      ],
+    }));
   };
 
   const handleCareerChange = (index, field, value) => {
-    const updatedCareers = [...careers];
-    updatedCareers[index][field] = value;
-    setCareers(updatedCareers);
+    setMentor((prevMentor) => {
+      const updatedCareers = [...prevMentor.careerDtos];
+      updatedCareers[index][field] = value;
+      return {
+        ...prevMentor,
+        careerDtos: updatedCareers,
+      };
+    });
   };
 
   const handleFocus = (e) => {
@@ -75,27 +78,35 @@ const MentorJoinForm = () => {
 
   /********** 경력 관련 메소드 END ***********/
 
+  
   /********** 카테고리 트리 구조 불러오기 START ***********/
+  const getCategories = async () => {
+    // 서버에서 이미 대분류 객체의 childCategories에 소분류가 들어있는 구조를 내려준다고 가정
+    const res = await categoryApi.ListCategory();
+    // 여기서는 별도의 필터를 안 합니다. 
+    // data 예: [
+    //   { categoryNo:1, categoryName:'직무 상담', categoryDepth:1, childCategories:[
+    //       { categoryNo:2, categoryName:'인사/총무/노무', categoryDepth:2, childCategories:[] },
+    //       ...
+    //   ]},
+    //   { categoryNo:5, categoryName:'학습/교육', categoryDepth:1, childCategories:[...], ...},
+    //   ...
+    // ]
+    setCategories(res.data);
+  }
+
+  const getCareer = async () => {
+    const res = await memberApi.getCareer(mentorProfileNo);
+    const careerDtos = res.data;
+    setMentor({ careerDtos: careerDtos || []});
+  }
+
   useEffect(() => {
-    async function getCategories() {
-      // 서버에서 이미 대분류 객체의 childCategories에 소분류가 들어있는 구조를 내려준다고 가정
-      const res = await categoryApi.ListCategory();
-      console.log("category res : ", res);
-      const data = await res.data;
-      console.log("category data : ", data);
-      // 여기서는 별도의 필터를 안 합니다. 
-      // data 예: [
-      //   { categoryNo:1, categoryName:'직무 상담', categoryDepth:1, childCategories:[
-      //       { categoryNo:2, categoryName:'인사/총무/노무', categoryDepth:2, childCategories:[] },
-      //       ...
-      //   ]},
-      //   { categoryNo:5, categoryName:'학습/교육', categoryDepth:1, childCategories:[...], ...},
-      //   ...
-      // ]
-      setCategories(data);
+    if(mentorProfileNo || mentorProfileNo == 0){
+      getCategories();
+      getCareer();
     }
-    getCategories();
-  }, []);
+  }, [mentorProfileNo]);
 
   // 현재 선택된 "대분류" 객체를 찾는다
   const parentObj = categories.find(
@@ -148,32 +159,30 @@ const MentorJoinForm = () => {
   
     try {
       // Step 1: 멘토 프로필 생성
-      const responseJsonObject =
-        mentorProfileNo === 0
-          ? await memberApi.mentorProfileCreateAction(token, mentor)
-          : await memberApi.mentorProfileUpdateAction(mentorProfileNo, mentor);
+      console.log(mentor);
+      let responseJsonObject = null;
+      if(mentorProfileNo === 0){
+        responseJsonObject = await memberApi.mentorProfileCreateAction(token, mentor);
+      }else{
+        responseJsonObject = await memberApi.mentorProfileUpdateAction(mentorProfileNo, mentor);
+      }
+      if (responseJsonObject.status === responseStatus.UPDATE_MENTOR_PROFILE_SUCCESS_CODE || responseJsonObject.status === responseStatus.CREATED_MENTOR_PROFILE_SUCCESS_CODE) {
+        console.log(responseJsonObject);
+        alert("멘토 정보 등록 성공");
+        navigate("/member/profile");
+      } else {
+        alert("등록 실패");
+      }
   
-      if (
-        responseJsonObject.status === responseStatus.CREATED_MENTOR_PROFILE_SUCCESS_CODE ||
-        responseJsonObject.status === responseStatus.UPDATE_MENTOR_PROFILE_SUCCESS_CODE
-      ) {
-        alert("멘토 프로필 생성 성공!");
-  
-        // Step 2: 생성된 프로필 번호 확인
-        const createdProfileNo = responseJsonObject.data.mentorProfileNo;
-        console.log("createdProfileNo : ", createdProfileNo);
         // Step 3: 이미지 업로드 (필수 이미지가 있다면)
         if (mentorImage) {
-          await uploadImage(createdProfileNo); // 생성된 번호로 이미지 업로드
+          await uploadImage(responseJsonObject.data.mentorProfileNo); // 생성된 번호로 이미지 업로드
         } else {
           alert("이미지 없이 멘토 프로필이 저장되었습니다.");
         }
   
         // 완료 후 페이지 이동
         navigate("/member/profile");
-      } else {
-        alert("멘토 프로필 생성 실패");
-      }
     } catch (error) {
       console.error("프로필 생성 중 오류 발생:", error);
       alert("프로필 생성 중 오류가 발생했습니다.");
@@ -182,8 +191,11 @@ const MentorJoinForm = () => {
   /***** 멘토 생성 버튼 END *****/
   
   const handleImageChange = (e) => {
-    const file = e.target.files[0];
-    setMentorImage(file);
+    setMentorImage(e.target.files[0]);
+    setMentor((prevMentor) => ({
+      ...prevMentor,
+      [e.target.name]: `/upload/mentor-profile/${mentorProfileNo}/${e.target.files[0].name}`,
+    }));
   }
 
   const uploadImage= async (mentorProfileNo) => {
@@ -195,9 +207,6 @@ const MentorJoinForm = () => {
 
     const response = await memberApi.uploadMentorProfileImage(mentorProfileNo, mentorImage);
     console.log("이미지 업로드 response : ", response);
-
-    alert("이미지 업로드 성공");
-
   }
   
   
@@ -284,20 +293,18 @@ const MentorJoinForm = () => {
             경력<span className="red-text">필수</span>
           </label>
           <div className="career-container">
-            {careers.map((career, index) => (
+          {mentor.careerDtos.map((career, index) => (
               <div key={index} className="career-row">
                 <input
                   type="text"
                   placeholder="회사명"
-                  value={career.companyName}
-                  onChange={(e) => handleCareerChange(index, "companyName", e.target.value)}
+                  onChange={(e) => handleCareerChange(index, "careerCompanyName", e.target.value)}
                   required
                 />
                 <input
                   type="text"
                   placeholder="직책"
-                  value={career.jobTitle}
-                  onChange={(e) => handleCareerChange(index, "jobTitle", e.target.value)}
+                  onChange={(e) => handleCareerChange(index, "careerJobTitle", e.target.value)}
                   required
                 />
                 <input
@@ -305,23 +312,21 @@ const MentorJoinForm = () => {
                   name="startDate"
                   onFocus={handleFocus}
                   onBlur={handleBlur}
-                  value={career.startDate}
-                  onChange={(e) => handleCareerChange(index, "startDate", e.target.value)}
+                  onChange={(e) => handleCareerChange(index, "careerStartDate", e.target.value)}
                   placeholder="입사년월"
                   required
                 />
-                  <input
-                    type="text"
-                    name="endDate"
-                    onFocus={handleFocus}
-                    onBlur={handleBlur}
-                    value={career.endDate}
-                    onChange={(e) => handleCareerChange(index, "endDate", e.target.value)}
-                    placeholder="퇴사년월"
-                    required
-                  />
-                </div>
-              ))}
+                <input
+                  type="text"
+                  name="endDate"
+                  onFocus={handleFocus}
+                  onBlur={handleBlur}
+                  onChange={(e) => handleCareerChange(index, "careerEndDate", e.target.value)}
+                  placeholder="퇴사년월"
+                  required
+                />
+              </div>
+                ))}
               {/* 추가 버튼을 필드 목록 외부로 이동 */}
               <button type="button" className="add-career-button" onClick={addCareerField}>
                 + 추가
