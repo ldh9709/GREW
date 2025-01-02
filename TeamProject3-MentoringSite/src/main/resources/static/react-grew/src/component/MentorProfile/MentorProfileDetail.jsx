@@ -2,7 +2,7 @@ import { useMemberAuth } from "../../util/AuthContext";
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom"; // useNavigate 추가
 import "../../css/mentorProfile.css"; // 🔥 추가된 CSS 파일
-import { getMentorProfileByNo } from "../../api/mentorProfileApi.js";
+import * as memberApi from "../../api/memberApi";
 import { listReviewByMember } from "../../api/reviewApi.js"; // 리뷰 목록 API 추가
 import * as categoryApi from "../../api/categoryApi";
 import * as mentorBoardApi from "../../api/mentorBoardApi";
@@ -28,7 +28,8 @@ export default function MentorProfileDetail() {
   const fetchMentorProfile = async () => {
     try {
       setLoading(true);
-      const mentorProfileResponse = await getMentorProfileByNo(mentorProfileNo);
+      const mentorProfileResponse = await memberApi.getMentorProfile(mentorProfileNo);
+      console.log(mentorProfileResponse.data);
       if (!mentorProfileResponse?.data || Object.keys(mentorProfileResponse.data).length === 0) {
         console.warn("Invalid mentor profile number:", mentorProfileNo);
         navigate("/mentor-profile/list", { replace: true });

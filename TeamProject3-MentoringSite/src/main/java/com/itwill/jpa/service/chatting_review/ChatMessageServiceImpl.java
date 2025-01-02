@@ -79,8 +79,8 @@ public class ChatMessageServiceImpl implements ChatMessageService {
 	}
 	//안읽은 채팅갯수(채팅방마다)
 	@Override
-	public int countChatMessageIsRead(Long chatRoomNo) {
-		int count = chatMessageRepository.countChatMessageByChatMessageCheckAndChatRoom_ChatRoomNo(1, chatRoomNo);
+	public int countChatMessageIsRead(Long chatRoomNo,Long memberNo) {
+		int count = chatMessageRepository.countChatMessageByChatMessageCheckAndChatRoom_ChatRoomNoAndMember_MemberNoNotEqual(1, chatRoomNo,memberNo);
 		return count;
 	}
 	

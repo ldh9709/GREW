@@ -13,7 +13,6 @@ const ChatRoomList = ({ onRoomClick }) => {
   const [totalPages, setTotalPages] = useState(0); // 총 페이지 수
   const [isReportHovered, setIsReportHovered] = useState(false);
   const [report, setreport] = useState({});
-  const [countChatRoom, setCountChatRoom] = useState(0);
   const { token, member } = useMemberAuth();
 
   const chatRoomList = async (page) => {
@@ -29,6 +28,7 @@ const ChatRoomList = ({ onRoomClick }) => {
       // 각 채팅방 상태를 개별적으로 비교하여 필터링
       const activeRooms = responseJsonObject.data.content.filter((room) => {
         // filter()는 배열의 각 항목을 하나씩 검사하며, 주어진 콜백 함수에서 true를 반환하는 항목만 새로운 배열에 포함
+
         return (
           (room.chatRoomStatus === 7100 &&
             (room.chatRoomLeaveStatus === 7500 ||
@@ -43,9 +43,7 @@ const ChatRoomList = ({ onRoomClick }) => {
       setTotalPages(responseJsonObject.data.totalPages);
     }
   };
-  useEffect(() => {
-    countIsReadChatRoom(1);
-  }, []);
+
   useEffect(() => {
     chatRoomList(currentPage - 1); // 페이지 번호는 0부터 시작
   }, [currentPage]);
@@ -105,10 +103,15 @@ const ChatRoomList = ({ onRoomClick }) => {
   const handleCloseModal = () => {
     setIsModalOpen2(false);
   };
-  const countIsReadChatRoom = async (chatRoomNo) => {
-    const response = await ChattingApi.countMessageChatRoom(chatRoomNo);
-    console.log(response);
-    setCountChatRoom(response.data);
+  // 메뉴 토글 함수
+  const toggleMenu = (chatRoomNo) => {
+    setRooms((prevRooms) =>
+      prevRooms.map((room) =>
+        room.chatRoomNo === chatRoomNo
+          ? { ...room, isMenuOpen: !room.isMenuOpen }
+          : room
+      )
+    );
   };
   return (
     <div>
@@ -118,59 +121,55 @@ const ChatRoomList = ({ onRoomClick }) => {
             <li
               key={room.chatRoomNo} // 고유 키 설정 (React에서 반복문에 필수)
               className="chat-room-item"
-              onClick={() => onRoomClick(room.chatRoomNo, room.chatRoomName)} // 채팅방 클릭 시 부모 컴포넌트에 해당 채팅방 id 전달
+              onClick={() => onRoomClick(room.chatRoomNo, room.chatRoomName)}
+              // 채팅방 클릭 시 부모 컴포넌트에 해당 채팅방 id 전달
             >
-              <span className="room-name">{room.chatRoomName}</span>
-              <div className="button-container">
-                <div>{countChatRoom}</div>
-                <button
-                  className="edit-button"
-                  onClick={(e) => {
-                    e.stopPropagation(); // 부모 이벤트 (채팅방 클릭) 전파 방지
-                    openEditModal(room); // 채팅방 이름 수정 모달 열기
-                  }}
-                >
-                  이름 수정
-                </button>
-                <button
-                  className="leave-button" // 나가기 버튼
-                  onClick={(e) => {
-                    e.stopPropagation(); // 부모 이벤트 전파 방지
-                    leaveRoom(room.chatRoomNo); // 나가기 기능 호출
-                  }}
-                >
-                  방 나가기
-                </button>
-                <div className="inquiry-report-btn">
-                  {isModalOpen2 && (
-                    <div
-                      onClick={(e) => e.stopPropagation()} // 클릭 이벤트 전파 방지
+              <div className="chat-room-first">
+                <span className="room-name">{room.chatRoomName}</span>{" "}
+                {room.countIsRead === 0 ? null : (
+                  <div className="chat-is-read">{room.countIsRead}</div>
+                )}
+                <div className="button-container">
+                  {/* 우측 상단 메뉴 버튼 */}
+                  <span className="chat-button-container">
+                    <button
+                      className="chat-menu-button"
+                      onClick={(e) => {
+                        e.stopPropagation(); // 부모 이벤트 전파 방지
+                        toggleMenu(room.chatRoomNo); // 메뉴 열기/닫기
+                      }}
                     >
-                      <ReportModal onClose={handleCloseModal} report={report} />
-                    </div>
-                  )}
-                  <button
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      handleOpenModal(room);
-                    }}
-                    onMouseEnter={() => setIsReportHovered(true)}
-                    onMouseLeave={() => setIsReportHovered(false)}
-                    className={`hover-button ${
-                      isReportHovered ? "hovered" : ""
-                    }`}
-                  >
-                    <img
-                      src={
-                        isReportHovered
-                          ? "https://img.icons8.com/?size=100&id=jy7dy2jsJ5UR&format=png&color=ed1515"
-                          : "https://img.icons8.com/?size=100&id=t5aOnHwCycmN&format=png&color=000000"
-                      }
-                      alt="Button Image"
-                      className="button-image"
-                    />
-                  </button>
+                      &#8942; {/* 메뉴 아이콘 (일반적으로 세로로 3개의 점) */}
+                    </button>
+                    {room.isMenuOpen && (
+                      <div className="chat-menu-dropdown">
+                        <button
+                          className="edit-button"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            openEditModal(room); // 채팅방 이름 수정 모달 열기
+                          }}
+                        >
+                          이름 수정
+                        </button>
+                        <button
+                          className="leave-button"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            leaveRoom(room.chatRoomNo); // 방 나가기 기능 호출
+                          }}
+                        >
+                          방 나가기
+                        </button>
+                      </div>
+                    )}
+                  </span>
                 </div>
+              </div>
+              <div className="chat-last-message">
+                {room.lastedMessage
+                  ? room.lastedMessage.substring(0, 14)
+                  : null}
               </div>
             </li>
           ))

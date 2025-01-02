@@ -117,6 +117,7 @@ public class MentorProfileServiceImpl implements MentorProfileService {
             MentorProfile mentorProfile = MentorProfile.toEntity(mentorProfileDto, member, category);
             mentorProfile.setMentorStatus(2); // 초기값 2로 등록
             mentorProfileRepository.save(mentorProfile);
+            careerService.save_updateCareer(mentorProfileDto.getCareerDtos());
             
             return mentorProfile; 
         } catch (Exception e) {
@@ -157,7 +158,6 @@ public class MentorProfileServiceImpl implements MentorProfileService {
     			MentorProfileDto.builder()
 				                .memberNo(memberNo) // 멤버 정보 설정
 				                .categoryNo(26L) // 카테고리 정보 설정
-//				                .mentorCareer("경력을 입력해주세요.")
 				                .mentorIntroduce("소개글을 입력해주세요.")
 				                .mentorImage(null)
 				                .mentorStatus(2) // 초기 상태가 없으면 2로 설정
@@ -176,6 +176,8 @@ public class MentorProfileServiceImpl implements MentorProfileService {
     	//저장
     	MentorProfile saveMentor = mentorProfileRepository.save(mentorProfile);
     	
+    	List<Career> careers = careerService.saveDummyCareer(saveMentor.getMentorProfileNo());
+    	saveMentor.setCareers(careers);
     	return saveMentor;
 	}
     
@@ -335,10 +337,10 @@ public class MentorProfileServiceImpl implements MentorProfileService {
 //            mentorProfile.setMentorCareer(mentorProfileDto.getMentorCareer());
             mentorProfile.setMentorIntroduce(mentorProfileDto.getMentorIntroduce());
             mentorProfile.setMentorImage(mentorProfileDto.getMentorImage());
-            mentorProfile.setMentorStatus(2); // 2로 설정
+            mentorProfile.setMentorHeadline(mentorProfileDto.getMentorHeadline());
             System.out.println(">>>>> updateMentorProfile : " + mentorProfileDto.getMentorImage());
             mentorProfile.setCategory(category); // 카테고리 설정
-            careerService.updateCareer(mentorProfileDto.getCareerDtos());
+            careerService.save_updateCareer(mentorProfileDto.getCareerDtos());
             
             // 🔥 저장
             return mentorProfileRepository.save(mentorProfile);

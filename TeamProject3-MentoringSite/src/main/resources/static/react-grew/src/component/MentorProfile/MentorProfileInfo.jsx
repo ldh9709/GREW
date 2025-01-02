@@ -8,39 +8,44 @@ import { faHeart, faHeartCircleCheck, faHeartCirclePlus } from '@fortawesome/fre
 export default function MentorProfileInfo({ mentorProfile }) {
     const { token, member } = useMemberAuth();
     const [isFollow, setIsfollow] = useState(false);
-    // const [follow, setFollow] = useState({
-    //     followNo:0,
-    //     menteeMemberNo:member.memberNo,
-    //     mentorMemberNo:mentorProfile.memberNo
-    // })
-
+    const [follow, setFollow] = useState({});
+    console.log('멘토',mentorProfile)
   //팔로우 여부 체크
   const checkFollow = async () => {
     if (member.memberRole === 'ROLE_MENTEE') {
       const response = await followApi.isExistFollow(token, mentorProfile.memberNo);
-      console.log(response)
+      console.log('참거짓',response.data)
       setIsfollow(response.data);
     }
   }
+  //팔로우 목록 조회
+  const fetchGetFollow = async () => {
+    if (member.memberRole === 'ROLE_MENTEE') {
+      const response = await followApi.getfollow(token, mentorProfile.memberNo);
+      setFollow(response.data)
+    }
+  }
 
-  //팔로우 등록
+  //팔로우 등록, 삭제
   const handleFollowClick = async() => {
     if(token && member.memberRole==='ROLE_MENTEE'){
       if (!isFollow) {
-          const follow = {
+          const followItem = {
             menteeMemberNo:member.memberNo,
             mentorMemberNo:mentorProfile.memberNo
           }
-          await followApi.addfollow(token, follow);
-          setIsfollow(true);
+          await followApi.addfollow(token, followItem);
+          setIsfollow(followItem);
           mentorProfile.mentorFollowCount += 1;
         } else {
-          await followApi.deleteFollow(token, mentorProfile.memberNo);
-          setIsfollow(false);
+          await followApi.deleteFollow(token, follow.followNo);
+          setIsfollow(null);
           mentorProfile.mentorFollowCount -= 1;
       } 
-    }else{
-      alert("멘티 회원만 가능한 서비스입니다.")
+    }else if(member.memberRole==='ROLE_MENTOR'){
+      alert("멘티회원만 가능한 서비스 입니다.")
+    }else {
+      alert("로그인이 필요한 서비스 입니다.")
     }
   }
 
@@ -59,7 +64,8 @@ export default function MentorProfileInfo({ mentorProfile }) {
     
     useEffect(() => {
         checkFollow();
-    },[])
+        fetchGetFollow();
+    },[isFollow])
 
   return (
       <>

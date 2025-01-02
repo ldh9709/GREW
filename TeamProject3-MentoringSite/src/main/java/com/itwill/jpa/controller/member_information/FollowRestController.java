@@ -114,6 +114,34 @@ public class FollowRestController {
 		
 		return responseEntity;
 	}
+	
+	/* 팔로우 멘토, 멘티 번호로 조회 */
+	@Operation(summary = "팔로우 멘토, 멘티 번호로 조회")
+	@SecurityRequirement(name = "BearerAuth")//API 엔드포인트가 인증을 요구한다는 것을 문서화(Swagger에서 JWT인증을 명시
+	@PreAuthorize("hasRole('MENTEE')")//ROLE이 MENTEE인 사람만 접근 가능
+	@GetMapping("/{mentorNo}")
+	public ResponseEntity<Response> getFollow(Authentication authentication, @PathVariable("mentorNo") String mentorNo){
+		
+		PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
+		Long menteeNo = principalDetails.getMemberNo();
+		
+		
+		FollowResponseDto follow = followService.getFollow(menteeNo,Long.parseLong(mentorNo));
+		Response response = new Response();
+		response.setStatus(ResponseStatusCode.CHECK_FOLLOW_SUCCESS);
+		response.setMessage(ResponseMessage.CHECK_FOLLOW_SUCCESS);
+		response.setData(follow);
+		
+		HttpHeaders httpHeaders = new HttpHeaders();
+		httpHeaders.setContentType(new MediaType(MediaType.APPLICATION_JSON, Charset.forName("UTF-8")));
+		
+		ResponseEntity<Response> responseEntity =
+				 new ResponseEntity<Response>(response,httpHeaders, HttpStatus.OK);
+		
+		return responseEntity;
+	}
+	
+	
 	/*팔로잉 리스트 출력(멘토리스트)*/
 	@Operation(summary = "멘티 팔로잉 리스트 출력")
 	@SecurityRequirement(name = "BearerAuth")

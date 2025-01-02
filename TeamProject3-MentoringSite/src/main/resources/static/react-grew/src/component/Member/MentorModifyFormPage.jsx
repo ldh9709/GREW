@@ -14,6 +14,8 @@ const MentorEditForm = () => {
   const member = auth?.member || {};  //사용자 관련 정보 객체
   const mentorProfileNo = token ? member.mentorProfileNo : null;  //사용자 멘토 프로필 번호
 
+  const [mentorImage, setMentorImage] = useState(null); // 이미지 파일
+
   const navigate = useNavigate();
   /***** Context 가져오기 END *****/
 
@@ -22,9 +24,10 @@ const MentorEditForm = () => {
   /**** 멘토토 선언 START ****/
   const [mentor, setMentor] = useState({
     categoryNo: "",
+    mentorStatus: "",
     mentorIntroduce: "",
     mentorHeadline: "",
-    careerDtos: [{ companyName: "", jobTitle: "", startDate: "", endDate: "" }],
+    careerDtos: [{ careerCompanyName: "", careerJobTitle: "", careerStartDate: "", careerEndDate: "", mentorProfileNo: mentorProfileNo}],
     mentorImage: "",
   });
   /**** 멘토 선언 END ****/
@@ -39,7 +42,7 @@ const MentorEditForm = () => {
       ...prevMentor,
       careerDtos: [
         ...prevMentor.careerDtos,
-        { companyName: "", jobTitle: "", startDate: "", endDate: "" },
+        { careerCompanyName: "", careerJobTitle: "", careerStartDate: "", careerEndDate: "", mentorProfileNo: mentorProfileNo},
       ],
     }));
   };
@@ -115,6 +118,14 @@ const MentorEditForm = () => {
     }));
   };
 
+  const handleImageChange = (e) => {
+    setMentorImage(e.target.files[0]);
+    setMentor((prevMentor) => ({
+      ...prevMentor,
+      [e.target.name]: `/upload/mentor-profile/${mentorProfileNo}/${e.target.files[0].name}`,
+    }));
+  }
+
   const handleFocus = (e) => {
     e.target.type = "date"; // 포커스되면 type을 date로 변경
   };
@@ -131,8 +142,8 @@ const MentorEditForm = () => {
     try {
       const res = await memberApi.getMentorProfile(mentorProfileNo);
       if (res.data) {
-        const { categoryNo, mentorIntroduce, mentorHeadline, careerDtos} = res.data;
-        setMentor({ categoryNo, mentorIntroduce, mentorHeadline, careerDtos: careerDtos || []});
+        const { categoryNo, mentorIntroduce, mentorHeadline, careerDtos, mentorStatus, mentorImage} = res.data;
+        setMentor({ categoryNo, mentorIntroduce, mentorHeadline, careerDtos: careerDtos || [], mentorStatus: mentorStatus, mentorImage: mentorImage});
         initializeCategorySelection(categoryNo);
       }
     } catch (err) {
@@ -159,7 +170,11 @@ const MentorEditForm = () => {
     fetchMentorInfo();
   }, [categories, mentorProfileNo]);
   
-
+  const uploadImage= async () => {
+      const response = await memberApi.uploadMentorProfileImage(mentorProfileNo, mentorImage);
+      console.log("이미지 업로드 response : ", response);
+  
+  }
 
 
   const mentorProfileUpdateAction = async () => {
@@ -177,6 +192,11 @@ const MentorEditForm = () => {
         }
         return true; // 유효성 검사 통과
       });
+      if (mentorImage) {
+        await uploadImage(); // 생성된 번호로 이미지 업로드
+      } else {
+        alert("이미지를 선택하지 않아 기존의 이미지가 적용되었습니다.");
+      }
       const response = await memberApi.mentorProfileUpdateAction(mentorProfileNo, mentor);
       if (response.status === responseStatus.UPDATE_MENTOR_PROFILE_SUCCESS_CODE) {
         alert("멘토 정보 수정 성공");
@@ -270,14 +290,14 @@ const MentorEditForm = () => {
                   type="text"
                   placeholder="회사명"
                   value={career.careerCompanyName}
-                  onChange={(e) => handleCareerChange(index, "companyName", e.target.value)}
+                  onChange={(e) => handleCareerChange(index, "careerCompanyName", e.target.value)}
                   required
                 />
                 <input
                   type="text"
                   placeholder="직책"
                   value={career.careerJobTitle}
-                  onChange={(e) => handleCareerChange(index, "jobTitle", e.target.value)}
+                  onChange={(e) => handleCareerChange(index, "careerJobTitle", e.target.value)}
                   required
                 />
                 <input
@@ -286,20 +306,20 @@ const MentorEditForm = () => {
                   onFocus={handleFocus}
                   onBlur={handleBlur}
                   value={career.careerStartDate}
-                  onChange={(e) => handleCareerChange(index, "startDate", e.target.value)}
+                  onChange={(e) => handleCareerChange(index, "careerStartDate", e.target.value)}
                   placeholder="입사년월"
                   required
                 />
-                  <input
-                    type="text"
-                    name="endDate"
-                    onFocus={handleFocus}
-                    onBlur={handleBlur}
-                    value={career.careerEndDate}
-                    onChange={(e) => handleCareerChange(index, "endDate", e.target.value)}
-                    placeholder="퇴사년월"
-                    required
-                  />
+                <input
+                  type="text"
+                  name="endDate"
+                  onFocus={handleFocus}
+                  onBlur={handleBlur}
+                  value={career.careerEndDate}
+                  onChange={(e) => handleCareerChange(index, "careerEndDate", e.target.value)}
+                  placeholder="퇴사년월"
+                  required
+                />
               </div>
                 ))}
                 {/* 추가 버튼을 필드 목록 외부로 이동 */}
@@ -318,7 +338,8 @@ const MentorEditForm = () => {
               type="file"
               className="form-group-profileImage"
               id="profileImage"
-              name="profileImage"
+              name="mentorImage"
+              onChange={handleImageChange}
               accept="image/*"
             />
           </div>

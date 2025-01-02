@@ -1,8 +1,10 @@
 package com.itwill.jpa.dto.chatting_review;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import com.itwill.jpa.dto.member_information.MemberDto;
+import com.itwill.jpa.entity.chatting_review.ChatMessage;
 import com.itwill.jpa.entity.chatting_review.ChatRoom;
 import com.itwill.jpa.entity.member_information.Member;
 
@@ -25,6 +27,10 @@ public class ChatRoomDto {
 	private Long mentorNo;
 	private String chatRoomName;
 	private int chatRoomLeaveStatus;
+	
+	private int countIsRead;
+	private String lastedMessage;
+	
 	
 	public static ChatRoomDto toDto(ChatRoom mentoringRequestEntity) {
 		return ChatRoomDto.builder()
