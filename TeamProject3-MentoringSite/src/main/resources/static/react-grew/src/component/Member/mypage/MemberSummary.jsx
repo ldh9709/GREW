@@ -44,7 +44,6 @@ export default function MemberSummary() {
       setMentorImage(response.imageUrl || profileDefault);
     }
   };
-  ///////////////
 
   //회원 요약정보 count 가져옴
   const fetchCountSummary = async () => {

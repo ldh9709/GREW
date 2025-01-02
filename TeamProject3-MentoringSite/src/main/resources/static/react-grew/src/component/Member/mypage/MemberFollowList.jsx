@@ -5,7 +5,7 @@ import { faHeart } from '@fortawesome/free-solid-svg-icons';
 import * as followApi from "../../../api/followApi"
 import { useNavigate } from "react-router-dom";
 
-export default function FollowList() {
+export default function FollowList({ handleUpdate }) {
     /* Context에 저장된 토큰, 멤버정보 */
     const { token } = useMemberAuth();
     const [followList, setFollowList] = useState([])
@@ -31,6 +31,7 @@ export default function FollowList() {
         try {
             await followApi.deleteFollow(token,followNo);
             fetchFollowList(currentPage - 1);
+            handleUpdate();
         } catch (error) {
             alert('팔로우 취소 실패');
         }
@@ -71,7 +72,7 @@ export default function FollowList() {
                                         <img src={follow.mentorImage} alt="프로필 이미지" />
                                     </div>
                                     <div className="info"
-                                     onClick={() => navigate(`/mentor-profile/${follow.mentorNo}`)}
+                                     onClick={() => navigate(`/mentor-profile/${follow.mentorProfileNo}`)}
                                     >
                                         <p className="name"><strong>{follow.mentorName} 멘토</strong></p>
                                         <p>{follow.primaryCategory}</p>

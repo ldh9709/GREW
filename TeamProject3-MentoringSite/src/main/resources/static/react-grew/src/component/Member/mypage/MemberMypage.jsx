@@ -7,31 +7,16 @@ import MemberTabs from './MemberTabs'
 
 
 export default function MemberMypage() {
+  const [summary, setSummary] = useState(0);
 
-  // const { memberNo } = useParams();
-  // const [isDataReady, setIsDataReady] = useState(false);
-
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     try {
-  //       await memberApi.memberCountSummary(memberNo);
-  //       setIsDataReady(true);
-  //     } catch (error) {
-  //       console.log("데이터 로드 실패", error);
-  //     }
-  //   };
-  //   fetchData();
-  // },[memberNo])
-
-  // // 데이터가 준비되기 전까지 아무것도 렌더링하지 않음
-  // if (!isDataReady) {
-  //   return null; // 아무것도 렌더링하지 않음
-  // }
+  const handleUpdate = () => {
+    setSummary((prev) => prev + 1);
+  };
 
   return (
     <div>
-        <MemberSummary/>
-        <MemberTabs/>
+      <MemberSummary key={summary}/>
+      <MemberTabs handleUpdate={handleUpdate} />
     </div>
   )
 }
