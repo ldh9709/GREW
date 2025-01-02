@@ -1,0 +1,215 @@
+/* 공통 컨테이너 스타일 */
+.mentor-join-container {
+    align-items: center;
+    text-align: center;
+    width: 800px;
+    height: 100vh;
+    margin: 0 auto;
+    background-color: #ffffff;
+    padding: 30px;
+    font-family: "nanumsquare";
+}
+
+/* 공통 폼 그룹 스타일 */
+.form-group-profile {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-bottom: 20px; /* 폼 그룹 간격 통일 */
+}
+
+/* 가로 정렬을 위한 공통 스타일 */
+.form-group-profile.horizontal,
+.form-group-profile.horizontal-field {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 20px; /* 내부 요소 간 간격 */
+}
+
+/* 라벨 스타일 */
+.form-group-profile label {
+    width: 150px;
+    font-weight: bold;
+    text-align: left;
+    margin-bottom: 0;
+    line-height: 1.5;
+}
+
+/* 입력 필드 스타일 */
+.form-group-profile input,
+.form-group-profile textarea,
+.form-group-profile select {
+    width: 100%;
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+    font-family: "nanumsquare";
+}
+
+/* 전문 분야 셀렉트 박스 */
+.form-group-profile.horizontal-field select {
+    width: 200px;
+}
+
+/* 대/소분류 선택을 가로로 정렬하는 스타일 */
+.form-group-profile.horizontal-combined {
+    display: flex;
+    flex-direction: row;
+    align-items: center; /* 세로 정렬 */
+    gap: 10px; /* 대분류와 소분류 간의 간격을 줄임 */
+    width: 100%; /* 전체 너비 사용 */
+    margin-bottom: 20px; /* 다른 폼 그룹과 간격 맞춤 */
+}
+
+/* 대분류와 소분류의 공통 스타일 */
+.form-group-profile.horizontal-combined .category-select {
+    flex: 1; /* 동일한 비율로 크기 조정 */
+    max-width: 180px; /* 선택 박스 최대 너비 조정 */
+    padding: 10px; /* 내부 여백 */
+    font-size: 14px; /* 글자 크기 */
+    border: 1px solid #ccc; /* 경계선 */
+    border-radius: 5px; /* 경계선 라운딩 */
+}
+
+/* 대분류 라벨 */
+.form-group-profile.horizontal-combined .parent-label {
+    flex: 0 0 100px; /* 고정된 너비 */
+    font-weight: bold; /* 강조 */
+    text-align: left; /* 텍스트 정렬 */
+    margin-right: 60px; /* 라벨과 대분류 선택 칸 간격 */
+}
+
+/* 소분류 선택 박스를 대분류 쪽으로 더 붙이기 */
+.form-group-profile.horizontal-combined .child-label {
+    flex: 0 0 80px; /* 고정된 너비 */
+    font-weight: bold; /* 강조 */
+    text-align: left; /* 텍스트 정렬 */
+    margin-left: -80px; /* 소분류 선택 박스를 왼쪽으로 이동 */
+    margin-right: 5px; /* 라벨과 소분류 선택 칸 간격 */
+}
+
+/* 텍스트 영역 스타일 */
+.form-group-profile.horizontal textarea {
+    width: 500px;
+    height: 50px;
+    resize: none;
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+/* 프로필 이미지 스타일 */
+.form-group-profileImage {
+    margin-left: 33px;
+}
+
+/* 제출 버튼 스타일 */
+.submit-button {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    text-align: center;
+    margin-top: 20px; /* 다른 폼 그룹과 간격 */
+}
+
+.submit-button:hover {
+    background-color: #45a049;
+}
+
+/* 경력 텍스트 컨테이너 */
+.textarea-container {
+    display: flex;
+    flex-direction: column; /* 세로 정렬 */
+    gap: 10px; /* 각 텍스트 영역 간 간격 */
+    width: 100%; /* 라벨과 같은 너비 맞춤 */
+    max-width: 500px; /* 동일한 최대 너비 */
+    box-sizing: border-box;
+    align-items: flex-start; /* 추가 버튼 정렬 */
+}
+
+/* 개별 경력 텍스트 영역 */
+.textarea-container textarea {
+    width: 100%; /* 컨테이너 너비에 맞춤 */
+    height: 50px;
+    resize: none;
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+    font-family: "nanumsquare";
+}
+
+/* 텍스트 영역 행 */
+.textarea-row {
+    display: flex;
+    align-items: center; /* 세로 정렬 */
+    gap: 10px; /* 텍스트 필드와 버튼 간 간격 */
+    width: 100%; /* 컨테이너 너비에 맞춤 */
+}
+
+/* 개별 경력 텍스트 영역 */
+.textarea-row textarea {
+    flex: 1; /* 텍스트 필드가 가용 공간을 차지하도록 설정 */
+    height: 50px;
+    resize: none;
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-family: "nanumsquare";
+    box-sizing: border-box;
+}
+/***** 경력 컨테이너 *****/
+/* 경력 입력 필드 컨테이너 */
+.career-container {
+    display: flex;
+    flex-direction: column; /* 각 경력 행을 세로로 정렬 */
+    gap: 10px; /* 각 경력 행 간격 */
+  }
+  
+  /* 경력 입력 필드 행 */
+  .career-row {
+    display: flex;
+    gap: 7px; /* 필드 간 간격 */
+    align-items: center; /* 필드와 버튼 높이 맞춤 */
+  }
+  
+  /* 입력 필드 스타일 */
+  .career-row input {
+    flex: 1; /* 입력 필드 크기를 동일하게 설정 */
+    width: 120px; /* 최소 너비 */
+  }
+  
+  /* 추가 버튼 스타일 */
+  .add-career-button {
+    flex-shrink: 0; /* 버튼 크기를 고정 */
+    padding: 8px 20px; /* 버튼 패딩 */
+    font-size: 14px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .add-career-button:hover {
+    background-color: #0056b3;
+  }
+
+.form-group-profileImage {
+    width: 630px !important;
+    margin-right: 70px;
+
+}

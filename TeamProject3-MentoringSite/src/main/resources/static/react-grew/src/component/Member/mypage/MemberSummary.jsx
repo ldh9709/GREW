@@ -122,6 +122,7 @@ export default function MemberSummary() {
           return;
         }
         navigate(`/mentor/join`);
+        return;
       } else {
         const confirmation = window.confirm(
           member.memberRole === "ROLE_MENTEE"
@@ -148,9 +149,46 @@ export default function MemberSummary() {
     }
   };
 
+  //회원 권한 변경
+  const handleUpdateRoleButton = async (role) => {
+    try {
+      if (member.mentorProfileNo === 0) {
+        const confirmation = window.confirm("멘토를 신청 하시겠습니까?");
+        if (!confirmation) {
+          return;
+        }
+        navigate(`/mentor/join`);
+        return;
+      } else {
+        const confirmation = window.confirm(
+          member.memberRole === "ROLE_MENTEE"
+            ? "멘토로 변경하시겠습니까?"
+            : "멘티로 변경하시겠습니까?"
+        );
+        if (!confirmation) {
+          return;
+        }
+      }
+
+      
+      const response = await memberApi.updateMemberRole(token, role);
+      if (response.status === 2012) {
+        // 기존 쿠키 삭제
+        // document.cookie = "member=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+        login(response.data.accessToken);
+      }
+      //강제 리로드
+      // window.location.reload();
+      // //성공 후 메인으로 이동
+      navigate(`/main`);
+    } catch (error) {
+      console.error("회원 권한 변경 실패", error);
+    }
+  };
+
   //이미지 클릭시 멘토프로필 수정폼 이동
   const handleClickImage = () => {
-    navigate(`/mentor/modify`);
+    navigate(`/profile/mentorProfile`);
   };
 
   useEffect(() => {
@@ -172,7 +210,7 @@ export default function MemberSummary() {
           <>
             <h1>
               {summary.name}님 안녕하세요{" "}
-              <a href="/member/profile/edit">
+              <a href="/profile/memberProfile">
                 <FontAwesomeIcon icon={faGear} /> 개인정보 변경
               </a>
             </h1>
@@ -220,7 +258,7 @@ export default function MemberSummary() {
           <>
             <h1>
               {summary.name}님 안녕하세요{" "}
-              <a href="/member/profile/edit">
+              <a href="/profile/memberProfile">
                 <FontAwesomeIcon icon={faGear} /> 개인정보 변경
               </a>
             </h1>
@@ -266,7 +304,7 @@ export default function MemberSummary() {
               onClick={() => {
                 handleUpdateRole("ROLE_MENTEE");
               }}
-            > 
+            >
             멘티 전환
             </button>
           </>

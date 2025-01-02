@@ -105,6 +105,45 @@ public class MemberRestController {
 				
 	}
 	
+	/* 이메일 중복 */
+	@Operation(summary = "이메일 중복 검사")
+	@GetMapping("/check-memberEmail")
+	public ResponseEntity<Response> checkEmailDupl(@RequestParam(name = "memberEmail") String memberEmail){
+		
+		Boolean checkEmailDupl = memberService.checkEmailDupl(memberEmail);
+
+		Response response = new Response();
+		
+		//응답 객체 생성
+		
+		if(checkEmailDupl == false) {
+			//응답객체에 코드, 메시지, 객체 설정
+			response.setStatus(ResponseStatusCode.DUPLICATION_MENBER_EMAIL);
+			response.setMessage(ResponseMessage.DUPLICATION_MENBER_EMAIL);
+			response.setData(null);
+		}
+		
+		if(checkEmailDupl == true) {
+			//응답객체에 코드, 메시지, 객체 설정
+			response.setStatus(ResponseStatusCode.CONFIRM_EMAIL_SUCCESS);
+			response.setMessage(ResponseMessage.CONFIRM_EMAIL_SUCCESS);
+			response.setData(null);
+		}
+		
+		//인코딩 타입 설정
+		HttpHeaders httpHeaders = new HttpHeaders();
+		httpHeaders.setContentType(new MediaType(MediaType.APPLICATION_JSON, Charset.forName("UTF-8")));
+		
+		//반환할 응답Entity 생성
+		ResponseEntity<Response> responseEntity =
+				 new ResponseEntity<Response>(response, httpHeaders, HttpStatus.OK);
+		
+		//반환
+		return responseEntity;
+				
+	}
+	
+	
 	@Autowired
 	private EmailService emailService;
 	
@@ -459,8 +498,8 @@ public class MemberRestController {
 		
 		//인증 제공자가 Email이 아니면
 		if(!memberService.getMemberByMemberEmail(memberEmail).getMemberProvider().equals("Email")) {
-			response.setStatus(ResponseStatusCode.MEMBER_IS_NOT_EMAIL);
-			response.setMessage(ResponseMessage.MEMBER_IS_NOT_EMAIL);
+			response.setStatus(ResponseStatusCode.MEMBER_PROVIDER_IS_NOT_EMAIL);
+			response.setMessage(ResponseMessage.MEMBER_PROVIDER_IS_NOT_EMAIL);
 			ResponseEntity<Response> responseEntity = 
 					new ResponseEntity<Response>(response, httpHeaders, HttpStatus.OK);
 			return responseEntity;
@@ -507,6 +546,65 @@ public class MemberRestController {
 	    return responseEntity;
 	}
 	
+	/***** 이메일 인증 (1) : 이메일 발송 *****/
+	@Operation(summary = "1. 이메일 인증번호 발송")
+	@PostMapping("/sendVerificationCode")
+	public ResponseEntity sendVerificationCode(@RequestBody MemberDto.JoinFormDto memberDto) {
+		
+		String memberEmail = memberDto.getEmail();
+		
+		Response response = new Response();
+			    
+	    try {
+	    	memberService.sendVerificationCode(memberEmail);;
+	        response.setStatus(ResponseStatusCode.EMAIL_SEND_SUCCESS);
+	        response.setMessage(ResponseMessage.EMAIL_SEND_SUCCESS);
+	        
+	    } catch (Exception e) {
+	        response.setStatus(ResponseStatusCode.EMAIL_SEND_FAIL);
+	        response.setMessage(ResponseMessage.EMAIL_SEND_FAIL);
+	    }
+	    
+	    return ResponseEntity.ok(response);
+	}
+	
+	/***** 아이디 찾기: 인증번호 확인 후 아이디 반환 *****/
+	@Operation(summary = "2. 이메일 인증번호 확인")
+	@PostMapping("/sendVerificationCode/verificationCode")
+	public ResponseEntity<Response> verificationCode(@RequestBody MemberDto.certificationCode memberDto) {
+	    
+		String memberEmail = memberDto.getMemberEmail();
+		Integer inputCode = memberDto.getInputCode();
+		
+		System.out.println("요청 데이터: " + memberDto);
+	    System.out.println("memberEmail: " + memberDto.getMemberEmail());
+	    System.out.println("inputCode: " + memberDto.getInputCode());
+	    
+		Boolean isChecked =	memberService.certificationCodeByFindId(memberEmail, inputCode);
+		
+		Response response = new Response();
+	    
+		HttpHeaders httpHeaders=new HttpHeaders();
+		httpHeaders.setContentType(new MediaType(MediaType.APPLICATION_JSON,Charset.forName("UTF-8")));
+		
+		
+	    //인증번호가 틀리면 실패 반환
+		if(!isChecked) {
+			response.setStatus(ResponseStatusCode.INPUTCODE_CONFIRM_FAIL);
+			response.setMessage(ResponseMessage.INPUTCODE_CONFIRM_FAIL);
+			ResponseEntity<Response> responseEntity = 
+					new ResponseEntity<Response>(response, httpHeaders, HttpStatus.OK);
+			return responseEntity;
+		}
+		
+		response.setStatus(ResponseStatusCode.INPUTCODE_CONFIRM_SUCCESS);
+		response.setMessage(ResponseMessage.INPUTCODE_CONFIRM_SUCCESS);
+		
+		ResponseEntity<Response> responseEntity = 
+				new ResponseEntity<Response>(response, httpHeaders, HttpStatus.OK);
+		
+	    return responseEntity;
+	}
 	
 	/* 멘티 회원 활동 요약 */
 	@Operation(summary = "멘티 활동 내역 요약")

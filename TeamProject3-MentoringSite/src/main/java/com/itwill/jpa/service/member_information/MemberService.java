@@ -66,12 +66,16 @@ public interface MemberService {
 	//아이디 찾기 시 메일 발송
 	void findId(MemberDto.findId memberDto);
 	
+	//이메일 인증 시 임시 비밀번호 메일 발송
+	void sendVerificationCode(String memberEmail);
+	
 	//아이디 찾기 시 인증번호가 일치하는지 확인
 	boolean certificationCodeByFindId(String memberEmail, Integer inputCode);
 	
 	//비밀번호 찾기 시 임시 비밀번호 메일 발송
 	void findPassword(MemberDto.findPassword memberDto);
-
+	
+		
 	//회원 신고 카운트 증가
 	Member incrementReportCount(Long MemberNo);
 	
