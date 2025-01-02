@@ -49,12 +49,7 @@ export const loginAction = async (sendJsonObject) => {
     form.append('username', sendJsonObject.memberId)
     form.append('password', sendJsonObject.memberPassword)
 
-    console.log("memberId : " , sendJsonObject.memberId);
-    console.log("memberPassword : ", sendJsonObject.memberPassword);
-
     const response = await axios.post("http://localhost:8080/login", form, header,);
-
-    console.log("response : " , response)
 
     return response.data;
 }
@@ -122,8 +117,11 @@ export const sendVerificationCode = async (memberEmail) => {
 }
 
 /* 2. 이메일 인증 - 인증번호 확인  */
-export const verificationCode = async (memberEmail, inputCode) => {
-    const response = await fetch(`${BACKEND_SERVER}/member/findId/certificationCode`, {
+export const verificationInputCode = async (memberEmail, inputCode) => {
+    console.log("요청 URL:", `${BACKEND_SERVER}/sendVerificationCode/verificationCode`);
+    console.log("요청 데이터:", { memberEmail, inputCode });
+
+    const response = await fetch(`${BACKEND_SERVER}/member/sendVerificationCode/verificationCode`, {
         method: 'POST',
         headers: {
             'Content-type': 'application/json'
@@ -134,7 +132,7 @@ export const verificationCode = async (memberEmail, inputCode) => {
         })
     });
     const resultJsonObject = await response.json();
-
+    console.log("인증번호 resultJsonObject:", resultJsonObject);
     return resultJsonObject;
 }
 

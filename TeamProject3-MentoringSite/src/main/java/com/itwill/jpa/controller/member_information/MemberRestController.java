@@ -537,6 +537,10 @@ public class MemberRestController {
 		String memberEmail = memberDto.getMemberEmail();
 		Integer inputCode = memberDto.getInputCode();
 		
+		System.out.println("요청 데이터: " + memberDto);
+	    System.out.println("memberEmail: " + memberDto.getMemberEmail());
+	    System.out.println("inputCode: " + memberDto.getInputCode());
+	    
 		Boolean isChecked =	memberService.certificationCodeByFindId(memberEmail, inputCode);
 		
 		Response response = new Response();
@@ -549,15 +553,6 @@ public class MemberRestController {
 		if(!isChecked) {
 			response.setStatus(ResponseStatusCode.INPUTCODE_CONFIRM_FAIL);
 			response.setMessage(ResponseMessage.INPUTCODE_CONFIRM_FAIL);
-			ResponseEntity<Response> responseEntity = 
-					new ResponseEntity<Response>(response, httpHeaders, HttpStatus.OK);
-			return responseEntity;
-		}
-		
-		//인증 제공자가 Email이 아니면
-		if(!memberService.getMemberByMemberEmail(memberEmail).getMemberProvider().equals("Email")) {
-			response.setStatus(ResponseStatusCode.MEMBER_PROVIDER_IS_NOT_EMAIL);
-			response.setMessage(ResponseMessage.MEMBER_PROVIDER_IS_NOT_EMAIL);
 			ResponseEntity<Response> responseEntity = 
 					new ResponseEntity<Response>(response, httpHeaders, HttpStatus.OK);
 			return responseEntity;

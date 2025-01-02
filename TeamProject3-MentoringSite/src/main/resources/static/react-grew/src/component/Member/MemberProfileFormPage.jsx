@@ -1,7 +1,7 @@
 import "../../css/memberPage.css";
 import React, { useEffect, useState } from "react";
 import { getCookie } from "../../util/cookieUtil";
-import { memberProfile, updateAction, sendVerificationCode, verificationCode } from "../../api/memberApi";
+import { memberProfile, updateAction, sendVerificationCode, verificationInputCode } from "../../api/memberApi";
 import * as categoryApi from "../../api/categoryApi";
 import * as responseStatus from "../../api/responseStatusCode";
 import { useNavigate } from "react-router-dom";
@@ -48,8 +48,11 @@ const MemberProfileFormPage = () => {
       memberEmail: newEmail,
     }));
 
-    setIsEmailChanged(newEmail !== originalEmail);
-    setIsEmailVerified(false); // 이메일 변경 시 인증 초기화
+    setIsEmailChanged(newEmail !== originalEmail); // 이메일 변경 여부 확인
+    setIsEmailVerified(false); // 이메일 변경 시 인증 완료 상태 초기화
+    console.log("isEmailChanged:", isEmailChanged);
+    console.log("isEmailVerified:", isEmailVerified);
+    console.log("Disabled 상태:", isEmailChanged && !isEmailVerified);
   };
   
    /* 인증번호 요청 핸들러 */
@@ -66,7 +69,7 @@ const MemberProfileFormPage = () => {
   /* 인증번호 검증 핸들러 */
   const handleVerifyCode = async () => {
     try {
-      const response = await verificationCode(member.memberEmail, verificationCode); // 서버에 인증번호 검증 요청
+      const response = await verificationInputCode(member.memberEmail, verificationCode); // 서버에 인증번호 검증 요청
       switch(response.status)  {
         case responseStatus.INPUTCODE_CONFIRM_FAIL:
           toast.error("인증번호가 올바르지 않습니다.");
@@ -76,9 +79,11 @@ const MemberProfileFormPage = () => {
           break;
         case responseStatus.INPUTCODE_CONFIRM_SUCCESS:
           toast.success("이메일이 인증되었습니다.");
+          setIsEmailVerified(true); // 인증 완료 상태 업데이트
+          break;
         default:
           toast.error("default에러가 발생하였습니다.");
-
+          break;
       }
     } catch (error) {
         toast.error("catch에러가 발생하였습니다.");
@@ -332,7 +337,7 @@ const MemberProfileFormPage = () => {
               className="profile-button"
               onClick={updateMember}
               value="수정완료"
-              disabled={!isEmailVerified}
+              disabled={isEmailChanged && !isEmailVerified} // 조건 추가
             />
           </div>
         </form>
