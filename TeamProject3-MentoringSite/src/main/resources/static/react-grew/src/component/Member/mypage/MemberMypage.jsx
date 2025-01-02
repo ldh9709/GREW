@@ -7,15 +7,15 @@ import MemberTabs from './MemberTabs'
 
 
 export default function MemberMypage() {
-  const [summary, setSummary] = useState(0);
+  const [triggerUpdate, setTriggerUpdate] = useState(0);
 
   const handleUpdate = () => {
-    setSummary((prev) => prev + 1);
+    setTriggerUpdate((prev) => prev + 1);
   };
 
   return (
     <div>
-      <MemberSummary key={summary}/>
+      <MemberSummary triggerUpdate={triggerUpdate}/>
       <MemberTabs handleUpdate={handleUpdate} />
     </div>
   )
