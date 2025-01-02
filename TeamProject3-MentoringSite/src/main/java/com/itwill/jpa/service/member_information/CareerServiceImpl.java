@@ -26,8 +26,9 @@ public class CareerServiceImpl implements CareerService{
     	return careerDtos;
 	}
 	@Override
-	public List<CareerDto> save_updateCareer(List<CareerDto> careerDtos) {
+	public List<CareerDto> save_updateCareer(List<CareerDto> careerDtos, Long mentorProfileNo) {
 		for (int i = 0; i < careerDtos.size(); i++) {
+        	careerDtos.get(i).setMentorProfileNo(mentorProfileNo);
 			careerRepository.save(Career.toEntity(careerDtos.get(i)));
 		}
 		return careerDtos;
