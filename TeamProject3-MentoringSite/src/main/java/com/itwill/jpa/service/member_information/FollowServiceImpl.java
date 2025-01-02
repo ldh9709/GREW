@@ -36,6 +36,7 @@ public class FollowServiceImpl implements FollowService{
 	public Boolean isExistFollow(Long menteeNo, Long mentorNo) {
 		try {
 			Boolean followExist =followReporitory.existsByMenteeMember_MemberNoAndMentorMember_MemberNo(menteeNo, mentorNo);
+			
 			return followExist;
 		} catch (Exception e) {
 			throw new CustomException(ResponseStatusCode.CHECK_FOLLOW_FAIL, ResponseMessage.CHECK_FOLLOW_FAIL, e);
@@ -46,7 +47,7 @@ public class FollowServiceImpl implements FollowService{
 	public FollowRequestDto createFollow(FollowRequestDto followDto) {
 		try {
 			/* 팔로우가 이미 되어있는지 확인 */
-			Boolean followExist = isExistFollow(followDto.getMenteeMemberNo(), followDto.getMentorMemberNo());
+			Boolean followExist = isExistFollow(followDto.getMenteeMemberNo(), followDto.getMentorMemberNo())!=null ? true : false;
 			
 			/* 팔로우 멘토 follow_count 증가*/
 			Member mentorMember = memberRepository.findById(followDto.getMentorMemberNo()).get();
@@ -57,6 +58,7 @@ public class FollowServiceImpl implements FollowService{
 			Follow follow = Follow.toEntity(followDto);
 			followReporitory.save(follow);
 			return followDto;
+			
 		} catch (Exception e) {
 			throw new CustomException(ResponseStatusCode.CREATE_FOLLOW_FAIL, ResponseMessage.CREATE_FOLLOW_FAIL,e);
 		}
@@ -65,12 +67,11 @@ public class FollowServiceImpl implements FollowService{
 	/*팔로우 취소*/
 	public Long deleteFollow(Long followNo) {
 		try {
-			
 			Follow follow = followReporitory.findById(followNo).get();
-			/* 팔로우 멘토 follow_count감소*/
-			followReporitory.findById(follow.getFollowNo()).get();
 			
-			Member mentorMember = follow.getMentorMember();
+			/* 팔로우 멘토 follow_count감소*/
+			
+			Member mentorMember = memberRepository.findById(follow.getMentorMember().getMemberNo()).get();
 			mentorMember.getMentorProfile().setMentorFollowCount(mentorMember.getMentorProfile().getMentorFollowCount()-1); 
 			memberRepository.save(mentorMember);
 			
@@ -101,6 +102,16 @@ public class FollowServiceImpl implements FollowService{
 		}
 		
 	}
+
+	@Override
+	public FollowResponseDto getFollow(Long menteeNo, Long mentorNo) {
+		try {
+			Follow follow = followReporitory.findByMenteeMember_MemberNoAndMentorMember_MemberNo(menteeNo, mentorNo);
+			return FollowResponseDto.toDto(follow);
+		} catch (Exception e) {
+			throw new CustomException(ResponseStatusCode.READ_MENTORLIST_FAIL, ResponseMessage.READ_MENTORLIST_FAIL, e);
+		}
+	}
 	
 	/*팔로워 수(멘티 수)*/
 	public Integer countFollower(Long mentorMemberNo) {
@@ -110,6 +121,7 @@ public class FollowServiceImpl implements FollowService{
 			throw new CustomException(ResponseStatusCode.READ_MENTEE_COUNT_FAIL, ResponseMessage.READ_MENTEE_COUNT_FAIL, e);
 		}
 	}
-	
+
+
 	
 }

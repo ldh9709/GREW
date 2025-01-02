@@ -26,6 +26,8 @@ public class ChatRoomDto {
 	private String chatRoomName;
 	private int chatRoomLeaveStatus;
 	
+	private int countIsRead;
+	
 	public static ChatRoomDto toDto(ChatRoom mentoringRequestEntity) {
 		return ChatRoomDto.builder()
 				.chatRoomNo(mentoringRequestEntity.getChatRoomNo())

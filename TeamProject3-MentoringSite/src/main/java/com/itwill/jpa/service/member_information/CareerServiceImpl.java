@@ -26,10 +26,24 @@ public class CareerServiceImpl implements CareerService{
     	return careerDtos;
 	}
 	@Override
-	public List<CareerDto> updateCareer(List<CareerDto> careerDtos) {
+	public List<CareerDto> save_updateCareer(List<CareerDto> careerDtos) {
 		for (int i = 0; i < careerDtos.size(); i++) {
 			careerRepository.save(Career.toEntity(careerDtos.get(i)));
 		}
 		return careerDtos;
+	}
+	@Override
+	public List<Career> saveDummyCareer(Long mentorProfileNo) {
+		CareerDto careerDto = CareerDto.builder()
+				.careerCompanyName("유령 회사")
+				.careerJobTitle("유령 직책")
+				.careerStartDate(null)
+				.careerEndDate(null)
+				.mentorProfileNo(mentorProfileNo)
+				.build();
+    	Career career = careerRepository.save(Career.toEntity(careerDto));
+		List<Career> careers = new ArrayList<>();
+		careers.add(career);
+		return careers;
 	}
 }

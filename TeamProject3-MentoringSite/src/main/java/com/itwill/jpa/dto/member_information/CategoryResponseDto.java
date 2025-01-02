@@ -22,22 +22,36 @@ public class CategoryResponseDto {
     private String categoryName;
     private Integer categoryDepth;
     private List<CategoryResponseDto> childCategories;
+    private CategoryResponseDto parentCategory;
 
     /*
      * Entity -> DTO
      */
-    public static CategoryResponseDto toDto(Category categoryEntity) {
-    	List<CategoryResponseDto> childcategoryList = new ArrayList<>();
-    	
-    	for (Category category : categoryEntity.getChildCategories()) {
-			childcategoryList.add(CategoryResponseDto.toDto(category));
-		}
-    	
+    public static CategoryResponseDto toBasic(Category categoryEntity) {
         return CategoryResponseDto.builder()
         		.categoryNo(categoryEntity.getCategoryNo())
                 .categoryName(categoryEntity.getCategoryName())
                 .categoryDepth(categoryEntity.getCategoryDepth())
+                .build();
+    }
+    
+    public static CategoryResponseDto toDto(Category categoryEntity) {
+    	List<CategoryResponseDto> childcategoryList = new ArrayList<>();
+    	
+    	if(categoryEntity.getChildCategories() != null) {
+    		for (Category category : categoryEntity.getChildCategories()) {
+    			childcategoryList.add(CategoryResponseDto.toBasic(category));
+    		}
+    	}
+    	
+        return CategoryResponseDto.builder()
+                .categoryNo(categoryEntity.getCategoryNo())
+                .categoryName(categoryEntity.getCategoryName())
+                .categoryDepth(categoryEntity.getCategoryDepth())
                 .childCategories(childcategoryList)
+                .parentCategory(categoryEntity.getParentCategory() != null 
+                    ? CategoryResponseDto.toBasic(categoryEntity.getParentCategory()) 
+                    : null)
                 .build();
     }
 

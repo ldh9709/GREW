@@ -10,6 +10,7 @@ DELETE  /follow/{followNo}                     :팔로윙 취소
 */
 
 
+//팔로우 여부
 export const isExistFollow = async (token,mentorNo) => {
     const response = await fetch(`${BACKEND_SERVER}/follow/is-exist/${mentorNo}`, {
         method: 'GET',
@@ -44,6 +45,21 @@ export const addfollow = async(token,sendJsonObject)=>{
 //     const responseJsonObject = await response.json();
 //     return responseJsonObject;
 // }
+
+//팔로우 조회(멘토,멘티번호)
+export const getfollow = async (token,mentorNo) => {
+
+    const response = await fetch(`${BACKEND_SERVER}/follow/${mentorNo}`,{
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}` // Authorization 헤더에 JWT 토큰 추가
+        }
+    })
+    const responseJsonObject = await response.json();
+    return responseJsonObject;
+}
+
 //팔로잉 리스트 조회
 export const followList = async (token,page) => {
 
