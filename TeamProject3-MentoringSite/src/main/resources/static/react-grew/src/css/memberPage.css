@@ -772,3 +772,9 @@ legend {
   background-color: #cccccc;
   cursor: not-allowed;
 }
+
+/* 관심사 */
+.interest-message {
+  color: red;
+  font-size: 15px;
+}

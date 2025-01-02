@@ -6,24 +6,16 @@ import { logout, memberProfile, getMentorProfile, updateMemberRole } from "../ap
 
 export default function HeaderMenu() {
   const navigate = useNavigate();
-  
+  /* CONTEXT */
   const auth = useMemberAuth();
-
   const token = auth?.token || null;
   console.log("토큰 : ", auth?.token || null);
   const member = auth?.member || {};
   console.log("멤버 : ", auth?.member || {});
   const login = auth.login;
-  
-
-
   const memberNo = token ? member.memberNo : null;
-  console.log("멤버 넘버 : ", memberNo);
-
   const mentorProfileNo = token ? member.mentorProfileNo : null;
-  console.log("멘토 프로필 넘버 : ", mentorProfileNo);
-
-  
+  /* CONTEXT */
 
   // 로그인 페이지로 이동
   const handleLoginNavigate = () => {
@@ -52,8 +44,6 @@ export default function HeaderMenu() {
   // 프로필 페이지로 이동
   const handleProfileNavigate = async () => {
     try {
-      
-      
       const memberProfileResponse = await memberProfile(token);
       console.log("멤버 프로필 : ", memberProfileResponse);
       
@@ -64,11 +54,9 @@ export default function HeaderMenu() {
       const checkMemberCategory = memberProfileResponse?.data?.interests?.some(
         (interest) => interest.categoryNo === 19
       );
-      console.log("checkMemberCategory : ", checkMemberCategory);
 
     if (checkMemberCategory) {
         navigate("/member/profile/edit");
-
       } else {
         navigate("/member/profile"); // 기본 프로필로 이동
       }
@@ -79,44 +67,45 @@ export default function HeaderMenu() {
   };
 
   const handleUpdateRole = async (role) => {
-        try {
-            if (member.mentorProfileNo === 0) {
-                const confirmation = window.confirm('멘토를 신청 하시겠습니까?')
-                if (!confirmation) {
-                    return;
-                }
-                navigate(`/mentor/join`);
-                return;
-            } else {
-                const confirmation = window.confirm(
-                    member.memberRole === "ROLE_MENTEE" 
-                    ? "멘토로 변경하시겠습니까?" 
-                    : "멘티로 변경하시겠습니까?"
-                );
-                if (!confirmation) {
-                    return;
-                }
-            }          
-
-            const response = await updateMemberRole(token, role);
-            if (response.status === 2012) {
-                login(response.data.accessToken);
-              }
-                navigate(`/main`);
-        } catch (error) {
-          console.error('회원 권한 변경 실패', error);
+    try {
+      if (member.mentorProfileNo === 0) {
+          const confirmation = window.confirm('멘토를 신청 하시겠습니까?')
+          if (!confirmation) {
+              return;
+          }
+          navigate(`/mentor/join`);
+          return;
+      } else {
+          const confirmation = window.confirm(
+              member.memberRole === "ROLE_MENTEE" 
+              ? "멘토로 변경하시겠습니까?" 
+              : "멘티로 변경하시겠습니까?"
+          );
+          if (!confirmation) {
+              return;
+          }
+      }          
+      const response = await updateMemberRole(token, role);
+      if (response.status === 2012) {
+          login(response.data.accessToken);
         }
-    };
+          navigate(`/main`);
+  } catch (error) {
+    console.error('회원 권한 변경 실패', error);
+  }
+};
 
-    const handleAdminNavigate = () =>{
-      navigate(`/admin`);
-    }
+  // 어드민 페이지 이동
+  const handleAdminNavigate = () =>{
+    navigate(`/admin`);
+  }
 
   // 스타일 정의
   const navStyle = {
     padding: "10px 20px",
   };
 
+  //오른쪽 바 스타일
   const rightMenuBarStyle = {
     display: "flex",
     justifyContent: "flex-end", // 오른쪽 정렬
