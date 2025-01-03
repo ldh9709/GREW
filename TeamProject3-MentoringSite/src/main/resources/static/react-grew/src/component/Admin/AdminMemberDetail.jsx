@@ -34,12 +34,12 @@ export default function AdminMemberDetail({mentor, onClose, refreshMentorData}) 
         }
        
     }
-    //멘토 거절
+    //멘토 반려
     const handleReject = async() => {
-        const confirmation = window.confirm('멘토를 거절절하시겠습니까?')
+        const confirmation = window.confirm('멘토를 반려하시겠습니까?')
         if(confirmation) {
             await adminApi.adminUpdateMentorStatus(token,mentor.memberNo,5);
-            alert('거절되었습니다.')
+            alert('반려되었습니다.')
             onClose();
         }
     }
@@ -89,7 +89,7 @@ export default function AdminMemberDetail({mentor, onClose, refreshMentorData}) 
             </div>
             <div className="mentor-actions">
                 <button className="approve-btn" onClick={handleApproval}>승인</button>
-                <button className="reject-btn" onClick={handleReject}>거절</button>
+                <button className="reject-btn" onClick={handleReject}>반려</button>
             </div>
         </div>
 
