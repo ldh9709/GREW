@@ -10,6 +10,7 @@ const MentorEditForm = () => {
 
   /***** Context 가져오기 START *****/
   const auth = useMemberAuth(); //사용자 인증 정보를 가져온다
+  const login = auth.login; //사용자 로그인 관련(토큰 수정)
   const token = auth?.token || null;  //사용자 인증 토큰
   const member = auth?.member || {};  //사용자 관련 정보 객체
   const mentorProfileNo = token ? member.mentorProfileNo : null;  //사용자 멘토 프로필 번호
@@ -200,6 +201,11 @@ const MentorEditForm = () => {
       const response = await memberApi.mentorProfileUpdateAction(mentorProfileNo, mentor);
       if (response.status === responseStatus.UPDATE_MENTOR_PROFILE_SUCCESS_CODE) {
         alert("멘토 정보 수정 성공");
+        const response = await memberApi.updateMemberRole(token, "ROLE_MENTEE");
+        if (response.status === 2012) {
+          // 기존 쿠키 삭제
+          login(response.data.accessToken);
+        }
         navigate("/main");
       } else {
         alert("수정 실패");
