@@ -6,8 +6,13 @@ import * as responseStatus from "../../api/responseStatusCode";
 import { toast } from "react-toastify";
 
 const MemberFindIdForm = () => {
+  // 페이지 이동
   const navigate = useNavigate();
 
+  // 이메일 유효성 검사 정규식
+  const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
+  // 멤버 선언
   const [member, setMember] = useState({
     memberId: "",
     memberName: "",
@@ -26,7 +31,7 @@ const MemberFindIdForm = () => {
       return;
     }
 
-    if(!member.memberEmail) {
+    if(!member.memberEmail || !emailRegex.test(member.memberEmail)) {
       toast.error("이메일을 다시 확인해주세요");
       return;
     }
@@ -36,8 +41,10 @@ const MemberFindIdForm = () => {
       case responseStatus.EMAIL_SEND_SUCCESS:
         toast.success("이메일이 발송되었습니다.");
         break;
+      case responseStatus.EMAIL_SEND_FAIL:
+        toast.error("이메일 발송에 실패하였습니다. 정보를 다시 확인해주세요.")
       default:
-        toast.error("이메일을 다시 확인해주세요.")
+        toast.error("입력하신 정보를 다시 확인해주세요.")
         break;
     }
   }

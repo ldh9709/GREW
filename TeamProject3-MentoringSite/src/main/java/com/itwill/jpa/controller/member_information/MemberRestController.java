@@ -87,8 +87,8 @@ public class MemberRestController {
 		
 		if(checkIdDupl == true) {
 			//응답객체에 코드, 메시지, 객체 설정
-			response.setStatus(ResponseStatusCode.CREATED_MEMBER_FAIL);
-			response.setMessage("삐빅 아이디 중복입니다");
+			response.setStatus(ResponseStatusCode.DUPLICATION_MENBER_ID);
+			response.setMessage(ResponseMessage.DUPLICATION_MENBER_ID);
 			response.setData(null);
 		}
 		

@@ -3,6 +3,7 @@ import "../../css/memberPage.css" // 별도의 CSS 파일을 연결해 스타일
 import { useNavigate } from "react-router-dom";
 import * as memberApi from "../../api/memberApi"
 import * as responseStatus from "../../api/responseStatusCode";
+import { toast } from "react-toastify";
 
 const MemberFindPasswordForm = () => {
     
@@ -19,22 +20,44 @@ const MemberFindPasswordForm = () => {
     };
 
     const findPassword = async () => {
-        const response = await memberApi.findPassword(member);
-        console.log("response : ", response);
-        console.log("response.status : ", response.status);
+        try {
+       
+            if(!member.memberId) {
+                toast.error("아이디를 입력해주세요.");
+                return;
+            }
 
-        switch(response.status) {
-            case responseStatus.PASSWORD_RESET_SUCCESS:
-                alert("이메일로 임시 비밀번호가 전송되었습니다.");
-                navigate('/login');
-            default:
-                alert("오류가 발생하였습니다.");
-                navigate('/main');
+            if(!member.memberName) {
+                toast.error("이름을 입력해주세요요.");
+                return;
+            }
+
+            if(!member.memberEmail) {
+                toast.error("이메일을 다시 확인해주세요.");
+                return;
+            }
+
+            const response = await memberApi.findPassword(member);
+            console.log(response.trace);
+            
+            switch(response.status) {
+                case responseStatus.PASSWORD_RESET_SUCCESS:
+                    toast.success("이메일로 임시 비밀번호가 전송되었습니다.");
+                    navigate('/login');
+                    break;
+                case responseStatus.NOT_FOUND_MEMBER:
+                    toast.error("이메일과 일치하는 회원이 없습니다.");
+                    break;
+                default:
+                    toast.error("오류가 발생하였습니다. 정보를 다시 확인해주세요.");
+                    break;
+            }
+        } catch (error) {
+            console.log("에러 : ", error);
         }
     }
 
     return (
-
         <div className="password-reset-container">
         <h1>개인회원 비밀번호 찾기</h1>
         <p className="description">

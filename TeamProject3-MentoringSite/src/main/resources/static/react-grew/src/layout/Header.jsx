@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import "../css/styles.css";
 import { useNavigate } from "react-router-dom";
 import { useMemberAuth } from "../util/AuthContext";
@@ -13,8 +13,8 @@ export default function HeaderMenu() {
   const member = auth?.member || {};
   console.log("멤버 : ", auth?.member || {});
   const login = auth.login;
-  const memberNo = token ? member.memberNo : null;
   const mentorProfileNo = token ? member.mentorProfileNo : null;
+  const [mentorProfile, setMentorProFile] = useState({});
   /* CONTEXT */
 
   // 로그인 페이지로 이동
@@ -48,6 +48,7 @@ export default function HeaderMenu() {
       console.log("멤버 프로필 : ", memberProfileResponse);
       
       const mentorProfileResponse = await getMentorProfile(mentorProfileNo);
+      setMentorProFile(mentorProfileResponse);
       console.log("멘토 프로필 : ", mentorProfileResponse);
       
       /* 멤버의 관심사가 19번인지 확인(SNS로그인 시 기본값) */
@@ -75,6 +76,9 @@ export default function HeaderMenu() {
           }
           navigate(`/mentor/join`);
           return;
+      } else if (mentorProfile.mentorStatus === 2) {
+        alert("심사 중입니다.");
+        return;
       } else {
           const confirmation = window.confirm(
               member.memberRole === "ROLE_MENTEE" 
@@ -112,6 +116,7 @@ export default function HeaderMenu() {
     gap: "20px",
   };
 
+  
   return (
     <div className="header" style={navStyle}>
       <div className="rightMenu" style={rightMenuBarStyle}>
