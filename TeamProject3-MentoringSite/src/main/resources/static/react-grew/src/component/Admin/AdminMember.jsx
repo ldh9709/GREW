@@ -3,9 +3,10 @@ import React, { useEffect, useState } from "react";
 import * as adminApi from "../../api/adminApi";
 import PagenationItem from "../PagenationItem";
 import AdminMemberDetail from "./AdminMemberDetail";
+import { useNavigate } from "react-router-dom";
 
 function AdminMember() {
-    const { token } = useMemberAuth();
+    const { token, member } = useMemberAuth();
     const [loading, setLoading] = useState(false);
     const [members, setMember] = useState([]);
     const [memberCount, setMemberCount] = useState(0);
@@ -19,7 +20,7 @@ function AdminMember() {
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(0); 
     const [selectMentor, setSelectMentor] = useState(null);
-
+    const navigator = useNavigate();
 
     const fetchMembers = async (role, order, page, size) => {
         try {
@@ -157,9 +158,17 @@ function AdminMember() {
         fetchData();
     }, [state,currentPage]);
     
+    if (!token || member?.memberRole !== "ROLE_ADMIN") {
+        return (
+            navigator(`/main`)
+        );
+    }
+
+    // 어드민 페이지 렌더링
     return (
         <>
             <div className="admin-member-submenu">
+                {/* 탭 메뉴 */}
                 <ul className="submenu">
                     <li
                         className={`submenu-item ${state.activeTab === "전체회원" ? "active" : ""}`}
@@ -190,11 +199,14 @@ function AdminMember() {
                 <div className="dropdown">
                     <select onChange={handleFilterChange} value={state.order}>
                         <option value={1}>최신순</option>
-                        <option value={2}>이름순</option>                
+                        <option value={2}>이름순</option>
                     </select>
                 </div>
             </div>
+
+            {/* 회원 목록 */}
             <div className="admin-table-container member-table-container">
+                {/* 테이블 */}
                 <table className="admin-table">
                     <thead>
                         <tr>
@@ -207,67 +219,62 @@ function AdminMember() {
                             <th>가입방식</th>
                             <th>회원상태</th>
                             <th>누적신고 수</th>
-                            { state.activeTab === '멘토신청' ? (<th>신청내용</th>) : ("")}
+                            {state.activeTab === "멘토신청" ? <th>신청내용</th> : ""}
                         </tr>
                     </thead>
-                    {loading ? <tbody></tbody> :
-                        <tbody>
-                            {members && members.map((member, index) => (
+                    <tbody>
+                        {loading ? (
+                            <tr>
+                                <td colSpan="9">로딩 중...</td>
+                            </tr>
+                        ) : (
+                            members.map((member, index) => (
                                 <tr key={index}>
-                                    <td>{(currentPage-1) * 10 + index + 1}</td>
+                                    <td>{(currentPage - 1) * 10 + index + 1}</td>
                                     <td>{member.memberName}</td>
                                     <td>{member.memberNo}</td>
                                     <td>{member.memberId}</td>
                                     <td>{member.memberEmail}</td>
-                                    <td>{member.memberJoinDate.substring(0,10)}</td>
+                                    <td>{member.memberJoinDate.substring(0, 10)}</td>
                                     <td>
-                                        {member.memberProvider === 'Email'
-                                            ? "일반가입"
-                                            : member.memberProvider}
+                                        {member.memberProvider === "Email" ? "일반가입" : member.memberProvider}
                                     </td>
-                                    <td>
-                                        {member.memberStatus === 1
-                                            ? "정상"
-                                            : "탈퇴"}
-                                    </td>
+                                    <td>{member.memberStatus === 1 ? "정상" : "탈퇴"}</td>
                                     <td>{member.memberReportCount}</td>
-                                    {state.activeTab === '멘토신청' ?
-                                    (
-                                    <td>
-                                        <button className="check"
-                                         onClick={()=>(handleRegisterMentor(member.mentorProfile))}
-                                        >상세</button>
-                                    </td>
-                                    ): ("")}
-
+                                    {state.activeTab === "멘토신청" && (
+                                        <td>
+                                            <button
+                                                className="check"
+                                                onClick={() => handleRegisterMentor(member.mentorProfile)}
+                                            >
+                                                상세
+                                            </button>
+                                        </td>
+                                    )}
                                 </tr>
-                            ))}
-                        </tbody>
-                    }
+                            ))
+                        )}
+                    </tbody>
                 </table>
-                <span className="member-count">
-                    총 : {state.activeTab === "멘토신청" ? mentorRegisterCount :memberCount}
-                </span>
-                {selectMentor && (
-                    <AdminMemberDetail
-                        onClose={()=>{setSelectMentor(null)}}
-                        mentor={selectMentor}
-                        refreshMentorData ={refreshMentorData}
-                    />
-                )}
 
-
+                {/* 페이징 */}
                 <div className="admin-pagenation">
-                <PagenationItem 
-                    currentPage={currentPage}
-                    totalPages={totalPages}
-                    paginate={paginate}
-                    
+                    <PagenationItem
+                        currentPage={currentPage}
+                        totalPages={totalPages}
+                        paginate={paginate}
+                    />
+                </div>
+            </div>
+
+            {/* 상세 보기 */}
+            {selectMentor && (
+                <AdminMemberDetail
+                    onClose={() => setSelectMentor(null)}
+                    mentor={selectMentor}
+                    refreshMentorData={refreshMentorData}
                 />
-                </div>
-
-
-                </div>
+            )}
         </>
     );
 }

@@ -9,7 +9,7 @@ import * as memberApi from "../../../api/memberApi";
 import * as mentorProfileApi from "../../../api/mentorProfileApi"; /////////////////
 import { useNavigate } from "react-router-dom";
 
-export default function MemberSummary() {
+export default function MemberSummary({triggerUpdate}) {
 
   /* 멘토 프로필 선언 */
   const [mentorProfile, setMentorProFile] = useState({});
@@ -44,7 +44,6 @@ export default function MemberSummary() {
       setMentorImage(response.imageUrl || profileDefault);
     }
   };
-  ///////////////
 
   //회원 요약정보 count 가져옴
   const fetchCountSummary = async () => {
@@ -201,7 +200,7 @@ export default function MemberSummary() {
       fetchMentorInfo(member.mentorProfileNo);
       fetchMentorImage();
     }
-  }, [member, token]);
+  }, [member, token, triggerUpdate]);
 
   return (
     <section className="summary">

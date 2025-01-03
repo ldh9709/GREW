@@ -54,12 +54,12 @@ const MemberProfileFormPage = () => {
   
    /* 인증번호 요청 핸들러 */
    const handleSendVerificationCode = async () => {
+     alert("인증번호가 이메일로 전송되었습니다.");
     try {
-      alert("인증번호가 이메일로 전송되었습니다.");
       await sendVerificationCode(member.memberEmail); // 서버에 이메일 전송 요청
       setSentCode(true); // 인증번호 전송 여부 업데이트
     } catch (error) {
-      alert("인증번호 전송에 실패했습니다. 다시 시도해주세요.");
+      console.log("인증번호 에러 : ", error);
     }
   };
 

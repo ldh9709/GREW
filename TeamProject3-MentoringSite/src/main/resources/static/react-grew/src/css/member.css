@@ -488,6 +488,7 @@ body {
 
 .info {
   flex: 1;
+  max-width: 150px;
   margin-left: 50px;
   text-align: left;
 }

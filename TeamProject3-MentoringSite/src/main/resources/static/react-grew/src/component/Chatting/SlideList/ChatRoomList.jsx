@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import * as ChattingApi from "../../../api/chattingApi.js";
 import { useMemberAuth } from "../../../util/AuthContext.js";
 import ReportModal from "../../Report/ReportModal.jsx";
-
+import SockJS from "sockjs-client";
+import { Client as StompClient } from "@stomp/stompjs";
 const ChatRoomList = ({ onRoomClick }) => {
   const [isModalOpen1, setIsModalOpen1] = useState(false); //tate
   const [isModalOpen2, setIsModalOpen2] = useState(false);
@@ -13,7 +14,58 @@ const ChatRoomList = ({ onRoomClick }) => {
   const [totalPages, setTotalPages] = useState(0); // 총 페이지 수
   const [isReportHovered, setIsReportHovered] = useState(false);
   const [report, setreport] = useState({});
+  const [messages, setMessages] = useState([]);
   const { token, member } = useMemberAuth();
+  let stompClient = useRef(null);
+
+  useEffect(() => {
+    if (member?.memberName) {
+      // memberName이 있을 때만 WebSocket 연결을 시작
+      const socket = new SockJS(`http://localhost:8080/chat`);
+
+      // StompClient 생성
+      stompClient.current = new StompClient({
+        webSocketFactory: () => socket,
+        onConnect: () => {
+          console.log("start")
+          // 서버와의 연결이 성공하면 구독 시작
+          stompClient.current.subscribe(
+            `/topic/messages/member/${member.memberNo}`,
+            (response) => {
+              const message = JSON.parse(response.body);
+              console.log(message);
+             
+              setRooms((prevRooms) =>
+                prevRooms.map((room) =>
+                  room.chatRoomNo === message.chatRoomNo
+                    ? {
+                        ...room,
+                        countIsRead: room.countIsRead+1 , // 읽지 않은 메시지 수 증가
+                        lastedMessage: message.chatMessageContent, // 최신 메시지 업데이트
+                      }
+                    : room
+                )
+              );
+            }
+          );
+        },
+        onDisconnect: () => {
+          console.log("Disconnected111111111");
+        },
+      });
+
+      stompClient.current.activate(); // 소켓 활성화
+
+      // cleanup 함수: 컴포넌트가 unmount 될 때 연결 종료
+      return () => {
+        if (stompClient.current) {
+          stompClient.current.deactivate(); // 소켓 연결 종료
+        }
+      };
+    }
+
+    console.log("소켓검사 종료");
+  }, [member]); // member가 변경될 때마다 useEffect 실행
 
   const chatRoomList = async (page) => {
     const responseJsonObject = await ChattingApi.activeListChatRoom(
@@ -38,7 +90,6 @@ const ChatRoomList = ({ onRoomClick }) => {
               room.chatRoomLeaveStatus === 7600))
         );
       });
-      console.log(activeRooms);
       setRooms(activeRooms); // 필터링된 채팅방만 setRooms에 설정
       setTotalPages(responseJsonObject.data.totalPages);
     }
@@ -54,7 +105,6 @@ const ChatRoomList = ({ onRoomClick }) => {
     setNewRoomName(room.chatRoomName); // 수정할 채팅방 이름을 입력창에 보여줌
     setIsModalOpen1(true); // 모달창 열기
   };
-
   const saveRoomName = async () => {
     // 채팅방 이름을 저장하는 함수 (모달창에서 이름 수정 후 저장 버튼 클릭 시 호출됨)
     if (currentRoom && newRoomName.trim()) {
