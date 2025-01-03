@@ -57,9 +57,9 @@ public class ChatController {
 	    return message;
 	}
 	// 이미지 메시지 처리 (WebSocket 방식)
-	@MessageMapping("/sendImage/{roomId}")
+	@MessageMapping("/chat/image/{roomId}")
 	@SendTo("/topic/images/{roomId}")
-	public ChatMessageImageDto sendImage(@DestinationVariable("roomId") Long roomId,@RequestBody Map<String, String> request) {
+	public ChatMessageImageDto sendImage(@DestinationVariable("roomId") Long roomId,@Payload Map<String, String> request) {
 	    ChatRoom chatRoom = ChatRoom.toEntity(chatRoomService.getChatRoom(roomId));
 	    System.out.println("챗룸 : "+chatRoom);
 	    System.out.println("chatroomNo : "+chatRoom.getChatRoomNo());
@@ -129,8 +129,8 @@ public class ChatController {
 	    */
 
 	    // 이미지 정보 저장
-	    chatMessageImageService.createImage(savedChatMessageImage);
-
+	    Long ChatImageNo = chatMessageImageService.createImage(savedChatMessageImage).getImageNo();
+	    savedChatMessageImage.setImageNo(ChatImageNo);
 	    // 저장된 이미지 객체 반환
 	    return savedChatMessageImage;
 	}

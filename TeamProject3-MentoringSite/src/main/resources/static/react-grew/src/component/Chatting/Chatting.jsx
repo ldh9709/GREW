@@ -100,24 +100,52 @@ const ChattingMessage = ({ roomId, roomName }) => {
     stompClient.current = new StompClient({
       webSocketFactory: () => socket,
       onConnect: () => {
+        // 채팅 메시지 구독
         stompClient.current.subscribe(
           `/topic/messages/${roomId}`,
           (response) => {
             const message = JSON.parse(response.body);
-            if (!message.chatMessageDate) {
-              message.chatMessageDate = new Date().toISOString();
-            }
 
             const messageType =
               message.memberName === username ? "sent" : "received";
 
-            // 이전 메시지 배열을 기반으로 새로운 메시지를 추가하는 방식
+            // 텍스트 메시지 처리
+            if (message.chatMessageContent !== "이미지") {
+              setMessages((prevMessages) => [
+                ...prevMessages,
+                {
+                  ...message,
+                  type: messageType,
+                  isImageLoaded: !!message.imageData, // 이미지가 있으면 로드된 상태로 설정
+                },
+              ]);
+            }
+          }
+        );
+        // 이미지 메시지 구독
+        stompClient.current.subscribe(
+          `/topic/images/${roomId}`,
+          (imageresponse) => {
+            console.log("이미지 메시지 응답", imageresponse.body);
+            const imageMessage = JSON.parse(imageresponse.body);
+
+            console.log("실시간 이미지 메시지", imageMessage);
+            console.log("실시간 이미지 메시지의 타입", imageMessage.type);
+            const imagemessageType =
+              imageMessage.type === username ? "sent" : "received";
             setMessages((prevMessages) => [
               ...prevMessages,
               {
-                ...message,
-                type: messageType,
-                isImageLoaded: !!message.imageData, // 이미지가 있으면 로드된 상태로 설정
+                chatMessageNo: imageMessage.chatMessageNo,
+                chatMessageContent: "이미지",
+                chatMessageDate: imageMessage.chatMessageDate
+                  ? new Date(imageMessage.chatMessageDate).toLocaleString()
+                  : new Date().toISOString(),
+                chatMessageCheck: imageMessage.chatMessageCheck,
+                memberName: imageMessage.memberName,
+                imageNo: imageMessage.imageNo,
+                imageData: imageMessage.imageBlob, // base64 이미지
+                type: imagemessageType,
               },
             ]);
           }
@@ -150,7 +178,7 @@ const ChattingMessage = ({ roomId, roomName }) => {
       const message = {
         chatMessageNo: 0,
         chatMessageContent: messageContent,
-        chatMessageDate: "",
+        chatMessageDate: new Date().toISOString(),
         chatMessageCheck: 1,
         memberNo: decodeToken.memberNo,
         memberName: username,
@@ -227,25 +255,25 @@ const ChattingMessage = ({ roomId, roomName }) => {
             memberNo: decodeToken.memberNo,
           };
 
-          // 이미지 전송
-          stompClient.current.publish({
-            destination: `/app/sendImage/${roomId}`,
-            body: JSON.stringify(imageData),
-          });
-
           // 채팅 메시지로 추가
           setMessages((prevMessages) => [
             ...prevMessages,
             {
-              chatMessageNo: imageData.chatMessageNo,
+              chatMessageNo: 0, // 서버에서 받은 chatMessageNo를 사용하도록 할 수 있음
               chatMessageContent: "이미지",
               chatMessageDate: new Date().toISOString(),
               chatMessageCheck: 1,
+              memberNo: decodeToken.memberNo,
               memberName: username,
               imageData: imageData.imageBlob,
               type: "sent",
             },
           ]);
+          // WebSocket을 통해 이미지를 보냄
+          stompClient.current.publish({
+            destination: `/app/chat/image/${roomId}`,
+            body: JSON.stringify(imageData),
+          });
         };
         img.src = reader.result;
       };
@@ -280,36 +308,41 @@ const ChattingMessage = ({ roomId, roomName }) => {
     }
   };
 
-  // 메시지 업데이트 시 이미지 로딩 처리
   useEffect(() => {
     const loadImages = async () => {
       const updatedMessages = await Promise.all(
         messages.map(async (msg) => {
           if (msg.chatMessageContent === "이미지" && msg.chatMessageNo) {
-            if (!msg.imageData) {
-              // 이미지를 로딩 중으로 설정
-              msg.isLoadingImage = true;
+            // 이미지가 이미 로드된 경우에는 로드하지 않음
+            if (msg.imageData || msg.isLoadingImage) {
+              return msg; // 이미지가 이미 있으면 그대로 반환
             }
+
+            // 이미지 로딩 중으로 설정
+            msg.isLoadingImage = true;
+
+            // 이미지가 없으면 서버에서 가져오기
             const base64Image = await fetchImageData(msg.chatMessageNo);
             if (base64Image) {
-              return { ...msg, imageData: base64Image, isLoadingImage: false }; // 로딩 완료
+              return { ...msg, imageData: base64Image, isLoadingImage: false }; // 로딩 완료 후 이미지 데이터 추가
             }
           }
           return msg; // 이미지가 없으면 그대로 반환
         })
       );
-      setMessages(updatedMessages); // 이미지가 업데이트된 메시지 배열을 상태로 설정
+      setMessages(updatedMessages); // 업데이트된 메시지 상태를 설정
     };
 
-    loadImages(); // 이미지 로딩 실행
-  }, [messages.length]); // 메시지 배열의 길이가 바뀔 때마다 실행
+    loadImages(); // 이미지 로딩 함수 실행
+  }, [messages.length]); // messages 상태가 변경될 때마다 실행
+
   // 이미지 파일 선택 처리
   const handleImageSelect = (event) => {
     const file = event.target.files[0];
     const MAX_FILE_SIZE_KB = 50000;
     if (file && file.size > MAX_FILE_SIZE_KB) {
       console.log(file.size);
-      alert("이미지 크기가 너무 큽니다. 50KB 이하의 이미지를 선택해주세요.");
+      alert("이미지 크기가 너무 큽니다. 50000kB 이하의 이미지를 선택해주세요.");
     } else {
       setSelectedImage(file);
     }
@@ -357,15 +390,11 @@ const ChattingMessage = ({ roomId, roomName }) => {
                   {/* 이미지 처리 */}
                   {msg.chatMessageContent === "이미지" && msg.imageData ? (
                     <div className={`chat-image-container-${msg.type}`}>
-                      {msg.isLoadingImage ? (
-                        <div className="loading-spinner">로딩 중...</div> // 로딩 중일 때 스피너 또는 메시지
-                      ) : (
-                        <img
-                          src={`data:image/png;base64,${msg.imageData}`}
-                          alt="chat image"
-                          className="chat-image"
-                        />
-                      )}
+                      <img
+                        src={`data:image/png;base64,${msg.imageData}`}
+                        alt="chat image"
+                        className="chat-image"
+                      />
                     </div>
                   ) : null}
                   <div className={`chat-message-time-${msg.type}`}>
