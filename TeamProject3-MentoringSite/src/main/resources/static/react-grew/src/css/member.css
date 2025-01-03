@@ -243,11 +243,19 @@ body {
 
 .tab-content {
   position: relative;
-  min-height: 500px;
   text-align: center;
   font-size: 1.1rem;
   margin: 5px 0px; 
   padding: 0 30px;
+}
+.tab-inquiry {
+  min-height: 300px;
+  align-items: center;
+}
+
+/*데이터 없을때 문구*/
+.empty-data{
+  margin: auto;
 }
 
 .list-table {

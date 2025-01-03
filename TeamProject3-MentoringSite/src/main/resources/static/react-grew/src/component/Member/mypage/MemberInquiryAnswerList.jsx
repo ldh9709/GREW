@@ -66,7 +66,7 @@ export default function MemberInquiryAnswerList() {
     <>
       <div className="tab-content tab-inquiry" id="inquiry">
         {dataList.length === 0 ? (
-          <p> 작성 내용이 없습니다. </p>
+          <p> 작성 내용이 없습니다.</p>
         ) : member.memberRole === "ROLE_MENTEE" ? (
           <table className="list-table">
             <thead>
@@ -152,14 +152,14 @@ export default function MemberInquiryAnswerList() {
                 </tr>
               )}
             </tbody>
+            <PagenationItem
+              currentPage={currentPage}
+              totalPages={totalPages}
+              paginate={paginate}
+            />
           </table>
         )}
       </div>
-      <PagenationItem
-        currentPage={currentPage}
-        totalPages={totalPages}
-        paginate={paginate}
-      />
     </>
   );
 }
