@@ -211,46 +211,46 @@ const MentorEditForm = () => {
   };
   return (
     <div className="mentor-edit-container">
-      <h1 className="mentor-edit-title">멘토 수정</h1>
-      <div className="mentor-edit-form-group">
-        <label className="mentor-edit-label">
-          전문분야<span className="mentor-edit-required">*</span>
-        </label>
-        <div className="mentor-edit-select-wrapper">
-          <select
-            className="mentor-edit-select"
-            id="parentCategory"
-            name="parentCategory"
-            value={selectedParent}
-            onChange={handleParentChange}
-          >
-            <option value="">-- 대분류 선택 --</option>
-            {categories
-              .filter((cat) => cat.categoryDepth === 1)
-              .map((parent) => (
-                <option key={parent.categoryNo} value={parent.categoryNo}>
-                  {parent.categoryName}
+      <h2 className="mentor-edit-title">멘토 정보 관리</h2>
+      <form className="mentor-edit-form">
+        <div className="mentor-edit-form-group">
+          <label className="mentor-edit-label">
+            전문분야<span className="mentor-edit-required">*</span>
+          </label>
+          <div className="mentor-edit-select-wrapper">
+            <select
+              className="mentor-edit-select"
+              id="parentCategory"
+              name="parentCategory"
+              value={selectedParent}
+              onChange={handleParentChange}
+            >
+              <option value="">-- 대분류 선택 --</option>
+              {categories
+                .filter((cat) => cat.categoryDepth === 1)
+                .map((parent) => (
+                  <option key={parent.categoryNo} value={parent.categoryNo}>
+                    {parent.categoryName}
+                  </option>
+                ))}
+            </select>
+            <select
+              className="mentor-edit-select"
+              id="childCategory"
+              name="childCategory"
+              value={selectedChild}
+              onChange={handleChildChange}
+              disabled={!selectedParent}
+            >
+              <option value="">-- 소분류 선택 --</option>
+              {childCategories.map((child) => (
+                <option key={child.categoryNo} value={child.categoryNo}>
+                  {child.categoryName}
                 </option>
               ))}
-          </select>
-          <select
-            className="mentor-edit-select"
-            id="childCategory"
-            name="childCategory"
-            value={selectedChild}
-            onChange={handleChildChange}
-            disabled={!selectedParent}
-          >
-            <option value="">-- 소분류 선택 --</option>
-            {childCategories.map((child) => (
-              <option key={child.categoryNo} value={child.categoryNo}>
-                {child.categoryName}
-              </option>
-            ))}
-          </select>
+            </select>
+          </div>
         </div>
-      </div>
-      <form className="mentor-edit-form">
         <div className="mentor-edit-form-group">
           <label className="mentor-edit-label">
             본인 소개<span className="mentor-edit-required">*</span>
@@ -283,64 +283,71 @@ const MentorEditForm = () => {
           <label className="mentor-edit-label">
             경력<span className="mentor-edit-required">*</span>
           </label>
-          <div className="mentor-edit-career-container">
+          <div>
             {mentor.careerDtos.map((career, index) => (
-              <div key={index} className="mentor-edit-career-row">
-                <input
-                  type="text"
-                  className="mentor-edit-input"
-                  placeholder="회사명"
-                  value={career.careerCompanyName}
-                  onChange={(e) =>
-                    handleCareerChange(index, "careerCompanyName", e.target.value)
-                  }
-                  required
-                />
-                <input
-                  type="text"
-                  className="mentor-edit-input"
-                  placeholder="직책"
-                  value={career.careerJobTitle}
-                  onChange={(e) =>
-                    handleCareerChange(index, "careerJobTitle", e.target.value)
-                  }
-                  required
-                />
-                <input
-                  type="text"
-                  name="startDate"
-                  className="mentor-edit-input"
-                  onFocus={handleFocus}
-                  onBlur={handleBlur}
-                  value={career.careerStartDate}
-                  onChange={(e) =>
-                    handleCareerChange(index, "careerStartDate", e.target.value)
-                  }
-                  placeholder="입사년월"
-                  required
-                />
-                <input
-                  type="text"
-                  name="endDate"
-                  className="mentor-edit-input"
-                  onFocus={handleFocus}
-                  onBlur={handleBlur}
-                  value={career.careerEndDate}
-                  onChange={(e) =>
-                    handleCareerChange(index, "careerEndDate", e.target.value)
-                  }
-                  placeholder="퇴사년월"
-                  required
-                />
+              <div key={index}>
+                <div className="mentor-edit-career-container">
+                  <input
+                    type="text"
+                    className="mentor-edit-input career-company"
+                    placeholder="회사명"
+                    value={career.careerCompanyName}
+                    onChange={(e) =>
+                      handleCareerChange(index, "careerCompanyName", e.target.value)
+                    }
+                    required
+                  />
+                  <input
+                    type="text"
+                    name="startDate"
+                    className="mentor-edit-input career-startDate"
+                    onFocus={handleFocus}
+                    onBlur={handleBlur}
+                    value={career.careerStartDate}
+                    onChange={(e) =>
+                      handleCareerChange(index, "careerStartDate", e.target.value)
+                    }
+                    placeholder="입사년월"
+                    required
+                  />
+                  <input
+                    type="text"
+                    name="endDate"
+                    className="mentor-edit-input career-endDate"
+                    onFocus={handleFocus}
+                    onBlur={handleBlur}
+                    value={career.careerEndDate}
+                    onChange={(e) =>
+                      handleCareerChange(index, "careerEndDate", e.target.value)
+                    }
+                    placeholder="퇴사년월"
+                    required
+                  />
+                </div>
+                <div>
+                  <input
+                    type="text"
+                    className="mentor-edit-input career-job-title"
+                    placeholder="직책 또는 직무(50글자 내외)"
+                    value={career.careerJobTitle}
+                    onChange={(e) =>
+                      handleCareerChange(index, "careerJobTitle", e.target.value)
+                    }
+                    maxLength={50}
+                    required
+                  />
+                </div>
               </div>
             ))}
-            <button
-              type="button"
-              className="mentor-edit-add-button"
-              onClick={addCareerField}
-            >
-              + 추가
-            </button>
+            <div className="career-add-button">
+              <button
+                type="button"
+                className="mentor-edit-add-button"
+                onClick={addCareerField}
+              >
+                + 추가
+              </button>
+            </div>
           </div>
         </div>
         <div className="mentor-edit-form-group">
@@ -356,13 +363,15 @@ const MentorEditForm = () => {
             onChange={handleImageChange}
           />
         </div>
-        <button
-          type="button"
-          className="mentor-edit-submit-button"
-          onClick={mentorProfileUpdateAction}
-        >
-          수정하기
-        </button>
+        <div className="mentor-edit-submit-container">
+          <button
+            type="button"
+            className="mentor-edit-submit-button"
+            onClick={mentorProfileUpdateAction}
+          >
+            수정
+          </button>
+        </div>
       </form>
     </div>
   );

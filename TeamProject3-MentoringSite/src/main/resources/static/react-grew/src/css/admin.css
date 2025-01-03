@@ -80,7 +80,6 @@
 }
 /* Content 스타일 */
 .content {
-    margin-left: 240px; /* sidebar의 너비만큼 왼쪽 공간 확보 */
     padding: 20px;
     display: flex;
     flex-direction: column;

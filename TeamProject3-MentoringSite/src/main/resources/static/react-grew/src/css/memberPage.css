@@ -571,20 +571,10 @@ legend {
 /***** 프로필페이지 CSS *****/
 
 /* 초기화: 로딩 중에도 일관된 레이아웃 유지 */
-.profile-layout {
-  display: flex;
-  margin: 0 auto;
-  width: 100%;
-  min-width: 100%;
-  max-width: 100%;
-  font-family: "nanumsquare", Arial, sans-serif;
-  gap: 10px; /* 사이드바와 콘텐츠 간격 */
-  min-height: 500px; /* 전체 높이를 고정 */
-}
+
 
 /* 사이드 메뉴 스타일 */
 .profile-sidebar {
-  width: 50%;
   max-width: 15%;
   min-width: 15%;
   background-color: #ffffff;
@@ -594,7 +584,6 @@ legend {
 }
 
 .profile-sidebar-right {
-  width: 50%; /* 우측 사이드바가 있다면 동일하게 설정 */
   min-width: 15%;
   max-width: 15%;
   background-color: #ffffff;
@@ -626,13 +615,21 @@ legend {
   color: white;
 }
 
-/* 콘텐츠 */
-.profile-content {
-  min-width: 600px;
-  flex: 1; /* 남은 공간을 모두 채움 */
-  opacity: 1; /* 초기 렌더링 시 보이게 설정 */
-  transition: opacity 0.3s ease; /* 로딩 시 자연스럽게 전환 */
-  margin-left: -120px;
+/* 회원 정보 수정 폼 */
+
+.profile-layout {
+  display: flex;
+  width: 100%;
+  margin: 0 auto;
+  gap: 10px; /* 사이드바와 콘텐츠 간격 */
+  min-height: 500px; /* 전체 높이를 고정 */
+}
+
+.profile-content-layout {
+  width: 700px;
+  max-width: 80%;
+  min-width: 80%;
+  margin: 0 auto;
 }
 
 .profile-container {
@@ -695,7 +692,7 @@ legend {
   margin: 5px;
   background-color: #f0f0f0;
   border: 1px solid #ccc;
-  border-radius: 5px;
+  border-radius: 20px;
   font-size: 14px;
   cursor: pointer;
   transition: all 0.3s ease;
@@ -713,30 +710,32 @@ legend {
 /* 버튼 그룹 */
 .profile-button-group {
   display: flex;
-  justify-content: center;
+  justify-content: right;
+  padding-top: 20px;
+  border-top: 1px solid #ccc;
 }
 
-.profile-button {
-  background-color: #4caf50;
+.profile-modify-button {
+  background-color: #007bff;
   color: white;
-  padding: 10px 20px;
+  padding: 8px 18px;
   border: none;
   border-radius: 5px;
-  font-size: 16px;
+  font-size: 14px;
   cursor: pointer;
   transition: background-color 0.3s ease;
 }
 
 /* 비활성화 상태 */
-.profile-button:disabled {
+.profile-modify-button:disabled {
   background-color: gray;       /* 비활성화 상태 색상 */
   cursor: not-allowed;          /* 마우스 커서 변경 */
   opacity: 0.6;                 /* 투명도 설정 */
   pointer-events: none;         /* 모든 마우스 이벤트 차단 */
 }
 
-.profile-button:hover {
-  background-color: #45a049;
+.profile-modify-button:hover {
+  background-color: #0056b3;
 }
 
 
