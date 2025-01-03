@@ -42,10 +42,10 @@ export default function AnswerModifyFormPage() {
   const [inquiry, setInquiry] = useState(initInquiry);
   // 질문 데이터 가져오는 함수
   useEffect(() => {
+    console.log(answerNo);
     const fetchInquiryData = async () => {
       try {
         const response = await answerApi.findInquiry(answer.inquiryNo);
-        console.log(response.data);
 
         setInquiry(response.data); // 받아온 데이터를 상태로 설정
       } catch (error) {
@@ -55,20 +55,19 @@ export default function AnswerModifyFormPage() {
 
     fetchInquiryData();
   }, [answer.inquiryNo]); // inquiryNo가 변경될 때마다 실행
-  useEffect(() => {
-    const a = async () => {
-      if(answerNo){
 
-        const responseJsonObject = await answerApi.viewAnswer(answerNo);
-        console.log(responseJsonObject.data);
-        if (member.memberNo != responseJsonObject.data.memberNo) {
-          navigate("/403");
-        }
-        setAnswer(responseJsonObject.data);
-      };
-      a();
+  const fetchAnswer = async () => {
+    const response = await answerApi.viewAnswer(answerNo);
+    console.log(response.data); 
+    if (member.memberNo != response.data.memberNo) {
+      navigate("/403");
     }
+    setAnswer(response.data);
+  };
+  useEffect(() => {
+    fetchAnswer();
   }, [answerNo]);
+  
 
   const onChangeAnswerForm = (e) => {
     setAnswer({
@@ -78,9 +77,7 @@ export default function AnswerModifyFormPage() {
   };
 
   const answerModifyAction = async () => {
-    console.log("answer", answer);
     const responseJsonObject = await answerApi.updateAnswer(answer, token);
-    console.log(responseJsonObject);
     navigate(`/inquiry/${answer.inquiryNo}`);
   };
 

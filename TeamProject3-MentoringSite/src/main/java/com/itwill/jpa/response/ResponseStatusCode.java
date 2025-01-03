@@ -38,6 +38,7 @@ public class ResponseStatusCode {
     public static final int NOT_FOUND_MEMBER = 2065; //가입하려는 회원정보 null
     public static final int NOT_AGREEMENT_MEMBER_ID = 2066; //회원ID와 정보가 일치하지 않음
     public static final int NOT_AGREEMENT_MEMBER_NAME = 2067; //회원NAME과 정보가 일치하지 않음
+    public static final int INPUT_NULL = 2068; //NULL값을 입력받음
     
 	/******************* MEMBER 메시지 ************************/
 	

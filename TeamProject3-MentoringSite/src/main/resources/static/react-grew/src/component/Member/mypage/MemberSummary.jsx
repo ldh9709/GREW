@@ -108,7 +108,7 @@ export default function MemberSummary({triggerUpdate}) {
   };
 
   const underReview = () => {
-    alert("심사 중입니다.");
+    alert("가입 심사 중입니다.");
     return;
   }
 
@@ -151,7 +151,7 @@ export default function MemberSummary({triggerUpdate}) {
   //회원 권한 변경
   const handleUpdateRoleButton = async (role) => {
     try {
-      if (member.mentorProfileNo === 0) {
+      if (member.mentorProfileNo === 0 || mentorProfile.categoryNo === 26) {
         const confirmation = window.confirm("멘토를 신청 하시겠습니까?");
         if (!confirmation) {
           return;
@@ -230,22 +230,24 @@ export default function MemberSummary({triggerUpdate}) {
             </div>
             <button
               className={`role-change ${
-                member.mentorProfileNo === 0
+                member.mentorProfileNo === 0 || mentorProfile.categoryNo === 26
                 ? "mentor-apply"
-                : mentorProfile.mentorStatus === 2
+                : mentorProfile.mentorStatus === 2 && mentorProfile.categoryNo !== 26
                 ? "mentor-review"
                 : "mentee-convert"
               }`}
               onClick={() =>
-                mentorProfile.mentorStatus === 2
-                  ? underReview() // 심사 중 알림
-                  : handleUpdateRole("ROLE_MENTOR") // 멘토 전환
+                member.mentorProfileNo === 0 || mentorProfile.categoryNo === 26
+                ? handleUpdateRoleButton("ROLE_MENTEE") //멘토 신청
+                : mentorProfile.mentorStatus === 2 && mentorProfile.categoryNo !== 26
+                ? underReview() // 심사 중 알림
+                : handleUpdateRole("ROLE_MENTOR") // 멘토 전환
               }
             >
               {
-              member.mentorProfileNo === 0 
+              member.mentorProfileNo === 0 || mentorProfile.categoryNo === 26
               ? "멘토 신청"
-              : mentorProfile.mentorStatus === 2 
+              : mentorProfile.mentorStatus === 2 && mentorProfile.categoryNo !== 26
               ? "심사 중"
               : member.mentorProfileNo !== 0
               ? "멘토 전환"

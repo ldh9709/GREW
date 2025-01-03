@@ -13,10 +13,10 @@ const MemberProfileFormPage = () => {
   const memberCookie = getCookie("member");
   const token = memberCookie.accessToken;
 
-  /* 관심사 start */
+  /* 관심사 */
   const [interests, setInterests] = useState([]); // 관심사 데이터
   const [selectedInterests, setSelectedInterests] = useState([]); // 선택된 관심사
-  /* 관심사 end */
+  const [interestMessage, setInterestMessage] = useState(""); // 조건부 메시지 상태
 
   /* 이메일 인증 관련 상태 */
   const [originalEmail, setOriginalEmail] = useState("");
@@ -24,8 +24,6 @@ const MemberProfileFormPage = () => {
   const [isEmailVerified, setIsEmailVerified] = useState(false); // 이메일 인증 성공 여부
   const [verificationCode, setVerificationCode] = useState("");
   const [sentCode, setSentCode] = useState(false); // 인증번호 전송 여부
-
-
 
   /* 멤버 start */
   const [member, setMember] = useState({
@@ -84,20 +82,33 @@ const MemberProfileFormPage = () => {
       }
     } catch (error) {
         toast.error("catch에러가 발생하였습니다.");
+        console.log("catch에러 : ", error);
     }
+  };
+
+  // 기본 관심사 필터링 및 메시지 설정
+  const filterInterests = (data) => {
+    const filtered = data.interests.filter(
+      (interest) => ![19, 20, 21].includes(interest.categoryNo)
+    );
+
+    // 관심사가 [19, 20, 21]에만 해당하면 메시지 설정
+    if (filtered.length === 0 && data.interests.length > 0) {
+      setInterestMessage("3개의 관심사를 선택해주세요.");
+    } else {
+      setInterestMessage("");
+    }
+
+    return filtered;
   };
 
   /***** 사용자 정보 가져오기 *****/
   const fetchProfileData = async () => {
     const response = await memberProfile(token);
-    console.log("프로필response : ", response);
 
     const { data } = response;
 
-    // 기본 관심사 필터링
-    const filteredInterests = data.interests.filter(
-      (interest) => ![19, 20, 21].includes(interest.categoryNo) // categoryNo가 19, 20, 21이 아닌 항목만 필터링
-    );
+    const filteredInterests = filterInterests(data); // 필터링 및 메시지 설정
 
     setMember({
       memberNo: data.memberNo,
@@ -203,10 +214,9 @@ const MemberProfileFormPage = () => {
   console.log(member.interests);
 
   return (
-    <div className="profile-layout">
+    <div className="profile-content-layout">
       {/* 오른쪽 프로필 수정 폼 */}
-      <div className="profile-content">
-        <h2 className="profile-title">회원정보 수정</h2>
+        <h2 className="profile-title">개인 정보 관리</h2>
         <form className="profile-form">
           <div className="profile-form-group">
             <p className="profile-form-label">
@@ -309,6 +319,9 @@ const MemberProfileFormPage = () => {
             <p className="profile-interest-label">
               관심사<span className="red-star">*</span>
             </p>
+            {interestMessage && (
+              <p className="interest-message">{interestMessage}</p>
+            )}
             {interests.length > 0 ? (
               interests.map((interest) => (
                 <div
@@ -331,14 +344,13 @@ const MemberProfileFormPage = () => {
           <div className="profile-button-group">
             <input
               type="button"
-              className="profile-button"
+              className="profile-modify-button"
               onClick={updateMember}
-              value="수정완료"
+              value="수정"
               disabled={isEmailChanged && !isEmailVerified} // 조건 추가
             />
           </div>
         </form>
-      </div>
     </div>
   );
 };

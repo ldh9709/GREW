@@ -39,6 +39,7 @@ public class ResponseMessage {
 	public static final String NOT_FOUND_MEMBER = "가입하려는 회원을 찾지 못했습니다.";
 	public static final String NOT_AGREEMENT_MEMBER_ID = "회원ID와 정보가 일치하지 않습니다.";
 	public static final String NOT_AGREEMENT_MEMBER_NAME = "회원NAME과 정보가 일치하지 않습니다.";
+	public static final String INPUT_NULL = "값이 NULL입니다.";
     
 	
     /******************* MENTOR BOARD 메시지 ************************/

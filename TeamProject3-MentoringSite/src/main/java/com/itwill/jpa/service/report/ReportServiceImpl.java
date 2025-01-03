@@ -78,10 +78,6 @@ public class ReportServiceImpl implements ReportService {
 			Report report = reportRepository.findById(reportNo).get();
 			System.out.println("처리완료" + report.getReportType());
 			System.out.println("처리완료" + report.getReportTarget());
-			if(report == null) {
-				throw new IllegalArgumentException("report 생성 오류");
-			}
-			
 			report.setReportStatus(2);
 			
 			/* type:MEMBER인 경우 
@@ -154,8 +150,8 @@ public class ReportServiceImpl implements ReportService {
 	
 
 	/* [어드민] 신고 전체 출력 
-	 * 필터링, 기본 순서 No
-	 * 1 : 전체 , 2: 신고접수 3: 처리완료 4:무고처리 
+	 * 필터링, 기본 정렬 No desc
+	 * 1 : 전체 , 2: 신고접수 3: 처리완료 4:반려처리 
 	 * */
 	@Override
 	public Page<ReportDto> getReportAll(Integer filter,int pageNumber, int pageSize) {
@@ -181,7 +177,7 @@ public class ReportServiceImpl implements ReportService {
 					break;
 				}
 				case 4: {
-					/* 무고처리 신고 출력 */
+					/* 반려처리 신고 출력 */
 					reports = reportRepository.findByReportStatusOrderByReportNoDesc(3, pageable);
 					break;
 				}
