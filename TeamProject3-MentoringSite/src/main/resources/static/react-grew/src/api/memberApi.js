@@ -74,7 +74,6 @@ export const logout = async () => {
             'Content-Type': 'application/json'
         },
     });
-    console.log("로그아웃 시 반환객체 : ",response);
     return response.url;
 };
 

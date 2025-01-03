@@ -1,55 +1,53 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "../css/styles.css";
 import { useNavigate } from "react-router-dom";
 import { useMemberAuth } from "../util/AuthContext";
 import { logout, memberProfile, getMentorProfile, updateMemberRole } from "../api/memberApi";
+import * as memberApi from "../api/memberApi";
 
 export default function HeaderMenu() {
+  /* 1. 상태 선언 부분 */
   const navigate = useNavigate();
-  /* CONTEXT */
   const auth = useMemberAuth();
   const token = auth?.token || null;
-  console.log("토큰 : ", auth?.token || null);
   const member = auth?.member || {};
-  console.log("멤버 : ", auth?.member || {});
   const login = auth.login;
   const mentorProfileNo = token ? member.mentorProfileNo : null;
-  const [mentorProfile, setMentorProFile] = useState({});
-  /* CONTEXT */
+  const [mentorProfile, setMentorProfile] = useState({});
 
-  // 로그인 페이지로 이동
-  const handleLoginNavigate = () => {
-    navigate("/member/login");
-  };
+
+
+
+  /* 2. 함수 선언 부분 */
+
+  // 네비게이션 로직 함수화
+  const navigateTo = (path) => navigate(path);
+
+  // 기존 함수 간소화
+  const handleLoginNavigate = () => navigateTo("/member/login"); //로그인 페이지로 이동
+  const handleJoinNavigate = () => navigateTo("/member/join"); //회원가입 페이지로 이동
+  const handleAdminNavigate = () => navigateTo("/admin"); //어드민 페이지로 이동
 
   // 로그아웃 처리
   const handleLogoutAction = async () => {
     try {
-      navigate("/main");
-      const isLogout = await logout();
+      await logout();
       auth.logout();
+      navigate("/");
       alert("로그아웃하셨습니다.");
-      console.log("로그아웃 성공 여부 : ", isLogout);
     } catch (error) {
       alert("오류 발생.");
       console.error("로그아웃 실패: ", error);
     }
   };
 
-  // 회원가입 페이지로 이동
-  const handleJoinNavigate = () => {
-    navigate("/member/join");
-  };
-
   // 프로필 페이지로 이동
   const handleProfileNavigate = async () => {
     try {
       const memberProfileResponse = await memberProfile(token);
-      console.log("멤버 프로필 : ", memberProfileResponse);
       
       const mentorProfileResponse = await getMentorProfile(mentorProfileNo);
-      setMentorProFile(mentorProfileResponse);
-      console.log("멘토 프로필 : ", mentorProfileResponse);
+      setMentorProfile(mentorProfileResponse);
       
       /* 멤버의 관심사가 19번인지 확인(SNS로그인 시 기본값) */
       const checkMemberCategory = memberProfileResponse?.data?.interests?.some(
@@ -69,6 +67,12 @@ export default function HeaderMenu() {
 
   const handleUpdateRole = async (role) => {
     try {
+      
+      if(mentorProfile === 2) {
+        alert("멘토 가입 심사 중입니다.");
+        return;
+      }
+
       if (member.mentorProfileNo === 0) {
           const confirmation = window.confirm('멘토를 신청 하시겠습니까?')
           if (!confirmation) {
@@ -77,7 +81,7 @@ export default function HeaderMenu() {
           navigate(`/mentor/join`);
           return;
       } else if (mentorProfile.mentorStatus === 2) {
-        alert("심사 중입니다.");
+        alert("멘토 가입 심사 중입니다.");
         return;
       } else {
           const confirmation = window.confirm(
@@ -99,10 +103,20 @@ export default function HeaderMenu() {
   }
 };
 
-  // 어드민 페이지 이동
-  const handleAdminNavigate = () =>{
-    navigate(`/admin`);
-  }
+  //1. memberApi에서 멘토 프로필 가져오기
+  const fetchMentorProfile = async () => {
+    const response = await memberApi.getMentorProfile(mentorProfileNo);
+    setMentorProfile(response.data);
+  };
+
+  /* 3. useEffect 선언 부분 */
+  //2. 멘토 프로필 가져오기
+  useEffect(() => {
+    if (mentorProfileNo && mentorProfileNo !== 0) {
+      fetchMentorProfile();
+    }
+  }, [mentorProfileNo]);
+
 
   // 스타일 정의
   const navStyle = {
@@ -115,8 +129,8 @@ export default function HeaderMenu() {
     justifyContent: "flex-end", // 오른쪽 정렬
     gap: "20px",
   };
-
   
+
   return (
     <div className="header" style={navStyle}>
       <div className="rightMenu" style={rightMenuBarStyle}>

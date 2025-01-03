@@ -5,6 +5,7 @@ import "../../css/memberPage.css";
 import  grew  from "../../image/logo.png";
 import { useNavigate, useParams } from "react-router-dom";
 import { useMemberAuth } from "../../util/AuthContext";
+import * as memberApi from "../../api/memberApi";
 
 export default function MemberProfileLayoutFormPage() {
   /* 왼쪽 사이드 바 CSS */
@@ -21,12 +22,12 @@ export default function MemberProfileLayoutFormPage() {
   const token = auth?.token || null;
   const member = auth?.member || {};
   const mentorProfileNo = token ? member.mentorProfileNo : null;
-  console.log("mentorProfileNo :", mentorProfileNo);
-  
+  const [mentorProfile, setMentorProfile] = useState({}); 
+
   const handleTabClick = (tab) => {
 
     // mentorProfile 탭을 클릭했을 때 조건 확인
-    if (tab === "mentorProfile" && mentorProfileNo === 0) {
+    if (tab === "mentorProfile" && (mentorProfileNo === 0 || mentorProfile.categoryNo === 26)) {
       alert("멘토만 접근할 수 있는 페이지입니다.");
       return;
     }
@@ -46,11 +47,24 @@ export default function MemberProfileLayoutFormPage() {
     }
   }
 
-  useEffect(() => {
-     // URL에서 가져온 `tab` 값을 기반으로 활성 탭 설정
-     setActiveTab(tab || "memberProfile");
-    }, [tab]);
+  /* 멘토 프로필 가져오기기 */
+  const fetchMentorProfile = async () => {
+    const response = await memberApi.getMentorProfile(mentorProfileNo);
+    setMentorProfile(response.data);
+  };
 
+  useEffect(() => {
+      
+     // URL에서 가져온 `tab` 값을 기반으로 활성 탭 설정
+     setActiveTab(tab || "memberProfile"); 
+    }, [tab]);
+  
+  /* 멘토 프로필 가져오기 */
+  useEffect(() => {
+    if (mentorProfileNo && mentorProfileNo !== 0) {
+      fetchMentorProfile();
+    }
+  }, [mentorProfileNo]);
   
   return (
     <div className="profile-layout">
