@@ -76,6 +76,11 @@ const MentorJoinForm = () => {
     }
   };
 
+  const skip = () => {
+    alert("멘토 신청은 마이페이지에서 다시 할 수 있습니다.");
+    navigate('/main');
+    return;
+  }
   /********** 경력 관련 메소드 END ***********/
 
   
@@ -350,6 +355,13 @@ const MentorJoinForm = () => {
           />
         </div>
         {/* 제출 버튼 */}
+        <button
+          type="button"
+          onClick={skip}
+          className="submit-button"
+        >
+          건너뛰기
+        </button>
         <button
           type="button"
           onClick={mentorProfileCreateAction}

@@ -121,9 +121,9 @@ export const MemberJoinFormPage = () => {
     }
 
     try {
+      toast.success("인증메일이 발송되었습니다.");
       const response = await memberApi.sendJoinCode(member.memberEmail);
       setTempCode(response.data);
-      toast.success("인증메일이 발송되었습니다.");
     } catch (error) {
       console.error("인증번호 발송 실패:", error);
       toast.error("인증번호 발송 중 문제가 발생했습니다.");
