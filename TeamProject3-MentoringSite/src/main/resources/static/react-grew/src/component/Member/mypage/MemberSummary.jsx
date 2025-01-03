@@ -108,7 +108,7 @@ export default function MemberSummary({triggerUpdate}) {
   };
 
   const underReview = () => {
-    alert("심사 중입니다.");
+    alert("가입 심사 중입니다.");
     return;
   }
 
