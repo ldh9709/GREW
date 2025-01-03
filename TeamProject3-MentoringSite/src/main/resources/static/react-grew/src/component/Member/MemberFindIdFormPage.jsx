@@ -31,7 +31,6 @@ const MemberFindIdForm = () => {
       return;
     }
     const response = await memberApi.sendMailFindId(member);
-    console.log(response);
 
     switch (response.status) {
       case responseStatus.EMAIL_SEND_SUCCESS:

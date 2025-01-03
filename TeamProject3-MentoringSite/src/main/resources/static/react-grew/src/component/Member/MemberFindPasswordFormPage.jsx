@@ -33,7 +33,6 @@ const MemberFindPasswordForm = () => {
         }
     }
 
-
     return (
 
         <div className="password-reset-container">
