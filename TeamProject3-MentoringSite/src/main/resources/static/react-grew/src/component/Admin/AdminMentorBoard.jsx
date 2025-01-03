@@ -40,10 +40,30 @@ export default function AdminMentorBoard () {
     const handleMoveMentor = async (mentorBoardNo) => {///mentor-board/detail/5
         const url = `/mentor-board/detail/${mentorBoardNo}`;// 게시글 이동
         window.open(url, "_blank"); // 새 탭에서 열기
-    }
+    };
+
+    const handleSearchChange = (e) => {
+        setSearch(e.target.value); // 검색어 변경 시
+    };
+
+    const handleSearchSubmit = (e) => {
+        e.preventDefault(); // 폼 제출 시 페이지 리로드 방지
+        fetchBoards(); // 검색 결과를 가져오기
+    };
 
     return(
         <div className="admin-table-container">
+            <div className="search-container">
+                <form onSubmit={handleSearchSubmit}>
+                    <input
+                        type="text"
+                        value={search}
+                        onChange={handleSearchChange}
+                        placeholder="검색어를 입력하세요"
+                    />
+                    <button type="submit">검색</button>
+                </form>
+            </div>
             <table className="admin-table">
                 <thead>
                     <tr>
