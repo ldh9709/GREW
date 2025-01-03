@@ -76,7 +76,7 @@ export default function MemberProfileLayoutFormPage() {
             }`}
             onClick={() => handleTabClick("memberProfile")}
             >
-            멤버 프로필 관리
+            개인 정보 관리
             </div>
             <div
             className={`profile-sidebar-item ${
@@ -84,12 +84,12 @@ export default function MemberProfileLayoutFormPage() {
             }`}
             onClick={() => handleTabClick("mentorProfile")}
             >
-            멘토 프로필 관리
+            멘토 정보 관리
             </div>
         </div>
 
       {/* 오른쪽 콘텐츠 */}
-      <div className="content">
+      <div>
         {activeTab === "memberProfile" && <MemberProfileFormPage/>}
         {activeTab === "mentorProfile" && <MentorModifyFormPage/>}
       </div>

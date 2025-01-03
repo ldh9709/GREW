@@ -214,10 +214,9 @@ const MemberProfileFormPage = () => {
   console.log(member.interests);
 
   return (
-    <div className="profile-layout">
+    <div className="profile-content-layout">
       {/* 오른쪽 프로필 수정 폼 */}
-      <div className="profile-content">
-        <h2 className="profile-title">회원정보 수정</h2>
+        <h2 className="profile-title">개인 정보 관리</h2>
         <form className="profile-form">
           <div className="profile-form-group">
             <p className="profile-form-label">
@@ -345,14 +344,13 @@ const MemberProfileFormPage = () => {
           <div className="profile-button-group">
             <input
               type="button"
-              className="profile-button"
+              className="profile-modify-button"
               onClick={updateMember}
-              value="수정완료"
+              value="수정"
               disabled={isEmailChanged && !isEmailVerified} // 조건 추가
             />
           </div>
         </form>
-      </div>
     </div>
   );
 };
