@@ -3,10 +3,10 @@ import "../../css/memberPage.css"; // 별도의 CSS 파일 연결
 import { useNavigate } from "react-router-dom";
 import * as memberApi from "../../api/memberApi";
 import * as responseStatus from "../../api/responseStatusCode";
+import { toast } from "react-toastify";
 
 const MemberFindIdForm = () => {
   const navigate = useNavigate();
-
 
   const [member, setMember] = useState({
     memberId: "",
@@ -20,15 +20,25 @@ const MemberFindIdForm = () => {
   };
 
   const sendMailFindId = async () => {
+
+    if(!member.memberName) {
+      toast.error("이름을 입력해주세요.");
+      return;
+    }
+
+    if(!member.memberEmail) {
+      toast.error("이메일을 다시 확인해주세요");
+      return;
+    }
     const response = await memberApi.sendMailFindId(member);
     console.log(response);
 
     switch (response.status) {
       case responseStatus.EMAIL_SEND_SUCCESS:
-        alert("이메일이 발송되었습니다.");
+        toast.success("이메일이 발송되었습니다.");
         break;
       default:
-        alert("이메일을 다시 확인해주세요.")
+        toast.error("이메일을 다시 확인해주세요.")
         break;
     }
   }
@@ -41,11 +51,13 @@ const MemberFindIdForm = () => {
     
     switch (response.status) {
       case responseStatus.INPUTCODE_CONFIRM_SUCCESS:
-        alert("인증번호가 확인되었습니다.");
+        toast.success("인증번호가 확인되었습니다.");
         navigate('/member/find-id-check', { state: { memberId } });
         break;
+      case responseStatus.NOT_FOUND_MEMBER:
+        toast.error("아이디가 존재하지 않습니다.")
       default:
-        alert("인증번호를 다시 확인해주세요.")
+        toast.error("인증번호를 다시 확인해주세요.")
         break;
     }
   }
