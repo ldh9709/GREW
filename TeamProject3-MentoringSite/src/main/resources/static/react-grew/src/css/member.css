@@ -240,19 +240,22 @@ body {
   padding: 10px 0;
 }
 
-
 .tab-content {
+  display: flex;
   position: relative;
   text-align: center;
+  min-height: 200px;
   font-size: 1.1rem;
-  margin: 5px 0px; 
+  align-items: center;
   padding: 0 30px;
 }
-.tab-inquiry {
-  min-height: 300px;
-  align-items: center;
-}
 
+.tab-content  p {
+  margin: 0 auto;
+}
+.tab-bottom{
+  padding-bottom: 70px;
+}
 /*데이터 없을때 문구*/
 .empty-data{
   margin: auto;
@@ -449,9 +452,6 @@ body {
 
 
 /* 팔로우 리스트 */
-.no-follow{
-  margin-top: 25%;
-}
 .follow-list {
   width: 880px;
   list-style: none;
@@ -562,11 +562,10 @@ body {
 }
 
 /* 멘토 컨텐츠 */
-.tab-boards {
+.member-tab-boards {
   position: relative;
   width: 95%;
   margin: 0 auto;
-  padding-bottom: 25px;
   align-items: center;
 }
 

@@ -137,14 +137,9 @@ export default function MemberInquiryAnswerList() {
                 ))
              }
             </tbody>
-            <PagenationItem
-              currentPage={currentPage}
-              totalPages={totalPages}
-              paginate={paginate}
-            />
           </table>
         )}
-        <PagenationItem
+        <PagenationItem 
           currentPage={currentPage}
           totalPages={totalPages}
           paginate={paginate}

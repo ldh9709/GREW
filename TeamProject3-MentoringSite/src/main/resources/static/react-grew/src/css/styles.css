@@ -123,6 +123,10 @@ button {
   background-color: #28a745;
   color: #fff;
 }
+/*페이지 없을때*/
+.pagination-none {
+  display: none;
+}
 
 #wrapper,
 #content {
