@@ -211,8 +211,6 @@ const MemberProfileFormPage = () => {
     fetchProfileData();
   }, []);
 
-  console.log(member.interests);
-
   return (
     <div className="profile-content-layout">
       {/* 오른쪽 프로필 수정 폼 */}
