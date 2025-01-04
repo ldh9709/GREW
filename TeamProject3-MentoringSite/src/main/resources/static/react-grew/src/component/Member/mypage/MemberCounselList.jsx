@@ -152,7 +152,7 @@ export default function MemberCounselList() {
   return (
     <>
       {loading ? <div></div>  :
-      <div className="tab-counsel">
+      <div className="tab-content tab-counsel tab-bottom">
         {counselList.length === 0 ? (
           <p> 진행한 상담내역이 없습니다. </p>
         ) : member.memberRole === "ROLE_MENTEE" ? (
@@ -166,7 +166,6 @@ export default function MemberCounselList() {
                   <p className="mentor-name">
                     {counsel.searchName} 멘토{console.log(counsel)}
                   </p>
-                  <p>멘토 프로필 번호: {counsel.mentorProfileNo || "없음"}</p>
                   <p className="mentor-status">
                     상담 상태: {counselStatus(counsel.chatRoomStatus)}
                   </p>
@@ -215,13 +214,13 @@ export default function MemberCounselList() {
             ))}
           </ul>
         )}
+        <PagenationItem
+          currentPage={currentPage}
+          totalPages={totalPages}
+          paginate={paginate}
+        />
       </div>
       }
-      <PagenationItem
-        currentPage={currentPage}
-        totalPages={totalPages}
-        paginate={paginate}
-      />
     </>
   );
 }

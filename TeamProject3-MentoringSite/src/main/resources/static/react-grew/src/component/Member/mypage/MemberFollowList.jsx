@@ -57,7 +57,7 @@ export default function FollowList({ handleUpdate }) {
 
     return (
         <>
-            <div className="tab-content" id="following">
+            <div className="tab-content tab-bottom" id="following">
               {/* 팔로우 리스트가 비어 있는 경우 */}
               {followList.length === 0 ? (
                     <p className="no-follow">팔로우 한 멘토가 없습니다.</p>

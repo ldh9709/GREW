@@ -48,7 +48,7 @@ export default function MemberSummary({triggerUpdate}) {
   //회원 요약정보 count 가져옴
   const fetchCountSummary = async () => {
     try {
-      if (member.memberRole === "ROLE_MENTEE") {
+      if (member && member.memberRole === "ROLE_MENTEE") {
         const response = await memberApi.menteeSummary(token);
         const { data } = await response;
         setSummary((prevState) => ({
@@ -57,7 +57,7 @@ export default function MemberSummary({triggerUpdate}) {
           counselCount: data.counselCount,
           followCount: data.followCount,
         }));
-      } else if (member.memberRole === "ROLE_MENTOR") {
+      } else if (member && member.memberRole === "ROLE_MENTOR") {
         const response = await memberApi.mentorSummary(token);
         const { data } = await response;
 
