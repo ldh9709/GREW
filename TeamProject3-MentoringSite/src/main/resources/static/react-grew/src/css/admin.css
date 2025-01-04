@@ -281,7 +281,7 @@
 /* 회원 목록 디테일 조회 */
 .mentor-detail-container {
   position: absolute; 
-  top: -120px; right: -390px;
+  top: -20px; right: -370px;
   min-width: 320px;
   margin: 20px auto;
   padding: 20px;
