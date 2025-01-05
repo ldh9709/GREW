@@ -215,58 +215,74 @@ const MentorJoinForm = () => {
   
   return (
     <div className="mentor-join-container">
-      <h1 className="form-title">회원가입</h1>
-      <h3 className="form-subtitle">멘토 가입을 환영합니다!</h3>
-
-      {/* 대/소분류 선택 폼 */}
-      <div className="form-group-profile horizontal-combined">
-        {/* 대분류 선택 */}
-        <label className="parent-label">
-          전문분야<span className="red-text">필수</span>
-        </label>
-        <select
-          className="category-select"
-          value={selectedParent}
-          onChange={handleParentChange}
-        >
-          <option value="">-- 대분류 선택 --</option>
-          {categories
-            .filter((cat) => cat.categoryDepth === 1) // depth=1인 것만 추려낸다
-            .map((parent) => (
-              <option key={parent.categoryNo} value={parent.categoryNo}>
-                {parent.categoryName}
-              </option>
-            ))}
-        </select>
-
-        {/* 소분류 선택 */}
-        <label className="child-label"></label>
-        <select
-          className="category-select"
-          value={selectedChild}
-          onChange={handleChildChange}
-          disabled={!selectedParent}
-        >
-          <option value="">-- 소분류 선택 --</option>
-          {childCategories.map((child) => (
-            <option key={child.categoryNo} value={child.categoryNo}>
-              {child.categoryName}
-            </option>
-          ))}
-        </select>
-      </div>
+      <h1 className="mentor-form-title">멘토 신청하기</h1>
 
       {/* 멘토 가입 폼 */}
       <form className="mentor-join-form">
+        {/* 대/소분류 선택 폼 */}
+        <label className="parent-label">
+          전문분야<span className="red-text">*</span>
+        </label>
+        <div className="form-group-profile horizontal-combined">
+          {/* 대분류 선택 */}
+          <select
+            className="category-select"
+            value={selectedParent}
+            onChange={handleParentChange}
+          >
+            <option value="">-- 대분류 선택 --</option>
+            {categories
+              .filter((cat) => cat.categoryDepth === 1) // depth=1인 것만 추려낸다
+              .map((parent) => (
+                <option key={parent.categoryNo} value={parent.categoryNo}>
+                  {parent.categoryName}
+                </option>
+              ))}
+          </select>
+
+          {/* 소분류 선택 */}
+          <select
+            className="category-select"
+            value={selectedChild}
+            onChange={handleChildChange}
+            disabled={!selectedParent}
+          >
+            <option value="">-- 소분류 선택 --</option>
+            {childCategories.map((child) => (
+              <option key={child.categoryNo} value={child.categoryNo}>
+                {child.categoryName}
+              </option>
+            ))}
+          </select>
+        </div>
+        {/* 한 줄 소개글 */}
+        <div className="form-group-profile horizontal">
+          <label htmlFor="mentorIntroduce" className="parent-label">
+            한줄 소개<span className="red-text">*</span>
+          </label>
+          <textarea
+            id="mentorHeadline"
+            className="mentor-join-headline"
+            name="mentorHeadline"
+            placeholder="한 줄 소개(50자 이내)"
+            rows="1"
+            maxLength={50}
+            value={mentor.mentorHeadline}
+            onChange={handleChangeMentorJoinForm}
+            required
+          ></textarea>
+        </div>
+
         {/* 소개글 */}
         <div className="form-group-profile horizontal">
-          <label htmlFor="mentorIntroduce">
-            본인 소개<span className="red-text">필수</span>
+          <label htmlFor="mentorIntroduce" className="parent-label">
+            소개글<span className="red-text">*</span>
           </label>
           <textarea
             id="mentorIntroduce"
+            className="mentor-join-introduce"
             name="mentorIntroduce"
-            placeholder="소개글 입력"
+            placeholder="소개글(1,000자 이내)"
             rows="5"
             value={mentor.mentorIntroduce}
             onChange={handleChangeMentorJoinForm}
@@ -274,66 +290,56 @@ const MentorJoinForm = () => {
           ></textarea>
         </div>
         
-        {/* 한 줄 소개글 */}
-        <div className="form-group-profile horizontal">
-          <label htmlFor="mentorIntroduce">
-            한줄 소개<span className="red-text">필수</span>
-          </label>
-          <textarea
-            id="mentorHeadline"
-            name="mentorHeadline"
-            placeholder="한 줄 소개 입력"
-            rows="1"
-            value={mentor.mentorHeadline}
-            onChange={handleChangeMentorJoinForm}
-            required
-          ></textarea>
-        </div>
-
         {/* 경력 START*/}
         <div className="form-group-profile horizontal">
-          <label>
-            경력<span className="red-text">필수</span>
+          <label className="parent-label">
+            경력<span className="red-text">*</span>
           </label>
           <div className="career-container">
           {mentor.careerDtos.map((career, index) => (
-              <div key={index} className="career-row">
-                <input
-                  type="text"
-                  placeholder="회사명"
-                  onChange={(e) => handleCareerChange(index, "careerCompanyName", e.target.value)}
-                  required
-                />
-                <input
-                  type="text"
-                  placeholder="직책"
-                  onChange={(e) => handleCareerChange(index, "careerJobTitle", e.target.value)}
-                  required
-                />
-                <input
-                  type="text"
-                  name="startDate"
-                  onFocus={handleFocus}
-                  onBlur={handleBlur}
-                  onChange={(e) => handleCareerChange(index, "careerStartDate", e.target.value)}
-                  placeholder="입사년월"
-                  required
-                />
-                <input
-                  type="text"
-                  name="endDate"
-                  onFocus={handleFocus}
-                  onBlur={handleBlur}
-                  onChange={(e) => handleCareerChange(index, "careerEndDate", e.target.value)}
-                  placeholder="퇴사년월"
-                  required
-                />
-              </div>
+            <div key={index}>
+              <div className="career-row">
+                  <input
+                    type="text"
+                    placeholder="회사명"
+                    onChange={(e) => handleCareerChange(index, "careerCompanyName", e.target.value)}
+                    required
+                  />
+                  <input
+                    type="text"
+                    name="startDate"
+                    onFocus={handleFocus}
+                    onBlur={handleBlur}
+                    onChange={(e) => handleCareerChange(index, "careerStartDate", e.target.value)}
+                    placeholder="입사년월"
+                    required
+                  />
+                  <input
+                    type="text"
+                    name="endDate"
+                    onFocus={handleFocus}
+                    onBlur={handleBlur}
+                    onChange={(e) => handleCareerChange(index, "careerEndDate", e.target.value)}
+                    placeholder="퇴사년월"
+                    required
+                  />
+                  </div>
+                  <div>
+                    <input
+                      type="text"
+                      placeholder="직책 또는 직무"
+                      onChange={(e) => handleCareerChange(index, "careerJobTitle", e.target.value)}
+                      required
+                    />
+                  </div>
+                </div>
                 ))}
               {/* 추가 버튼을 필드 목록 외부로 이동 */}
-              <button type="button" className="add-career-button" onClick={addCareerField}>
-                + 추가
-              </button>
+              <div className="career-add-button">
+                <button type="button" className="add-career-button" onClick={addCareerField}>
+                  + 추가
+                </button>
+              </div>
           </div>
         </div>
         {/* 경력 END*/}
@@ -342,7 +348,7 @@ const MentorJoinForm = () => {
         {/* 프로필 사진 첨부 */}
         <div className="form-group-profile horizontal">
           <label htmlFor="profileImage">
-            프로필 사진<span className="red-text">필수</span>
+            프로필 사진<span className="red-text">*</span>
           </label>
           <input
             type="file"
@@ -355,20 +361,22 @@ const MentorJoinForm = () => {
           />
         </div>
         {/* 제출 버튼 */}
-        <button
-          type="button"
-          onClick={skip}
-          className="submit-button"
-        >
-          건너뛰기
-        </button>
-        <button
-          type="button"
-          onClick={mentorProfileCreateAction}
-          className="submit-button"
-        >
-          회원가입
-        </button>
+        <div className="mentor-submit-container">
+          <button
+            type="button"
+            onClick={mentorProfileCreateAction}
+            className="submit-button"
+          >
+            신청하기
+          </button>
+          <button
+            type="button"
+            onClick={skip}
+            className="skip-button"
+          >
+            건너뛰기
+          </button>
+        </div>
       </form>
     </div>
 

@@ -14,13 +14,23 @@ const ChatAlarim = () => {
   const [activePanel, setActivePanel] = useState(null); //패널을 열때 chat 또는 notification인지 구분하는 용도
   const [roomId, setRoomId] = useState(null); // 선택된 roomId 상태
   const [roomName, setRoomName] = useState(null); // 선택된 roomName 상태
+  const [roomStatus, setRoomStatus] = useState(null); // 선택된 roomStatus 상태
+  const [mentorNo, setMentorNo] = useState(null); // 선택된 mentorNo 상태
   const { token, member } = useMemberAuth();
   let stompClient = useRef(null);
   // stompClient 초기화 및 WebSocket 연결
   
   useEffect(() => {
     if (roomId && member.memberName) {
-      const socket = new SockJS(`http://localhost:8080/chat`);
+      let socket;
+
+      try {
+        socket = new SockJS('http://localhost:8080/chat');
+      } catch (error) {
+        console.error('Failed to connect to localhost, trying ngrok...');
+        socket = new SockJS('https://f8eb-175-123-27-55.ngrok-free.app/chat');
+      }
+      
       stompClient.current = new StompClient({
         webSocketFactory: () => socket,
         onConnect: () => {
@@ -48,16 +58,17 @@ const ChatAlarim = () => {
         }
       };
     }
-    console.log("소켓검사 종료");
   }, [roomId]);
 
   const togglePanel = (panel) => {
     //chat 또는 notification를 확인하여 슬라이드 패널을 열고 닫음
     setActivePanel((prevPanel) => (prevPanel === panel ? null : panel));
   };
-  const openChatting = (roomId, roomName) => {
+  const openChatting = (roomId, roomName, roomStatus, mentorNo) => {
     setRoomId(roomId); // 선택된 roomId 설정
     setRoomName(roomName); // 선택된 roomName 설정
+    setRoomStatus(roomStatus);
+    setMentorNo(mentorNo);
     setActivePanel("ChattingMessage");
   };
   const alarmIsReadCount = async () => {
@@ -81,7 +92,7 @@ const ChatAlarim = () => {
             {activePanel === "chat" && <ChatRoom onRoomClick={openChatting} />}
             {activePanel === "notification" && <Alarim />}
             {activePanel === "ChattingMessage" && (
-              <ChattingMessage roomId={roomId} roomName={roomName} />
+              <ChattingMessage roomId={roomId} roomName={roomName} roomStatus={roomStatus} mentorNo={mentorNo}/>
             )}
           </div>
           {/* Chat Button */}

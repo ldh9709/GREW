@@ -64,7 +64,7 @@ export default function MemberInquiryAnswerList() {
 
   return (
     <>
-      <div className="tab-content tab-inquiry" id="inquiry">
+      <div className="tab-content tab-bottom" id="inquiry">
         {dataList.length === 0 ? (
           <p> 작성 내용이 없습니다.</p>
         ) : member.memberRole === "ROLE_MENTEE" ? (
@@ -80,8 +80,7 @@ export default function MemberInquiryAnswerList() {
             </thead>
             <tbody>
               {/* 질문 리스트 map으로 반복 */}
-              {dataList && dataList.length > 0 ? (
-                dataList.map((inquiry, index) => (
+                {dataList.map((inquiry, index) => (
                   <tr
                     key={index}
                     onClick={() => {
@@ -102,14 +101,7 @@ export default function MemberInquiryAnswerList() {
                     )}
                     <td className="col-views">{inquiry.inquiryViews}</td>
                   </tr>
-                ))
-              ) : (
-                <tr>
-                  <td colSpan="5" style={{ textAlign: "center" }}>
-                    질문내용이 없습니다
-                  </td>
-                </tr>
-              )}
+                ))}
             </tbody>
           </table>
         ) : (
@@ -124,8 +116,7 @@ export default function MemberInquiryAnswerList() {
             </thead>
             <tbody>
               {/* 질문 리스트 map으로 반복 */}
-              {dataList && dataList.length > 0 ? (
-                dataList.map((answer, index) => (
+              { dataList.map((answer, index) => (
                   <tr
                     key={index}
                     onClick={() => {
@@ -144,21 +135,17 @@ export default function MemberInquiryAnswerList() {
                     <td className="col-likes">{answer.vote}</td>
                   </tr>
                 ))
-              ) : (
-                <tr>
-                  <td colSpan="4" style={{ textAlign: "center" }}>
-                    질문내용이 없습니다
-                  </td>
-                </tr>
-              )}
+             }
             </tbody>
-            <PagenationItem
-              currentPage={currentPage}
-              totalPages={totalPages}
-              paginate={paginate}
-            />
           </table>
         )}
+        <div className="mypage-pagenation">
+          <PagenationItem 
+            currentPage={currentPage}
+            totalPages={totalPages}
+            paginate={paginate}
+          />
+        </div>
       </div>
     </>
   );

@@ -43,7 +43,7 @@ export default function MemberMentorContentList() {
 
   return (
     <>
-      <div className="tab-boards">
+      <div className="tab-boards tab-bottom">
         <div className="board-list">
           {boardList.map((board, index) => (
             <div
@@ -80,14 +80,14 @@ export default function MemberMentorContentList() {
           ))}
         </div>
         {/* 페이지네이션 버튼 */}
-        <div className="common-pagination common-pagination-bottom">
-        </div>
-      </div>
+        <div className="mypage-pagenation">
           <PagenationItem
             currentPage={currentPage}
             totalPages={totalPages}
             paginate={paginate}
           />  
+        </div>
+      </div>
     </>
   );
 }

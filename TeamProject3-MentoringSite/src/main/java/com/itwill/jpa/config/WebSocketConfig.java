@@ -21,7 +21,10 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer{
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
         registry.addEndpoint("/chat")
-        		.setAllowedOrigins("http://localhost:3000")
+		        .setAllowedOrigins(
+	                "http://localhost:3000",
+	                "https://8db0-175-123-27-55.ngrok-free.app"
+	            )
         		.withSockJS();  		 // SockJS를 사용하여 /chat 엔드포인트 설정
     }
     
