@@ -224,12 +224,7 @@ VALUES(mentor_profile_no_SEQ.nextval, '안녕하세요, 김태윤 멘토입니�
 INSERT INTO career(CAREER_NO, CAREER_COMPANY_NAME, CAREER_JOB_TITLE, CAREER_START_DATE, CAREER_END_DATE, MENTOR_PROFILE_NO)
 VALUES(career_no_SEQ.nextval, '스마트러닝 교육센터', '중학생 학습 프로그램 개발자', '2015-03-01', '2023-12-01', (SELECT mentor_profile_no FROM mentor_profile WHERE member_no = (SELECT member_no FROM member WHERE member_id = 'mentor12')));
 
-INSERT INTO member(member_no, member_id, member_password, member_email, member_name, member_points, member_status, member_join_date, member_report_count, member_role, member_provider)
-VALUES(member_no_SEQ.nextval, 'mentor13', 'pass13', 'mentor13@naver.com', '이지훈', 4000, 1, SYSDATE, 0, 'ROLE_MENTOR', '');
-INSERT INTO mentor_profile(mentor_profile_no, mentor_introduce, mentor_rating, mentor_mentoring_count, mentor_image, mentor_activity_count, mentor_follow_count, mentor_status, category_no, member_no, mentor_headline)
-VALUES(mentor_profile_no_SEQ.nextval, '안녕하세요, 이지훈 멘토입니다. 고등학생들의 진학 및 학습 방법에 대해 전문적으로 상담합니다.', 4.7, 30, '/images/mentor-profile/17.jpg', 120, 60, 3, 7, member_no_SEQ.currval, '고등학생 상담 전문가');
-INSERT INTO career(CAREER_NO, CAREER_COMPANY_NAME, CAREER_JOB_TITLE, CAREER_START_DATE, CAREER_END_DATE, MENTOR_PROFILE_NO)
-VALUES(career_no_SEQ.nextval, '입시 전문가 협회', '고등학생 진학 컨설턴트', '2010-01-01', '2024-01-01', (SELECT mentor_profile_no FROM mentor_profile WHERE member_no = (SELECT member_no FROM member WHERE member_id = 'mentor13')));
+
 
 INSERT INTO member(member_no, member_id, member_password, member_email, member_name, member_points, member_status, member_join_date, member_report_count, member_role, member_provider)
 VALUES(member_no_SEQ.nextval, 'mentor14', 'pass14', 'mentor14@naver.com', '박수민', 5000, 1, SYSDATE, 0, 'ROLE_MENTOR', '');
@@ -280,12 +275,7 @@ VALUES(mentor_profile_no_SEQ.nextval, '안녕하세요, 이정훈 멘토입니�
 INSERT INTO career(CAREER_NO, CAREER_COMPANY_NAME, CAREER_JOB_TITLE, CAREER_START_DATE, CAREER_END_DATE, MENTOR_PROFILE_NO)
 VALUES(career_no_SEQ.nextval, '헬스 퍼스널 트레이닝 센터', '피트니스 트레이너', '2012-06-01', '2024-01-01', (SELECT mentor_profile_no FROM mentor_profile WHERE member_no = (SELECT member_no FROM member WHERE member_id = 'mentor20')));
 
-INSERT INTO member(member_no, member_id, member_password, member_email, member_name, member_points, member_status, member_join_date, member_report_count, member_role, member_provider)
-VALUES(member_no_SEQ.nextval, 'mentor21', 'pass21', 'mentor21@naver.com', '박지연', 4500, 1, SYSDATE, 0, 'ROLE_MENTOR', '');
-INSERT INTO mentor_profile(mentor_profile_no, mentor_introduce, mentor_rating, mentor_mentoring_count, mentor_image, mentor_activity_count, mentor_follow_count, mentor_status, category_no, member_no, mentor_headline)
-VALUES(mentor_profile_no_SEQ.nextval, '안녕하세요, 박지연 멘토입니다. 요가와 필라테스 전문가로서 여러분의 건강을 도와드립니다.', 4.8, 30, '/images/mentor-profile/25.jpg', 120, 60, 3, 24, member_no_SEQ.currval, '요가/필라테스 전문가');
-INSERT INTO career(CAREER_NO, CAREER_COMPANY_NAME, CAREER_JOB_TITLE, CAREER_START_DATE, CAREER_END_DATE, MENTOR_PROFILE_NO)
-VALUES(career_no_SEQ.nextval, '요가 웰니스 센터', '요가 및 필라테스 강사', '2014-08-01', '2024-01-01', (SELECT mentor_profile_no FROM mentor_profile WHERE member_no = (SELECT member_no FROM member WHERE member_id = 'mentor21')));
+
 
 
 
