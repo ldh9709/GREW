@@ -14,6 +14,7 @@ const ChatAlarim = () => {
   const [activePanel, setActivePanel] = useState(null); //패널을 열때 chat 또는 notification인지 구분하는 용도
   const [roomId, setRoomId] = useState(null); // 선택된 roomId 상태
   const [roomName, setRoomName] = useState(null); // 선택된 roomName 상태
+  const [roomStatus, setRoomStatus] = useState(null); // 선택된 roomName 상태
   const { token, member } = useMemberAuth();
   let stompClient = useRef(null);
   // stompClient 초기화 및 WebSocket 연결
@@ -62,9 +63,10 @@ const ChatAlarim = () => {
     //chat 또는 notification를 확인하여 슬라이드 패널을 열고 닫음
     setActivePanel((prevPanel) => (prevPanel === panel ? null : panel));
   };
-  const openChatting = (roomId, roomName) => {
+  const openChatting = (roomId, roomName, roomStatus) => {
     setRoomId(roomId); // 선택된 roomId 설정
     setRoomName(roomName); // 선택된 roomName 설정
+    setRoomStatus(roomStatus);
     setActivePanel("ChattingMessage");
   };
   const alarmIsReadCount = async () => {
@@ -88,7 +90,7 @@ const ChatAlarim = () => {
             {activePanel === "chat" && <ChatRoom onRoomClick={openChatting} />}
             {activePanel === "notification" && <Alarim />}
             {activePanel === "ChattingMessage" && (
-              <ChattingMessage roomId={roomId} roomName={roomName} />
+              <ChattingMessage roomId={roomId} roomName={roomName} roomStatus={roomStatus}/>
             )}
           </div>
           {/* Chat Button */}

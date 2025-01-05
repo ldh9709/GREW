@@ -92,6 +92,7 @@ const ChatRoomList = ({ onRoomClick }) => {
               room.chatRoomLeaveStatus === 7600))
         );
       });
+      console.log(activeRooms);
       setRooms(activeRooms); // 필터링된 채팅방만 setRooms에 설정
       setTotalPages(responseJsonObject.data.totalPages);
     }
@@ -110,7 +111,7 @@ const ChatRoomList = ({ onRoomClick }) => {
   const saveRoomName = async () => {
     // 채팅방 이름을 저장하는 함수 (모달창에서 이름 수정 후 저장 버튼 클릭 시 호출됨)
     if (currentRoom && newRoomName.trim()) {
-      const responseJsonObject = await ChattingApi.changeChatRoomName(
+      await ChattingApi.changeChatRoomName(
         currentRoom.chatRoomNo,
         token,
         newRoomName.trim()
@@ -121,7 +122,7 @@ const ChatRoomList = ({ onRoomClick }) => {
   };
 
   const leaveRoom = async (roomNo) => {
-    const responseJsonObject = await ChattingApi.leaveChatRoom(roomNo, token);
+    await ChattingApi.leaveChatRoom(roomNo, token);
     await chatRoomList(currentPage - 1); // 현재 페이지 갱신
   };
 
@@ -171,7 +172,7 @@ const ChatRoomList = ({ onRoomClick }) => {
             <li
               key={room.chatRoomNo} // 고유 키 설정 (React에서 반복문에 필수)
               className="chat-room-item"
-              onClick={() => onRoomClick(room.chatRoomNo, room.chatRoomName)}
+              onClick={() => onRoomClick(room.chatRoomNo, room.chatRoomName, room.chatRoomStatus)}
               // 채팅방 클릭 시 부모 컴포넌트에 해당 채팅방 id 전달
             >
               <div className="chat-room-first">

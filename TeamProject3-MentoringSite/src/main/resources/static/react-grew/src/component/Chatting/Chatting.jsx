@@ -5,7 +5,7 @@ import { getCookie } from "../../util/cookieUtil.js";
 import * as ChattingApi from "../../api/chattingApi.js";
 import { jwtDecode } from "jwt-decode";
 
-const ChattingMessage = ({ roomId, roomName }) => {
+const ChattingMessage = ({ roomId, roomName, roomStatus }) => {
   const memberCookie = getCookie("member");
   const token = memberCookie ? memberCookie.accessToken : null;
   const decodeToken = token ? jwtDecode(token) : null;
@@ -209,59 +209,58 @@ const ChattingMessage = ({ roomId, roomName }) => {
 
   // 메시지 전송 처리
   const handleSendMessage = (event) => {
-    event.preventDefault();
-    if (messageContent.trim() && stompClient.current) {
-      const message = {
-        chatMessageNo: 0,
-        chatMessageContent: messageContent,
-        chatMessageDate: "",
-        chatMessageCheck: 1,
-        memberNo: decodeToken.memberNo,
-        memberName: username,
-        chatRoomNo: roomId,
-      };
-      stompClient.current.publish({
-        destination: `/app/chat/${roomId}`,
-        body: JSON.stringify(message),
-      });
-      setMessageContent(""); // 전송 후 입력 필드 초기화
-    }
-  };
-
-  // 이미지 전송 처리
-  const handleSendImage = (event) => {
-    event.preventDefault();
-    if (selectedImage && stompClient.current) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        const base64Image = reader.result.split(",")[1];
-
-        const imageData = {
-          imageBlob: base64Image,
-          chatMessageNo: Date.now(),
-          chatRoomNo: roomId,
+    if(selectedImage == null){
+      event.preventDefault();
+      if (messageContent.trim() && stompClient.current) {
+        const message = {
+          chatMessageNo: 0,
+          chatMessageContent: messageContent,
+          chatMessageDate: "",
+          chatMessageCheck: 1,
           memberNo: decodeToken.memberNo,
+          memberName: username,
+          chatRoomNo: roomId,
         };
-
         stompClient.current.publish({
-          destination: `/app/sendImage/${roomId}`,
-          body: JSON.stringify(imageData),
+          destination: `/app/chat/${roomId}`,
+          body: JSON.stringify(message),
         });
-        // 채팅 메시지로 추가
-        setMessages((prevMessages) => [
-          ...prevMessages,
-          {
-            chatMessageNo: imageData.chatMessageNo,
-            chatMessageContent: "이미지",
-            chatMessageDate: new Date().toISOString(),
-            chatMessageCheck: 1,
-            memberName: username,
-            imageData: base64Image,
-            type: "sent",
-          },
-        ]);
-      };
-      reader.readAsDataURL(selectedImage);
+        setMessageContent(""); // 전송 후 입력 필드 초기화
+      }
+    } else{ // 이미지 전송 처리
+      event.preventDefault();
+      if (selectedImage && stompClient.current) {
+        const reader = new FileReader();
+        reader.onloadend = () => {
+          const base64Image = reader.result.split(",")[1];
+
+          const imageData = {
+            imageBlob: base64Image,
+            chatMessageNo: Date.now(),
+            chatRoomNo: roomId,
+            memberNo: decodeToken.memberNo,
+          };
+
+          stompClient.current.publish({
+            destination: `/app/sendImage/${roomId}`,
+            body: JSON.stringify(imageData),
+          });
+          // 채팅 메시지로 추가
+          setMessages((prevMessages) => [
+            ...prevMessages,
+            {
+              chatMessageNo: imageData.chatMessageNo,
+              chatMessageContent: "이미지",
+              chatMessageDate: new Date().toISOString(),
+              chatMessageCheck: 1,
+              memberName: username,
+              imageData: base64Image,
+              type: "sent",
+            },
+          ]);
+        };
+        reader.readAsDataURL(selectedImage);
+      }
     }
   };
 
@@ -350,19 +349,13 @@ const ChattingMessage = ({ roomId, roomName }) => {
             type="text"
             id="message"
             className="message-input"
-            placeholder="메시지를 입력하세요..."
+            placeholder={roomStatus === 7200 ? "활동이 종료되었습니다." : "메시지를 입력하세요."}
+            disabled={roomStatus === 7200}
             value={messageContent}
             onChange={(e) => setMessageContent(e.target.value)}
           />
           <button type="submit" id="send" className="send-button">
             전송
-          </button>
-          <button
-            type="button"
-            className="send-image-button"
-            onClick={handleSendImage}
-          >
-            이미지 전송
           </button>
         </form>
       </div>
