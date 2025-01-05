@@ -20,7 +20,15 @@ const ChatAlarim = () => {
   
   useEffect(() => {
     if (roomId && member.memberName) {
-      const socket = new SockJS(`http://localhost:8080/chat`);
+      let socket;
+
+      try {
+        socket = new SockJS('http://localhost:8080/chat');
+      } catch (error) {
+        console.error('Failed to connect to localhost, trying ngrok...');
+        socket = new SockJS('https://f8eb-175-123-27-55.ngrok-free.app/chat');
+      }
+      
       stompClient.current = new StompClient({
         webSocketFactory: () => socket,
         onConnect: () => {
@@ -48,7 +56,6 @@ const ChatAlarim = () => {
         }
       };
     }
-    console.log("소켓검사 종료");
   }, [roomId]);
 
   const togglePanel = (panel) => {
