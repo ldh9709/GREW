@@ -29,6 +29,34 @@ hover-buttonbody {
   font-size: 18px;
   text-align: center;
 }
+.completed-button {
+  background-color: #28a745; /* 버튼 기본 배경색 */
+  color: #fff; /* 기본 글자색 */
+  border: none; /* 테두리 제거 */
+  border-radius: 5px; /* 둥근 모서리 */
+  padding: 3px 10px; /* 버튼 여백 */
+  font-size: 16px; /* 글자 크기 */
+  cursor: pointer; /* 기본 커서 */
+  transition: background-color 0.3s ease, transform 0.2s ease; /* 효과 */
+}
+
+.completed-button:hover {
+  background-color: #218838; /* 호버 시 색상 */
+  transform: scale(1.05); /* 호버 시 크기 확대 */
+}
+
+.completed-button:active {
+  background-color: #1e7e34; /* 클릭 시 색상 */
+  transform: scale(0.95); /* 클릭 시 크기 축소 */
+}
+
+/* 비활성화 상태 스타일 */
+.completed-button:disabled {
+  background-color: #6c757d; /* 비활성화 배경색 */
+  color: #fff; /* 비활성화 글자색 */
+  cursor: not-allowed; /* 비활성화 커서 */
+  opacity: 0.7; /* 투명도 */
+}
 .chat-tab {
   text-align: center;
   padding: 10px 20px;
@@ -196,7 +224,7 @@ hover-buttonbody {
   border: 1px solid #ccc;
   scroll-behavior: smooth;
   height: calc(
-    100vh - 180px
+    100vh - 190px
   ); /* 채팅 내용 영역의 높이를 화면 크기에 맞게 조정 */
   padding: 10px; /* 여백 추가 */
 }
