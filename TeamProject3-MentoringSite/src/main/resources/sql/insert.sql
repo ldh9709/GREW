@@ -62,11 +62,9 @@ INSERT INTO category(category_no, category_name, category_depth, parent_category
 VALUES(category_no_SEQ.nextval, '관심사를 선택해주세요', 3, null);
 
 
-/* 멘티 등록 */
-/***** 테스트용 아이디 등록 *****/
+/***** 테스트용 아이디 등록(멘티) *****/
 INSERT INTO member (member_no,member_id,member_password,member_email,member_name,member_points,member_status,member_join_date,member_report_count,member_role,member_provider) 
 VALUES (member_no_SEQ.nextval, 'asdf1234', '{bcrypt}$2a$10$Lhr9iLqvAzcQhu4Bd.VXmOHSu0LepHnKlrx43i5EbsEgkJBsNaVke', 'asdf1234@gmail.com', '김진영', 500, 1, sysdate, 0, 'ROLE_MENTEE', 'Email');
-/* 관심사 등록 */
 insert into interest (interest_no, member_no, category_no) 
 values(interest_no_SEQ.nextval, 1, 2);
 insert into interest (interest_no, member_no, category_no) 
@@ -74,112 +72,202 @@ values(interest_no_SEQ.nextval, 1, 3);
 insert into interest (interest_no, member_no, category_no) 
 values(interest_no_SEQ.nextval, 1, 4);
 
-/* 멘티 등록 */
-INSERT INTO member(member_no,member_id,member_password,member_email,member_name,member_points,member_status,member_join_date,member_report_count,member_role,member_provider)
-VALUES(member_no_SEQ.nextval,'bbb','bbb','bbb@naver.com','김찬영',500,1,sysdate,0,'ROLE_MENTEE','');
-INSERT INTO member(member_no,member_id,member_password,member_email,member_name,member_points,member_status,member_join_date,member_report_count,member_role,member_provider)
-VALUES(member_no_SEQ.nextval,'ccc','ccc','ccc@naver.com','나문정',5000,1,sysdate,0,'ROLE_MENTEE','naver');
-INSERT INTO member(member_no,member_id,member_password,member_email,member_name,member_points,member_status,member_join_date,member_report_count,member_role,member_provider)
-VALUES(member_no_SEQ.nextval,'ddd','ddd','ddd@naver.com','문준형',700,1,sysdate,0,'ROLE_MENTEE','');
-INSERT INTO member(member_no,member_id,member_password,member_email,member_name,member_points,member_status,member_join_date,member_report_count,member_role,member_provider)
-VALUES(member_no_SEQ.nextval,'eee','eee','eee@naver.com','박은미',9000,1,sysdate,0,'ROLE_MENTEE','');
-
-/***** 테스트용 아이디 등록 *****/
+/***** 테스트용 아이디 등록(멘티) *****/
 INSERT INTO member (member_no,member_id,member_password,member_email,member_name,member_points,member_status,member_join_date,member_report_count,member_role,member_provider) 
 VALUES (member_no_SEQ.nextval, 'qwer1234', '{bcrypt}$2a$10$2Vj/MwAon9U1UFSHcF8DSe9VtT86qtIFmWo2.tocHk1Px1NAXFU3K', 'zszz5434@gmail.com', '이도현', 500, 1, sysdate, 0, 'ROLE_MENTOR', 'Email');
+insert into interest (interest_no, member_no, category_no) 
+values(interest_no_SEQ.nextval, 2, 23);
+insert into interest (interest_no, member_no, category_no) 
+values(interest_no_SEQ.nextval, 2, 24);
+insert into interest (interest_no, member_no, category_no) 
+values(interest_no_SEQ.nextval, 2, 25);
+
+/***** 테스트용 아이디 등록(멘토) *****/
 INSERT INTO mentor_profile(mentor_profile_no, mentor_introduce, mentor_rating, mentor_mentoring_count, mentor_image, mentor_activity_count, mentor_follow_count, mentor_status, category_no, member_no, mentor_headline)
-VALUES (mentor_profile_no_SEQ.NEXTVAL, '안녕하세요, 이도현 멘토입니다.', 5, 10, '/images/mentor-profile/15.jpeg', 100, 50, 3, 2, member_no_SEQ.CURRVAL, '반갑습니다.');
+VALUES (mentor_profile_no_SEQ.NEXTVAL, '안녕하세요, 이도현 멘토입니다.', 5, 10, '/images/mentor-profile/15.jpeg', 100, 50, 3, 2, 2, '반갑습니다.');
 INSERT INTO career(CAREER_NO, CAREER_COMPANY_NAME, CAREER_JOB_TITLE, CAREER_START_DATE, CAREER_END_DATE, MENTOR_PROFILE_NO)
 VALUES(career_no_SEQ.nextval, '한샘', '경력자입니다', '2020.01.01', '2024.01.01', 1);
 
-/***** 테스트용 아이디 등록 *****/
+/***** 테스트용 아이디 등록(관리자) *****/
 INSERT INTO member (member_no,member_id,member_password,member_email,member_name,member_points,member_status,member_join_date,member_report_count,member_role,member_provider) 
 VALUES (member_no_SEQ.nextval, 'admin1234', '{bcrypt}$2a$10$2Vj/MwAon9U1UFSHcF8DSe9VtT86qtIFmWo2.tocHk1Px1NAXFU3K', 'admin1234@gmail.com', '관리자', 500, 1, sysdate, 0, 'ROLE_ADMIN', 'Email');
+insert into interest (interest_no, member_no, category_no) 
+values(interest_no_SEQ.nextval, 3, 23);
+insert into interest (interest_no, member_no, category_no) 
+values(interest_no_SEQ.nextval, 3, 24);
+insert into interest (interest_no, member_no, category_no) 
+values(interest_no_SEQ.nextval, 3, 25);
 
 
-/* 관심사 등록 */
+/* 멘티 등록 */
+INSERT INTO member(member_no,member_id,member_password,member_email,member_name,member_points,member_status,member_join_date,member_report_count,member_role,member_provider)
+VALUES(member_no_SEQ.nextval,'bbb','{bcrypt}$2a$10$2Vj/MwAon9U1UFSHcF8DSe9VtT86qtIFmWo2.tocHk1Px1NAXFU3K','bbb@naver.com','김찬영',500,1,sysdate,0,'ROLE_MENTEE','Email');
 insert into interest (interest_no, member_no, category_no) 
-values(interest_no_SEQ.nextval, 6, 2);
+values(interest_no_SEQ.nextval, 4, 2);
 insert into interest (interest_no, member_no, category_no) 
-values(interest_no_SEQ.nextval, 6, 3);
+values(interest_no_SEQ.nextval, 4, 3);
 insert into interest (interest_no, member_no, category_no) 
-values(interest_no_SEQ.nextval, 6, 4);
+values(interest_no_SEQ.nextval, 4, 4);
+INSERT INTO member(member_no,member_id,member_password,member_email,member_name,member_points,member_status,member_join_date,member_report_count,member_role,member_provider)
+VALUES(member_no_SEQ.nextval,'ccc','{bcrypt}$2a$10$2Vj/MwAon9U1UFSHcF8DSe9VtT86qtIFmWo2.tocHk1Px1NAXFU3K','ccc@naver.com','나문정',5000,1,sysdate,0,'ROLE_MENTEE','Email');
+insert into interest (interest_no, member_no, category_no) 
+values(interest_no_SEQ.nextval, 5, 6);
+insert into interest (interest_no, member_no, category_no) 
+values(interest_no_SEQ.nextval, 5, 7);
+insert into interest (interest_no, member_no, category_no) 
+values(interest_no_SEQ.nextval, 5, 8);
+INSERT INTO member(member_no,member_id,member_password,member_email,member_name,member_points,member_status,member_join_date,member_report_count,member_role,member_provider)
+VALUES(member_no_SEQ.nextval,'ddd','{bcrypt}$2a$10$2Vj/MwAon9U1UFSHcF8DSe9VtT86qtIFmWo2.tocHk1Px1NAXFU3K','ddd@naver.com','문준형',700,1,sysdate,0,'ROLE_MENTEE','Email');
+insert into interest (interest_no, member_no, category_no) 
+values(interest_no_SEQ.nextval, 6, 10);
+insert into interest (interest_no, member_no, category_no) 
+values(interest_no_SEQ.nextval, 6, 11);
+insert into interest (interest_no, member_no, category_no) 
+values(interest_no_SEQ.nextval, 6, 12);
+INSERT INTO member(member_no,member_id,member_password,member_email,member_name,member_points,member_status,member_join_date,member_report_count,member_role,member_provider)
+VALUES(member_no_SEQ.nextval,'eee','{bcrypt}$2a$10$2Vj/MwAon9U1UFSHcF8DSe9VtT86qtIFmWo2.tocHk1Px1NAXFU3K','eee@naver.com','박은미',9000,1,sysdate,0,'ROLE_MENTEE','Email');
+insert into interest (interest_no, member_no, category_no) 
+values(interest_no_SEQ.nextval, 7, 13);
+insert into interest (interest_no, member_no, category_no) 
+values(interest_no_SEQ.nextval, 7, 14);
+insert into interest (interest_no, member_no, category_no) 
+values(interest_no_SEQ.nextval, 7, 16);
 
 /* 멘토 등록 */
 INSERT INTO member(member_no,member_id,member_password,member_email,member_name,member_points,member_status,member_join_date,member_report_count,member_role,member_provider)
-VALUES(member_no_SEQ.nextval,'fff','fff','fff@naver.com','송대현',5500,1,sysdate,0,'ROLE_MENTOR','');
+VALUES(member_no_SEQ.nextval,'fff','{bcrypt}$2a$10$2Vj/MwAon9U1UFSHcF8DSe9VtT86qtIFmWo2.tocHk1Px1NAXFU3K','fff@naver.com','송대현',5500,1,sysdate,0,'ROLE_MENTOR','Email');
+insert into interest (interest_no, member_no, category_no) 
+values(interest_no_SEQ.nextval, 8, 6);
+insert into interest (interest_no, member_no, category_no) 
+values(interest_no_SEQ.nextval, 8, 7);
+insert into interest (interest_no, member_no, category_no) 
+values(interest_no_SEQ.nextval, 8, 8);
 INSERT INTO mentor_profile(mentor_profile_no, mentor_introduce, mentor_rating, mentor_mentoring_count, mentor_image, mentor_activity_count, mentor_follow_count, mentor_status, category_no, member_no, mentor_headline)
-VALUES (mentor_profile_no_SEQ.NEXTVAL, '안녕하세요, 송대현 멘토입니다.', 5.0, 10, '/images/mentor-profile/1.jpeg', 100, 50, 3, 4, member_no_SEQ.CURRVAL, '반갑습니둥');
+VALUES (mentor_profile_no_SEQ.NEXTVAL, '안녕하세요, 송대현 멘토입니다.', 5.0, 10, '/images/mentor-profile/1.jpeg', 100, 50, 3, 4, member_no_SEQ.currval, '자바 백엔드 마스터입니다');
 INSERT INTO career(CAREER_NO, CAREER_COMPANY_NAME, CAREER_JOB_TITLE, CAREER_START_DATE, CAREER_END_DATE, MENTOR_PROFILE_NO)
-VALUES(career_no_SEQ.nextval, '한샘', '경력자입니다', '2020.01.01', '2024.01.01', 2);
+VALUES(career_no_SEQ.nextval, 'xx개발', '백엔드 개발자 담당', '2020.01.01', '2024.01.01', 2);
 
 INSERT INTO member(member_no,member_id,member_password,member_email,member_name,member_points,member_status,member_join_date,member_report_count,member_role,member_provider)
-VALUES(member_no_SEQ.nextval,'ggg','ggg','ggg@naver.com','양한수',6300,1,sysdate,0,'ROLE_MENTOR','');
+VALUES(member_no_SEQ.nextval,'ggg','{bcrypt}$2a$10$2Vj/MwAon9U1UFSHcF8DSe9VtT86qtIFmWo2.tocHk1Px1NAXFU3K','ggg@naver.com','양한수',6300,1,sysdate,0,'ROLE_MENTOR','Email');
+insert into interest (interest_no, member_no, category_no) 
+values(interest_no_SEQ.nextval, 9, 10);
+insert into interest (interest_no, member_no, category_no) 
+values(interest_no_SEQ.nextval, 9, 11);
+insert into interest (interest_no, member_no, category_no) 
+values(interest_no_SEQ.nextval, 9, 12);
 INSERT INTO mentor_profile(mentor_profile_no, mentor_introduce, mentor_rating, mentor_mentoring_count, mentor_image, mentor_activity_count, mentor_follow_count, mentor_status, category_no, member_no, mentor_headline)
-VALUES (mentor_profile_no_SEQ.NEXTVAL, '안녕하세요, 양한수 멘토입니다.', 5.0, 10, '/images/mentor-profile/2.png', 100, 50, 3, 8, member_no_SEQ.CURRVAL, '나도반갑습둥');
+VALUES (mentor_profile_no_SEQ.NEXTVAL, '안녕하세요, 양한수 멘토입니다.', 5.0, 10, '/images/mentor-profile/2.png', 100, 50, 3, 10, member_no_SEQ.currval, '반갑습니다 성심성의껏 멘토해드리겠습니다.');
 INSERT INTO career(CAREER_NO, CAREER_COMPANY_NAME, CAREER_JOB_TITLE, CAREER_START_DATE, CAREER_END_DATE, MENTOR_PROFILE_NO)
 VALUES(career_no_SEQ.nextval, '한샘', '경력자입니다', '2020.01.01', '2024.01.01', 3);
 
 INSERT INTO member(member_no,member_id,member_password,member_email,member_name,member_points,member_status,member_join_date,member_report_count,member_role,member_provider)
-VALUES(member_no_SEQ.nextval,'hhh','hhh','hhh@naver.com','이지현',4000,1,sysdate,0,'ROLE_MENTOR','');
+VALUES(member_no_SEQ.nextval,'hhh','{bcrypt}$2a$10$2Vj/MwAon9U1UFSHcF8DSe9VtT86qtIFmWo2.tocHk1Px1NAXFU3K','hhh@naver.com','이지현',4000,1,sysdate,0,'ROLE_MENTOR','Email');
+insert into interest (interest_no, member_no, category_no) 
+values(interest_no_SEQ.nextval, 10, 10);
+insert into interest (interest_no, member_no, category_no) 
+values(interest_no_SEQ.nextval, 10, 11);
+insert into interest (interest_no, member_no, category_no) 
+values(interest_no_SEQ.nextval, 10, 12);
 INSERT INTO mentor_profile(mentor_profile_no, mentor_introduce, mentor_rating, mentor_mentoring_count, mentor_image, mentor_activity_count, mentor_follow_count, mentor_status, category_no, member_no, mentor_headline)
-VALUES (mentor_profile_no_SEQ.NEXTVAL, '안녕하세요, 이지현 멘토입니다.', 5.0, 10, '/images/mentor-profile/3.jpeg', 100, 50, 3, 12, member_no_SEQ.CURRVAL, '반갑습니다람쥐');
+VALUES (mentor_profile_no_SEQ.NEXTVAL, '안녕하세요, 이지현 멘토입니다.', 5.0, 10, '/images/mentor-profile/3.jpeg', 100, 50, 3, 12, member_no_SEQ.currval, '믿고맡겨 주세요!');
 INSERT INTO career(CAREER_NO, CAREER_COMPANY_NAME, CAREER_JOB_TITLE, CAREER_START_DATE, CAREER_END_DATE, MENTOR_PROFILE_NO)
 VALUES(career_no_SEQ.nextval, '한샘', '경력자입니다', '2020.01.01', '2024.01.01', 4);
 
 INSERT INTO member(member_no, member_id, member_password, member_email, member_name, member_points, member_status, member_join_date, member_report_count, member_role, member_provider)
-VALUES(member_no_SEQ.nextval, 'mentor01', 'pass01', 'mentor01@naver.com', '김민수', 3000, 1, SYSDATE, 0, 'ROLE_MENTOR', '');
+VALUES(member_no_SEQ.nextval, 'mentor01', '{bcrypt}$2a$10$2Vj/MwAon9U1UFSHcF8DSe9VtT86qtIFmWo2.tocHk1Px1NAXFU3K', 'mentor01@naver.com', '김민수', 3000, 1, SYSDATE, 0, 'ROLE_MENTOR', 'Email');.
+insert into interest (interest_no, member_no, category_no) 
+values(interest_no_SEQ.nextval, 11, 16);
+insert into interest (interest_no, member_no, category_no) 
+values(interest_no_SEQ.nextval, 11, 17);
+insert into interest (interest_no, member_no, category_no) 
+values(interest_no_SEQ.nextval, 11, 18);
 INSERT INTO mentor_profile(mentor_profile_no, mentor_introduce, mentor_rating, mentor_mentoring_count, mentor_image, mentor_activity_count, mentor_follow_count, mentor_status, category_no, member_no, mentor_headline)
-VALUES(mentor_profile_no_SEQ.nextval, '안녕하세요, 김민수 멘토입니다.', 5.0, 25, '/images/mentor-profile/4.jpg', 150, 75, 3, 2, member_no_SEQ.currval, '집가고싶다.');
+VALUES(mentor_profile_no_SEQ.nextval, '안녕하세요, 김민수 멘토입니다.', 5.0, 25, '/images/mentor-profile/4.jpg', 150, 75, 3, 2, member_no_SEQ.currval, '시 부터 소설까지 어떠한 글쓰기든 도와드리겠습니다~');
 INSERT INTO career(CAREER_NO, CAREER_COMPANY_NAME, CAREER_JOB_TITLE, CAREER_START_DATE, CAREER_END_DATE, MENTOR_PROFILE_NO)
-VALUES(career_no_SEQ.nextval, '한샘', '10년 경력', '2020.01.01', '2024.01.01', 5);
+VALUES(career_no_SEQ.nextval, 'xx출판사', '소설부문 담당자', '2023.04.01', '2024.01.01', 5);
 
 INSERT INTO member(member_no, member_id, member_password, member_email, member_name, member_points, member_status, member_join_date, member_report_count, member_role, member_provider)
-VALUES(member_no_SEQ.nextval, 'mentor02', 'pass02', 'mentor02@naver.com', '이서준', 4000, 1, SYSDATE, 0, 'ROLE_MENTOR', '');
+VALUES(member_no_SEQ.nextval, 'mentor02', '{bcrypt}$2a$10$2Vj/MwAon9U1UFSHcF8DSe9VtT86qtIFmWo2.tocHk1Px1NAXFU3K', 'mentor02@naver.com', '이서준', 4000, 1, SYSDATE, 0, 'ROLE_MENTOR', 'Email');
+insert into interest (interest_no, member_no, category_no) 
+values(interest_no_SEQ.nextval, 12, 16);
+insert into interest (interest_no, member_no, category_no) 
+values(interest_no_SEQ.nextval, 12, 17);
+insert into interest (interest_no, member_no, category_no) 
+values(interest_no_SEQ.nextval, 12, 18);
 INSERT INTO mentor_profile(mentor_profile_no, mentor_introduce, mentor_rating, mentor_mentoring_count, mentor_image, mentor_activity_count, mentor_follow_count, mentor_status, category_no, member_no, mentor_headline)
 VALUES(mentor_profile_no_SEQ.nextval, '안녕하세요, 이서준 멘토입니다.', 4.8, 20, '/images/mentor-profile/5.jpeg', 120, 60, 3, 3, member_no_SEQ.currval, '너도나도유캔두');
 INSERT INTO career(CAREER_NO, CAREER_COMPANY_NAME, CAREER_JOB_TITLE, CAREER_START_DATE, CAREER_END_DATE, MENTOR_PROFILE_NO)
-VALUES(career_no_SEQ.nextval, '한샘', '8년 경력', '2020.01.01', '2024.01.01', 6);
+VALUES(career_no_SEQ.nextval, '갤러리', '전시 및 마케팅 담당', '2020.01.01', '2024.01.01', 6);
 
 INSERT INTO member(member_no, member_id, member_password, member_email, member_name, member_points, member_status, member_join_date, member_report_count, member_role, member_provider)
-VALUES(member_no_SEQ.nextval, 'mentor03', 'pass03', 'mentor03@naver.com', '박지우', 3500, 1, SYSDATE, 0, 'ROLE_MENTOR', '');
+VALUES(member_no_SEQ.nextval, 'mentor03', '{bcrypt}$2a$10$2Vj/MwAon9U1UFSHcF8DSe9VtT86qtIFmWo2.tocHk1Px1NAXFU3K', 'mentor03@naver.com', '박지우', 3500, 1, SYSDATE, 0, 'ROLE_MENTOR', 'Email');
+insert into interest (interest_no, member_no, category_no) 
+values(interest_no_SEQ.nextval, 13, 23);
+insert into interest (interest_no, member_no, category_no) 
+values(interest_no_SEQ.nextval, 13, 24);
+insert into interest (interest_no, member_no, category_no) 
+values(interest_no_SEQ.nextval, 13, 25);
 INSERT INTO mentor_profile(mentor_profile_no, mentor_introduce, mentor_rating, mentor_mentoring_count, mentor_image, mentor_activity_count, mentor_follow_count, mentor_status, category_no, member_no, mentor_headline)
-VALUES(mentor_profile_no_SEQ.nextval, '안녕하세요, 박지우 멘토입니다.', 4.5, 15, '/images/mentor-profile/6.jpg', 110, 50, 3, 4, member_no_SEQ.currval, '야 너도 집갈 수 있어');
+VALUES(mentor_profile_no_SEQ.nextval, '안녕하세요, 박지우 멘토입니다.', 4.5, 15, '/images/mentor-profile/6.jpg', 110, 50, 3, 4, member_no_SEQ.currval, '고등 담임의 경험으로 컨설팅 해드리겠습니다.');
 INSERT INTO career(CAREER_NO, CAREER_COMPANY_NAME, CAREER_JOB_TITLE, CAREER_START_DATE, CAREER_END_DATE, MENTOR_PROFILE_NO)
-VALUES(career_no_SEQ.nextval, '한샘', '6년 경력', '2020.01.01', '2024.01.01', 7);
+VALUES(career_no_SEQ.nextval, 'xx고등학교', '고2 수학 담임', '2020.01.01', '2023.12.30', 7);
+INSERT INTO career(CAREER_NO, CAREER_COMPANY_NAME, CAREER_JOB_TITLE, CAREER_START_DATE, CAREER_END_DATE, MENTOR_PROFILE_NO)
+VALUES(career_no_SEQ.nextval, 'xx고등학교', '고2 수학 담임', '2023.01.01', '2024.01.01', 7);
 
 INSERT INTO member(member_no, member_id, member_password, member_email, member_name, member_points, member_status, member_join_date, member_report_count, member_role, member_provider)
-VALUES(member_no_SEQ.nextval, 'mentor04', 'pass04', 'mentor04@naver.com', '정하늘', 3200, 1, SYSDATE, 0, 'ROLE_MENTOR', '');
+VALUES(member_no_SEQ.nextval, 'mentor04', '{bcrypt}$2a$10$2Vj/MwAon9U1UFSHcF8DSe9VtT86qtIFmWo2.tocHk1Px1NAXFU3K', 'mentor04@naver.com', '정하늘', 3200, 1, SYSDATE, 0, 'ROLE_MENTOR', 'Email');
+insert into interest (interest_no, member_no, category_no) 
+values(interest_no_SEQ.nextval, 14, 23);
+insert into interest (interest_no, member_no, category_no) 
+values(interest_no_SEQ.nextval, 14, 24);
+insert into interest (interest_no, member_no, category_no) 
+values(interest_no_SEQ.nextval, 14, 25);
 INSERT INTO mentor_profile(mentor_profile_no, mentor_introduce, mentor_rating, mentor_mentoring_count, mentor_image, mentor_activity_count, mentor_follow_count, mentor_status, category_no, member_no, mentor_headline)
-VALUES(mentor_profile_no_SEQ.nextval, '안녕하세요, 정하늘 멘토입니다.', 4.7, 18, '/images/mentor-profile/7.jpeg', 130, 65, 3, 8, member_no_SEQ.currval, '집가자');
+VALUES(mentor_profile_no_SEQ.nextval, '안녕하세요, 정하늘 멘토입니다.', 4.7, 18, '/images/mentor-profile/7.jpeg', 130, 65, 3, 8, member_no_SEQ.currval, '입시상담 자신 있습니다.');
 INSERT INTO career(CAREER_NO, CAREER_COMPANY_NAME, CAREER_JOB_TITLE, CAREER_START_DATE, CAREER_END_DATE, MENTOR_PROFILE_NO)
-VALUES(career_no_SEQ.nextval, '한샘', '7년 경력', '2024.01.01', null, 8);
+VALUES(career_no_SEQ.nextval, '대치동 학원', '입시 컨설팅 담당자', '2024.01.01', null, 8);
 
 INSERT INTO member(member_no, member_id, member_password, member_email, member_name, member_points, member_status, member_join_date, member_report_count, member_role, member_provider)
-VALUES(member_no_SEQ.nextval, 'mentor05', 'pass05', 'mentor05@naver.com', '최예진', 5000, 1, SYSDATE, 0, 'ROLE_MENTOR', '');
+VALUES(member_no_SEQ.nextval, 'mentor05', '{bcrypt}$2a$10$2Vj/MwAon9U1UFSHcF8DSe9VtT86qtIFmWo2.tocHk1Px1NAXFU3K', 'mentor05@naver.com', '최예진', 5000, 1, SYSDATE, 0, 'ROLE_MENTOR', 'Email');
+insert into interest (interest_no, member_no, category_no) 
+values(interest_no_SEQ.nextval, 15, 12);
+insert into interest (interest_no, member_no, category_no) 
+values(interest_no_SEQ.nextval, 15, 13);
+insert into interest (interest_no, member_no, category_no) 
+values(interest_no_SEQ.nextval, 15, 14);
 INSERT INTO mentor_profile(mentor_profile_no, mentor_introduce, mentor_rating, mentor_mentoring_count, mentor_image, mentor_activity_count, mentor_follow_count, mentor_status, category_no, member_no, mentor_headline)
-VALUES(mentor_profile_no_SEQ.nextval, '안녕하세요, 최예진 멘토입니다.', 4.6, 22, '/images/mentor-profile/8.jpeg', 140, 70, 3, 16, member_no_SEQ.currval, '嬉しいです');
+VALUES(mentor_profile_no_SEQ.nextval, '안녕하세요, 최예진 멘토입니다.', 4.6, 22, '/images/mentor-profile/8.jpeg', 140, 70, 3, 16, member_no_SEQ.currval, '스타트업 아이디어 고민해드립니다.');
 INSERT INTO career(CAREER_NO, CAREER_COMPANY_NAME, CAREER_JOB_TITLE, CAREER_START_DATE, CAREER_END_DATE, MENTOR_PROFILE_NO)
-VALUES(career_no_SEQ.nextval, '한샘', '5년 경력', '2024.01.01', null, 9);
+VALUES(career_no_SEQ.nextval, '아이티윌', '스타트업 상담 및 컨설팅', '2024.01.01', null, 9);
 
 INSERT INTO member(member_no, member_id, member_password, member_email, member_name, member_points, member_status, member_join_date, member_report_count, member_role, member_provider)
-VALUES(member_no_SEQ.nextval, 'mentor06', 'pass06', 'mentor06@naver.com', '홍서연', 4800, 1, SYSDATE, 0, 'ROLE_MENTOR', '');
+VALUES(member_no_SEQ.nextval, 'mentor06', '{bcrypt}$2a$10$2Vj/MwAon9U1UFSHcF8DSe9VtT86qtIFmWo2.tocHk1Px1NAXFU3K', 'mentor06@naver.com', '홍서연', 4800, 1, SYSDATE, 0, 'ROLE_MENTOR', 'Email');
+insert into interest (interest_no, member_no, category_no) 
+values(interest_no_SEQ.nextval, 16, 2);
+insert into interest (interest_no, member_no, category_no) 
+values(interest_no_SEQ.nextval, 16, 3);
+insert into interest (interest_no, member_no, category_no) 
+values(interest_no_SEQ.nextval, 16, 4);
 INSERT INTO mentor_profile(mentor_profile_no, mentor_introduce, mentor_rating, mentor_mentoring_count, mentor_image, mentor_activity_count, mentor_follow_count, mentor_status, category_no, member_no, mentor_headline)
 VALUES(mentor_profile_no_SEQ.nextval, '안녕하세요, 홍서연 멘토입니다.', 4.9, 30, '/images/mentor-profile/9.png', 160, 80, 3, 8, member_no_SEQ.currval, 'HELLO');
 INSERT INTO career(CAREER_NO, CAREER_COMPANY_NAME, CAREER_JOB_TITLE, CAREER_START_DATE, CAREER_END_DATE, MENTOR_PROFILE_NO)
-VALUES(career_no_SEQ.nextval, '한샘', '9년 경력', '2024.01.01', null, 10);
+VALUES(career_no_SEQ.nextval, 'xx아카테미', '일렉기타 강습', '2024.05.01', null, 10);
 
 INSERT INTO member(member_no, member_id, member_password, member_email, member_name, member_points, member_status, member_join_date, member_report_count, member_role, member_provider)
-VALUES(member_no_SEQ.nextval, 'mentor07', 'pass07', 'mentor07@naver.com', '김도윤', 4500, 1, SYSDATE, 0, 'ROLE_MENTOR', '');
+VALUES(member_no_SEQ.nextval, 'mentor07', '{bcrypt}$2a$10$2Vj/MwAon9U1UFSHcF8DSe9VtT86qtIFmWo2.tocHk1Px1NAXFU3K', 'mentor07@naver.com', '김도윤', 4500, 1, SYSDATE, 0, 'ROLE_MENTOR', 'Email');
+insert into interest (interest_no, member_no, category_no) 
+values(interest_no_SEQ.nextval, 17, 10);
+insert into interest (interest_no, member_no, category_no) 
+values(interest_no_SEQ.nextval, 17, 11);
+insert into interest (interest_no, member_no, category_no) 
+values(interest_no_SEQ.nextval, 17, 12);
 INSERT INTO mentor_profile(mentor_profile_no, mentor_introduce, mentor_rating, mentor_mentoring_count, mentor_image, mentor_activity_count, mentor_follow_count, mentor_status, category_no, member_no, mentor_headline)
 VALUES(mentor_profile_no_SEQ.nextval, 
 '- 특성화고 직업상담사의 업무
 - 직업상담사의 직무 역량
 - 대학원 졸업장 없이 심리학 전공을 살릴 수 있었던 방법
 - 계약직 기회를 제대로 활용하는 방법
-- 대학원 진학의 득과 실
-
-등을 드릴 수 있습니다 :)', 5.0, 40, '/images/mentor-profile/10.jpg', 170, 90, 3, 12, member_no_SEQ.currval, '하이');
+- 대학원 진학의 득과 실 등을 드릴 수 있습니다 :)', 5.0, 40, '/images/mentor-profile/10.jpg', 170, 90, 3, 12, member_no_SEQ.currval, '입시컨설팅 늦지 않았습니다!');
 INSERT INTO career(CAREER_NO, CAREER_COMPANY_NAME, CAREER_JOB_TITLE, CAREER_START_DATE, CAREER_END_DATE, MENTOR_PROFILE_NO)
 VALUES(career_no_SEQ.nextval, '한샘', '영업시스템 PM팀_ 서비스기획', '2024.01.01', null, 11);
 INSERT INTO career(CAREER_NO, CAREER_COMPANY_NAME, CAREER_JOB_TITLE, CAREER_START_DATE, CAREER_END_DATE, MENTOR_PROFILE_NO)
@@ -190,102 +278,379 @@ INSERT INTO career(CAREER_NO, CAREER_COMPANY_NAME, CAREER_JOB_TITLE, CAREER_STAR
 VALUES(career_no_SEQ.nextval, '한샘', '리하우스 영업관리팀_ 인테리어 설계', '2016.01.01', '2019.01.01', 11);
 
 INSERT INTO member(member_no, member_id, member_password, member_email, member_name, member_points, member_status, member_join_date, member_report_count, member_role, member_provider)
-VALUES(member_no_SEQ.nextval, 'mentor08', 'pass08', 'mentor08@naver.com', '김도옌', 4500, 1, SYSDATE, 0, 'ROLE_MENTOR', '');
+VALUES(member_no_SEQ.nextval, 'mentor08', '{bcrypt}$2a$10$2Vj/MwAon9U1UFSHcF8DSe9VtT86qtIFmWo2.tocHk1Px1NAXFU3K', 'mentor08@naver.com', '김도옌', 4500, 1, SYSDATE, 0, 'ROLE_MENTOR', 'Email');
+insert into interest (interest_no, member_no, category_no) 
+values(interest_no_SEQ.nextval, 18, 16);
+insert into interest (interest_no, member_no, category_no) 
+values(interest_no_SEQ.nextval, 18, 17);
+insert into interest (interest_no, member_no, category_no) 
+values(interest_no_SEQ.nextval, 18, 18);
 INSERT INTO mentor_profile(mentor_profile_no, mentor_introduce, mentor_rating, mentor_mentoring_count, mentor_image, mentor_activity_count, mentor_follow_count, mentor_status, category_no, member_no, mentor_headline)
-VALUES(mentor_profile_no_SEQ.nextval, '안녕하세요, 김도옌 멘토입니다.', 5.0, 40, '/images/mentor-profile/11.jpg', 170, 90, 3, 18, member_no_SEQ.currval, '내가 최고 경력자');
+VALUES(mentor_profile_no_SEQ.nextval, '안녕하세요, 김도옌 멘토입니다.', 5.0, 40, '/images/mentor-profile/11.jpg', 170, 90, 3, 18, member_no_SEQ.currval, '그림을 두려워하지 마세요');
 INSERT INTO career(CAREER_NO, CAREER_COMPANY_NAME, CAREER_JOB_TITLE, CAREER_START_DATE, CAREER_END_DATE, MENTOR_PROFILE_NO)
 VALUES(career_no_SEQ.nextval, '한샘', '12년 경력', '2024.01.01', null, 12);
 
 INSERT INTO member(member_no, member_id, member_password, member_email, member_name, member_points, member_status, member_join_date, member_report_count, member_role, member_provider)
-VALUES(member_no_SEQ.nextval, 'mentor09', 'pass09', 'mentor09@naver.com', '김도예', 4500, 1, SYSDATE, 0, 'ROLE_MENTOR', '');
+VALUES(member_no_SEQ.nextval, 'mentor09', '{bcrypt}$2a$10$2Vj/MwAon9U1UFSHcF8DSe9VtT86qtIFmWo2.tocHk1Px1NAXFU3K', 'mentor09@naver.com', '김도예', 4500, 1, SYSDATE, 0, 'ROLE_MENTOR', 'Email');
+insert into interest (interest_no, member_no, category_no) 
+values(interest_no_SEQ.nextval, 19, 13);
+insert into interest (interest_no, member_no, category_no) 
+values(interest_no_SEQ.nextval, 19, 14);
+insert into interest (interest_no, member_no, category_no) 
+values(interest_no_SEQ.nextval, 19, 17);
 INSERT INTO mentor_profile(mentor_profile_no, mentor_introduce, mentor_rating, mentor_mentoring_count, mentor_image, mentor_activity_count, mentor_follow_count, mentor_status, category_no, member_no, mentor_headline)
-VALUES(mentor_profile_no_SEQ.nextval, '안녕하세요, 김도예 멘토입니다.', 5.0, 40, '/images/mentor-profile/12.jpg', 170, 90, 3, 18, member_no_SEQ.currval, '하하하');
+VALUES(mentor_profile_no_SEQ.nextval, '안녕하세요, 김도예 멘토입니다.', 5.0, 40, '/images/mentor-profile/12.jpg', 170, 90, 3, 18, member_no_SEQ.currval, '사진 잘 찍는 법 알려드릴게요');
 INSERT INTO career(CAREER_NO, CAREER_COMPANY_NAME, CAREER_JOB_TITLE, CAREER_START_DATE, CAREER_END_DATE, MENTOR_PROFILE_NO)
 VALUES(career_no_SEQ.nextval, '한샘', '17년 경력', '2024.01.01', null, 13);
 
 INSERT INTO member(member_no, member_id, member_password, member_email, member_name, member_points, member_status, member_join_date, member_report_count, member_role, member_provider)
-VALUES(member_no_SEQ.nextval, 'mentor10', 'pass10', 'mentor10@naver.com', '김도요', 4500, 1, SYSDATE, 0, 'ROLE_MENTOR', '');
+VALUES(member_no_SEQ.nextval, 'mentor10', '{bcrypt}$2a$10$2Vj/MwAon9U1UFSHcF8DSe9VtT86qtIFmWo2.tocHk1Px1NAXFU3K', 'mentor10@naver.com', '김도요', 4500, 1, SYSDATE, 0, 'ROLE_MENTOR', 'Email');
 INSERT INTO mentor_profile(mentor_profile_no, mentor_introduce, mentor_rating, mentor_mentoring_count, mentor_image, mentor_activity_count, mentor_follow_count, mentor_status, category_no, member_no, mentor_headline)
-VALUES(mentor_profile_no_SEQ.nextval, '안녕하세요, 김도요 멘토입니다.',5.0, 40, '/images/mentor-profile/13.png', 170, 90, 3, 18, member_no_SEQ.currval, '호호호');
+insert into interest (interest_no, member_no, category_no) 
+values(interest_no_SEQ.nextval, 20, 16);
+insert into interest (interest_no, member_no, category_no) 
+values(interest_no_SEQ.nextval, 20, 17);
+insert into interest (interest_no, member_no, category_no) 
+values(interest_no_SEQ.nextval, 20, 18);
+VALUES(mentor_profile_no_SEQ.nextval, '안녕하세요, 김도요 멘토입니다.',5.0, 40, '/images/mentor-profile/13.png', 170, 90, 3, 18, member_no_SEQ.currval, '열심히 멘토하겠습니다.');
 INSERT INTO career(CAREER_NO, CAREER_COMPANY_NAME, CAREER_JOB_TITLE, CAREER_START_DATE, CAREER_END_DATE, MENTOR_PROFILE_NO)
 VALUES(career_no_SEQ.nextval, '한샘', '12년 경력', '2024.01.01', null, 14);
 
 INSERT INTO member(member_no, member_id, member_password, member_email, member_name, member_points, member_status, member_join_date, member_report_count, member_role, member_provider)
-VALUES(member_no_SEQ.nextval, 'mentor11', 'pass11', 'mentor11@naver.com', '김윤하', 4500, 1, SYSDATE, 0, 'ROLE_MENTOR', '');
+VALUES(member_no_SEQ.nextval, 'mentor11', '{bcrypt}$2a$10$2Vj/MwAon9U1UFSHcF8DSe9VtT86qtIFmWo2.tocHk1Px1NAXFU3K', 'mentor11@naver.com', '김윤하', 4500, 1, SYSDATE, 0, 'ROLE_MENTOR', 'Email');
+insert into interest (interest_no, member_no, category_no) 
+values(interest_no_SEQ.nextval, 21, 16);
+insert into interest (interest_no, member_no, category_no) 
+values(interest_no_SEQ.nextval, 21, 17);
+insert into interest (interest_no, member_no, category_no) 
+values(interest_no_SEQ.nextval, 21, 18);
 INSERT INTO mentor_profile(mentor_profile_no, mentor_introduce, mentor_rating, mentor_mentoring_count, mentor_image, mentor_activity_count, mentor_follow_count, mentor_status, category_no, member_no, mentor_headline)
-VALUES(mentor_profile_no_SEQ.nextval, '안녕하세요, 김윤하 멘토입니다.',5.0, 40, '/images/mentor-profile/14.jpg', 170, 90, 3, 18, member_no_SEQ.currval, '헤헤헤');
+VALUES(mentor_profile_no_SEQ.nextval, '안녕하세요, 김윤하 멘토입니다.',5.0, 40, '/images/mentor-profile/14.jpg', 170, 90, 3, 18, member_no_SEQ.currval, '자세한 상담 도와드리겠습니다.');
 INSERT INTO career(CAREER_NO, CAREER_COMPANY_NAME, CAREER_JOB_TITLE, CAREER_START_DATE, CAREER_END_DATE, MENTOR_PROFILE_NO)
 VALUES(career_no_SEQ.nextval, '한샘', '12년 경력', '2024.01.01', null, 15);
 
 INSERT INTO member(member_no, member_id, member_password, member_email, member_name, member_points, member_status, member_join_date, member_report_count, member_role, member_provider)
-VALUES(member_no_SEQ.nextval, 'mentor12', 'pass12', 'mentor12@naver.com', '김태윤', 3500, 1, SYSDATE, 0, 'ROLE_MENTOR', '');
+VALUES(member_no_SEQ.nextval, 'mentor12', '{bcrypt}$2a$10$2Vj/MwAon9U1UFSHcF8DSe9VtT86qtIFmWo2.tocHk1Px1NAXFU3K', 'mentor12@naver.com', '김태윤', 3500, 1, SYSDATE, 0, 'ROLE_MENTOR', 'Email');
+insert into interest (interest_no, member_no, category_no) 
+values(interest_no_SEQ.nextval, 22, 23);
+insert into interest (interest_no, member_no, category_no) 
+values(interest_no_SEQ.nextval, 22, 24);
+insert into interest (interest_no, member_no, category_no) 
+values(interest_no_SEQ.nextval, 22, 25);
 INSERT INTO mentor_profile(mentor_profile_no, mentor_introduce, mentor_rating, mentor_mentoring_count, mentor_image, mentor_activity_count, mentor_follow_count, mentor_status, category_no, member_no, mentor_headline)
 VALUES(mentor_profile_no_SEQ.nextval, '안녕하세요, 김태윤 멘토입니다. 중학생들을 위한 학습 및 진로 상담 전문가입니다.', 4.8, 25, '/images/mentor-profile/16.jpg', 90, 40, 3, 6, member_no_SEQ.currval, '중학생 상담 전문가');
 INSERT INTO career(CAREER_NO, CAREER_COMPANY_NAME, CAREER_JOB_TITLE, CAREER_START_DATE, CAREER_END_DATE, MENTOR_PROFILE_NO)
 VALUES(career_no_SEQ.nextval, '스마트러닝 교육센터', '중학생 학습 프로그램 개발자', '2015-03-01', '2023-12-01', (SELECT mentor_profile_no FROM mentor_profile WHERE member_no = (SELECT member_no FROM member WHERE member_id = 'mentor12')));
 
-INSERT INTO member(member_no, member_id, member_password, member_email, member_name, member_points, member_status, member_join_date, member_report_count, member_role, member_provider)
-VALUES(member_no_SEQ.nextval, 'mentor13', 'pass13', 'mentor13@naver.com', '이지훈', 4000, 1, SYSDATE, 0, 'ROLE_MENTOR', '');
-INSERT INTO mentor_profile(mentor_profile_no, mentor_introduce, mentor_rating, mentor_mentoring_count, mentor_image, mentor_activity_count, mentor_follow_count, mentor_status, category_no, member_no, mentor_headline)
-VALUES(mentor_profile_no_SEQ.nextval, '안녕하세요, 이지훈 멘토입니다. 고등학생들의 진학 및 학습 방법에 대해 전문적으로 상담합니다.', 4.7, 30, '/images/mentor-profile/17.jpg', 120, 60, 3, 7, member_no_SEQ.currval, '고등학생 상담 전문가');
-INSERT INTO career(CAREER_NO, CAREER_COMPANY_NAME, CAREER_JOB_TITLE, CAREER_START_DATE, CAREER_END_DATE, MENTOR_PROFILE_NO)
-VALUES(career_no_SEQ.nextval, '입시 전문가 협회', '고등학생 진학 컨설턴트', '2010-01-01', '2024-01-01', (SELECT mentor_profile_no FROM mentor_profile WHERE member_no = (SELECT member_no FROM member WHERE member_id = 'mentor13')));
+
 
 INSERT INTO member(member_no, member_id, member_password, member_email, member_name, member_points, member_status, member_join_date, member_report_count, member_role, member_provider)
-VALUES(member_no_SEQ.nextval, 'mentor14', 'pass14', 'mentor14@naver.com', '박수민', 5000, 1, SYSDATE, 0, 'ROLE_MENTOR', '');
+VALUES(member_no_SEQ.nextval, 'mentor14', '{bcrypt}$2a$10$2Vj/MwAon9U1UFSHcF8DSe9VtT86qtIFmWo2.tocHk1Px1NAXFU3K', 'mentor14@naver.com', '박수민', 5000, 1, SYSDATE, 0, 'ROLE_MENTOR', 'Email');
+insert into interest (interest_no, member_no, category_no) 
+values(interest_no_SEQ.nextval, 23, 23);
+insert into interest (interest_no, member_no, category_no) 
+values(interest_no_SEQ.nextval, 23, 24);
+insert into interest (interest_no, member_no, category_no) 
+values(interest_no_SEQ.nextval, 23, 25);
 INSERT INTO mentor_profile(mentor_profile_no, mentor_introduce, mentor_rating, mentor_mentoring_count, mentor_image, mentor_activity_count, mentor_follow_count, mentor_status, category_no, member_no, mentor_headline)
 VALUES(mentor_profile_no_SEQ.nextval, '안녕하세요, 박수민 멘토입니다. 음악 이론과 실기에 대해 전문적으로 가르칩니다.', 5.0, 50, '/images/mentor-profile/18.jpg', 150, 70, 3, 10, member_no_SEQ.currval, '음악 멘토링 전문가');
 INSERT INTO career(CAREER_NO, CAREER_COMPANY_NAME, CAREER_JOB_TITLE, CAREER_START_DATE, CAREER_END_DATE, MENTOR_PROFILE_NO)
 VALUES(career_no_SEQ.nextval, '국립음악원', '음악 이론 강사', '2012-05-01', '2024-01-01', (SELECT mentor_profile_no FROM mentor_profile WHERE member_no = (SELECT member_no FROM member WHERE member_id = 'mentor14')));
 
 INSERT INTO member(member_no, member_id, member_password, member_email, member_name, member_points, member_status, member_join_date, member_report_count, member_role, member_provider)
-VALUES(member_no_SEQ.nextval, 'mentor15', 'pass15', 'mentor15@naver.com', '정해인', 4800, 1, SYSDATE, 0, 'ROLE_MENTOR', '');
+VALUES(member_no_SEQ.nextval, 'mentor15', '{bcrypt}$2a$10$2Vj/MwAon9U1UFSHcF8DSe9VtT86qtIFmWo2.tocHk1Px1NAXFU3K', 'mentor15@naver.com', '정해인', 4800, 1, SYSDATE, 0, 'ROLE_MENTOR', 'Email');
+insert into interest (interest_no, member_no, category_no) 
+values(interest_no_SEQ.nextval, 24, 2);
+insert into interest (interest_no, member_no, category_no) 
+values(interest_no_SEQ.nextval, 24, 3);
+insert into interest (interest_no, member_no, category_no) 
+values(interest_no_SEQ.nextval, 24, 4);
 INSERT INTO mentor_profile(mentor_profile_no, mentor_introduce, mentor_rating, mentor_mentoring_count, mentor_image, mentor_activity_count, mentor_follow_count, mentor_status, category_no, member_no, mentor_headline)
 VALUES(mentor_profile_no_SEQ.nextval, '안녕하세요, 정해인 멘토입니다. 연기와 연극에 대한 전문 지식을 제공합니다.', 4.9, 35, '/images/mentor-profile/19.jpg', 100, 50, 3, 14, member_no_SEQ.currval, '연기 전문가');
 INSERT INTO career(CAREER_NO, CAREER_COMPANY_NAME, CAREER_JOB_TITLE, CAREER_START_DATE, CAREER_END_DATE, MENTOR_PROFILE_NO)
 VALUES(career_no_SEQ.nextval, '서울연극협회', '연극 연출 및 배우 지도', '2010-02-01', '2024-01-01', (SELECT mentor_profile_no FROM mentor_profile WHERE member_no = (SELECT member_no FROM member WHERE member_id = 'mentor15')));
 
 INSERT INTO member(member_no, member_id, member_password, member_email, member_name, member_points, member_status, member_join_date, member_report_count, member_role, member_provider)
-VALUES(member_no_SEQ.nextval, 'mentor16', 'pass16', 'mentor16@naver.com', '이현아', 4500, 1, SYSDATE, 0, 'ROLE_MENTOR', '');
+VALUES(member_no_SEQ.nextval, 'mentor16', '{bcrypt}$2a$10$2Vj/MwAon9U1UFSHcF8DSe9VtT86qtIFmWo2.tocHk1Px1NAXFU3K', 'mentor16@naver.com', '이현아', 4500, 1, SYSDATE, 0, 'ROLE_MENTOR', 'Email');
+insert into interest (interest_no, member_no, category_no) 
+values(interest_no_SEQ.nextval, 25, 2);
+insert into interest (interest_no, member_no, category_no) 
+values(interest_no_SEQ.nextval, 25, 3);
+insert into interest (interest_no, member_no, category_no) 
+values(interest_no_SEQ.nextval, 25, 4);
 INSERT INTO mentor_profile(mentor_profile_no, mentor_introduce, mentor_rating, mentor_mentoring_count, mentor_image, mentor_activity_count, mentor_follow_count, mentor_status, category_no, member_no, mentor_headline)
 VALUES(mentor_profile_no_SEQ.nextval, '안녕하세요, 이현아 멘토입니다. 건강한 식단과 영양 상담을 전문적으로 도와드립니다.', 4.8, 28, '/images/mentor-profile/20.jpg', 110, 55, 3, 25, member_no_SEQ.currval, '영양 상담 전문가');
 INSERT INTO career(CAREER_NO, CAREER_COMPANY_NAME, CAREER_JOB_TITLE, CAREER_START_DATE, CAREER_END_DATE, MENTOR_PROFILE_NO)
 VALUES(career_no_SEQ.nextval, '영양학 연구소', '임상 영양사', '2015-07-01', '2024-01-01', (SELECT mentor_profile_no FROM mentor_profile WHERE member_no = (SELECT member_no FROM member WHERE member_id = 'mentor16')));
 
 INSERT INTO member(member_no, member_id, member_password, member_email, member_name, member_points, member_status, member_join_date, member_report_count, member_role, member_provider)
-VALUES(member_no_SEQ.nextval, 'mentor17', 'pass17', 'mentor17@naver.com', '손민호', 4200, 1, SYSDATE, 0, 'ROLE_MENTOR', '');
+VALUES(member_no_SEQ.nextval, 'mentor17', '{bcrypt}$2a$10$2Vj/MwAon9U1UFSHcF8DSe9VtT86qtIFmWo2.tocHk1Px1NAXFU3K', 'mentor17@naver.com', '손민호', 4200, 1, SYSDATE, 0, 'ROLE_MENTOR', 'Email');
+insert into interest (interest_no, member_no, category_no) 
+values(interest_no_SEQ.nextval, 26, 2);
+insert into interest (interest_no, member_no, category_no) 
+values(interest_no_SEQ.nextval, 26, 3);
+insert into interest (interest_no, member_no, category_no) 
+values(interest_no_SEQ.nextval, 26, 4);
 INSERT INTO mentor_profile(mentor_profile_no, mentor_introduce, mentor_rating, mentor_mentoring_count, mentor_image, mentor_activity_count, mentor_follow_count, mentor_status, category_no, member_no, mentor_headline)
 VALUES(mentor_profile_no_SEQ.nextval, '안녕하세요, 손민호 멘토입니다. 글쓰기와 창작에 대한 멘토링을 제공합니다.', 4.6, 20, '/images/mentor-profile/21.jpg', 130, 65, 3, 11, member_no_SEQ.currval, '글쓰기 멘토링 전문가');
 INSERT INTO career(CAREER_NO, CAREER_COMPANY_NAME, CAREER_JOB_TITLE, CAREER_START_DATE, CAREER_END_DATE, MENTOR_PROFILE_NO)
 VALUES(career_no_SEQ.nextval, '창작 글쓰기 워크숍', '글쓰기 강사', '2013-09-01', '2024-01-01', (SELECT mentor_profile_no FROM mentor_profile WHERE member_no = (SELECT member_no FROM member WHERE member_id = 'mentor17')));
 
 INSERT INTO member(member_no, member_id, member_password, member_email, member_name, member_points, member_status, member_join_date, member_report_count, member_role, member_provider)
-VALUES(member_no_SEQ.nextval, 'mentor18', 'pass18', 'mentor18@naver.com', '이강민', 4700, 1, SYSDATE, 0, 'ROLE_MENTOR', '');
+VALUES(member_no_SEQ.nextval, 'mentor18', '{bcrypt}$2a$10$2Vj/MwAon9U1UFSHcF8DSe9VtT86qtIFmWo2.tocHk1Px1NAXFU3K', 'mentor18@naver.com', '이강민', 4700, 1, SYSDATE, 0, 'ROLE_MENTOR', 'Email');
+insert into interest (interest_no, member_no, category_no) 
+values(interest_no_SEQ.nextval, 27, 2);
+insert into interest (interest_no, member_no, category_no) 
+values(interest_no_SEQ.nextval, 27, 3);
+insert into interest (interest_no, member_no, category_no) 
+values(interest_no_SEQ.nextval, 27, 4);
 INSERT INTO mentor_profile(mentor_profile_no, mentor_introduce, mentor_rating, mentor_mentoring_count, mentor_image, mentor_activity_count, mentor_follow_count, mentor_status, category_no, member_no, mentor_headline)
 VALUES(mentor_profile_no_SEQ.nextval, '안녕하세요, 이강민 멘토입니다. 사진과 영상 제작에 대한 전문적인 상담을 제공합니다.', 5.0, 40, '/images/mentor-profile/22.jpg', 170, 80, 3, 13, member_no_SEQ.currval, '사진/영상 제작 전문가');
 INSERT INTO career(CAREER_NO, CAREER_COMPANY_NAME, CAREER_JOB_TITLE, CAREER_START_DATE, CAREER_END_DATE, MENTOR_PROFILE_NO)
 VALUES(career_no_SEQ.nextval, '크리에이티브 스튜디오', '영상 제작자', '2011-04-01', '2024-01-01', (SELECT mentor_profile_no FROM mentor_profile WHERE member_no = (SELECT member_no FROM member WHERE member_id = 'mentor18')));
 
 INSERT INTO member(member_no, member_id, member_password, member_email, member_name, member_points, member_status, member_join_date, member_report_count, member_role, member_provider)
-VALUES(member_no_SEQ.nextval, 'mentor19', 'pass19', 'mentor19@naver.com', '최유진', 5500, 1, SYSDATE, 0, 'ROLE_MENTOR', '');
+VALUES(member_no_SEQ.nextval, 'mentor19', '{bcrypt}$2a$10$2Vj/MwAon9U1UFSHcF8DSe9VtT86qtIFmWo2.tocHk1Px1NAXFU3K', 'mentor19@naver.com', '최유진', 5500, 1, SYSDATE, 0, 'ROLE_MENTOR', 'Email');
+insert into interest (interest_no, member_no, category_no) 
+values(interest_no_SEQ.nextval, 28, 2);
+insert into interest (interest_no, member_no, category_no) 
+values(interest_no_SEQ.nextval, 28, 3);
+insert into interest (interest_no, member_no, category_no) 
+values(interest_no_SEQ.nextval, 28, 4);
 INSERT INTO mentor_profile(mentor_profile_no, mentor_introduce, mentor_rating, mentor_mentoring_count, mentor_image, mentor_activity_count, mentor_follow_count, mentor_status, category_no, member_no, mentor_headline)
 VALUES(mentor_profile_no_SEQ.nextval, '안녕하세요, 최유진 멘토입니다. 마케팅 전략과 성공 사례를 전문적으로 상담합니다.', 5.0, 50, '/images/mentor-profile/23.jpg', 200, 100, 3, 17, member_no_SEQ.currval, '마케팅 전략 전문가');
 INSERT INTO career(CAREER_NO, CAREER_COMPANY_NAME, CAREER_JOB_TITLE, CAREER_START_DATE, CAREER_END_DATE, MENTOR_PROFILE_NO)
 VALUES(career_no_SEQ.nextval, '마케팅 솔루션 기업', '마케팅 컨설턴트', '2009-03-01', '2024-01-01', (SELECT mentor_profile_no FROM mentor_profile WHERE member_no = (SELECT member_no FROM member WHERE member_id = 'mentor19')));
 
 INSERT INTO member(member_no, member_id, member_password, member_email, member_name, member_points, member_status, member_join_date, member_report_count, member_role, member_provider)
-VALUES(member_no_SEQ.nextval, 'mentor20', 'pass20', 'mentor20@naver.com', '이정훈', 4600, 1, SYSDATE, 0, 'ROLE_MENTOR', '');
+VALUES(member_no_SEQ.nextval, 'mentor20', '{bcrypt}$2a$10$2Vj/MwAon9U1UFSHcF8DSe9VtT86qtIFmWo2.tocHk1Px1NAXFU3K', 'mentor20@naver.com', '이정훈', 4600, 1, SYSDATE, 0, 'ROLE_MENTOR', 'Email');
+insert into interest (interest_no, member_no, category_no) 
+values(interest_no_SEQ.nextval, 29, 2);
+insert into interest (interest_no, member_no, category_no) 
+values(interest_no_SEQ.nextval, 29, 3);
+insert into interest (interest_no, member_no, category_no) 
+values(interest_no_SEQ.nextval, 29, 4);
 INSERT INTO mentor_profile(mentor_profile_no, mentor_introduce, mentor_rating, mentor_mentoring_count, mentor_image, mentor_activity_count, mentor_follow_count, mentor_status, category_no, member_no, mentor_headline)
 VALUES(mentor_profile_no_SEQ.nextval, '안녕하세요, 이정훈 멘토입니다. 피트니스와 운동 프로그램 설계 전문가입니다.', 4.9, 35, '/images/mentor-profile/24.jpg', 140, 70, 3, 23, member_no_SEQ.currval, '피트니스 전문가');
 INSERT INTO career(CAREER_NO, CAREER_COMPANY_NAME, CAREER_JOB_TITLE, CAREER_START_DATE, CAREER_END_DATE, MENTOR_PROFILE_NO)
 VALUES(career_no_SEQ.nextval, '헬스 퍼스널 트레이닝 센터', '피트니스 트레이너', '2012-06-01', '2024-01-01', (SELECT mentor_profile_no FROM mentor_profile WHERE member_no = (SELECT member_no FROM member WHERE member_id = 'mentor20')));
 
 INSERT INTO member(member_no, member_id, member_password, member_email, member_name, member_points, member_status, member_join_date, member_report_count, member_role, member_provider)
-VALUES(member_no_SEQ.nextval, 'mentor21', 'pass21', 'mentor21@naver.com', '박지연', 4500, 1, SYSDATE, 0, 'ROLE_MENTOR', '');
+VALUES(member_no_SEQ.nextval, 'mentor50', '{bcrypt}$2a$10$2Vj/MwAon9U1UFSHcF8DSe9VtT86qtIFmWo2.tocHk1Px1NAXFU3K', 'mentor50@naver.com', '이재훈', 5200, 1, SYSDATE, 0, 'ROLE_MENTOR', 'Email');
+insert into interest (interest_no, member_no, category_no) 
+values(interest_no_SEQ.nextval, 30, 2);
+insert into interest (interest_no, member_no, category_no) 
+values(interest_no_SEQ.nextval, 30, 3);
+insert into interest (interest_no, member_no, category_no) 
+values(interest_no_SEQ.nextval, 30, 4);
 INSERT INTO mentor_profile(mentor_profile_no, mentor_introduce, mentor_rating, mentor_mentoring_count, mentor_image, mentor_activity_count, mentor_follow_count, mentor_status, category_no, member_no, mentor_headline)
-VALUES(mentor_profile_no_SEQ.nextval, '안녕하세요, 박지연 멘토입니다. 요가와 필라테스 전문가로서 여러분의 건강을 도와드립니다.', 4.8, 30, '/images/mentor-profile/25.jpg', 120, 60, 3, 24, member_no_SEQ.currval, '요가/필라테스 전문가');
-INSERT INTO career(CAREER_NO, CAREER_COMPANY_NAME, CAREER_JOB_TITLE, CAREER_START_DATE, CAREER_END_DATE, MENTOR_PROFILE_NO)
-VALUES(career_no_SEQ.nextval, '요가 웰니스 센터', '요가 및 필라테스 강사', '2014-08-01', '2024-01-01', (SELECT mentor_profile_no FROM mentor_profile WHERE member_no = (SELECT member_no FROM member WHERE member_id = 'mentor21')));
+VALUES(mentor_profile_no_SEQ.nextval, '안녕하세요, 이재훈 멘토입니다. 금융 및 투자 전문가로 활동하고 있습니다.', 4.8, 50, '/images/mentor-profile/1a.jpg', 120, 45, 3, 3, member_no_SEQ.currval, '금융 투자 전문가');
+INSERT INTO career(career_no, career_company_name, career_job_title, career_start_date, career_end_date, mentor_profile_no)
+VALUES(career_no_SEQ.nextval, '투자 컨설팅 회사', '금융 컨설턴트', '2016-01-01', '2024-01-01', (SELECT mentor_profile_no FROM mentor_profile WHERE member_no = (SELECT member_no FROM member WHERE member_id = 'mentor50')));
+
+
+INSERT INTO member(member_no, member_id, member_password, member_email, member_name, member_points, member_status, member_join_date, member_report_count, member_role, member_provider)
+VALUES(member_no_SEQ.nextval, 'mentor51', '{bcrypt}$2a$10$2Vj/MwAon9U1UFSHcF8DSe9VtT86qtIFmWo2.tocHk1Px1NAXFU3K', 'mentor51@naver.com', '김유나', 4800, 1, SYSDATE, 0, 'ROLE_MENTOR', 'Email');
+insert into interest (interest_no, member_no, category_no) 
+values(interest_no_SEQ.nextval, 31, 2);
+insert into interest (interest_no, member_no, category_no) 
+values(interest_no_SEQ.nextval, 31, 3);
+insert into interest (interest_no, member_no, category_no) 
+values(interest_no_SEQ.nextval, 31, 4);
+INSERT INTO mentor_profile(mentor_profile_no, mentor_introduce, mentor_rating, mentor_mentoring_count, mentor_image, mentor_activity_count, mentor_follow_count, mentor_status, category_no, member_no, mentor_headline)
+VALUES(mentor_profile_no_SEQ.nextval, '안녕하세요, 김유나 멘토입니다. UI/UX 디자인 전문가로 활동 중입니다.', 4.7, 35, '/images/mentor-profile/2a.jpg', 140, 55, 3, 4, member_no_SEQ.currval, 'UI/UX 디자인 전문가');
+INSERT INTO career(career_no, career_company_name, career_job_title, career_start_date, career_end_date, mentor_profile_no)
+VALUES(career_no_SEQ.nextval, '디자인 에이전시', 'UI/UX 디자이너', '2015-03-01', '2024-01-01', (SELECT mentor_profile_no FROM mentor_profile WHERE member_no = (SELECT member_no FROM member WHERE member_id = 'mentor51')));
+
+INSERT INTO member(member_no, member_id, member_password, member_email, member_name, member_points, member_status, member_join_date, member_report_count, member_role, member_provider)
+VALUES(member_no_SEQ.nextval, 'mentor52', '{bcrypt}$2a$10$2Vj/MwAon9U1UFSHcF8DSe9VtT86qtIFmWo2.tocHk1Px1NAXFU3K', 'mentor52@naver.com', '박정민', 5000, 1, SYSDATE, 0, 'ROLE_MENTOR', 'Email');
+insert into interest (interest_no, member_no, category_no) 
+values(interest_no_SEQ.nextval, 32, 2);
+insert into interest (interest_no, member_no, category_no) 
+values(interest_no_SEQ.nextval, 32, 3);
+insert into interest (interest_no, member_no, category_no) 
+values(interest_no_SEQ.nextval, 32, 4);
+INSERT INTO mentor_profile(mentor_profile_no, mentor_introduce, mentor_rating, mentor_mentoring_count, mentor_image, mentor_activity_count, mentor_follow_count, mentor_status, category_no, member_no, mentor_headline)
+VALUES(mentor_profile_no_SEQ.nextval, '안녕하세요, 박정민 멘토입니다. 법률 및 상담 전문가입니다.', 4.9, 42, '/images/mentor-profile/3a.jpg', 160, 70, 3, 9, member_no_SEQ.currval, '법률 상담 전문가');
+INSERT INTO career(career_no, career_company_name, career_job_title, career_start_date, career_end_date, mentor_profile_no)
+VALUES(career_no_SEQ.nextval, '법률 사무소', '법률 컨설턴트', '2014-09-01', '2024-01-01', (SELECT mentor_profile_no FROM mentor_profile WHERE member_no = (SELECT member_no FROM member WHERE member_id = 'mentor52')));
+
+INSERT INTO member(member_no, member_id, member_password, member_email, member_name, member_points, member_status, member_join_date, member_report_count, member_role, member_provider)
+VALUES(member_no_SEQ.nextval, 'mentor53', '{bcrypt}$2a$10$2Vj/MwAon9U1UFSHcF8DSe9VtT86qtIFmWo2.tocHk1Px1NAXFU3K', 'mentor53@naver.com', '최서연', 5100, 1, SYSDATE, 0, 'ROLE_MENTOR', 'Email');
+insert into interest (interest_no, member_no, category_no) 
+values(interest_no_SEQ.nextval, 33, 2);
+insert into interest (interest_no, member_no, category_no) 
+values(interest_no_SEQ.nextval, 33, 3);
+insert into interest (interest_no, member_no, category_no) 
+values(interest_no_SEQ.nextval, 33, 4);
+INSERT INTO mentor_profile(mentor_profile_no, mentor_introduce, mentor_rating, mentor_mentoring_count, mentor_image, mentor_activity_count, mentor_follow_count, mentor_status, category_no, member_no, mentor_headline)
+VALUES(mentor_profile_no_SEQ.nextval, '안녕하세요, 최서연 멘토입니다. 디지털 마케팅 전문가로 활동 중입니다.', 4.8, 38, '/images/mentor-profile/4a.jpg', 130, 65, 3, 9, member_no_SEQ.currval, '디지털 마케팅 전문가');
+INSERT INTO career(career_no, career_company_name, career_job_title, career_start_date, career_end_date, mentor_profile_no)
+VALUES(career_no_SEQ.nextval, '마케팅 에이전시', '디지털 마케터', '2017-04-01', '2024-01-01', (SELECT mentor_profile_no FROM mentor_profile WHERE member_no = (SELECT member_no FROM member WHERE member_id = 'mentor53')));
+
+INSERT INTO member(member_no, member_id, member_password, member_email, member_name, member_points, member_status, member_join_date, member_report_count, member_role, member_provider)
+VALUES(member_no_SEQ.nextval, 'mentor54', '{bcrypt}$2a$10$2Vj/MwAon9U1UFSHcF8DSe9VtT86qtIFmWo2.tocHk1Px1NAXFU3K', 'mentor54@naver.com', '이민재', 4700, 1, SYSDATE, 0, 'ROLE_MENTOR', 'Email');
+insert into interest (interest_no, member_no, category_no) 
+values(interest_no_SEQ.nextval, 34, 2);
+insert into interest (interest_no, member_no, category_no) 
+values(interest_no_SEQ.nextval, 34, 3);
+insert into interest (interest_no, member_no, category_no) 
+values(interest_no_SEQ.nextval, 34, 4);
+INSERT INTO mentor_profile(mentor_profile_no, mentor_introduce, mentor_rating, mentor_mentoring_count, mentor_image, mentor_activity_count, mentor_follow_count, mentor_status, category_no, member_no, mentor_headline)
+VALUES(mentor_profile_no_SEQ.nextval, '안녕하세요, 이민재 멘토입니다. 콘텐츠 크리에이션 전문가입니다.', 4.8, 29, '/images/mentor-profile/5a.jpg', 140, 58, 3, 13, member_no_SEQ.currval, '콘텐츠 크리에이션 전문가');
+INSERT INTO career(career_no, career_company_name, career_job_title, career_start_date, career_end_date, mentor_profile_no)
+VALUES(career_no_SEQ.nextval, '미디어 회사', '콘텐츠 제작자', '2016-02-01', '2024-01-01', (SELECT mentor_profile_no FROM mentor_profile WHERE member_no = (SELECT member_no FROM member WHERE member_id = 'mentor54')));
+
+INSERT INTO member(member_no, member_id, member_password, member_email, member_name, member_points, member_status, member_join_date, member_report_count, member_role, member_provider)
+VALUES(member_no_SEQ.nextval, 'mentor55', '{bcrypt}$2a$10$2Vj/MwAon9U1UFSHcF8DSe9VtT86qtIFmWo2.tocHk1Px1NAXFU3K', 'mentor55@naver.com', '박하은', 4800, 1, SYSDATE, 0, 'ROLE_MENTOR', '');
+insert into interest (interest_no, member_no, category_no) 
+values(interest_no_SEQ.nextval, 35, 2);
+insert into interest (interest_no, member_no, category_no) 
+values(interest_no_SEQ.nextval, 35, 3);
+insert into interest (interest_no, member_no, category_no) 
+values(interest_no_SEQ.nextval, 35, 4);
+INSERT INTO mentor_profile(mentor_profile_no, mentor_introduce, mentor_rating, mentor_mentoring_count, mentor_image, mentor_activity_count, mentor_follow_count, mentor_status, category_no, member_no, mentor_headline)
+VALUES(mentor_profile_no_SEQ.nextval, '안녕하세요, 박하은 멘토입니다. 교육 및 학습 코칭 전문가입니다.', 4.9, 40, '/images/mentor-profile/6a.jpg', 150, 60, 3, 7, member_no_SEQ.currval, '학습 코칭 전문가');
+INSERT INTO career(career_no, career_company_name, career_job_title, career_start_date, career_end_date, mentor_profile_no)
+VALUES(career_no_SEQ.nextval, '교육 컨설팅 센터', '학습 코치', '2015-09-01', '2024-01-01', (SELECT mentor_profile_no FROM mentor_profile WHERE member_no = (SELECT member_no FROM member WHERE member_id = 'mentor55')));
+
+
+INSERT INTO member(member_no, member_id, member_password, member_email, member_name, member_points, member_status, member_join_date, member_report_count, member_role, member_provider)
+VALUES(member_no_SEQ.nextval, 'mentor57', '{bcrypt}$2a$10$2Vj/MwAon9U1UFSHcF8DSe9VtT86qtIFmWo2.tocHk1Px1NAXFU3K', 'mentor57@naver.com', '정유진', 5100, 1, SYSDATE, 0, 'ROLE_MENTOR', 'Email');
+insert into interest (interest_no, member_no, category_no) 
+values(interest_no_SEQ.nextval, 36, 2);
+insert into interest (interest_no, member_no, category_no) 
+values(interest_no_SEQ.nextval, 36, 3);
+insert into interest (interest_no, member_no, category_no) 
+values(interest_no_SEQ.nextval, 36, 4);
+INSERT INTO mentor_profile(mentor_profile_no, mentor_introduce, mentor_rating, mentor_mentoring_count, mentor_image, mentor_activity_count, mentor_follow_count, mentor_status, category_no, member_no, mentor_headline)
+VALUES(mentor_profile_no_SEQ.nextval, '안녕하세요, 정유진 멘토입니다. 금융 컨설팅 전문가입니다.', 4.7, 35, '/images/mentor-profile/8a.jpg', 110, 47, 3, 17, member_no_SEQ.currval, '금융 컨설팅 전문가');
+INSERT INTO career(career_no, career_company_name, career_job_title, career_start_date, career_end_date, mentor_profile_no)
+VALUES(career_no_SEQ.nextval, '금융 서비스 회사', '재무 컨설턴트', '2018-01-01', '2024-01-01', (SELECT mentor_profile_no FROM mentor_profile WHERE member_no = (SELECT member_no FROM member WHERE member_id = 'mentor57')));
+
+INSERT INTO member(member_no, member_id, member_password, member_email, member_name, member_points, member_status, member_join_date, member_report_count, member_role, member_provider)
+VALUES(member_no_SEQ.nextval, 'mentor58', '{bcrypt}$2a$10$2Vj/MwAon9U1UFSHcF8DSe9VtT86qtIFmWo2.tocHk1Px1NAXFU3K', 'mentor58@naver.com', '이서윤', 4700, 1, SYSDATE, 0, 'ROLE_MENTOR', 'Email');
+insert into interest (interest_no, member_no, category_no) 
+values(interest_no_SEQ.nextval, 37, 2);
+insert into interest (interest_no, member_no, category_no) 
+values(interest_no_SEQ.nextval, 37, 3);
+insert into interest (interest_no, member_no, category_no) 
+values(interest_no_SEQ.nextval, 37, 4);
+INSERT INTO mentor_profile(mentor_profile_no, mentor_introduce, mentor_rating, mentor_mentoring_count, mentor_image, mentor_activity_count, mentor_follow_count, mentor_status, category_no, member_no, mentor_headline)
+VALUES(mentor_profile_no_SEQ.nextval, '안녕하세요, 이서윤 멘토입니다. 소프트웨어 개발 전문가입니다.', 4.8, 60, '/images/mentor-profile/9a.jpg', 180, 85, 3, 4, member_no_SEQ.currval, '소프트웨어 개발 전문가');
+INSERT INTO career(career_no, career_company_name, career_job_title, career_start_date, career_end_date, mentor_profile_no)
+VALUES(career_no_SEQ.nextval, 'IT 기업', '소프트웨어 개발자', '2014-07-01', '2024-01-01', (SELECT mentor_profile_no FROM mentor_profile WHERE member_no = (SELECT member_no FROM member WHERE member_id = 'mentor58')));
+
+INSERT INTO member(member_no, member_id, member_password, member_email, member_name, member_points, member_status, member_join_date, member_report_count, member_role, member_provider)
+VALUES(member_no_SEQ.nextval, 'mentor59', '{bcrypt}$2a$10$2Vj/MwAon9U1UFSHcF8DSe9VtT86qtIFmWo2.tocHk1Px1NAXFU3K', 'mentor59@naver.com', '최민지', 4900, 1, SYSDATE, 0, 'ROLE_MENTOR', 'Email');
+insert into interest (interest_no, member_no, category_no) 
+values(interest_no_SEQ.nextval, 38, 2);
+insert into interest (interest_no, member_no, category_no) 
+values(interest_no_SEQ.nextval, 38, 3);
+insert into interest (interest_no, member_no, category_no) 
+values(interest_no_SEQ.nextval, 38, 4);
+INSERT INTO mentor_profile(mentor_profile_no, mentor_introduce, mentor_rating, mentor_mentoring_count, mentor_image, mentor_activity_count, mentor_follow_count, mentor_status, category_no, member_no, mentor_headline)
+VALUES(mentor_profile_no_SEQ.nextval, '안녕하세요, 최민지 멘토입니다. 디자인 및 일러스트 전문가입니다.', 4.7, 45, '/images/mentor-profile/10a.jpg', 160, 68, 3, 9, member_no_SEQ.currval, '디자인 전문가');
+INSERT INTO career(career_no, career_company_name, career_job_title, career_start_date, career_end_date, mentor_profile_no)
+VALUES(career_no_SEQ.nextval, '디자인 스튜디오', '일러스트레이터', '2015-06-01', '2024-01-01', (SELECT mentor_profile_no FROM mentor_profile WHERE member_no = (SELECT member_no FROM member WHERE member_id = 'mentor59')));
+
+INSERT INTO member(member_no, member_id, member_password, member_email, member_name, member_points, member_status, member_join_date, member_report_count, member_role, member_provider)
+VALUES(member_no_SEQ.nextval, 'mentor60', '{bcrypt}$2a$10$2Vj/MwAon9U1UFSHcF8DSe9VtT86qtIFmWo2.tocHk1Px1NAXFU3K', 'mentor60@naver.com', '김도현', 5100, 1, SYSDATE, 0, 'ROLE_MENTOR', 'Email');
+insert into interest (interest_no, member_no, category_no) 
+values(interest_no_SEQ.nextval, 39, 2);
+insert into interest (interest_no, member_no, category_no) 
+values(interest_no_SEQ.nextval, 39, 3);
+insert into interest (interest_no, member_no, category_no) 
+values(interest_no_SEQ.nextval, 39, 4);
+INSERT INTO mentor_profile(mentor_profile_no, mentor_introduce, mentor_rating, mentor_mentoring_count, mentor_image, mentor_activity_count, mentor_follow_count, mentor_status, category_no, member_no, mentor_headline)
+VALUES(mentor_profile_no_SEQ.nextval, '안녕하세요, 김도현 멘토입니다. 헬스 및 피트니스 전문가입니다.', 4.8, 50, '/images/mentor-profile/11a.jpg', 190, 90,3, 22, member_no_SEQ.currval, '피트니스 전문가');
+INSERT INTO career(career_no, career_company_name, career_job_title, career_start_date, career_end_date, mentor_profile_no)
+VALUES(career_no_SEQ.nextval, '헬스 트레이닝 센터', '퍼스널 트레이너', '2013-09-01', '2024-01-01', (SELECT mentor_profile_no FROM mentor_profile WHERE member_no = (SELECT member_no FROM member WHERE member_id = 'mentor60')));
+
+INSERT INTO member(member_no, member_id, member_password, member_email, member_name, member_points, member_status, member_join_date, member_report_count, member_role, member_provider)
+VALUES(member_no_SEQ.nextval, 'mentor61', '{bcrypt}$2a$10$2Vj/MwAon9U1UFSHcF8DSe9VtT86qtIFmWo2.tocHk1Px1NAXFU3K', 'mentor61@naver.com', '정민호', 5000, 1, SYSDATE, 0, 'ROLE_MENTOR', 'Email');
+insert into interest (interest_no, member_no, category_no) 
+values(interest_no_SEQ.nextval, 40, 2);
+insert into interest (interest_no, member_no, category_no) 
+values(interest_no_SEQ.nextval, 40, 3);
+insert into interest (interest_no, member_no, category_no) 
+values(interest_no_SEQ.nextval, 40, 4);
+INSERT INTO mentor_profile(mentor_profile_no, mentor_introduce, mentor_rating, mentor_mentoring_count, mentor_image, mentor_activity_count, mentor_follow_count, mentor_status, category_no, member_no, mentor_headline)
+VALUES(mentor_profile_no_SEQ.nextval, '안녕하세요, 정민호 멘토입니다. IT 보안 및 네트워크 전문가입니다.', 4.9, 40, '/images/mentor-profile/12a.jpg', 140, 55, 3, 4, member_no_SEQ.currval, 'IT 보안 전문가');
+INSERT INTO career(career_no, career_company_name, career_job_title, career_start_date, career_end_date, mentor_profile_no)
+VALUES(career_no_SEQ.nextval, 'IT 보안 회사', '네트워크 엔지니어', '2012-11-01', '2024-01-01', (SELECT mentor_profile_no FROM mentor_profile WHERE member_no = (SELECT member_no FROM member WHERE member_id = 'mentor61')));
+
+INSERT INTO member(member_no, member_id, member_password, member_email, member_name, member_points, member_status, member_join_date, member_report_count, member_role, member_provider)
+VALUES(member_no_SEQ.nextval, 'mentor62', '{bcrypt}$2a$10$2Vj/MwAon9U1UFSHcF8DSe9VtT86qtIFmWo2.tocHk1Px1NAXFU3K', 'mentor62@naver.com', '한지원', 5200, 1, SYSDATE, 0, 'ROLE_MENTOR', 'Email');
+insert into interest (interest_no, member_no, category_no) 
+values(interest_no_SEQ.nextval, 41, 2);
+insert into interest (interest_no, member_no, category_no) 
+values(interest_no_SEQ.nextval, 41, 3);
+insert into interest (interest_no, member_no, category_no) 
+values(interest_no_SEQ.nextval, 41, 4);
+INSERT INTO mentor_profile(mentor_profile_no, mentor_introduce, mentor_rating, mentor_mentoring_count, mentor_image, mentor_activity_count, mentor_follow_count, mentor_status, category_no, member_no, mentor_headline)
+VALUES(mentor_profile_no_SEQ.nextval, '안녕하세요, 한지원 멘토입니다. 창업 및 비즈니스 컨설팅 전문가입니다.', 4.8, 55, '/images/mentor-profile/13a.jpg', 170, 75, 3, 15, member_no_SEQ.currval, '창업 전문가');
+INSERT INTO career(career_no, career_company_name, career_job_title, career_start_date, career_end_date, mentor_profile_no)
+VALUES(career_no_SEQ.nextval, '스타트업 인큐베이터', '창업 컨설턴트', '2014-02-01', '2024-01-01', (SELECT mentor_profile_no FROM mentor_profile WHERE member_no = (SELECT member_no FROM member WHERE member_id = 'mentor62')));
+
+INSERT INTO member(member_no, member_id, member_password, member_email, member_name, member_points, member_status, member_join_date, member_report_count, member_role, member_provider)
+VALUES(member_no_SEQ.nextval, 'mentor63', '{bcrypt}$2a$10$2Vj/MwAon9U1UFSHcF8DSe9VtT86qtIFmWo2.tocHk1Px1NAXFU3K', 'mentor63@naver.com', '이수민', 4700, 1, SYSDATE, 0, 'ROLE_MENTOR', 'Email');
+insert into interest (interest_no, member_no, category_no) 
+values(interest_no_SEQ.nextval, 42, 2);
+insert into interest (interest_no, member_no, category_no) 
+values(interest_no_SEQ.nextval, 42, 3);
+insert into interest (interest_no, member_no, category_no) 
+values(interest_no_SEQ.nextval, 42, 4);
+INSERT INTO mentor_profile(mentor_profile_no, mentor_introduce, mentor_rating, mentor_mentoring_count, mentor_image, mentor_activity_count, mentor_follow_count, mentor_status, category_no, member_no, mentor_headline)
+VALUES(mentor_profile_no_SEQ.nextval, '안녕하세요, 이수민 멘토입니다. 데이터 분석 및 통계 전문가입니다.', 4.7, 32, '/images/mentor-profile/14a.jpg', 120, 45, 3, 5, member_no_SEQ.currval, '데이터 분석 전문가');
+INSERT INTO career(career_no, career_company_name, career_job_title, career_start_date, career_end_date, mentor_profile_no)
+VALUES(career_no_SEQ.nextval, '분석 컨설팅 회사', '데이터 분석가', '2015-08-01', '2024-01-01', (SELECT mentor_profile_no FROM mentor_profile WHERE member_no = (SELECT member_no FROM member WHERE member_id = 'mentor63')));
+
+INSERT INTO member(member_no, member_id, member_password, member_email, member_name, member_points, member_status, member_join_date, member_report_count, member_role, member_provider)
+VALUES(member_no_SEQ.nextval, 'mentor65', '{bcrypt}$2a$10$2Vj/MwAon9U1UFSHcF8DSe9VtT86qtIFmWo2.tocHk1Px1NAXFU3K', 'mentor65@naver.com', '유민재', 4600, 1, SYSDATE, 0, 'ROLE_MENTOR', 'Email');
+insert into interest (interest_no, member_no, category_no) 
+values(interest_no_SEQ.nextval, 43, 2);
+insert into interest (interest_no, member_no, category_no) 
+values(interest_no_SEQ.nextval, 43, 3);
+insert into interest (interest_no, member_no, category_no) 
+values(interest_no_SEQ.nextval, 43, 4);
+INSERT INTO mentor_profile(mentor_profile_no, mentor_introduce, mentor_rating, mentor_mentoring_count, mentor_image, mentor_activity_count, mentor_follow_count, mentor_status, category_no, member_no, mentor_headline)
+VALUES(mentor_profile_no_SEQ.nextval, '안녕하세요, 유민재 멘토입니다. 창업 컨설팅 전문가입니다.', 4.8, 50, '/images/mentor-profile/16a.jpg', 130, 65, 3, 15, member_no_SEQ.currval, '창업 컨설팅 전문가');
+INSERT INTO career(career_no, career_company_name, career_job_title, career_start_date, career_end_date, mentor_profile_no)
+VALUES(career_no_SEQ.nextval, '창업 지원 센터', '창업 컨설턴트', '2012-10-01', '2024-01-01', (SELECT mentor_profile_no FROM mentor_profile WHERE member_no = (SELECT member_no FROM member WHERE member_id = 'mentor65')));
+
+INSERT INTO member(member_no, member_id, member_password, member_email, member_name, member_points, member_status, member_join_date, member_report_count, member_role, member_provider)
+VALUES(member_no_SEQ.nextval, 'mentor66', '{bcrypt}$2a$10$2Vj/MwAon9U1UFSHcF8DSe9VtT86qtIFmWo2.tocHk1Px1NAXFU3K', 'mentor66@naver.com', '한유진', 4700, 1, SYSDATE, 0, 'ROLE_MENTOR', 'Email');
+insert into interest (interest_no, member_no, category_no) 
+values(interest_no_SEQ.nextval, 44, 2);
+insert into interest (interest_no, member_no, category_no) 
+values(interest_no_SEQ.nextval, 44, 3);
+insert into interest (interest_no, member_no, category_no) 
+values(interest_no_SEQ.nextval, 44, 4);
+INSERT INTO mentor_profile(mentor_profile_no, mentor_introduce, mentor_rating, mentor_mentoring_count, mentor_image, mentor_activity_count, mentor_follow_count, mentor_status, category_no, member_no, mentor_headline)
+VALUES(mentor_profile_no_SEQ.nextval, '안녕하세요, 한유진 멘토입니다. 영어 교육 전문가입니다.', 4.9, 44, '/images/mentor-profile/17a.jpg', 150, 80, 3, 6, member_no_SEQ.currval, '영어 교육 전문가');
+INSERT INTO career(career_no, career_company_name, career_job_title, career_start_date, career_end_date, mentor_profile_no)
+VALUES(career_no_SEQ.nextval, '영어 교육 센터', '영어 교사', '2014-09-01', '2024-01-01', (SELECT mentor_profile_no FROM mentor_profile WHERE member_no = (SELECT member_no FROM member WHERE member_id = 'mentor66')));
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 /*멘토 보드 등록*/
