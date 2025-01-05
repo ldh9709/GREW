@@ -447,6 +447,7 @@ hover-buttonbody {
   display: flex;
   flex-direction: row;
   width: 220px;
+  z-index: 1000;
 }
 .chat-menu-dropdown button {
   padding: 8px;
