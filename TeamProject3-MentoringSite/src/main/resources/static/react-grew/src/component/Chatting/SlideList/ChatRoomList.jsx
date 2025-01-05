@@ -21,19 +21,24 @@ const ChatRoomList = ({ onRoomClick }) => {
   useEffect(() => {
     if (member?.memberName) {
       // memberName이 있을 때만 WebSocket 연결을 시작
-      const socket = new SockJS(`http://localhost:8080/chat`);
+      let socket;
+            
+      try {
+        socket = new SockJS('http://localhost:8080/chat');
+      } catch (error) {
+        console.error('Failed to connect to localhost, trying ngrok...');
+        socket = new SockJS('https://f8eb-175-123-27-55.ngrok-free.app/chat');
+      }
 
       // StompClient 생성
       stompClient.current = new StompClient({
         webSocketFactory: () => socket,
         onConnect: () => {
-          console.log("start")
           // 서버와의 연결이 성공하면 구독 시작
           stompClient.current.subscribe(
             `/topic/messages/member/${member.memberNo}`,
             (response) => {
               const message = JSON.parse(response.body);
-              console.log(message);
              
               setRooms((prevRooms) =>
                 prevRooms.map((room) =>
@@ -49,9 +54,7 @@ const ChatRoomList = ({ onRoomClick }) => {
             }
           );
         },
-        onDisconnect: () => {
-          console.log("Disconnected111111111");
-        },
+        onDisconnect: () => console.log("Disconnected"),
       });
 
       stompClient.current.activate(); // 소켓 활성화
@@ -64,7 +67,6 @@ const ChatRoomList = ({ onRoomClick }) => {
       };
     }
 
-    console.log("소켓검사 종료");
   }, [member]); // member가 변경될 때마다 useEffect 실행
 
   const chatRoomList = async (page) => {
@@ -113,7 +115,6 @@ const ChatRoomList = ({ onRoomClick }) => {
         token,
         newRoomName.trim()
       );
-      console.log(responseJsonObject.data);
       await chatRoomList(currentPage - 1); // 현재 페이지 갱신
       setIsModalOpen1(false); // 닫기
     }
@@ -121,7 +122,6 @@ const ChatRoomList = ({ onRoomClick }) => {
 
   const leaveRoom = async (roomNo) => {
     const responseJsonObject = await ChattingApi.leaveChatRoom(roomNo, token);
-    console.log(responseJsonObject);
     await chatRoomList(currentPage - 1); // 현재 페이지 갱신
   };
 
