@@ -1,14 +1,11 @@
 import React, { useState, useEffect, useRef } from "react";
 import SockJS from "sockjs-client";
 import { Client as StompClient } from "@stomp/stompjs";
-import { getCookie } from "../../util/cookieUtil.js";
 import * as ChattingApi from "../../api/chattingApi.js";
-import { jwtDecode } from "jwt-decode";
+import { useMemberAuth } from '../../util/AuthContext.js';
 
 const ChattingMessage = ({ roomId, roomName, roomStatus, mentorNo }) => {
-  const memberCookie = getCookie("member");
-  const token = memberCookie ? memberCookie.accessToken : null;
-  const decodeToken = token ? jwtDecode(token) : null;
+  const { token, member } = useMemberAuth();
 
   const [username, setUsername] = useState("");
   const [messageContent, setMessageContent] = useState("");
@@ -83,8 +80,12 @@ const ChattingMessage = ({ roomId, roomName, roomStatus, mentorNo }) => {
     }
   };
 
+  const chatRoomCompleted = async () => {
+    await ChattingApi.completedChatRoom(roomId);
+  }
+
   useEffect(() => {
-    const username = decodeToken.memberName;
+    const username = member.memberName;
     if (username) {
       setUsername(username); // 이름 설정
       setHasUnreadMessages(false); // 다시 초기화
@@ -217,7 +218,7 @@ const ChattingMessage = ({ roomId, roomName, roomStatus, mentorNo }) => {
           chatMessageContent: messageContent,
           chatMessageDate: "",
           chatMessageCheck: 1,
-          memberNo: decodeToken.memberNo,
+          memberNo: member.memberNo,
           memberName: username,
           chatRoomNo: roomId,
         };
@@ -238,7 +239,7 @@ const ChattingMessage = ({ roomId, roomName, roomStatus, mentorNo }) => {
             imageBlob: base64Image,
             chatMessageNo: Date.now(),
             chatRoomNo: roomId,
-            memberNo: decodeToken.memberNo,
+            memberNo: member.memberNo,
           };
 
           stompClient.current.publish({
@@ -277,8 +278,9 @@ const ChattingMessage = ({ roomId, roomName, roomStatus, mentorNo }) => {
   if (username && roomId) {
     return (
       <div className="chat-app">
-        <div className="chat-header">{roomName}</div>
-
+        <div className="chat-header">{roomName}
+         {mentorNo == member.memberNo ? <button className="" onClick={chatRoomCompleted}>활동 완료</button> : <></> }
+        </div>
         <div
           id="chat-container"
           ref={chatContainerRef}

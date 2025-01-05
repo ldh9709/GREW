@@ -196,7 +196,7 @@ hover-buttonbody {
   border: 1px solid #ccc;
   scroll-behavior: smooth;
   height: calc(
-    100vh - 160px
+    100vh - 180px
   ); /* 채팅 내용 영역의 높이를 화면 크기에 맞게 조정 */
   padding: 10px; /* 여백 추가 */
 }
@@ -247,7 +247,6 @@ hover-buttonbody {
 }
 /* 채팅 입력창 */
 .message-form {
-  position: absolute;
   bottom: 0;
   left: 0; /* 화면 왼쪽부터 시작 */
   right: 0; /* 화면 오른쪽 끝까지 확장 */

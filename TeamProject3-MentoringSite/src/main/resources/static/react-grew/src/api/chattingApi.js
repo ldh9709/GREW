@@ -58,6 +58,17 @@ export const activeChatRoom = async (chatRoomNo) => {
   return responseJsonObject;
 };
 
+export const completedChatRoom = async (chatRoomNo) => {
+  const response = await fetch(
+    `${BACKEND_SERVER}/chatroom/completed/${chatRoomNo}`,
+    {
+      method: "PUT"
+    }
+  );
+  const responseJsonObject = await response.json();
+  return responseJsonObject;
+};
+
 export const rejectedChatRoom = async (chatRoomNo) => {
   const response = await fetch(
     `${BACKEND_SERVER}/chatroom/rejected/${chatRoomNo}`,
