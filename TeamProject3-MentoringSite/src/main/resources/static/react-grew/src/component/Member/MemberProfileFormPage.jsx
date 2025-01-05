@@ -6,12 +6,14 @@ import * as categoryApi from "../../api/categoryApi";
 import * as responseStatus from "../../api/responseStatusCode";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { useMemberAuth } from "../../util/AuthContext";
 
 
 const MemberProfileFormPage = () => {
   const navigate = useNavigate();
-  const memberCookie = getCookie("member");
-  const token = memberCookie.accessToken;
+  
+  const auth = useMemberAuth();
+  const token = auth?.token || null;
 
   /* 관심사 */
   const [interests, setInterests] = useState([]); // 관심사 데이터
@@ -191,20 +193,26 @@ const MemberProfileFormPage = () => {
   };
 
   /***** 회원 탈퇴 액션 *****/
-  const deleteMember = () => {
-
-    deleteAction(token).then((responseJsonObject) => {
+  const deleteMember = async () => {
+    try {
+      const responseJsonObject = await deleteAction(token);
       console.log("Server response:", responseJsonObject);
+  
       switch (responseJsonObject.status) {
         case responseStatus.DELETE_MEMBER_SUCCESS:
+          await logout();
+          auth.logout(); // AuthContext 상태 업데이트
           navigate("/main");
-          logout();
           alert("탈퇴되었습니다.");
           break;
         default:
           alert("알 수 없는 오류가 발생했습니다.");
+          break;
       }
-    });
+    } catch (error) {
+      console.error("탈퇴 요청 중 오류 발생:", error);
+      alert("탈퇴 처리 중 문제가 발생했습니다.");
+    }
   };
   useEffect(() => {
     async function fetchInterests() {
