@@ -214,11 +214,13 @@ export default function MemberCounselList() {
             ))}
           </ul>
         )}
-        <PagenationItem
-          currentPage={currentPage}
-          totalPages={totalPages}
-          paginate={paginate}
-        />
+        <div className="mypage-pagenation">
+          <PagenationItem
+            currentPage={currentPage}
+            totalPages={totalPages}
+            paginate={paginate}
+          />
+        </div>
       </div>
       }
     </>

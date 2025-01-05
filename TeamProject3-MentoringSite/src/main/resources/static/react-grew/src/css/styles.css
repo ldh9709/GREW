@@ -101,6 +101,12 @@ button {
   cursor: not-allowed;
 }
 
+.mypage-pagenation{
+  position: absolute;
+  bottom: 80px; left: 50%;
+  transform: translateX(-50%);
+}
+
 /* 페이지 번호 버튼 */
 .common-pagination-number {
   width: 30px;

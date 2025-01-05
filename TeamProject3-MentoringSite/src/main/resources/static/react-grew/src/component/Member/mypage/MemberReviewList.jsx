@@ -53,11 +53,13 @@ export default function MemberReviewList() {
             <p className="review-comment">{review.reviewContent}</p>
           </div>
         ))}
-      <PagenationItem
-        currentPage={currentPage}
-        totalPages={totalPages}
-        paginate={paginate}
-      />
+        <div>
+          <PagenationItem
+            currentPage={currentPage}
+            totalPages={totalPages}
+            paginate={paginate}
+          />
+        </div>
       </div>
     </>
   );

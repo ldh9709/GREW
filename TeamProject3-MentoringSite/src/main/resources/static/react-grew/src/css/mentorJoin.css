@@ -1,13 +1,17 @@
 /* 공통 컨테이너 스타일 */
 .mentor-join-container {
     align-items: center;
-    text-align: center;
-    width: 800px;
-    height: 100vh;
+    width: 700px;
     margin: 0 auto;
+    border: 1px solid #ccc;
+    border-radius: 10px;
     background-color: #ffffff;
     padding: 30px;
-    font-family: "nanumsquare";
+}
+
+.mentor-form-title{
+    text-align: center;
+    margin-bottom: 50px;
 }
 
 /* 공통 폼 그룹 스타일 */
@@ -22,9 +26,6 @@
 .form-group-profile.horizontal,
 .form-group-profile.horizontal-field {
     display: flex;
-    flex-direction: row;
-    align-items: center;
-    gap: 20px; /* 내부 요소 간 간격 */
 }
 
 /* 라벨 스타일 */
@@ -46,7 +47,6 @@
     border: 1px solid #ccc;
     border-radius: 5px;
     box-sizing: border-box;
-    font-family: "nanumsquare";
 }
 
 /* 전문 분야 셀렉트 박스 */
@@ -58,28 +58,27 @@
 .form-group-profile.horizontal-combined {
     display: flex;
     flex-direction: row;
-    align-items: center; /* 세로 정렬 */
     gap: 10px; /* 대분류와 소분류 간의 간격을 줄임 */
     width: 100%; /* 전체 너비 사용 */
-    margin-bottom: 20px; /* 다른 폼 그룹과 간격 맞춤 */
+    margin: 10px 0; /* 다른 폼 그룹과 간격 맞춤 */
 }
 
 /* 대분류와 소분류의 공통 스타일 */
 .form-group-profile.horizontal-combined .category-select {
+    width: 45%;
     flex: 1; /* 동일한 비율로 크기 조정 */
-    max-width: 180px; /* 선택 박스 최대 너비 조정 */
     padding: 10px; /* 내부 여백 */
     font-size: 14px; /* 글자 크기 */
     border: 1px solid #ccc; /* 경계선 */
     border-radius: 5px; /* 경계선 라운딩 */
+    cursor: pointer;
 }
 
 /* 대분류 라벨 */
-.form-group-profile.horizontal-combined .parent-label {
-    flex: 0 0 100px; /* 고정된 너비 */
+.mentor-join-form .parent-label {
     font-weight: bold; /* 강조 */
     text-align: left; /* 텍스트 정렬 */
-    margin-right: 60px; /* 라벨과 대분류 선택 칸 간격 */
+    margin-bottom: 10px;
 }
 
 /* 소분류 선택 박스를 대분류 쪽으로 더 붙이기 */
@@ -93,8 +92,6 @@
 
 /* 텍스트 영역 스타일 */
 .form-group-profile.horizontal textarea {
-    width: 500px;
-    height: 50px;
     resize: none;
     padding: 10px;
     font-size: 14px;
@@ -102,31 +99,48 @@
     border-radius: 5px;
     box-sizing: border-box;
 }
+.mentor-join-headline{
+    height: 50px;
+}
 
+.mentor-join-introduce{
+    min-height: 350px;
+}
 /* 프로필 이미지 스타일 */
 .form-group-profileImage {
-    margin-left: 33px;
+
 }
 
 /* 제출 버튼 스타일 */
-.submit-button {
+.mentor-submit-container{
+    font-size: 14px;
+    display: flex;
+    justify-content: end;
+}
+.submit-button, .skip-button {
     display: block;
-    width: 100%;
     padding: 10px;
-    background-color: #4caf50;
+    background-color: #007bff;
     color: white;
     border: none;
     border-radius: 5px;
-    font-size: 16px;
     cursor: pointer;
     text-align: center;
     margin-top: 20px; /* 다른 폼 그룹과 간격 */
+    transition: background-color 0.3s;
 }
 
 .submit-button:hover {
-    background-color: #45a049;
+    background-color: #0056b3;
 }
 
+.skip-button {
+    background-color: #888;
+    margin-left: 5px;
+}
+.skip-button:hover {
+    background-color: #777;
+}
 /* 경력 텍스트 컨테이너 */
 .textarea-container {
     display: flex;
@@ -148,7 +162,6 @@
     border: 1px solid #ccc;
     border-radius: 5px;
     box-sizing: border-box;
-    font-family: "nanumsquare";
 }
 
 /* 텍스트 영역 행 */
@@ -168,12 +181,12 @@
     font-size: 14px;
     border: 1px solid #ccc;
     border-radius: 5px;
-    font-family: "nanumsquare";
     box-sizing: border-box;
 }
 /***** 경력 컨테이너 *****/
 /* 경력 입력 필드 컨테이너 */
 .career-container {
+    width: 100%;
     display: flex;
     flex-direction: column; /* 각 경력 행을 세로로 정렬 */
     gap: 10px; /* 각 경력 행 간격 */
@@ -184,20 +197,15 @@
     display: flex;
     gap: 7px; /* 필드 간 간격 */
     align-items: center; /* 필드와 버튼 높이 맞춤 */
+    margin-bottom: 5px;
   }
   
-  /* 입력 필드 스타일 */
-  .career-row input {
-    flex: 1; /* 입력 필드 크기를 동일하게 설정 */
-    width: 120px; /* 최소 너비 */
-  }
   
   /* 추가 버튼 스타일 */
   .add-career-button {
-    flex-shrink: 0; /* 버튼 크기를 고정 */
     padding: 8px 20px; /* 버튼 패딩 */
     font-size: 14px;
-    background-color: #007bff;
+    background-color: #45a049;
     color: white;
     border: none;
     border-radius: 5px;
@@ -205,11 +213,6 @@
   }
   
   .add-career-button:hover {
-    background-color: #0056b3;
+    background-color: #4caf50;
   }
 
-.form-group-profileImage {
-    width: 630px !important;
-    margin-right: 70px;
-
-}
