@@ -259,6 +259,7 @@ public class MemberRestController {
 	/* 회원 정보 보기 */
 	@SecurityRequirement(name = "BearerAuth")//API 엔드포인트가 인증을 요구한다는 것을 문서화(Swagger에서 JWT인증을 명시
 	@Operation(summary = "회원 정보 보기")
+	@PreAuthorize("hasRole('MENTEE')")
 	@GetMapping("/member-info")
 	public ResponseEntity<Response> getMember(@RequestParam(name = "memberNo") Long memberNo) {
 		
@@ -331,6 +332,7 @@ public class MemberRestController {
 	/* 회원 정보 수정 */
 	@Operation(summary = "회원 정보 수정")
 	@PutMapping("/profile/modify")
+	@PreAuthorize("hasRole('MENTEE') or hasRole('MENTOR')")
 	@SecurityRequirement(name = "BearerAuth")//API 엔드포인트가 인증을 요구한다는 것을 문서화(Swagger에서 JWT인증을 명시
 	public ResponseEntity<Response> updateMember(
 			@RequestBody MemberDto memberDto,
@@ -356,6 +358,49 @@ public class MemberRestController {
 			response.setStatus(ResponseStatusCode.UPDATE_MEMBER_SUCCESS);
 			response.setMessage(ResponseMessage.UPDATE_MEMBER_SUCCESS);
 			response.setData(updateMemberDto);
+			
+		}
+		
+		//반환 객체 선언 (2)
+		HttpHeaders httpHeaders=new HttpHeaders();
+		httpHeaders.setContentType(new MediaType(MediaType.APPLICATION_JSON,Charset.forName("UTF-8")));
+		
+		//반환 객체 저장
+		ResponseEntity<Response> responseEntity = 
+				new ResponseEntity<Response>(response, httpHeaders, HttpStatus.OK);
+		
+		return responseEntity;
+	}
+	
+	/* 회원 탈퇴 */
+	@Operation(summary = "회원 탈퇴")
+	@PutMapping("/profile/delete")
+	@PreAuthorize("hasRole('MENTEE') or hasRole('MENTOR')")
+	@SecurityRequirement(name = "BearerAuth")//API 엔드포인트가 인증을 요구한다는 것을 문서화(Swagger에서 JWT인증을 명시
+	public ResponseEntity<Response> deleteMember(
+			@RequestBody MemberDto memberDto,
+			Authentication authentication
+			) {
+		
+		//토큰을 통해 번호 검색
+		PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
+		Long memberNo = principalDetails.getMemberNo();
+		
+		// 반환 객체 선언 (1)
+		Response response = new Response();
+		
+		//상태 변경 메소드 실행
+		Member deleteMember = memberService.deleteMember(memberNo);
+		
+		//반환 객체 DTO로 변환
+		MemberDto deleteMemberDto = MemberDto.toDto(deleteMember);
+		
+		
+		if(deleteMemberDto != null) {
+			//응답객체에 코드, 메시지, 객체 설정
+			response.setStatus(ResponseStatusCode.UPDATE_MEMBER_SUCCESS);
+			response.setMessage(ResponseMessage.UPDATE_MEMBER_SUCCESS);
+			response.setData(deleteMemberDto);
 			
 		}
 		
