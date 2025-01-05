@@ -259,7 +259,6 @@ public class MemberRestController {
 	/* 회원 정보 보기 */
 	@SecurityRequirement(name = "BearerAuth")//API 엔드포인트가 인증을 요구한다는 것을 문서화(Swagger에서 JWT인증을 명시
 	@Operation(summary = "회원 정보 보기")
-	@PreAuthorize("hasRole('MENTEE')")
 	@GetMapping("/member-info")
 	public ResponseEntity<Response> getMember(@RequestParam(name = "memberNo") Long memberNo) {
 		
@@ -291,7 +290,7 @@ public class MemberRestController {
 	/***** 회원 정보 보기(토큰) *****/
 	@Operation(summary = "회원 정보 보기(토큰)")
 	@SecurityRequirement(name = "BearerAuth")//API 엔드포인트가 인증을 요구한다는 것을 문서화(Swagger에서 JWT인증을 명시
-	@PreAuthorize("hasRole('MENTEE') or hasRole('MENTOR') or hasRole('ADMIN') ")//ROLE이 MENTEE인 사람만 접근 가능
+	//@PreAuthorize("hasRole('MENTEE') or hasRole('MENTOR') or hasRole('ADMIN') ")//ROLE이 MENTEE인 사람만 접근 가능
 	@GetMapping("/profile")
 	public ResponseEntity<Response> getMember(Authentication authentication) {
 		
@@ -332,7 +331,7 @@ public class MemberRestController {
 	/* 회원 정보 수정 */
 	@Operation(summary = "회원 정보 수정")
 	@PutMapping("/profile/modify")
-	@PreAuthorize("hasRole('MENTEE') or hasRole('MENTOR')")
+	//@PreAuthorize("hasRole('MENTEE') or hasRole('MENTOR')")
 	@SecurityRequirement(name = "BearerAuth")//API 엔드포인트가 인증을 요구한다는 것을 문서화(Swagger에서 JWT인증을 명시
 	public ResponseEntity<Response> updateMember(
 			@RequestBody MemberDto memberDto,
@@ -375,7 +374,7 @@ public class MemberRestController {
 	/* 회원 탈퇴 */
 	@Operation(summary = "회원 탈퇴")
 	@PutMapping("/profile/delete")
-	@PreAuthorize("hasRole('MENTEE') or hasRole('MENTOR')")
+	//@PreAuthorize("hasRole('MENTEE') or hasRole('MENTOR')")
 	@SecurityRequirement(name = "BearerAuth")//API 엔드포인트가 인증을 요구한다는 것을 문서화(Swagger에서 JWT인증을 명시
 	public ResponseEntity<Response> deleteMember(
 			@RequestBody MemberDto memberDto,
@@ -418,7 +417,7 @@ public class MemberRestController {
 	/* 회원 상태 수정 */
 	@Operation(summary = "회원 상태 수정")
 	@SecurityRequirement(name = "BearerAuth")//API 엔드포인트가 인증을 요구한다는 것을 문서화(Swagger에서 JWT인증을 명시
-	@PreAuthorize("hasRole('MENTEE') or hasRole('MENTOR') or hasRole('ADMIN')")//ROLE이 MENTEE인 사람만 접근 가능
+	//@PreAuthorize("hasRole('MENTEE') or hasRole('MENTOR') or hasRole('ADMIN')")//ROLE이 MENTEE인 사람만 접근 가능
 	@PutMapping("/status/{statusNo}")
 	public ResponseEntity<Response> updateMemberStatus(
 			Authentication authentication,
