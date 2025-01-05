@@ -281,7 +281,7 @@
 /* 회원 목록 디테일 조회 */
 .mentor-detail-container {
   position: absolute; 
-  top: -120px; right: -390px;
+  top: -20px; right: -370px;
   min-width: 320px;
   margin: 20px auto;
   padding: 20px;
@@ -321,12 +321,16 @@
 }
 
 .mentor-profile-pic {
-  width: 100px;
-  height: 100px;
+  width: 120px;
+  height: 120px;
   border-radius: 50%;
   background-color: #ddd;
 }
-
+.mentor-profile-pic img {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+}
 .mentor-textarea {
   width: 100%;;
   flex: 0 0 230px;

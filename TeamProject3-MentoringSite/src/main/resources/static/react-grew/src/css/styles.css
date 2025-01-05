@@ -101,6 +101,12 @@ button {
   cursor: not-allowed;
 }
 
+.mypage-pagenation{
+  position: absolute;
+  bottom: 80px; left: 50%;
+  transform: translateX(-50%);
+}
+
 /* 페이지 번호 버튼 */
 .common-pagination-number {
   width: 30px;
@@ -122,6 +128,10 @@ button {
 .common-pagination-number.active {
   background-color: #28a745;
   color: #fff;
+}
+/*페이지 없을때*/
+.pagination-none {
+  display: none;
 }
 
 #wrapper,

@@ -344,7 +344,7 @@ const MemberProfileFormPage = () => {
               type="button"
               className="profile-modify-button"
               onClick={updateMember}
-              value="수정"
+              value="저장"
               disabled={isEmailChanged && !isEmailVerified} // 조건 추가
             />
           </div>

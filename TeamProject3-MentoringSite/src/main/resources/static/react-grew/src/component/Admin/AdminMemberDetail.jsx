@@ -61,7 +61,9 @@ export default function AdminMemberDetail({mentor, onClose, refreshMentorData}) 
                 </div>
                 <div className="mentor-row">
                     <span className="mentor-label">프로필 사진</span>
-                    <div className="mentor-profile-pic"></div>
+                    <div className="mentor-profile-pic">
+                        <img src={mentor.mentorImage} alt="mentor-image" />
+                    </div>
                 </div>
                 <div className="mentor-row">
                     <span className="mentor-label">한줄 소개</span>

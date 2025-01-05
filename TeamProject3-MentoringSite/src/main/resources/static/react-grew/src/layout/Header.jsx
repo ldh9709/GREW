@@ -32,9 +32,9 @@ export default function HeaderMenu() {
   // 로그아웃 처리
   const handleLogoutAction = async () => {
     try {
+      navigate("/");
       await logout();
       auth.logout();
-      navigate("/");
       alert("로그아웃하셨습니다.");
     } catch (error) {
       alert("오류 발생.");
