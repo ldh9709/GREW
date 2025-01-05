@@ -99,7 +99,15 @@ const ChattingMessage = ({ roomId, roomName }) => {
       return;
     }
     if (roomId && username) {
-      const socket = new SockJS(`http://localhost:8080/chat`);
+      let socket;
+            
+      try {
+        socket = new SockJS('http://localhost:8080/chat');
+      } catch (error) {
+        console.error('Failed to connect to localhost, trying ngrok...');
+        socket = new SockJS('https://f8eb-175-123-27-55.ngrok-free.app/chat');
+      }
+
       stompClient.current = new StompClient({
         webSocketFactory: () => socket,
         onConnect: () => {
@@ -152,7 +160,6 @@ const ChattingMessage = ({ roomId, roomName }) => {
         }
       };
     }
-    console.log("소켓검사 종료");
   }, [roomId, username]);
 
   // 메시지 전송 후 스크롤 제어
@@ -228,7 +235,6 @@ const ChattingMessage = ({ roomId, roomName }) => {
       const reader = new FileReader();
       reader.onloadend = () => {
         const base64Image = reader.result.split(",")[1];
-        console.log("Base64 Image:", base64Image);
 
         const imageData = {
           imageBlob: base64Image,
