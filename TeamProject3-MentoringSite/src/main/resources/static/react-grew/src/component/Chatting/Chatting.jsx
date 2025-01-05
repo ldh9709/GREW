@@ -5,7 +5,7 @@ import { getCookie } from "../../util/cookieUtil.js";
 import * as ChattingApi from "../../api/chattingApi.js";
 import { jwtDecode } from "jwt-decode";
 
-const ChattingMessage = ({ roomId, roomName, roomStatus }) => {
+const ChattingMessage = ({ roomId, roomName, roomStatus, mentorNo }) => {
   const memberCookie = getCookie("member");
   const token = memberCookie ? memberCookie.accessToken : null;
   const decodeToken = token ? jwtDecode(token) : null;

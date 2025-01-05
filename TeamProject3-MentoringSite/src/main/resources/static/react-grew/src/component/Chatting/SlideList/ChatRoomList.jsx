@@ -172,7 +172,7 @@ const ChatRoomList = ({ onRoomClick }) => {
             <li
               key={room.chatRoomNo} // 고유 키 설정 (React에서 반복문에 필수)
               className="chat-room-item"
-              onClick={() => onRoomClick(room.chatRoomNo, room.chatRoomName, room.chatRoomStatus)}
+              onClick={() => onRoomClick(room.chatRoomNo, room.chatRoomName, room.chatRoomStatus, room.mentorNo)}
               // 채팅방 클릭 시 부모 컴포넌트에 해당 채팅방 id 전달
             >
               <div className="chat-room-first">
@@ -212,6 +212,36 @@ const ChatRoomList = ({ onRoomClick }) => {
                         >
                           방 나가기
                         </button>
+                        <div className="inquiry-report-btn">
+                          {isModalOpen2 && (
+                            <div
+                              onClick={(e) => e.stopPropagation()} // 클릭 이벤트 전파 방지
+                            >
+                              <ReportModal onClose={handleCloseModal} report={report} />
+                            </div>
+                          )}
+                          <button
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              handleOpenModal(room);
+                            }}
+                            onMouseEnter={() => setIsReportHovered(true)}
+                            onMouseLeave={() => setIsReportHovered(false)}
+                            className={`hover-button ${
+                              isReportHovered ? "hovered" : ""
+                            }`}
+                          >
+                            <img
+                              src={
+                                isReportHovered
+                                  ? "https://img.icons8.com/?size=100&id=jy7dy2jsJ5UR&format=png&color=ed1515"
+                                  : "https://img.icons8.com/?size=100&id=t5aOnHwCycmN&format=png&color=000000"
+                              }
+                              alt="Button Image"
+                              className="button-image"
+                            />
+                          </button>
+                        </div>
                       </div>
                     )}
                   </span>
