@@ -54,7 +54,6 @@ const ChatRoomList = ({ onRoomClick }) => {
             }
           );
         },
-        onDisconnect: () => console.log("Disconnected"),
       });
 
       stompClient.current.activate(); // 소켓 활성화
