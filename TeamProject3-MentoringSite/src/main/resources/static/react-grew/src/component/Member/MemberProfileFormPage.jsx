@@ -1,7 +1,7 @@
 import "../../css/memberPage.css";
 import React, { useEffect, useState } from "react";
 import { getCookie } from "../../util/cookieUtil";
-import { memberProfile, updateAction, sendVerificationCode, verificationInputCode } from "../../api/memberApi";
+import { memberProfile, updateAction, sendVerificationCode, verificationInputCode, logout, deleteAction } from "../../api/memberApi";
 import * as categoryApi from "../../api/categoryApi";
 import * as responseStatus from "../../api/responseStatusCode";
 import { useNavigate } from "react-router-dom";
@@ -190,6 +190,22 @@ const MemberProfileFormPage = () => {
     });
   };
 
+  /***** 회원 탈퇴 액션 *****/
+  const deleteMember = () => {
+
+    deleteAction(token).then((responseJsonObject) => {
+      console.log("Server response:", responseJsonObject);
+      switch (responseJsonObject.status) {
+        case responseStatus.DELETE_MEMBER_SUCCESS:
+          navigate("/main");
+          logout();
+          alert("탈퇴되었습니다.");
+          break;
+        default:
+          alert("알 수 없는 오류가 발생했습니다.");
+      }
+    });
+  };
   useEffect(() => {
     async function fetchInterests() {
       try {
@@ -351,9 +367,8 @@ const MemberProfileFormPage = () => {
             <input
               type="button"
               className="profile-modify-button"
-              onClick={updateMember}
+              onClick={deleteMember}
               value="회원 탈퇴"
-              disabled={isEmailChanged && !isEmailVerified} // 조건 추가
             />
           </div>
         </form>

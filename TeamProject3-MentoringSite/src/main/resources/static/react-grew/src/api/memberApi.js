@@ -62,7 +62,7 @@ export const loginAction = async (sendJsonObject) => {
     form.append('password', sendJsonObject.memberPassword)
 
     const response = await axios.post("http://localhost:8080/login", form, header,);
-
+    console.log("Response : ", response);
     return response.data;
 }
 //로그아웃
@@ -275,7 +275,7 @@ export const updateAction = async (memberDto, token) => {
     
 }
 
-//회원 정보 수정
+//회원 탈퇴
 export const deleteAction = async (token) => {
 
     const response = await fetch(`${BACKEND_SERVER}/member/profile/delete`, {
@@ -286,7 +286,6 @@ export const deleteAction = async (token) => {
         },
       });
       const resultJsonObject = await response.json();
-
       console.log("resultJsonObject : ", resultJsonObject);
 
       return resultJsonObject;

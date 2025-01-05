@@ -2,6 +2,7 @@ package com.itwill.jpa.auth;
 
 import java.util.UUID;
 
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
@@ -74,7 +75,12 @@ public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
         String password = passwordEncoder.encode("password" + UUID.randomUUID().toString().substring(0, 6));
 
         Member findMember = memberRepository.findByMemberEmail(email);
-
+        
+        // 사용자 상태(memberStatus) 확인
+        if (findMember.getMemberStatus() == 2) {
+            throw new BadCredentialsException("탈퇴한 사용자입니다.");
+        }
+        
         if (findMember == null) {
             findMember = Member.toSecurityEntity(MemberSecurityDto.JoinOAuth2()
             		.memberId(randomId)

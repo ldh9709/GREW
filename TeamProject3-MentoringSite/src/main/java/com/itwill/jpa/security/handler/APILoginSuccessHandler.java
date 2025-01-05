@@ -59,7 +59,7 @@ public class APILoginSuccessHandler implements AuthenticationSuccessHandler {
         cookie.setSecure(false); // HTTPS에서만 전송 (개발 환경에서는 false)
         cookie.setPath("/");
         cookie.setMaxAge(60 * 60); // 1시간
-
+        //response.addHeader("Set-Cookie", "member=" + encodedValue + "; Path=/; HttpOnly; SameSite=None; Secure");
         response.addCookie(cookie);
         
         // 6. 클레임을 JSON 문자열로 변환합니다.
