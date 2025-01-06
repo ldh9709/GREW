@@ -8,7 +8,7 @@ import "../../css/memberPage.css"
 import google from '../../image/google.png';
 import naver from '../../image/naver.png';
 import kakao from '../../image/kakao.png';
-import bigLogo from '../../image/logo_960.png';
+import bigLogo from '../../image/logo_960.png' ;
 
 export const MemberJoinFormPage = () => {
   const navigate = useNavigate();

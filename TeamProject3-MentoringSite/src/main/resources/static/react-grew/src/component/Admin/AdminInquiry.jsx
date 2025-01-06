@@ -77,7 +77,7 @@ export function AdminInquiry() {
                         <tr key={board.id || index}>
                             <td onClick={() => handleMoveInquiry(board.inquiryNo)}>{board.inquiryNo}</td>
                             <td onClick={() => handleMoveInquiry(board.inquiryNo)}>{board.inquiryTitle}</td>
-                            <td onClick={() => handleMoveInquiry(board.inquiryNo)}>{board.inquiryDate.substring(0.10)}</td>
+                            <td onClick={() => handleMoveInquiry(board.inquiryNo)}>{new Date(board.inquiryDate).toLocaleDateString()}</td>
                             <td onClick={() => handleMoveInquiry(board.inquiryNo)}>{board.inquiryViews}</td>
                             <td onClick={() => handleMoveInquiry(board.inquiryNo)}>{board.categoryName}</td>
                             <td onClick={() => handleMoveInquiry(board.inquiryNo)}>{board.memberName}</td>
@@ -91,12 +91,12 @@ export function AdminInquiry() {
                     ))}
                 </tbody>
             </table>
-            <div className="admin-pagenation">
+            {/*<div className="admin-pagenation">
                     <PagenationItem
                         currentPage={currentPage}
                         totalPages={totalPages}
                         paginate={paginate}/>
-            </div>
+            </div>*/}
         </div>
     );
 }

@@ -72,8 +72,7 @@ export const adminInquiry = async(token, page, size) => {
         throw new Error(`API 요청 실패: ${response.status}`);
     }
     return await response.json();
-  } catch (error) {
-      console.error("전체 게시글 API 호출 오류:", error);
+  } catch (error) {      
       throw error;
   }
 };
@@ -95,7 +94,6 @@ export const hideInquiry = async(token, inquiryNo)=>{
     const data = await response.json();
     return data;
   }catch (error){
-    console.error("가려두기 요청 실패:", error);
     throw error;
   }
 };
@@ -112,7 +110,6 @@ export const adminMentorBoardWithSearch = async (token, search, page, size) => {
 
   try {
       const response = await fetch(url, config);
-
       // HTTP 응답이 성공적이지 않을 경우 처리
       if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
@@ -122,7 +119,6 @@ export const adminMentorBoardWithSearch = async (token, search, page, size) => {
       const data = await response.json();
       return data;
   } catch (error) {
-      console.error("데이터 가져오는 중 오류 발생:", error);
       throw error; // 오류를 호출한 곳으로 전달
   }
 };
@@ -173,7 +169,7 @@ export const adminCategoryInquiry = async (categoryNo, page, token, size) => {
     const responseJsonObject = await response.json();
     return responseJsonObject;
   } catch (error) {
-    console.error("API 호출 오류 : ", error);
     throw error;
   }
 };
+
