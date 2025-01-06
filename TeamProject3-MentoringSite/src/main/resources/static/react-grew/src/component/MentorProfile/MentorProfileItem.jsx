@@ -70,7 +70,7 @@ export default function MentorProfileItem({ mentor }) {
       <div className="card-category">{additionalData.categoryName}</div>
 
       {/* 멘토 이름 */}
-      <div className="card-title">{member.memberName} 멘토</div>
+      <div className="card-title">{mentor.memberName} 멘토</div>
 
       {/* 멘토 한줄 소개 */}
       <div className="card-content">{additionalData.mentorHeadline}</div>
