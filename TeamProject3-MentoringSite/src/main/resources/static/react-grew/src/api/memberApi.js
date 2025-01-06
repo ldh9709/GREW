@@ -53,7 +53,6 @@ export const followList = async()=>{
 
 //로그인
 export const loginAction = async (sendJsonObject) => {
-    console.log("Request Data: ", sendJsonObject);
 
     const header = {headers: {"Content-Type": "application/x-www-form-urlencoded"}, withCredentials: true }
 
