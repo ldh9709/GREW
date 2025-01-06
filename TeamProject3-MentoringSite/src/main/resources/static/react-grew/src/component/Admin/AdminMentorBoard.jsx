@@ -53,7 +53,7 @@ export default function AdminMentorBoard () {
 
     return(
         <div className="admin-table-container">
-            <div className="search-container">
+            {/*<div className="search-container">
                 <form onSubmit={handleSearchSubmit}>
                     <input
                         type="text"
@@ -63,7 +63,7 @@ export default function AdminMentorBoard () {
                     />
                     <button type="submit">검색</button>
                 </form>
-            </div>
+            </div>*/}
             <table className="admin-table">
                 <thead>
                     <tr>
