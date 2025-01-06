@@ -64,7 +64,7 @@ VALUES(category_no_SEQ.nextval, '관심사를 선택해주세요', 3, null);
 
 /***** 테스트용 아이디 등록(멘티) *****/
 INSERT INTO member (member_no,member_id,member_password,member_email,member_name,member_points,member_status,member_join_date,member_report_count,member_role,member_provider) 
-VALUES (member_no_SEQ.nextval, 'asdf1234', '{bcrypt}$2a$10$Lhr9iLqvAzcQhu4Bd.VXmOHSu0LepHnKlrx43i5EbsEgkJBsNaVke', 'asdf1234@gmail.com', '김진영', 500, 1, sysdate, 0, 'ROLE_MENTEE', 'Email');
+VALUES (member_no_SEQ.nextval, 'asdf1234', '{bcrypt}$2a$10$Lhr9iLqvAzcQhu4Bd.VXmOHSu0LepHnKlrx43i5EbsEgkJBsNaVke', 'asdf1234@gmail.com', '김진영', 500, 1, '25/01/01', 0, 'ROLE_MENTEE', 'Email');
 insert into interest (interest_no, member_no, category_no) 
 values(interest_no_SEQ.nextval, 1, 2);
 insert into interest (interest_no, member_no, category_no) 
@@ -74,7 +74,7 @@ values(interest_no_SEQ.nextval, 1, 4);
 
 /***** 테스트용 아이디 등록(멘티) *****/
 INSERT INTO member (member_no,member_id,member_password,member_email,member_name,member_points,member_status,member_join_date,member_report_count,member_role,member_provider) 
-VALUES (member_no_SEQ.nextval, 'qwer1234', '{bcrypt}$2a$10$2Vj/MwAon9U1UFSHcF8DSe9VtT86qtIFmWo2.tocHk1Px1NAXFU3K', 'zszz5434@gmail.com', '이도현', 500, 1, sysdate, 0, 'ROLE_MENTOR', 'Email');
+VALUES (member_no_SEQ.nextval, 'qwer1234', '{bcrypt}$2a$10$2Vj/MwAon9U1UFSHcF8DSe9VtT86qtIFmWo2.tocHk1Px1NAXFU3K', 'zszz5434@gmail.com', '이도현', 500, 1, '25/01/01', 0, 'ROLE_MENTOR', 'Email');
 insert into interest (interest_no, member_no, category_no) 
 values(interest_no_SEQ.nextval, 2, 23);
 insert into interest (interest_no, member_no, category_no) 
@@ -90,7 +90,7 @@ VALUES(career_no_SEQ.nextval, '한샘', '경력자입니다', '2020.01.01', '202
 
 /***** 테스트용 아이디 등록(관리자) *****/
 INSERT INTO member (member_no,member_id,member_password,member_email,member_name,member_points,member_status,member_join_date,member_report_count,member_role,member_provider) 
-VALUES (member_no_SEQ.nextval, 'admin1234', '{bcrypt}$2a$10$2Vj/MwAon9U1UFSHcF8DSe9VtT86qtIFmWo2.tocHk1Px1NAXFU3K', 'admin1234@gmail.com', '관리자', 500, 1, sysdate, 0, 'ROLE_ADMIN', 'Email');
+VALUES (member_no_SEQ.nextval, 'admin1234', '{bcrypt}$2a$10$2Vj/MwAon9U1UFSHcF8DSe9VtT86qtIFmWo2.tocHk1Px1NAXFU3K', 'admin1234@gmail.com', '관리자', 500, 1, '25/01/01', 0, 'ROLE_ADMIN', 'Email');
 insert into interest (interest_no, member_no, category_no) 
 values(interest_no_SEQ.nextval, 3, 23);
 insert into interest (interest_no, member_no, category_no) 
@@ -101,7 +101,7 @@ values(interest_no_SEQ.nextval, 3, 25);
 
 /* 멘티 등록 */
 INSERT INTO member(member_no,member_id,member_password,member_email,member_name,member_points,member_status,member_join_date,member_report_count,member_role,member_provider)
-VALUES(member_no_SEQ.nextval,'bbb','{bcrypt}$2a$10$2Vj/MwAon9U1UFSHcF8DSe9VtT86qtIFmWo2.tocHk1Px1NAXFU3K','bbb@naver.com','김찬영',500,1,sysdate,0,'ROLE_MENTEE','Email');
+VALUES(member_no_SEQ.nextval,'bbb','{bcrypt}$2a$10$2Vj/MwAon9U1UFSHcF8DSe9VtT86qtIFmWo2.tocHk1Px1NAXFU3K','bbb@naver.com','김찬영',500,1,'25/01/01',0,'ROLE_MENTEE','Email');
 insert into interest (interest_no, member_no, category_no) 
 values(interest_no_SEQ.nextval, 4, 2);
 insert into interest (interest_no, member_no, category_no) 
@@ -109,7 +109,7 @@ values(interest_no_SEQ.nextval, 4, 3);
 insert into interest (interest_no, member_no, category_no) 
 values(interest_no_SEQ.nextval, 4, 4);
 INSERT INTO member(member_no,member_id,member_password,member_email,member_name,member_points,member_status,member_join_date,member_report_count,member_role,member_provider)
-VALUES(member_no_SEQ.nextval,'ccc','{bcrypt}$2a$10$2Vj/MwAon9U1UFSHcF8DSe9VtT86qtIFmWo2.tocHk1Px1NAXFU3K','ccc@naver.com','나문정',5000,1,sysdate,0,'ROLE_MENTEE','Email');
+VALUES(member_no_SEQ.nextval,'ccc','{bcrypt}$2a$10$2Vj/MwAon9U1UFSHcF8DSe9VtT86qtIFmWo2.tocHk1Px1NAXFU3K','ccc@naver.com','나문정',5000,1,'25/01/01',0,'ROLE_MENTEE','Email');
 insert into interest (interest_no, member_no, category_no) 
 values(interest_no_SEQ.nextval, 5, 6);
 insert into interest (interest_no, member_no, category_no) 
@@ -117,7 +117,7 @@ values(interest_no_SEQ.nextval, 5, 7);
 insert into interest (interest_no, member_no, category_no) 
 values(interest_no_SEQ.nextval, 5, 8);
 INSERT INTO member(member_no,member_id,member_password,member_email,member_name,member_points,member_status,member_join_date,member_report_count,member_role,member_provider)
-VALUES(member_no_SEQ.nextval,'ddd','{bcrypt}$2a$10$2Vj/MwAon9U1UFSHcF8DSe9VtT86qtIFmWo2.tocHk1Px1NAXFU3K','ddd@naver.com','문준형',700,1,sysdate,0,'ROLE_MENTEE','Email');
+VALUES(member_no_SEQ.nextval,'ddd','{bcrypt}$2a$10$2Vj/MwAon9U1UFSHcF8DSe9VtT86qtIFmWo2.tocHk1Px1NAXFU3K','ddd@naver.com','문준형',700,1,'25/01/01',0,'ROLE_MENTEE','Email');
 insert into interest (interest_no, member_no, category_no) 
 values(interest_no_SEQ.nextval, 6, 10);
 insert into interest (interest_no, member_no, category_no) 
@@ -125,7 +125,7 @@ values(interest_no_SEQ.nextval, 6, 11);
 insert into interest (interest_no, member_no, category_no) 
 values(interest_no_SEQ.nextval, 6, 12);
 INSERT INTO member(member_no,member_id,member_password,member_email,member_name,member_points,member_status,member_join_date,member_report_count,member_role,member_provider)
-VALUES(member_no_SEQ.nextval,'eee','{bcrypt}$2a$10$2Vj/MwAon9U1UFSHcF8DSe9VtT86qtIFmWo2.tocHk1Px1NAXFU3K','eee@naver.com','박은미',9000,1,sysdate,0,'ROLE_MENTEE','Email');
+VALUES(member_no_SEQ.nextval,'eee','{bcrypt}$2a$10$2Vj/MwAon9U1UFSHcF8DSe9VtT86qtIFmWo2.tocHk1Px1NAXFU3K','eee@naver.com','박은미',9000,1,'25/01/02',0,'ROLE_MENTEE','Email');
 insert into interest (interest_no, member_no, category_no) 
 values(interest_no_SEQ.nextval, 7, 13);
 insert into interest (interest_no, member_no, category_no) 
@@ -135,7 +135,7 @@ values(interest_no_SEQ.nextval, 7, 16);
 
 /* 멘토 등록 */
 INSERT INTO member(member_no,member_id,member_password,member_email,member_name,member_points,member_status,member_join_date,member_report_count,member_role,member_provider)
-VALUES(member_no_SEQ.nextval,'fff','{bcrypt}$2a$10$2Vj/MwAon9U1UFSHcF8DSe9VtT86qtIFmWo2.tocHk1Px1NAXFU3K','fff@naver.com','송대현',5500,1,sysdate,0,'ROLE_MENTOR','Email');
+VALUES(member_no_SEQ.nextval,'fff','{bcrypt}$2a$10$2Vj/MwAon9U1UFSHcF8DSe9VtT86qtIFmWo2.tocHk1Px1NAXFU3K','fff@naver.com','송대현',5500,1,'25/01/02',0,'ROLE_MENTOR','Email');
 insert into interest (interest_no, member_no, category_no) 
 values(interest_no_SEQ.nextval, 8, 6);
 insert into interest (interest_no, member_no, category_no) 
@@ -148,7 +148,7 @@ INSERT INTO career(CAREER_NO, CAREER_COMPANY_NAME, CAREER_JOB_TITLE, CAREER_STAR
 VALUES(career_no_SEQ.nextval, 'xx개발', '백엔드 개발자 담당', '2020.01.01', '2024.01.01', 2);
 
 INSERT INTO member(member_no,member_id,member_password,member_email,member_name,member_points,member_status,member_join_date,member_report_count,member_role,member_provider)
-VALUES(member_no_SEQ.nextval,'ggg','{bcrypt}$2a$10$2Vj/MwAon9U1UFSHcF8DSe9VtT86qtIFmWo2.tocHk1Px1NAXFU3K','ggg@naver.com','양한수',6300,1,sysdate,0,'ROLE_MENTOR','Email');
+VALUES(member_no_SEQ.nextval,'ggg','{bcrypt}$2a$10$2Vj/MwAon9U1UFSHcF8DSe9VtT86qtIFmWo2.tocHk1Px1NAXFU3K','ggg@naver.com','양한수',6300,1,'25/01/02',0,'ROLE_MENTOR','Email');
 insert into interest (interest_no, member_no, category_no) 
 values(interest_no_SEQ.nextval, 9, 10);
 insert into interest (interest_no, member_no, category_no) 
@@ -161,7 +161,7 @@ INSERT INTO career(CAREER_NO, CAREER_COMPANY_NAME, CAREER_JOB_TITLE, CAREER_STAR
 VALUES(career_no_SEQ.nextval, '한샘', '경력자입니다', '2020.01.01', '2024.01.01', 3);
 
 INSERT INTO member(member_no,member_id,member_password,member_email,member_name,member_points,member_status,member_join_date,member_report_count,member_role,member_provider)
-VALUES(member_no_SEQ.nextval,'hhh','{bcrypt}$2a$10$2Vj/MwAon9U1UFSHcF8DSe9VtT86qtIFmWo2.tocHk1Px1NAXFU3K','hhh@naver.com','이지현',4000,1,sysdate,0,'ROLE_MENTOR','Email');
+VALUES(member_no_SEQ.nextval,'hhh','{bcrypt}$2a$10$2Vj/MwAon9U1UFSHcF8DSe9VtT86qtIFmWo2.tocHk1Px1NAXFU3K','hhh@naver.com','이지현',4000,1,'25/01/02',0,'ROLE_MENTOR','Email');
 insert into interest (interest_no, member_no, category_no) 
 values(interest_no_SEQ.nextval, 10, 10);
 insert into interest (interest_no, member_no, category_no) 
@@ -174,7 +174,7 @@ INSERT INTO career(CAREER_NO, CAREER_COMPANY_NAME, CAREER_JOB_TITLE, CAREER_STAR
 VALUES(career_no_SEQ.nextval, '한샘', '경력자입니다', '2020.01.01', '2024.01.01', 4);
 
 INSERT INTO member(member_no, member_id, member_password, member_email, member_name, member_points, member_status, member_join_date, member_report_count, member_role, member_provider)
-VALUES(member_no_SEQ.nextval, 'mentor01', '{bcrypt}$2a$10$2Vj/MwAon9U1UFSHcF8DSe9VtT86qtIFmWo2.tocHk1Px1NAXFU3K', 'mentor01@naver.com', '김민수', 3000, 1, SYSDATE, 0, 'ROLE_MENTOR', 'Email');.
+VALUES(member_no_SEQ.nextval, 'mentor01', '{bcrypt}$2a$10$2Vj/MwAon9U1UFSHcF8DSe9VtT86qtIFmWo2.tocHk1Px1NAXFU3K', 'mentor01@naver.com', '김민수', 3000, 1, '25/01/03', 0, 'ROLE_MENTOR', 'Email');.
 insert into interest (interest_no, member_no, category_no) 
 values(interest_no_SEQ.nextval, 11, 16);
 insert into interest (interest_no, member_no, category_no) 
@@ -187,7 +187,7 @@ INSERT INTO career(CAREER_NO, CAREER_COMPANY_NAME, CAREER_JOB_TITLE, CAREER_STAR
 VALUES(career_no_SEQ.nextval, 'xx출판사', '소설부문 담당자', '2023.04.01', '2024.01.01', 5);
 
 INSERT INTO member(member_no, member_id, member_password, member_email, member_name, member_points, member_status, member_join_date, member_report_count, member_role, member_provider)
-VALUES(member_no_SEQ.nextval, 'mentor02', '{bcrypt}$2a$10$2Vj/MwAon9U1UFSHcF8DSe9VtT86qtIFmWo2.tocHk1Px1NAXFU3K', 'mentor02@naver.com', '이서준', 4000, 1, SYSDATE, 0, 'ROLE_MENTOR', 'Email');
+VALUES(member_no_SEQ.nextval, 'mentor02', '{bcrypt}$2a$10$2Vj/MwAon9U1UFSHcF8DSe9VtT86qtIFmWo2.tocHk1Px1NAXFU3K', 'mentor02@naver.com', '이서준', 4000, 1, '25/01/03', 0, 'ROLE_MENTOR', 'Email');
 insert into interest (interest_no, member_no, category_no) 
 values(interest_no_SEQ.nextval, 12, 16);
 insert into interest (interest_no, member_no, category_no) 
@@ -200,7 +200,7 @@ INSERT INTO career(CAREER_NO, CAREER_COMPANY_NAME, CAREER_JOB_TITLE, CAREER_STAR
 VALUES(career_no_SEQ.nextval, '갤러리', '전시 및 마케팅 담당', '2020.01.01', '2024.01.01', 6);
 
 INSERT INTO member(member_no, member_id, member_password, member_email, member_name, member_points, member_status, member_join_date, member_report_count, member_role, member_provider)
-VALUES(member_no_SEQ.nextval, 'mentor03', '{bcrypt}$2a$10$2Vj/MwAon9U1UFSHcF8DSe9VtT86qtIFmWo2.tocHk1Px1NAXFU3K', 'mentor03@naver.com', '박지우', 3500, 1, SYSDATE, 0, 'ROLE_MENTOR', 'Email');
+VALUES(member_no_SEQ.nextval, 'mentor03', '{bcrypt}$2a$10$2Vj/MwAon9U1UFSHcF8DSe9VtT86qtIFmWo2.tocHk1Px1NAXFU3K', 'mentor03@naver.com', '박지우', 3500, 1, '25/01/03', 0, 'ROLE_MENTOR', 'Email');
 insert into interest (interest_no, member_no, category_no) 
 values(interest_no_SEQ.nextval, 13, 23);
 insert into interest (interest_no, member_no, category_no) 
@@ -215,7 +215,7 @@ INSERT INTO career(CAREER_NO, CAREER_COMPANY_NAME, CAREER_JOB_TITLE, CAREER_STAR
 VALUES(career_no_SEQ.nextval, 'xx고등학교', '고2 수학 담임', '2023.01.01', '2024.01.01', 7);
 
 INSERT INTO member(member_no, member_id, member_password, member_email, member_name, member_points, member_status, member_join_date, member_report_count, member_role, member_provider)
-VALUES(member_no_SEQ.nextval, 'mentor04', '{bcrypt}$2a$10$2Vj/MwAon9U1UFSHcF8DSe9VtT86qtIFmWo2.tocHk1Px1NAXFU3K', 'mentor04@naver.com', '정하늘', 3200, 1, SYSDATE, 0, 'ROLE_MENTOR', 'Email');
+VALUES(member_no_SEQ.nextval, 'mentor04', '{bcrypt}$2a$10$2Vj/MwAon9U1UFSHcF8DSe9VtT86qtIFmWo2.tocHk1Px1NAXFU3K', 'mentor04@naver.com', '정하늘', 3200, 1, '25/01/03', 0, 'ROLE_MENTOR', 'Email');
 insert into interest (interest_no, member_no, category_no) 
 values(interest_no_SEQ.nextval, 14, 23);
 insert into interest (interest_no, member_no, category_no) 
@@ -228,7 +228,7 @@ INSERT INTO career(CAREER_NO, CAREER_COMPANY_NAME, CAREER_JOB_TITLE, CAREER_STAR
 VALUES(career_no_SEQ.nextval, '대치동 학원', '입시 컨설팅 담당자', '2024.01.01', null, 8);
 
 INSERT INTO member(member_no, member_id, member_password, member_email, member_name, member_points, member_status, member_join_date, member_report_count, member_role, member_provider)
-VALUES(member_no_SEQ.nextval, 'mentor05', '{bcrypt}$2a$10$2Vj/MwAon9U1UFSHcF8DSe9VtT86qtIFmWo2.tocHk1Px1NAXFU3K', 'mentor05@naver.com', '최예진', 5000, 1, SYSDATE, 0, 'ROLE_MENTOR', 'Email');
+VALUES(member_no_SEQ.nextval, 'mentor05', '{bcrypt}$2a$10$2Vj/MwAon9U1UFSHcF8DSe9VtT86qtIFmWo2.tocHk1Px1NAXFU3K', 'mentor05@naver.com', '최예진', 5000, 1, '25/01/04', 0, 'ROLE_MENTOR', 'Email');
 insert into interest (interest_no, member_no, category_no) 
 values(interest_no_SEQ.nextval, 15, 12);
 insert into interest (interest_no, member_no, category_no) 
@@ -241,7 +241,7 @@ INSERT INTO career(CAREER_NO, CAREER_COMPANY_NAME, CAREER_JOB_TITLE, CAREER_STAR
 VALUES(career_no_SEQ.nextval, '아이티윌', '스타트업 상담 및 컨설팅', '2024.01.01', null, 9);
 
 INSERT INTO member(member_no, member_id, member_password, member_email, member_name, member_points, member_status, member_join_date, member_report_count, member_role, member_provider)
-VALUES(member_no_SEQ.nextval, 'mentor06', '{bcrypt}$2a$10$2Vj/MwAon9U1UFSHcF8DSe9VtT86qtIFmWo2.tocHk1Px1NAXFU3K', 'mentor06@naver.com', '홍서연', 4800, 1, SYSDATE, 0, 'ROLE_MENTOR', 'Email');
+VALUES(member_no_SEQ.nextval, 'mentor06', '{bcrypt}$2a$10$2Vj/MwAon9U1UFSHcF8DSe9VtT86qtIFmWo2.tocHk1Px1NAXFU3K', 'mentor06@naver.com', '홍서연', 4800, 1, '25/01/04', 0, 'ROLE_MENTOR', 'Email');
 insert into interest (interest_no, member_no, category_no) 
 values(interest_no_SEQ.nextval, 16, 2);
 insert into interest (interest_no, member_no, category_no) 
@@ -254,7 +254,7 @@ INSERT INTO career(CAREER_NO, CAREER_COMPANY_NAME, CAREER_JOB_TITLE, CAREER_STAR
 VALUES(career_no_SEQ.nextval, 'xx아카테미', '일렉기타 강습', '2024.05.01', null, 10);
 
 INSERT INTO member(member_no, member_id, member_password, member_email, member_name, member_points, member_status, member_join_date, member_report_count, member_role, member_provider)
-VALUES(member_no_SEQ.nextval, 'mentor07', '{bcrypt}$2a$10$2Vj/MwAon9U1UFSHcF8DSe9VtT86qtIFmWo2.tocHk1Px1NAXFU3K', 'mentor07@naver.com', '김도윤', 4500, 1, SYSDATE, 0, 'ROLE_MENTOR', 'Email');
+VALUES(member_no_SEQ.nextval, 'mentor07', '{bcrypt}$2a$10$2Vj/MwAon9U1UFSHcF8DSe9VtT86qtIFmWo2.tocHk1Px1NAXFU3K', 'mentor07@naver.com', '김도윤', 4500, 1, '25/01/04', 0, 'ROLE_MENTOR', 'Email');
 insert into interest (interest_no, member_no, category_no) 
 values(interest_no_SEQ.nextval, 17, 10);
 insert into interest (interest_no, member_no, category_no) 
@@ -278,7 +278,7 @@ INSERT INTO career(CAREER_NO, CAREER_COMPANY_NAME, CAREER_JOB_TITLE, CAREER_STAR
 VALUES(career_no_SEQ.nextval, '한샘', '리하우스 영업관리팀_ 인테리어 설계', '2016.01.01', '2019.01.01', 11);
 
 INSERT INTO member(member_no, member_id, member_password, member_email, member_name, member_points, member_status, member_join_date, member_report_count, member_role, member_provider)
-VALUES(member_no_SEQ.nextval, 'mentor08', '{bcrypt}$2a$10$2Vj/MwAon9U1UFSHcF8DSe9VtT86qtIFmWo2.tocHk1Px1NAXFU3K', 'mentor08@naver.com', '김도옌', 4500, 1, SYSDATE, 0, 'ROLE_MENTOR', 'Email');
+VALUES(member_no_SEQ.nextval, 'mentor08', '{bcrypt}$2a$10$2Vj/MwAon9U1UFSHcF8DSe9VtT86qtIFmWo2.tocHk1Px1NAXFU3K', 'mentor08@naver.com', '김도옌', 4500, 1, '25/01/05', 0, 'ROLE_MENTOR', 'Email');
 insert into interest (interest_no, member_no, category_no) 
 values(interest_no_SEQ.nextval, 18, 16);
 insert into interest (interest_no, member_no, category_no) 
@@ -291,7 +291,7 @@ INSERT INTO career(CAREER_NO, CAREER_COMPANY_NAME, CAREER_JOB_TITLE, CAREER_STAR
 VALUES(career_no_SEQ.nextval, '한샘', '12년 경력', '2024.01.01', null, 12);
 
 INSERT INTO member(member_no, member_id, member_password, member_email, member_name, member_points, member_status, member_join_date, member_report_count, member_role, member_provider)
-VALUES(member_no_SEQ.nextval, 'mentor09', '{bcrypt}$2a$10$2Vj/MwAon9U1UFSHcF8DSe9VtT86qtIFmWo2.tocHk1Px1NAXFU3K', 'mentor09@naver.com', '김도예', 4500, 1, SYSDATE, 0, 'ROLE_MENTOR', 'Email');
+VALUES(member_no_SEQ.nextval, 'mentor09', '{bcrypt}$2a$10$2Vj/MwAon9U1UFSHcF8DSe9VtT86qtIFmWo2.tocHk1Px1NAXFU3K', 'mentor09@naver.com', '김도예', 4500, 1, '25/01/05', 0, 'ROLE_MENTOR', 'Email');
 insert into interest (interest_no, member_no, category_no) 
 values(interest_no_SEQ.nextval, 19, 13);
 insert into interest (interest_no, member_no, category_no) 
@@ -304,7 +304,7 @@ INSERT INTO career(CAREER_NO, CAREER_COMPANY_NAME, CAREER_JOB_TITLE, CAREER_STAR
 VALUES(career_no_SEQ.nextval, '한샘', '17년 경력', '2024.01.01', null, 13);
 
 INSERT INTO member(member_no, member_id, member_password, member_email, member_name, member_points, member_status, member_join_date, member_report_count, member_role, member_provider)
-VALUES(member_no_SEQ.nextval, 'mentor10', '{bcrypt}$2a$10$2Vj/MwAon9U1UFSHcF8DSe9VtT86qtIFmWo2.tocHk1Px1NAXFU3K', 'mentor10@naver.com', '김도요', 4500, 1, SYSDATE, 0, 'ROLE_MENTOR', 'Email');
+VALUES(member_no_SEQ.nextval, 'mentor10', '{bcrypt}$2a$10$2Vj/MwAon9U1UFSHcF8DSe9VtT86qtIFmWo2.tocHk1Px1NAXFU3K', 'mentor10@naver.com', '김도요', 4500, 1, '25/01/05', 0, 'ROLE_MENTOR', 'Email');
 insert into interest (interest_no, member_no, category_no) 
 values(interest_no_SEQ.nextval, 20, 16);
 insert into interest (interest_no, member_no, category_no) 
@@ -317,7 +317,7 @@ INSERT INTO career(CAREER_NO, CAREER_COMPANY_NAME, CAREER_JOB_TITLE, CAREER_STAR
 VALUES(career_no_SEQ.nextval, '한샘', '12년 경력', '2024.01.01', null, 14);
 
 INSERT INTO member(member_no, member_id, member_password, member_email, member_name, member_points, member_status, member_join_date, member_report_count, member_role, member_provider)
-VALUES(member_no_SEQ.nextval, 'mentor11', '{bcrypt}$2a$10$2Vj/MwAon9U1UFSHcF8DSe9VtT86qtIFmWo2.tocHk1Px1NAXFU3K', 'mentor11@naver.com', '김윤하', 4500, 1, SYSDATE, 0, 'ROLE_MENTOR', 'Email');
+VALUES(member_no_SEQ.nextval, 'mentor11', '{bcrypt}$2a$10$2Vj/MwAon9U1UFSHcF8DSe9VtT86qtIFmWo2.tocHk1Px1NAXFU3K', 'mentor11@naver.com', '김윤하', 4500, 1, '25/01/05', 0, 'ROLE_MENTOR', 'Email');
 insert into interest (interest_no, member_no, category_no) 
 values(interest_no_SEQ.nextval, 21, 16);
 insert into interest (interest_no, member_no, category_no) 
@@ -330,7 +330,7 @@ INSERT INTO career(CAREER_NO, CAREER_COMPANY_NAME, CAREER_JOB_TITLE, CAREER_STAR
 VALUES(career_no_SEQ.nextval, '한샘', '12년 경력', '2024.01.01', null, 15);
 
 INSERT INTO member(member_no, member_id, member_password, member_email, member_name, member_points, member_status, member_join_date, member_report_count, member_role, member_provider)
-VALUES(member_no_SEQ.nextval, 'mentor12', '{bcrypt}$2a$10$2Vj/MwAon9U1UFSHcF8DSe9VtT86qtIFmWo2.tocHk1Px1NAXFU3K', 'mentor12@naver.com', '김태윤', 3500, 1, SYSDATE, 0, 'ROLE_MENTOR', 'Email');
+VALUES(member_no_SEQ.nextval, 'mentor12', '{bcrypt}$2a$10$2Vj/MwAon9U1UFSHcF8DSe9VtT86qtIFmWo2.tocHk1Px1NAXFU3K', 'mentor12@naver.com', '김태윤', 3500, 1, '25/01/07', 0, 'ROLE_MENTOR', 'Email');
 insert into interest (interest_no, member_no, category_no) 
 values(interest_no_SEQ.nextval, 22, 23);
 insert into interest (interest_no, member_no, category_no) 
@@ -345,7 +345,7 @@ VALUES(career_no_SEQ.nextval, '스마트러닝 교육센터', '중학생 학습 
 
 
 INSERT INTO member(member_no, member_id, member_password, member_email, member_name, member_points, member_status, member_join_date, member_report_count, member_role, member_provider)
-VALUES(member_no_SEQ.nextval, 'mentor14', '{bcrypt}$2a$10$2Vj/MwAon9U1UFSHcF8DSe9VtT86qtIFmWo2.tocHk1Px1NAXFU3K', 'mentor14@naver.com', '박수민', 5000, 1, SYSDATE, 0, 'ROLE_MENTOR', 'Email');
+VALUES(member_no_SEQ.nextval, 'mentor14', '{bcrypt}$2a$10$2Vj/MwAon9U1UFSHcF8DSe9VtT86qtIFmWo2.tocHk1Px1NAXFU3K', 'mentor14@naver.com', '박수민', 5000, 1, '25/01/07', 0, 'ROLE_MENTOR', 'Email');
 insert into interest (interest_no, member_no, category_no) 
 values(interest_no_SEQ.nextval, 23, 23);
 insert into interest (interest_no, member_no, category_no) 
@@ -358,7 +358,7 @@ INSERT INTO career(CAREER_NO, CAREER_COMPANY_NAME, CAREER_JOB_TITLE, CAREER_STAR
 VALUES(career_no_SEQ.nextval, '국립음악원', '음악 이론 강사', '2012-05-01', '2024-01-01', (SELECT mentor_profile_no FROM mentor_profile WHERE member_no = (SELECT member_no FROM member WHERE member_id = 'mentor14')));
 
 INSERT INTO member(member_no, member_id, member_password, member_email, member_name, member_points, member_status, member_join_date, member_report_count, member_role, member_provider)
-VALUES(member_no_SEQ.nextval, 'mentor15', '{bcrypt}$2a$10$2Vj/MwAon9U1UFSHcF8DSe9VtT86qtIFmWo2.tocHk1Px1NAXFU3K', 'mentor15@naver.com', '정해인', 4800, 1, SYSDATE, 0, 'ROLE_MENTOR', 'Email');
+VALUES(member_no_SEQ.nextval, 'mentor15', '{bcrypt}$2a$10$2Vj/MwAon9U1UFSHcF8DSe9VtT86qtIFmWo2.tocHk1Px1NAXFU3K', 'mentor15@naver.com', '정해인', 4800, 1, '25/01/07', 0, 'ROLE_MENTOR', 'Email');
 insert into interest (interest_no, member_no, category_no) 
 values(interest_no_SEQ.nextval, 24, 2);
 insert into interest (interest_no, member_no, category_no) 
@@ -371,7 +371,7 @@ INSERT INTO career(CAREER_NO, CAREER_COMPANY_NAME, CAREER_JOB_TITLE, CAREER_STAR
 VALUES(career_no_SEQ.nextval, '서울연극협회', '연극 연출 및 배우 지도', '2010-02-01', '2024-01-01', (SELECT mentor_profile_no FROM mentor_profile WHERE member_no = (SELECT member_no FROM member WHERE member_id = 'mentor15')));
 
 INSERT INTO member(member_no, member_id, member_password, member_email, member_name, member_points, member_status, member_join_date, member_report_count, member_role, member_provider)
-VALUES(member_no_SEQ.nextval, 'mentor16', '{bcrypt}$2a$10$2Vj/MwAon9U1UFSHcF8DSe9VtT86qtIFmWo2.tocHk1Px1NAXFU3K', 'mentor16@naver.com', '이현아', 4500, 1, SYSDATE, 0, 'ROLE_MENTOR', 'Email');
+VALUES(member_no_SEQ.nextval, 'mentor16', '{bcrypt}$2a$10$2Vj/MwAon9U1UFSHcF8DSe9VtT86qtIFmWo2.tocHk1Px1NAXFU3K', 'mentor16@naver.com', '이현아', 4500, 1, '25/01/07', 0, 'ROLE_MENTOR', 'Email');
 insert into interest (interest_no, member_no, category_no) 
 values(interest_no_SEQ.nextval, 25, 2);
 insert into interest (interest_no, member_no, category_no) 
@@ -384,7 +384,7 @@ INSERT INTO career(CAREER_NO, CAREER_COMPANY_NAME, CAREER_JOB_TITLE, CAREER_STAR
 VALUES(career_no_SEQ.nextval, '영양학 연구소', '임상 영양사', '2015-07-01', '2024-01-01', (SELECT mentor_profile_no FROM mentor_profile WHERE member_no = (SELECT member_no FROM member WHERE member_id = 'mentor16')));
 
 INSERT INTO member(member_no, member_id, member_password, member_email, member_name, member_points, member_status, member_join_date, member_report_count, member_role, member_provider)
-VALUES(member_no_SEQ.nextval, 'mentor17', '{bcrypt}$2a$10$2Vj/MwAon9U1UFSHcF8DSe9VtT86qtIFmWo2.tocHk1Px1NAXFU3K', 'mentor17@naver.com', '손민호', 4200, 1, SYSDATE, 0, 'ROLE_MENTOR', 'Email');
+VALUES(member_no_SEQ.nextval, 'mentor17', '{bcrypt}$2a$10$2Vj/MwAon9U1UFSHcF8DSe9VtT86qtIFmWo2.tocHk1Px1NAXFU3K', 'mentor17@naver.com', '손민호', 4200, 1, '25/01/07', 0, 'ROLE_MENTOR', 'Email');
 insert into interest (interest_no, member_no, category_no) 
 values(interest_no_SEQ.nextval, 26, 2);
 insert into interest (interest_no, member_no, category_no) 
@@ -397,7 +397,7 @@ INSERT INTO career(CAREER_NO, CAREER_COMPANY_NAME, CAREER_JOB_TITLE, CAREER_STAR
 VALUES(career_no_SEQ.nextval, '창작 글쓰기 워크숍', '글쓰기 강사', '2013-09-01', '2024-01-01', (SELECT mentor_profile_no FROM mentor_profile WHERE member_no = (SELECT member_no FROM member WHERE member_id = 'mentor17')));
 
 INSERT INTO member(member_no, member_id, member_password, member_email, member_name, member_points, member_status, member_join_date, member_report_count, member_role, member_provider)
-VALUES(member_no_SEQ.nextval, 'mentor18', '{bcrypt}$2a$10$2Vj/MwAon9U1UFSHcF8DSe9VtT86qtIFmWo2.tocHk1Px1NAXFU3K', 'mentor18@naver.com', '이강민', 4700, 1, SYSDATE, 0, 'ROLE_MENTOR', 'Email');
+VALUES(member_no_SEQ.nextval, 'mentor18', '{bcrypt}$2a$10$2Vj/MwAon9U1UFSHcF8DSe9VtT86qtIFmWo2.tocHk1Px1NAXFU3K', 'mentor18@naver.com', '이강민', 4700, 1, '25/01/07', 0, 'ROLE_MENTOR', 'Email');
 insert into interest (interest_no, member_no, category_no) 
 values(interest_no_SEQ.nextval, 27, 2);
 insert into interest (interest_no, member_no, category_no) 
@@ -410,7 +410,7 @@ INSERT INTO career(CAREER_NO, CAREER_COMPANY_NAME, CAREER_JOB_TITLE, CAREER_STAR
 VALUES(career_no_SEQ.nextval, '크리에이티브 스튜디오', '영상 제작자', '2011-04-01', '2024-01-01', (SELECT mentor_profile_no FROM mentor_profile WHERE member_no = (SELECT member_no FROM member WHERE member_id = 'mentor18')));
 
 INSERT INTO member(member_no, member_id, member_password, member_email, member_name, member_points, member_status, member_join_date, member_report_count, member_role, member_provider)
-VALUES(member_no_SEQ.nextval, 'mentor19', '{bcrypt}$2a$10$2Vj/MwAon9U1UFSHcF8DSe9VtT86qtIFmWo2.tocHk1Px1NAXFU3K', 'mentor19@naver.com', '최유진', 5500, 1, SYSDATE, 0, 'ROLE_MENTOR', 'Email');
+VALUES(member_no_SEQ.nextval, 'mentor19', '{bcrypt}$2a$10$2Vj/MwAon9U1UFSHcF8DSe9VtT86qtIFmWo2.tocHk1Px1NAXFU3K', 'mentor19@naver.com', '최유진', 5500, 1, '25/01/07', 0, 'ROLE_MENTOR', 'Email');
 insert into interest (interest_no, member_no, category_no) 
 values(interest_no_SEQ.nextval, 28, 2);
 insert into interest (interest_no, member_no, category_no) 
@@ -423,7 +423,7 @@ INSERT INTO career(CAREER_NO, CAREER_COMPANY_NAME, CAREER_JOB_TITLE, CAREER_STAR
 VALUES(career_no_SEQ.nextval, '마케팅 솔루션 기업', '마케팅 컨설턴트', '2009-03-01', '2024-01-01', (SELECT mentor_profile_no FROM mentor_profile WHERE member_no = (SELECT member_no FROM member WHERE member_id = 'mentor19')));
 
 INSERT INTO member(member_no, member_id, member_password, member_email, member_name, member_points, member_status, member_join_date, member_report_count, member_role, member_provider)
-VALUES(member_no_SEQ.nextval, 'mentor20', '{bcrypt}$2a$10$2Vj/MwAon9U1UFSHcF8DSe9VtT86qtIFmWo2.tocHk1Px1NAXFU3K', 'mentor20@naver.com', '이정훈', 4600, 1, SYSDATE, 0, 'ROLE_MENTOR', 'Email');
+VALUES(member_no_SEQ.nextval, 'mentor20', '{bcrypt}$2a$10$2Vj/MwAon9U1UFSHcF8DSe9VtT86qtIFmWo2.tocHk1Px1NAXFU3K', 'mentor20@naver.com', '이정훈', 4600, 1, '25/01/07', 0, 'ROLE_MENTOR', 'Email');
 insert into interest (interest_no, member_no, category_no) 
 values(interest_no_SEQ.nextval, 29, 2);
 insert into interest (interest_no, member_no, category_no) 
@@ -446,7 +446,7 @@ VALUES(career_no_SEQ.nextval, '헬스 퍼스널 트레이닝 센터', '피트니
 
 
 INSERT INTO member(member_no, member_id, member_password, member_email, member_name, member_points, member_status, member_join_date, member_report_count, member_role, member_provider)
-VALUES(member_no_SEQ.nextval, 'mentor50', '{bcrypt}$2a$10$2Vj/MwAon9U1UFSHcF8DSe9VtT86qtIFmWo2.tocHk1Px1NAXFU3K', 'mentor50@naver.com', '이재훈', 5200, 1, SYSDATE, 0, 'ROLE_MENTOR', 'Email');
+VALUES(member_no_SEQ.nextval, 'mentor50', '{bcrypt}$2a$10$2Vj/MwAon9U1UFSHcF8DSe9VtT86qtIFmWo2.tocHk1Px1NAXFU3K', 'mentor50@naver.com', '이재훈', 5200, 1, '25/01/07', 0, 'ROLE_MENTOR', 'Email');
 insert into interest (interest_no, member_no, category_no) 
 values(interest_no_SEQ.nextval, 30, 2);
 insert into interest (interest_no, member_no, category_no) 
@@ -460,7 +460,7 @@ VALUES(career_no_SEQ.nextval, '투자 컨설팅 회사', '금융 컨설턴트', 
 
 
 INSERT INTO member(member_no, member_id, member_password, member_email, member_name, member_points, member_status, member_join_date, member_report_count, member_role, member_provider)
-VALUES(member_no_SEQ.nextval, 'mentor51', '{bcrypt}$2a$10$2Vj/MwAon9U1UFSHcF8DSe9VtT86qtIFmWo2.tocHk1Px1NAXFU3K', 'mentor51@naver.com', '김유나', 4800, 1, SYSDATE, 0, 'ROLE_MENTOR', 'Email');
+VALUES(member_no_SEQ.nextval, 'mentor51', '{bcrypt}$2a$10$2Vj/MwAon9U1UFSHcF8DSe9VtT86qtIFmWo2.tocHk1Px1NAXFU3K', 'mentor51@naver.com', '김유나', 4800, 1, '25/01/07', 0, 'ROLE_MENTOR', 'Email');
 insert into interest (interest_no, member_no, category_no) 
 values(interest_no_SEQ.nextval, 31, 2);
 insert into interest (interest_no, member_no, category_no) 
@@ -473,7 +473,7 @@ INSERT INTO career(career_no, career_company_name, career_job_title, career_star
 VALUES(career_no_SEQ.nextval, '디자인 에이전시', 'UI/UX 디자이너', '2015-03-01', '2024-01-01', (SELECT mentor_profile_no FROM mentor_profile WHERE member_no = (SELECT member_no FROM member WHERE member_id = 'mentor51')));
 
 INSERT INTO member(member_no, member_id, member_password, member_email, member_name, member_points, member_status, member_join_date, member_report_count, member_role, member_provider)
-VALUES(member_no_SEQ.nextval, 'mentor52', '{bcrypt}$2a$10$2Vj/MwAon9U1UFSHcF8DSe9VtT86qtIFmWo2.tocHk1Px1NAXFU3K', 'mentor52@naver.com', '박정민', 5000, 1, SYSDATE, 0, 'ROLE_MENTOR', 'Email');
+VALUES(member_no_SEQ.nextval, 'mentor52', '{bcrypt}$2a$10$2Vj/MwAon9U1UFSHcF8DSe9VtT86qtIFmWo2.tocHk1Px1NAXFU3K', 'mentor52@naver.com', '박정민', 5000, 1, '25/01/07', 0, 'ROLE_MENTOR', 'Email');
 insert into interest (interest_no, member_no, category_no) 
 values(interest_no_SEQ.nextval, 32, 2);
 insert into interest (interest_no, member_no, category_no) 
@@ -486,7 +486,7 @@ INSERT INTO career(career_no, career_company_name, career_job_title, career_star
 VALUES(career_no_SEQ.nextval, '법률 사무소', '법률 컨설턴트', '2014-09-01', '2024-01-01', (SELECT mentor_profile_no FROM mentor_profile WHERE member_no = (SELECT member_no FROM member WHERE member_id = 'mentor52')));
 
 INSERT INTO member(member_no, member_id, member_password, member_email, member_name, member_points, member_status, member_join_date, member_report_count, member_role, member_provider)
-VALUES(member_no_SEQ.nextval, 'mentor53', '{bcrypt}$2a$10$2Vj/MwAon9U1UFSHcF8DSe9VtT86qtIFmWo2.tocHk1Px1NAXFU3K', 'mentor53@naver.com', '최서연', 5100, 1, SYSDATE, 0, 'ROLE_MENTOR', 'Email');
+VALUES(member_no_SEQ.nextval, 'mentor53', '{bcrypt}$2a$10$2Vj/MwAon9U1UFSHcF8DSe9VtT86qtIFmWo2.tocHk1Px1NAXFU3K', 'mentor53@naver.com', '최서연', 5100, 1, '25/01/07', 0, 'ROLE_MENTOR', 'Email');
 insert into interest (interest_no, member_no, category_no) 
 values(interest_no_SEQ.nextval, 33, 2);
 insert into interest (interest_no, member_no, category_no) 
@@ -499,7 +499,7 @@ INSERT INTO career(career_no, career_company_name, career_job_title, career_star
 VALUES(career_no_SEQ.nextval, '마케팅 에이전시', '디지털 마케터', '2017-04-01', '2024-01-01', (SELECT mentor_profile_no FROM mentor_profile WHERE member_no = (SELECT member_no FROM member WHERE member_id = 'mentor53')));
 
 INSERT INTO member(member_no, member_id, member_password, member_email, member_name, member_points, member_status, member_join_date, member_report_count, member_role, member_provider)
-VALUES(member_no_SEQ.nextval, 'mentor54', '{bcrypt}$2a$10$2Vj/MwAon9U1UFSHcF8DSe9VtT86qtIFmWo2.tocHk1Px1NAXFU3K', 'mentor54@naver.com', '이민재', 4700, 1, SYSDATE, 0, 'ROLE_MENTOR', 'Email');
+VALUES(member_no_SEQ.nextval, 'mentor54', '{bcrypt}$2a$10$2Vj/MwAon9U1UFSHcF8DSe9VtT86qtIFmWo2.tocHk1Px1NAXFU3K', 'mentor54@naver.com', '이민재', 4700, 1, '25/01/07', 0, 'ROLE_MENTOR', 'Email');
 insert into interest (interest_no, member_no, category_no) 
 values(interest_no_SEQ.nextval, 34, 2);
 insert into interest (interest_no, member_no, category_no) 
@@ -512,7 +512,7 @@ INSERT INTO career(career_no, career_company_name, career_job_title, career_star
 VALUES(career_no_SEQ.nextval, '미디어 회사', '콘텐츠 제작자', '2016-02-01', '2024-01-01', (SELECT mentor_profile_no FROM mentor_profile WHERE member_no = (SELECT member_no FROM member WHERE member_id = 'mentor54')));
 
 INSERT INTO member(member_no, member_id, member_password, member_email, member_name, member_points, member_status, member_join_date, member_report_count, member_role, member_provider)
-VALUES(member_no_SEQ.nextval, 'mentor55', '{bcrypt}$2a$10$2Vj/MwAon9U1UFSHcF8DSe9VtT86qtIFmWo2.tocHk1Px1NAXFU3K', 'mentor55@naver.com', '박하은', 4800, 1, SYSDATE, 0, 'ROLE_MENTOR', 'Email');
+VALUES(member_no_SEQ.nextval, 'mentor55', '{bcrypt}$2a$10$2Vj/MwAon9U1UFSHcF8DSe9VtT86qtIFmWo2.tocHk1Px1NAXFU3K', 'mentor55@naver.com', '박하은', 4800, 1, '25/01/07', 0, 'ROLE_MENTOR', 'Email');
 insert into interest (interest_no, member_no, category_no) 
 values(interest_no_SEQ.nextval, 35, 2);
 insert into interest (interest_no, member_no, category_no) 
@@ -526,7 +526,7 @@ VALUES(career_no_SEQ.nextval, '교육 컨설팅 센터', '학습 코치', '2015-
 
 
 INSERT INTO member(member_no, member_id, member_password, member_email, member_name, member_points, member_status, member_join_date, member_report_count, member_role, member_provider)
-VALUES(member_no_SEQ.nextval, 'mentor57', '{bcrypt}$2a$10$2Vj/MwAon9U1UFSHcF8DSe9VtT86qtIFmWo2.tocHk1Px1NAXFU3K', 'mentor57@naver.com', '정유진', 5100, 1, SYSDATE, 0, 'ROLE_MENTOR', 'Email');
+VALUES(member_no_SEQ.nextval, 'mentor57', '{bcrypt}$2a$10$2Vj/MwAon9U1UFSHcF8DSe9VtT86qtIFmWo2.tocHk1Px1NAXFU3K', 'mentor57@naver.com', '정유진', 5100, 1, '25/01/07', 0, 'ROLE_MENTOR', 'Email');
 insert into interest (interest_no, member_no, category_no) 
 values(interest_no_SEQ.nextval, 36, 2);
 insert into interest (interest_no, member_no, category_no) 
@@ -539,7 +539,7 @@ INSERT INTO career(career_no, career_company_name, career_job_title, career_star
 VALUES(career_no_SEQ.nextval, '금융 서비스 회사', '재무 컨설턴트', '2018-01-01', '2024-01-01', (SELECT mentor_profile_no FROM mentor_profile WHERE member_no = (SELECT member_no FROM member WHERE member_id = 'mentor57')));
 
 INSERT INTO member(member_no, member_id, member_password, member_email, member_name, member_points, member_status, member_join_date, member_report_count, member_role, member_provider)
-VALUES(member_no_SEQ.nextval, 'mentor58', '{bcrypt}$2a$10$2Vj/MwAon9U1UFSHcF8DSe9VtT86qtIFmWo2.tocHk1Px1NAXFU3K', 'mentor58@naver.com', '이서윤', 4700, 1, SYSDATE, 0, 'ROLE_MENTOR', 'Email');
+VALUES(member_no_SEQ.nextval, 'mentor58', '{bcrypt}$2a$10$2Vj/MwAon9U1UFSHcF8DSe9VtT86qtIFmWo2.tocHk1Px1NAXFU3K', 'mentor58@naver.com', '이서윤', 4700, 1, '25/01/07', 0, 'ROLE_MENTOR', 'Email');
 insert into interest (interest_no, member_no, category_no) 
 values(interest_no_SEQ.nextval, 37, 2);
 insert into interest (interest_no, member_no, category_no) 
@@ -552,7 +552,7 @@ INSERT INTO career(career_no, career_company_name, career_job_title, career_star
 VALUES(career_no_SEQ.nextval, '필라테스', '강사', '2014-07-01', '2024-01-01', (SELECT mentor_profile_no FROM mentor_profile WHERE member_no = (SELECT member_no FROM member WHERE member_id = 'mentor58')));
 
 INSERT INTO member(member_no, member_id, member_password, member_email, member_name, member_points, member_status, member_join_date, member_report_count, member_role, member_provider)
-VALUES(member_no_SEQ.nextval, 'mentor59', '{bcrypt}$2a$10$2Vj/MwAon9U1UFSHcF8DSe9VtT86qtIFmWo2.tocHk1Px1NAXFU3K', 'mentor59@naver.com', '최민지', 4900, 1, SYSDATE, 0, 'ROLE_MENTOR', 'Email');
+VALUES(member_no_SEQ.nextval, 'mentor59', '{bcrypt}$2a$10$2Vj/MwAon9U1UFSHcF8DSe9VtT86qtIFmWo2.tocHk1Px1NAXFU3K', 'mentor59@naver.com', '최민지', 4900, 1, '25/01/07', 0, 'ROLE_MENTOR', 'Email');
 insert into interest (interest_no, member_no, category_no) 
 values(interest_no_SEQ.nextval, 38, 2);
 insert into interest (interest_no, member_no, category_no) 
@@ -565,7 +565,7 @@ INSERT INTO career(career_no, career_company_name, career_job_title, career_star
 VALUES(career_no_SEQ.nextval, '디자인 스튜디오', '일러스트레이터', '2015-06-01', '2024-01-01', (SELECT mentor_profile_no FROM mentor_profile WHERE member_no = (SELECT member_no FROM member WHERE member_id = 'mentor59')));
 
 INSERT INTO member(member_no, member_id, member_password, member_email, member_name, member_points, member_status, member_join_date, member_report_count, member_role, member_provider)
-VALUES(member_no_SEQ.nextval, 'mentor60', '{bcrypt}$2a$10$2Vj/MwAon9U1UFSHcF8DSe9VtT86qtIFmWo2.tocHk1Px1NAXFU3K', 'mentor60@naver.com', '김도현', 5100, 1, SYSDATE, 0, 'ROLE_MENTOR', 'Email');
+VALUES(member_no_SEQ.nextval, 'mentor60', '{bcrypt}$2a$10$2Vj/MwAon9U1UFSHcF8DSe9VtT86qtIFmWo2.tocHk1Px1NAXFU3K', 'mentor60@naver.com', '김도현', 5100, 1, '25/01/07', 0, 'ROLE_MENTOR', 'Email');
 insert into interest (interest_no, member_no, category_no) 
 values(interest_no_SEQ.nextval, 39, 2);
 insert into interest (interest_no, member_no, category_no) 
@@ -578,7 +578,7 @@ INSERT INTO career(career_no, career_company_name, career_job_title, career_star
 VALUES(career_no_SEQ.nextval, '헬스 트레이닝 센터', '퍼스널 트레이너', '2013-09-01', '2024-01-01', (SELECT mentor_profile_no FROM mentor_profile WHERE member_no = (SELECT member_no FROM member WHERE member_id = 'mentor60')));
 
 INSERT INTO member(member_no, member_id, member_password, member_email, member_name, member_points, member_status, member_join_date, member_report_count, member_role, member_provider)
-VALUES(member_no_SEQ.nextval, 'mentor61', '{bcrypt}$2a$10$2Vj/MwAon9U1UFSHcF8DSe9VtT86qtIFmWo2.tocHk1Px1NAXFU3K', 'mentor61@naver.com', '정민호', 5000, 1, SYSDATE, 0, 'ROLE_MENTOR', 'Email');
+VALUES(member_no_SEQ.nextval, 'mentor61', '{bcrypt}$2a$10$2Vj/MwAon9U1UFSHcF8DSe9VtT86qtIFmWo2.tocHk1Px1NAXFU3K', 'mentor61@naver.com', '정민호', 5000, 1, '25/01/07', 0, 'ROLE_MENTOR', 'Email');
 insert into interest (interest_no, member_no, category_no) 
 values(interest_no_SEQ.nextval, 40, 2);
 insert into interest (interest_no, member_no, category_no) 
@@ -591,7 +591,7 @@ INSERT INTO career(career_no, career_company_name, career_job_title, career_star
 VALUES(career_no_SEQ.nextval, 'IT 보안 회사', '네트워크 엔지니어', '2012-11-01', '2024-01-01', (SELECT mentor_profile_no FROM mentor_profile WHERE member_no = (SELECT member_no FROM member WHERE member_id = 'mentor61')));
 
 INSERT INTO member(member_no, member_id, member_password, member_email, member_name, member_points, member_status, member_join_date, member_report_count, member_role, member_provider)
-VALUES(member_no_SEQ.nextval, 'mentor62', '{bcrypt}$2a$10$2Vj/MwAon9U1UFSHcF8DSe9VtT86qtIFmWo2.tocHk1Px1NAXFU3K', 'mentor62@naver.com', '한지원', 5200, 1, SYSDATE, 0, 'ROLE_MENTOR', 'Email');
+VALUES(member_no_SEQ.nextval, 'mentor62', '{bcrypt}$2a$10$2Vj/MwAon9U1UFSHcF8DSe9VtT86qtIFmWo2.tocHk1Px1NAXFU3K', 'mentor62@naver.com', '한지원', 5200, 1, '25/01/07', 0, 'ROLE_MENTOR', 'Email');
 insert into interest (interest_no, member_no, category_no) 
 values(interest_no_SEQ.nextval, 41, 2);
 insert into interest (interest_no, member_no, category_no) 
@@ -604,7 +604,7 @@ INSERT INTO career(career_no, career_company_name, career_job_title, career_star
 VALUES(career_no_SEQ.nextval, '스타트업 인큐베이터', '창업 컨설턴트', '2014-02-01', '2024-01-01', (SELECT mentor_profile_no FROM mentor_profile WHERE member_no = (SELECT member_no FROM member WHERE member_id = 'mentor62')));
 
 INSERT INTO member(member_no, member_id, member_password, member_email, member_name, member_points, member_status, member_join_date, member_report_count, member_role, member_provider)
-VALUES(member_no_SEQ.nextval, 'mentor63', '{bcrypt}$2a$10$2Vj/MwAon9U1UFSHcF8DSe9VtT86qtIFmWo2.tocHk1Px1NAXFU3K', 'mentor63@naver.com', '이수민', 4700, 1, SYSDATE, 0, 'ROLE_MENTOR', 'Email');
+VALUES(member_no_SEQ.nextval, 'mentor63', '{bcrypt}$2a$10$2Vj/MwAon9U1UFSHcF8DSe9VtT86qtIFmWo2.tocHk1Px1NAXFU3K', 'mentor63@naver.com', '이수민', 4700, 1, '25/01/07', 0, 'ROLE_MENTOR', 'Email');
 insert into interest (interest_no, member_no, category_no) 
 values(interest_no_SEQ.nextval, 42, 2);
 insert into interest (interest_no, member_no, category_no) 
@@ -617,7 +617,7 @@ INSERT INTO career(career_no, career_company_name, career_job_title, career_star
 VALUES(career_no_SEQ.nextval, '분석 컨설팅 회사', '데이터 분석가', '2015-08-01', '2024-01-01', (SELECT mentor_profile_no FROM mentor_profile WHERE member_no = (SELECT member_no FROM member WHERE member_id = 'mentor63')));
 
 INSERT INTO member(member_no, member_id, member_password, member_email, member_name, member_points, member_status, member_join_date, member_report_count, member_role, member_provider)
-VALUES(member_no_SEQ.nextval, 'mentor65', '{bcrypt}$2a$10$2Vj/MwAon9U1UFSHcF8DSe9VtT86qtIFmWo2.tocHk1Px1NAXFU3K', 'mentor65@naver.com', '유민재', 4600, 1, SYSDATE, 0, 'ROLE_MENTOR', 'Email');
+VALUES(member_no_SEQ.nextval, 'mentor65', '{bcrypt}$2a$10$2Vj/MwAon9U1UFSHcF8DSe9VtT86qtIFmWo2.tocHk1Px1NAXFU3K', 'mentor65@naver.com', '유민재', 4600, 1, '25/01/07', 0, 'ROLE_MENTOR', 'Email');
 insert into interest (interest_no, member_no, category_no) 
 values(interest_no_SEQ.nextval, 43, 2);
 insert into interest (interest_no, member_no, category_no) 
@@ -630,7 +630,7 @@ INSERT INTO career(career_no, career_company_name, career_job_title, career_star
 VALUES(career_no_SEQ.nextval, '창업 지원 센터', '창업 컨설턴트', '2012-10-01', '2024-01-01', (SELECT mentor_profile_no FROM mentor_profile WHERE member_no = (SELECT member_no FROM member WHERE member_id = 'mentor65')));
 
 INSERT INTO member(member_no, member_id, member_password, member_email, member_name, member_points, member_status, member_join_date, member_report_count, member_role, member_provider)
-VALUES(member_no_SEQ.nextval, 'mentor66', '{bcrypt}$2a$10$2Vj/MwAon9U1UFSHcF8DSe9VtT86qtIFmWo2.tocHk1Px1NAXFU3K', 'mentor66@naver.com', '한유진', 4700, 1, SYSDATE, 0, 'ROLE_MENTOR', 'Email');
+VALUES(member_no_SEQ.nextval, 'mentor66', '{bcrypt}$2a$10$2Vj/MwAon9U1UFSHcF8DSe9VtT86qtIFmWo2.tocHk1Px1NAXFU3K', 'mentor66@naver.com', '한유진', 4700, 1, '25/01/07', 0, 'ROLE_MENTOR', 'Email');
 insert into interest (interest_no, member_no, category_no) 
 values(interest_no_SEQ.nextval, 44, 2);
 insert into interest (interest_no, member_no, category_no) 
