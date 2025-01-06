@@ -47,7 +47,6 @@ const ChatAlarim = () => {
             }
           );
         },
-        onDisconnect: () => console.log("Disconnected"),
       });
 
       stompClient.current.activate();
