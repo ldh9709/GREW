@@ -2422,17 +2422,7 @@ values (review_no_SEQ.nextval, '매우 만족했습니다!', 1, '멘토님의 �
 insert into review (review_no, review_title, review_status, review_content, review_score, review_date, chat_room_no)
 values (review_no_SEQ.nextval, '좋은 경험이었어요', 1, '멘토님이 친절하시고 세심하게 도와주셨습니다. 덕분에 많은 도움이 되었습니다.', 4, sysdate, 6);
 
-insert into review (review_no, review_title, review_status, review_content, review_score, review_date, chat_room_no)
-values (review_no_SEQ.nextval, '멘토님 덕분에 자신감을 얻었어요', 1, '멘토님의 격려 덕분에 제가 자신감을 얻었습니다. 제가 고민하던 문제를 해결할 수 있게 도와주셔서 감사해요!', 5, sysdate, 7);
 
-insert into review (review_no, review_title, review_status, review_content, review_score, review_date, chat_room_no)
-values (review_no_SEQ.nextval, '조금 더 상세했으면 좋겠어요', 1, '멘토님의 피드백은 좋았지만, 조금 더 구체적인 피드백을 주셨으면 좋았을 것 같아요. 그래도 유익한 시간이었어요.', 3, sysdate, 7);
-
-insert into review (review_no, review_title, review_status, review_content, review_score, review_date, chat_room_no)
-values (review_no_SEQ.nextval, '멘토링 내용은 좋았지만', 1, '멘토링 내용은 좋았지만, 시간 제약이 있어 충분히 논의하지 못한 점이 아쉬웠습니다. 다음에 더 많은 시간을 갖고 싶어요.', 4, sysdate, 8);
-
-insert into review (review_no, review_title, review_status, review_content, review_score, review_date, chat_room_no)
-values (review_no_SEQ.nextval, '대체로 괜찮았어요', 1, '멘토님은 좋으셨고 대체로 괜찮았지만, 제게 맞는 해결책을 더 많이 제공해 주셨으면 좋았을 것 같습니다.', 3, sysdate, 8);
 
 insert into review (review_no, review_title, review_status, review_content, review_score, review_date, chat_room_no)
 values (review_no_SEQ.nextval, '도움이 많이 되었어요', 1, '멘토님 덕분에 여러 문제를 해결할 수 있었어요. 구체적인 피드백을 통해 많은 것을 배우게 되었습니다.', 5, sysdate, 9);

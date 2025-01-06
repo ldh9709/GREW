@@ -28,9 +28,14 @@ export default function MentorProfileDetail() {
   const fetchMentorProfile = async () => {
     try {
       setLoading(true);
-      const mentorProfileResponse = await memberApi.getMentorProfile(mentorProfileNo);
+      const mentorProfileResponse = await memberApi.getMentorProfile(
+        mentorProfileNo
+      );
       console.log(mentorProfileResponse.data);
-      if (!mentorProfileResponse?.data || Object.keys(mentorProfileResponse.data).length === 0) {
+      if (
+        !mentorProfileResponse?.data ||
+        Object.keys(mentorProfileResponse.data).length === 0
+      ) {
         console.warn("Invalid mentor profile number:", mentorProfileNo);
         navigate("/mentor-profile/list", { replace: true });
         return;
@@ -50,7 +55,11 @@ export default function MentorProfileDetail() {
 
   const fetchMentorBoards = async () => {
     try {
-      const response = await mentorBoardApi.listMentorBoardsByProfile(mentorProfileNo, 0, 5);
+      const response = await mentorBoardApi.listMentorBoardsByProfile(
+        mentorProfileNo,
+        0,
+        5
+      );
       setBoards(response?.data?.content || []);
     } catch (error) {
       console.error("멘토 보드 데이터를 가져오는 중 오류 발생:", error);
@@ -76,8 +85,6 @@ export default function MentorProfileDetail() {
         } else {
           setReviews([]);
         }
-      } else {
-        setReviews([]);
       }
     } catch (error) {
       setError("리뷰 가져오는 중 오류가 발생했습니다.");
@@ -100,8 +107,12 @@ export default function MentorProfileDetail() {
     try {
       const response = await categoryApi.ListCategory();
       const allCategories = response.data || [];
-      const matchingCategory = allCategories.find((cat) => cat.categoryNo === categoryNo);
-      setCategoryName(matchingCategory ? matchingCategory.categoryName : "카테고리 정보 없음");
+      const matchingCategory = allCategories.find(
+        (cat) => cat.categoryNo === categoryNo
+      );
+      setCategoryName(
+        matchingCategory ? matchingCategory.categoryName : "카테고리 정보 없음"
+      );
     } catch (error) {
       console.error("카테고리 정보를 가져오는 중 오류 발생:", error);
       setCategoryName("카테고리 정보 없음");
@@ -112,47 +123,65 @@ export default function MentorProfileDetail() {
     navigate(`/review/${reviewNo}`);
   };
 
+  // 별점 표시 함수
   const renderStars = (score) => {
-    const stars = [];
-    for (let i = 0; i < 5; i++) {
-      if (i < score) {
-        stars.push(
-          <span key={i} className="star filled">
+    const filledStars = Math.round(score); // 점수를 반올림하여 별을 채우기
+    const emptyStars = 5 - filledStars;
+    return (
+      <div>
+        {[...Array(filledStars)].map((_, index) => (
+          <span key={index} className="review star filled">
             ★
           </span>
-        );
-      } else {
-        stars.push(
-          <span key={i} className="star">
+        ))}
+        {[...Array(emptyStars)].map((_, index) => (
+          <span key={index + filledStars} className="review star">
             ★
           </span>
-        );
-      }
-    }
-    return stars;
+        ))}
+      </div>
+    );
   };
 
   const paginate = (pageNumber) => {
     setCurrentPage(pageNumber);
   };
+  // 페이지네이션 버튼 표시 (3개씩 끊어서 표시)
+  const pageNumbers = [];
+  const pagesToShow = 10; // 한 번에 보여줄 페이지 수
+  const startPage =
+    Math.floor((currentPage - 1) / pagesToShow) * pagesToShow + 1;
+  const endPage = Math.min(startPage + pagesToShow - 1, totalPages);
+
+  for (let i = startPage; i <= endPage; i++) {
+    pageNumbers.push(i);
+  }
+  const maskName = (name) => {
+    if (name.length <= 2) {
+      return name[0] + "*".repeat(name.length - 1);
+    }
+    return name[0] + "*".repeat(name.length - 2) + name[name.length - 1];
+  };
 
   function calculateYearMonthDifference(startDate, endDate) {
     const start = new Date(startDate);
     const end = new Date(endDate);
-  
-    const totalMonths = (end.getFullYear() - start.getFullYear()) * 12 + (end.getMonth() - start.getMonth());
-  
+
+    const totalMonths =
+      (end.getFullYear() - start.getFullYear()) * 12 +
+      (end.getMonth() - start.getMonth());
+
     const years = Math.floor(totalMonths / 12); // 연도 계산
     const months = totalMonths % 12; // 남은 개월 계산
-  
+
     if (years > 0 && months > 0) {
       return `(${years}년 ${months}개월)`;
     } else if (years > 0) {
       return `(${years}년)`;
-    } else if(months){
+    } else if (months) {
       return `(${months}개월)`;
-    }else{
-      return ""
+    } else {
+      return "";
     }
   }
 
@@ -180,16 +209,28 @@ export default function MentorProfileDetail() {
               <ul className="mentor-profile-career">
                 {mentorProfile.careerDtos.map((career, index) => (
                   <li key={index}>
-                        <div className="career-date-container"> 
-                          <span>{career.careerStartDate.substring(0,7)} ~ {career.careerEndDate ? career.careerEndDate.substring(0,7) : "재직중"} </span>
-                          <span>
-                            {calculateYearMonthDifference(career.careerStartDate, career.careerEndDate)}
-                          </span>
-                        </div>
-                        <div className="career-info-container">
-                          <div className="career-company">{career.careerCompanyName}</div>
-                          <div className="career-jobtitle">{career.careerJobTitle}</div>
-                        </div>
+                    <div className="career-date-container">
+                      <span>
+                        {career.careerStartDate.substring(0, 7)} ~{" "}
+                        {career.careerEndDate
+                          ? career.careerEndDate.substring(0, 7)
+                          : "재직중"}{" "}
+                      </span>
+                      <span>
+                        {calculateYearMonthDifference(
+                          career.careerStartDate,
+                          career.careerEndDate
+                        )}
+                      </span>
+                    </div>
+                    <div className="career-info-container">
+                      <div className="career-company">
+                        {career.careerCompanyName}
+                      </div>
+                      <div className="career-jobtitle">
+                        {career.careerJobTitle}
+                      </div>
+                    </div>
                   </li>
                 ))}
               </ul>
@@ -210,18 +251,56 @@ export default function MentorProfileDetail() {
                 onClick={() => handleReviewClick(review.reviewNo)}
                 className="mentor-review-item"
               >
-                <p>
+                <div>
                   <strong>{review.reviewTitle}</strong>
-                </p>
-                <p>{review.reviewContent || "리뷰 내용이 없습니다."}</p>
-                <p className="review-stars">{renderStars(review.reviewScore || 0)}</p>
-                <p>{review.menteeName || "작성자 이름"} 님의 리뷰</p>
+                </div>
+                <div>{review.reviewContent || "리뷰 내용이 없습니다."}</div>
+                <div className="review-score">
+                  {renderStars(review.reviewScore || 0)}
+                </div>
+                <div>
+                  {maskName(review.menteeName) || "작성자 이름"} 님의 리뷰
+                </div>
               </li>
             ))}
           </ul>
         ) : (
           <p>리뷰가 없습니다.</p>
         )}
+      </div>
+      {/* 페이지네이션 버튼 */}
+      <div className="pagenation1">
+        {/* 이전 버튼 */}
+        <button
+          className="common-pagination-arrow"
+          disabled={currentPage === 1}
+          onClick={() => paginate(currentPage - 1)}
+        >
+          &lt;
+        </button>
+        {startPage > 1 && (
+          <button onClick={() => paginate(startPage - 1)}>이전</button>
+        )}{" "}
+        {/* 페이지 번호 버튼 */}
+        {pageNumbers.map((number) => (
+          <button
+            key={number}
+            className={`common-pagination-number ${
+              currentPage === number ? "active" : ""
+            }`}
+            onClick={() => paginate(number)}
+          >
+            {number}
+          </button>
+        ))}
+        {/* 다음 버튼 */}
+        <button
+          className="common-pagination-arrow"
+          disabled={currentPage === totalPages}
+          onClick={() => paginate(currentPage + 1)}
+        >
+          &gt;
+        </button>
       </div>
 
       <div className="mentor-boards">

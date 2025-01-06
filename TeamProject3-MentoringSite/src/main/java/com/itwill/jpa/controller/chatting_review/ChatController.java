@@ -22,10 +22,12 @@ import com.itwill.jpa.dto.chatting_review.ChatRoomDto;
 import com.itwill.jpa.entity.chatting_review.ChatMessage;
 import com.itwill.jpa.entity.chatting_review.ChatMessageImage;
 import com.itwill.jpa.entity.chatting_review.ChatRoom;
+import com.itwill.jpa.entity.member_information.Member;
 import com.itwill.jpa.repository.chatting_review.ChatMessageImageRepository;
 import com.itwill.jpa.service.chatting_review.ChatMessageImageService;
 import com.itwill.jpa.service.chatting_review.ChatMessageService;
 import com.itwill.jpa.service.chatting_review.ChatRoomService;
+import com.itwill.jpa.service.member_information.MemberService;
 
 
 
@@ -36,6 +38,9 @@ public class ChatController {
 	@Autowired
     private ChatMessageImageService chatMessageImageService;
     
+	@Autowired
+    private MemberService memberService;
+
     @Autowired
     private ChatMessageImageRepository chatMessageImageRepository;
     
@@ -68,9 +73,9 @@ public class ChatController {
 	    return message;
 	}
 	// 이미지 메시지 처리 (WebSocket 방식)
-	@MessageMapping("/sendImage/{roomId}")
+	@MessageMapping("/chat/sendImage/{roomId}")
 	@SendTo("/topic/images/{roomId}")
-	public ChatMessageImageDto sendImage(@DestinationVariable("roomId") Long roomId,@RequestBody Map<String, String> request) {
+	public ChatMessageImageDto sendImage(@DestinationVariable("roomId") Long roomId,@Payload Map<String, String> request) {
 	    ChatRoom chatRoom = ChatRoom.toEntity(chatRoomService.getChatRoom(roomId));
 	    System.out.println("챗룸 : "+chatRoom);
 	    System.out.println("chatroomNo : "+chatRoom.getChatRoomNo());
@@ -79,6 +84,7 @@ public class ChatController {
 	    String chatRoomNo = request.get("chatRoomNo");  // roomId 받기
 	    String memberNo = request.get("memberNo");     // memberNo 받기
 
+	    Member member = memberService.getMember(Long.parseLong(memberNo));
 	    System.out.println("받은 imageBlob: " + imageBlob);  // 디버그용 로그
 	    System.out.println("Received chatRoomNo: " + chatRoomNo);
 	    System.out.println("Received memberNo: " + memberNo);
@@ -92,6 +98,7 @@ public class ChatController {
 	    String base64Image = imageBlob;
 
 	    // 이미지 형식 체크 후, Base64에서 앞부분 제거
+	 // 이미지 형식 체크 후, Base64에서 앞부분 제거
 	    if (base64Image.startsWith("data:image/png;base64,")) {
 	        base64Image = base64Image.split(",")[1];
 	    } else if (base64Image.startsWith("data:image/jpeg;base64,")) {
@@ -101,10 +108,13 @@ public class ChatController {
 	    } else if (base64Image.startsWith("iVBORw0KGgo")) {
 	        // PNG 이미지의 Base64 시작 부분 확인 (이미 Base64로 인코딩된 데이터이므로, 시작 부분만 체크)
 	        base64Image = base64Image;  // Base64가 이미 포함된 경우 그대로 사용
+	    } else if (base64Image.startsWith("/9j/")) {
+	        // JPEG 이미지의 Base64 시작 부분을 확인 (이미 Base64로 인코딩된 데이터이므로, 시작 부분만 체크)
+	        base64Image = base64Image;  // JPEG 형식인 경우 그대로 사용
 	    } else {
-	        // 추가적인 형식 검사를 하거나, 예외를 발생시켜야 할 수 있습니다.
 	        throw new IllegalArgumentException("지원하지 않는 이미지 형식입니다.");
 	    }
+
 
 	    // Base64 디코딩하여 byte[]로 변환
 	    byte[] imageBytes = Base64.getDecoder().decode(base64Image);
@@ -112,9 +122,9 @@ public class ChatController {
 	    // 채팅 메시지 생성
 	    ChatMessageDto chatMessage = new ChatMessageDto();
 	    chatMessage.setChatRoomNo(Integer.parseInt(chatRoomNo));  // 받은 chatRoomNo 설정
-	    chatMessage.setMemberNo(Integer.parseInt(memberNo));     // 받은 memberNo 설정
-	    
-	    
+	    chatMessage.setMemberNo(member.getMemberNo());     // 받은 memberNo 설정
+	    chatMessage.setMemberName(member.getMemberName());
+
 	    
 	    // 메시지 저장
 	    ChatMessage chatmessage = chatMessageService.createChatMessage(chatMessage);  // 메시지 저장 후 ID를 받음
@@ -132,16 +142,12 @@ public class ChatController {
 	    savedChatMessageImage.setChatRoomNo(chatRoom.getChatRoomNo());
 	    savedChatMessageImage.setBase64Image(base64Image);
 	    savedChatMessageImage.setMemberNo(chatmessage.getMember().getMemberNo());
-	    
-	    // 이미지 데이터를 파일로 저장하거나 DB에 다른 형식으로 저장하려면, 아래와 같은 방법을 고려할 수 있습니다.
-	    /*
-	    String imagePath = saveImageToFileSystem(imageBytes);
-	    savedChatMessageImage.setImagePath(imagePath);  // 파일 경로를 저장
-	    */
+	    savedChatMessageImage.setMemberName(member.getMemberName());
+
 
 	    // 이미지 정보 저장
-	    chatMessageImageService.createImage(savedChatMessageImage);
-
+	    Long ChatImageNo = chatMessageImageService.createImage(savedChatMessageImage).getImageNo();
+	    savedChatMessageImage.setImageNo(ChatImageNo);
 	    // 저장된 이미지 객체 반환
 	    return savedChatMessageImage;
 	}
