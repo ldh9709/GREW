@@ -85,8 +85,6 @@ export default function MentorProfileDetail() {
         } else {
           setReviews([]);
         }
-      } else {
-        setReviews([]);
       }
     } catch (error) {
       setError("리뷰 가져오는 중 오류가 발생했습니다.");
@@ -165,6 +163,28 @@ export default function MentorProfileDetail() {
     return name[0] + "*".repeat(name.length - 2) + name[name.length - 1];
   };
 
+  function calculateYearMonthDifference(startDate, endDate) {
+    const start = new Date(startDate);
+    const end = new Date(endDate);
+
+    const totalMonths =
+      (end.getFullYear() - start.getFullYear()) * 12 +
+      (end.getMonth() - start.getMonth());
+
+    const years = Math.floor(totalMonths / 12); // 연도 계산
+    const months = totalMonths % 12; // 남은 개월 계산
+
+    if (years > 0 && months > 0) {
+      return `(${years}년 ${months}개월)`;
+    } else if (years > 0) {
+      return `(${years}년)`;
+    } else if (months) {
+      return `(${months}개월)`;
+    } else {
+      return "";
+    }
+  }
+
   if (loading) return <p>로딩 중...</p>;
   if (error) return <p className="error-message">{error}</p>;
 
@@ -186,13 +206,31 @@ export default function MentorProfileDetail() {
             <h2>주요 경력</h2>
             {mentorProfile?.careerDtos &&
             mentorProfile.careerDtos.length > 0 ? (
-              <ul>
+              <ul className="mentor-profile-career">
                 {mentorProfile.careerDtos.map((career, index) => (
                   <li key={index}>
-                    <strong>회사:</strong> {career.careerCompanyName} <br />
-                    <strong>직책:</strong> {career.careerJobTitle} <br />
-                    <strong>기간:</strong> {career.careerStartDate} ~{" "}
-                    {career.careerEndDate || "현재"} <br />
+                    <div className="career-date-container">
+                      <span>
+                        {career.careerStartDate.substring(0, 7)} ~{" "}
+                        {career.careerEndDate
+                          ? career.careerEndDate.substring(0, 7)
+                          : "재직중"}{" "}
+                      </span>
+                      <span>
+                        {calculateYearMonthDifference(
+                          career.careerStartDate,
+                          career.careerEndDate
+                        )}
+                      </span>
+                    </div>
+                    <div className="career-info-container">
+                      <div className="career-company">
+                        {career.careerCompanyName}
+                      </div>
+                      <div className="career-jobtitle">
+                        {career.careerJobTitle}
+                      </div>
+                    </div>
                   </li>
                 ))}
               </ul>
@@ -213,14 +251,16 @@ export default function MentorProfileDetail() {
                 onClick={() => handleReviewClick(review.reviewNo)}
                 className="mentor-review-item"
               >
-                <p>
+                <div>
                   <strong>{review.reviewTitle}</strong>
-                </p>
-                <p>{review.reviewContent || "리뷰 내용이 없습니다."}</p>
-                <p className="review-score">
+                </div>
+                <div>{review.reviewContent || "리뷰 내용이 없습니다."}</div>
+                <div className="review-score">
                   {renderStars(review.reviewScore || 0)}
-                </p>
-                <p>{maskName(review.menteeName) || "작성자 이름"} 님의 리뷰</p>
+                </div>
+                <div>
+                  {maskName(review.menteeName) || "작성자 이름"} 님의 리뷰
+                </div>
               </li>
             ))}
           </ul>

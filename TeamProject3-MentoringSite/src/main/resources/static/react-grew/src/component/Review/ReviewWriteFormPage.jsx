@@ -54,8 +54,11 @@ export default function ReviewWriteFormPage() {
     try {
       const responseJsonObject = await reviewApi.writeReview(review, token);
       console.log(responseJsonObject.data);
-      // 리뷰 작성 후 해당 리뷰 상세 페이지로 이동
-      navigate(`/review/${responseJsonObject.data.reviewNo}`);
+      
+      
+      navigate(`/member/profile`, {
+        state: { chatRoomNo, isReview: true},
+      });
     } catch (error) {
       console.error("리뷰 작성 오류:", error);
     }
