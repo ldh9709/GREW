@@ -15,6 +15,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -319,7 +320,7 @@ public class MemberServiceImpl implements MemberService {
 					}
 					break;
 				}
-				// 가입순(이름 순)
+				// 이름 순
 				case 2: {
 					if(role == null) {
 						memberList = memberRepository.findAllByOrderByMemberNameAsc(pageable);
@@ -344,15 +345,19 @@ public class MemberServiceImpl implements MemberService {
 	/******회원 멘토 상태별 회원 목록 조회******/
 	public Page<MemberDto> getMemberAllByMentorStatus(Integer status, Integer order, int pageNumber, int pageSize){
 		try {
-			Pageable pageable = PageRequest.of(pageNumber, pageSize);
+			Pageable pageable = PageRequest.of(pageNumber, pageSize,Sort.by(Sort.Order.desc("memberNo")));
 			Page<Member> members = null;
-			
+			System.out.println( "상태" + status + "정렬"  + order );
 			switch (order) {
+				//가입 순 (회원번호 순)
 				case 1: {
 					members = memberRepository.findByMentorProfile_MentorStatusOrderByMemberNoDesc(status,pageable);
+					break;
 				}
+				//이름 순 
 				case 2: {
 					members = memberRepository.findByMentorProfile_MentorStatusOrderByMemberNameAsc(status,pageable);
+					break;
 				}
 			}
 			
@@ -372,7 +377,6 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	@Transactional
 	public Member incrementReportCount(Long memberNo) {
-		System.out.println("번호넘어오긴함" + memberNo);
 		Member member = memberRepository.findByMemberNo(memberNo);
 		member.setMemberReportCount(member.getMemberReportCount()+1);
 		return memberRepository.save(member);

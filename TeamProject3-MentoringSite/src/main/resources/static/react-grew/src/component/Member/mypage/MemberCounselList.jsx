@@ -1,11 +1,10 @@
 import { useMemberAuth } from "../../../util/AuthContext";
 import React, { useEffect, useState } from "react";
-import image from "../../../image/images.jpeg";
 import * as chattingApi from "../../../api/chattingApi";
 import * as memberApi from "../../../api/memberApi";
 import * as reviewApi from "../../../api/reviewApi";
 import { useNavigate } from "react-router-dom";
-import { getMentorProfileByMemberNo } from "../../../api/answerApi";
+import { getMentorProfileByMemberNo } from "../../../api/mentorProfileApi";
 import PagenationItem from "../../PagenationItem";
 
 export default function MemberCounselList() {
@@ -18,7 +17,7 @@ export default function MemberCounselList() {
   const [totalPages, setTotalPages] = useState(0);
 
   const fetchName = async (memberNo) => {
-    const response = await memberApi.memberInfo(token, memberNo);
+    const response = await memberApi.getMemberByMemberNo(memberNo);
     console.log(response.data);
     return response.data.memberName;
   };
@@ -35,9 +34,7 @@ export default function MemberCounselList() {
           chatRooms.map(async (chat) => {
             const searchName = await fetchName(chat.mentorNo);
             // 멘토 프로필 조회
-            const mentorProfileResponse = await getMentorProfileByMemberNo(
-              chat.mentorNo
-            );
+            const mentorProfileResponse = await getMentorProfileByMemberNo(chat.mentorNo); 
             const mentorProfileNo =
               mentorProfileResponse?.data?.mentorProfileNo || null;
             const mentorImage =
