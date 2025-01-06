@@ -237,8 +237,6 @@ export const getMentorProfileByMemberNo = async (memberNo) => {
   return responseJsonObject;
 };
 
-///////////////////////////////////////////////////////////////////////////////////////////
-// PARENT_CATEGORY_NO 기준 팔로우 순 멘토 리스트 조회
 /**
  *  대분류 카테고리의 팔로우 순 멘토 리스트 조회
  */

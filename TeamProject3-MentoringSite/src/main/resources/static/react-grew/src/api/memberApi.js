@@ -305,21 +305,6 @@ export const updateMemberRole = async(token,role) => {
     return responseJsonObject;
 }
 
-//회원 전체 조회
-
-//특정 회원 조회
-export const memberInfo = async (token,memberNo) => {
-    const response = await fetch(`${BACKEND_SERVER}/member/member-info?memberNo=${memberNo}`, {
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${token}`
-        }
-    });
-    const responseJsonObject = await response.json();
-    return responseJsonObject;
-}
-
 //멤버 프로필 조회
 export const memberProfile = async (token) => {
     const response = await fetch(`${BACKEND_SERVER}/member/profile`, {
@@ -398,7 +383,7 @@ export const mentorSummary = async (token) => {
 //멤버 넘버로 멤버객체찾기
 export const getMemberByMemberNo = async (memberNo) => {
 
-    const response = await fetch(`${BACKEND_SERVER}/member/member-info?memberNo=${memberNo}`,{
+    const response = await fetch(`${BACKEND_SERVER}/member/member-info/${memberNo}`,{
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
