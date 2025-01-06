@@ -114,7 +114,6 @@ export const adminMentorBoardWithSearch = async (token, search, page, size) => {
       if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
       }
-
       // JSON 응답 데이터를 반환
       const data = await response.json();
       return data;

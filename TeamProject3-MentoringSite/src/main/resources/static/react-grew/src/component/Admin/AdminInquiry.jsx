@@ -12,9 +12,7 @@ export function AdminInquiry() {
     const [page, setPage] = useState(0); // 페이지 번호
 
     // 게시판 목록 가져오기
-    const fetchBoards = async (categoryNo, page = 0, size = 10) => {       
-        console.log("데이터 요청 시작:", { categoryNo, page, size });
-        console.log("Token 확인:", token);
+    const fetchBoards = async (categoryNo, page = 0, size = 10) => {   
         let response;
         if (categoryNo === "ALL") {
             response = await adminApi.adminInquiry(token, page, size);
@@ -91,12 +89,12 @@ export function AdminInquiry() {
                     ))}
                 </tbody>
             </table>
-            {/*<div className="admin-pagenation">
+            <div className="admin-pagenation">
                     <PagenationItem
                         currentPage={currentPage}
                         totalPages={totalPages}
                         paginate={paginate}/>
-            </div>*/}
+            </div>
         </div>
     );
 }
