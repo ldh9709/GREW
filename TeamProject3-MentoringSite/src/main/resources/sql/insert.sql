@@ -286,7 +286,7 @@ values(interest_no_SEQ.nextval, 18, 17);
 insert into interest (interest_no, member_no, category_no) 
 values(interest_no_SEQ.nextval, 18, 18);
 INSERT INTO mentor_profile(mentor_profile_no, mentor_introduce, mentor_rating, mentor_mentoring_count, mentor_image, mentor_activity_count, mentor_follow_count, mentor_status, category_no, member_no, mentor_headline)
-VALUES(mentor_profile_no_SEQ.nextval, '안녕하세요, 김도옌 멘토입니다.', 5.0, 40, '/images/mentor-profile/11.jpg', 170, 90, 3, 18, member_no_SEQ.currval, '그림을 두려워하지 마세요');
+VALUES(mentor_profile_no_SEQ.nextval, '안녕하세요, 김도옌 멘토입니다.', 5.0, 40, '/images/mentor-profile/11.jpg', 170, 90, 3, 18, member_no_SEQ.currval, '힘이 되어드릴께요');
 INSERT INTO career(CAREER_NO, CAREER_COMPANY_NAME, CAREER_JOB_TITLE, CAREER_START_DATE, CAREER_END_DATE, MENTOR_PROFILE_NO)
 VALUES(career_no_SEQ.nextval, '한샘', '12년 경력', '2024.01.01', null, 12);
 
@@ -299,7 +299,7 @@ values(interest_no_SEQ.nextval, 19, 14);
 insert into interest (interest_no, member_no, category_no) 
 values(interest_no_SEQ.nextval, 19, 17);
 INSERT INTO mentor_profile(mentor_profile_no, mentor_introduce, mentor_rating, mentor_mentoring_count, mentor_image, mentor_activity_count, mentor_follow_count, mentor_status, category_no, member_no, mentor_headline)
-VALUES(mentor_profile_no_SEQ.nextval, '안녕하세요, 김도예 멘토입니다.', 5.0, 40, '/images/mentor-profile/12.jpg', 170, 90, 3, 18, member_no_SEQ.currval, '사진 잘 찍는 법 알려드릴게요');
+VALUES(mentor_profile_no_SEQ.nextval, '안녕하세요, 김도예 멘토입니다.', 5.0, 40, '/images/mentor-profile/12.jpg', 170, 90, 3, 18, member_no_SEQ.currval, '상담이 필요하면 연락주세요');
 INSERT INTO career(CAREER_NO, CAREER_COMPANY_NAME, CAREER_JOB_TITLE, CAREER_START_DATE, CAREER_END_DATE, MENTOR_PROFILE_NO)
 VALUES(career_no_SEQ.nextval, '한샘', '17년 경력', '2024.01.01', null, 13);
 
@@ -481,7 +481,7 @@ values(interest_no_SEQ.nextval, 32, 3);
 insert into interest (interest_no, member_no, category_no) 
 values(interest_no_SEQ.nextval, 32, 4);
 INSERT INTO mentor_profile(mentor_profile_no, mentor_introduce, mentor_rating, mentor_mentoring_count, mentor_image, mentor_activity_count, mentor_follow_count, mentor_status, category_no, member_no, mentor_headline)
-VALUES(mentor_profile_no_SEQ.nextval, '안녕하세요, 박정민 멘토입니다. 법률 및 상담 전문가입니다.', 4.9, 42, '/images/mentor-profile/3a.jpg', 160, 70, 3, 9, member_no_SEQ.currval, '법률 상담 전문가');
+VALUES(mentor_profile_no_SEQ.nextval, '안녕하세요, 박정민 멘토입니다. 법률 및 상담 전문가입니다.', 4.9, 42, '/images/mentor-profile/3a.jpg', 160, 70, 3, 18, member_no_SEQ.currval, '법률 상담 전문가');
 INSERT INTO career(career_no, career_company_name, career_job_title, career_start_date, career_end_date, mentor_profile_no)
 VALUES(career_no_SEQ.nextval, '법률 사무소', '법률 컨설턴트', '2014-09-01', '2024-01-01', (SELECT mentor_profile_no FROM mentor_profile WHERE member_no = (SELECT member_no FROM member WHERE member_id = 'mentor52')));
 
