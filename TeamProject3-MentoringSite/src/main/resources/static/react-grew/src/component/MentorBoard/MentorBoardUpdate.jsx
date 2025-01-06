@@ -166,6 +166,7 @@ function MentorBoardUpdate() {
           type="text"
           id="mentorBoardTitle"
           placeholder="제목을 입력해주세요."
+          maxLength={50}
           value={mentorBoardTitle}
           onChange={(e) => setMentorBoardTitle(e.target.value)}
         />
