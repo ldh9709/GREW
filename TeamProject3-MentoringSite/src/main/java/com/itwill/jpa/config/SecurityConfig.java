@@ -75,7 +75,11 @@ public class SecurityConfig {
 		"/mentor-profile/rating", // 별점 순 멘토 순위
 		"/mentor-profile/career/*", // 경력 데이터 가져오기
 		"/mentor-profile/*/image-url", // 멘토 프로필 이미지 URL 조회
-
+		
+		/***************************************************************/
+	   
+	   
+		/***************************************************************/
 		
 		/***** MENTOR BOARD *****/
 	    "/mentor-board/sorted/*", // 멘토 보드 리스트 - sorted/{status}
@@ -164,9 +168,9 @@ public class SecurityConfig {
 	    "/mentor-profile/create-profile", // 멘토 프로필 생성
 	    "/mentor-profile/*/create-dumy-profile", // 멘토 더미 프로필 생성
 	    "/mentor-profile/status/*", // 멘토 프로필 상태변경
-	    "/mentor-profile/*", // 멘토 프로필 수정
 	    "/mentor-profile/*/upload-image", // 멘토 프로필 이미지 업로드
-	    
+	    //"/mentor-profile/*", // 멘토 프로필 수정 => 링크 수정해야함
+	   
 	    /***** MENTOR BOARD *****/
 	    "/mentor-board", // 멘토 보드 등록
 	    "/mentor-board/*", // 멘토 보드 수정 - {mentorBoardNo}
@@ -311,7 +315,7 @@ public class SecurityConfig {
 		      	  
 		      	  .requestMatchers(MENTOR_AUTHENTICATED).hasRole("MENTOR") //MENTEE만 접근 가능
 		      	  
-		      	  .requestMatchers(MENTOR_AUTHENTICATED).hasRole("ADMIN") //MENTEE만 접근 가능
+		      	  .requestMatchers(ADMIN_AUTHENTICATED).hasRole("ADMIN") //MENTEE만 접근 가능
 		      	  
 		      	  .requestMatchers(MENTEE_MENTOR_AUTHENTICATED).hasAnyRole("MENTEE" , "MENTOR") //MENTEE, MENTOR만 접근 가능
 		      	  

@@ -21,25 +21,27 @@ const MemberLoginFormPage = () => {
 
   const loginAction = async (e) => {
     e.preventDefault();
-    const responseJsonObject = await memberApi.loginAction(member);
+    try {
+      const responseJsonObject = await memberApi.loginAction(member);
 
-    /* 로그인 성공해서 토큰이 있을 때 */
-    if (responseJsonObject.accessToken) {
+      /* 로그인 성공해서 토큰이 있을 때 */
+      if (responseJsonObject.accessToken) {
 
-      login(responseJsonObject.accessToken);
+        login(responseJsonObject.accessToken);
 
-      /* 멘토 프로필 START */
-      const mentorProfileResponse = await memberApi.getMentorProfile(responseJsonObject.mentorProfileNo);
+        /* 멘토 프로필 START */
+        const mentorProfileResponse = await memberApi.getMentorProfile(responseJsonObject.mentorProfileNo);
+        // categoryNo가 26인지 확인
+        const isMentorCategory = mentorProfileResponse?.data?.categoryNo === 26;
+        // 역할에 따라 페이지 이동
+        navigate(isMentorCategory ? "/mentor/join" : "/main");
 
-      // categoryNo가 26인지 확인
-      if (mentorProfileResponse?.data?.categoryNo === 26) {
-        navigate("/mentor/join"); // 멘토 가입 페이지로 이동
       } else {
-        navigate("/main"); // 기본 메인 페이지로 이동
+        console.log("responseJsonObject.status : ", responseJsonObject.status);
+        alert("회원정보가 일치하지 않습니다.");
       }
-    } else {
-      console.log("responseJsonObject.status : ", responseJsonObject.status);
-      alert("회원정보가 일치하지 않습니다.");
+    } catch(error) {
+      console.error("로그인 요청 오류: ", error);
     }
   };
   
