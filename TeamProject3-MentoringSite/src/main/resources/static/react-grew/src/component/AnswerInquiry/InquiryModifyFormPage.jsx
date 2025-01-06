@@ -33,7 +33,6 @@ export default function InqiuryModifyFormPage() {
 
         const responseJsonObject = await inquiryApi.viewInquiry(inquiryNo);
         setInquiry(responseJsonObject.data);
-        console.log(responseJsonObject.data);
         if (member.memberNo != responseJsonObject.data.memberNo) {
           navigate("/403");
         }
@@ -59,7 +58,6 @@ export default function InqiuryModifyFormPage() {
       return; // 폼 제출을 막음
     }
     const responseJsonObject = await inquiryApi.updateInquiry(inquiry, token);
-    console.log(responseJsonObject);
     navigate(`/inquiry/${inquiryNo}`);
   };
 

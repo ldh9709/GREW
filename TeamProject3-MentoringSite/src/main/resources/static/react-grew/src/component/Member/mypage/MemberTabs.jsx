@@ -6,7 +6,7 @@ import ReviewList from './MemberReviewList';
 import InquiryAnswerList from "./MemberInquiryAnswerList";
 import MemberMentorBoardList from "./MemberMentorBoardList";
 
-export default function MemberTabs() {
+export default function MemberTabs({handleUpdate}) {
     /* Context에 저장된 토큰, 멤버정보 */
     const { token, member } = useMemberAuth();
 
@@ -89,7 +89,7 @@ export default function MemberTabs() {
             )}
             {activeTab === "following" && (
             <div id="following">
-                <FollowList />
+                <FollowList handleUpdate={handleUpdate} />
             </div>
             )}
             {activeTab === "answer" && (

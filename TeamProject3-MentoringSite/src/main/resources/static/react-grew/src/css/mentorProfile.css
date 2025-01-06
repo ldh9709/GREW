@@ -308,3 +308,34 @@
   position: relative; /* 부모 요소에 상대적인 배치를 위해 */
   height: 50px;
 }
+
+/* 경력 사항 */
+.mentor-profile-career{
+  padding-left: 0px;
+}
+.mentor-profile-career li{
+  display: flex;
+}
+.mentor-profile-career li > div:first-child{
+  margin-right: 20px;
+}
+
+.career-date-container{
+  min-width: 200px;
+  font-size: 15px;
+}
+.career-date-container span:nth-child(2){
+  text-align: right;
+  font-size: 14px;
+  color: #888;
+  padding-right: 3px;
+}
+
+.career-company {
+  font-size: 16px;
+  color: black;
+}
+.career-jobtitle{
+  font-size: 15px;
+  color: #777;
+}

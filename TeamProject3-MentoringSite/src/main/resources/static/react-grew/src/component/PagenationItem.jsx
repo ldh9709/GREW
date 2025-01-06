@@ -9,7 +9,7 @@ export default function PagenationItem({ currentPage, totalPages, paginate }) {
   return (
     <>
       {/* 페이지네이션 버튼 */}
-      <div className="common-pagination common-pagination-bottom">
+      <div className={`common-pagination common-pagination-bottom ${totalPages === 0 ? 'pagination-none' : '' }`}>
         {/* 이전 버튼 */}
         <button
           className="common-pagination-arrow"

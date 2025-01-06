@@ -52,6 +52,7 @@
 
 /* header */
 .admin-header {
+  position: relative;
   width: 100%; height: 70px;
   background-color: #fff;
   border-bottom: 1px solid #ddd;
@@ -62,11 +63,23 @@
   line-height: 70px;
   padding-left: 30px;
 }
-
-
+.admin-header-btn button {
+  position: absolute;
+  padding: 5px 18px;
+  border-radius: 3px;
+  background-color: #555;
+}
+.admin-header-btn button:hover{
+  background-color: #444;
+}
+.main-btn{
+  top: 20px; right: 125px;
+}
+.logout-btn {
+  top: 20px; right: 30px;
+}
 /* Content 스타일 */
 .content {
-    margin-left: 240px; /* sidebar의 너비만큼 왼쪽 공간 확보 */
     padding: 20px;
     display: flex;
     flex-direction: column;
@@ -112,14 +125,6 @@
   position: "absolute";
   top: "10px";
   right: "10px";
-}
-/* MentorSearch */
-.search-input {
-  width: 100%;
-  padding: 10px;
-  margin-bottom: 20px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
 }
 
 /* 전체 테이블 스타일 */
@@ -276,7 +281,7 @@
 /* 회원 목록 디테일 조회 */
 .mentor-detail-container {
   position: absolute; 
-  top: -120px; right: -390px;
+  top: -20px; right: -370px;
   min-width: 320px;
   margin: 20px auto;
   padding: 20px;
@@ -316,12 +321,16 @@
 }
 
 .mentor-profile-pic {
-  width: 100px;
-  height: 100px;
+  width: 120px;
+  height: 120px;
   border-radius: 50%;
   background-color: #ddd;
 }
-
+.mentor-profile-pic img {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+}
 .mentor-textarea {
   width: 100%;;
   flex: 0 0 230px;

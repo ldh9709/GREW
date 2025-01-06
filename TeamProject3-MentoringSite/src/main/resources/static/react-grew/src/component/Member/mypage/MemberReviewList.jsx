@@ -43,7 +43,7 @@ export default function MemberReviewList() {
 
   return (
     <>
-      <div className="review-list">
+      <div className="review-list tab-bottom">
         {reviewList.map((review, index) => (
           <div className="review-item" key={index}>
             <p className="review-name">
@@ -53,12 +53,14 @@ export default function MemberReviewList() {
             <p className="review-comment">{review.reviewContent}</p>
           </div>
         ))}
+        <div>
+          <PagenationItem
+            currentPage={currentPage}
+            totalPages={totalPages}
+            paginate={paginate}
+          />
+        </div>
       </div>
-      <PagenationItem
-        currentPage={currentPage}
-        totalPages={totalPages}
-        paginate={paginate}
-      />
     </>
   );
 }

@@ -9,7 +9,7 @@ import * as memberApi from "../../../api/memberApi";
 import * as mentorProfileApi from "../../../api/mentorProfileApi"; /////////////////
 import { useNavigate } from "react-router-dom";
 
-export default function MemberSummary() {
+export default function MemberSummary({triggerUpdate}) {
 
   /* 멘토 프로필 선언 */
   const [mentorProfile, setMentorProFile] = useState({});
@@ -44,12 +44,11 @@ export default function MemberSummary() {
       setMentorImage(response.imageUrl || profileDefault);
     }
   };
-  ///////////////
 
   //회원 요약정보 count 가져옴
   const fetchCountSummary = async () => {
     try {
-      if (member.memberRole === "ROLE_MENTEE") {
+      if (member && member.memberRole === "ROLE_MENTEE") {
         const response = await memberApi.menteeSummary(token);
         const { data } = await response;
         setSummary((prevState) => ({
@@ -58,7 +57,7 @@ export default function MemberSummary() {
           counselCount: data.counselCount,
           followCount: data.followCount,
         }));
-      } else if (member.memberRole === "ROLE_MENTOR") {
+      } else if (member && member.memberRole === "ROLE_MENTOR") {
         const response = await memberApi.mentorSummary(token);
         const { data } = await response;
 
@@ -109,7 +108,7 @@ export default function MemberSummary() {
   };
 
   const underReview = () => {
-    alert("심사 중입니다.");
+    alert("가입 심사 중입니다.");
     return;
   }
 
@@ -152,7 +151,7 @@ export default function MemberSummary() {
   //회원 권한 변경
   const handleUpdateRoleButton = async (role) => {
     try {
-      if (member.mentorProfileNo === 0) {
+      if (member.mentorProfileNo === 0 || mentorProfile.categoryNo === 26) {
         const confirmation = window.confirm("멘토를 신청 하시겠습니까?");
         if (!confirmation) {
           return;
@@ -201,7 +200,7 @@ export default function MemberSummary() {
       fetchMentorInfo(member.mentorProfileNo);
       fetchMentorImage();
     }
-  }, [member, token]);
+  }, [member, token, triggerUpdate]);
 
   return (
     <section className="summary">
@@ -231,22 +230,24 @@ export default function MemberSummary() {
             </div>
             <button
               className={`role-change ${
-                member.mentorProfileNo === 0
+                member.mentorProfileNo === 0 || mentorProfile.categoryNo === 26
                 ? "mentor-apply"
-                : mentorProfile.mentorStatus === 2
+                : mentorProfile.mentorStatus === 2 && mentorProfile.categoryNo !== 26
                 ? "mentor-review"
                 : "mentee-convert"
               }`}
               onClick={() =>
-                mentorProfile.mentorStatus === 2
-                  ? underReview() // 심사 중 알림
-                  : handleUpdateRole("ROLE_MENTOR") // 멘토 전환
+                member.mentorProfileNo === 0 || mentorProfile.categoryNo === 26
+                ? handleUpdateRoleButton("ROLE_MENTEE") //멘토 신청
+                : mentorProfile.mentorStatus === 2 && mentorProfile.categoryNo !== 26
+                ? underReview() // 심사 중 알림
+                : handleUpdateRole("ROLE_MENTOR") // 멘토 전환
               }
             >
               {
-              member.mentorProfileNo === 0 
+              member.mentorProfileNo === 0 || mentorProfile.categoryNo === 26
               ? "멘토 신청"
-              : mentorProfile.mentorStatus === 2 
+              : mentorProfile.mentorStatus === 2 && mentorProfile.categoryNo !== 26
               ? "심사 중"
               : member.mentorProfileNo !== 0
               ? "멘토 전환"

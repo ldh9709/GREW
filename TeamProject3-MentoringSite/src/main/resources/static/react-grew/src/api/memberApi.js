@@ -53,7 +53,6 @@ export const followList = async()=>{
 
 //로그인
 export const loginAction = async (sendJsonObject) => {
-    console.log("Request Data: ", sendJsonObject);
 
     const header = {headers: {"Content-Type": "application/x-www-form-urlencoded"}, withCredentials: true }
 
@@ -62,7 +61,7 @@ export const loginAction = async (sendJsonObject) => {
     form.append('password', sendJsonObject.memberPassword)
 
     const response = await axios.post("http://localhost:8080/login", form, header,);
-
+    console.log("Response : ", response);
     return response.data;
 }
 //로그아웃
@@ -74,7 +73,6 @@ export const logout = async () => {
             'Content-Type': 'application/json'
         },
     });
-    console.log("로그아웃 시 반환객체 : ",response);
     return response.url;
 };
 
@@ -275,6 +273,24 @@ export const updateAction = async (memberDto, token) => {
       return resultJsonObject;
     
 }
+
+//회원 탈퇴
+export const deleteAction = async (token) => {
+
+    const response = await fetch(`${BACKEND_SERVER}/member/profile/delete`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+      });
+      const resultJsonObject = await response.json();
+      console.log("resultJsonObject : ", resultJsonObject);
+
+      return resultJsonObject;
+    
+}
+
 //회원 권한 변경
 export const updateMemberRole = async(token,role) => {
     const response = await fetch(`${BACKEND_SERVER}/member/update-role/${role}`,{

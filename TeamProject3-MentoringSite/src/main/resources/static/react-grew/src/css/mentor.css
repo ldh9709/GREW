@@ -1,24 +1,17 @@
 /* 공통 컨테이너 스타일 */
 .mentor-edit-container {
-  width: 100%;
-  min-width: 100%;
-  max-width: 100%;
-  width: 500px;
+  width: 700px;
+  max-width: 80%;
+  min-width: 80%;
   margin: 0 auto;
-  padding: 20px;
-  font-weight: bold;
-  background-color: #ffffff;
-  
 }
 
 /* 제목 스타일 */
 .mentor-edit-title {
-  font-size: 24px;
+  font-size: 30px;
   font-weight: bold;
   text-align: center;
-  color: #333;
-  margin-bottom: 20px;
-  margin-right: 220px;
+  color: #555;
 }
 
 /* 폼 그룹 공통 스타일 */
@@ -26,12 +19,6 @@
   margin-bottom: 20px;
   display: flex;
   flex-direction: column;
-  max-width: 600px;
-  min-width: 600px;
-  flex: 1; /* 남은 공간을 모두 채움 */
-  opacity: 1; /* 초기 렌더링 시 보이게 설정 */
-  transition: opacity 0.3s ease; /* 로딩 시 자연스럽게 전환 */
-  margin-left: -120px;
 }
 
 .mentor-edit-label {
@@ -50,7 +37,6 @@
 .mentor-edit-input,
 .mentor-edit-textarea,
 .mentor-edit-select {
-  width: 100%;
   padding: 10px;
   border: 1px solid #ddd;
   border-radius: 5px;
@@ -65,10 +51,31 @@
   outline: none;
 }
 
+.mentor-edit-headline{
+  height: 40px;
+}
+.mentor-edit-introduce{
+  height: 350px;
+}
+.mentor-edit-career-container {
+  display: flex;
+  justify-content: space-between;
+}
+.mentor-edit-input.career-company {
+  width: 250px;
+}
+.mentor-edit-input.career-startDate, .mentor-edit-input.career-endDate {
+  width: 150px;
+}
+
+.career-job-title{
+  width: 100%;
+  margin: 5px 0;
+}
+
 /* 텍스트 영역 스타일 */
 .mentor-edit-textarea {
   resize: none;
-  height: 100px;
 }
 
 /* 선택 박스 스타일 */
@@ -81,27 +88,15 @@
   flex: 1;
 }
 
-/* 경력 필드 스타일 */
-.mentor-edit-career-container {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.mentor-edit-career-row {
-  display: flex;
-  gap: 10px;
-}
-
-.mentor-edit-input {
-  flex: 1;
-}
 
 /* 추가 버튼 스타일 */
+.career-add-button{
+  display: flex; 
+  justify-content: flex-end; 
+}
 .mentor-edit-add-button {
-  width: 100%;
   padding: 10px;
-  background-color: #007bff;
+  background-color: #28a745;
   color: #ffffff;
   font-size: 14px;
   border: none;
@@ -111,26 +106,29 @@
 }
 
 .mentor-edit-add-button:hover {
-  background-color: #0056b3;
+  background-color: #218838;
 }
 
 /* 제출 버튼 스타일 */
+.mentor-edit-submit-container{
+  display: flex;
+  justify-content: end;
+}
 .mentor-edit-submit-button {
-  width: 100%;
-  padding: 12px;
-  background-color: #4caf50;
+  padding: 8px 18px;
+  background-color: #007bff;
   color: #ffffff;
-  font-size: 16px;
+  font-size: 14px;
   border: none;
   border-radius: 5px;
   cursor: pointer;
 }
 
 .mentor-edit-submit-button:hover {
-  background-color: #45a049;
+  background-color: #0056b3;
 }
 
-/* 반응형 처리 */
+/* 반응형 처리 
 @media (max-width: 600px) {
   .mentor-edit-career-row {
     flex-direction: column;
@@ -140,3 +138,4 @@
     flex-direction: column;
   }
 }
+*/

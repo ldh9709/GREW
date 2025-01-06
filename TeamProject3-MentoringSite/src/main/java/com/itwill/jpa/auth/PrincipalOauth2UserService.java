@@ -2,6 +2,7 @@ package com.itwill.jpa.auth;
 
 import java.util.UUID;
 
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
@@ -38,15 +39,15 @@ public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
         //MemberId 랜덤부여
         String randomId = UUID.randomUUID().toString().replace("-", "").substring(0,9);
         
-        System.out.println(">>>" + oauth2User.getClass().getSimpleName());
-        System.out.println(">>> 인증유저" + oauth2User);
-        System.out.println("***********useRequest********");
-        System.out.println(userRequest);
-        System.out.println("clientRegistration : " + userRequest.getClientRegistration().getClientName());
-        System.out.println("clientRegistration : " + userRequest.getClientRegistration().getClientId());
-        System.out.println("accessToken : " + userRequest.getAccessToken().getTokenValue());
-        System.out.println("additionalParameter : " + userRequest.getAdditionalParameters());
-        System.out.println("***********END********");
+//        System.out.println(">>>" + oauth2User.getClass().getSimpleName());
+//        System.out.println(">>> 인증유저" + oauth2User);
+//        System.out.println("***********useRequest********");
+//        System.out.println(userRequest);
+//        System.out.println("clientRegistration : " + userRequest.getClientRegistration().getClientName());
+//        System.out.println("clientRegistration : " + userRequest.getClientRegistration().getClientId());
+//        System.out.println("accessToken : " + userRequest.getAccessToken().getTokenValue());
+//        System.out.println("additionalParameter : " + userRequest.getAdditionalParameters());
+//        System.out.println("***********END********");
 
         // Oauth2UserInfo 객체 초기화
         Oauth2UserInfo oauth2UserInfo = null;
@@ -58,18 +59,15 @@ public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
         if (provider.equals("google")) {
             // 제공자별로 다른 JSON 구조를 파싱
             oauth2UserInfo = new GoogleUserInfo(oauth2User.getAttributes());
-            System.out.println("oauth2UserInfo : >>>>>" + oauth2UserInfo);
         } else if (provider.equals("naver")) {
             // Naver 추가 로직
         	oauth2UserInfo = new NaverUserInfo(oauth2User.getAttributes());
-        	System.out.println("oauth2UserInfo : >>>>>" + oauth2UserInfo);
         } else if (provider.equals("kakao")) {
             // Kakao 추가 로직
         	oauth2UserInfo= new KakaoUserInfo(oauth2User.getAttributes());
         }
         // 인증 제공자의 이름을 가져옴
         String name = oauth2UserInfo.getName();
-        System.out.println("name : >>>" + name);
         // 인증 제공자의 이메일을 가져옴
         String email = oauth2UserInfo.getEmail();
 
@@ -77,7 +75,12 @@ public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
         String password = passwordEncoder.encode("password" + UUID.randomUUID().toString().substring(0, 6));
 
         Member findMember = memberRepository.findByMemberEmail(email);
-
+        
+        // 사용자 상태(memberStatus) 확인
+        if (findMember.getMemberStatus() == 2) {
+            throw new BadCredentialsException("탈퇴한 사용자입니다.");
+        }
+        
         if (findMember == null) {
             findMember = Member.toSecurityEntity(MemberSecurityDto.JoinOAuth2()
             		.memberId(randomId)
@@ -90,7 +93,7 @@ public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
         }
         
         MemberSecurityDto securityMember = MemberSecurityDto.toDto(findMember);
-        System.out.println("securityMember : >>>" + securityMember);
+        
         return new PrincipalDetails(securityMember, oauth2UserInfo);
     }
 }
