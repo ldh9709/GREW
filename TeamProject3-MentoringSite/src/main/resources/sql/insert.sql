@@ -1241,6 +1241,81 @@ insert into inquiry(inquiry_no,inquiry_title, inquiry_content, inquiry_date, inq
 values(inquiry_no_SEQ.nextval, '초등 미술 공모전', '곧잇으면 하는 미술 공모전이 잇는지 궁금합니다 !!
 올해에 공모전 몇번 한 뒤로 재미있어서 계속 시도 하는 중인데
 2025년 미술 공모전이라던가 아니면 지금 하고잇는 미술 공모전 좀 알려주세요 !! 주제는 상관 없어요 시간이 넉넉하고 초등학생 잼민이가 참여할 공모전이묜 됩니다 !',sysdate,1,133,12,11);
+insert into inquiry(inquiry_no,inquiry_title, inquiry_content, inquiry_date, inquiry_status, inquiry_views, category_no, member_no)
+values(inquiry_no_SEQ.nextval, '광주미술학원 어디로 보내야할까요..?', '저희 아이가 미술에 관심이 많다고 미술쪽으로 보내달라고 얼마 전 이야기를 하더라구요. 평소에 그림 그린 것들도 보면 확실히 소질이 있어보이는 것 같아서 미술학원을 보내보고자 하는데 광주미술학원 어디가 잘 가르치나요? 되도록이면 입시 전문으로 하는 학원으로 보내고 싶습니다. 광주미술학원 정보 좀 주세요 ㅠ',sysdate,1,133,12,21);
+insert into inquiry(inquiry_no,inquiry_title, inquiry_content, inquiry_date, inquiry_status, inquiry_views, category_no, member_no)
+values(inquiry_no_SEQ.nextval, '예고 미술선생님이 되는법', '전 중2인데 진로를 예고 미술선생님이 되고 싶습니다
+
+1. 미술 선생님이 될려면 소묘나 이런 쪽 말고 애니매이션이런 만화 쪽으로 나와도 괜찮나요?
+
+2. 미술선생님이 되려면 공부는 얼마정도 해야하나요?
+
+3. 예고를 나오게 되면 미술선생님이 되는게 빨라지나요?
+
+4. 미술선생님이 되기 까지 무엇을 해야하나요?
+
+5. 지금 미술성적이 고등학교 진학에 도움이 되나요?',sysdate,1,533,12,22);
+insert into inquiry(inquiry_no,inquiry_title, inquiry_content, inquiry_date, inquiry_status, inquiry_views, category_no, member_no)
+values(inquiry_no_SEQ.nextval, '백석예술대학교 미술학부', '안녕하세요 이번에 백석예대 미술학부에 대해 궁금한 게 있어서요
+백석예대 미술학부 안에 전공이 네 개로 나눠지는 거 같은데
+제가 수시 접수할 때는 전공 선택하는 거 없이 그냥 미술학부로만 있었거든요?
+그럼 시스템이 미술학부에 들어간 후에 제가 전공을 선택하는 건가요?',sysdate,1,433,12,25);
+insert into inquiry(inquiry_no,inquiry_title, inquiry_content, inquiry_date, inquiry_status, inquiry_views, category_no, member_no)
+values(inquiry_no_SEQ.nextval, '미술 학원을 운영하고 있는 평범한 사람입니다,ㅎ', '지식인에서 답변 해 주시는 거 보고
+저도 궁금한 게 생각이 나서 질문 드려 봅니다.
+
+현재 사업자 등록은
+서비스교육업 사업자가 하나 있는 상태입니다.
+제가 하고자 하는 것은 중국 사이트에서
+미술재료를 구입 해+ 미술커리큘럼을 (본인 개인적으로 만듦)
+금액 측정을 해서 판매를 보고 싶습니다.
+
+3. 사업자 등록은 어떤 것으로 내야 하는지 궁금 합니다.
+sns 홍보 후 네이버 결제창을 연결하여 판매 할 계획입니다.
+5. 부가적으로 필요한 것들이 있을까요?ㅜㅜ
+
+6. 중국에서 물건을 사입 해 올 때, 법규 안에 가능한 금액 대라던지 또는 얼마 이상이 되면 관세 또는 세금 신고를 해야 되는 건지 그런 건 어떻게 하는 건지도 궁금합니다^^',sysdate,1,1233,12,29);
+insert into inquiry(inquiry_no,inquiry_title, inquiry_content, inquiry_date, inquiry_status, inquiry_views, category_no, member_no)
+values(inquiry_no_SEQ.nextval, '신분증 재발급 사진', '제가 신분증을 2번째 재발급 받아야 하는 상황인데
+처음에 a사진 발급 받고 -> b사진으로 새로 재발급 받은 상태였는데 다시 a사진으로 재발급 가능하나요??ㅠ
+b사진으로 발급 받은지 6개월이 지나버려서요
+',sysdate,1,233,13,33);
+insert into inquiry(inquiry_no,inquiry_title, inquiry_content, inquiry_date, inquiry_status, inquiry_views, category_no, member_no)
+values(inquiry_no_SEQ.nextval, '반려동물 사진 공모전', '반려동뭉 사진 공모전 참여해보고 싶은데
+지금 하고 있는 공모전 없을까요? 지역은 광주에 살아요 ㅠ
+고등학생이에여 주변에 공모전 수상해서 상금 받고 하더라구요
+대학교 같은데에서 진행중인 공모전도 상관없어요 ㅠ',sysdate,1,933,13,13);
+insert into inquiry(inquiry_no,inquiry_title, inquiry_content, inquiry_date, inquiry_status, inquiry_views, category_no, member_no)
+values(inquiry_no_SEQ.nextval, '질문민증 사진 수험표 사진으로', '민증 사진 너무 마음에 안 들어서 그런데 수험표에 넣었던 사진으로 민증 사진 해도 되나여',sysdate,1,833,13,23);
+insert into inquiry(inquiry_no,inquiry_title, inquiry_content, inquiry_date, inquiry_status, inquiry_views, category_no, member_no)
+values(inquiry_no_SEQ.nextval, '대학로 연극 예매 할인 되는거 있나요?', '오랜만에 남자친구랑 대학로 연극보러 가려는데
+대학로 연극 예매 할인 되는거 있나요?
+재밌는거로 골라서 보고 싶은데
+대학로 연극 예매 할인 받는 방법이나
+정보 좀 알려주세용~',sysdate,1,833,14,23);
+insert into inquiry(inquiry_no,inquiry_title, inquiry_content, inquiry_date, inquiry_status, inquiry_views, category_no, member_no)
+values(inquiry_no_SEQ.nextval, '연극 라면', '고3인데요.다음주에 아빠랑 연극 라면보러 갈건데 부모님이랑 같이보기에 괜찮나요?',sysdate,1,833,14,13);
+insert into inquiry(inquiry_no,inquiry_title, inquiry_content, inquiry_date, inquiry_status, inquiry_views, category_no, member_no)
+values(inquiry_no_SEQ.nextval, '스타트업법률자문 받아야할까요?', '친언니는 대기업 출신이고 저는 일반 공무원을 하다가 둘다 그만둔 상태에요
+인공지능 관련한 일을 같이 해보고 싶어서 같이 시작하려고 하는데 
+스타트업에 경우 스타트업법률자문 꼭 받아가면서 일 시작하는게 좋을까요?
+언니가 대기업 있을때는 변호사 도움 받아가면서 일 진행했다길래요 ㅎ
+신생기업이라도 이런 부분 도움을 받으면서 시작하는게 좋을까 싶어서요. 
+답변주시면 감사하겠습니다.',sysdate,1,833,16,28);
+values(inquiry_no_SEQ.nextval, '스타트업특허를 준비중입니다', '최근 스타트업을 창설하게 되었는데
+스타트업특허의 뜻과 특허시 이점을 알려주시면 감사하겠습니다.',sysdate,1,833,16,38);
+values(inquiry_no_SEQ.nextval, '네이버 블로그 마케팅 효과있나요?', '음식점을 오픈했습니다 요즘에도 네이버 블로그 마케팅 효과가 있을까요? 인스타그램이 대세일거 같긴한데 여전히 블로그 리뷰와 방문자 리뷰가 경쟁사들이 많은 거 같고 요즘엔 어떤가요 블로그마케팅에서 제가 아는 건 체험단인데 이거 말고 또 좋은 네이버 마케팅 방법이 있을가요?.',sysdate,1,833,17,18);
+values(inquiry_no_SEQ.nextval, '특허법률사무소 어떻게 고르는 건가요?', '마케팅은 어떤 직업이고 어떤일을 하나요?',sysdate,1,333,17,19);
+values(inquiry_no_SEQ.nextval, '마케팅이 하는일', '특허법률사무소를 알아보고 있습니다. 특허 출원을 준비중인데 특허법률사무소가 정말 많더라고요.. 어떤걸 보고 골라야 하는지 막막하기도 하고 특허법률사무소는 어떻게 현명하게 고를 수 있는지 알려주세요!',sysdate,1,333,18,9);
+values(inquiry_no_SEQ.nextval, '해외특허법률사무소 알아보고있습니다.', '회사 대표님꼐서 해외특허를 진행해보시자고 합니다.
+회사에서 특허쪽으로 잘 알고있지못해
+해외특허법률사무소 같은 곳에 의뢰를 맡겨야할 것 같은데요
+어떻게 해외특허법률사무소를 알아보면 좋을까요?
+금액은 어느정도 나올까요?',sysdate,1,133,18,10);
+values(inquiry_no_SEQ.nextval, '피트니스 복싱 초기', '닌텐도 피트니스 복싱 미쿠 한 3일정도 2,30분씩 했는데 벌써 상체에 알배겼는데 괜찮은가요??? 고3이어서 운동을 전혀 아예 안하고 막 완전 난생 처음 운동 시작해서 근육이 좀 놀란걸까요? 팔ㅇ이 안올라가여ㅓㅜㅜㅋㅋㅋㅋ 관절빠지는거 아니겟죠?? 괜찮은걸까여ㅏ?? 이렇게 게임에서 시키는대로 무식하게 주먹질 해도 괜찮은걸까요? 스트레칭 해줘야하나여',sysdate,1,233,23,6);
+values(inquiry_no_SEQ.nextval, '피트니스 광고 마케팅 어디가 잘하나요?', '피트니스 광고 마케팅 어디가 잘하나요?
+잘하는곳중 하나로 선택해서 진행하려고 하는데 어디가 정말 좋은지 모르겠어서요
+이용하시는곳 있으시면 공유 부탁드려요 ',sysdate,1,833,23,7);
 
 
 
