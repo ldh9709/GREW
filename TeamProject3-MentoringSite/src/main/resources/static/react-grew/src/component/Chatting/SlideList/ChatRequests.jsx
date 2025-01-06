@@ -18,7 +18,6 @@ const ChatRequests = () => {
                     (room.chatRoomStatus === 7000 && room.chatRoomLeaveStatus === 7500) || (room.chatRoomStatus === 7000 && room.chatRoomLeaveStatus === 7600)
                 );
             });
-            console.log(activeRooms);
             setRooms(activeRooms);  // 필터링된 채팅방만 setRooms에 설정
             setTotalPages(responseJsonObject.data.totalPages);
         }
