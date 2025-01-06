@@ -485,18 +485,3 @@
   cursor: pointer;
 }
 
-/*멘토게시글 검색 영역*/
-.search-container {
-  margin-bottom: 20px;
-}
-
-.search-container input {
-  padding: 8px;
-  width: 200px;
-  margin-right: 10px;
-}
-
-.search-container button {
-  padding: 8px 12px;
-  cursor: pointer;
-}
