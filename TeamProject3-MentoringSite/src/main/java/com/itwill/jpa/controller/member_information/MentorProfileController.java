@@ -287,7 +287,7 @@ public class MentorProfileController {
 	}
 
 	@Operation(summary = "멘토 프로필 수정")
-	@PutMapping("/{mentorProfileNo}")
+	@PutMapping("/modify/{mentorProfileNo}")
 	public ResponseEntity<Response> updateMentorProfile(@PathVariable("mentorProfileNo") Long mentorProfileNo,
 			@RequestBody MentorProfileDto mentorProfileDto) {
 		Response response = new Response();

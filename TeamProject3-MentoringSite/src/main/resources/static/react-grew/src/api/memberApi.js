@@ -232,13 +232,14 @@ export const mentorProfileCreateAction = async (token, mentor) => {
 }
 
 //멘토 프로필 생성(수정)
-export const mentorProfileUpdateAction = async (mentorProfileNo, mentor) => {
+export const mentorProfileUpdateAction = async (mentorProfileNo, mentor, token) => {
     console.log("mentorProfileUpdateAction mentorProfileNo: ", mentorProfileNo);
     console.log("mentorProfileUpdateAction mentor: ", mentor);
-    const response = await fetch(`${BACKEND_SERVER}/mentor-profile/${mentorProfileNo}`, {
+    const response = await fetch(`${BACKEND_SERVER}/mentor-profile/modify/${mentorProfileNo}`, {
         method:'PUT', 
         headers:{
-            'Content-type':'application/json'
+            'Content-type':'application/json',
+            'Authorization': `Bearer ${token}` // Authorization 헤더에 JWT 토큰 추가
         },
         body: JSON.stringify({
             categoryNo: mentor.categoryNo,

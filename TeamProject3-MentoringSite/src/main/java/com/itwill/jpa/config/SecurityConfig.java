@@ -169,7 +169,7 @@ public class SecurityConfig {
 	    "/mentor-profile/*/create-dumy-profile", // 멘토 더미 프로필 생성
 	    "/mentor-profile/status/*", // 멘토 프로필 상태변경
 	    "/mentor-profile/*/upload-image", // 멘토 프로필 이미지 업로드
-	    //"/mentor-profile/*", // 멘토 프로필 수정 => 링크 수정해야함
+	    "/mentor-profile/modify/*", // 멘토 프로필 수정 => 링크 수정해야함
 	   
 	    /***** MENTOR BOARD *****/
 	    "/mentor-board", // 멘토 보드 등록

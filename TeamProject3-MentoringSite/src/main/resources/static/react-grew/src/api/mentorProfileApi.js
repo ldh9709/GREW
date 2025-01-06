@@ -66,7 +66,7 @@ export const updateMentorProfile = async (
   mentorProfileDto
 ) => {
   const response = await fetch(
-    `${BACKEND_SERVER}/mentor-profile/${mentorProfileNo}`,
+    `${BACKEND_SERVER}/mentor-profile/modify/${mentorProfileNo}`,
     {
       method: "PUT",
       headers: { "Content-Type": "application/json;charset=UTF-8" },
