@@ -8,7 +8,7 @@ import "../../css/memberPage.css"
 import google from '../../image/google.png';
 import naver from '../../image/naver.png';
 import kakao from '../../image/kakao.png';
-import dhlogo from '../../image/dhlogo.png';
+import bigLogo from '../../image/logo_960.png';
 
 export const MemberJoinFormPage = () => {
   const navigate = useNavigate();
@@ -227,9 +227,8 @@ export const MemberJoinFormPage = () => {
   return (
     <div className="member-signup-container">
       
-      <img src={dhlogo} alt="logo" className="logo-icon"/>
-      <h2 className="logo-title">멘토멘티 매칭 플랫폼 No.1!</h2>
-      <h3 className="logo-title">그루에 오신 것을 환영합니다</h3>
+      <img src={bigLogo} alt="logo" className="logo-icon"/>
+      <h1 className="logo-title">그루에 오신 것을 환영합니다</h1>
 
       <h3 className="member-join-sub-title">SNS 회원가입</h3>
         <div className="member-sns-login-group">

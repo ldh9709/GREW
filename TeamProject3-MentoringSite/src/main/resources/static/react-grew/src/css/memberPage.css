@@ -43,11 +43,10 @@
 
 .member-join-sub-title {
   text-align: left;
-  margin-left: 45px;
+  margin-left: 20px;
   margin-bottom: 10px;
   font-size: 15px;
   color: #333;
-  font-family: "nanumsquare";
 }
 
 /* 입력 폼 */
@@ -96,15 +95,13 @@
   background-color: #1f973b;
 }
 .logo-icon {
-  display: flex; /* 플렉스박스 활성화 */
-    font-family: "nanumsquare";
+    width: 100px; height: 100px;
+    display: flex; /* 플렉스박스 활성화 */
     margin: 0 auto; /* 여백 자동으로 가운데 정렬 */
     box-sizing: border-box; /* 패딩 포함 */
-
 }
 
 .logo-title{
-    font-family: "nanumsquare";
     text-align: center;
 }
 
@@ -155,7 +152,6 @@ fieldset {
   border: 1px solid #ddd;
   margin-bottom: 15px;
   border-radius: 5px;
-  font-family: "nanumsquare";
 }
 
 legend {
@@ -172,7 +168,6 @@ legend {
 .red-text {
   color: red;
   font-size: 13px;
-  font-family: "nanumsquare";
   margin-left: 10px;
 }
 
@@ -226,7 +221,6 @@ legend {
   width: 300px;
   height: 30px;
   display: flex;
-  font-family: 'nanumsquare';
   font-size: 15px;
   padding: 5px;
 }
@@ -242,7 +236,6 @@ legend {
 
 /* 프로필 페이지 */
 .member-profile-container {
-  font-family: 'nanumsquare';
   background-color: #ffffff;
 }
 .member-profile-header {
@@ -259,14 +252,12 @@ legend {
   margin-top: 100px;
   margin-bottom: 15px;
   padding: 30px;
-  font-family: 'nanumsquare';
 }
 .member-form-group {
   display: flex;
   align-items: center;
   margin-left: 100px;
   margin-bottom: 15px;
-  font-family: 'nanumsquare';
   padding: 5px;
 }
 .member-form-password {
@@ -292,7 +283,6 @@ legend {
   width: 300px;
   height: 30px;
   display: flex;
-  font-family: 'nanumsquare';
   font-size: 15px;
   padding: 5px;
 }
@@ -328,7 +318,6 @@ legend {
   background-color: #ffffff;
   border: 1px solid #ccc;
   border-radius: 10px;
-  font-family: "nanumsquare";
   text-align: center;
   margin: 200px auto 0 auto;
 }
@@ -356,7 +345,6 @@ legend {
   width: 250px;
   height: 250px;
   font-size: 50px;
-  font-family: 'nanumsquare';
   color: white;
   border: none;
   border-radius: 8px;
@@ -404,7 +392,6 @@ legend {
   background-color: #ffffff;
   border: 1px solid #ccc;
   border-radius: 10px;
-  font-family: "nanumsquare";
 }
 
 /* 제목 스타일 */
@@ -451,7 +438,6 @@ legend {
   color: #555;
   margin-bottom: 20px;
   text-align: center;
-  font-family: "nanumsquare";
 }
 
 /* 폼 그룹 */
@@ -464,7 +450,6 @@ legend {
   font-size: 14px;
   color: #333;
   margin-bottom: 5px;
-  font-family: "nanumsquare";
 }
 
 .reset-form input {
@@ -474,7 +459,6 @@ legend {
   border: 1px solid #ccc;
   border-radius: 5px;
   box-sizing: border-box;
-  font-family: "nanumsquare";
 }
 
 .reset-form input:focus {
@@ -501,7 +485,6 @@ legend {
   cursor: pointer;
   margin-top: 15px;
   margin-bottom: 10px;
-  font-family: "nanumsquare";
 }
 
 .send-code-button:hover {
@@ -519,7 +502,6 @@ legend {
   border-radius: 5px;
   font-size: 16px;
   cursor: pointer;
-  font-family: "nanumsquare";
   transition: background-color 0.3s;
 }
 
