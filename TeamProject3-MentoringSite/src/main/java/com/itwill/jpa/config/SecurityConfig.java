@@ -173,7 +173,7 @@ public class SecurityConfig {
 	   
 	    /***** MENTOR BOARD *****/
 	    "/mentor-board", // 멘토 보드 등록
-	    "/mentor-board/*", // 멘토 보드 수정 - {mentorBoardNo}
+	    "/mentor-board/modify/*", // 멘토 보드 수정 - {mentorBoardNo}
 	    "/mentor-board/*/status", // 멘토 보드 삭제(상태변경) - {mentorBoardNo}/status
 	    "/mentor-board/list/member", // 멘토 작성 콘텐츠 (마이페이지 용도)
 	    

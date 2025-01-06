@@ -93,7 +93,7 @@ public class MentorBoardController {
     @SecurityRequirement(name = "BearerAuth")
     @PreAuthorize("hasRole('MENTOR') or hasRole('ADMIN')")    
     @Operation(summary = "멘토 보드 수정")
-    @PutMapping("/{mentorBoardNo}")
+    @PutMapping("/modify/{mentorBoardNo}")
     public ResponseEntity<Response> updateMentorBoard(
             @PathVariable(name = "mentorBoardNo") Long mentorBoardNo, 
             @RequestBody MentorBoardDto mentorBoardDto,
