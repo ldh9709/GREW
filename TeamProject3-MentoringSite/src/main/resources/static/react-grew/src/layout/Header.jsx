@@ -10,7 +10,9 @@ export default function HeaderMenu() {
   const navigate = useNavigate();
   const auth = useMemberAuth();
   const token = auth?.token || null;
+  console.log("토큰 : ", token);
   const member = auth?.member || {};
+  console.log("멤버 : ", member);
   const login = auth.login;
   const mentorProfileNo = token ? member.mentorProfileNo : null;
   const [mentorProfile, setMentorProfile] = useState({});
