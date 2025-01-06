@@ -43,7 +43,7 @@ function InquiryView() {
       setMentorProFileStatus(response.data.mentorStatus);
     }
   };
-  useEffect(() => {
+  useEffect(() => { 
     (async () => {
       const responseJsonObject = await inquiryApi.viewInquiry(inquiryNo);
 
