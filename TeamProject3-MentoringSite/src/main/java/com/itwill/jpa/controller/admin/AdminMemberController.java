@@ -102,7 +102,9 @@ public class AdminMemberController {
     @Operation(summary = "멘토 프로필 리스트 출력(상태별)")
     @GetMapping("/mentor/status")
 	public ResponseEntity<Response> getMemberByMentorStatus(
+			@Parameter(name = "status", description = "1: 멘티(신청전) / 2: 신청접수 / 3: 승인완료 / 4:거절", required = true, example = "3")
 			@RequestParam(name = "status") Integer status,
+			@Parameter(name = "order", description = "정렬, 1:최신순 / 2:이름순 ", required = true, example = "1")
             @RequestParam(name = "order") Integer order,
             @RequestParam(name = "page", defaultValue = "0") int page,
             @RequestParam(name = "size", defaultValue = "10") int size
