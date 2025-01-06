@@ -1031,11 +1031,30 @@ VALUES (report_no_SEQ.nextval, 'INQUIRY', 11, 4,'별로임', sysdate, 1, sysdate
 
 /* 질문 등록 */
 insert into inquiry(inquiry_no,inquiry_title, inquiry_content, inquiry_date, inquiry_status, inquiry_views, category_no, member_no)
-values(inquiry_no_SEQ.nextval, '부자가 되고 싶어요!', '부자가될려면 어떻게 해야하나요?',sysdate,1,411,2,1);
+values(inquiry_no_SEQ.nextval, '집합건물 총무의 관리비 사기 이슈', '안녕하세요. 성남시 분당구 야탑동 일반 상가입니다. 2층에 실평수 15평의 점유중인 임차인입니다. 현재 2년 가까이 임차중입니다만 3층에 1개호실 점유자가 본 건물을 5년 가까인 총무역할을 하고 있습니다. 사업은 에스컴 같은 사설 보안cctv경호를 하고 잇는데, 제가 입주 당시 난데없이 총무라고 소개하면서, 자신의 보안카메라 또는 에어컨 실외기를 달라는 권유와 강요를 3차례 이상해오며, 사무실 문을 자기 집 들어오듯이 열고 들어오는 행위등 소위 말해. 주거침입 범죄을 해왓습니다. 관리비 고지서를 문자 또는 문틈에 끼워두면 되는데. 그걸 빌미로 사무실 부재중이고. 문이열렷을때. 안에 들어와 책상에 두고 가는 짓을 하엿습니다.
+
+우선 본론으로 이 총무가 관리비를 자기 계좌로 받으며. 건물수리등응 자가로 수리하며. 기타지출증빙 자료 일체 없으며, 지출내역 보고등. 일체하지 않습니다. 이미 공동주택관리법 위반으로 경찰에 사기로 고소하엿지만. 집합건물애 해당하여 각하되엇습니다
+
+명백한건. 총무가. 임차인을 상대로 사기 및 횡령한 금액이 매월 최소50만원에서 최대 백만원은 충분히 입증할수 잇습니다.
+
+이 교활한 잡범을 반드시 엄벌하고 싶습니다',sysdate,1,411,2,1);
 insert into inquiry(inquiry_no,inquiry_title, inquiry_content, inquiry_date, inquiry_status, inquiry_views, category_no, member_no)
-values(inquiry_no_SEQ.nextval, '지식을 늘리고 싶어요', '지식을 늘리는 방법에는 무엇이 있나요?',sysdate,1,11,7,2);
+values(inquiry_no_SEQ.nextval, '노가다 총무 재직증명서 발급 거절', '4대보험 들어가있는 회사이구요
+입사하자마자 재직증명서 신청 했더니
+몇일 일하고 신청 하라고 거절하더라구요?
+그래서 몇일 일하고 신청 했더니 이젠 카톡 읽고 씹고
+답장도 안하네요?
+은행. 업무로 신청하는대 은행명이랑 사유 묻고있고
+
+현장에서 근무 하는 총무인데요 전화번호랑 회사명은 알고있고 퇴사후에 신고하려고 하는데요이분때매 제가 일 하루 쉬고 은행가야되게 생겨서요.
+
+이 총무 신고 하려면 고용노동부 가면 되나요??
+카카오톡 보내도 읽고 씹고 그러는 내용은 있네요',sysdate,1,851,2,2);
 insert into inquiry(inquiry_no,inquiry_title, inquiry_content, inquiry_date, inquiry_status, inquiry_views, category_no, member_no)
-values(inquiry_no_SEQ.nextval, '웹개발자 관련 질물', '웹개발자가 되려면 어떤언어를 공부하면 될까요?',sysdate,1,864,16,1);
+values(inquiry_no_SEQ.nextval, '인사총무관리사 자격증', '안녕하세요
+인사팀쪽 일을 하다가 인사총무관리사 자격증을 알아보고있는데요
+민간자격증이라 해도 취득하면 나름 업무적으론 도움이 될 것 같아서 취득하려고 하는데요
+어디서 자격증 취득해야할까요 ?',sysdate,1,864,2,4);
 insert into inquiry(inquiry_no,inquiry_title, inquiry_content, inquiry_date, inquiry_status, inquiry_views, category_no, member_no)
 values(inquiry_no_SEQ.nextval, '장원급제의 정확한 뜻은 무엇인가요?!', '장원급제 뜻에 대해 아래 내용이 궁금해요.
 
@@ -1043,62 +1062,187 @@ values(inquiry_no_SEQ.nextval, '장원급제의 정확한 뜻은 무엇인가요
 • 역사적으로 유명한 장원급제자는 누가 있나요?
 • 장원급제를 한 사람이 조선시대에 맡았던 직책은 무엇인가요??',sysdate,1,351,2,1);
 insert into inquiry(inquiry_no,inquiry_title, inquiry_content, inquiry_date, inquiry_status, inquiry_views, category_no, member_no)
-values(inquiry_no_SEQ.nextval, '질문아이폰 시리 설정', '아이폰16인데 설정에서 Siri 및 검색이 없어요
-아이오에스18로 업데이트하면서 사라진 건가요??
-그리고 시리 설정하는 방법도 알려주세요ㅠㅠ
-아무리 제가 시리라고 불러도 대답을 안 해요ㅠ?',sysdate,1,984,7,4);
+values(inquiry_no_SEQ.nextval, '질문대학교 총무활동 근로장려금
+', '제가 대학교에서 총무 활동을 하고 있어 제 계좌로 큰돈이 왔다갔다 합니다.
+이게 근로 장려금이 지급되는 액수와 큰 관련이 있을까요?
+만약 관련 또한 있다면 해결방법도 알려주세요ㅠㅠ',sysdate,1,984,2,4);
 insert into inquiry(inquiry_no,inquiry_title, inquiry_content, inquiry_date, inquiry_status, inquiry_views, category_no, member_no)
-values(inquiry_no_SEQ.nextval, '질문인스타 상대방 스토리 캡쳐하면 뜨나요??', '중학교 선배 인스타 스토리 캡쳐했는데 상대방 스토리에 캡쳐한거 뜨나요?',sysdate,1,84,16,5);
+values(inquiry_no_SEQ.nextval, '질문총무와 재무의 차이점', '회사 직무에서 총무와 재무가 있는데
+두 개의 차이점이 뭔가요',sysdate,1,144,2,5);
 insert into inquiry(inquiry_no,inquiry_title, inquiry_content, inquiry_date, inquiry_status, inquiry_views, category_no, member_no)
-values(inquiry_no_SEQ.nextval, '스타벅스 램프', '2024.12.23일날 품절 되었나요? 아님 그 전에 품절 된건가요??',sysdate,1,1025,2,6);
+values(inquiry_no_SEQ.nextval, '질문종중 총무임의 로 임야매매', '종중 총무가 임으로 임야 매매를 했어요
+개인뿌로가 한테요(자격 없읆)
+5억에 샀다기에 등본으떼어보니 3억이에요
+맨처음 다운 계역서 라드니 3일후 나무값이 2억아라고 매매서류를 만들어 왔어요
+매매 무효화 하고  나무값 2억을 되돌려 바을수 있을까요
+임원 및 이사들 모르게 거래를 햇어요  ',sysdate,1,1114,2,5);
 insert into inquiry(inquiry_no,inquiry_title, inquiry_content, inquiry_date, inquiry_status, inquiry_views, category_no, member_no)
-values(inquiry_no_SEQ.nextval, '질문영웅vs하얼빈', '영웅이 재밌나요?
+values(inquiry_no_SEQ.nextval, '총무 현금영수증(소득공제용, 지출증빙용)', '이번 5월에 입사했고 총무 처음해봐서,,현금영수증을 제 번호로 끊어버렸어요..이러면 안 된다는 걸 지금 알아버렸습니다. 그래서 용도 변경을 하려면 홈택스에 들어가면 가능하다해서 소득공제용 현금영수증 끊은 내역을 보니 안 떴더라고요?? 이런 경우에는 아직 반영이 안 된건지, 아니면 소득공제용으로 끊긴게 아닌건지 궁금합니다 만약 소득공제용으로 끊겼을 경우에 다시 갔던 식당에서 지출증빙용으로 다시 현금영수증 달라고 하면 안되는 부분인지 궁금합니다 ㅠㅠㅠㅠㅠ 
++제가 4월에 첫 월급을 받고 5월에 일을 하며 현금영수증을 제 번호로 현금영수증을 끊었는데요 그래서 부모님 연말정산 세금 감면에 쓰여서 내역에 안뜨는 경우인건지도 궁금합니다. ',sysdate,1,844,2,6);
+insert into inquiry(inquiry_no,inquiry_title, inquiry_content, inquiry_date, inquiry_status, inquiry_views, category_no, member_no)
+values(inquiry_no_SEQ.nextval, '위촉직 총무 실업급여 수급자격문의', '보험사에 위촉직(특고직/설계사코드사용)총무로 고용보험 가입 후 2년간 근무하고 계약 만기로 퇴사 예정입니다.
+위촉직이어도 해당 계약서와 고용보험 상실시 계약만기사유라는게 확인되면 실업급여 수급가능한가요? 수급이 가능하다면 센터 방문시 필요서류 함께 문의드립니다.(해촉증명서 등)
+고용보험',sysdate,1,584,2,5);
+insert into inquiry(inquiry_no,inquiry_title, inquiry_content, inquiry_date, inquiry_status, inquiry_views, category_no, member_no)
+values(inquiry_no_SEQ.nextval, '인사총무관리사 자격증 공부하려고 하는데요.', '안녕하세요! 인사과를 목표로 하는 취준생입니다.
+이력서 쓰다 보니 관련한 스펙이 부족한 것 같아서
+인사총무관리사 자격증 준비를 해볼까 하는데요.
 
-하얼빈이 재밌나요?
+혹시 인사총무관리사 자격증도 인강으로 딸 수 있는 건가요?
 
-둘다 안중근 의사의 이야기를 다룬 영화라지만
+기간은 보통 어느 정도 걸릴까요?',sysdate,1,444,2,7);
+insert into inquiry(inquiry_no,inquiry_title, inquiry_content, inquiry_date, inquiry_status, inquiry_views, category_no, member_no)
+values(inquiry_no_SEQ.nextval, '영업신고 및 사업자등록 관련 부가세 문의', '오픈 준비중에 있습니다.
+영업신고증은 12월 20일쯤 신청해서 받을 생각이고
+간이사업자는 1월에 사업자를 내는게 좋다고해서
+사업자등록증 신청은 25년 1월 2일에 할 예정인데
 
-제 친구가 오늘 하얼빈 보고 왔다는데
+영업신고증 날짜와 상관없이 사업자등록(개업)이 1월이면
+25년 1월 부가세 신고는 안해도 되는걸까요?
 
-영웅보다 하얼빈이 재밌다고 하더라구요
+그리고 만약 사업자등록을 올해 12월에 같이해버리고
+신청시 개업연월일을 25년 1월달로 작성하면
+25년 1월에 부가세 신고를 안해도되나요? 아니면
+신청이 24년 12월이니까 25년 1월 부가세 신고를 해야하나요?',sysdate,1,984,3,5);
+insert into inquiry(inquiry_no,inquiry_title, inquiry_content, inquiry_date, inquiry_status, inquiry_views, category_no, member_no)
+values(inquiry_no_SEQ.nextval, '영업방해및 협박죄 성립가능한가요?', '안녕하세요. 질문하겠습니다.
+저는 숙박업을 하고있습니다. 저희 전 직원이 약 4년을 일을 하면서 저희 회사돈을 횡령을 했습니다,
+그래서 관할 경찰서에 신고를 했지만, 그 직원의 주소가 불명이라 잡지 못하고 있습니다.
+그런데 문제는 여기서 인데요
+그 직원이 일을 하고 횡령한 사실을 알고 월급을 받는 동시에 도망을 갔습니다.,
+9일간 돈을 안준 상태입니다. 그 직원은 돈을 주지 않았다는것으로 노동청에  신고를 했었구요
+그래서 2번 조서를 받으러 출석을 안했습니다. 그래서 노동청에서 수사가 종료가 된상태입니다
+근데 그 직원이 저희 홈페이지에 글을 남기고 있습니다. 나쁜말들로 악용하고 있습니다.
+그뿐만이 아니고 저희숙박업소에 방이 남아있는곳에 임의적으로 예약을 하고있습니다.
+다른 손님들 예약을 못하게 방해를 하고있습니다.(증거는 차고 넘칩니다)
+이 부분이 영업방해죄 성립이 되나요?
+사이버 수사대로 신고를 할수있는부분일까요? 그 사람이 주소로도 못찾고 연락처도 수시로 바꿔서
+잡지를 못하고 있는데. 어떻게 해야될까요?
+또한 저희 회사 통장에 돈을 1원씩 넣으면서 (언제까지 돈을 넣어라)(안그러면 신고한다등)
+협박을 하고 있습니다.
+저는 답변 또한 그 직원에게 해주지도 못하는 상황입니다.
+이또한 협박죄도 가능한가요?',sysdate,1,284,3,13);
+insert into inquiry(inquiry_no,inquiry_title, inquiry_content, inquiry_date, inquiry_status, inquiry_views, category_no, member_no)
+values(inquiry_no_SEQ.nextval, '영업방해죄 성립 요건과 처벌 수위는 어떻게 되나요?', '최근 가게 앞에서 큰 소리로 욕설을 하며 소란을 피우는 사람 때문에 영업에 큰 피해를 입었습니다. 이 경우 영업방해죄로 고소할 수 있나요? 만약 가능하다면 영업방해죄 성립 요건과 처벌 수위는 어떻게 되는지 알고 싶습니다. 또한 증거 수집 방법과 절차도 함께 알려주시면 감사하겠습니다.',sysdate,1,84,3,14);
+insert into inquiry(inquiry_no,inquiry_title, inquiry_content, inquiry_date, inquiry_status, inquiry_views, category_no, member_no)
+values(inquiry_no_SEQ.nextval, '미용업 영업신고 시 필요한 사항은 무엇인가요?', '미용실 영업신고할 때 필요한 서류는 무엇이 있나요?',sysdate,1,147,3,21);
+insert into inquiry(inquiry_no,inquiry_title, inquiry_content, inquiry_date, inquiry_status, inquiry_views, category_no, member_no)
+values(inquiry_no_SEQ.nextval, '질문병원영업정지 해결 원해요', '남편이 운영하는 병원이 광고법위반으로 병원영업정지 당할 위기에 놓여있습니다. 
+업체 통해서 광고를 해왔고 문제 없다고 들었는데 당황스럽습니다...
+도와주실 변호사님 찾습니다..',sysdate,1,84,3,41);
+insert into inquiry(inquiry_no,inquiry_title, inquiry_content, inquiry_date, inquiry_status, inquiry_views, category_no, member_no)
+values(inquiry_no_SEQ.nextval, 'IT 개발 대금 미지급 문제와 사기죄 고소 가능성', '안녕하세요, IT 개발사를 운영하고 있습니다.
+저희가 올해 2월에 홈페이지 개발 건을 수주 받은 것이 있는데,
+12월이 다 되도록 잔금을 이체하지 않고 있습니다.
+계약은 총 500만원으로, 잔금은 250만원이 남은 상태입니다.
 
-오늘 개봉 했다고 하던데
+잔금을 지급하지 않는 이유는 한결같이 최종 결과물이 마음에 들지 않는다는 것입니다.
+잔금 지급 요청도 벌써 5번 넘게 했으며,
+수정 요청 해달라고 할 때마다 수정해서 디자인 전면 갈아 엎기만 3 차례가 넘습니다.
+별도의 유지보수 계약 없이 계속 인력 소요가 들어가니 벌써 적자인 프로젝트입니다.
 
-굳이 둘중 하나 고르자면 뭐가 더 볼만하고 재밌나요??',sysdate,1,887,7,7);
+홈페이지에 오타가 많고, (어디에 오타있는지 설명도 안함)
+이미지가 마음에 들지 않으며 (추가로 주지도 않음)
+레이아웃 변경을 수없이 요구합니다.
+그걸 다 해야 잔금을 준다는 식인데, 벌써 몇번의 수정을 거쳤는데도 주지 않습니다.
+너무 지쳐서 이제 고소하고 싶은데, 승소 가능성이 있나요?
+큰 돈은 아니지만 2월부터 지금까지 너무 힘이 듭니다.',sysdate,1,847,4,14);
 insert into inquiry(inquiry_no,inquiry_title, inquiry_content, inquiry_date, inquiry_status, inquiry_views, category_no, member_no)
-values(inquiry_no_SEQ.nextval, '강철부대w 새 회차 넷플릭스에 올라오는 시간', '강철부대w 새 회차는 방송이 끝나야 넷플릭스에 올라오나요? 지금 하고있는 13화(전우회) 편이 아직 넷플엔 없어서요',sysdate,1,151,16,7);
+values(inquiry_no_SEQ.nextval, 'IT 웹 개발 위탁학교 알려주세요', '위탁학교 고민중인에 it웹 개발 위탁학교 알려주세요',sysdate,1,824,4,16);
 insert into inquiry(inquiry_no,inquiry_title, inquiry_content, inquiry_date, inquiry_status, inquiry_views, category_no, member_no)
-values(inquiry_no_SEQ.nextval, '전화 추합이 마지막 날 제일 많이 빠지나요?', '전화 추합이 마지막 날 제일 많이 돌고 빠질까요ㅠㅠ??? 정말 피가 마르네요…',sysdate,1,18,2,8);
-insert into inquiry(inquiry_no,inquiry_title, inquiry_content, inquiry_date, inquiry_status, inquiry_views, category_no, member_no)
-values(inquiry_no_SEQ.nextval, '2024 SBS 가요대전 순서별 예측 시간', '안녕하세여! 저는 스트레이키즈 분들의 무대만 보고 싶은데 정확한 시간을 몰라서 글을 올립니다.. 가요대전을 보는 게 이번이 처음이라서.. 대략 몇시에 시작할 지도 잘 몰라서ㅜ 스키즈 븐들 무대가 3부에 될 거 같은데.. 언제 시작할 까요?? 큐피드 사진 빨갛게 밑줄 친 데가 스키즈분들 순서 입니당..',sysdate,1,97,7,4);
-insert into inquiry(inquiry_no,inquiry_title, inquiry_content, inquiry_date, inquiry_status, inquiry_views, category_no, member_no)
-values(inquiry_no_SEQ.nextval, '월세 2회 미납 관련', '매월24일 월세를 드리는 날입니다.
-11월에는 급여를 받는날이 늦어져, 12월10일에 드리게 되었습미다...
-이번달도 회사에서도 사정이 안되어,,,다음달 10일 급여를 주신다고 하여... 집주인께 다음달 10일까지 양해를 규하는 연락을 드리게 되었습니다. 두번째 미입금으로 임대차법 적용에 해당이 되니, 일주일 이내로 짐을 빼라고 하셔서... 이러는 상황에서 보증금도 받을수 있을까요?? ㅠㅠ 법적으로 조취하시겠다고 하셔서,,, 무서워서, 빨리 다른집을 찾아보고 있는데...ㅠㅠ',sysdate,1,6,16,5);
+values(inquiry_no_SEQ.nextval, '웹개발 IT국비지원 온라인 강의 문의입니다', '안녕하세요
 
+현재 내일배움카드를 신청하고 강의를 신청하려 하고 있습니다
+
+제가 7년정도전에 이민을 와서 혹시 웹개발 IT국비지원 온라인 강의 아시는 것 있으시면 알려주시면 감사하겠습니다
+
+감사합니다',sysdate,1,1284,4,5);
 insert into inquiry(inquiry_no,inquiry_title, inquiry_content, inquiry_date, inquiry_status, inquiry_views, category_no, member_no)
-values(inquiry_no_SEQ.nextval, '조명가게 이해안되는 부분 있어서 질문남겨요', '1,박보영과 주지훈은 개인적으로 현생에서는 즉 이승에서는 인연이 없는 관계인건가요?  박보영이 코마상태였을때 박보영도 조명가게를 들르게 된 건가요??',sysdate,1,105,16,6);
+values(inquiry_no_SEQ.nextval, '중학생 백반증, 한의원 치료 효과 있을까요?', '강남 압구정역 10대 중반/여 백반증
+
+저는 중학생 딸아이를 둔 엄마입니다. 몇 달 전부터 아이 팔과 다리에 하얀 반점이 생겨 병원에 갔더니 백반증 진단을 받았습니다.
+
+
+
+여러 치료 방법을 알아보다가 한의원 치료가 백반증에 효과적이라는 이야기를 들었습니다.
+
+
+
+아이가 아직 어리고, 민감한 피부를 가지고 있어서 어떤 치료가 가장 안전하고 효과적일지 고민이 됩니다.
+
+
+
+한의원에서는 아이들의 백반증을 어떤 방식으로 치료하고, 치료가 진행되면서 어떤 점에 유의해야 하는지 알고 싶습니다.
+
+
+
+부모로서 아이의 백반증이 다시 생기지 않도록 관리하는 방법도 궁금합니다.',sysdate,1,384,6,22);
 insert into inquiry(inquiry_no,inquiry_title, inquiry_content, inquiry_date, inquiry_status, inquiry_views, category_no, member_no)
-values(inquiry_no_SEQ.nextval, '멀티탭에 이 버튼은 뭔가요 ??', '눌러도 고정이안되고 무슨 용도인가요?',sysdate,1,47,2,6);
+values(inquiry_no_SEQ.nextval, '중학생보약도 효과가 좋을까요?', '청담 10대 중반/여 공진단
+
+키성장에도 도움이 되고 아이 공부하는데 도움이 된다면 중학생이어도 보약은 필요할 것 같아요 근데 비쌀까요?',sysdate,1,774,6,41);
 insert into inquiry(inquiry_no,inquiry_title, inquiry_content, inquiry_date, inquiry_status, inquiry_views, category_no, member_no)
-values(inquiry_no_SEQ.nextval, '뱀파이어 웹툰 찾아주세요', '주인공이 여자고 학생인데 학교에서 왕따 당하는 있는 상황이고
-돈이 필요해서 친구의 도움으로 어떤 술집?에 갔는데
-거기 술집이 뱀파이어 술집 같은 곳이여서 주인공 피 빼고 뱀파이어가 주인공 피 맛을 봤는데 주인공 피가 특별해서 정기적으로 거기 술집 가서 피 빼고 그런 내용이었던 것 같은데 찾을 수 있나요?',sysdate,1,888,7,6);
+values(inquiry_no_SEQ.nextval, '중학생도 코수술 할 수 있나요?', '중학생인데 부모님 허락받고 코수술 하신 분 있으신가요..?
+병원에서 아예 안 받아주나요?',sysdate,1,984,6,15);
 insert into inquiry(inquiry_no,inquiry_title, inquiry_content, inquiry_date, inquiry_status, inquiry_views, category_no, member_no)
-values(inquiry_no_SEQ.nextval, '임영웅 리사이틀 콘서트 부스 위치요?', '임영웅 리사이틀 콘서트 각 부스들이 어디에 있는지 알고 가면 좋을거 같아서 그러는데 혹시 안내도 있을까요?',sysdate,1,777,16,6);
+values(inquiry_no_SEQ.nextval, '농구선수 중학생 때 키', '남자 농구선수들 중학생 때는 키가 어느정도 되어야 할까요?',sysdate,1,1025,6,6);
 insert into inquiry(inquiry_no,inquiry_title, inquiry_content, inquiry_date, inquiry_status, inquiry_views, category_no, member_no)
-values(inquiry_no_SEQ.nextval, '피파 스쿼드좀 짜줏실분ㅠㅠ', '2050억 있는데 처음해봐서 어떻게 팀을 만들어야 할지 모르겠어요ㅠㅠ 어떤 팀이던 다 상관 없으니 2050억 맞춰서만 최대한 좋게 부탁드립니다!
-++++ 2444억 으로 바꼈어요!!!?',sysdate,1,333,2,6);
+values(inquiry_no_SEQ.nextval, '중학생 학폭 소송', '중학생 학폭했을때 소송같은거 해서 합의금 물어줘야 하면
+부모가 그냥 배째라는식으로 안줄수도있나요?',sysdate,1,887,6,7);
 insert into inquiry(inquiry_no,inquiry_title, inquiry_content, inquiry_date, inquiry_status, inquiry_views, category_no, member_no)
-values(inquiry_no_SEQ.nextval, '질문고등학생 크리스마스 서울 데이트장소 추천', '오늘부로 100일된 커플입니다
+values(inquiry_no_SEQ.nextval, '고등학생성추행 어떻게해야할까요', '고등학생성추행 피해자의 부모입니다. 같은반 학생에게 딸이 성추행을 당했습니다. 고등학생성추행은 처벌이 어려우려나요? 그냥 덮고 묻어주고 잊어야하는게 맞는지 어디까지 가야할지 모르겠습니다.',sysdate,1,151,7,36);
+insert into inquiry(inquiry_no,inquiry_title, inquiry_content, inquiry_date, inquiry_status, inquiry_views, category_no, member_no)
+values(inquiry_no_SEQ.nextval, '전화 추합이 마지막 날 제일 많이 빠지나요?', '전화 추합이 마지막 날 제일 많이 돌고 빠질까요ㅠㅠ??? 정말 피가 마르네요…',sysdate,1,1118,7,8);
+insert into inquiry(inquiry_no,inquiry_title, inquiry_content, inquiry_date, inquiry_status, inquiry_views, category_no, member_no)
+values(inquiry_no_SEQ.nextval, '2024 SBS 가요대전 순서별 예측 시간', '안녕하세여! 저는 스트레이키즈 분들의 무대만 보고 싶은데 정확한 시간을 몰라서 글을 올립니다.. 가요대전을 보는 게 이번이 처음이라서.. 대략 몇시에 시작할 지도 잘 몰라서ㅜ 스키즈 븐들 무대가 3부에 될 거 같은데.. 언제 시작할 까요?? 큐피드 사진 빨갛게 밑줄 친 데가 스키즈분들 순서 입니당..',sysdate,1,97,7,34);
+insert into inquiry(inquiry_no,inquiry_title, inquiry_content, inquiry_date, inquiry_status, inquiry_views, category_no, member_no)
+values(inquiry_no_SEQ.nextval, '고등학생 크리스마스 서울 데이트장소 추천', '오늘부로 100일된 커플입니다
 서울에서 데이트 할 예정인데
 뭐하고 놀아야할지 감이 잘안잡혀 질문 올립니다
 크리스마스에 여자친구랑 재밌게 놀만한 장소나
-분위기 좋은곳 추천해주시면 정말 감사하겠습니다',sysdate,1,222,7,6);
+분위기 좋은곳 추천해주시면 정말 감사하겠습니다',sysdate,1,222,7,37);
 insert into inquiry(inquiry_no,inquiry_title, inquiry_content, inquiry_date, inquiry_status, inquiry_views, category_no, member_no)
-values(inquiry_no_SEQ.nextval, '오징어게임 2 개봉시간 언제인가요?', '기사에서는 26일 정각이라하고
-지식인에서는 5시 정각이라하는데
-오전 오후 언제 인건가요??',sysdate,1,987,16,6);
+values(inquiry_no_SEQ.nextval, '대학입시 연기', '현재 05년생이고 대학입시를 준비중입니다. 내년에 삼수를 하게되면 어떻게 연기신청을 해야되나요? 수능접수증을 준비하면 되나요? ',sysdate,1,6,8,31);
+
+insert into inquiry(inquiry_no,inquiry_title, inquiry_content, inquiry_date, inquiry_status, inquiry_views, category_no, member_no)
+values(inquiry_no_SEQ.nextval, '학폭대학입시 영향있을까요?', '학폭대학입시 문제로 걱정입니다...
+
+제가 학교폭력을 하게 되어 학폭위가 열리는데
+만일 이게 생기부에 남으면 영구적으로 남는 걸까요?
+학폭대학입시 지장이 갈 정도일까요?',sysdate,1,105,8,36);
+insert into inquiry(inquiry_no,inquiry_title, inquiry_content, inquiry_date, inquiry_status, inquiry_views, category_no, member_no)
+values(inquiry_no_SEQ.nextval, '04년생 대학입시 사유로 입영연기', '04년생인데 대학입시로 입영 연기가 된다고 하는데 대학입시서류..? 를 어디서 떼오나요..?',sysdate,1,417,8,26);
+insert into inquiry(inquiry_no,inquiry_title, inquiry_content, inquiry_date, inquiry_status, inquiry_views, category_no, member_no)
+values(inquiry_no_SEQ.nextval, '일본 대학 입시', '지금 현재 고삼이고 수시2차 결과랑 추합 기다리고 있습니다 제가 학과를 일어과로 다 넣었는데 만약에 다 떨어지면 일본 대학을 갈 계획인데 일본대학 입시에 대해서 알려주실 수 있나요..? 내신성적이 좋지는 않지만 넣은 대학은 명전 배화 한양여대입니다 일본대학 전문대학 또는 사년제 대학 입시에 대해서 알려주실 수 있나요..? 준비과정이나 어떤 걸 해야하는지 지금 현재 jlpt를 준비하고 있습니다 (일본대학에 어떤 전형이 있는지도 알려주세요ㅜㅜ) 부탁드립니다….',sysdate,1,888,8,24);
+insert into inquiry(inquiry_no,inquiry_title, inquiry_content, inquiry_date, inquiry_status, inquiry_views, category_no, member_no)
+values(inquiry_no_SEQ.nextval, '음악 저작권 어떻게 되나요?', '블로그에 음악을 올리려고 하는데 저작권 문제가 걱정됩니다. 음악 저작권법 위반 시 처벌 수위와 함께 합법적으로 음악을 사용하는 방법에 대해서도 알려주시면 감사하겠습니다. 상세한 답변 부탁드립니다.',sysdate,1,777,10,16);
+insert into inquiry(inquiry_no,inquiry_title, inquiry_content, inquiry_date, inquiry_status, inquiry_views, category_no, member_no)
+values(inquiry_no_SEQ.nextval, '전문대 실용음악과', '실용음악과있는 전문대학교가 어디인가요?',sysdate,1,333,10,21);
+insert into inquiry(inquiry_no,inquiry_title, inquiry_content, inquiry_date, inquiry_status, inquiry_views, category_no, member_no)
+values(inquiry_no_SEQ.nextval, '음악교육과...', '음악교육과 진학 원하는 예비 고1학생인데요
+1.음악교육과는 생기부를 안 보나요? 서원대는 안 본다고 하던데 제 세대부터 교육체제가 바뀌어서 잘 모르겠어요
+2.음악교육과 있는 대학교에 내신컷이 어느정도 되나요?
+3.실기 준비는 언제 부터 해야할까요? 입시 학원을 다니자니 아무래도 음악교육과니깐 공부를 우선으로 해야할거같아서요
+4.만약 음악교육과에 진학 하고 나서 임영고시를 치면 음악선생님이 되는건데 임용고시는 많이 어렵나요….??',sysdate,1,1441,10,23);
+insert into inquiry(inquiry_no,inquiry_title, inquiry_content, inquiry_date, inquiry_status, inquiry_views, category_no, member_no)
+values(inquiry_no_SEQ.nextval, '한국교원대 음악교육과 편입', '타 대학 음악교육과에서 한국교원대 음악교육과로 편입할 수 있나요 ?? 한국교원대 홈페이지 편입요강에는 없던데 된다면 어디서 전형 확인할 수 있을까요 ..?',sysdate,1,3133,10,27);
+insert into inquiry(inquiry_no,inquiry_title, inquiry_content, inquiry_date, inquiry_status, inquiry_views, category_no, member_no)
+values(inquiry_no_SEQ.nextval, '소방공무원 실용글쓰기', '실용글쓰기 3%가 630점 맞나요? 710점이라 나와있는것도 있어서요 2025년 기준으로 알려주세요!',sysdate,1,733,11,31);
+insert into inquiry(inquiry_no,inquiry_title, inquiry_content, inquiry_date, inquiry_status, inquiry_views, category_no, member_no)
+values(inquiry_no_SEQ.nextval, '통일 글쓰기 대회 같은 거 있나요?', '제목이 곧 내용!
+현재 진행중인 대회도 좋고, 매해 마다 하는 대회여도 좋아요! 좀 알려주세요ㅠㅠ
+
+(소설로 써도 되는 대회로!!)',sysdate,1,433,11,32);
+insert into inquiry(inquiry_no,inquiry_title, inquiry_content, inquiry_date, inquiry_status, inquiry_views, category_no, member_no)
+values(inquiry_no_SEQ.nextval, '글쓰기 시작하려면', '글쓰기를 시작하고 싶은데 어떤 방법으로 시작을 하면 좋을지요?',sysdate,1,333,11,37);
+insert into inquiry(inquiry_no,inquiry_title, inquiry_content, inquiry_date, inquiry_status, inquiry_views, category_no, member_no)
+values(inquiry_no_SEQ.nextval, '중2 글쓰기 수행평가 처음 끝', '중2 글쓰기 수행평가 처음이랑 끝을 어떤 설명방법을 사용해서 써야할 지 모르겠어요',sysdate,1,733,11,31);
+insert into inquiry(inquiry_no,inquiry_title, inquiry_content, inquiry_date, inquiry_status, inquiry_views, category_no, member_no)
+values(inquiry_no_SEQ.nextval, '초등 미술 공모전', '곧잇으면 하는 미술 공모전이 잇는지 궁금합니다 !!
+올해에 공모전 몇번 한 뒤로 재미있어서 계속 시도 하는 중인데
+2025년 미술 공모전이라던가 아니면 지금 하고잇는 미술 공모전 좀 알려주세요 !! 주제는 상관 없어요 시간이 넉넉하고 초등학생 잼민이가 참여할 공모전이묜 됩니다 !',sysdate,1,133,12,11);
+
+
 
 
 /* 답변 등록 */
