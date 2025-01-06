@@ -210,7 +210,12 @@ const MentorBoardDetail = () => {
         )}
       </div>
 
-      <div className="mentor-info-card">
+      <div
+        className="mentor-info-card"
+        role="button" // 접근성을 위한 역할 추가
+        tabIndex={0} // 키보드 접근 가능
+        onClick={() => navigate(`/mentor-profile/${mentor.mentorProfileNo}`)} // 클릭 시 네비게이션
+      >
         <img
           src={mentor.mentorImage || "/default-profile.png"}
           alt="멘토 프로필 이미지"
@@ -225,7 +230,10 @@ const MentorBoardDetail = () => {
         <div className="mentor-follow">
           <button
             className={`follow-button ${isFollow ? "follow-isexist" : ""}`}
-            onClick={handleFollowClick}
+            onClick={(e) => {
+              e.stopPropagation(); // 이벤트 전파 차단
+              handleFollowClick();
+            }}
           >
             {isFollow ? (
               <FontAwesomeIcon icon={faHeart} />

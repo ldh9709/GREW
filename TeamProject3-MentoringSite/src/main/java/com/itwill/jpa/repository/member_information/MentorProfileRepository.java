@@ -57,6 +57,7 @@ public interface MentorProfileRepository extends JpaRepository<MentorProfile, Lo
             "LEFT JOIN FETCH mp.careers c " + // MentorProfile의 careers를 직접 조인
             "WHERE mp.mentorStatus = 3 AND (" +
             "LOWER(mp.mentorIntroduce) LIKE LOWER(CONCAT('%', :search, '%')) " +
+            "OR LOWER(mp.mentorHeadline) LIKE LOWER(CONCAT('%', :search, '%')) " + 
             "OR LOWER(mp.member.memberName) LIKE LOWER(CONCAT('%', :search, '%')) " +
             "OR LOWER(c.careerCompanyName) LIKE LOWER(CONCAT('%', :search, '%')) " +
             "OR LOWER(c.careerJobTitle) LIKE LOWER(CONCAT('%', :search, '%')))")

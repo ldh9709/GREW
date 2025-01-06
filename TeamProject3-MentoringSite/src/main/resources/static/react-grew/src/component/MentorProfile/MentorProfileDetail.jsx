@@ -304,21 +304,21 @@ export default function MentorProfileDetail() {
       </div>
 
       <div className="mentor-boards">
-        <h3>멘토 보드</h3>
-        {boards.length > 0 ? (
-          boards.map((board) => (
-            <MentorBoardItem
-              key={board.mentorBoardNo}
-              board={board}
-              onClick={() =>
-                navigate(`/mentor-board/detail/${board.mentorBoardNo}`)
-              }
-            />
-          ))
-        ) : (
-          <p>등록된 멘토 보드가 없습니다.</p>
-        )}
-      </div>
+  <h3>멘토 보드</h3>
+  {boards.length > 0 ? (
+    <div className="mentor-board-list">
+      {boards.map((board) => (
+        <MentorBoardItem
+          key={board.mentorBoardNo}
+          board={board}
+          onClick={() => navigate(`/mentor-board/detail/${board.mentorBoardNo}`)}
+        />
+      ))}
+    </div>
+  ) : (
+    <p>등록된 멘토 보드가 없습니다.</p>
+  )}
+</div>
     </div>
   );
 }

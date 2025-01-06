@@ -172,7 +172,6 @@ const ChattingMessage = ({ roomId, roomName, Status, mentorNo }) => {
             }
           );
         },
-        onDisconnect: () => console.log("Disconnected"),
       });
 
       stompClient.current.activate();

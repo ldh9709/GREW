@@ -1,6 +1,7 @@
 package com.itwill.jpa.auth;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -24,14 +25,22 @@ public class PrincipalDetailsService implements UserDetailsService {
 	@Override
 	//로그인 요청 받을 시 호출
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		System.out.println("username >>>>>" + username);
+		
 		//아이디로 멤버 찾기
 		MemberSecurityDto findMember = MemberSecurityDto.toDto(memberRepository.findMemberByMemberId(username));
-		System.out.println("findMember >>>>>" + findMember);
+		
+		// 사용자 상태(memberStatus) 확인
+        if (findMember.getMemberStatus() == 2) {
+            throw new BadCredentialsException("탈퇴한 사용자입니다.");
+        }
+        
 		//멤버가 존재하면 찾은 멤버 반환
 		if(findMember != null) {
 			return new PrincipalDetails(findMember);
 		}
+		
+		
+		
 		return null;
 	}
 

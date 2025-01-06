@@ -14,27 +14,18 @@ export default function AdminMentorBoard () {
     const [search, setSearch] = useState("");// 검색어
     
     const fetchBoards = async () => {
-        try {
-            let response;
-            if (search.trim()) {
-                // 검색어가 있는 경우
-                response = await adminApi.adminMentorBoardWithSearch(token, search, page, size);
-            } else {
-                // 검색어가 없는 경우
-                response = await adminApi.adminMentorBoard(token, page, size);
-            }
-
-            if (response && response.data && response.data.content) {
-                setMentors(response.data.content);
-                setTotalPages(response.data.totalPages); // 전체 페이지 수 설정
-            } else {
-                console.error("유효하지 않은 응답 데이터:", response);
-                setMentors([]); // 데이터가 없을 경우 빈 배열로 설정
-            }
-        } catch (error) {
-            console.error("게시판 데이터를 가져오는 중 오류 발생:", error);
-            setMentors([]); // 오류 발생 시 빈 배열로 설정
+        let response;
+        if (search.trim()) {
+            response = await adminApi.adminMentorBoardWithSearch(token, search, page, size);
+        } else {// 검색어가 없는 경우            
+            response = await adminApi.adminMentorBoard(token, page, size);
         }
+        if (response && response.data && response.data.content) {
+            setMentors(response.data.content);
+            setTotalPages(response.data.totalPages); // 전체 페이지 수 설정
+        } else {            
+            setMentors([]); // 데이터가 없을 경우 빈 배열로 설정
+        }        
     };
 
     useEffect(()=>{
@@ -46,40 +37,38 @@ export default function AdminMentorBoard () {
         setCurrentPage(pageNumber);
     };
 
-    //게시글 이동
     const handleMoveMentor = async (mentorBoardNo) => {///mentor-board/detail/5
-        const url = `/mentor-board/detail/${mentorBoardNo}`;// mentorBoardNo를 사용하여 URL
+        const url = `/mentor-board/detail/${mentorBoardNo}`;// 게시글 이동
         window.open(url, "_blank"); // 새 탭에서 열기
-    }
+    };
 
-    const handleSearch = (e) => {
-        setSearch(e.target.value);
-        setPage(0);
-    }
+    const handleSearchChange = (e) => {
+        setSearch(e.target.value); // 검색어 변경 시
+    };
+
+    const handleSearchSubmit = (e) => {
+        e.preventDefault(); // 폼 제출 시 페이지 리로드 방지
+        fetchBoards(); // 검색 결과를 가져오기
+    };
+
     return(
         <div className="admin-table-container">
-            {/*<div className="dropdwon"> 
-                <select className="dropdown-style" 
-                value={role} onChange={(e)=> setRole(e.target.value)}>
-                    <option value="ALL">전체 보기</option>
-                    <option value="1">직무 상담</option>
-                    <option value="2">학습 / 교육</option>
-                    <option value="3">예술 / 창작</option>
-                    <option value="4">창업 / 비즈니스</option>
-                </select>
-            </div>
-            <div className="dropdwon">
-                <input type="text" onChange={handleSearch}
-                placeholder="검색어"
-                className="search-input"
-                value={search}/>
+            {/*<div className="search-container">
+                <form onSubmit={handleSearchSubmit}>
+                    <input
+                        type="text"
+                        value={search}
+                        onChange={handleSearchChange}
+                        placeholder="검색어를 입력하세요"
+                    />
+                    <button type="submit">검색</button>
+                </form>
             </div>*/}
             <table className="admin-table">
                 <thead>
                     <tr>
                         <th>회원 번호</th>
                         <th>제목</th>
-                        {/*<th>내용</th>*/}
                         <th>작성일</th>
                         <th>조회수</th>
                         <th>카테고리</th>
@@ -91,7 +80,6 @@ export default function AdminMentorBoard () {
                             <tr key={index} onClick={() => handleMoveMentor(mentor.mentorBoardNo)}>                                
                                 <td>{mentor.memberNo}</td>
                                 <td>{mentor.mentorBoardTitle}</td>
-                                {/*<td>{mentor.mentorBoardContent.substring(0,50)}</td>*/}
                                 <td>{mentor.mentorBoardDate.substring(0,10)}</td>
                                 <td>{mentor.mentorBoardViews}</td>
                                 <td>{mentor.categoryName}</td>

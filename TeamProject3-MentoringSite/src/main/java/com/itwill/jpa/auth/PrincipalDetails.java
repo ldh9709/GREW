@@ -41,6 +41,7 @@ public class PrincipalDetails implements UserDetails, OAuth2User {
 	public PrincipalDetails(MemberSecurityDto member, Oauth2UserInfo oauth2UserInfo) {
 		this.member = member;
 		System.out.println("<<<<<PrincipalDetailsMember2 : " + this.member);
+		
 		this.oauth2UserInfo = oauth2UserInfo;
 		System.out.println("<<<<<PrincipalDetailsOauth2UserInfo : " + this.oauth2UserInfo);
 	}
