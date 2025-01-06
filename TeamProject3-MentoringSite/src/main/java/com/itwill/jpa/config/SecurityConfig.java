@@ -87,8 +87,148 @@ public class SecurityConfig {
 			SwaggerPatterns = {"/swagger-resources/**", "/swagger-ui/**", "/v3/api-docs/**","/v3/api-docs", "/swagger-ui.html", "/login", apiMemberPattern };
 	
 	//인증 없이 접근 가능한 경로 정의
-	private final String[] whitelist = { };
+	private final String[] whitelist = {
+		"/**", //모든 경로
+		/***** MEMBER *****/
+		"/login", //로그인
+		"/oauth2/**", //SNS로그인
+		"/member/check-memberId", //아이디 중복 검사
+		"/member/check-memberEmail", //이메일 중복 검사
+		"/membe/sendJoinCode", //인증번호 발송
+		"/member/createMember", //회원가입/관심사 입력
+		"/member/createMember/mento", //회원가입/관심사 입력/멘토더미데이터
+		"/member/member-info", //회원 정보 보기
+		
+		/***** MENTOR BOARD *****/
+	    "/mentor-board/sorted/*", // 멘토 보드 리스트 - sorted/{status}
+	    "/mentor-board/*", // 멘토 보드 상세 조회 - {mentorBoardNo}
+	    "/mentor-board/*/views", // 멘토 보드 조회수 증가 - {mentorBoardNo}/views
+	    "/mentor-board/sorted/views", // 멘토 보드 조회수 기준 페이징
+	    "/mentor-board/search/*", // 멘토 보드 검색 기능 페이징 - /search/{search}
+	    "/mentor-board/sorted/date/other", // 멘토 보드 날짜 기준 페이징
+	    "/mentor-board/list/*", // 멘토 작성 콘텐츠 (프로필 페이지 용도) - {mentorProfileNo}
+	    "/mentor-board/*/upload-image", // 이미지 업로드 엔드포인트 - {mentorBoardNo}/upload-image
+	    "/mentor-board/*/image-url", // 이미지 URL 가져오기 엔드포인트 - {mentorBoardNo}/image-url
+	    "/mentor-board/*/view-count", // 카테고리별 멘토 콘텐츠 리스트 출력(조회수 기준) - {categoryNo}/view-count
+	    "/mentor-board/*/parent/view-count", // 카테고리별(대분류) 멘토 콘텐츠 리스트 출력(조회수 기준) - {categoryNo}/parent/view-count
+	    "/mentor-board/*/date", // 카테고리별 멘토 콘텐츠 리스트 출력(최신순) - {categoryNo}/date
+	    "/mentor-board/*/parent/date", // 카테고리별(대분류) 멘토 콘텐츠 리스트 출력(최신순) - {categoryNo}/parent/date
+	    "/mentor-board/sorted/views/status", // 멘토 보드 리스트 상태값, 조회수 기준 출력 - 출처 불명? 미사용?
+		
+	    /***** Answer *****/
+	    "/answer/accept/*", // 답변 채택
+	    "/answer/*/answer-vote", // 질문에 작성된 답변 조회(추천)
+	    "/answer/*/answer-date", // 질문에 작성된 답변 조회(최신)
+	    "/answer/*/category-vote", // 카테고리별 답변 조회(추천)
+	    "/answer/*/category-date", // 카테고리별 답변 조회(최신)
+	    "/answer/view/*", // 답변 상세보기
+	    "/answer/recently-vote", // 최근 3일간 추천 베스트
+	    "/answer/isAnswer", // 본인 답변 유무
+	    "/answer/count-answer/*", // 한 질문의 답변 수
+	    
+	    /***** INQUIRY *****/
+	    "/inquiry/view/*", // 질문 보기
+	    "/inquiry/increase/*", // 질문 조회수 증가
+	    "/inquiry/*/answer-count", // 답변 수 많은 순 카테고리별 질문 출력
+	    "/inquiry/*/parent/answer-count", // 답변 수 많은 순 카테고리별(대분류) 질문 출력
+	    "/inquiry/*/view-count", // 조회수 순 카테고리별 질문 출력
+	    "/inquiry/*/parent/view-count", // 조회수 순 카테고리별(대분류) 질문 출력
+	    "/inquiry/*/date", // 최신순 카테고리별 질문 출력
+	    "/inquiry/*/parent/date", // 최신순 카테고리별(대분류) 질문 출력
+	    "/inquiry/answer-count", // 답변 수 순으로 전체 질문 출력
+	    "/inquiry/view-count", // 조회수 순으로 전체 질문 출력
+	    "/inquiry/date", // 최신순으로 전체 질문 출력
+	    "/inquiry/search/*", // 검색 기능
+	    "/inquiry/find/*", // 질문 번호로 객체 찾기
+	    
+	    /***** VOTE *****/
+	    "/*/votes", // 추천 - 비추천 값
+		
+	    /***** ALARMS *****/
+	    "/alarms/*/redirect", // 알림 클릭 시 URL 전송
+	    "/alarms/alarms", // 한 명의 알림 리스트 출력
+	    "/alarms/all/isread", // 한 명의 알림 전체 읽음 처리
+	    "/alarms/delete", // 선택 알림 삭제
+	    "/alarms/delete/all", // 멤버 알림 전체 삭제
+	    "/alarms/is-read/*", // 알림 한 개 읽음 표시
+	    "/alarms/is-read/count", // 안 읽은 알림 개수
+	    "/alarms/find-alarm", // 알람 객체 찾기	
+	    
+	    /***** FOLLOW *****/
+	    "/follow/mentor/*", // 팔로워 수 조회
+	    "/follow/is-exist/*", // 팔로우 등록 여부 체크
+	    
+	    
+	};
 	
+	//인증이 필요한 경로 정의
+	private static final String[] AUTHENTICATED = {
+		/***** MEMBER *****/
+	    "/member/profile", //회원(본인) 정보 보기
+	    "/member/profile/modify", //회원 정보 수정
+	    "/member/profile/delete", //회원 탈퇴
+	    "/member/status/*", //멤버 상태 변경
+	    
+	    /***** MENTOR BOARD *****/
+	    "/mentor-board", // 멘토 보드 등록
+	    "/mentor-board/*", // 멘토 보드 수정 - {mentorBoardNo}
+	    "/mentor-board/*/status", // 멘토 보드 삭제(상태변경) - {mentorBoardNo}/status
+	    "/mentor-board/list/member", // 멘토 작성 콘텐츠 (마이페이지 용도)
+	    
+	    /***** VOTE *****/
+	    "/vote/*/upvote", // 추천
+	    "/vote/*/downvote", // 비추천
+	    
+	    /***** FOLLOW *****/
+	    "/follow", // 팔로우 신청
+	    "/follow/*", // 팔로우 멘토 멤버 번호로 조회
+	    "/follow/followList", // 팔로우 리스트 조회
+	    "/follow/cancel/*", // 팔로우 번호로 취소	 
+	    
+	    /***** REPORT *****/
+	    "/report" // 신고 등록
+	};
+	
+	//멘티 인증이 필요한 경로 정의
+	private static final String[] MENTEE_AUTHENTICATED = {
+		/***** MEMBER *****/
+		"/member/mentee-summary", //멘티 활동 내역 요약	
+		
+	    /***** INQUIRY *****/
+	    "/inquiry", // 질문 등록
+	    "/inquiry/update/*", // 질문 수정
+	    "/inquiry/delete/*", // 질문 삭제
+	    "/inquiry/list/member" // 내가 작성한 질문 내역		
+	};
+	
+	//멘토 인증이 필요한 경로 정의
+	private static final String[] MENTOR_AUTHENTICATED = {
+		/***** MEMBER *****/
+		"/member/mentor-summary", //멘토 활동 내역 요약	
+		
+		/***** Answer *****/
+	    "/answer/*", // 답변 등록
+	    "/answer/delete/*", // 답변 삭제
+	    "/answer/update/*" // 답변 수정	
+	    
+	};
+	
+	//관리자 인증이 필요한 경로 정의
+	private static final String[] ADMIN_AUTHENTICATED = {
+		"/admin/**" //어드민 전체
+	};
+	
+	//멘티 혹은 멘토 인증이 필요한 경로 정의
+	private static final String[] MENTEE_MENTOR_AUTHENTICATED = {
+		/***** Answer *****/
+		"/answer" //내가작성한답변내역
+
+	};
+	
+	//모든 인증이 가능한 경로 정의
+	private static final String[] MENTEE_MENTOR_ADMIN_AUTHENTICATED = {
+		"/member/update-role/**", //회원 권한 수정
+	};
 	
 	/* Spring Security에서 HTTP 요청에 대한 보안 설정을 구성 */
 	@Bean
@@ -155,9 +295,21 @@ public class SecurityConfig {
 		httpSecurity.authorizeHttpRequests((authorizeHttpRequestsConfig) -> {
 		      // swagger설정
 		      authorizeHttpRequestsConfig
-		      	  .requestMatchers("/profile").authenticated()//끝이 profile인 URL은 인증된 사용자만 접근 가능
-		      	  //.requestMatchers("/profile").hasRole("MENTEE")//끝이 profile인 URL은 MENTEE만 접근 가능
-			      .requestMatchers("/**","/login","/oauth2/**").permitAll()
+		      
+		      	  .requestMatchers(AUTHENTICATED).authenticated()//인증된 사용자만 접근 가능
+		      	  
+		      	  .requestMatchers(MENTEE_AUTHENTICATED).hasRole("MENTEE") //MENTEE만 접근 가능
+		      	  
+		      	  .requestMatchers(MENTOR_AUTHENTICATED).hasRole("MENTOR") //MENTEE만 접근 가능
+		      	  
+		      	  .requestMatchers(MENTOR_AUTHENTICATED).hasRole("ADMIN") //MENTEE만 접근 가능
+		      	  
+		      	  .requestMatchers(MENTEE_MENTOR_AUTHENTICATED).hasAnyRole("MENTEE" , "MENTOR") //MENTEE, MENTOR만 접근 가능
+		      	  
+		      	  .requestMatchers(MENTEE_MENTOR_ADMIN_AUTHENTICATED).hasAnyRole("MENTEE", "MENTOR", "ADMIN") //MENTEE, MENTOR만 접근 가능
+		      	  
+			      .requestMatchers(whitelist).permitAll() //인증 없이 접근 가능
+			      
 			      .anyRequest().authenticated();
 		    });
 		

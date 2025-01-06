@@ -20,6 +20,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -96,6 +97,7 @@ public class MentorProfileController {
 	 * 멘토 프로필을 생성합니다.
 	 */
 	@Operation(summary = "멘토 프로필 생성")
+	@PreAuthorize("hasRole('MENTEE')")
 	@PostMapping("/create-profile")
 	public ResponseEntity<Response> saveMentorProfile(Authentication authentication,
 			@RequestBody MentorProfileDto mentorProfileDto) {
