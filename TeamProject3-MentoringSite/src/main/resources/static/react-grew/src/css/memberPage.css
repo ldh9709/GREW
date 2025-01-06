@@ -500,6 +500,7 @@ legend {
   font-size: 18px;
   cursor: pointer;
   margin-top: 15px;
+  margin-bottom: 10px;
   font-family: "nanumsquare";
 }
 
@@ -566,3 +567,213 @@ legend {
   background-color: #1f973b;
 }
 
+
+/***** 프로필페이지 CSS *****/
+
+/* 초기화: 로딩 중에도 일관된 레이아웃 유지 */
+
+
+/* 사이드 메뉴 스타일 */
+.profile-sidebar {
+  max-width: 15%;
+  min-width: 15%;
+  background-color: #ffffff;
+  padding: 10px;
+  border-right: 2px solid #ddd;
+  min-height: 100%; /* 높이를 고정하여 깜빡임 방지 */
+}
+
+.profile-sidebar-right {
+  min-width: 15%;
+  max-width: 15%;
+  background-color: #ffffff;
+  padding: 10px;
+}
+
+.profile-sidebar-img {
+  width: 50%;
+  min-width: 50%;
+  margin-left: 0; /* 좌측 여백 제거 */
+}
+
+.profile-sidebar-item {
+  padding: 10px;
+  margin-bottom: 10px;
+  text-align: center;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.profile-sidebar-item:hover {
+  background-color: #d0d0d0;
+}
+
+.profile-sidebar-item.active {
+  background-color: #4caf50;
+  color: white;
+}
+
+/* 회원 정보 수정 폼 */
+
+.profile-layout {
+  display: flex;
+  width: 100%;
+  margin: 0 auto;
+  gap: 10px; /* 사이드바와 콘텐츠 간격 */
+  min-height: 500px; /* 전체 높이를 고정 */
+}
+
+.profile-content-layout {
+  width: 700px;
+  max-width: 80%;
+  min-width: 80%;
+  margin: 0 auto;
+}
+
+.profile-container {
+  width: 100%;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+/* 프로필 타이틀 */
+.profile-title {
+  font-size: 30px;
+  font-weight: bold;
+  text-align: center;
+  color: #555;
+  margin-bottom: 20px;
+}
+
+/* 폼 스타일 */
+.profile-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.profile-form-group {
+  margin-bottom: 15px;
+}
+
+.profile-form-label {
+  font-size: 14px;
+  margin-bottom: 5px;
+  color: #555;
+}
+
+.profile-form-group input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 14px;
+  box-sizing: border-box;
+}
+
+.profile-form-group input:disabled {
+  background-color: #e9e9e9;
+}
+
+/* 관심사 그룹 */
+.profile-interest-group {
+  margin-bottom: 20px;
+}
+
+.profile-interest-label {
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+
+.profile-interest-item {
+  display: inline-block;
+  padding: 8px 12px;
+  margin: 5px;
+  background-color: #f0f0f0;
+  border: 1px solid #ccc;
+  border-radius: 20px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.profile-interest-item.selected {
+  background-color: #4caf50;
+  color: white;
+}
+
+.profile-interest-item:hover {
+  background-color: #d0d0d0;
+}
+
+/* 버튼 그룹 */
+.profile-button-group {
+  display: flex;
+  justify-content: right;
+  padding-top: 20px;
+  border-top: 1px solid #ccc;
+}
+
+.profile-modify-button {
+  background-color: #007bff;
+  color: white;
+  padding: 8px 18px;
+  border: none;
+  border-radius: 5px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+/* 비활성화 상태 */
+.profile-modify-button:disabled {
+  background-color: gray;       /* 비활성화 상태 색상 */
+  cursor: not-allowed;          /* 마우스 커서 변경 */
+  opacity: 0.6;                 /* 투명도 설정 */
+  pointer-events: none;         /* 모든 마우스 이벤트 차단 */
+}
+
+.profile-modify-button:hover {
+  background-color: #0056b3;
+}
+
+
+/* 이메일 추가 CSS */
+.email-verification-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 10px; /* 입력 필드와 버튼 사이의 간격 */
+}
+
+.email-verification-button {
+  background-color: #5c85d6;
+  width: 200px;
+  height: 40px;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.3s;
+  
+}
+
+.email-verification-button:hover {
+  background-color: #0056b3;
+}
+
+.email-verification-button:active {
+  background-color: #003f7f;
+}
+
+.email-verification-button:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+}
+
+/* 관심사 */
+.interest-message {
+  color: red;
+  font-size: 15px;
+}

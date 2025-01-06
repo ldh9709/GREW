@@ -16,6 +16,7 @@ import MemberLoginFormPage from "./component/Member/MemberLoginFormPage";
 import MemberProfileFormPage from "./component/Member/MemberProfileFormPage";
 import MemberFindPasswordFormPage from "./component/Member/MemberFindPasswordFormPage";
 import MemberFindIdFormPage from "./component/Member/MemberFindIdFormPage";
+import MemberProfileLayoutFormPage from "./component/Member/MemberProfileLayoutFormPage";
 
 /* 멘토 페이지 임포트 */
 import MemberMypage from "./component/Member/mypage/MemberMypage";
@@ -46,7 +47,6 @@ import InquirySearchList from "./component/AnswerInquiry/InquirySearchList";
 import MentorBoardSearchList from "./component/MentorBoard/MentorBoardSearchList";
 import ReviewWriteFormPage from "./component/Review/ReviewWriteFormPage";
 import ReviewView from "./component/Review/ReviewView";
-import ReviewListPage from "./component/Review/ReviewList";
 import ForbiddenPage from "./component/ForbiddenPage";
 import MentorProfileItem from "./component/MentorProfile/MentorProfileItem";
 
@@ -99,6 +99,10 @@ function App() {
               <Route path="/member/login" element={<MemberLoginFormPage />} />
               <Route path="/member/profile" element={<MemberMypage />} />
               <Route
+                path="//profile/:tab"
+                element={<MemberProfileLayoutFormPage />}
+              />
+              <Route
                 path="/member/profile/edit"
                 element={<MemberProfileFormPage />}
               />
@@ -124,10 +128,7 @@ function App() {
                 path="/mentor-profile/search"
                 element={<MentorSearchList />}
               />
-              <Route
-                path="/inquiry/search"
-                element={<InquirySearchList />}
-              />
+              <Route path="/inquiry/search" element={<InquirySearchList />} />
               {/* Mentor페이지 */}
               <Route path="/mentor/join" element={<MentorJoinFormPage />} />
               <Route
@@ -220,7 +221,6 @@ function App() {
               />
               <Route path="/review/:reviewNo" element={<ReviewView />} />{" "}
               {/* 상세 페이지 라우팅 */}
-              <Route path="/review/reviewList" element={<ReviewListPage />} />
               <Route path="/inquiry" element={<InqiuryList />} />
               <Route path="/inquiry/:inquiryNo" element={<InqiuryView />} />
               <Route path="/inquiry/write" element={<InquiryWriteFormpage />} />

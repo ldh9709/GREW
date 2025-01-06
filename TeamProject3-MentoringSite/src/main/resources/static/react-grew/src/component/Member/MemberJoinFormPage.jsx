@@ -37,6 +37,9 @@ export const MemberJoinFormPage = () => {
   //아이디 중복
   const [isIdAvailable, setIsIdAvailable] = useState(null); // 중복 여부 상태
 
+  // 이메일 유효성 검사 정규식
+  const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
   /* 아이디 중복 확인 */
   const checkIdDupl = async () => {
     const response = await memberApi.checkIdDupl({ memberId: member.memberId });
@@ -56,6 +59,19 @@ export const MemberJoinFormPage = () => {
     } else {
       setMemberPassword2Error("");
     }
+  }
+
+  /* 이메일 중복 확인 */
+  const checkEmail = async () => {
+    const response = await memberApi.checkEmailDupl({memberEmail: member.memberEmail});
+    if(response?.status === responseStatus.DUPLICATION_MEMBER_EMAIL) {
+      setMemberEmailError("사용 불가능한 이메일입니다.");
+      setIsIdAvailable(false);
+    } else {
+      setMemberEmailError("");
+      setIsIdAvailable(true);
+    }
+  
   }
 
   // 입력 필드 업데이트 핸들러
@@ -85,20 +101,8 @@ export const MemberJoinFormPage = () => {
       }
     }
 
-
     /* 이메일 유효성 검사 */
     if (e.target.name === "memberEmail") {
-      const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-      if (!emailRegex.test(e.target.value)) {
-        setMemberEmailError("유효하지 않은 이메일 형식입니다.");
-      } else {
-        setMemberEmailError(""); // 규칙을 만족하면 에러 초기화
-      }
-    }
-
-    /* 이메일 유효성 검사 */
-    if (e.target.name === "memberEmail") {
-      const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
       if (!emailRegex.test(e.target.value)) {
         setMemberEmailError("이메일 형식을 올바르게 입력해주세요.");
       } else {
@@ -110,9 +114,20 @@ export const MemberJoinFormPage = () => {
 
   // 인증번호 발송
   const sendJoinCode = async () => {
-    const response = await memberApi.sendJoinCode(member.memberEmail);
-    setTempCode(response.data);
-    toast.success("인증메일이 발송되었습니다.");
+
+    if (!emailRegex.test(member.memberEmail)) {
+      toast.error("이메일 형식을 올바르게 입력해주세요.");
+      return;
+    }
+
+    try {
+      toast.success("인증메일이 발송되었습니다.");
+      const response = await memberApi.sendJoinCode(member.memberEmail);
+      setTempCode(response.data);
+    } catch (error) {
+      console.error("인증번호 발송 실패:", error);
+      toast.error("인증번호 발송 중 문제가 발생했습니다.");
+    }
   };
 
   /* 관심사 선택 시 배열 업데이트 */
@@ -163,7 +178,7 @@ export const MemberJoinFormPage = () => {
       return;
     }
 
-    if(!member.memberEmail) {
+    if(!member.memberEmail || !emailRegex.test(member.memberEmail)) {
       toast.error("이메일 형식을 올바르게 입력해주세요.");
       return;
     }
@@ -296,8 +311,10 @@ export const MemberJoinFormPage = () => {
             <input
                 type="email"
                 name="memberEmail"
+                className={memberEmailError ? "member-input-error" : ""}
                 placeholder="이메일을 입력하세요"
                 onChange={handleChangeJoinForm}
+                onBlur={checkEmail}
                 required
             />
          <p className={`member-form-join-check ${memberEmailError ? "visible" : ""}`}>

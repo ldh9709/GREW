@@ -10,6 +10,7 @@ const MentorEditForm = () => {
 
   /***** Context 가져오기 START *****/
   const auth = useMemberAuth(); //사용자 인증 정보를 가져온다
+  const login = auth.login; //사용자 로그인 관련(토큰 수정)
   const token = auth?.token || null;  //사용자 인증 토큰
   const member = auth?.member || {};  //사용자 관련 정보 객체
   const mentorProfileNo = token ? member.mentorProfileNo : null;  //사용자 멘토 프로필 번호
@@ -122,7 +123,7 @@ const MentorEditForm = () => {
     setMentorImage(e.target.files[0]);
     setMentor((prevMentor) => ({
       ...prevMentor,
-      [e.target.name]: `/images/mentor-profile/${e.target.files[0].name}`,
+      [e.target.name]: `/upload/mentor-profile/${mentorProfileNo}/${e.target.files[0].name}`,
     }));
   }
 
@@ -200,6 +201,11 @@ const MentorEditForm = () => {
       const response = await memberApi.mentorProfileUpdateAction(mentorProfileNo, mentor);
       if (response.status === responseStatus.UPDATE_MENTOR_PROFILE_SUCCESS_CODE) {
         alert("멘토 정보 수정 성공");
+        const response = await memberApi.updateMemberRole(token, "ROLE_MENTEE");
+        if (response.status === 2012) {
+          // 기존 쿠키 삭제
+          login(response.data.accessToken);
+        }
         navigate("/main");
       } else {
         alert("수정 실패");
@@ -209,152 +215,172 @@ const MentorEditForm = () => {
       alert("수정 중 오류 발생");
     }
   };
-    return (
-      <div className="mentor-join-container">
-        <h1 className="form-title">멘토 수정</h1>
-        {/* 대/소분류 선택 폼 */}
-        <div className="form-group-profile horizontal-combined">
-          {/* 대분류 선택 */}
-          <label className="parent-label">전문분야<span className="red-text">필수</span></label>
-          <select className="category-select" value={selectedParent} onChange={handleParentChange}>
-            <option value="">-- 대분류 선택 --</option>
-            {categories
-              .filter((cat) => cat.categoryDepth === 1) // depth=1인 것만 추려낸다
-              .map((parent) => (
-                <option key={parent.categoryNo} value={parent.categoryNo}>
-                  {parent.categoryName}
+  return (
+    <div className="mentor-edit-container">
+      <h2 className="mentor-edit-title">멘토 정보 관리</h2>
+      <form className="mentor-edit-form">
+        <div className="mentor-edit-form-group">
+          <label className="mentor-edit-label">
+            전문분야<span className="mentor-edit-required">*</span>
+          </label>
+          <div className="mentor-edit-select-wrapper">
+            <select
+              className="mentor-edit-select"
+              id="parentCategory"
+              name="parentCategory"
+              value={selectedParent}
+              onChange={handleParentChange}
+            >
+              <option value="">-- 대분류 선택 --</option>
+              {categories
+                .filter((cat) => cat.categoryDepth === 1)
+                .map((parent) => (
+                  <option key={parent.categoryNo} value={parent.categoryNo}>
+                    {parent.categoryName}
+                  </option>
+                ))}
+            </select>
+            <select
+              className="mentor-edit-select"
+              id="childCategory"
+              name="childCategory"
+              value={selectedChild}
+              onChange={handleChildChange}
+              disabled={!selectedParent}
+            >
+              <option value="">-- 소분류 선택 --</option>
+              {childCategories.map((child) => (
+                <option key={child.categoryNo} value={child.categoryNo}>
+                  {child.categoryName}
                 </option>
               ))}
-          </select>
-  
-          {/* 소분류 선택 */}
-          <label className="child-label"></label>
-          <select
-            className="category-select"
-            value={selectedChild}
-            onChange={handleChildChange}
-            disabled={!selectedParent}
-          >
-            <option value="">-- 소분류 선택 --</option>
-            {childCategories.map((child) => (
-              <option key={child.categoryNo} value={child.categoryNo}>
-                {child.categoryName}
-              </option>
-            ))}
-          </select>
+            </select>
+          </div>
         </div>
-  
-  
-        <form className="mentor-join-form">
-          {/* 소개글 */}
-          <div className="form-group-profile horizontal">
-            <label htmlFor="mentorIntroduce">
-              본인 소개<span className="red-text">필수</span>
-            </label>
-            <textarea
-              id="mentorIntroduce"
-              name="mentorIntroduce"
-              placeholder="소개글 입력"
-              rows="5"
-              value={mentor.mentorIntroduce}
-              onChange={handleChangeMentorEditForm}
-              required
-            ></textarea>
-          </div>
-
-          {/* 한 줄 소개글 */}
-          <div className="form-group-profile horizontal">
-            <label htmlFor="mentorIntroduce">
-              한줄 소개<span className="red-text">필수</span>
-            </label>
-            <textarea
-              id="mentorHeadline"
-              name="mentorHeadline"
-              placeholder="한 줄 소개 입력"
-              rows="1"
-              value={mentor.mentorHeadline}
-              onChange={handleChangeMentorJoinForm}
-              required
-            ></textarea>
-          </div>
-
-          {/* 경력 */}
-          <div className="form-group-profile horizontal">
-            <label htmlFor="mentorCareer">
-              경력<span className="red-text">필수</span>
-            </label>
-            <div className="career-container">
+        <div className="mentor-edit-form-group">
+          <label className="mentor-edit-label">
+            본인 소개<span className="mentor-edit-required">*</span>
+          </label>
+          <textarea
+            className="mentor-edit-textarea"
+            id="mentorIntroduce"
+            name="mentorIntroduce"
+            placeholder="소개글 입력"
+            value={mentor.mentorIntroduce}
+            onChange={handleChangeMentorEditForm}
+            required
+          ></textarea>
+        </div>
+        <div className="mentor-edit-form-group">
+          <label className="mentor-edit-label">
+            한줄 소개<span className="mentor-edit-required">*</span>
+          </label>
+          <textarea
+            className="mentor-edit-textarea"
+            id="mentorHeadline"
+            name="mentorHeadline"
+            placeholder="한 줄 소개 입력"
+            value={mentor.mentorHeadline}
+            onChange={handleChangeMentorEditForm}
+            required
+          ></textarea>
+        </div>
+        <div className="mentor-edit-form-group">
+          <label className="mentor-edit-label">
+            경력<span className="mentor-edit-required">*</span>
+          </label>
+          <div>
             {mentor.careerDtos.map((career, index) => (
-              <div key={index} className="career-row">
-                <input
-                  type="text"
-                  placeholder="회사명"
-                  value={career.careerCompanyName}
-                  onChange={(e) => handleCareerChange(index, "careerCompanyName", e.target.value)}
-                  required
-                />
-                <input
-                  type="text"
-                  placeholder="직책"
-                  value={career.careerJobTitle}
-                  onChange={(e) => handleCareerChange(index, "careerJobTitle", e.target.value)}
-                  required
-                />
-                <input
-                  type="text"
-                  name="startDate"
-                  onFocus={handleFocus}
-                  onBlur={handleBlur}
-                  value={career.careerStartDate}
-                  onChange={(e) => handleCareerChange(index, "careerStartDate", e.target.value)}
-                  placeholder="입사년월"
-                  required
-                />
-                <input
-                  type="text"
-                  name="endDate"
-                  onFocus={handleFocus}
-                  onBlur={handleBlur}
-                  value={career.careerEndDate}
-                  onChange={(e) => handleCareerChange(index, "careerEndDate", e.target.value)}
-                  placeholder="퇴사년월"
-                  required
-                />
+              <div key={index}>
+                <div className="mentor-edit-career-container">
+                  <input
+                    type="text"
+                    className="mentor-edit-input career-company"
+                    placeholder="회사명"
+                    value={career.careerCompanyName}
+                    onChange={(e) =>
+                      handleCareerChange(index, "careerCompanyName", e.target.value)
+                    }
+                    required
+                  />
+                  <input
+                    type="text"
+                    name="startDate"
+                    className="mentor-edit-input career-startDate"
+                    onFocus={handleFocus}
+                    onBlur={handleBlur}
+                    value={career.careerStartDate}
+                    onChange={(e) =>
+                      handleCareerChange(index, "careerStartDate", e.target.value)
+                    }
+                    placeholder="입사년월"
+                    required
+                  />
+                  <input
+                    type="text"
+                    name="endDate"
+                    className="mentor-edit-input career-endDate"
+                    onFocus={handleFocus}
+                    onBlur={handleBlur}
+                    value={career.careerEndDate}
+                    onChange={(e) =>
+                      handleCareerChange(index, "careerEndDate", e.target.value)
+                    }
+                    placeholder="퇴사년월"
+                    required
+                  />
+                </div>
+                <div>
+                  <input
+                    type="text"
+                    className="mentor-edit-input career-job-title"
+                    placeholder="직책 또는 직무(50글자 내외)"
+                    value={career.careerJobTitle}
+                    onChange={(e) =>
+                      handleCareerChange(index, "careerJobTitle", e.target.value)
+                    }
+                    maxLength={50}
+                    required
+                  />
+                </div>
               </div>
-                ))}
-                {/* 추가 버튼을 필드 목록 외부로 이동 */}
-                <button type="button" className="add-career-button" onClick={addCareerField}>
-                  + 추가
-                </button>
+            ))}
+            <div className="career-add-button">
+              <button
+                type="button"
+                className="mentor-edit-add-button"
+                onClick={addCareerField}
+              >
+                + 추가
+              </button>
             </div>
           </div>
-  
-          {/* 프로필 사진 첨부 */}
-          <div className="form-group-profile horizontal">
-            <label htmlFor="profileImage">
-              프로필 사진<span className="red-text">필수</span>
-            </label>
-            <input
-              type="file"
-              className="form-group-profileImage"
-              id="profileImage"
-              name="mentorImage"
-              onChange={handleImageChange}
-              accept="image/*"
-            />
-          </div>
-  
-          {/* 제출 버튼 */}
+        </div>
+        <div className="mentor-edit-form-group">
+          <label className="mentor-edit-label">
+            프로필 사진<span className="mentor-edit-required">*</span>
+          </label>
+          <input
+            type="file"
+            className="mentor-edit-input"
+            id="profileImage"
+            name="mentorImage"
+            accept="image/*"
+            onChange={handleImageChange}
+          />
+        </div>
+        <div className="mentor-edit-submit-container">
           <button
             type="button"
+            className="mentor-edit-submit-button"
             onClick={mentorProfileUpdateAction}
-            className="submit-button"
           >
-            수정하기
+            수정
           </button>
-        </form>
-      </div>
-    );
+        </div>
+      </form>
+    </div>
+  );
 };
 
 export default MentorEditForm;

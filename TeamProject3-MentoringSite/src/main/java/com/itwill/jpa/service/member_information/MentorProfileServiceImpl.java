@@ -116,8 +116,8 @@ public class MentorProfileServiceImpl implements MentorProfileService {
             // 4️⃣ 멘토 프로필 생성 및 저장
             MentorProfile mentorProfile = MentorProfile.toEntity(mentorProfileDto, member, category);
             mentorProfile.setMentorStatus(2); // 초기값 2로 등록
-            mentorProfileRepository.save(mentorProfile);
-            careerService.save_updateCareer(mentorProfileDto.getCareerDtos());
+            MentorProfile mentorProfile2 = mentorProfileRepository.save(mentorProfile);
+            careerService.save_updateCareer(mentorProfileDto.getCareerDtos(), mentorProfile2.getMentorProfileNo());
             
             return mentorProfile; 
         } catch (Exception e) {
@@ -160,7 +160,7 @@ public class MentorProfileServiceImpl implements MentorProfileService {
 				                .categoryNo(26L) // 카테고리 정보 설정
 				                .mentorIntroduce("소개글을 입력해주세요.")
 				                .mentorImage(null)
-				                .mentorStatus(2) // 초기 상태가 없으면 2로 설정
+				                .mentorStatus(1) // 초기 상태가 없으면 1로 설정
 				                .mentorRating(0.0) // 초기 평점이 없으면 0.0으로 설정
 				                .mentorMentoringCount(0)
 				                .mentorFollowCount(0)
@@ -338,9 +338,10 @@ public class MentorProfileServiceImpl implements MentorProfileService {
             mentorProfile.setMentorIntroduce(mentorProfileDto.getMentorIntroduce());
             mentorProfile.setMentorImage(mentorProfileDto.getMentorImage());
             mentorProfile.setMentorHeadline(mentorProfileDto.getMentorHeadline());
+            mentorProfile.setMentorStatus(2);
             System.out.println(">>>>> updateMentorProfile : " + mentorProfileDto.getMentorImage());
             mentorProfile.setCategory(category); // 카테고리 설정
-            careerService.save_updateCareer(mentorProfileDto.getCareerDtos());
+            careerService.save_updateCareer(mentorProfileDto.getCareerDtos(), mentorProfileNo);
             
             // 🔥 저장
             return mentorProfileRepository.save(mentorProfile);

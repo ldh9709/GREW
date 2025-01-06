@@ -87,8 +87,8 @@ public class MemberRestController {
 		
 		if(checkIdDupl == true) {
 			//응답객체에 코드, 메시지, 객체 설정
-			response.setStatus(ResponseStatusCode.CREATED_MEMBER_FAIL);
-			response.setMessage("삐빅 아이디 중복입니다");
+			response.setStatus(ResponseStatusCode.DUPLICATION_MENBER_ID);
+			response.setMessage(ResponseMessage.DUPLICATION_MENBER_ID);
 			response.setData(null);
 		}
 		
@@ -104,6 +104,45 @@ public class MemberRestController {
 		return responseEntity;
 				
 	}
+	
+	/* 이메일 중복 */
+	@Operation(summary = "이메일 중복 검사")
+	@GetMapping("/check-memberEmail")
+	public ResponseEntity<Response> checkEmailDupl(@RequestParam(name = "memberEmail") String memberEmail){
+		
+		Boolean checkEmailDupl = memberService.checkEmailDupl(memberEmail);
+
+		Response response = new Response();
+		
+		//응답 객체 생성
+		
+		if(checkEmailDupl == false) {
+			//응답객체에 코드, 메시지, 객체 설정
+			response.setStatus(ResponseStatusCode.DUPLICATION_MENBER_EMAIL);
+			response.setMessage(ResponseMessage.DUPLICATION_MENBER_EMAIL);
+			response.setData(null);
+		}
+		
+		if(checkEmailDupl == true) {
+			//응답객체에 코드, 메시지, 객체 설정
+			response.setStatus(ResponseStatusCode.CONFIRM_EMAIL_SUCCESS);
+			response.setMessage(ResponseMessage.CONFIRM_EMAIL_SUCCESS);
+			response.setData(null);
+		}
+		
+		//인코딩 타입 설정
+		HttpHeaders httpHeaders = new HttpHeaders();
+		httpHeaders.setContentType(new MediaType(MediaType.APPLICATION_JSON, Charset.forName("UTF-8")));
+		
+		//반환할 응답Entity 생성
+		ResponseEntity<Response> responseEntity =
+				 new ResponseEntity<Response>(response, httpHeaders, HttpStatus.OK);
+		
+		//반환
+		return responseEntity;
+				
+	}
+	
 	
 	@Autowired
 	private EmailService emailService;
@@ -251,7 +290,7 @@ public class MemberRestController {
 	/***** 회원 정보 보기(토큰) *****/
 	@Operation(summary = "회원 정보 보기(토큰)")
 	@SecurityRequirement(name = "BearerAuth")//API 엔드포인트가 인증을 요구한다는 것을 문서화(Swagger에서 JWT인증을 명시
-	@PreAuthorize("hasRole('MENTEE') or hasRole('MENTOR') or hasRole('ADMIN') ")//ROLE이 MENTEE인 사람만 접근 가능
+	//@PreAuthorize("hasRole('MENTEE') or hasRole('MENTOR') or hasRole('ADMIN') ")//ROLE이 MENTEE인 사람만 접근 가능
 	@GetMapping("/profile")
 	public ResponseEntity<Response> getMember(Authentication authentication) {
 		
@@ -292,6 +331,7 @@ public class MemberRestController {
 	/* 회원 정보 수정 */
 	@Operation(summary = "회원 정보 수정")
 	@PutMapping("/profile/modify")
+	//@PreAuthorize("hasRole('MENTEE') or hasRole('MENTOR')")
 	@SecurityRequirement(name = "BearerAuth")//API 엔드포인트가 인증을 요구한다는 것을 문서화(Swagger에서 JWT인증을 명시
 	public ResponseEntity<Response> updateMember(
 			@RequestBody MemberDto memberDto,
@@ -331,10 +371,53 @@ public class MemberRestController {
 		return responseEntity;
 	}
 	
+	/* 회원 탈퇴 */
+	@Operation(summary = "회원 탈퇴")
+	@PutMapping("/profile/delete")
+	//@PreAuthorize("hasRole('MENTEE') or hasRole('MENTOR')")
+	@SecurityRequirement(name = "BearerAuth")//API 엔드포인트가 인증을 요구한다는 것을 문서화(Swagger에서 JWT인증을 명시
+	public ResponseEntity<Response> deleteMember(
+			@RequestBody MemberDto memberDto,
+			Authentication authentication
+			) {
+		
+		//토큰을 통해 번호 검색
+		PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
+		Long memberNo = principalDetails.getMemberNo();
+		
+		// 반환 객체 선언 (1)
+		Response response = new Response();
+		
+		//상태 변경 메소드 실행
+		Member deleteMember = memberService.deleteMember(memberNo);
+		
+		//반환 객체 DTO로 변환
+		MemberDto deleteMemberDto = MemberDto.toDto(deleteMember);
+		
+		
+		if(deleteMemberDto != null) {
+			//응답객체에 코드, 메시지, 객체 설정
+			response.setStatus(ResponseStatusCode.UPDATE_MEMBER_SUCCESS);
+			response.setMessage(ResponseMessage.UPDATE_MEMBER_SUCCESS);
+			response.setData(deleteMemberDto);
+			
+		}
+		
+		//반환 객체 선언 (2)
+		HttpHeaders httpHeaders=new HttpHeaders();
+		httpHeaders.setContentType(new MediaType(MediaType.APPLICATION_JSON,Charset.forName("UTF-8")));
+		
+		//반환 객체 저장
+		ResponseEntity<Response> responseEntity = 
+				new ResponseEntity<Response>(response, httpHeaders, HttpStatus.OK);
+		
+		return responseEntity;
+	}
+	
 	/* 회원 상태 수정 */
 	@Operation(summary = "회원 상태 수정")
 	@SecurityRequirement(name = "BearerAuth")//API 엔드포인트가 인증을 요구한다는 것을 문서화(Swagger에서 JWT인증을 명시
-	@PreAuthorize("hasRole('MENTEE') or hasRole('MENTOR') or hasRole('ADMIN')")//ROLE이 MENTEE인 사람만 접근 가능
+	//@PreAuthorize("hasRole('MENTEE') or hasRole('MENTOR') or hasRole('ADMIN')")//ROLE이 MENTEE인 사람만 접근 가능
 	@PutMapping("/status/{statusNo}")
 	public ResponseEntity<Response> updateMemberStatus(
 			Authentication authentication,
@@ -459,8 +542,8 @@ public class MemberRestController {
 		
 		//인증 제공자가 Email이 아니면
 		if(!memberService.getMemberByMemberEmail(memberEmail).getMemberProvider().equals("Email")) {
-			response.setStatus(ResponseStatusCode.MEMBER_IS_NOT_EMAIL);
-			response.setMessage(ResponseMessage.MEMBER_IS_NOT_EMAIL);
+			response.setStatus(ResponseStatusCode.MEMBER_PROVIDER_IS_NOT_EMAIL);
+			response.setMessage(ResponseMessage.MEMBER_PROVIDER_IS_NOT_EMAIL);
 			ResponseEntity<Response> responseEntity = 
 					new ResponseEntity<Response>(response, httpHeaders, HttpStatus.OK);
 			return responseEntity;
@@ -507,6 +590,65 @@ public class MemberRestController {
 	    return responseEntity;
 	}
 	
+	/***** 이메일 인증 (1) : 이메일 발송 *****/
+	@Operation(summary = "1. 이메일 인증번호 발송")
+	@PostMapping("/sendVerificationCode")
+	public ResponseEntity sendVerificationCode(@RequestBody MemberDto.JoinFormDto memberDto) {
+		
+		String memberEmail = memberDto.getEmail();
+		
+		Response response = new Response();
+			    
+	    try {
+	    	memberService.sendVerificationCode(memberEmail);;
+	        response.setStatus(ResponseStatusCode.EMAIL_SEND_SUCCESS);
+	        response.setMessage(ResponseMessage.EMAIL_SEND_SUCCESS);
+	        
+	    } catch (Exception e) {
+	        response.setStatus(ResponseStatusCode.EMAIL_SEND_FAIL);
+	        response.setMessage(ResponseMessage.EMAIL_SEND_FAIL);
+	    }
+	    
+	    return ResponseEntity.ok(response);
+	}
+	
+	/***** 아이디 찾기: 인증번호 확인 후 아이디 반환 *****/
+	@Operation(summary = "2. 이메일 인증번호 확인")
+	@PostMapping("/sendVerificationCode/verificationCode")
+	public ResponseEntity<Response> verificationCode(@RequestBody MemberDto.certificationCode memberDto) {
+	    
+		String memberEmail = memberDto.getMemberEmail();
+		Integer inputCode = memberDto.getInputCode();
+		
+		System.out.println("요청 데이터: " + memberDto);
+	    System.out.println("memberEmail: " + memberDto.getMemberEmail());
+	    System.out.println("inputCode: " + memberDto.getInputCode());
+	    
+		Boolean isChecked =	memberService.certificationCodeByFindId(memberEmail, inputCode);
+		
+		Response response = new Response();
+	    
+		HttpHeaders httpHeaders=new HttpHeaders();
+		httpHeaders.setContentType(new MediaType(MediaType.APPLICATION_JSON,Charset.forName("UTF-8")));
+		
+		
+	    //인증번호가 틀리면 실패 반환
+		if(!isChecked) {
+			response.setStatus(ResponseStatusCode.INPUTCODE_CONFIRM_FAIL);
+			response.setMessage(ResponseMessage.INPUTCODE_CONFIRM_FAIL);
+			ResponseEntity<Response> responseEntity = 
+					new ResponseEntity<Response>(response, httpHeaders, HttpStatus.OK);
+			return responseEntity;
+		}
+		
+		response.setStatus(ResponseStatusCode.INPUTCODE_CONFIRM_SUCCESS);
+		response.setMessage(ResponseMessage.INPUTCODE_CONFIRM_SUCCESS);
+		
+		ResponseEntity<Response> responseEntity = 
+				new ResponseEntity<Response>(response, httpHeaders, HttpStatus.OK);
+		
+	    return responseEntity;
+	}
 	
 	/* 멘티 회원 활동 요약 */
 	@Operation(summary = "멘티 활동 내역 요약")

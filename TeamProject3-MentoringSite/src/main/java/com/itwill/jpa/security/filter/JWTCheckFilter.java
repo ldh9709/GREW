@@ -139,7 +139,7 @@ public class JWTCheckFilter extends OncePerRequestFilter {
           // Authorization 헤더에서 'Bearer ' 부분을 제외한 토큰만 추출
           String accessToken = authHeaderStr.substring(7);
           // JWTUtil.validateToken() 메서드를 사용하여 토큰을 검증하고 클레임을 추출
-          Map<String, Object> claims = JWTUtil.validateToken(accessToken);
+          Map<String, Object> claims = JWTUtil.validateToken(accessToken, request, response);
           log.info("JWT claims: " + claims); // 토큰에서 추출한 클레임 로깅
           
           // 클레임에서 사용자 정보를 추출

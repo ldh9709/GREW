@@ -58,6 +58,17 @@ export const activeChatRoom = async (chatRoomNo) => {
   return responseJsonObject;
 };
 
+export const completedChatRoom = async (chatRoomNo) => {
+  const response = await fetch(
+    `${BACKEND_SERVER}/chatroom/completed/${chatRoomNo}`,
+    {
+      method: "PUT"
+    }
+  );
+  const responseJsonObject = await response.json();
+  return responseJsonObject;
+};
+
 export const rejectedChatRoom = async (chatRoomNo) => {
   const response = await fetch(
     `${BACKEND_SERVER}/chatroom/rejected/${chatRoomNo}`,
@@ -144,18 +155,6 @@ export const sendImage = async (token, chatRoomNo, imageBlob) => {
       body: JSON.stringify({
         imageBlob: imageBlob, // Base64로 인코딩된 이미지 데이터
       }),
-    }
-  );
-
-  const responseJsonObject = await response.json();
-  return responseJsonObject; // 서버로부터 반환된 이미지 처리 결과
-};
-//채팅방 안읽은갯수
-export const countMessageChatRoom = async (chatRoomNo) => {
-  const response = await fetch(
-    `${BACKEND_SERVER}/chatmessage/count/message?chatRoomNo=${chatRoomNo}`,
-    {
-      method: "GET",
     }
   );
 

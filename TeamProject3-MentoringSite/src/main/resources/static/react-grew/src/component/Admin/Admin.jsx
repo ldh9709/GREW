@@ -4,10 +4,15 @@ import AdminMember from './AdminMember';
 import AdminReport from './AdminReport';
 import AdminInquiry from './AdminInquiry';
 import AdminMentorBoard from './AdminMentorBoard';
+import { useNavigate } from 'react-router-dom';
+import { logout } from '../../api/memberApi'
+import { useMemberAuth } from "../../util/AuthContext";
 
 export default function Admin() {
 
+  const auth = useMemberAuth();
   const [activeTab, setActiveTab] = useState("member");
+  const navigate = useNavigate();
   console.log("Active Tab:", activeTab);
   // //탭 클릭시 실행되는 함수
     const handleTabClick = (tab) => {
@@ -27,6 +32,18 @@ export default function Admin() {
     }
   }
 
+  const handleLogoutAction = async () => {
+    try {
+      await logout();
+      auth.logout();
+      navigate("/main");
+      alert("로그아웃 되었습니다..")
+    } catch (error) {
+      alert("로그아웃 실패")
+    }
+  }
+
+
   return (
   <div className="admin-container">
     <div className="sidebar">
@@ -42,12 +59,16 @@ export default function Admin() {
     </div>
     <div className='admin-header'>
         <span>{tabName(activeTab)}</span>
+        <div className='admin-header-btn'>
+          <button className='main-btn' onClick={()=>(navigate(`/main`))}>메인</button>
+          <button className='logout-btn' onClick={handleLogoutAction}>로그아웃</button>
+        </div>
     </div>
     <div className="admin-content">
       {activeTab === "member" && <AdminMember />}
-      {activeTab === "report" && <AdminReport />}
       {activeTab === "board" && <AdminInquiry />}      
       {activeTab === "mentor" && <AdminMentorBoard />}      
+      {activeTab === "report" && <AdminReport />}
     </div>
 </div>
   )

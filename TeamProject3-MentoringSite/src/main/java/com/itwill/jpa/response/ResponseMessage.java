@@ -17,6 +17,7 @@ public class ResponseMessage {
 	public static final String EMAIL_SEND_SUCCESS = "이메일 발송 성공";
 	public static final String INPUTCODE_CONFIRM_SUCCESS = "인증번호 인증 성공";
 	public static final String UPDATE_ROLE_SUCCESS = "회원 권한 수정 성공";
+	public static final String CONFIRM_EMAIL_SUCCESS = "이메일 중복 검사 성공";
 	
 	
 	// 실패 메시지
@@ -30,7 +31,7 @@ public class ResponseMessage {
 	public static final String PASSWORD_RESET_FAIL = "비밀번호 재설정 실패";
 	public static final String EMAIL_SEND_FAIL = "이메일 발송 실패";
 	public static final String INPUTCODE_CONFIRM_FAIL = "인증번호 인증 실패";
-	public static final String MEMBER_IS_NOT_EMAIL = "SNS로 가입한 사용자입니다.";        // 이메일로 가입한 회원이 아님
+	public static final String MEMBER_PROVIDER_IS_NOT_EMAIL = "SNS로 가입한 사용자입니다.";        // 이메일로 가입한 회원이 아님
 	public static final String AUTHENTICATION_FAILED = "로그인 정보와 일치하지 않습니다."; // 토큰과 정보가 일치하지 않음
 	public static final String UPDATE_ROLE_FAIL = "회원 권한 수정 성공";
 	public static final String DUPLICATION_MENBER_ID = "아이디가 중복되었습니다.";
@@ -38,6 +39,7 @@ public class ResponseMessage {
 	public static final String NOT_FOUND_MEMBER = "가입하려는 회원을 찾지 못했습니다.";
 	public static final String NOT_AGREEMENT_MEMBER_ID = "회원ID와 정보가 일치하지 않습니다.";
 	public static final String NOT_AGREEMENT_MEMBER_NAME = "회원NAME과 정보가 일치하지 않습니다.";
+	public static final String INPUT_NULL = "값이 NULL입니다.";
     
 	
     /******************* MENTOR BOARD 메시지 ************************/

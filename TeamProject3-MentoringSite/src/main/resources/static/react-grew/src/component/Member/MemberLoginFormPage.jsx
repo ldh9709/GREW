@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from "react";
+import "../../css/memberPage.css"
+import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import * as memberApi from "../../api/memberApi";
-import { setCookie, getCookie } from "../../util/cookieUtil"
-import "../../css/memberPage.css"
 import google from '../../image/google.png';
 import naver from '../../image/naver.png';
 import kakao from '../../image/kakao.png';

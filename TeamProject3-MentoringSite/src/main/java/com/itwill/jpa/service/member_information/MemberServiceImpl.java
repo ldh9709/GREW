@@ -51,8 +51,9 @@ public class MemberServiceImpl implements MemberService {
 	
 	@Autowired
 	InterestRepository interestRepository;
-	@Autowired
+
 	//메일 발송을 위한 메소드 의존성 주입
+	@Autowired
 	CustomMailSender customMailSender;
 	
 	@Autowired
@@ -66,55 +67,6 @@ public class MemberServiceImpl implements MemberService {
 	 - 비밀번호 : 8자 이상, 대문자 소문자 숫자 특수문자 중 2가지 이상 허용 (공백 금지)
 	 - 이메일 : 중복 확인 / 이메일 형식 (@)이 맞는지 체크(공백금지) / 도메인 유효성 검사
 	 * */
-	
-//	
-//	/***** 아이디 유효성(글자수, 포함글자) 체크 *****/
-//	public Boolean checkIdValid(String memberId) {
-//		boolean hasSpace = memberId.contains(" ");
-//		/* 예외처리적용예정 */
-//		if(memberId.length() < 3 || memberId.length() > 15) return false;
-//		if(!memberId.matches("^[a-zA-Z0-9_]+$")) return false;
-//		if(hasSpace) return false;
-//		return true;
-//	}
-//	
-//	
-//	/***** 비밀번호 유효성(글자수, 포함글자) 체크 *****/
-//	public Boolean checkPasswordValid(String memberPassword) {
-//		// 1. 비밀번호 길이 검사 (3~15글자)
-//		if(memberPassword.length() < 8) return false; //길이오류
-//		
-//		// 2. 두가지 이상 문자 조합 검사(대문자 소문자 숫자 특수문자 중 2가지 이상 허용 (공백 금지))
-//	    boolean hasUppercase = memberPassword.matches(".*[A-Z].*");
-//	    boolean hasLowercase = memberPassword.matches(".*[a-z].*");
-//	    boolean hasDigit = memberPassword.matches(".*[0-9].*");
-//	    boolean hasSpecialChar = memberPassword.matches(".*[!@#$%^&*(),.?\":{}|<>].*");
-//	    boolean hasSpace = memberPassword.contains(" ");
-//
-//	    // 공백이 있는 경우
-//	    if (hasSpace) {
-//	        return false; // 공백 오류
-//	    }
-//
-//	    // 두 가지 이상의 문자 유형을 만족하는지 확인
-//	    int typesCount = 0;
-//	    if (hasUppercase) typesCount++;
-//	    if (hasLowercase) typesCount++;
-//	    if (hasDigit) typesCount++;
-//	    if (hasSpecialChar) typesCount++;
-//
-//	    if (typesCount < 2) {
-//	        return false; // 형식 오류 (두 가지 이상 충족하지 않음)
-//	    }
-//	    
-//	    return true;
-//	}
-//	
-//	/* 이메일 유효성 체크 */
-//	public Boolean checkEmailValid(String memberEmail) {
-//		if(!memberEmail.matches("\\\\.[A-Za-z]{2,}$")) return false;
-//		return true;
-//	}
 	
 	
 	/***** 아이디 중복체크 *****/	
@@ -172,24 +124,27 @@ public class MemberServiceImpl implements MemberService {
 			for (InterestDto interest : memberDto.getInterests()) {
 				
 				Interest interestEntity = Interest.toEntity(interest);
-				System.out.println("회원가입 interestEntity : " + interestEntity);
 				
 				saveMember.addInterests(interestEntity);
 			}
 			
-			System.out.println(">>>>>saveMember : " + saveMember);
+			
 			return memberRepository.save(saveMember);
 			
 		} catch (Exception e) {
 			throw new CustomException(ResponseStatusCode.CREATED_MEMBER_FAIL, ResponseMessage.CREATED_MEMBER_FAIL, e);
 		}
 		
-		
 	}
 	
 	/***** 아이디 찾기 *****/
 	public String getMemberId(String memberEmail) {
 		String memberId = memberRepository.findMemberIdByMemberEmail(memberEmail).get();
+		
+		if(memberId == null) {
+			throw new CustomException(ResponseStatusCode.NOT_FOUND_MEMBER, ResponseMessage.NOT_FOUND_MEMBER, null);
+		}
+		
 		return maskMemberId(memberId);
 		
 	}
@@ -245,10 +200,45 @@ public class MemberServiceImpl implements MemberService {
 		return memberRepository.save(member);
 	}
 	
+	/***** 회원 탈퇴 *****/
+	@Override
+	public Member deleteMember(Long memberNo) {
+		
+		if(memberNo == null) {
+			throw new CustomException(ResponseStatusCode.INPUT_NULL, ResponseMessage.INPUT_NULL, null);
+		}
+		
+		Member member = memberRepository.findByMemberNo(memberNo);
+		
+		if(member == null) {
+			throw new CustomException(ResponseStatusCode.NOT_FOUND_MEMBER, ResponseMessage.NOT_FOUND_MEMBER, null);
+		}
+		
+		//비활성화로 상태 변경
+		member.setMemberStatus(2);
+		
+		return memberRepository.save(member);
+	}
+	
+	
 	/***** 회원 상태 수정 *****/
 	@Override
 	public Member updateMemberStatus(Long memberNo, Integer statusNo) {
+		
+		if(memberNo == null) {
+			throw new CustomException(ResponseStatusCode.INPUT_NULL, ResponseMessage.INPUT_NULL, null);
+		}
+		
+		if(statusNo == null) {
+			throw new CustomException(ResponseStatusCode.INPUT_NULL, ResponseMessage.INPUT_NULL, null);
+		}
+		
 		Member member = memberRepository.findByMemberNo(memberNo);
+		
+		if(member == null) {
+			throw new CustomException(ResponseStatusCode.NOT_FOUND_MEMBER, ResponseMessage.NOT_FOUND_MEMBER, null);
+		}
+		
 		member.setMemberStatus(statusNo);
 		
 		return memberRepository.save(member);
@@ -256,7 +246,20 @@ public class MemberServiceImpl implements MemberService {
 	
 	/***** 회원 권한 변경 *****/
 	public Member updateMemberRole(Long memberNo, String role) {
+		
+		if(memberNo == null) {
+			throw new CustomException(ResponseStatusCode.INPUT_NULL, ResponseMessage.INPUT_NULL, null);
+		}
+		
+		if(role == null) {
+			throw new CustomException(ResponseStatusCode.INPUT_NULL, ResponseMessage.INPUT_NULL, null);
+		}
+		
 		Member member = memberRepository.findByMemberNo(memberNo);
+		
+		if(member == null) {
+			throw new CustomException(ResponseStatusCode.NOT_FOUND_MEMBER, ResponseMessage.NOT_FOUND_MEMBER, null);
+		}
 		
 		if (role.equals("ROLE_MENTEE")) {
 		    member.setMemberRole(Role.ROLE_MENTEE);
@@ -266,19 +269,22 @@ public class MemberServiceImpl implements MemberService {
 		return memberRepository.save(member);
 	}
 	
-	/***** 회원 삭제 *****/
-	@Override
-	public Member deleteMember(Long memberNo) {
-		Member findMember = memberRepository.findByMemberNo(memberNo);
-		memberRepository.deleteById(memberNo);;
-		
-		return findMember;
-	}
 	
 	/**** 회원정보 상세 보기 ****/
 	@Override
 	public Member getMember(Long memberNo) {
-		return memberRepository.findByMemberNo(memberNo);
+		
+		if(memberNo == null) {
+			throw new CustomException(ResponseStatusCode.INPUT_NULL, ResponseMessage.INPUT_NULL, null);
+		}
+		
+		Member member = memberRepository.findByMemberNo(memberNo);
+		
+		if(member == null) {
+			throw new CustomException(ResponseStatusCode.NOT_FOUND_MEMBER, ResponseMessage.NOT_FOUND_MEMBER, null);
+		}
+		
+		return member;
 	}
 
 	/********************************* Interest CRUD **************************************/
@@ -376,6 +382,11 @@ public class MemberServiceImpl implements MemberService {
 	//회원가입 시 인증번호 메일 전송
 	@Override
 	public Integer sendJoinCode(MemberDto.JoinFormDto joinForm) {
+		
+		if(joinForm == null) {
+			throw new CustomException(ResponseStatusCode.INPUT_NULL, ResponseMessage.INPUT_NULL, null);
+		}
+		
 		//랜덤 숫자 객체 생성
 		Random random = new Random();
 		
@@ -399,9 +410,6 @@ public class MemberServiceImpl implements MemberService {
 		//입력받은 이메일로 저장된 인증번호 반환
 		Integer storedCode = tempCode.get(memberEmail);
 		
-		System.out.println("storedCode : <<<" + storedCode);
-		System.out.println("email : <<<" + memberEmail);
-		System.out.println("inputCode : <<<" + inputCode);
 		//유효성 검사 후 안맞으면 false 반환
 		if(storedCode == null || !storedCode.equals(inputCode)) {
 			return false;
@@ -418,6 +426,7 @@ public class MemberServiceImpl implements MemberService {
 		//이메일에 해당하는 인증번호 가져오기
 		return tempCode.get(email);
 	}
+	
 	/***** 아이디 찾기 *****/
 	@Override
 	//아이디 찾기 시 사용
@@ -447,13 +456,9 @@ public class MemberServiceImpl implements MemberService {
 	
 	//아이디 찾기 인증번호 확인
 	@Override
-	public boolean certificationCodeByFindId(String email, Integer inputCode) {
+	public boolean certificationCodeByFindId(String memberEmail, Integer inputCode) {
 		//입력받은 이메일로 저장된 인증번호 반환
-		Integer storedCode = tempCode.get(email);
-		
-		System.out.println("storedCode : <<<" + storedCode);
-		System.out.println("email : <<<" + email);
-		System.out.println("inputCode : <<<" + inputCode);
+		Integer storedCode = tempCode.get(memberEmail);
 		
 		//유효성 검사 후 안맞으면 false 반환
 		if(storedCode == null || !storedCode.equals(inputCode)) {
@@ -461,7 +466,7 @@ public class MemberServiceImpl implements MemberService {
 		}
 		
 		//맞으면 데이터 삭제 후 true 반환
-		tempCode.remove(email);
+		tempCode.remove(memberEmail);
 		
 		return true;
 		
@@ -470,15 +475,47 @@ public class MemberServiceImpl implements MemberService {
 	//이메일로 멤버 찾기
 	@Override
 	public Member getMemberByMemberEmail(String memberEmail) {
-		return memberRepository.findByMemberEmail(memberEmail);
+		Member member = memberRepository.findByMemberEmail(memberEmail);
+		
+		if(member == null) {
+			throw new CustomException(ResponseStatusCode.NOT_FOUND_MEMBER, ResponseMessage.NOT_FOUND_MEMBER, null);
+		}
+		
+		return member; 
 	}
+	
+	//이메일로 인증번호 발송
+	@Override
+	public void sendVerificationCode(String memberEmail) {
+		//랜덤 숫자 객체 생성
+		Random random = new Random();
+		
+		//6자리 숫자 임시번호 발급
+		Integer tempNo = random.nextInt(900000) + 100000;
+		
+		//인증번호 저장
+		tempCode.put(memberEmail, tempNo);
+		
+		//메일 발송
+		customMailSender.sendVerificationCode(memberEmail, tempNo);
+		
+	}
+	
     /**************************************************************************************/
 	
 	@Override
 	//비밀번호 찾기 이메일 전송
 	public void findPassword(MemberDto.findPassword memberDto) {
+		
+		if(memberDto == null) {
+			throw new CustomException(ResponseStatusCode.INPUT_NULL, ResponseMessage.INPUT_NULL, null);
+		}
+		
 		Member member = memberRepository.findByMemberEmail(memberDto.getEmail());
 		
+		if(member == null) {
+			throw new CustomException(ResponseStatusCode.NOT_FOUND_MEMBER, ResponseMessage.NOT_FOUND_MEMBER, null);
+		}
 		if(!member.getMemberName().equals(memberDto.getMemberName())) {
 			throw new CustomException(ResponseStatusCode.AUTHENTICATION_FAILED, ResponseMessage.AUTHENTICATION_FAILED, null);
 		}
@@ -515,5 +552,7 @@ public class MemberServiceImpl implements MemberService {
 
         return tokens;
 	}
+
+	
 	
 }

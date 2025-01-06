@@ -11,7 +11,7 @@ export default function AdminReportDetail({report, onClose, fetchReports}) {
     const handleStatusUpdate = async (reportNo, status) => {
         try {
             let confirmation;
-            status === 2 ? ( confirmation = window.confirm('신고 처리 하시겠습니까?')) : (confirmation = window.confirm('무고 처리 하시겠습니까?'))
+            status === 2 ? ( confirmation = window.confirm('신고 처리 하시겠습니까?')) : (confirmation = window.confirm('반려 처리 하시겠습니까?'))
             if(confirmation){
                 const response = await adminApi.updateReportStatusForAdmin(token, reportNo, status);
                 alert(`신고 상태가 '${reportUtil.reportStatus(status)}'로 변경되었습니다.`);
@@ -69,7 +69,7 @@ export default function AdminReportDetail({report, onClose, fetchReports}) {
                 <button className="checked"
                 >처리</button>
                 <button className="checked"
-                >무고</button>
+                >반려</button>
             </div>
             ) : (
             <div>
@@ -78,7 +78,7 @@ export default function AdminReportDetail({report, onClose, fetchReports}) {
                 >처리</button>
                 <button className="false-report"
                 onClick={() => handleStatusUpdate(report.reportNo, 3)}
-                >무고</button>
+                >반려</button>
             </div>
             )}
         </div>
