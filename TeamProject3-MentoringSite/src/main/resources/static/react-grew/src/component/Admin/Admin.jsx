@@ -23,9 +23,9 @@ export default function Admin() {
     switch (tab) {
       case "member":
         return "회원목록"
-      case "inquiry":
-        return "질문게시글"
       case "board":
+        return "질문게시글"
+      case "mentor":
         return "멘토게시글"
       case "report":
         return "신고목록"

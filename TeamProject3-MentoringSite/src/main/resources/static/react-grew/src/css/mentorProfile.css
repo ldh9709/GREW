@@ -1,3 +1,26 @@
+.mentor-boards {
+  margin: 20px;
+}
+
+.mentor-board-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px; /* 카드 간격 */
+}
+
+.mentor-board-list > * {
+  flex: 1 1 calc(50% - 16px); /* 한 줄에 2개 배치 */
+  box-sizing: border-box;
+}
+
+@media (max-width: 768px) {
+  .mentor-board-list > * {
+    flex: 1 1 100%; /* 작은 화면에서는 한 줄에 1개 */
+  }
+}
+
+
+
 /* MentorProfileList 전체 컨테이너 */
 .mentor-profile-list {
   width: 80%;
