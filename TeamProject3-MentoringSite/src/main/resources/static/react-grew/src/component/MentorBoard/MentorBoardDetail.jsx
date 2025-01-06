@@ -78,10 +78,12 @@ const MentorBoardDetail = () => {
 
   useEffect(() => {
     fetchBoardDetail();
-    handleViewCount(); // 조회수 증가 로직 추가
-    checkFollow();
+    handleViewCount(); 
+    if(token){
+      checkFollow();
+    }
   }, [mentorBoardNo]);
-
+  
   useEffect(() => {
     if (board != null) {
       fetchMentorInfo();
@@ -212,9 +214,9 @@ const MentorBoardDetail = () => {
 
       <div
         className="mentor-info-card"
-        role="button" // 접근성을 위한 역할 추가
-        tabIndex={0} // 키보드 접근 가능
-        onClick={() => navigate(`/mentor-profile/${mentor.mentorProfileNo}`)} // 클릭 시 네비게이션
+        role="button"
+        tabIndex={0} 
+        onClick={() => navigate(`/mentor-profile/${mentor.mentorProfileNo}`)}
       >
         <img
           src={mentor.mentorImage || "/default-profile.png"}
@@ -231,7 +233,7 @@ const MentorBoardDetail = () => {
           <button
             className={`follow-button ${isFollow ? "follow-isexist" : ""}`}
             onClick={(e) => {
-              e.stopPropagation(); // 이벤트 전파 차단
+              e.stopPropagation();
               handleFollowClick();
             }}
           >
