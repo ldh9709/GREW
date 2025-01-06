@@ -274,6 +274,25 @@ export const updateAction = async (memberDto, token) => {
       return resultJsonObject;
     
 }
+
+//회원 정보 수정
+export const deleteAction = async (token) => {
+
+    const response = await fetch(`${BACKEND_SERVER}/member/profile/delete`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+      });
+      const resultJsonObject = await response.json();
+
+      console.log("resultJsonObject : ", resultJsonObject);
+
+      return resultJsonObject;
+    
+}
+
 //회원 권한 변경
 export const updateMemberRole = async(token,role) => {
     const response = await fetch(`${BACKEND_SERVER}/member/update-role/${role}`,{

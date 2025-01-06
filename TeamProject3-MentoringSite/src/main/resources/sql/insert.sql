@@ -305,13 +305,13 @@ VALUES(career_no_SEQ.nextval, '한샘', '17년 경력', '2024.01.01', null, 13);
 
 INSERT INTO member(member_no, member_id, member_password, member_email, member_name, member_points, member_status, member_join_date, member_report_count, member_role, member_provider)
 VALUES(member_no_SEQ.nextval, 'mentor10', '{bcrypt}$2a$10$2Vj/MwAon9U1UFSHcF8DSe9VtT86qtIFmWo2.tocHk1Px1NAXFU3K', 'mentor10@naver.com', '김도요', 4500, 1, SYSDATE, 0, 'ROLE_MENTOR', 'Email');
-INSERT INTO mentor_profile(mentor_profile_no, mentor_introduce, mentor_rating, mentor_mentoring_count, mentor_image, mentor_activity_count, mentor_follow_count, mentor_status, category_no, member_no, mentor_headline)
 insert into interest (interest_no, member_no, category_no) 
 values(interest_no_SEQ.nextval, 20, 16);
 insert into interest (interest_no, member_no, category_no) 
 values(interest_no_SEQ.nextval, 20, 17);
 insert into interest (interest_no, member_no, category_no) 
 values(interest_no_SEQ.nextval, 20, 18);
+INSERT INTO mentor_profile(mentor_profile_no, mentor_introduce, mentor_rating, mentor_mentoring_count, mentor_image, mentor_activity_count, mentor_follow_count, mentor_status, category_no, member_no, mentor_headline)
 VALUES(mentor_profile_no_SEQ.nextval, '안녕하세요, 김도요 멘토입니다.',5.0, 40, '/images/mentor-profile/13.png', 170, 90, 3, 18, member_no_SEQ.currval, '열심히 멘토하겠습니다.');
 INSERT INTO career(CAREER_NO, CAREER_COMPANY_NAME, CAREER_JOB_TITLE, CAREER_START_DATE, CAREER_END_DATE, MENTOR_PROFILE_NO)
 VALUES(career_no_SEQ.nextval, '한샘', '12년 경력', '2024.01.01', null, 14);
@@ -435,6 +435,16 @@ VALUES(mentor_profile_no_SEQ.nextval, '안녕하세요, 이정훈 멘토입니�
 INSERT INTO career(CAREER_NO, CAREER_COMPANY_NAME, CAREER_JOB_TITLE, CAREER_START_DATE, CAREER_END_DATE, MENTOR_PROFILE_NO)
 VALUES(career_no_SEQ.nextval, '헬스 퍼스널 트레이닝 센터', '피트니스 트레이너', '2012-06-01', '2024-01-01', (SELECT mentor_profile_no FROM mentor_profile WHERE member_no = (SELECT member_no FROM member WHERE member_id = 'mentor20')));
 
+
+
+
+
+
+
+
+
+
+
 INSERT INTO member(member_no, member_id, member_password, member_email, member_name, member_points, member_status, member_join_date, member_report_count, member_role, member_provider)
 VALUES(member_no_SEQ.nextval, 'mentor50', '{bcrypt}$2a$10$2Vj/MwAon9U1UFSHcF8DSe9VtT86qtIFmWo2.tocHk1Px1NAXFU3K', 'mentor50@naver.com', '이재훈', 5200, 1, SYSDATE, 0, 'ROLE_MENTOR', 'Email');
 insert into interest (interest_no, member_no, category_no) 
@@ -537,9 +547,9 @@ values(interest_no_SEQ.nextval, 37, 3);
 insert into interest (interest_no, member_no, category_no) 
 values(interest_no_SEQ.nextval, 37, 4);
 INSERT INTO mentor_profile(mentor_profile_no, mentor_introduce, mentor_rating, mentor_mentoring_count, mentor_image, mentor_activity_count, mentor_follow_count, mentor_status, category_no, member_no, mentor_headline)
-VALUES(mentor_profile_no_SEQ.nextval, '안녕하세요, 이서윤 멘토입니다. 소프트웨어 개발 전문가입니다.', 4.8, 60, '/images/mentor-profile/9a.jpg', 180, 85, 3, 4, member_no_SEQ.currval, '소프트웨어 개발 전문가');
+VALUES(mentor_profile_no_SEQ.nextval, '안녕하세요, 이서윤 멘토입니다. 필라테스 강사입니다.', 4.8, 60, '/images/mentor-profile/9a.jpg', 180, 85, 3, 24, member_no_SEQ.currval, '필라테스 경력 20년');
 INSERT INTO career(career_no, career_company_name, career_job_title, career_start_date, career_end_date, mentor_profile_no)
-VALUES(career_no_SEQ.nextval, 'IT 기업', '소프트웨어 개발자', '2014-07-01', '2024-01-01', (SELECT mentor_profile_no FROM mentor_profile WHERE member_no = (SELECT member_no FROM member WHERE member_id = 'mentor58')));
+VALUES(career_no_SEQ.nextval, '필라테스', '강사', '2014-07-01', '2024-01-01', (SELECT mentor_profile_no FROM mentor_profile WHERE member_no = (SELECT member_no FROM member WHERE member_id = 'mentor58')));
 
 INSERT INTO member(member_no, member_id, member_password, member_email, member_name, member_points, member_status, member_join_date, member_report_count, member_role, member_provider)
 VALUES(member_no_SEQ.nextval, 'mentor59', '{bcrypt}$2a$10$2Vj/MwAon9U1UFSHcF8DSe9VtT86qtIFmWo2.tocHk1Px1NAXFU3K', 'mentor59@naver.com', '최민지', 4900, 1, SYSDATE, 0, 'ROLE_MENTOR', 'Email');
@@ -636,34 +646,17 @@ VALUES(career_no_SEQ.nextval, '영어 교육 센터', '영어 교사', '2014-09-
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 /*멘토 보드 등록*/
 
-/* 인사/총무/노무 분야 category 2번 member 번호 6번 ,11번*/
+/* 인사/총무/노무 분야 category 2번 member 번호 2번 ,11번*/
 INSERT INTO mentor_board (mentor_board_no, mentor_board_title, mentor_board_content, mentor_board_image, mentor_board_date, mentor_board_views, mentor_board_status, member_no) 
 VALUES (mentor_board_no_SEQ.nextval, '핵심만 콕! 바로쓰는 총무 실무', '''핵심만 뽑아 쓰는 총무 업무의 모든 것!''  NCS 학습모듈 집필위원이 알려주는 학습포인트와 현업 꿀팁!',  '/images/mentor-board/인사총무01.jpg', TO_DATE('2024-12-13 15:30:00', 'YYYY-MM-DD HH24:MI:SS'), 185, 1, 11);
 
 INSERT INTO mentor_board (mentor_board_no, mentor_board_title, mentor_board_content, mentor_board_image, mentor_board_date, mentor_board_views, mentor_board_status, member_no) 
-VALUES (mentor_board_no_SEQ.nextval, '총무 업무 자동화로 시간 절약하기', '반복적인 총무 업무를 효율적으로 처리할 수 있는 자동화 도구와 팁에 대해 소개합니다.', '/images/mentor-board/인사총무02.jpg', TO_DATE('2024-08-10 14:00:00', 'YYYY-MM-DD HH24:MI:SS'), 85, 1, 6);
+VALUES (mentor_board_no_SEQ.nextval, '총무 업무 자동화로 시간 절약하기', '반복적인 총무 업무를 효율적으로 처리할 수 있는 자동화 도구와 팁에 대해 소개합니다.', '/images/mentor-board/인사총무02.jpg', TO_DATE('2024-08-10 14:00:00', 'YYYY-MM-DD HH24:MI:SS'), 85, 1, 2);
 
 INSERT INTO mentor_board (mentor_board_no, mentor_board_title, mentor_board_content, mentor_board_image, mentor_board_date, mentor_board_views, mentor_board_status, member_no) 
-VALUES (mentor_board_no_SEQ.nextval, '노무 관리에서의 주요 법적 이슈와 해결 방안', '최근 발생한 주요 노무 관련 분쟁 사례와 이를 예방하고 해결하는 방법을 알려드립니다.', '/images/mentor-board/인사총무03.jpg', TO_DATE('2024-08-15 09:30:00', 'YYYY-MM-DD HH24:MI:SS'), 145, 1, 6);
+VALUES (mentor_board_no_SEQ.nextval, '노무 관리에서의 주요 법적 이슈와 해결 방안', '최근 발생한 주요 노무 관련 분쟁 사례와 이를 예방하고 해결하는 방법을 알려드립니다.', '/images/mentor-board/인사총무03.jpg', TO_DATE('2024-08-15 09:30:00', 'YYYY-MM-DD HH24:MI:SS'), 145, 1, 2);
 
 INSERT INTO mentor_board (mentor_board_no, mentor_board_title, mentor_board_content, mentor_board_image, mentor_board_date, mentor_board_views, mentor_board_status, member_no) 
 VALUES (mentor_board_no_SEQ.nextval, '신입사원 온보딩 프로세스 최적화하기', '신입사원이 빠르게 조직에 적응하고 성과를 낼 수 있도록 하는 온보딩 프로세스를 소개합니다.', '/images/mentor-board/인사총무04.jpg', TO_DATE('2024-08-20 16:00:00', 'YYYY-MM-DD HH24:MI:SS'), 97, 1, 11);
@@ -672,7 +665,7 @@ INSERT INTO mentor_board (mentor_board_no, mentor_board_title, mentor_board_cont
 VALUES (mentor_board_no_SEQ.nextval, '임직원 복리후생 제도 설계의 핵심 포인트', '직원 만족도를 높이고 회사 경쟁력을 강화할 수 있는 복리후생 제도 설계 방법에 대해 논의합니다.', '/images/mentor-board/인사총무05.jpg', TO_DATE('2024-08-25 18:00:00', 'YYYY-MM-DD HH24:MI:SS'), 110, 1, 11);
 
 INSERT INTO mentor_board (mentor_board_no, mentor_board_title, mentor_board_content, mentor_board_image, mentor_board_date, mentor_board_views, mentor_board_status, member_no) 
-VALUES (mentor_board_no_SEQ.nextval, '효율적인 인사 평가 시스템 구축 방법', '인사 평가의 객관성을 높이고 직원들의 동기를 유발할 수 있는 평가 시스템 구축 방법에 대해 공유합니다.', '/images/mentor-board/인사총무06.jpg', TO_DATE('2024-08-05 10:00:00', 'YYYY-MM-DD HH24:MI:SS'), 120, 1, 6);
+VALUES (mentor_board_no_SEQ.nextval, '효율적인 인사 평가 시스템 구축 방법', '인사 평가의 객관성을 높이고 직원들의 동기를 유발할 수 있는 평가 시스템 구축 방법에 대해 공유합니다.', '/images/mentor-board/인사총무06.jpg', TO_DATE('2024-08-05 10:00:00', 'YYYY-MM-DD HH24:MI:SS'), 120, 1, 2);
 
 
 /* 영업/영업관리 분야 category 3번 member 번호 12번*/
@@ -692,7 +685,7 @@ INSERT INTO mentor_board (mentor_board_no, mentor_board_title, mentor_board_cont
 VALUES (mentor_board_no_SEQ.nextval, '영업 프로세스에서의 리더십 역할', '성공적인 영업 관리는 리더의 역할에 달려 있습니다. 이 글에서는 영업 리더가 팀의 성과를 극대화하기 위해 어떤 방식으로 리더십을 발휘해야 하는지에 대해 논의합니다.', '/images/mentor-board/영업관리05.jpg', TO_DATE('2024-12-15 14:20:00', 'YYYY-MM-DD HH24:MI:SS'), 135, 1, 12);
 
 
-/* IT개발/데이터 category 3번 member 번호 8번, 13번 */
+/* IT개발/데이터 category 4번 member 번호 8번, 13번 */
 INSERT INTO mentor_board (mentor_board_no, mentor_board_title, mentor_board_content, mentor_board_image, mentor_board_date, mentor_board_views, mentor_board_status, member_no) 
 VALUES (mentor_board_no_SEQ.nextval, '개발 직군, 다른 직무부터 시작해도 될까요?', '멘티님, 산다는 게 참 어려운 결정의 연속인 것 같습니다. 당연하게도 제가 뭔가 해답을 제시해 드리기는 어렵겠지만 제 경우의 경험을 말씀드려보자면, 저는 고등학교는 문과를 졸업했어요',  '/images/mentor-board/it개발데이터01.jpg', TO_DATE('2024-12-10 12:00:00', 'YYYY-MM-DD HH24:MI:SS'), 105, 1, 8);
 
@@ -729,34 +722,24 @@ INSERT INTO mentor_board (mentor_board_no, mentor_board_title, mentor_board_cont
 VALUES (mentor_board_no_SEQ.nextval, '중학교 시험 대비 꿀팁', '중간고사와 기말고사를 효율적으로 준비할 수 있는 학습 계획 및 실전 팁을 제공합니다.', '/images/mentor-board/중학생05.jpg', TO_DATE('2024-04-03 14:00:00', 'YYYY-MM-DD HH24:MI:SS'), 111, 1, 22);
 
 
-/* 고등학생 학습/교육 category 7번 member 번호 23번 */
+/* 고등학생 학습/교육 category 7번 member 번호 35번 */
 INSERT INTO mentor_board(mentor_board_no, mentor_board_title, mentor_board_content, mentor_board_image, mentor_board_date, mentor_board_views, mentor_board_status, member_no)
-VALUES(mentor_board_no_SEQ.nextval, '고등학생 학습법과 대학입시 준비', '고등학생들이 학업 성취를 극대화하고 대학 입시에 성공하기 위한 실질적인 가이드를 제공합니다.', '/images/mentor-board/고등학생01.jpg', TO_DATE('2024-12-03 22:12:00', 'YYYY-MM-DD HH24:MI:SS'), 320, 1, 23);
+VALUES(mentor_board_no_SEQ.nextval, '고등학생 학습법과 대학입시 준비', '고등학생들이 학업 성취를 극대화하고 대학 입시에 성공하기 위한 실질적인 가이드를 제공합니다.', '/images/mentor-board/고등학생01.jpg', TO_DATE('2024-12-03 22:12:00', 'YYYY-MM-DD HH24:MI:SS'), 320, 1, 35);
 
 INSERT INTO mentor_board (mentor_board_no, mentor_board_title, mentor_board_content, mentor_board_image, mentor_board_date, mentor_board_views, mentor_board_status, member_no)
-VALUES (mentor_board_no_SEQ.nextval, '효율적인 수능 대비 전략', '수능 준비 과정을 체계적으로 계획하고 학습 효율을 높이는 방법에 대해 다룹니다.', '/images/mentor-board/고등학생02.jpg', TO_DATE('2024-08-13 18:20:00', 'YYYY-MM-DD HH24:MI:SS'), 280, 1, 23);
+VALUES (mentor_board_no_SEQ.nextval, '효율적인 수능 대비 전략', '수능 준비 과정을 체계적으로 계획하고 학습 효율을 높이는 방법에 대해 다룹니다.', '/images/mentor-board/고등학생02.jpg', TO_DATE('2024-08-13 18:20:00', 'YYYY-MM-DD HH24:MI:SS'), 280, 1, 35);
 
 INSERT INTO mentor_board (mentor_board_no, mentor_board_title, mentor_board_content, mentor_board_image, mentor_board_date, mentor_board_views, mentor_board_status, member_no)
-VALUES (mentor_board_no_SEQ.nextval, '고등학생을 위한 시간 관리 기술', '학업과 생활의 균형을 맞추기 위한 시간 관리 기술과 실천 팁을 제공합니다.', '/images/mentor-board/고등학생03.jpg', TO_DATE('2024-10-07 11:00:00', 'YYYY-MM-DD HH24:MI:SS'), 100, 1, 23);
+VALUES (mentor_board_no_SEQ.nextval, '고등학생을 위한 시간 관리 기술', '학업과 생활의 균형을 맞추기 위한 시간 관리 기술과 실천 팁을 제공합니다.', '/images/mentor-board/고등학생03.jpg', TO_DATE('2024-10-07 11:00:00', 'YYYY-MM-DD HH24:MI:SS'), 100, 1, 35);
 
 INSERT INTO mentor_board (mentor_board_no, mentor_board_title, mentor_board_content, mentor_board_image, mentor_board_date, mentor_board_views, mentor_board_status, member_no)
-VALUES (mentor_board_no_SEQ.nextval, '고등학교 주요 과목 학습법', '국어, 영어, 수학, 과학 등 주요 과목별 효과적인 학습 전략과 문제 해결 팁을 소개합니다.', '/images/mentor-board/고등학생04.jpg', TO_DATE('2024-10-07 15:50:00', 'YYYY-MM-DD HH24:MI:SS'), 132, 1, 23);
+VALUES (mentor_board_no_SEQ.nextval, '고등학교 주요 과목 학습법', '국어, 영어, 수학, 과학 등 주요 과목별 효과적인 학습 전략과 문제 해결 팁을 소개합니다.', '/images/mentor-board/고등학생04.jpg', TO_DATE('2024-10-07 15:50:00', 'YYYY-MM-DD HH24:MI:SS'), 132, 1, 35);
 
 INSERT INTO mentor_board (mentor_board_no, mentor_board_title, mentor_board_content, mentor_board_image, mentor_board_date, mentor_board_views, mentor_board_status, member_no)
-VALUES (mentor_board_no_SEQ.nextval, '효과적인 진로 탐색 방법', '고등학생들이 자신의 진로를 탐색하고 목표를 설정할 수 있도록 돕는 실질적인 방법과 사례를 제공합니다.', '/images/mentor-board/고등학생05.jpg', TO_DATE('2024-09-03 14:00:00', 'YYYY-MM-DD HH24:MI:SS'), 175, 1, 23);
+VALUES (mentor_board_no_SEQ.nextval, '효과적인 진로 탐색 방법', '고등학생들이 자신의 진로를 탐색하고 목표를 설정할 수 있도록 돕는 실질적인 방법과 사례를 제공합니다.', '/images/mentor-board/고등학생05.jpg', TO_DATE('2024-09-03 14:00:00', 'YYYY-MM-DD HH24:MI:SS'), 175, 1, 35);
 
 
-/* 대학입시상담 category 8번 member 번호 9,14,16번 */
--- member_no 9번
-INSERT INTO mentor_board (mentor_board_no, mentor_board_title, mentor_board_content, mentor_board_image, mentor_board_date, mentor_board_views, mentor_board_status, member_no)
-VALUES (mentor_board_no_SEQ.nextval, '대학 입시 면접에서 성공하는 방법', '면접에서 자신을 돋보이게 하는 팁과 성공 사례를 소개합니다.', '/images/mentor-board/대학입시상담01.jpg', TO_DATE('2024-10-03 14:00:00', 'YYYY-MM-DD HH24:MI:SS'), 140, 1, 9);
-
-INSERT INTO mentor_board (mentor_board_no, mentor_board_title, mentor_board_content, mentor_board_image, mentor_board_date, mentor_board_views, mentor_board_status, member_no)
-VALUES (mentor_board_no_SEQ.nextval, '대학별 지원 전략 세우기', '본인에게 적합한 대학을 선택하고 지원 전략을 세우는 방법을 알아봅니다.', '/images/mentor-board/대학입시상담02.jpg', TO_DATE('2024-10-08 11:30:00', 'YYYY-MM-DD HH24:MI:SS'), 120, 1, 9);
-
-INSERT INTO mentor_board (mentor_board_no, mentor_board_title, mentor_board_content, mentor_board_image, mentor_board_date, mentor_board_views, mentor_board_status, member_no)
-VALUES (mentor_board_no_SEQ.nextval, '합격을 부르는 수험 생활 관리 팁', '수험생들이 스트레스를 줄이고 효율적으로 학습할 수 있는 관리 방법을 제공합니다.', '/images/mentor-board/대학입시상담03.jpg', TO_DATE('2024-10-12 09:00:00', 'YYYY-MM-DD HH24:MI:SS'), 130, 1, 9);
-
+/* 대학입시상담 category 8번 member 번호 14,16번 */
 -- member_no 14번
 INSERT INTO mentor_board (mentor_board_no, mentor_board_title, mentor_board_content, mentor_board_image, mentor_board_date, mentor_board_views, mentor_board_status, member_no)
 VALUES (mentor_board_no_SEQ.nextval, '합격률을 높이는 자기소개서 작성법', '자기소개서에서 강조해야 할 핵심 포인트와 작성법을 공유합니다.', '/images/mentor-board/대학입시상담04.jpg', TO_DATE('2024-10-15 14:45:00', 'YYYY-MM-DD HH24:MI:SS'), 150, 1, 14);
@@ -778,44 +761,44 @@ INSERT INTO mentor_board (mentor_board_no, mentor_board_title, mentor_board_cont
 VALUES (mentor_board_no_SEQ.nextval, '수험생 학습 플랜 작성하기', '개인의 학습 스타일에 맞는 수험 계획을 작성하고 실행하는 방법을 공유합니다.', '/images/mentor-board/대학입시상담09.jpg', TO_DATE('2024-10-28 11:45:00', 'YYYY-MM-DD HH24:MI:SS'), 155, 1, 16);
 
 
-/* 음악 category 10번 member 번호 24번 */
+/* 음악 category 10번 member 번호 9번 */
 INSERT INTO mentor_board(mentor_board_no, mentor_board_title, mentor_board_content, mentor_board_image, mentor_board_date, mentor_board_views, mentor_board_status, member_no)
-VALUES(mentor_board_no_SEQ.nextval, '음악 이론과 실기 완벽 가이드', '음악을 배우고자 하는 학생들을 위한 이론과 실기 학습법을 소개합니다. 기초부터 고급 단계까지 다룹니다.', '/images/mentor-board/음악01.jpg',TO_DATE('2024-10-12 14:00:00', 'YYYY-MM-DD HH24:MI:SS'), 230, 1, 24);
+VALUES(mentor_board_no_SEQ.nextval, '음악 이론과 실기 완벽 가이드', '음악을 배우고자 하는 학생들을 위한 이론과 실기 학습법을 소개합니다. 기초부터 고급 단계까지 다룹니다.', '/images/mentor-board/음악01.jpg',TO_DATE('2024-10-12 14:00:00', 'YYYY-MM-DD HH24:MI:SS'), 230, 1, 9);
 
 INSERT INTO mentor_board (mentor_board_no, mentor_board_title, mentor_board_content, mentor_board_image, mentor_board_date, mentor_board_views, mentor_board_status, member_no)
-VALUES (mentor_board_no_SEQ.nextval, '초보자를 위한 악기 선택 가이드', '처음 음악을 시작하는 분들을 위한 악기 선택 팁과 추천 정보를 제공합니다.', '/images/mentor-board/음악02.jpg', TO_DATE('2024-04-12 14:00:00', 'YYYY-MM-DD HH24:MI:SS'), 130, 1, 24);
+VALUES (mentor_board_no_SEQ.nextval, '초보자를 위한 악기 선택 가이드', '처음 음악을 시작하는 분들을 위한 악기 선택 팁과 추천 정보를 제공합니다.', '/images/mentor-board/음악02.jpg', TO_DATE('2024-04-12 14:00:00', 'YYYY-MM-DD HH24:MI:SS'), 130, 1, 9);
 
 INSERT INTO mentor_board (mentor_board_no, mentor_board_title, mentor_board_content, mentor_board_image, mentor_board_date, mentor_board_views, mentor_board_status, member_no)
-VALUES (mentor_board_no_SEQ.nextval, '작곡을 시작하는 사람들을 위한 팁', '초보자들이 작곡을 시작할 때 알아야 할 기초 지식과 창작 방법을 소개합니다.', '/images/mentor-board/음악03.jpg', TO_DATE('2024-10-15 09:30:00', 'YYYY-MM-DD HH24:MI:SS'), 145, 1, 24);
+VALUES (mentor_board_no_SEQ.nextval, '작곡을 시작하는 사람들을 위한 팁', '초보자들이 작곡을 시작할 때 알아야 할 기초 지식과 창작 방법을 소개합니다.', '/images/mentor-board/음악03.jpg', TO_DATE('2024-10-15 09:30:00', 'YYYY-MM-DD HH24:MI:SS'), 145, 1, 9);
 
 INSERT INTO mentor_board (mentor_board_no, mentor_board_title, mentor_board_content, mentor_board_image, mentor_board_date, mentor_board_views, mentor_board_status, member_no)
-VALUES (mentor_board_no_SEQ.nextval, '음악 이론 쉽게 배우기', '복잡해 보이는 음악 이론을 쉽게 이해하고 활용하는 방법을 단계별로 설명합니다.', '/images/mentor-board/음악04.jpg', TO_DATE('2024-10-20 11:15:00', 'YYYY-MM-DD HH24:MI:SS'), 120, 1, 24);
+VALUES (mentor_board_no_SEQ.nextval, '음악 이론 쉽게 배우기', '복잡해 보이는 음악 이론을 쉽게 이해하고 활용하는 방법을 단계별로 설명합니다.', '/images/mentor-board/음악04.jpg', TO_DATE('2024-10-20 11:15:00', 'YYYY-MM-DD HH24:MI:SS'), 120, 1, 9);
 
 INSERT INTO mentor_board (mentor_board_no, mentor_board_title, mentor_board_content, mentor_board_image, mentor_board_date, mentor_board_views, mentor_board_status, member_no)
-VALUES (mentor_board_no_SEQ.nextval, '음악 경연대회 준비 팁', '음악 경연대회에서 좋은 결과를 얻기 위한 준비 과정과 실전 노하우를 소개합니다.', '/images/mentor-board/음악05.jpg', TO_DATE('2024-10-25 16:00:00', 'YYYY-MM-DD HH24:MI:SS'), 155, 1, 24);
+VALUES (mentor_board_no_SEQ.nextval, '음악 경연대회 준비 팁', '음악 경연대회에서 좋은 결과를 얻기 위한 준비 과정과 실전 노하우를 소개합니다.', '/images/mentor-board/음악05.jpg', TO_DATE('2024-10-25 16:00:00', 'YYYY-MM-DD HH24:MI:SS'), 155, 1, 9);
 
 
-/* 글쓰기 category 11번 member 번호 27번 */
+/* 글쓰기 category 11번 member 번호 26번 */
 INSERT INTO mentor_board(mentor_board_no, mentor_board_title, mentor_board_content, mentor_board_image, mentor_board_date, mentor_board_views, mentor_board_status, member_no)
-VALUES(mentor_board_no_SEQ.nextval, '창의적인 글쓰기 비법', '창의적인 글쓰기를 위한 아이디어 발굴 방법과 실질적인 글쓰기 노하우를 제공합니다.', '/images/mentor-board/글쓰기01.jpg', TO_DATE('2024-11-17 10:20:00', 'YYYY-MM-DD HH24:MI:SS'), 155, 1, 27);
+VALUES(mentor_board_no_SEQ.nextval, '창의적인 글쓰기 비법', '창의적인 글쓰기를 위한 아이디어 발굴 방법과 실질적인 글쓰기 노하우를 제공합니다.', '/images/mentor-board/글쓰기01.jpg', TO_DATE('2024-11-17 10:20:00', 'YYYY-MM-DD HH24:MI:SS'), 155, 1, 26);
 
 INSERT INTO mentor_board (mentor_board_no, mentor_board_title, mentor_board_content, mentor_board_image, mentor_board_date, mentor_board_views, mentor_board_status, member_no)
-VALUES (mentor_board_no_SEQ.nextval, '효과적인 스토리텔링 기술', '독자의 관심을 끌고 감동을 줄 수 있는 스토리텔링 기술과 사례를 공유합니다.', '/images/mentor-board/글쓰기02.jpg', TO_DATE('2024-11-20 14:30:00', 'YYYY-MM-DD HH24:MI:SS'), 140, 1, 27);
+VALUES (mentor_board_no_SEQ.nextval, '효과적인 스토리텔링 기술', '독자의 관심을 끌고 감동을 줄 수 있는 스토리텔링 기술과 사례를 공유합니다.', '/images/mentor-board/글쓰기02.jpg', TO_DATE('2024-11-20 14:30:00', 'YYYY-MM-DD HH24:MI:SS'), 140, 1, 26);
 
 INSERT INTO mentor_board (mentor_board_no, mentor_board_title, mentor_board_content, mentor_board_image, mentor_board_date, mentor_board_views, mentor_board_status, member_no)
-VALUES (mentor_board_no_SEQ.nextval, '글쓰기 블록 극복하기', '글쓰기 과정에서 마주치는 창작의 벽을 극복하기 위한 유용한 팁과 방법을 제공합니다.', '/images/mentor-board/글쓰기03.jpg', TO_DATE('2024-11-23 09:45:00', 'YYYY-MM-DD HH24:MI:SS'), 125, 1, 27);
+VALUES (mentor_board_no_SEQ.nextval, '글쓰기 블록 극복하기', '글쓰기 과정에서 마주치는 창작의 벽을 극복하기 위한 유용한 팁과 방법을 제공합니다.', '/images/mentor-board/글쓰기03.jpg', TO_DATE('2024-11-23 09:45:00', 'YYYY-MM-DD HH24:MI:SS'), 125, 1, 26);
 
 INSERT INTO mentor_board (mentor_board_no, mentor_board_title, mentor_board_content, mentor_board_image, mentor_board_date, mentor_board_views, mentor_board_status, member_no)
-VALUES (mentor_board_no_SEQ.nextval, '설득력 있는 글쓰기의 비밀', '독자를 설득할 수 있는 글쓰기 방법과 사례를 통해 설득력을 높이는 노하우를 배웁니다.', '/images/mentor-board/글쓰기04.jpg', TO_DATE('2024-11-25 11:00:00', 'YYYY-MM-DD HH24:MI:SS'), 150, 1, 27);
+VALUES (mentor_board_no_SEQ.nextval, '설득력 있는 글쓰기의 비밀', '독자를 설득할 수 있는 글쓰기 방법과 사례를 통해 설득력을 높이는 노하우를 배웁니다.', '/images/mentor-board/글쓰기04.jpg', TO_DATE('2024-11-25 11:00:00', 'YYYY-MM-DD HH24:MI:SS'), 150, 1, 26);
 
 INSERT INTO mentor_board (mentor_board_no, mentor_board_title, mentor_board_content, mentor_board_image, mentor_board_date, mentor_board_views, mentor_board_status, member_no)
-VALUES (mentor_board_no_SEQ.nextval, '다양한 장르의 글쓰기 도전하기', '에세이, 소설, 시 등 다양한 장르에서 글을 쓰는 방법과 재미를 소개합니다.', '/images/mentor-board/글쓰기05.jpg', TO_DATE('2024-11-30 16:15:00', 'YYYY-MM-DD HH24:MI:SS'), 160, 1, 27);
+VALUES (mentor_board_no_SEQ.nextval, '다양한 장르의 글쓰기 도전하기', '에세이, 소설, 시 등 다양한 장르에서 글을 쓰는 방법과 재미를 소개합니다.', '/images/mentor-board/글쓰기05.jpg', TO_DATE('2024-11-30 16:15:00', 'YYYY-MM-DD HH24:MI:SS'), 160, 1, 26);
 
 
 /* 미술 category 12번 member 번호 10,17번 */
 -- member_no 10번
 INSERT INTO mentor_board (mentor_board_no, mentor_board_title, mentor_board_content, mentor_board_image, mentor_board_date, mentor_board_views, mentor_board_status, member_no) 
-VALUES (mentor_board_no_SEQ.nextval, '이미지 리터러시와 시각적 해석_미술을 통한 이미지 소통의 본질', '이미지 리터러시와 시각적 해석은 미술을 통한 이미지 소통의 본질 이미지 리터러시와 시각적 해석은 현대 사회에서 더욱 중요한 역할을 맡고 있습니다. 미술은 이러한 관점에서 특히 이미지를 통한 소통의 핵심을 형성하고 있습니다. ',  '/images/mentor-board/미술01.jpg', TO_DATE('2024-12-10 12:00:00', 'YYYY-MM-DD HH24:MI:SS'), 105, 1, 10);
+VALUES (mentor_board_no_SEQ.nextval, '이미지 리터러시와 시각적 해석_미술을 통한 이미지 소통의 본질', '이미지 리터러시와 시각적 해석은 미술을 통한 이미지 소통의 본질 이미지 리터러시와 시각적 해석은 현대 사회에서 더욱 중요한 역할을 맡고 있습니다. 미술은 이러한 관점에서 특히 이미지를 통한 소통의 핵심을 형성하고 있습니다. ',  '/images/mentor-board/미술01.jpg', TO_DATE('2024-12-10 12:00:00', 'YYYY-MM-DD HH24:MI:SS'), 105, 1, 9);
 
 INSERT INTO mentor_board (mentor_board_no, mentor_board_title, mentor_board_content, mentor_board_image, mentor_board_date, mentor_board_views, mentor_board_status, member_no)
 VALUES (mentor_board_no_SEQ.nextval, '창의력을 키우는 드로잉 연습법', '초보자와 전문가 모두를 위한 창의력을 키우는 드로잉 연습 방법과 실전 팁을 제공합니다.', '/images/mentor-board/미술02.jpg', TO_DATE('2024-12-15 10:45:00', 'YYYY-MM-DD HH24:MI:SS'), 120, 1, 10);
@@ -834,38 +817,38 @@ INSERT INTO mentor_board (mentor_board_no, mentor_board_title, mentor_board_cont
 VALUES (mentor_board_no_SEQ.nextval, '조형 예술에서의 균형과 조화', '조형 예술 작품을 제작할 때 필수적으로 고려해야 할 균형과 조화의 개념을 다룹니다.', '/images/mentor-board/미술06.jpg', TO_DATE('2024-12-30 18:00:00', 'YYYY-MM-DD HH24:MI:SS'), 150, 1, 17);
 	
 
-/* 사진/영상제작 category 13번 member 28번 */
+/* 사진/영상제작 category 13번 member 27번 */
 INSERT INTO mentor_board(mentor_board_no, mentor_board_title, mentor_board_content, mentor_board_image, mentor_board_date, mentor_board_views, mentor_board_status, member_no)
-VALUES(mentor_board_no_SEQ.nextval, '사진과 영상 제작의 모든 것', '사진 촬영과 영상 제작의 기초부터 고급 기술까지 실질적인 조언과 팁을 제공합니다.', '/images/mentor-board/사진영상제작01.jpg', TO_DATE('2024-11-03 14:00:00', 'YYYY-MM-DD HH24:MI:SS'), 120, 1, 28);
+VALUES(mentor_board_no_SEQ.nextval, '사진과 영상 제작의 모든 것', '사진 촬영과 영상 제작의 기초부터 고급 기술까지 실질적인 조언과 팁을 제공합니다.', '/images/mentor-board/사진영상제작01.jpg', TO_DATE('2024-11-03 14:00:00', 'YYYY-MM-DD HH24:MI:SS'), 120, 1, 27);
 
 INSERT INTO mentor_board (mentor_board_no, mentor_board_title, mentor_board_content, mentor_board_image, mentor_board_date, mentor_board_views, mentor_board_status, member_no)
-VALUES (mentor_board_no_SEQ.nextval, '스마트폰으로 멋진 사진 촬영하기', '스마트폰 카메라를 활용해 전문가 못지않은 사진을 찍는 팁과 기법을 공유합니다.', '/images/mentor-board/사진영상제작02.jpg', TO_DATE('2024-11-12 14:00:00', 'YYYY-MM-DD HH24:MI:SS'), 85, 1, 28);
+VALUES (mentor_board_no_SEQ.nextval, '스마트폰으로 멋진 사진 촬영하기', '스마트폰 카메라를 활용해 전문가 못지않은 사진을 찍는 팁과 기법을 공유합니다.', '/images/mentor-board/사진영상제작02.jpg', TO_DATE('2024-11-12 14:00:00', 'YYYY-MM-DD HH24:MI:SS'), 85, 1, 27);
 
 INSERT INTO mentor_board (mentor_board_no, mentor_board_title, mentor_board_content, mentor_board_image, mentor_board_date, mentor_board_views, mentor_board_status, member_no)
-VALUES (mentor_board_no_SEQ.nextval, '영상 제작을 위한 스토리보드 작성법', '영상 제작의 기본 단계인 스토리보드 작성법과 이를 활용한 효율적인 제작 과정을 다룹니다.', '/images/mentor-board/사진영상제작03.jpg', TO_DATE('2024-10-15 10:30:00', 'YYYY-MM-DD HH24:MI:SS'), 110, 1, 28);
+VALUES (mentor_board_no_SEQ.nextval, '영상 제작을 위한 스토리보드 작성법', '영상 제작의 기본 단계인 스토리보드 작성법과 이를 활용한 효율적인 제작 과정을 다룹니다.', '/images/mentor-board/사진영상제작03.jpg', TO_DATE('2024-10-15 10:30:00', 'YYYY-MM-DD HH24:MI:SS'), 110, 1, 27);
 
 INSERT INTO mentor_board (mentor_board_no, mentor_board_title, mentor_board_content, mentor_board_image, mentor_board_date, mentor_board_views, mentor_board_status, member_no)
-VALUES (mentor_board_no_SEQ.nextval, '촬영 후 보정 작업의 중요성', '사진과 영상 촬영 후 보정 작업의 중요성과 이를 위한 기본 툴 사용법을 설명합니다.', '/images/mentor-board/사진영상제작04.jpg', TO_DATE('2024-09-18 16:00:00', 'YYYY-MM-DD HH24:MI:SS'), 95, 1, 28);
+VALUES (mentor_board_no_SEQ.nextval, '촬영 후 보정 작업의 중요성', '사진과 영상 촬영 후 보정 작업의 중요성과 이를 위한 기본 툴 사용법을 설명합니다.', '/images/mentor-board/사진영상제작04.jpg', TO_DATE('2024-09-18 16:00:00', 'YYYY-MM-DD HH24:MI:SS'), 95, 1, 27);
 
 INSERT INTO mentor_board (mentor_board_no, mentor_board_title, mentor_board_content, mentor_board_image, mentor_board_date, mentor_board_views, mentor_board_status, member_no)
-VALUES (mentor_board_no_SEQ.nextval, '자연광을 활용한 촬영 기법', '자연광을 활용해 감성적인 사진과 영상을 제작하는 기술과 사례를 소개합니다.', '/images/mentor-board/사진영상제작05.jpg', TO_DATE('2024-12-20 18:15:00', 'YYYY-MM-DD HH24:MI:SS'), 125, 1, 28);
+VALUES (mentor_board_no_SEQ.nextval, '자연광을 활용한 촬영 기법', '자연광을 활용해 감성적인 사진과 영상을 제작하는 기술과 사례를 소개합니다.', '/images/mentor-board/사진영상제작05.jpg', TO_DATE('2024-12-20 18:15:00', 'YYYY-MM-DD HH24:MI:SS'), 125, 1, 27);
 
 
-/* 연기/연극 category 14번 member 25번 */
+/* 연기/연극 category 14번 member 24번 */
 INSERT INTO mentor_board(mentor_board_no, mentor_board_title, mentor_board_content, mentor_board_image, mentor_board_date, mentor_board_views, mentor_board_status, member_no)
-VALUES(mentor_board_no_SEQ.nextval, '연기와 연극의 세계', '연극과 연기 수업을 통해 자신을 표현하는 방법을 배워보세요. 전문적인 팁과 실질적인 조언을 제공합니다.', '/images/mentor-board/연기연극01.jpg', TO_DATE('2024-07-18 14:17:00', 'YYYY-MM-DD HH24:MI:SS'), 300, 1, 25);
+VALUES(mentor_board_no_SEQ.nextval, '연기와 연극의 세계', '연극과 연기 수업을 통해 자신을 표현하는 방법을 배워보세요. 전문적인 팁과 실질적인 조언을 제공합니다.', '/images/mentor-board/연기연극01.jpg', TO_DATE('2024-07-18 14:17:00', 'YYYY-MM-DD HH24:MI:SS'), 300, 1, 24);
 
 INSERT INTO mentor_board (mentor_board_no, mentor_board_title, mentor_board_content, mentor_board_image, mentor_board_date, mentor_board_views, mentor_board_status, member_no)
-VALUES (mentor_board_no_SEQ.nextval, '초보자를 위한 연기 기본기 연습법', '연기의 기본기를 다지고 자신감을 키우기 위한 연습 방법을 단계별로 설명합니다.', '/images/mentor-board/연기연극02.jpg', TO_DATE('2024-11-20 10:30:00', 'YYYY-MM-DD HH24:MI:SS'), 210, 1, 25);
+VALUES (mentor_board_no_SEQ.nextval, '초보자를 위한 연기 기본기 연습법', '연기의 기본기를 다지고 자신감을 키우기 위한 연습 방법을 단계별로 설명합니다.', '/images/mentor-board/연기연극02.jpg', TO_DATE('2024-11-20 10:30:00', 'YYYY-MM-DD HH24:MI:SS'), 210, 1, 24);
 
 INSERT INTO mentor_board (mentor_board_no, mentor_board_title, mentor_board_content, mentor_board_image, mentor_board_date, mentor_board_views, mentor_board_status, member_no)
-VALUES (mentor_board_no_SEQ.nextval, '무대에서의 자신감 향상 비법', '무대 공포증을 극복하고 관객 앞에서 자신 있게 연기할 수 있는 노하우를 공유합니다.', '/images/mentor-board/연기연극03.jpg', TO_DATE('2024-09-22 14:00:00', 'YYYY-MM-DD HH24:MI:SS'), 275, 1, 25);
+VALUES (mentor_board_no_SEQ.nextval, '무대에서의 자신감 향상 비법', '무대 공포증을 극복하고 관객 앞에서 자신 있게 연기할 수 있는 노하우를 공유합니다.', '/images/mentor-board/연기연극03.jpg', TO_DATE('2024-09-22 14:00:00', 'YYYY-MM-DD HH24:MI:SS'), 275, 1, 24);
 
 INSERT INTO mentor_board (mentor_board_no, mentor_board_title, mentor_board_content, mentor_board_image, mentor_board_date, mentor_board_views, mentor_board_status, member_no)
-VALUES (mentor_board_no_SEQ.nextval, '연극 대본 분석과 캐릭터 이해하기', '연극 대본을 분석하고 캐릭터를 깊이 이해하여 더 나은 연기를 하는 방법을 소개합니다.', '/images/mentor-board/연기연극04.jpg', TO_DATE('2024-12-25 16:00:00', 'YYYY-MM-DD HH24:MI:SS'), 190, 1, 25);
+VALUES (mentor_board_no_SEQ.nextval, '연극 대본 분석과 캐릭터 이해하기', '연극 대본을 분석하고 캐릭터를 깊이 이해하여 더 나은 연기를 하는 방법을 소개합니다.', '/images/mentor-board/연기연극04.jpg', TO_DATE('2024-12-25 16:00:00', 'YYYY-MM-DD HH24:MI:SS'), 190, 1, 24);
 
 INSERT INTO mentor_board (mentor_board_no, mentor_board_title, mentor_board_content, mentor_board_image, mentor_board_date, mentor_board_views, mentor_board_status, member_no)
-VALUES (mentor_board_no_SEQ.nextval, '감정 표현의 다양성 연습법', '다양한 감정을 자연스럽게 표현할 수 있도록 도와주는 연습 방법과 팁을 제공합니다.', '/images/mentor-board/연기연극06.jpg', TO_DATE('2024-12-28 18:15:00', 'YYYY-MM-DD HH24:MI:SS'), 225, 1, 25);
+VALUES (mentor_board_no_SEQ.nextval, '감정 표현의 다양성 연습법', '다양한 감정을 자연스럽게 표현할 수 있도록 도와주는 연습 방법과 팁을 제공합니다.', '/images/mentor-board/연기연극06.jpg', TO_DATE('2024-12-28 18:15:00', 'YYYY-MM-DD HH24:MI:SS'), 225, 1, 24);
 
 
 /* 스타트업 category 16번 member 15번 */
@@ -885,21 +868,21 @@ INSERT INTO mentor_board (mentor_board_no, mentor_board_title, mentor_board_cont
 VALUES (mentor_board_no_SEQ.nextval, '스타트업 성장의 핵심 - 데이터 기반 의사결정', '데이터를 기반으로 비즈니스 의사결정을 내리고 성장 전략을 수립하는 방법을 공유합니다.', '/images/mentor-board/스타트업05.jpg', TO_DATE('2024-10-18 16:00:00', 'YYYY-MM-DD HH24:MI:SS'), 400, 1, 15);
 
 
-/* 마케팅전략 category 17번 member 29번 */
+/* 마케팅전략 category 17번 member 28번 */
 INSERT INTO mentor_board(mentor_board_no, mentor_board_title, mentor_board_content, mentor_board_image, mentor_board_date, mentor_board_views, mentor_board_status, member_no)
-VALUES(mentor_board_no_SEQ.nextval, '효과적인 마케팅 전략', '마케팅 전략의 기본과 실제 성공 사례를 통해 효과적인 전략을 설계하는 방법을 제공합니다.', '/images/mentor-board/마케팅전략01.jpg', TO_DATE('2024-10-14 13:30:00', 'YYYY-MM-DD HH24:MI:SS'), 100, 1, 29);
+VALUES(mentor_board_no_SEQ.nextval, '효과적인 마케팅 전략', '마케팅 전략의 기본과 실제 성공 사례를 통해 효과적인 전략을 설계하는 방법을 제공합니다.', '/images/mentor-board/마케팅전략01.jpg', TO_DATE('2024-10-14 13:30:00', 'YYYY-MM-DD HH24:MI:SS'), 100, 1, 28);
 
 INSERT INTO mentor_board (mentor_board_no, mentor_board_title, mentor_board_content, mentor_board_image, mentor_board_date, mentor_board_views, mentor_board_status, member_no)
-VALUES (mentor_board_no_SEQ.nextval, '디지털 마케팅의 핵심 요소', '디지털 마케팅의 성공을 위한 핵심 요소와 실전 적용 방법을 다룹니다.', '/images/mentor-board/마케팅전략02.jpg', TO_DATE('2024-03-10 10:00:00', 'YYYY-MM-DD HH24:MI:SS'), 150, 1, 29);
+VALUES (mentor_board_no_SEQ.nextval, '디지털 마케팅의 핵심 요소', '디지털 마케팅의 성공을 위한 핵심 요소와 실전 적용 방법을 다룹니다.', '/images/mentor-board/마케팅전략02.jpg', TO_DATE('2024-03-10 10:00:00', 'YYYY-MM-DD HH24:MI:SS'), 150, 1, 28);
 
 INSERT INTO mentor_board (mentor_board_no, mentor_board_title, mentor_board_content, mentor_board_image, mentor_board_date, mentor_board_views, mentor_board_status, member_no)
-VALUES (mentor_board_no_SEQ.nextval, '브랜드 인지도를 높이는 방법', '브랜드 인지도를 효과적으로 높이기 위한 전략과 성공적인 사례를 소개합니다.', '/images/mentor-board/마케팅전략03.jpg', TO_DATE('2024-05-20 14:45:00', 'YYYY-MM-DD HH24:MI:SS'), 200, 1, 29);
+VALUES (mentor_board_no_SEQ.nextval, '브랜드 인지도를 높이는 방법', '브랜드 인지도를 효과적으로 높이기 위한 전략과 성공적인 사례를 소개합니다.', '/images/mentor-board/마케팅전략03.jpg', TO_DATE('2024-05-20 14:45:00', 'YYYY-MM-DD HH24:MI:SS'), 200, 1, 28);
 
 INSERT INTO mentor_board (mentor_board_no, mentor_board_title, mentor_board_content, mentor_board_image, mentor_board_date, mentor_board_views, mentor_board_status, member_no)
-VALUES (mentor_board_no_SEQ.nextval, '소셜 미디어를 활용한 마케팅 전략', '소셜 미디어 플랫폼을 활용해 효과적으로 고객과 소통하고 마케팅 성과를 극대화하는 방법을 설명합니다.', '/images/mentor-board/마케팅전략04.jpg', TO_DATE('2024-08-15 16:00:00', 'YYYY-MM-DD HH24:MI:SS'), 175, 1, 29);
+VALUES (mentor_board_no_SEQ.nextval, '소셜 미디어를 활용한 마케팅 전략', '소셜 미디어 플랫폼을 활용해 효과적으로 고객과 소통하고 마케팅 성과를 극대화하는 방법을 설명합니다.', '/images/mentor-board/마케팅전략04.jpg', TO_DATE('2024-08-15 16:00:00', 'YYYY-MM-DD HH24:MI:SS'), 175, 1, 28);
 
 INSERT INTO mentor_board (mentor_board_no, mentor_board_title, mentor_board_content, mentor_board_image, mentor_board_date, mentor_board_views, mentor_board_status, member_no)
-VALUES (mentor_board_no_SEQ.nextval, '타겟 고객 분석과 맞춤형 전략', '타겟 고객을 분석하고 그에 맞는 맞춤형 마케팅 전략을 세우는 방법을 공유합니다.', '/images/mentor-board/마케팅전략05.jpg', TO_DATE('2024-11-01 12:30:00', 'YYYY-MM-DD HH24:MI:SS'), 225, 1, 29);
+VALUES (mentor_board_no_SEQ.nextval, '타겟 고객 분석과 맞춤형 전략', '타겟 고객을 분석하고 그에 맞는 맞춤형 마케팅 전략을 세우는 방법을 공유합니다.', '/images/mentor-board/마케팅전략05.jpg', TO_DATE('2024-11-01 12:30:00', 'YYYY-MM-DD HH24:MI:SS'), 225, 1, 28);
 
 
 /* 법률특허상담 category 18번 member 18,19,20,21번 */
@@ -932,38 +915,38 @@ INSERT INTO mentor_board (mentor_board_no, mentor_board_title, mentor_board_cont
 VALUES (mentor_board_no_SEQ.nextval, '기업을 위한 법적 리스크 관리', '기업이 법적 리스크를 사전에 관리하고 분쟁을 방지하는 전략을 소개합니다.', '/images/mentor-board/법률특허상담08.jpg', TO_DATE('2024-11-10 15:45:00', 'YYYY-MM-DD HH24:MI:SS'), 180, 1, 21);
 
 
-/* 피트니스 category 23번 member 30번 */
+/* 피트니스 category 23번 member 29번 */
 INSERT INTO mentor_board(mentor_board_no, mentor_board_title, mentor_board_content, mentor_board_image, mentor_board_date, mentor_board_views, mentor_board_status, member_no)
-VALUES(mentor_board_no_SEQ.nextval, '운동 성과를 극대화하는 피트니스 팁', '효과적인 피트니스 계획 수립 및 운동 루틴 조정을 통해 성과를 높이는 방법을 소개합니다.', '/images/mentor-board/피트니스01.jpg', TO_DATE('2024-03-19 15:45:00', 'YYYY-MM-DD HH24:MI:SS'), 379, 1, 30);
+VALUES(mentor_board_no_SEQ.nextval, '운동 성과를 극대화하는 피트니스 팁', '효과적인 피트니스 계획 수립 및 운동 루틴 조정을 통해 성과를 높이는 방법을 소개합니다.', '/images/mentor-board/피트니스01.jpg', TO_DATE('2024-03-19 15:45:00', 'YYYY-MM-DD HH24:MI:SS'), 379, 1, 29);
 
 INSERT INTO mentor_board (mentor_board_no, mentor_board_title, mentor_board_content, mentor_board_image, mentor_board_date, mentor_board_views, mentor_board_status, member_no)
-VALUES (mentor_board_no_SEQ.nextval, '근육 성장에 최적화된 운동 방법', '근육 성장을 위해 필수적인 운동 루틴과 영양 섭취 요령을 다룹니다.', '/images/mentor-board/피트니스02.jpg', TO_DATE('2024-04-10 14:00:00', 'YYYY-MM-DD HH24:MI:SS'), 250, 1, 30);
+VALUES (mentor_board_no_SEQ.nextval, '근육 성장에 최적화된 운동 방법', '근육 성장을 위해 필수적인 운동 루틴과 영양 섭취 요령을 다룹니다.', '/images/mentor-board/피트니스02.jpg', TO_DATE('2024-04-10 14:00:00', 'YYYY-MM-DD HH24:MI:SS'), 250, 1, 29);
 
 INSERT INTO mentor_board (mentor_board_no, mentor_board_title, mentor_board_content, mentor_board_image, mentor_board_date, mentor_board_views, mentor_board_status, member_no)
-VALUES (mentor_board_no_SEQ.nextval, '다이어트를 위한 효과적인 유산소 운동', '체중 감량을 위한 유산소 운동의 선택과 지속 가능성을 높이는 팁을 제공합니다.', '/images/mentor-board/피트니스03.jpg', TO_DATE('2024-05-15 10:30:00', 'YYYY-MM-DD HH24:MI:SS'), 310, 1, 30);
+VALUES (mentor_board_no_SEQ.nextval, '다이어트를 위한 효과적인 유산소 운동', '체중 감량을 위한 유산소 운동의 선택과 지속 가능성을 높이는 팁을 제공합니다.', '/images/mentor-board/피트니스03.jpg', TO_DATE('2024-05-15 10:30:00', 'YYYY-MM-DD HH24:MI:SS'), 310, 1, 29);
 
 INSERT INTO mentor_board (mentor_board_no, mentor_board_title, mentor_board_content, mentor_board_image, mentor_board_date, mentor_board_views, mentor_board_status, member_no)
-VALUES (mentor_board_no_SEQ.nextval, '피트니스 초보자를 위한 가이드', '초보자들이 운동을 시작할 때 유의해야 할 사항과 단계별 운동 계획을 소개합니다.', '/images/mentor-board/피트니스04.jpg', TO_DATE('2024-06-20 16:45:00', 'YYYY-MM-DD HH24:MI:SS'), 285, 1, 30);
+VALUES (mentor_board_no_SEQ.nextval, '피트니스 초보자를 위한 가이드', '초보자들이 운동을 시작할 때 유의해야 할 사항과 단계별 운동 계획을 소개합니다.', '/images/mentor-board/피트니스04.jpg', TO_DATE('2024-06-20 16:45:00', 'YYYY-MM-DD HH24:MI:SS'), 285, 1, 29);
 
 INSERT INTO mentor_board (mentor_board_no, mentor_board_title, mentor_board_content, mentor_board_image, mentor_board_date, mentor_board_views, mentor_board_status, member_no)
-VALUES (mentor_board_no_SEQ.nextval, '체형 교정을 위한 스트레칭과 운동법', '체형 교정에 효과적인 스트레칭과 운동법을 설명하며 바른 자세 유지 방법을 소개합니다.', '/images/mentor-board/피트니스05.jpg', TO_DATE('2024-08-05 09:15:00', 'YYYY-MM-DD HH24:MI:SS'), 295, 1, 30);
+VALUES (mentor_board_no_SEQ.nextval, '체형 교정을 위한 스트레칭과 운동법', '체형 교정에 효과적인 스트레칭과 운동법을 설명하며 바른 자세 유지 방법을 소개합니다.', '/images/mentor-board/피트니스05.jpg', TO_DATE('2024-08-05 09:15:00', 'YYYY-MM-DD HH24:MI:SS'), 295, 1, 29);
 
 
-/* 요가/필라테스 category 24번 member 31번 */
+/* 요가/필라테스 category 24번 member 37번 */
 INSERT INTO mentor_board(mentor_board_no, mentor_board_title, mentor_board_content, mentor_board_image, mentor_board_date, mentor_board_views, mentor_board_status, member_no)
-VALUES(mentor_board_no_SEQ.nextval, '요가와 필라테스로 건강한 몸 만들기', '요가와 필라테스의 기초와 자세 교정을 통해 건강과 유연성을 개선하는 방법을 공유합니다.', '/images/mentor-board/요가필라테스01.jpg', TO_DATE('2024-08-06 19:37:00', 'YYYY-MM-DD HH24:MI:SS'), 337, 1, 31);
+VALUES(mentor_board_no_SEQ.nextval, '요가와 필라테스로 건강한 몸 만들기', '요가와 필라테스의 기초와 자세 교정을 통해 건강과 유연성을 개선하는 방법을 공유합니다.', '/images/mentor-board/요가필라테스01.jpg', TO_DATE('2024-08-06 19:37:00', 'YYYY-MM-DD HH24:MI:SS'), 337, 1, 37);
 
 INSERT INTO mentor_board (mentor_board_no, mentor_board_title, mentor_board_content, mentor_board_image, mentor_board_date, mentor_board_views, mentor_board_status, member_no)
-VALUES (mentor_board_no_SEQ.nextval, '초보자를 위한 요가 입문 가이드', '요가를 처음 시작하는 사람들을 위한 기초 자세와 호흡법을 소개합니다.', '/images/mentor-board/요가필라테스02.jpg', TO_DATE('2024-08-10 09:30:00', 'YYYY-MM-DD HH24:MI:SS'), 220, 1, 31);
+VALUES (mentor_board_no_SEQ.nextval, '초보자를 위한 요가 입문 가이드', '요가를 처음 시작하는 사람들을 위한 기초 자세와 호흡법을 소개합니다.', '/images/mentor-board/요가필라테스02.jpg', TO_DATE('2024-08-10 09:30:00', 'YYYY-MM-DD HH24:MI:SS'), 220, 1, 37);
 
 INSERT INTO mentor_board (mentor_board_no, mentor_board_title, mentor_board_content, mentor_board_image, mentor_board_date, mentor_board_views, mentor_board_status, member_no)
-VALUES (mentor_board_no_SEQ.nextval, '필라테스로 코어 근육 강화하기', '필라테스를 통해 코어 근육을 강화하고 자세를 개선하는 효과적인 운동법을 다룹니다.', '/images/mentor-board/요가필라테스03.jpg', TO_DATE('2024-09-01 10:15:00', 'YYYY-MM-DD HH24:MI:SS'), 280, 1, 31);
+VALUES (mentor_board_no_SEQ.nextval, '필라테스로 코어 근육 강화하기', '필라테스를 통해 코어 근육을 강화하고 자세를 개선하는 효과적인 운동법을 다룹니다.', '/images/mentor-board/요가필라테스03.jpg', TO_DATE('2024-09-01 10:15:00', 'YYYY-MM-DD HH24:MI:SS'), 280, 1, 37);
 
 INSERT INTO mentor_board (mentor_board_no, mentor_board_title, mentor_board_content, mentor_board_image, mentor_board_date, mentor_board_views, mentor_board_status, member_no)
-VALUES (mentor_board_no_SEQ.nextval, '요가와 명상을 통한 스트레스 해소법', '요가와 명상의 조합으로 스트레스를 해소하고 마음의 평화를 찾는 방법을 공유합니다.', '/images/mentor-board/요가필라테스04.jpg', TO_DATE('2024-09-15 15:00:00', 'YYYY-MM-DD HH24:MI:SS'), 310, 1, 31);
+VALUES (mentor_board_no_SEQ.nextval, '요가와 명상을 통한 스트레스 해소법', '요가와 명상의 조합으로 스트레스를 해소하고 마음의 평화를 찾는 방법을 공유합니다.', '/images/mentor-board/요가필라테스04.jpg', TO_DATE('2024-09-15 15:00:00', 'YYYY-MM-DD HH24:MI:SS'), 310, 1, 37);
 
 INSERT INTO mentor_board (mentor_board_no, mentor_board_title, mentor_board_content, mentor_board_image, mentor_board_date, mentor_board_views, mentor_board_status, member_no)
-VALUES (mentor_board_no_SEQ.nextval, '필라테스를 활용한 체형 교정', '필라테스를 통해 체형 교정과 유연성을 높이는 효과적인 자세와 운동법을 소개합니다.', '/images/mentor-board/요가필라테스05.jpg', TO_DATE('2024-10-05 17:30:00', 'YYYY-MM-DD HH24:MI:SS'), 250, 1, 31);
+VALUES (mentor_board_no_SEQ.nextval, '필라테스를 활용한 체형 교정', '필라테스를 통해 체형 교정과 유연성을 높이는 효과적인 자세와 운동법을 소개합니다.', '/images/mentor-board/요가필라테스05.jpg', TO_DATE('2024-10-05 17:30:00', 'YYYY-MM-DD HH24:MI:SS'), 250, 1, 37);
 
 
 /* 식단/영양 상담 category 25번 member 25번 */
@@ -988,29 +971,29 @@ VALUES (mentor_board_no_SEQ.nextval, '특수 목표를 위한 맞춤형 식단',
 INSERT INTO follow(follow_no,mentee_member_no,mentor_member_no)
 VALUES(follow_no_SEQ.nextval,1,20);
 INSERT INTO follow(follow_no,mentee_member_no,mentor_member_no)
-VALUES(follow_no_SEQ.nextval,6,8);
+VALUES(follow_no_SEQ.nextval,2,8);
 INSERT INTO follow(follow_no,mentee_member_no,mentor_member_no)
-VALUES(follow_no_SEQ.nextval,6,9);
+VALUES(follow_no_SEQ.nextval,2,9);
 INSERT INTO follow(follow_no,mentee_member_no,mentor_member_no)
-VALUES(follow_no_SEQ.nextval,6,10);
+VALUES(follow_no_SEQ.nextval,2,10);
 INSERT INTO follow(follow_no,mentee_member_no,mentor_member_no)
-VALUES(follow_no_SEQ.nextval,6,11);
+VALUES(follow_no_SEQ.nextval,2,11);
 INSERT INTO follow(follow_no,mentee_member_no,mentor_member_no)
-VALUES(follow_no_SEQ.nextval,6,12);
+VALUES(follow_no_SEQ.nextval,2,12);
 INSERT INTO follow(follow_no,mentee_member_no,mentor_member_no)
-VALUES(follow_no_SEQ.nextval,6,13);
+VALUES(follow_no_SEQ.nextval,2,13);
 INSERT INTO follow(follow_no,mentee_member_no,mentor_member_no)
-VALUES(follow_no_SEQ.nextval,6,14);
+VALUES(follow_no_SEQ.nextval,2,14);
 INSERT INTO follow(follow_no,mentee_member_no,mentor_member_no)
-VALUES(follow_no_SEQ.nextval,6,15);
+VALUES(follow_no_SEQ.nextval,2,15);
 INSERT INTO follow(follow_no,mentee_member_no,mentor_member_no)
-VALUES(follow_no_SEQ.nextval,6,16);
+VALUES(follow_no_SEQ.nextval,2,16);
 INSERT INTO follow(follow_no,mentee_member_no,mentor_member_no)
-VALUES(follow_no_SEQ.nextval,2,6);
+VALUES(follow_no_SEQ.nextval,2,17);
 INSERT INTO follow(follow_no,mentee_member_no,mentor_member_no)
-VALUES(follow_no_SEQ.nextval,3,6);
+VALUES(follow_no_SEQ.nextval,3,2);
 INSERT INTO follow(follow_no,mentee_member_no,mentor_member_no)
-VALUES(follow_no_SEQ.nextval,4,7);
+VALUES(follow_no_SEQ.nextval,4,2);
 INSERT INTO follow(follow_no,mentee_member_no,mentor_member_no)
 VALUES(follow_no_SEQ.nextval,5,7);
 
@@ -1063,11 +1046,11 @@ insert into inquiry(inquiry_no,inquiry_title, inquiry_content, inquiry_date, inq
 values(inquiry_no_SEQ.nextval, '질문아이폰 시리 설정', '아이폰16인데 설정에서 Siri 및 검색이 없어요
 아이오에스18로 업데이트하면서 사라진 건가요??
 그리고 시리 설정하는 방법도 알려주세요ㅠㅠ
-아무리 제가 시리라고 불러도 대답을 안 해요ㅠ?',sysdate,1,984,7,2);
+아무리 제가 시리라고 불러도 대답을 안 해요ㅠ?',sysdate,1,984,7,4);
 insert into inquiry(inquiry_no,inquiry_title, inquiry_content, inquiry_date, inquiry_status, inquiry_views, category_no, member_no)
-values(inquiry_no_SEQ.nextval, '질문인스타 상대방 스토리 캡쳐하면 뜨나요??', '중학교 선배 인스타 스토리 캡쳐했는데 상대방 스토리에 캡쳐한거 뜨나요?',sysdate,1,84,16,1);
+values(inquiry_no_SEQ.nextval, '질문인스타 상대방 스토리 캡쳐하면 뜨나요??', '중학교 선배 인스타 스토리 캡쳐했는데 상대방 스토리에 캡쳐한거 뜨나요?',sysdate,1,84,16,5);
 insert into inquiry(inquiry_no,inquiry_title, inquiry_content, inquiry_date, inquiry_status, inquiry_views, category_no, member_no)
-values(inquiry_no_SEQ.nextval, '스타벅스 램프', '2024.12.23일날 품절 되었나요? 아님 그 전에 품절 된건가요??',sysdate,1,1025,2,1);
+values(inquiry_no_SEQ.nextval, '스타벅스 램프', '2024.12.23일날 품절 되었나요? 아님 그 전에 품절 된건가요??',sysdate,1,1025,2,6);
 insert into inquiry(inquiry_no,inquiry_title, inquiry_content, inquiry_date, inquiry_status, inquiry_views, category_no, member_no)
 values(inquiry_no_SEQ.nextval, '질문영웅vs하얼빈', '영웅이 재밌나요?
 
@@ -1081,17 +1064,17 @@ values(inquiry_no_SEQ.nextval, '질문영웅vs하얼빈', '영웅이 재밌나�
 
 오늘 개봉 했다고 하던데
 
-굳이 둘중 하나 고르자면 뭐가 더 볼만하고 재밌나요??',sysdate,1,887,7,2);
+굳이 둘중 하나 고르자면 뭐가 더 볼만하고 재밌나요??',sysdate,1,887,7,7);
 insert into inquiry(inquiry_no,inquiry_title, inquiry_content, inquiry_date, inquiry_status, inquiry_views, category_no, member_no)
-values(inquiry_no_SEQ.nextval, '강철부대w 새 회차 넷플릭스에 올라오는 시간', '강철부대w 새 회차는 방송이 끝나야 넷플릭스에 올라오나요? 지금 하고있는 13화(전우회) 편이 아직 넷플엔 없어서요',sysdate,1,151,16,1);
+values(inquiry_no_SEQ.nextval, '강철부대w 새 회차 넷플릭스에 올라오는 시간', '강철부대w 새 회차는 방송이 끝나야 넷플릭스에 올라오나요? 지금 하고있는 13화(전우회) 편이 아직 넷플엔 없어서요',sysdate,1,151,16,7);
 insert into inquiry(inquiry_no,inquiry_title, inquiry_content, inquiry_date, inquiry_status, inquiry_views, category_no, member_no)
-values(inquiry_no_SEQ.nextval, '전화 추합이 마지막 날 제일 많이 빠지나요?', '전화 추합이 마지막 날 제일 많이 돌고 빠질까요ㅠㅠ??? 정말 피가 마르네요…',sysdate,1,18,2,1);
+values(inquiry_no_SEQ.nextval, '전화 추합이 마지막 날 제일 많이 빠지나요?', '전화 추합이 마지막 날 제일 많이 돌고 빠질까요ㅠㅠ??? 정말 피가 마르네요…',sysdate,1,18,2,8);
 insert into inquiry(inquiry_no,inquiry_title, inquiry_content, inquiry_date, inquiry_status, inquiry_views, category_no, member_no)
-values(inquiry_no_SEQ.nextval, '2024 SBS 가요대전 순서별 예측 시간', '안녕하세여! 저는 스트레이키즈 분들의 무대만 보고 싶은데 정확한 시간을 몰라서 글을 올립니다.. 가요대전을 보는 게 이번이 처음이라서.. 대략 몇시에 시작할 지도 잘 몰라서ㅜ 스키즈 븐들 무대가 3부에 될 거 같은데.. 언제 시작할 까요?? 큐피드 사진 빨갛게 밑줄 친 데가 스키즈분들 순서 입니당..',sysdate,1,97,7,2);
+values(inquiry_no_SEQ.nextval, '2024 SBS 가요대전 순서별 예측 시간', '안녕하세여! 저는 스트레이키즈 분들의 무대만 보고 싶은데 정확한 시간을 몰라서 글을 올립니다.. 가요대전을 보는 게 이번이 처음이라서.. 대략 몇시에 시작할 지도 잘 몰라서ㅜ 스키즈 븐들 무대가 3부에 될 거 같은데.. 언제 시작할 까요?? 큐피드 사진 빨갛게 밑줄 친 데가 스키즈분들 순서 입니당..',sysdate,1,97,7,4);
 insert into inquiry(inquiry_no,inquiry_title, inquiry_content, inquiry_date, inquiry_status, inquiry_views, category_no, member_no)
 values(inquiry_no_SEQ.nextval, '월세 2회 미납 관련', '매월24일 월세를 드리는 날입니다.
 11월에는 급여를 받는날이 늦어져, 12월10일에 드리게 되었습미다...
-이번달도 회사에서도 사정이 안되어,,,다음달 10일 급여를 주신다고 하여... 집주인께 다음달 10일까지 양해를 규하는 연락을 드리게 되었습니다. 두번째 미입금으로 임대차법 적용에 해당이 되니, 일주일 이내로 짐을 빼라고 하셔서... 이러는 상황에서 보증금도 받을수 있을까요?? ㅠㅠ 법적으로 조취하시겠다고 하셔서,,, 무서워서, 빨리 다른집을 찾아보고 있는데...ㅠㅠ',sysdate,1,6,16,1);
+이번달도 회사에서도 사정이 안되어,,,다음달 10일 급여를 주신다고 하여... 집주인께 다음달 10일까지 양해를 규하는 연락을 드리게 되었습니다. 두번째 미입금으로 임대차법 적용에 해당이 되니, 일주일 이내로 짐을 빼라고 하셔서... 이러는 상황에서 보증금도 받을수 있을까요?? ㅠㅠ 법적으로 조취하시겠다고 하셔서,,, 무서워서, 빨리 다른집을 찾아보고 있는데...ㅠㅠ',sysdate,1,6,16,5);
 
 insert into inquiry(inquiry_no,inquiry_title, inquiry_content, inquiry_date, inquiry_status, inquiry_views, category_no, member_no)
 values(inquiry_no_SEQ.nextval, '조명가게 이해안되는 부분 있어서 질문남겨요', '1,박보영과 주지훈은 개인적으로 현생에서는 즉 이승에서는 인연이 없는 관계인건가요?  박보영이 코마상태였을때 박보영도 조명가게를 들르게 된 건가요??',sysdate,1,105,16,6);
@@ -1231,24 +1214,24 @@ values(answer_no_SEQ.nextval, '1.차미령의 정체는 무엇인가요?
 
 /* 채팅방 요정 등록 */
 insert into chat_room (chat_room_no, chat_room_status, chat_room_start_date, chat_room_end_date, mentee_no, mentor_no)
-values(chat_room_no_SEQ.nextval, 7100, sysdate, null, 1, 6);
+values(chat_room_no_SEQ.nextval, 7100, sysdate, null, 1, 2);
 insert into chat_room (chat_room_no, chat_room_status, chat_room_start_date, chat_room_end_date, mentee_no, mentor_no)
-values(chat_room_no_SEQ.nextval, 7000, sysdate, null, 4, 6);
+values(chat_room_no_SEQ.nextval, 7000, sysdate, null, 4, 2);
 insert into chat_room (chat_room_no, chat_room_status, chat_room_start_date, chat_room_end_date, mentee_no, mentor_no)
-values(chat_room_no_SEQ.nextval, 7200, sysdate, null, 5, 6);
+values(chat_room_no_SEQ.nextval, 7200, sysdate, null, 5, 2);
 
 insert into chat_room (chat_room_no, chat_room_status, chat_room_start_date, chat_room_end_date, mentee_no, mentor_no)
-values(chat_room_no_SEQ.nextval, 7000, sysdate, null, 6, 8);
+values(chat_room_no_SEQ.nextval, 7000, sysdate, null, 2, 8);
 insert into chat_room (chat_room_no, chat_room_status, chat_room_start_date, chat_room_end_date, mentee_no, mentor_no)
-values(chat_room_no_SEQ.nextval, 7000, sysdate, null, 6, 9);
+values(chat_room_no_SEQ.nextval, 7000, sysdate, null, 2, 9);
 insert into chat_room (chat_room_no, chat_room_status, chat_room_start_date, chat_room_end_date, mentee_no, mentor_no)
-values(chat_room_no_SEQ.nextval, 7100, sysdate, null, 6, 10);
+values(chat_room_no_SEQ.nextval, 7100, sysdate, null, 2, 10);
 insert into chat_room (chat_room_no, chat_room_status, chat_room_start_date, chat_room_end_date, mentee_no, mentor_no)
-values(chat_room_no_SEQ.nextval, 7200, sysdate, null, 6, 11);
+values(chat_room_no_SEQ.nextval, 7200, sysdate, null, 2, 11);
 insert into chat_room (chat_room_no, chat_room_status, chat_room_start_date, chat_room_end_date, mentee_no, mentor_no)
-values(chat_room_no_SEQ.nextval, 7200, sysdate, null, 6, 12);
+values(chat_room_no_SEQ.nextval, 7200, sysdate, null, 2, 12);
 insert into chat_room (chat_room_no, chat_room_status, chat_room_start_date, chat_room_end_date, mentee_no, mentor_no)
-values(chat_room_no_SEQ.nextval, 7500, sysdate, null, 6, 13);
+values(chat_room_no_SEQ.nextval, 7500, sysdate, null, 2, 13);
 
 
 /* 채팅방 활성화 등록 */

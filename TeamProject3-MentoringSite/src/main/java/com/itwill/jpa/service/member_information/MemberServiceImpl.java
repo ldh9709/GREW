@@ -200,6 +200,27 @@ public class MemberServiceImpl implements MemberService {
 		return memberRepository.save(member);
 	}
 	
+	/***** 회원 탈퇴 *****/
+	@Override
+	public Member deleteMember(Long memberNo) {
+		
+		if(memberNo == null) {
+			throw new CustomException(ResponseStatusCode.INPUT_NULL, ResponseMessage.INPUT_NULL, null);
+		}
+		
+		Member member = memberRepository.findByMemberNo(memberNo);
+		
+		if(member == null) {
+			throw new CustomException(ResponseStatusCode.NOT_FOUND_MEMBER, ResponseMessage.NOT_FOUND_MEMBER, null);
+		}
+		
+		//비활성화로 상태 변경
+		member.setMemberStatus(2);
+		
+		return memberRepository.save(member);
+	}
+	
+	
 	/***** 회원 상태 수정 *****/
 	@Override
 	public Member updateMemberStatus(Long memberNo, Integer statusNo) {
@@ -248,19 +269,6 @@ public class MemberServiceImpl implements MemberService {
 		return memberRepository.save(member);
 	}
 	
-	/***** 회원 삭제 *****/
-	@Override
-	public Member deleteMember(Long memberNo) {
-		Member findMember = memberRepository.findByMemberNo(memberNo);
-		
-		if(findMember == null) {
-			throw new CustomException(ResponseStatusCode.NOT_FOUND_MEMBER, ResponseMessage.NOT_FOUND_MEMBER, null);
-		}
-		
-		memberRepository.deleteById(memberNo);;
-		
-		return findMember;
-	}
 	
 	/**** 회원정보 상세 보기 ****/
 	@Override

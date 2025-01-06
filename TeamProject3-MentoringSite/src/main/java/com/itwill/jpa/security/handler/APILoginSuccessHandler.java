@@ -44,9 +44,11 @@ public class APILoginSuccessHandler implements AuthenticationSuccessHandler {
         /***** 디버깅 END *****/
         // 3. JWT 토큰을 생성합니다.
         // JWTUtil.generateToken() 메서드를 사용해 액세스 토큰(accessToken)과 리프레시 토큰(refreshToken)을 생성합니다.
-        String accessToken = JWTUtil.generateToken(claims, 60);  // access token은 60분 동안 유효
-        String refreshToken = JWTUtil.generateToken(claims, 60 * 24);  // refresh token은 1일 동안 유효
-
+        String accessToken = JWTUtil.generateToken(claims, 10);  // access token은 테스트용 10분 유효
+        System.out.println("Generated accessToken : >>>>>" + accessToken);
+        String refreshToken = JWTUtil.generateToken(claims, 60 * 24);  // refresh token은 7일 동안 유효
+        System.out.println("Generated Refresh Token : >>>>>" + refreshToken);
+        
         // 4. JSON 문자열 생성 후 Base64로 인코딩
         String jsonValue = String.format("{\"accessToken\": \"%s\", \"refreshToken\": \"%s\"}", accessToken, refreshToken);
         String encodedValue = Base64.getEncoder().encodeToString(jsonValue.getBytes());
@@ -56,7 +58,7 @@ public class APILoginSuccessHandler implements AuthenticationSuccessHandler {
         cookie.setHttpOnly(false); // JavaScript에서 접근 가능
         cookie.setSecure(false); // HTTPS에서만 전송 (개발 환경에서는 false)
         cookie.setPath("/");
-        cookie.setMaxAge(60 * 60 * 24); // 1일
+        cookie.setMaxAge(60 * 60); // 1시간
 
         response.addCookie(cookie);
         

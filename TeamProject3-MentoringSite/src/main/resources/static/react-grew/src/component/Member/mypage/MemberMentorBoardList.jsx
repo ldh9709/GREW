@@ -80,7 +80,7 @@ export default function MemberMentorContentList() {
           ))}
         </div>
         {/* 페이지네이션 버튼 */}
-        <div className={`common-pagination common-pagination-bottom ${totalPages === 1 ? 'pagination-enabled' : '' }`}>
+        <div className="mypage-pagenation">
           <PagenationItem
             currentPage={currentPage}
             totalPages={totalPages}

@@ -101,6 +101,12 @@ button {
   cursor: not-allowed;
 }
 
+.mypage-pagenation{
+  position: absolute;
+  bottom: 80px; left: 50%;
+  transform: translateX(-50%);
+}
+
 /* 페이지 번호 버튼 */
 .common-pagination-number {
   width: 30px;
@@ -135,7 +141,7 @@ button {
 /* 로그인 버튼 바 */
 .header {
   position: fixed;
-  right: 365px;
+  top:0px; right: 365px;
   height: 30px;
   line-height: 30px;
   background-color: #fff;
@@ -163,8 +169,7 @@ button {
 /*상단 메뉴바*/
 .navbar-collapse {
   position: fixed;
-  left: 0px;
-  right: 0px;
+  top: 0px; left: 0px; right: 0px;
   height: 50px;
   line-height: 50px;
   align-items: center;
