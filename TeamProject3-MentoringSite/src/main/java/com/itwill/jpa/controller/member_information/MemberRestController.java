@@ -72,8 +72,8 @@ public class MemberRestController {
 	private ChatRoomService chatRoomService;
 	@Autowired
 	private ReviewService reviewService;
-	
-	
+	@Autowired
+	private EmailService emailService;
 	
 	/* 아이디 중복 */
 	@Operation(summary = "아이디 중복 검사")
@@ -107,13 +107,15 @@ public class MemberRestController {
 		} catch (CustomException e) {
 			response.setStatus(e.getStatusCode());  // CustomException에서 제공된 상태 코드
 		    response.setMessage(e.getMessage());    // CustomException에서 제공된 메시지
-		    response.setData(e.getCause().getMessage()); // 클라이언트에는 간단한 에러 메시지만 제공
 		    
 		    // ResponseEntity로 응답 반환
 	        return new ResponseEntity<Response>(response, httpHeaders, HttpStatus.OK);  
 		} catch (Exception e) {
-			e.printStackTrace();
-			return null;
+			// 일반 예외 처리
+	        e.printStackTrace();
+	        response.setStatus(ResponseStatusCode.INTERNAL_SERVER_ERROR);
+	        response.setMessage(ResponseMessage.INTERNAL_SERVER_ERROR);
+	        return new ResponseEntity<Response>(response, httpHeaders, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 	
@@ -135,7 +137,10 @@ public class MemberRestController {
 				//응답객체에 코드, 메시지, 객체 설정
 				response.setStatus(ResponseStatusCode.CONFIRM_EMAIL_SUCCESS);
 				response.setMessage(ResponseMessage.CONFIRM_EMAIL_SUCCESS);
-				response.setData(null);
+			} else {
+				//응답객체에 코드, 메시지, 객체 설정
+				response.setStatus(ResponseStatusCode.DUPLICATION_MENBER_EMAIL);
+				response.setMessage(ResponseMessage.DUPLICATION_MENBER_EMAIL);
 			}
 			
 			//반환할 응답Entity 생성
@@ -146,24 +151,21 @@ public class MemberRestController {
 			return responseEntity;
 			
 		} catch (CustomException e) {
+			// ResponseEntity로 응답 반환
 			response.setStatus(e.getStatusCode());  // CustomException에서 제공된 상태 코드
 		    response.setMessage(e.getMessage());    // CustomException에서 제공된 메시지
-		    response.setData(e.getCause().getMessage()); // 클라이언트에는 간단한 에러 메시지만 제공
-		    
-		    // ResponseEntity로 응답 반환
-	        return new ResponseEntity<Response>(response, httpHeaders, HttpStatus.OK);  
+	        return new ResponseEntity<Response>(response, httpHeaders, HttpStatus.OK);
+	        
 		} catch (Exception e) {
-			e.printStackTrace();
-			return null;
+			// 일반 예외 처리
+	        e.printStackTrace();
+	        response.setStatus(ResponseStatusCode.INTERNAL_SERVER_ERROR);
+	        response.setMessage(ResponseMessage.INTERNAL_SERVER_ERROR);
+	        return new ResponseEntity<Response>(response, httpHeaders, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 		
 				
 	}
-	
-	
-	@Autowired
-	private EmailService emailService;
-	
 	
 	@Operation(summary = "인증번호 발송")
 	@PostMapping("/sendJoinCode")
@@ -192,41 +194,48 @@ public class MemberRestController {
 	@Operation(summary = "회원가입/관심사 입력")
 	@PostMapping("/createMember")
 	public ResponseEntity<Response> createMember(@Valid	@RequestBody MemberDtoAndTempCode memberJoinDto) {
-		
-		MemberDto memberDto = memberJoinDto.getMemberDto();
-		System.out.println("MEMBERDTO : >>> " + memberDto);
-		Integer tempCode = memberJoinDto.getTempCode();
-		System.out.println("TEMPCODE : >>>" + tempCode);
-		
+		//반환 객체 설정
 		Response response = new Response();
-		
-		//인증번호가 맞는지 확인
-		boolean isChecked = memberService.certificationCode(memberDto.getMemberEmail(), tempCode);
-		
-		System.out.println("isChecked : " + isChecked);
-		if(!isChecked) {
-			response.setStatus(ResponseStatusCode.CREATED_MEMBER_FAIL);
-			response.setMessage(ResponseMessage.CREATED_MEMBER_FAIL);
-		}
-		
-		
-		System.out.println(">>>>>saveMember memberDto : " + memberDto);
-		Member member = memberService.saveMember(memberDto);
-		System.out.println(">>>>>MEMBER member : " + member);
-		
-		response.setStatus(ResponseStatusCode.CREATED_MEMBER_SUCCESS);
-		response.setMessage(ResponseMessage.CREATED_MEMBER_SUCCESS);
 		
 		//인코딩 타입 설정
 		HttpHeaders httpHeaders = new HttpHeaders();
 		httpHeaders.setContentType(new MediaType(MediaType.APPLICATION_JSON, Charset.forName("UTF-8")));
 		
-		//반환할 응답Entity 생성
-		ResponseEntity<Response> responseEntity =
-				 new ResponseEntity<Response>(response, httpHeaders, HttpStatus.OK);
+		try {
+			
+			//memberJoinDto를 나눔
+			MemberDto memberDto = memberJoinDto.getMemberDto();
+			Integer tempCode = memberJoinDto.getTempCode();
+			
+			//인증번호가 맞는지 확인
+			boolean isChecked = memberService.certificationCode(memberDto.getMemberEmail(), tempCode);
+			
+			//인증번호 맞으면 회원가입 완료
+			Member member = memberService.saveMember(memberDto);
+			
+			response.setStatus(ResponseStatusCode.CREATED_MEMBER_SUCCESS);
+			response.setMessage(ResponseMessage.CREATED_MEMBER_SUCCESS);
+			
+			//반환할 응답Entity 생성
+			ResponseEntity<Response> responseEntity =
+					 new ResponseEntity<Response>(response, httpHeaders, HttpStatus.OK);
 			
 			return responseEntity;
+			
+		} catch (CustomException e) {
+			response.setStatus(e.getStatusCode());  // CustomException에서 제공된 상태 코드
+		    response.setMessage(e.getMessage());    // CustomException에서 제공된 메시지
+		    // ResponseEntity로 응답 반환
+	        return new ResponseEntity<Response>(response, httpHeaders, HttpStatus.OK);  
+	        
+		} catch (Exception e) {
+	        // 일반 예외 처리
+	        e.printStackTrace();
+	        response.setStatus(ResponseStatusCode.INTERNAL_SERVER_ERROR);
+	        response.setMessage(ResponseMessage.INTERNAL_SERVER_ERROR);
+	        return new ResponseEntity<Response>(response, httpHeaders, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
+	}
 	
 	/*** 
 	 * 회원 저장(멘토까지)

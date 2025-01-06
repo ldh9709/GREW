@@ -412,11 +412,12 @@ public class MemberServiceImpl implements MemberService {
 		
 		//유효성 검사 후 안맞으면 false 반환
 		if(storedCode == null || !storedCode.equals(inputCode)) {
-			return false;
+			throw new CustomException(ResponseStatusCode.INPUTCODE_CONFIRM_FAIL, ResponseMessage.INPUTCODE_CONFIRM_FAIL, null);
 		}
 		
 		//맞으면 데이터 삭제 후 true 반환
 		tempCode.remove(memberEmail);
+		
 		return true;
 		
 	}

@@ -43,7 +43,7 @@ export const MemberJoinFormPage = () => {
   /* 아이디 중복 확인 */
   const checkIdDupl = async () => {
     const response = await memberApi.checkIdDupl({ memberId: member.memberId });
-    if (response?.status === responseStatus.CREATED_MEMBER_FAIL) {
+    if (response?.status === responseStatus.DUPLICATION_MEMBER_ID) {
       setMemberIdError("사용 불가능한 아이디입니다.");
       setIsIdAvailable(false);
     } else {
@@ -193,6 +193,7 @@ export const MemberJoinFormPage = () => {
     if(role === 'mentor') {
       const responseJsonObject = await memberApi.mentorJoinAction(member, tempCode);
       console.log("멘토 회원가입 시 반환 객체 : ", responseJsonObject);
+      console.log("Received status:", responseJsonObject.status);
       switch (responseJsonObject.status) {
         case responseStatus.CREATED_MEMBER_SUCCESS:
           navigate('/member/login');
@@ -209,6 +210,9 @@ export const MemberJoinFormPage = () => {
         case responseStatus.DUPLICATION_MEMBER_EMAIL:
           toast.error("이메일이 중복되었습니다.");
           break;
+        case responseStatus.INPUTCODE_CONFIRM_FAIL:
+          toast.error("인증번호가 올바르지 않습니다..");
+          break;
         default:
           toast.error("에러가 발생하였습니다.");
           break;
@@ -217,6 +221,7 @@ export const MemberJoinFormPage = () => {
     } else if(role ==='mentee') {
       const responseJsonObject = await memberApi.menteeJoinAction(member, tempCode);
       console.log("멘티 회원가입 시 반환 객체 : ", responseJsonObject);
+      console.log("Received status:", responseJsonObject.status);
       switch (responseJsonObject.status) {
         case responseStatus.CREATED_MEMBER_SUCCESS:
           navigate('/member/login');
@@ -224,8 +229,20 @@ export const MemberJoinFormPage = () => {
         case responseStatus.CREATED_MEMBER_FAIL:
           toast.error("가입이 실패하였습니다.");
           break;
+        case responseStatus.NOT_FOUND_MEMBER:
+          toast.error("정보를 다시 입력해주세요.");
+          break;
+        case responseStatus.DUPLICATION_MEMBER_ID:
+          toast.error("아이디가 중복되었습니다.");
+          break;
+        case responseStatus.DUPLICATION_MEMBER_EMAIL:
+          toast.error("이메일이 중복되었습니다.");
+          break;
+        case responseStatus.INPUTCODE_CONFIRM_FAIL:
+          toast.error("인증번호가 올바르지 않습니다.");
+          break;
         default:
-          toast.error("에러가 발생하였습니다..");
+          toast.error("에러가 발생하였습니다.");
           break;
       }
      
