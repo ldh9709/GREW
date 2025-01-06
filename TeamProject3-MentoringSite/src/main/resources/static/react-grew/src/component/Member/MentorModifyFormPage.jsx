@@ -259,28 +259,29 @@ const MentorEditForm = () => {
         </div>
         <div className="mentor-edit-form-group">
           <label className="mentor-edit-label">
-            본인 소개<span className="mentor-edit-required">*</span>
+            한줄 소개<span className="mentor-edit-required">*</span>
           </label>
           <textarea
-            className="mentor-edit-textarea"
-            id="mentorIntroduce"
-            name="mentorIntroduce"
-            placeholder="소개글 입력"
-            value={mentor.mentorIntroduce}
+            className="mentor-edit-textarea mentor-edit-headline"
+            id="mentorHeadline"
+            name="mentorHeadline"
+            placeholder="한 줄 소개(50자 이내)"
+            maxLength={50}
+            value={mentor.mentorHeadline}
             onChange={handleChangeMentorEditForm}
             required
           ></textarea>
         </div>
         <div className="mentor-edit-form-group">
           <label className="mentor-edit-label">
-            한줄 소개<span className="mentor-edit-required">*</span>
+            본인 소개<span className="mentor-edit-required">*</span>
           </label>
           <textarea
-            className="mentor-edit-textarea"
-            id="mentorHeadline"
-            name="mentorHeadline"
-            placeholder="한 줄 소개 입력"
-            value={mentor.mentorHeadline}
+            className="mentor-edit-textarea mentor-edit-introduce"
+            id="mentorIntroduce"
+            name="mentorIntroduce"
+            placeholder="소개글 입력"
+            value={mentor.mentorIntroduce}
             onChange={handleChangeMentorEditForm}
             required
           ></textarea>

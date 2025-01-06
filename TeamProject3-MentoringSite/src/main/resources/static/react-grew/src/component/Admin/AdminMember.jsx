@@ -152,7 +152,7 @@ function AdminMember() {
     // 실행 함수
     useEffect(() => {
         fetchMentorRegisterCount(2,1)
-    }, []);
+    }, [state]);
 
     useEffect(() => {
         fetchData();
