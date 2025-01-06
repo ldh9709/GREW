@@ -15,7 +15,7 @@
   text-align: center;  /* 제목을 가운데 정렬 */
   font-size: 2rem;     /* 제목 글자 크기 */
   font-weight: bold;   /* 제목 두껍게 */
-  margin: 0px;/* 제목과 폼 간의 간격 */
+  margin: 0px; /* 제목과 폼 간의 간격 */
   color: #333;         /* 제목 텍스트 색상 */
 }
 
@@ -40,12 +40,17 @@
   font-size: 16px;
   box-sizing: border-box; /* 박스 크기 설정 */
 }
+
 .field-title {
   background-color: #f5f6f8;
 }
+
 .field textarea {
   min-height: 300px;
   resize: none;
+  white-space: pre-wrap; /* 자동 줄바꿈 활성화 */
+  word-wrap: break-word; /* 단어 단위로 줄바꿈 */
+  overflow-wrap: break-word; /* 긴 단어도 줄바꿈 */
 }
 
 .category {
