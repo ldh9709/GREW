@@ -502,7 +502,7 @@ INSERT INTO career(career_no, career_company_name, career_job_title, career_star
 VALUES(career_no_SEQ.nextval, '미디어 회사', '콘텐츠 제작자', '2016-02-01', '2024-01-01', (SELECT mentor_profile_no FROM mentor_profile WHERE member_no = (SELECT member_no FROM member WHERE member_id = 'mentor54')));
 
 INSERT INTO member(member_no, member_id, member_password, member_email, member_name, member_points, member_status, member_join_date, member_report_count, member_role, member_provider)
-VALUES(member_no_SEQ.nextval, 'mentor55', '{bcrypt}$2a$10$2Vj/MwAon9U1UFSHcF8DSe9VtT86qtIFmWo2.tocHk1Px1NAXFU3K', 'mentor55@naver.com', '박하은', 4800, 1, SYSDATE, 0, 'ROLE_MENTOR', '');
+VALUES(member_no_SEQ.nextval, 'mentor55', '{bcrypt}$2a$10$2Vj/MwAon9U1UFSHcF8DSe9VtT86qtIFmWo2.tocHk1Px1NAXFU3K', 'mentor55@naver.com', '박하은', 4800, 1, SYSDATE, 0, 'ROLE_MENTOR', 'Email');
 insert into interest (interest_no, member_no, category_no) 
 values(interest_no_SEQ.nextval, 35, 2);
 insert into interest (interest_no, member_no, category_no) 
