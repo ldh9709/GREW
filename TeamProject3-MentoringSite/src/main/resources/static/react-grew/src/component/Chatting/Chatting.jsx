@@ -4,7 +4,9 @@ import { Client as StompClient } from "@stomp/stompjs";
 import * as ChattingApi from "../../api/chattingApi.js";
 import { useMemberAuth } from '../../util/AuthContext.js';
 
-const ChattingMessage = ({ roomId, roomName, roomStatus, mentorNo }) => {
+const ChattingMessage = ({ roomId, roomName, Status, mentorNo }) => {
+  const [roomStatus, setRoomStatus] = useState(Status);
+
   const { token, member } = useMemberAuth();
 
   const [username, setUsername] = useState("");
@@ -81,7 +83,8 @@ const ChattingMessage = ({ roomId, roomName, roomStatus, mentorNo }) => {
   };
 
   const chatRoomCompleted = async () => {
-    await ChattingApi.completedChatRoom(roomId);
+    const responseJsonObject = await ChattingApi.completedChatRoom(roomId);
+    setRoomStatus(responseJsonObject.status);
   }
 
   useEffect(() => {
@@ -150,7 +153,6 @@ const ChattingMessage = ({ roomId, roomName, roomStatus, mentorNo }) => {
             }
           );
         },
-        onDisconnect: () => console.log("Disconnected"),
       });
 
       stompClient.current.activate();
@@ -278,8 +280,19 @@ const ChattingMessage = ({ roomId, roomName, roomStatus, mentorNo }) => {
   if (username && roomId) {
     return (
       <div className="chat-app">
-        <div className="chat-header">{roomName}
-         {mentorNo == member.memberNo ? <button className="" onClick={chatRoomCompleted}>활동 완료</button> : <></> }
+        <div className="chat-header">
+          <div>{roomName}
+         {mentorNo == member.memberNo ? 
+          <button 
+            className="completed-button" 
+            onClick={chatRoomCompleted}
+            disabled={roomStatus === 7200}
+          >활동 완료
+          </button> 
+          : 
+            <></> 
+          }
+          </div>
         </div>
         <div
           id="chat-container"

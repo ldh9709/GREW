@@ -47,7 +47,6 @@ const ChatAlarim = () => {
             }
           );
         },
-        onDisconnect: () => console.log("Disconnected"),
       });
 
       stompClient.current.activate();
@@ -92,7 +91,7 @@ const ChatAlarim = () => {
             {activePanel === "chat" && <ChatRoom onRoomClick={openChatting} />}
             {activePanel === "notification" && <Alarim />}
             {activePanel === "ChattingMessage" && (
-              <ChattingMessage roomId={roomId} roomName={roomName} roomStatus={roomStatus} mentorNo={mentorNo}/>
+              <ChattingMessage roomId={roomId} roomName={roomName} Status={roomStatus} mentorNo={mentorNo}/>
             )}
           </div>
           {/* Chat Button */}
