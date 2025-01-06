@@ -1302,61 +1302,459 @@ values(inquiry_no_SEQ.nextval, '스타트업법률자문 받아야할까요?', '
 언니가 대기업 있을때는 변호사 도움 받아가면서 일 진행했다길래요 ㅎ
 신생기업이라도 이런 부분 도움을 받으면서 시작하는게 좋을까 싶어서요. 
 답변주시면 감사하겠습니다.',sysdate,1,833,16,28);
+insert into inquiry(inquiry_no,inquiry_title, inquiry_content, inquiry_date, inquiry_status, inquiry_views, category_no, member_no)
 values(inquiry_no_SEQ.nextval, '스타트업특허를 준비중입니다', '최근 스타트업을 창설하게 되었는데
 스타트업특허의 뜻과 특허시 이점을 알려주시면 감사하겠습니다.',sysdate,1,833,16,38);
+insert into inquiry(inquiry_no,inquiry_title, inquiry_content, inquiry_date, inquiry_status, inquiry_views, category_no, member_no)
 values(inquiry_no_SEQ.nextval, '네이버 블로그 마케팅 효과있나요?', '음식점을 오픈했습니다 요즘에도 네이버 블로그 마케팅 효과가 있을까요? 인스타그램이 대세일거 같긴한데 여전히 블로그 리뷰와 방문자 리뷰가 경쟁사들이 많은 거 같고 요즘엔 어떤가요 블로그마케팅에서 제가 아는 건 체험단인데 이거 말고 또 좋은 네이버 마케팅 방법이 있을가요?.',sysdate,1,833,17,18);
+insert into inquiry(inquiry_no,inquiry_title, inquiry_content, inquiry_date, inquiry_status, inquiry_views, category_no, member_no)
 values(inquiry_no_SEQ.nextval, '특허법률사무소 어떻게 고르는 건가요?', '마케팅은 어떤 직업이고 어떤일을 하나요?',sysdate,1,333,17,19);
+insert into inquiry(inquiry_no,inquiry_title, inquiry_content, inquiry_date, inquiry_status, inquiry_views, category_no, member_no)
 values(inquiry_no_SEQ.nextval, '마케팅이 하는일', '특허법률사무소를 알아보고 있습니다. 특허 출원을 준비중인데 특허법률사무소가 정말 많더라고요.. 어떤걸 보고 골라야 하는지 막막하기도 하고 특허법률사무소는 어떻게 현명하게 고를 수 있는지 알려주세요!',sysdate,1,333,18,9);
+insert into inquiry(inquiry_no,inquiry_title, inquiry_content, inquiry_date, inquiry_status, inquiry_views, category_no, member_no)
 values(inquiry_no_SEQ.nextval, '해외특허법률사무소 알아보고있습니다.', '회사 대표님꼐서 해외특허를 진행해보시자고 합니다.
 회사에서 특허쪽으로 잘 알고있지못해
 해외특허법률사무소 같은 곳에 의뢰를 맡겨야할 것 같은데요
 어떻게 해외특허법률사무소를 알아보면 좋을까요?
 금액은 어느정도 나올까요?',sysdate,1,133,18,10);
+insert into inquiry(inquiry_no,inquiry_title, inquiry_content, inquiry_date, inquiry_status, inquiry_views, category_no, member_no)
 values(inquiry_no_SEQ.nextval, '피트니스 복싱 초기', '닌텐도 피트니스 복싱 미쿠 한 3일정도 2,30분씩 했는데 벌써 상체에 알배겼는데 괜찮은가요??? 고3이어서 운동을 전혀 아예 안하고 막 완전 난생 처음 운동 시작해서 근육이 좀 놀란걸까요? 팔ㅇ이 안올라가여ㅓㅜㅜㅋㅋㅋㅋ 관절빠지는거 아니겟죠?? 괜찮은걸까여ㅏ?? 이렇게 게임에서 시키는대로 무식하게 주먹질 해도 괜찮은걸까요? 스트레칭 해줘야하나여',sysdate,1,233,23,6);
+insert into inquiry(inquiry_no,inquiry_title, inquiry_content, inquiry_date, inquiry_status, inquiry_views, category_no, member_no)
 values(inquiry_no_SEQ.nextval, '피트니스 광고 마케팅 어디가 잘하나요?', '피트니스 광고 마케팅 어디가 잘하나요?
 잘하는곳중 하나로 선택해서 진행하려고 하는데 어디가 정말 좋은지 모르겠어서요
 이용하시는곳 있으시면 공유 부탁드려요 ',sysdate,1,833,23,7);
+insert into inquiry(inquiry_no,inquiry_title, inquiry_content, inquiry_date, inquiry_status, inquiry_views, category_no, member_no)
+values(inquiry_no_SEQ.nextval, '요가필라테스의 차이점은 어떤게 있을까요?', '요가와 필라테스는 모두 몸과 마음의 건강을 증진시키는 운동이지만 둘 사이에는 몇 가지 차이점이 있다고 들었습니다. 요가와 필라테스의 차이점은 무엇인가요? 또 각각의 운동이 가지는 장단점과 효과도 알려주시면 감사하겠습니다. 아울러 요가와 필라테스 중 어떤 운동이 저에게 더 적합할지 추천해 주시면 많은 도움이 될 것 같습니다. ',sysdate,1,123,24,9);
+insert into inquiry(inquiry_no,inquiry_title, inquiry_content, inquiry_date, inquiry_status, inquiry_views, category_no, member_no)
+values(inquiry_no_SEQ.nextval, '도수치료와 필라테스?', '일자목 두통이 심각하게 심해서 필라테스를 꾸준히 해오다가 (필테를 하면 두통은 안와요) 치루수술 후 운동을 두달간 못하여 두통에 시달리는데요
+도수치료와 필라테스를 같이 해도 되나요? 오전에 필테를 가고 오후에 도수치료를 받구요',sysdate,1,128,24,15);
+insert into inquiry(inquiry_no,inquiry_title, inquiry_content, inquiry_date, inquiry_status, inquiry_views, category_no, member_no)
+values(inquiry_no_SEQ.nextval, '콜레스테롤 식단관리 어떻게 하죠?', '성남 50대 후반/여 콜레스테롤
+
+콜레스테롤 식단관리 어떻게 할지 고민입니다.
+
+제가 콜레스테롤 수치가 높아요.
+
+어떤음식이 콜레스테롤을 낮추는데 도움이 될까요',sysdate,1,128,25,10);
+insert into inquiry(inquiry_no,inquiry_title, inquiry_content, inquiry_date, inquiry_status, inquiry_views, category_no, member_no)
+values(inquiry_no_SEQ.nextval, '당뇨에좋은식단 추천해주세요(김해 당뇨)', '김해 40대 초반/남 당뇨
+
+공복혈당이 전단계 수치로 나와서 이제 관리하려고 하는데요
+
+일단 먹는 걸 조절해야 할 것 같은데 어떤 식단이 좋을지 추천해주세요',sysdate,1,128,25,19);
 
 
 
 
 /* 답변 등록 */
 insert into answer(answer_no, answer_content, answer_date, answer_accept, answer_status, member_no, inquiry_no)
-values(answer_no_SEQ.nextval, '비트코인투자를 시작하세요!!',sysdate, 1, 1, 2, 1);
+values(answer_no_SEQ.nextval, '
+
+1. 상가 3층 1호실 점유자가 총무 역할을 하고 있는데, 총무 개인 계좌로 관리비 및 건물수리비를 받아서 지출 내역을 보고 하지 않았기 때문에,
+
+2. 총무를 업무상 횡령죄 및 업무상 배임죄로 형사고소 하여, 처벌할 수 있습니다.
+
+3. 상가 관리 분쟁 사건을 수행한 경험 있는 19년차 경력의 대방건설 법무실장 출신 형사법 및 민사법 전문 변호사와 함께, 형사 사건을 진행하여야, 총무를 형사처벌 시키고, 그동안 피해 입은 손해를 배상 받을 수 있습니다.
+
+
+',sysdate, 2, 1, 2, 1);
 insert into answer(answer_no, answer_content, answer_date, answer_accept, answer_status, member_no, inquiry_no)
-values(answer_no_SEQ.nextval, '은행적금을 활용해보세요',sysdate, 1, 1, 8, 1);
+values(answer_no_SEQ.nextval, '근기법상 사용증명서는 30일 이상 재직하여야 발급이 가능하므로 말씀하신 기간 내 신청하였다면 회사는 발급 의무는 없습니다. 따라서 노동청에 신고할 사항이 있는 것으로 보이지는 않습니다.
+
+추가 상담을 원하시면 상담(유료)을 신청하여주세요.
+
+(댓글을 통한 추가상담은 하지 않으니 양해 부탁드립니다.)',sysdate, 2, 1, 11, 2);
 insert into answer(answer_no, answer_content, answer_date, answer_accept, answer_status, member_no, inquiry_no)
-values(answer_no_SEQ.nextval, '장원급제는 과거 시험에서 1등으로 합격한 것을 뜻하며, 
-
-조선시대 최고의 학문적 성취를 상징합니다. 
-
-정몽주, 이이, 김상헌 등이 대표적인 장원급제자로, 
-
-이들은 주로 대제학, 판서, 좌의정 같은 국가의 핵심 직책을 맡아 중요한 역할을 했습니다.
-
-더자세한내용은 아래사이트에있으니 참고하시면됩니다.',sysdate, 1, 1, 8, 5);
-insert into answer(answer_no, answer_content, answer_date, answer_accept, answer_status, member_no, inquiry_no)
-values(answer_no_SEQ.nextval, '오징어게임2 공개시간 안내드립니다.
-
-26일 오후 5시에 오징어게임2 공개됩니다.
-
-자세한 내용 아래를 확인 바랍니다.
+values(answer_no_SEQ.nextval, '안녕하세요 :)
 
 ​
 
-​',sysdate, 1, 1, 3, 6);
+인사총무관리사란 인사 부서의 운영을 계획 및 조직, 지시하며 관리하는 역할을 맡으며, 각종 훈련과 채용활동을 조정하고 노사관계 정책 및 절차를 만들어 시행하며 단체교섭을 협상하는 전문가로서, 
+
+임직원 업무지원 및 복지, 대/내외적 행사, 인적자원을 효율적으로 관리하는 담당자입니다. 
+
+세부적으로는 총무부서의 전반적인 이해, 자산관리, 일반행정, 회사설립업무, 의전 및 행사진행, 복리후생, 시설물 관리 등 일의 범위와 양이 상당히 많으며, 인사총무는 업종(태)에 따라 핵심업무가 달라집니다.
+
+​
+
+한국심리교육협회에서 인사총무관리사 자격증 어렵지 않게 취득하실 수 있으시며,
+
+자격기본법에 의거하여 국가기관인 한국직업능력연구원에 정식등록되어 이력사항 및 활용하실 수 있으시며,
+
+온라인수강과 온라인시험으로 이루어져 있어 큰 부담없이 수강 및 시험응시가 가능하답니다.
+
+​
+
+교안/예상문안도 다운로드 받아보실 수 있으시며,
+
+자격증 과정의 커리큘럼도 자세하게 잘 짜여져 있어 참고해주셔도 좋으실 것 같아요 :)
+
+​
+
+한국심리교육협회에서 현재 무료수강 이벤트가 진행중에 있으니 확인하시고 신청 진행 하시면 될 것 같습니다 :).',sysdate, 1, 2, 11, 3);
 insert into answer(answer_no, answer_content, answer_date, answer_accept, answer_status, member_no, inquiry_no)
-values(answer_no_SEQ.nextval, '일반적으로 품절 여부는 재고 관리 시스템에 실시간으로 업데이트되므로 
+values(answer_no_SEQ.nextval, '​직업은 말그대로 평생 해야할 업이기에 잘 선택하셔야 해요
 
-해당 날짜 이전에 이미 품절되었을 가능성도 있습니다. 
+좀 더 수월한 자격증을 기반으로 준비하시는 분들도 많은거 같습니다
 
-아래사이트에는 스타벅스램프예약방법에 대해 자세히나와있으니
+​
 
-읽어보시면됩니다 현재로서는 전국 품절같습니다.
+무엇도 나의 노력을 막을수 없다고 생각하는게 첫번째 인거 같습니다
 
-',sysdate, 1, 1, 6, 6);
+자격증 종류도 보면 예전과는 다르게 정말 다양하게 많아진거 같습니다
+
+​
+
+늘 긍정적인 마인드와 노력이 함께 있다면 좋을결과가 늘 함께할걸로 생각이 되어지네요
+
+새롭게 일을 시작하거나 공부를 시작하실때에 끈기는 정말 중요한부분인거 같더라구요',sysdate, 1, 1, 2, 3);
 insert into answer(answer_no, answer_content, answer_date, answer_accept, answer_status, member_no, inquiry_no)
-values(answer_no_SEQ.nextval, '서울 데이트 할만한곳  
+values(answer_no_SEQ.nextval, '[질문]
+
+​대학교 총무활동 근로장려금
+
+​
+
+제가 대학교에서 총무 활동을 하고 있어 제 계좌로 큰돈이 왔다갔다 합니다.
+
+이게 근로 장려금이 지급되는 액수와 큰 관련이 있을까요?
+
+만약 관련 또한 있다면 해결방법도 알려주세요ㅠㅠ
+
+​
+
+[답변]
+
+안녕하세요. 근로장려금 제도에 대해 문의해주셨네요.
+
+저도 근로장려금 제도에 대해 관심이 많아서 정보를 찾아보고 있습니다.
+
+제가 알고 있는 정보를 바탕으로 답변을 드리겠습니다.
+
+​
+
+대학교 총무 활동으로 인해 계좌에 큰 금액이 입출금되는 상황이라면, 근로장려금 지급 심사에 영향을 미칠 수 있습니다.
+
+​
+
+왜 영향을 미칠까요?
+
+소득 판단 기준: 근로장려금은 저소득층을 위한 지원 제도이므로, 소득 기준을 엄격하게 적용합니다. 총무 활동으로 인해 계좌에 큰 금액이 오고 가면, 이를 소득으로 간주하여 근로장려금 지급 대상에서 제외될 수 있습니다.
+
+자금 출처 소명: 총무 활동으로 인한 입출금 내역은 단순히 통과금일 수도 있지만, 근로장려금 심사 과정에서는 이 자금의 출처와 용도를 명확하게 소명해야 할 수 있습니다.
+
+​
+
+해결 방법
+
+자금의 성격 명확히 밝히기:
+
+통장 내역 정리: 총무 활동으로 인한 입출금 내역을 정리하여, 단순히 통과금임을 증명할 수 있는 자료를 준비합니다. (예: 회계 장부, 영수증 등)
+
+자금의 용도: 총무 활동 자금의 사용 내역을 상세하게 기록하여, 개인적인 소득으로 사용되지 않았음을 증명합니다.
+
+세무사 상담: 복잡한 소득 신고와 관련된 문제는 세무사에게 상담하여 전문적인 도움을 받는 것이 좋습니다.
+
+국세청 문의: 근로장려금 심사 기준이나 필요한 서류 등에 대해 국세청에 직접 문의하여 자세한 안내를 받을 수 있습니다.
+
+​
+
+이상으로 근로장려금 제도에 대한 답변을 마치겠습니다.',sysdate, 2, 1, 2, 5);
+insert into answer(answer_no, answer_content, answer_date, answer_accept, answer_status, member_no, inquiry_no)
+values(answer_no_SEQ.nextval, ' 종중 총무가 임으로 임야 매매를 했어요
+
+개인뿌로가 한테요(자격 없읆)
+
+5억에 샀다기에 등본으떼어보니 3억이에요
+
+맨처음 다운 계역서 라드니 3일후 나무값이 2억아라고 매매서류를 만들어 왔어요
+
+매매 무효화 하고  나무값 2억을 되돌려 바을수 있을까요
+
+임원 및 이사들 모르게 거래를 햇어요  
+
+==> 종관에 매매 절차가 규정되는데 이러한 경우 일반적으로 종관 회의에서 결정을 한 후 매도하는 순으로 진행됩니다. 총무가 이러한 절차를 생략한 것으로 보이고, 매매계약 무효처분을 할 수 있으나 이러한 경우 총무는 사기죄, 사문서 위조 및 행사죄 등으로 형사처벌대상입니다.',sysdate, 1, 1, 2, 7);
+insert into answer(answer_no, answer_content, answer_date, answer_accept, answer_status, member_no, inquiry_no)
+values(answer_no_SEQ.nextval, '혹시 현금영수증 발급받은 번호를 현금영수증에 등록하셨을까요?
+
+​
+
+만약 안했다면 번호등록 후 다음날 조회될거니 그때 용도 변경하시면됩니다.
+
+​
+
+그래도 안될 경우
+
+다시 발급하면 허위매출이 올라가니까 그 방법은 아닌거 같고.
+
+​
+
+업체사장님께 위임받으셔서 서류들고 세무서에서 정정요청하는 방법도 있습니다.',sysdate, 2, 1, 2, 8);
+insert into answer(answer_no, answer_content, answer_date, answer_accept, answer_status, member_no, inquiry_no)
+values(answer_no_SEQ.nextval, '이번 5월에 입사했고 총무 처음해봐서,,현금영수증을 제 번호로 끊어버렸어요..이러면 안 된다는 걸 지금 알아버렸습니다. 그래서 용도 변경을 하려면 홈택스에 들어가면 가능하다해서 소득공제용 현금영수증 끊은 내역을 보니 안 떴더라고요?? 이런 경우에는 아직 반영이 안 된건지, 아니면 소득공제용으로 끊긴게 아닌건지 궁금합니다 만약 소득공제용으로 끊겼을 경우에 다시 갔던 식당에서 지출증빙용으로 다시 현금영수증 달라고 하면 안되는 부분인지 궁금합니다 ㅠㅠㅠㅠㅠ 
+
++제가 4월에 첫 월급을 받고 5월에 일을 하며 현금영수증을 제 번호로 현금영수증을 끊었는데요 그래서 부모님 연말정산 세금 감면에 쓰여서 내역에 안뜨는 경우인건지도 궁금합니다. 
+
+​
+
+​
+
+질문주신 말씀에 답변드려봅니다
+
+​
+
+용도 변경 가능 여부 확인 후 재발급 요청 가능.',sysdate, 1, 1, 11, 8);
+insert into answer(answer_no, answer_content, answer_date, answer_accept, answer_status, member_no, inquiry_no)
+values(answer_no_SEQ.nextval, '안녕하세요. 한국공인노무사회-네이버 지식iN 상담 공인노무사 김정식 입니다.
+
+​
+
+총무는 근로자로 처리하는 것이 옳을 듯한데, 설계사코드로 가입되었다면 서류상 특고로 적용될 듯합니다. 회사에서 이직확인서를 제출하면, 본인은 신분증만 가져가면 됩니다. ',sysdate, 2, 1, 2, 9);
+insert into answer(answer_no, answer_content, answer_date, answer_accept, answer_status, member_no, inquiry_no)
+values(answer_no_SEQ.nextval, '안녕하세요! 저는 국제자격검정원에서 취득했는데
+
+강사진, 강의 퀄리티 모두 훌륭해서 추천하고 싶네요 :)
+
+​
+
+인사과 목표 취준생이시라고 하니 인사총무관리사 
+
+자격증 준비하시는 거 정말 현명한 결정인 것 같아요.
+
+​
+
+수업은 5주 과정이고, 시험은 100점 만점에 60점 이상이면 합격인데요.
+
+​
+
+통합 강의라 합격 시 1급이랑 2급 인사총무관리사 자격증을 동시에 받으실 수 있어요.
+
+​
+
+정식으로 등록된 자격기관에서 발급되는 것이라서 
+
+이력서에 스펙으로 인정되도록 정식 기재가 가능해
+
+취업하실 때 도움이 되는데요.
+
+​
+
+교육 재능 기부 차원으로 수강료, 교재비, 응시료를 무료로 
+
+해 주고 있어서 부담 없이 공부하실 수 있는 기관입니다.
+
+​
+
+엄선한 채용공고가 매일 업데이트 되는 
+
+취업정보센터도 지원하는 곳이니 고려해 보시길 바래요 :)',sysdate, 1, 1, 11, 10);
+insert into answer(answer_no, answer_content, answer_date, answer_accept, answer_status, member_no, inquiry_no)
+values(answer_no_SEQ.nextval, '사업자등록증상 개업연월일이 개업일이 됩니다. 따라서 사업자등록신청은 12월에 하더라도 개업연월일이 25년1월이라면 24년도분 부가세 신고(25년1월25일 신고)는 하지 않아도 됩니다. 다만, 12월 중에 오픈하여 실제적인 매출이 있다면 신고를 하는 것이 원칙입니다. 영업신고증 날짜는 부가세 신고와 직접적인 연관은 없습니다.
+
+​
+
+​
+
+도움이 되셨기를 바랍니다.
+
+​',sysdate, 2, 1, 30, 12);
+insert into answer(answer_no, answer_content, answer_date, answer_accept, answer_status, member_no, inquiry_no)
+values(answer_no_SEQ.nextval, '영업방해 및 협박죄 성립 가능성 여부 관련 질문에 대해 답변드리겠습니다.
+
+​
+
+현재 상황을 종합해 볼 때, 전 직원의 행위가 영업방해죄 및 협박죄에 해당될 가능성이 매우 높습니다.
+
+​
+
+1. 영업방해죄 성립 가능성
+
+홈페이지에 악의적인 글 게시: 사업체의 명예를 훼손하고 고객의 이용을 저해하여 영업 활동을 방해하는 행위입니다.
+
+임의적인 예약: 정당한 사유 없이 타인의 예약을 방해하여 영업 활동에 지장을 초래하는 행위입니다.
+
+​
+
+증거가 충분하다면 영업방해죄가 성립될 가능성이 매우 높습니다.
+
+​
+
+2. 협박죄 성립 가능성
+
+돈을 1원씩 넣으면서 협박: 상대방에게 불안감이나 공포심을 유발하여 부당한 이득을 취하려는 행위입니다.
+
+신고하겠다는 협박: 허위 사실 유포나 위협적인 언행으로 상대방을 압박하는 행위입니다.
+
+​
+
+이러한 행위는 명백한 협박죄에 해당됩니다.
+
+​
+
+3. 대응 방안
+
+1) 증거 확보:
+
+홈페이지에 게시된 글, 예약 내역, 통장 입금 내역 등 모든 증거를 확보해야 합니다.
+
+협박 내용이 담긴 메시지, 통화 녹음 등도 중요한 증거가 될 수 있습니다.
+
+2) 경찰에 신고:
+
+관할 경찰서 사이버수사대에 신고하여 영업방해죄 및 협박죄로 고소해야 합니다.
+
+확보한 증거를 제출하고, 피해 상황을 상세하게 설명해야 합니다.
+
+3) 법률 전문가의 도움:
+
+변호사와 상담하여 법적인 절차를 진행하고, 향후 발생할 수 있는 문제에 대비해야 합니다.
+
+변호사는 증거 분석, 고소장 작성, 법원 절차 진행 등을 도와줄 수 있습니다.
+
+​
+
+4. 추가 조언
+
+답변을 하지 마세요: 가해자에게 답변을 하면 오히려 더 큰 피해를 볼 수 있습니다.
+
+SNS 등을 통한 확산 방지: 가해자의 글이 더 퍼지지 않도록 조치를 취해야 합니다.
+
+민사 소송: 형사 고소와 함께 민사 소송을 통해 손해배상을 청구할 수도 있습니다.
+
+​
+
+주의사항:
+
+자신의 감정을 조절하고 신중하게 대처해야 합니다.
+
+법적인 절차에 따라 침착하게 대응해야 합니다.
+
+전문가의 도움을 받아 문제를 해결하는 것이 좋습니다.
+
+​
+
+현재 상황이 매우 힘들겠지만, 너무 걱정하지 마시고 법적인 절차를 통해 문제를 해결하시기 바랍니다.',sysdate, 1, 1, 30, 13);
+insert into answer(answer_no, answer_content, answer_date, answer_accept, answer_status, member_no, inquiry_no)
+values(answer_no_SEQ.nextval, '미용실 영업신고 하기 전 영업장 장소에 대한 확인이 필요합니다.
+
+미용실의 경우 근린생활 1종, 2종시설에만 가능하며 영업신고 가능여부는 관할 구청 위생과에서 확인이 가능하오니
+
+부동산 계약 전 확인하시기 바랍니다.
+
+
+
+영업신고 시 필요한 서류는 ①위생교육수료증 ②미용사면허증 ③신분증 지참하시어 구청 위생과로 방문하시면 됩니다.
+
+별도의 수수료는 없지만 면적에 따라 부과하는 면허세는 있을 수 있으니 참고하시기 바랍니다.',sysdate, 2, 1, 12, 14);
+insert into answer(answer_no, answer_content, answer_date, answer_accept, answer_status, member_no, inquiry_no)
+values(answer_no_SEQ.nextval, '의료광고는 의료법에 의하여 엄격하게 다루어지고 있기 때문에, 잘못 광고를 진행한다면 병원영업정지 등의 행정적 처분이 내려질 수 있습니다.
+
+​
+
+대행업체를 통하여 광고를 진행했다 하더라도 최후 검토 과정을 거치는 과정에서의 책임이 발생하기 때문에 해당 업체에게 모든 책임을 물기는 힘든 부분이 있습니다.
+
+​
+
+어떤 부분에서 의료광고법을 위반하였는지 확인하시고 계약 및 광고 발행까지의 경위를 파악할 수 있도록 계약서와 업체와의 대화 내용을 검토하셔야 합니다.
+
+​
+
+그 이후에 영업정지 처분에 대한 불복 및 감경을 원한다는 의사를 표현하며 행정심판 등의 절차를 거치는 것이 좋지요.
+
+​',sysdate, 2, 1, 30, 15);
+insert into answer(answer_no, answer_content, answer_date, answer_accept, answer_status, member_no, inquiry_no)
+values(answer_no_SEQ.nextval, '안녕하세요. 서울지방변호사회 소속으로 지식iN 법률상담을 진행하고 있는 김국일 변호사입니다.
+
+​
+
+생각보다 의료광고법이 매우 엄격하고 까다로운 데다가 의사라고 해서 이런 부분을 모두 파악하고 있는 것이 아니기 때문에 이러한 문제가 종종 발생하곤 합니다. 
+
+​
+
+의료광고법위반에 해당될 수 있는 행위로는 아래와 같습니다. 
+
+​
+
+1. 의료인이 아닌 사람이 의료에 대한 광고를 게시하거나, 홍보 활동을 하는 것 
+
+​
+
+2. 환자로 하여금 리뷰이벤트 등을 활용한 치료 후기 광고 
+
+​
+
+3. 타 병원의 치료를 비교하거나, 비방하는 홍보 
+
+​
+
+4. 수술이나 시술을 받은 후 부작용을 명시하지 않는 것 
+
+​
+
+5. 가격 할인, 교통 편의 제공, 알선 등 유인하는 행위 
+
+​
+
+의료광고법위반으로 병원영업정지를 받게 된다면 이에 더하여 형사처벌까지 받게 될 수 있으며, 거짓이 없는 내용이라고 하더라도 객관적인 사실이 아니라면 처벌대상이 될 수 있기 때문에 이점 유의하셔야 합니다. 
+
+. 
+
+또한 병원영업정지와 같은 행정처분이 이루어졌다면, 처분이 내려지기 전 신속하게 행정소송을 진행할 수 있어야 합니다. ',sysdate, 1, 1, 12, 15);
+insert into answer(answer_no, answer_content, answer_date, answer_accept, answer_status, member_no, inquiry_no)
+values(answer_no_SEQ.nextval, '1. 냉정하게 말씀드리자면 사기죄로 고소야 할 수 있지만, 형사고소하더라도 처벌이 어렵습니다.
+
+2. 부득이 민사소송을 제기해야 하나 소가를 고려할 때 변호사 조력을 받을 경우 실익이 없습니다.
+
+3. 그러므로 소송 전에 법리적 검토가 완료된 법무법인 명의의 내용증명을 발송하여 신속히 잔금을 지급할 것을 요구하는 한편, 요구에 불응할 경우 상대방을 사기로 고소할 것이고(실제 처벌 여부는 별론으로 하고 경고는 필요합니다), 민사적으로도 소송을 제기할 것이며 민형사 소송이 진행되면 상대방은 형사적으로는 처벌되고 민사적으로도 패소하여 원고(질문자님)의 소송비용까지 부담해야 한다는 점을 지적함으로써 소송 전에 문제해결을 도모할 수 있겠습니다.
+
+내용증명 발송을 통해 민형사 분쟁을 신속하고 합리적인 비용으로 해결하는데 있어 단언컨대 압도적인 전문성을 보유하고 있습니다.
+',sysdate, 2, 1, 31, 16);
+insert into answer(answer_no, answer_content, answer_date, answer_accept, answer_status, member_no, inquiry_no)
+values(answer_no_SEQ.nextval, 'IT 웹 개발 위탁학교로는 인천중앙직업전문학교가
+
+고용노동부가 선정한 4차산업 선도인력 양성기관으로
+
+위탁학교들 중 유일하게 4차산업 특성화 교육기관이라
+
+가장 유명한걸로 알고 있으니 참고해!
+
+​',sysdate, 2, 1, 31, 17);
+insert into answer(answer_no, answer_content, answer_date, answer_accept, answer_status, member_no, inquiry_no)
+values(answer_no_SEQ.nextval, 'IT앱 웹 개발쪽은 인천중앙직업전문학교가 유명한걸로암',sysdate, 1, 1, 40, 17);
+insert into answer(answer_no, answer_content, answer_date, answer_accept, answer_status, member_no, inquiry_no)
+values(answer_no_SEQ.nextval, '전국 고교위탁 최다 과정 승인!!
+
+전국 고교위탁 최다 과정 승인!!
+
+​
+
+안녕하세요. 고교위탁 NO.1
+
+[인천중앙직업전문학교] 입니다.
+
+​
+
+IT웹.앱 개발 위탁교육을 희망하는 학생이라면
+
+고용노동부 선정 4차산업선도인력양성기관으로써
+
+4차산업 특성화 교육기관의 특화된 커리큘럼을 기반으로
+
+체계적인 교육을 통해 전문인재를 양성하고 있는
+
+[인천중앙직업전문학교]의 정보보안&사물인터넷 / 게임프로그래밍&게임기획
+
+게임그래픽디자인&게임원화 / 설계디자인&3D프린터
+
+다양한 IT계열의 전공과정이 있습니다.',sysdate, 1, 1, 8, 17);
+insert into answer(answer_no, answer_content, answer_date, answer_accept, answer_status, member_no, inquiry_no)
+values(answer_no_SEQ.nextval, '안녕하세요! 고교위탁 9년 연속 우수 훈련기관 인천직업능력교육원 입니다.
+
+​
+
+​
+
+위탁에 관련하여 질문 주셨는데요.
 
 ​
 
@@ -1364,71 +1762,543 @@ values(answer_no_SEQ.nextval, '서울 데이트 할만한곳
 
 ​
 
-12월 서울시 축제 
+​
 
-서울라이트 광화문 2024.12.13 ~2025.01.05 광화문역 
+Q. 위탁학교 고민중인에 it웹 개발 위탁학교 알려주세요
 
-광화문 마켓 2024.12.13금 ~2025.01.05 광화문역 광화문광장 
+​
 
-서울빛초롱축제 2024.12.13금~2025.01.12 광화문역 5번출구 청계광장 
+​
 
-서울라이트DDP 2024.12.19 ~2025. 12.31 DDP 동대문역사문화공원역 
+​
 
-서울광장 스케이트장 1천원 2024.12.20~2025.02.9 시청역 ',sysdate, 1, 1, 6, 6);
+- 안녕하세요. 인천직업능력교육원은  IT전문 위탁교육기관으로써 9년 연속 우수훈련기관에 선정되었으며 이는 직업능력심사평가원 사이트에서 직접 선별된 기관들을 확인도 하실 수 있습니다. 
+
+아래 25년도 개설예정 과정들과 저희 학교에 대한 간략한 설명이 있으니 읽어봐주시고 편하게 문의해주시면 감사하겠습니다.',sysdate, 1, 1, 13, 17);
 insert into answer(answer_no, answer_content, answer_date, answer_accept, answer_status, member_no, inquiry_no)
-values(answer_no_SEQ.nextval, '러브 액츄얼리
+values(answer_no_SEQ.nextval, '안녕하세요~!
 
-로맨틱 홀리데이
+IT국비지원교육기관 교육상담센터입니다.
 
-라스트 홀리데이
+우선 국비지원을 활용하여 취업준비를 하시려는 계획이시라면 온라인교육으로는 어렵습니다.
 
-크리스마스 캐롤
+실무실습부터 프로젝트진행 및 취업준비와 취업연계등 온라인으로는 진행이 어렵기때문에 오프라인교육으로 IT국비지원교육을 진행하셔야 합니다.
 
-나홀로집에 1,2&3
+IT국비지원교육기관은 전국에 지점들이 있기때문에 가까우신 지점에서 수강 가능하구요~ 교육에 앞서 1:1무료컨설팅을 통해 자세한 교육계획 상담 도와드리고있습니다.
 
-호두까기 인형과 4개의 왕국
+아래 IT국비지원교육기관 '하이미디어아카데미' 정보공유 블로그 남겨드릴게요~
 
-미녀와 야수: 마법의 크리스마스
-
-아이스에이지: 매머드 크리스마스
-
-곰돌이푸 - 즐거운 크리스마스! 신나는 새해!',sysdate, 1, 1, 6, 7);
+실시간 상담도 진행중이오니 아래 네이버 정보공유 카페글을 참고해주세요!!',sysdate, 1, 1, 40, 18);
 insert into answer(answer_no, answer_content, answer_date, answer_accept, answer_status, member_no, inquiry_no)
-values(answer_no_SEQ.nextval, '뱀파이어 웹툰 뱀파이어의 꽃을 찾아보세요',sysdate, 1, 1, 6, 3);
+values(answer_no_SEQ.nextval, '안녕하세요 취업왕입니다.
+
+​
+
+KG아이티뱅크는 코딩취업 / 자격증 / 진로 / 전공대비 / 자기개발 / 진학 / IT특기병 등 코딩 전문 교육 및 상담을 진행하고 있습니다.
+
+​
+
+KG아이티뱅크는 정보보안, 네트워크, 시스템, 클라우드컴퓨팅, 프로그래밍, 데이터베이스 등 IT 고급인력양성을 목적으로 2002년 설립된 IT전문교육기관입니다.',sysdate, 2, 1, 13, 18);
 insert into answer(answer_no, answer_content, answer_date, answer_accept, answer_status, member_no, inquiry_no)
-values(answer_no_SEQ.nextval, '국가근로장학금은 별도로 신청해야 해서, 국가장학금 신청만으로는 진행되지 않아요.
+values(answer_no_SEQ.nextval, 'IT 웹개발은 국비지원 온라인 교육보다는 집체교육으로 받으시는 것을 추천해드립니다.
 
-부모님 동의와 서류 제출이 없으면 신청이 완료되지 않고 취소될 수 있으니 꼭 챙겨야 해요.
+집체교육을 받으시면서 요즘은 무료 동영상강의가 많아서 추가적으로 유투버 또는
 
-네, 국가장학금 신청 후 1유형으로 뜨는 게 맞아요! ',sysdate, 1, 1, 6, 1);
+무료 온라인 강의를 병행 하시기 바랍니다.
+
+현재 내국인 또는 결혼 이민자의 경우 국비 무료교육이 가능하며 자세한
+
+신청자격 및 훈련과정은 www.hrd-net 을 통해 검색 및 신청이 가능합니다.',sysdate, 1, 1, 31, 18);
 insert into answer(answer_no, answer_content, answer_date, answer_accept, answer_status, member_no, inquiry_no)
-values(answer_no_SEQ.nextval, '임영웅 가수 2024년 리사이틀 콘서트 부스 위치 사진으로 보여드릴게요',sysdate, 1, 1, 6, 1);
+values(answer_no_SEQ.nextval, '온라인 교육은 자격증 취득과정이라고 계좌제 형태가 많습니다!
+
+​
+
+온라인 강의는 자부담이 들 확률이 큽니다!
+
+​
+
+일단 백엔드 쪽으로 취업을 준비하신다면 IT 취업연계 국비수업으로 공부를 하시는게 가장 좋아요!
+
+​
+
+6개월 과정동안 집체교육 수업을 통해 백엔드 실무역량을 완벽히 익히고 프로젝트 진행하여 포트폴리오에 녹여서
+
+​
+
+취업하는 것이 가장 현실적으로 취업확률이 높습니다!
+
+​
+
+궁금한 거 있으시면 물어보세요!!',sysdate, 1, 1, 8, 18);
 insert into answer(answer_no, answer_content, answer_date, answer_accept, answer_status, member_no, inquiry_no)
-values(answer_no_SEQ.nextval, '안녕하세요!  상황을 차근차근 계산해 드릴게요.
+values(answer_no_SEQ.nextval, '안녕하세요, 닥톡-네이버 지식iN 상담한의사 김세윤입니다.
 
-문제 정리
 
-처음 6명이 29만 원을 이미 냈습니다.
 
-각자 부담한 금액은:
+중학생 딸의 백반증 진단 소식을 들으시고 많이 걱정되셨을 것 같습니다. 특히 아이가 어리고 피부가 민감하니 치료 방법에 대해 더욱 신중하게 고민하시는 점 충분히 이해됩니다.
 
-29만원 나누기 6명=48,333.33… = 약 48,333원
 
-나중에 한 명이 추가로 들어와 총 금액이 30만 5천 원이 되었습니다.
 
-새로 추가된 금액:
-
-30만5천원−29만원=15,000원
-
-7명이 공평하게 부담해야 할 총 금액은:
-
-30만5천원 나누기 7명=43,571.43…= 약 43,571원',sysdate, 1, 1, 6, 2);
+백반증은 피부에 나타나는 증상이지만, 근본 원인은 면역기능 이상에서 시작되는 질환입니다. 멜라닌세포가 파괴되면서 다양한 크기와 형태의 하얀 반점이 생기는데, 통증이나 가려움 같은 증상이 없어 초기에 큰 문제로 인식되지 않다가 점차 부모님과 아이 모두에게 심리적 부담을 줄 수 있습니다.',sysdate, 1, 1, 44, 19);
 insert into answer(answer_no, answer_content, answer_date, answer_accept, answer_status, member_no, inquiry_no)
-values(answer_no_SEQ.nextval, '1.차미령의 정체는 무엇인가요?
+values(answer_no_SEQ.nextval, '안녕하세요, 닥톡-네이버 지식iN 상담한의사 장영용입니다.
 
--차미령의 정체는 아직 명확히 밝혀지지 않았습니다. 
 
--그녀는 드라마 속에서 중요한 역할을 맡고 있으며, 여러 가지 복잡한 성격을 가지고 있습니다.',sysdate, 1, 1, 6, 3);
+
+중학생보약 관련해서 질문을 주신 것 같습니다,
+
+중학생보약이 효과가 좋을지 고민이신 모양입니다
+
+공진단으로 드신다면 효과를 볼 수 있습니다
+
+제가 관련 정보를 드릴 테니 참고해 주세요
+
+
+
+많은 수험생영양제로 알려져 있으며 한약으로는 으뜸이 되는 것이 공진단이라고 할 수 있습니다 공진단의 특성상 아이부터 노인까지 누구나 먹을 수 있다는 점입니다 가장 많이 찾는 것이 기력회복용 피로회복용이며 수술 후 보약이나 떨어진 기운을 좋게해주는 효과가 있는 것이 공진단이라고 할 수 있습니다 특히 뇌기능을 회복해주는 효과까지 있어서 청소년이나 수험생에게 효과가 좋다고 할 수 있습니다
+
+
+
+정기를 돋우고 기와 혈을 원활하게 하여 질병 예방과 건강한 삶을 유지하는 모든 약 중에 최고의약인 공진단은 그 효능만큼 믿을 수 있고 검증된 곳에서 조제하여 드시는 것이 무엇보다 중요합니다.
+
+
+
+도움이 되셨는지요
+
+감사합니다,',sysdate, 2, 1, 22, 20);
+insert into answer(answer_no, answer_content, answer_date, answer_accept, answer_status, member_no, inquiry_no)
+values(answer_no_SEQ.nextval, '성형을 위한거면 안받아주죠. 미용시술면으론 아직 이른 나이',sysdate, 1, 1, 44, 21);
+insert into answer(answer_no, answer_content, answer_date, answer_accept, answer_status, member_no, inquiry_no)
+values(answer_no_SEQ.nextval, '
+
+코는 뼈와 연골같은 골격 구조가 있고 성장기에 같이 커지기 때문에,
+
+성형 목적의 시술이나 수술은 성년기(만19세) 이후에 합니다.
+
+대부분의 병원에서 중학생을 대상으로 코 성형수술을 하진 않습니다.
+
+​',sysdate, 2, 1, 22, 21);
+insert into answer(answer_no, answer_content, answer_date, answer_accept, answer_status, member_no, inquiry_no)
+values(answer_no_SEQ.nextval, '크면 클수록 좋겠지만 농구를 잘한다는 전제하에 가장 작은 단신 가드를 가정. 
+
+​
+
+볼 핸들링 좋고 빠르고 잘 뛰는 중학생 포인트 가드를 기준으로 
+
+1학년 때 적어도 170초반에는 진입해야 이후 성장 가능성을 볼 수 있을 겁니다. 
+
+​
+
+그 외의 포지션 플레이어라면 볼 핸들링과 시야 능력치는 조금씩 부족해도 각 포지션에 맞는 스킬과 포지션 넘버 순서 대로 5cm씩은 더 큰 신장을 가진다고 보면 될 것 같습니다. ',sysdate, 1, 1, 44, 22);
+insert into answer(answer_no, answer_content, answer_date, answer_accept, answer_status, member_no, inquiry_no)
+values(answer_no_SEQ.nextval, '그럴 수 있습니다 
+
+​
+
+민사소송 제기할 때 부모 상대로 하세요
+
+​',sysdate, 1, 1, 22, 23);
+insert into answer(answer_no, answer_content, answer_date, answer_accept, answer_status, member_no, inquiry_no)
+values(answer_no_SEQ.nextval, '가해자 부모를 상대로하여 민사소송을 제기하셔야 합니다.',sysdate, 2, 1, 44, 23);
+insert into answer(answer_no, answer_content, answer_date, answer_accept, answer_status, member_no, inquiry_no)
+values(answer_no_SEQ.nextval, '
+고등학생 간의 성추행 사건이라 하더라도, 14세 이상이라면 형사처벌의 대상이 되므로 가해 학생도 법적 책임을 질 수 있습니다.
+
+​
+
+​
+
+고등학생 성추행의 경우, 피해자의 고통과 회복이 중요하므로, 사건을 덮고 지나가기보다는 피해자의 권리를 지키기 위해 적절한 조치를 취하는 것이 필요하게 될텐데요,
+
+​
+
+​
+
+만약 가해자 학생의 처벌을 원한다면, 학교나 교육청에 피해 사실을 알릴 수 있는 방법이 있지만, 혹여나 학교에 소문이 퍼질까 두렵다면 경찰에 신고해 도움을 청하시는 것도 하나의 방법이 되겠죠.',sysdate, 2, 1, 35, 24);
+insert into answer(answer_no, answer_content, answer_date, answer_accept, answer_status, member_no, inquiry_no)
+values(answer_no_SEQ.nextval, '○ 현역병 입영일자 연기 사유 중 ‘대학진학 예정자’는 21세가 되는 해의 5월 말일까지 연기가능하며(증빙서류 없음), 이에 더하여 연기를 희망하는 사람은 다음 연도 대학수학능력시험 접수증 등 증빙서류를 제출하는 경우 22세가 되는 해의 5월 말까지 연기가 가능합니다.
+
+ 
+
+​
+
+* 병역법 상 나이계산 : 당해연도-출생연도
+
+ 
+
+​
+
+○ 입영일자 연기신청은 입영일 5일 전까지 인터넷/모바일/팩스/방문 중 편하신 방법을 택하여 연기 신청 하실 수 있습니다.
+
+- 인터넷 신청 : 병무청 누리집 – 병무민원 – 현역/상근 – 현역/상근 민원신청 – 입영일자 연기원 신청
+
+- 모바일 신청 : 병무청 앱 – 민원서비스 – 현역상근 – 입영일자 연기원 신청
+
+ ',sysdate, 2, 1, 14, 28);
+insert into answer(answer_no, answer_content, answer_date, answer_accept, answer_status, member_no, inquiry_no)
+values(answer_no_SEQ.nextval, '학교폭력위원회의 징계가 결정되면, 그 기록이 학교생활기록부에 남을 수 있게 되는데요, 다만, 생기부에 남는 기간은 징계의 수위에 따라 달라집니다.
+
+​
+
+​
+
+보편적으로 출석 정지 이상의 징계가 내려지면 생기부에 기록되며, 졸업 후 최대 2년까지 유지되며, 학교폭력 기록이 생기부에 남으면 대학 입시에 지장을 줄 수밖에 없게 되겠죠.',sysdate, 1, 1, 16, 29);
+insert into answer(answer_no, answer_content, answer_date, answer_accept, answer_status, member_no, inquiry_no)
+values(answer_no_SEQ.nextval, '04년생은 수능접수증이 필요없습니다.
+
+그냥 연기신청서에 대학진학사유로 작성하여 접수하면 됩니다.
+
+아래 내용을 읽어보시고, 바로 연기신청하세요.',sysdate, 2, 1, 16, 26);
+insert into answer(answer_no, answer_content, answer_date, answer_accept, answer_status, member_no, inquiry_no)
+values(answer_no_SEQ.nextval, '일본 국공사립대학 외국인 전형은 대학과 전공학부에 따라 EJU 시험 반영과목/ 영어성적 반영여부/
+
+본고사과목이 다를 수 있으므로 먼저 전공을 정하고 각 대학 입시요강을 확인해 입시에 꼭 필요한 과목만을
+
+준비하면 시간대비 효과적으로 시험 준비를 할 수 있습니다.(종로 와세다 진학상담 강추!!)
+
+종로 와세다는 일본대학입시전문학원으로.. 시험 준비부터 대학 선택 원서 접수및 입시 전반적인 부분을 지도 관리합니다.',sysdate, 1, 1, 14, 24);
+insert into answer(answer_no, answer_content, answer_date, answer_accept, answer_status, member_no, inquiry_no)
+values(answer_no_SEQ.nextval, '
+​
+저작권을 침해하면 저작권법에 따라 민사 및 형사적 책임을 질 수 있습니다.
+
+민사적 처벌의 경우, 저작권자가 실제 손해액과 함께 그 침해 행위로 인한 이익을 포함한 배상을 요구할 수 있습니다.
+
+형사적 처벌의 경우, 1년 이하의 징역형이나 최대 1천만원 이하의 벌금, 이외에도 침해 행위에 따라 더 높은 처벌을 받을 수도 있습니다.
+
+​
+
+음악을 합법적으로 사용하려면, 저작권자의 허락을 받거나, 저작권이 만료되었거나 없는 음악을 사용하는 등의 방법을 통해 저작권을 존중하는 방식으로 접근할 것을 권장 드립니다.',sysdate, 2, 1, 23, 32);
+insert into answer(answer_no, answer_content, answer_date, answer_accept, answer_status, member_no, inquiry_no)
+values(answer_no_SEQ.nextval, '서울예술대학교
+
+동아방송예술대학교
+
+백석예술대학교
+
+명지전문대학교
+
+여주대학교 등등 있고
+
+​
+
+실용음악으로 유명한 대학은 
+
+한양대 에리카
+
+호원대학교
+
+서울예술대학교',sysdate, 1, 1, 9, 33);
+insert into answer(answer_no, answer_content, answer_date, answer_accept, answer_status, member_no, inquiry_no)
+values(answer_no_SEQ.nextval, '1. 음악교육과는 생기부를 보지 않아요.
+
+2. 내신컷은 대학교마다 다르니 확인 필요해요.
+
+3. 실기 준비는 고1부터 시작하는 것이 좋아요.
+
+4. 임용고시는 준비하기에 따라 달라요.',sysdate, 1, 1, 9, 34);
+insert into answer(answer_no, answer_content, answer_date, answer_accept, answer_status, member_no, inquiry_no)
+values(answer_no_SEQ.nextval, '안녕하세요 질문자님 :) 저는 한국교원대학교 재학생입니다.
+
+​
+
+편입에 관한 정보는 *한국교원대학교 입학안내홈페이지-편입학* 에서 확인하실 수 있는데요, 아쉽게도 최근 3개년 동안 음악교육과는 편입학이 시행되지 않고 있습니다. ㅠㅠ
+
+​
+
+매년 12월에 편입학 TO 가 모집요강에 공지되니 올해도 잘 살펴보시길 추천드립니다. 답변이 도움이 되었을까요? 추가로 궁금하신 점은 댓글 주시면 친절히 답변드리겠습니다. ',sysdate, 1, 1, 9, 35);
+insert into answer(answer_no, answer_content, answer_date, answer_accept, answer_status, member_no, inquiry_no)
+values(answer_no_SEQ.nextval, '
+3% 가산점을 받으시려면 630점 이상을 취득하셔야 합니다. ',sysdate, 2, 1, 26, 36);
+insert into answer(answer_no, answer_content, answer_date, answer_accept, answer_status, member_no, inquiry_no)
+values(answer_no_SEQ.nextval, '대회.공모전 콘테스트코리아입니다.
+
+​
+
+통일과 관련된 글쓰기 대회는
+
+대회.공모전 - 문학.문예 부문(www.contestkorea.com) 에서
+
+통합검색 창 옆에 '통일'로 검색하면 도움이 됩니다.
+
+​
+
+2025 청소년 문학 및 백일장 모음(https://tinyurl.com/23alncnc)에서도
+
+참고해 보세요.',sysdate, 2, 1, 26, 37);
+insert into answer(answer_no, answer_content, answer_date, answer_accept, answer_status, member_no, inquiry_no)
+values(answer_no_SEQ.nextval, '한국실용글쓰기 cbt 시험 소방가산점에 대해 알려드리겠습니다. 한국실용글쓰기 cbt 시험은 정기시험이 아닌 상시시험으로 진행됩니다. 
+
+ 
+
+cbt시험은 일반적으로 자격증 가산점으로 인정되지 않습니다. 그러나 소방과 관련된 일부 직업에는 소방 자격증이 요구될 수 있으며, 이는 채용 과정에서 가산점으로 고려될 수 있습니다. 
+
+ 
+
+따라서 소방 관련 자격증을 보유하면 채용에 도움이 될 수 있을 수 있습니다. 그러나 cbt시험 자체는 자격증 가산점으로 효력이 있는 것은 아니니 참고하시기 바랍니다.',sysdate, 2, 1, 26, 38);
+insert into answer(answer_no, answer_content, answer_date, answer_accept, answer_status, member_no, inquiry_no)
+values(answer_no_SEQ.nextval, '1. 주제 선정과 목적 설정
+
+먼저, 어떤 주제에 대해 글을 쓰고 싶은지, 그리고 왜 그 글을 쓰는지 목적을 분명히 정해야 합니다. 목적이 분명할수록 글의 방향이 잡히고 독자에게 전달할 메시지를 명확히 할 수 있습니다.
+
+​
+
+​
+
+2. 구조 구상하기
+
+서론, 본론, 결론의 구조를 미리 계획해두는 것이 좋습니다. 서론에서는 주제와 문제를 제시하고, 본론에서 구체적인 내용을 다루며, 결론에서는 핵심 내용을 정리하거나 의견을 제시합니다. 이를 통해 논리적이고 체계적인 글을 쓸 수 있습니다.
+
+​',sysdate, 1, 1, 26, 39);
+insert into answer(answer_no, answer_content, answer_date, answer_accept, answer_status, member_no, inquiry_no)
+values(answer_no_SEQ.nextval, '대한민국 대표 공모전미디어 입니다.
+
+​
+
+연말이라 시기적으로 가장 공모전 행사가 적은 때입니다. 
+
+접수 2주전부터 공지되니 수시로 방문해보세요. 
+
+​
+
+씽굿에는 진행중인 다양한 대회정보,대외활동,공모전 정보를 확인할 수 있습니다.
+
+현재 진행중인 공모전은 모두 정리되어 확인이 가능합니다. 
+
+참여 가능한 대외활동, 공모전, 대회들은 언제나 진행중에 있습니다.
+
+​',sysdate, 1, 1, 10, 40);
+insert into answer(answer_no, answer_content, answer_date, answer_accept, answer_status, member_no, inquiry_no)
+values(answer_no_SEQ.nextval, '네 광주미술학원 중에 입시 전문으로 가르치는 학원으로는 창의미술원을 추천해드릴게요!',sysdate, 2, 1, 17, 41);
+insert into answer(answer_no, answer_content, answer_date, answer_accept, answer_status, member_no, inquiry_no)
+values(answer_no_SEQ.nextval, '광주미술학원 고민하고 계신가보네요.
+
+그렇다면 여러 미술학원 중 북구C.&.C미술학원 추천드려요
+
+​
+
+2024년 여러 실기대회에서 학생들이 수 많은 수상을 받을만큼 체계적으로 잘 알려주고 있습니다',sysdate, 1, 1, 10, 41);
+insert into answer(answer_no, answer_content, answer_date, answer_accept, answer_status, member_no, inquiry_no)
+values(answer_no_SEQ.nextval, '예고미술쌤은 회화전공해야해여 ㅋㅋ(디자인쌤 하실거면 디자인도ㄱㅊ)
+
+사범대 말고요 ㅇㅇ.. 
+
+​
+
+애니고 쌤할거면 애니해야갰지만
+
+ 일반 애니과없는 예고는 애니전공하면 선생님 못합니다.
+
+예고에서 소묘가르치는건 회화전공쌤들이하고요
+
+나머지 전공가르치는 쌤 하고싶으시면  님 전공대로 하는겁니다.
+
+(애니랑 회회파트(디자인도)는 천지차이)
+
+​
+
+일단 미술쌤 (예고기준)되시려면 대학 잘가야해요 (당연한소리지만) 그냥 인서울이아니라 진짜 상위권학교들
+
+(ex서울대, 홍대, 이대, 경희대)
+
+대학원나온분들도 많고요.
+
+​
+
+즉, 공부 잘해야합니다. (근데 이것도 사실 전형이나 전공마자 조금씩 다 다르긴하지만, 공부는 잘할수록좋음.)
+
+​',sysdate, 2, 1, 17, 42);
+insert into answer(answer_no, answer_content, answer_date, answer_accept, answer_status, member_no, inquiry_no)
+values(answer_no_SEQ.nextval, '백석예술대학교 디자인미술학부 전공선택에 대해 궁금하셨군요!
+
+​
+
+본교 디자인미술학부는 1개의 학부 내에 4개의 세부전공 분야로 특화되어 분야에 대해 다채롭게 배우고 선택할 수 있습니다. 1학년 1학기는 학부생으로 입학하여 여러 전공수업을 수강하여 자신에게 맞는 전공을 찾아가며,
+
+1학년 2학기부터 세부전공을 선택하여 전공과 관련하여 더욱 심화된 수업을 수강할 수 있습니다. 
+
+​',sysdate, 1, 1, 17, 43);
+insert into answer(answer_no, answer_content, answer_date, answer_accept, answer_status, member_no, inquiry_no)
+values(answer_no_SEQ.nextval, '수입하고자 하시는 "미술재료"가 구체적으로 무엇인지 알아야 답변이 가능합니다
+
+(물품에 따라 관세율 및 통관절차가 상이함)
+
+​
+
+사업자등록의 업태/종목과 수입가능 여부는 직접적인 관련이 없으며
+
+사업자가 사업을 목적으로 수입하는 모든 물품은 관세사를 통해 일반통관절차를 거쳐야 하며
+
+관세 및 부가가치세를 납부해야 합니다',sysdate, 1, 1, 26, 44);
+insert into answer(answer_no, answer_content, answer_date, answer_accept, answer_status, member_no, inquiry_no)
+values(answer_no_SEQ.nextval, '1. 주맨등록증 사진은 6개월이내 촬영된 것을 요구하고 있습니다.
+
+​
+
+2. 주민등록증 신규발급 및 재발급신청을 하면서 제출한 사진은 국가전산망에 등록되어 있습니다.
+
+​
+
+3. 기존 주민등록증의 발급일자가 6개월이내라면 기존 주민등록증에 사용한 사진을 사용할 수 있으나, 6개월이 지났다면 새로운 사진을 준비하는 것이 바람직합니다,
+
+​
+
+4. 질문의 a와 b사진 모두 국가전산망에 등록되어 있습니다. b사진이 6개월을 지났다고 하였으므로 그 보다 더 오래된 a사진을 제출하면 전산망에서 6개월이 지난 기존 사진임을 확인할 수 있고 그러면 접수가 거부될 것입니다,',sysdate, 2, 1, 27, 45);
+insert into answer(answer_no, answer_content, answer_date, answer_accept, answer_status, member_no, inquiry_no)
+values(answer_no_SEQ.nextval, '대회.공모전 콘테스트코리아입니다.
+
+​
+
+반려동물 사진 공모전은 마감된 공모전만 보입니다.
+
+1년에 15회 정도 열리는 것 같습니다.',sysdate, 2, 1, 34, 46);
+insert into answer(answer_no, answer_content, answer_date, answer_accept, answer_status, member_no, inquiry_no)
+values(answer_no_SEQ.nextval, '반려동물 사진 공모전을 진행하는 곳은 국내에서 쓰담쓰담 밖에 없습니다.
+
+​
+
+쓰담쓰담 커뮤니티에서 1등에 도전해보세요. 동물사진',sysdate, 1, 1, 27, 46);
+insert into answer(answer_no, answer_content, answer_date, answer_accept, answer_status, member_no, inquiry_no)
+values(answer_no_SEQ.nextval, '수능 원서 사진과 주민등록증 사진은 모두 여권용(3.5x4.5cm) 사이즈를 사용하기에 사용은 가능합니다.
+
+​
+
+다만 사진 촬영 시에 신분증 규정에 맞도록 촬영했으면 가능하나, 그냥 크기만 맞추고 기준을 지키지 않았으면 불가할 수 있으니 아래 이미지 참고해 보시고, 딱히 문제 없으면 재발급 신청하면 됩니다(수수료 5,000원).',sysdate, 2, 1, 27, 47);
+insert into answer(answer_no, answer_content, answer_date, answer_accept, answer_status, member_no, inquiry_no)
+values(answer_no_SEQ.nextval, '다양한 장르의 대학로 연극 정보를 찾고 계신다면
+
+관련 앱에서도 손쉽게 대학로 연극 예매 할인 정보들을 참고해볼 수 있습니다
+
+이런 방법으로 활용하여 알아보시는걸 권유드려요
+
+대학로 연극 예매 할인 받는 방법도 자세하게 나와 있어
+
+어렵지 않게 대학로 연극 예매 할인 받고 이용해보실 수 있을 거예요
+
+​',sysdate, 2, 1, 24, 48);
+insert into answer(answer_no, answer_content, answer_date, answer_accept, answer_status, member_no, inquiry_no)
+values(answer_no_SEQ.nextval, '성인이 봐도 괜찮은 연극이면 부모님이랑 같이 봐도 괜찮습니다.',sysdate, 1, 1, 24, 49);
+insert into answer(answer_no, answer_content, answer_date, answer_accept, answer_status, member_no, inquiry_no)
+values(answer_no_SEQ.nextval, '스타트업을 창업할 때 중요한 것은 초기 단계에서 사업 구조나 계약서 작성, 인사, 지식재산권 문제 등 다양한 법적 이슈를 예방하는 것이겠지요.
+
+​
+
+특히나 인공지능과 관련된 사업은 지식재산권 및 기술적인 특성상 법적 규제가 많고, 계약서나 협약서에서 발생할 수 있는 분쟁을 예방하기 위해 신경을 써야 합니다.
+
+​
+
+자금이나 인력 등의 제약이 있기 때문에 법률 비용을 아끼고자 할 수 있지만, 법적 문제로 인한 비용 부담은 오히려 더 커질 수 있습니다.',sysdate, 2, 1, 15, 50);
+insert into answer(answer_no, answer_content, answer_date, answer_accept, answer_status, member_no, inquiry_no)
+values(answer_no_SEQ.nextval, '한국의 스타트업이 높은 성장률을 보이지 못하는 통계가 있어서, 최근에는 많은 사람들이 스타트업 특허에 관심을 갖고 있습니다. 스타트업 특허를 취득하면 아이디어에 대한 지식재산권을 확보하여 사업을 더욱 안정적으로 성장시킬 수 있습니다.
+
+​
+
+우선 출원 가능성을 검토한 후 등록 절차를 밟아야 스타트업 특허를 안전하게 한 번에 등록할 수 있다고 생각합니다. 출원 가능성 판단이나 서류 작성은 전문적인 지식이 필요하기 때문에 전문가의 도움을 받는 것이 좋습니다.',sysdate, 2, 1, 15, 51);
+insert into answer(answer_no, answer_content, answer_date, answer_accept, answer_status, member_no, inquiry_no)
+values(answer_no_SEQ.nextval, '네이버 블로그 마케팅은 크게 3가지가 있습니다. 첫째, 블로그체험단 입니다 가장 보편적이고 중요한 마케팅으로서 개인의 리뷰이므로 정보성이고 그래서 신뢰도가 높고 자연스럽다는 장점이 있습니다 단점은 무료로 체험서비스를 제공해야 합니다 다만, 광고비가 저렴해서 이것은 상쇄 할 수 있는 단점입니다.',sysdate, 2, 1, 28, 52);
+insert into answer(answer_no, answer_content, answer_date, answer_accept, answer_status, member_no, inquiry_no)
+values(answer_no_SEQ.nextval, '바이럴마케팅을 독학하실거면 커뮤니티부터 참고하시면
+
+​
+
+공부하는데 도움이 될거예요
+
+​
+
+보통 온라인마케팅에서 활발한 커뮤니티는 아이보스,
+
+​
+
+셀클럽 등이 있습니다
+
+​
+
+한반 가셔 보시면 도움될 내용 많으니 참고하시면 좋을듯해요
+
+​',sysdate, 1, 1, 36, 52);
+insert into answer(answer_no, answer_content, answer_date, answer_accept, answer_status, member_no, inquiry_no)
+values(answer_no_SEQ.nextval, '대중에세 홍보하는 모든 방법의 일을 말합니다',sysdate, 1, 1, 28, 53);
+insert into answer(answer_no, answer_content, answer_date, answer_accept, answer_status, member_no, inquiry_no)
+values(answer_no_SEQ.nextval, '마케팅은 제품이나 서비스의 홍보 및 판매 증진을 위해 광고 마케팅 전략 시장 조사 등을 수행하는 직업입니다',sysdate, 2, 1, 36, 53);
+insert into answer(answer_no, answer_content, answer_date, answer_accept, answer_status, member_no, inquiry_no)
+values(answer_no_SEQ.nextval, '특허법률사무소 알아보고 계신다면 첫 번째로 고려해야할 사항은 관련 사례가 많은지 입니다. 특허 출원을 원하신다면 각종 서류 작성 및 확실한 법률자문을 제공할 수 있어야 하기에, 지식재산권 전문변호사를 상세히 찾아보고 상담을 받아보는 것이 좋습니다.',sysdate, 2, 1, 21, 54);
+insert into answer(answer_no, answer_content, answer_date, answer_accept, answer_status, member_no, inquiry_no)
+values(answer_no_SEQ.nextval, '특허법률사무소를 선택할 때 고려해야 할 사항은 다음과 같습니다.
+
+​
+
+1.전문성: 특허 출원은 전문적인 지식과 경험이 필요한 분야입니다. 해당 사무소의 전문성을 확인하기 위해서는 변리사의 경력과 실적을 확인하는 것이 좋습니다.
+
+​
+
+2.비용: 수임 비용이 합리적인지, 추가 비용이 발생하는지 등을 확인해야 합니다.
+
+​',sysdate, 1, 1, 18, 54);
+insert into answer(answer_no, answer_content, answer_date, answer_accept, answer_status, member_no, inquiry_no)
+values(answer_no_SEQ.nextval, '아파서 병원갈때..병의 종류에 따라..병원 종류가 정해지듯...특허로 바슷할듯 합니다..
+
+예를 들어 이 아플때 치과...눈아플땐 안과 가듯..
+
+기계분야 특허는 그 분야를 잘 이해할수 있고..경력도 풍부한 변리사를 찾아가는 것이 좋습니다.',sysdate, 1, 1, 20, 54);
+insert into answer(answer_no, answer_content, answer_date, answer_accept, answer_status, member_no, inquiry_no)
+values(answer_no_SEQ.nextval, '
+
+비용은 출원하시려는 국가에 따라 다르기 때문에
+
+상담을 통해 자세히 안내받아보실 수 있습니다.
+
+출원 방법에는 PCT출원과 개별국 출원이 있습니다.
+
+PCT출원은 여러 국가에 출원하기에 용이하기 때문에
+
+상황에 맞게 진행하시고 상담을 받아보시기 바랍니다.',sysdate, 1, 1, 19, 55);
+insert into answer(answer_no, answer_content, answer_date, answer_accept, answer_status, member_no, inquiry_no)
+values(answer_no_SEQ.nextval, '아무래도 날씨가 추워지는만큼 가볍게 움직여 몸을 내고 운동을 시작하시는게 부상방지에 도움이될듯 합니다. 난생처음 운동하셨다면 지금 느끼시는 근육통(알배김)현상이 맞습니다.
+
+닌텐도에서 제안하는 수준의 운동이라면 지금 강도로 꾸준하게 하셔도 문제 없을듯 싶습니다. 
+
+알배김은 운동하면서 근육을 연결하는 섬유가 찢어지면서 생기는 통증으로 3~4일정도 휴식과 적절한 음식섭취를 겸해주시면 금방회복됩니다.',sysdate, 2, 1, 29, 56);
+insert into answer(answer_no, answer_content, answer_date, answer_accept, answer_status, member_no, inquiry_no)
+values(answer_no_SEQ.nextval, '저 같은 경우 광고할 때
+
+정말 전화도 엄청오고
+
+이것저것 다 해봤는데요
+
+​
+
+가장 괜찮았고 SNS랑 지식인으로
+
+노출이 이렇게 많이 될 줄은 몰랐네요',sysdate, 2, 1, 29, 57);
+insert into answer(answer_no, answer_content, answer_date, answer_accept, answer_status, member_no, inquiry_no)
+values(answer_no_SEQ.nextval, '요가와 필라테스는 모두 신체와 마음의 균형을 맞추는 운동이지만, 그 목적과 방법에서 차이가 있습니다. 아래에 각각의 차이점과 장단점을 정리해드리겠습니다.',sysdate, 2, 1, 37, 58);
+insert into answer(answer_no, answer_content, answer_date, answer_accept, answer_status, member_no, inquiry_no)
+values(answer_no_SEQ.nextval, '같이 해보세요
+
+통증이 심하면 도수치료만 해보세요',sysdate, 2, 1, 37, 59);
+insert into answer(answer_no, answer_content, answer_date, answer_accept, answer_status, member_no, inquiry_no)
+values(answer_no_SEQ.nextval, '콜레스테롤 수치를 낮추기 위해서는
+
+다음과 같은 음식을 포함한 식단을 고려하는 것이 좋습니다.
+
+
+
+식이섬유가 풍부한 음식: 귀리, 보리, 콩류, 과일,
+
+채소는 식이섬유가 많아 콜레스테롤 수치를 낮추는 데 도움을 줍니다.
+
+
+
+건강한 지방: 올리브유, 아보카도, 견과류와 같은
+
+불포화 지방은 나쁜 콜레스테롤(LDL)을 줄이는 데 도움이 됩니다.
+
+',sysdate, 2, 1, 25, 60);
+insert into answer(answer_no, answer_content, answer_date, answer_accept, answer_status, member_no, inquiry_no)
+values(answer_no_SEQ.nextval, '당뇨 식단을 구성할 때 중요한 것은 제시간에 한식 위주
+
+건강한 식단을 삼시세끼 잘 챙겨 먹는 것입니다.',sysdate, 2, 1, 25, 61);
 
 
 /* 채팅방 요정 등록 */
@@ -1573,15 +2443,305 @@ values (review_no_SEQ.nextval, '아쉬운 부분도 있었어요', 1, '멘토님
 
 /* 추천 등록 */
 insert into vote(vote_no, vote_type, vote_date, answer_no, member_no)
-values(vote_no_SEQ.nextval, 1, sysdate,1,1);
+values(vote_no_SEQ.nextval, 1, sysdate,1,21);
 insert into vote(vote_no, vote_type, vote_date, answer_no, member_no)
-values(vote_no_SEQ.nextval, 1, sysdate,1,2);
+values(vote_no_SEQ.nextval, 1, sysdate,1,22);
 insert into vote(vote_no, vote_type, vote_date, answer_no, member_no)
-values(vote_no_SEQ.nextval, 1, sysdate,1,3);
+values(vote_no_SEQ.nextval, 1, sysdate,1,23);
 insert into vote(vote_no, vote_type, vote_date, answer_no, member_no)
-values(vote_no_SEQ.nextval, 1, sysdate,1,4);
+values(vote_no_SEQ.nextval, 1, sysdate,1,24);
 insert into vote(vote_no, vote_type, vote_date, answer_no, member_no)
-values(vote_no_SEQ.nextval, 2, sysdate,1,5);
+values(vote_no_SEQ.nextval, 1, sysdate,1,25);
+insert into vote(vote_no, vote_type, vote_date, answer_no, member_no)
+values(vote_no_SEQ.nextval, 1, sysdate,1,26);
+insert into vote(vote_no, vote_type, vote_date, answer_no, member_no)
+values(vote_no_SEQ.nextval, 1, sysdate,1,27);
+insert into vote(vote_no, vote_type, vote_date, answer_no, member_no)
+values(vote_no_SEQ.nextval, 1, sysdate,1,28);
+insert into vote(vote_no, vote_type, vote_date, answer_no, member_no)
+values(vote_no_SEQ.nextval, 1, sysdate,1,29);
+insert into vote(vote_no, vote_type, vote_date, answer_no, member_no)
+values(vote_no_SEQ.nextval, 1, sysdate,1,30);
+insert into vote(vote_no, vote_type, vote_date, answer_no, member_no)
+values(vote_no_SEQ.nextval, 1, sysdate,2,21);
+insert into vote(vote_no, vote_type, vote_date, answer_no, member_no)
+values(vote_no_SEQ.nextval, 1, sysdate,2,22);
+insert into vote(vote_no, vote_type, vote_date, answer_no, member_no)
+values(vote_no_SEQ.nextval, 1, sysdate,2,23);
+insert into vote(vote_no, vote_type, vote_date, answer_no, member_no)
+values(vote_no_SEQ.nextval, 1, sysdate,2,24);
+insert into vote(vote_no, vote_type, vote_date, answer_no, member_no)
+values(vote_no_SEQ.nextval, 1, sysdate,2,25);
+insert into vote(vote_no, vote_type, vote_date, answer_no, member_no)
+values(vote_no_SEQ.nextval, 1, sysdate,2,26);
+insert into vote(vote_no, vote_type, vote_date, answer_no, member_no)
+values(vote_no_SEQ.nextval, 1, sysdate,2,27);
+insert into vote(vote_no, vote_type, vote_date, answer_no, member_no)
+values(vote_no_SEQ.nextval, 1, sysdate,3,28);
+insert into vote(vote_no, vote_type, vote_date, answer_no, member_no)
+values(vote_no_SEQ.nextval, 1, sysdate,3,29);
+insert into vote(vote_no, vote_type, vote_date, answer_no, member_no)
+values(vote_no_SEQ.nextval, 1, sysdate,3,30);
+insert into vote(vote_no, vote_type, vote_date, answer_no, member_no)
+values(vote_no_SEQ.nextval, 1, sysdate,3,21);
+insert into vote(vote_no, vote_type, vote_date, answer_no, member_no)
+values(vote_no_SEQ.nextval, 1, sysdate,4,22);
+insert into vote(vote_no, vote_type, vote_date, answer_no, member_no)
+values(vote_no_SEQ.nextval, 1, sysdate,4,23);
+insert into vote(vote_no, vote_type, vote_date, answer_no, member_no)
+values(vote_no_SEQ.nextval, 1, sysdate,4,24);
+insert into vote(vote_no, vote_type, vote_date, answer_no, member_no)
+values(vote_no_SEQ.nextval, 1, sysdate,5,25);
+insert into vote(vote_no, vote_type, vote_date, answer_no, member_no)
+values(vote_no_SEQ.nextval, 1, sysdate,5,26);
+insert into vote(vote_no, vote_type, vote_date, answer_no, member_no)
+values(vote_no_SEQ.nextval, 1, sysdate,5,27);
+insert into vote(vote_no, vote_type, vote_date, answer_no, member_no)
+values(vote_no_SEQ.nextval, 1, sysdate,5,28);
+insert into vote(vote_no, vote_type, vote_date, answer_no, member_no)
+values(vote_no_SEQ.nextval, 1, sysdate,5,29);
+insert into vote(vote_no, vote_type, vote_date, answer_no, member_no)
+values(vote_no_SEQ.nextval, 1, sysdate,5,30);
+insert into vote(vote_no, vote_type, vote_date, answer_no, member_no)
+values(vote_no_SEQ.nextval, 1, sysdate,5,21);
+insert into vote(vote_no, vote_type, vote_date, answer_no, member_no)
+values(vote_no_SEQ.nextval, 1, sysdate,6,22);
+insert into vote(vote_no, vote_type, vote_date, answer_no, member_no)
+values(vote_no_SEQ.nextval, 1, sysdate,6,23);
+insert into vote(vote_no, vote_type, vote_date, answer_no, member_no)
+values(vote_no_SEQ.nextval, 1, sysdate,7,24);
+insert into vote(vote_no, vote_type, vote_date, answer_no, member_no)
+values(vote_no_SEQ.nextval, 1, sysdate,7,25);
+insert into vote(vote_no, vote_type, vote_date, answer_no, member_no)
+values(vote_no_SEQ.nextval, 1, sysdate,7,26);
+insert into vote(vote_no, vote_type, vote_date, answer_no, member_no)
+values(vote_no_SEQ.nextval, 1, sysdate,8,27);
+insert into vote(vote_no, vote_type, vote_date, answer_no, member_no)
+values(vote_no_SEQ.nextval, 1, sysdate,8,28);
+insert into vote(vote_no, vote_type, vote_date, answer_no, member_no)
+values(vote_no_SEQ.nextval, 1, sysdate,9,29);
+insert into vote(vote_no, vote_type, vote_date, answer_no, member_no)
+values(vote_no_SEQ.nextval, 1, sysdate,9,30);
+insert into vote(vote_no, vote_type, vote_date, answer_no, member_no)
+values(vote_no_SEQ.nextval, 1, sysdate,10,21);
+insert into vote(vote_no, vote_type, vote_date, answer_no, member_no)
+values(vote_no_SEQ.nextval, 1, sysdate,10,22);
+insert into vote(vote_no, vote_type, vote_date, answer_no, member_no)
+values(vote_no_SEQ.nextval, 1, sysdate,11,23);
+insert into vote(vote_no, vote_type, vote_date, answer_no, member_no)
+values(vote_no_SEQ.nextval, 1, sysdate,13,24);
+insert into vote(vote_no, vote_type, vote_date, answer_no, member_no)
+values(vote_no_SEQ.nextval, 1, sysdate,14,25);
+insert into vote(vote_no, vote_type, vote_date, answer_no, member_no)
+values(vote_no_SEQ.nextval, 1, sysdate,15,26);
+insert into vote(vote_no, vote_type, vote_date, answer_no, member_no)
+values(vote_no_SEQ.nextval, 1, sysdate,16,27);
+insert into vote(vote_no, vote_type, vote_date, answer_no, member_no)
+values(vote_no_SEQ.nextval, 1, sysdate,17,28);
+insert into vote(vote_no, vote_type, vote_date, answer_no, member_no)
+values(vote_no_SEQ.nextval, 1, sysdate,18,29);
+insert into vote(vote_no, vote_type, vote_date, answer_no, member_no)
+values(vote_no_SEQ.nextval, 1, sysdate,18,30);
+insert into vote(vote_no, vote_type, vote_date, answer_no, member_no)
+values(vote_no_SEQ.nextval, 1, sysdate,20,21);
+insert into vote(vote_no, vote_type, vote_date, answer_no, member_no)
+values(vote_no_SEQ.nextval, 1, sysdate,20,22);
+insert into vote(vote_no, vote_type, vote_date, answer_no, member_no)
+values(vote_no_SEQ.nextval, 1, sysdate,20,23);
+insert into vote(vote_no, vote_type, vote_date, answer_no, member_no)
+values(vote_no_SEQ.nextval, 1, sysdate,20,24);
+insert into vote(vote_no, vote_type, vote_date, answer_no, member_no)
+values(vote_no_SEQ.nextval, 1, sysdate,20,25);
+insert into vote(vote_no, vote_type, vote_date, answer_no, member_no)
+values(vote_no_SEQ.nextval, 1, sysdate,20,26);
+insert into vote(vote_no, vote_type, vote_date, answer_no, member_no)
+values(vote_no_SEQ.nextval, 1, sysdate,21,27);
+insert into vote(vote_no, vote_type, vote_date, answer_no, member_no)
+values(vote_no_SEQ.nextval, 1, sysdate,21,28);
+insert into vote(vote_no, vote_type, vote_date, answer_no, member_no)
+values(vote_no_SEQ.nextval, 1, sysdate,21,29);
+insert into vote(vote_no, vote_type, vote_date, answer_no, member_no)
+values(vote_no_SEQ.nextval, 1, sysdate,21,30);
+insert into vote(vote_no, vote_type, vote_date, answer_no, member_no)
+values(vote_no_SEQ.nextval, 1, sysdate,21,21);
+insert into vote(vote_no, vote_type, vote_date, answer_no, member_no)
+values(vote_no_SEQ.nextval, 1, sysdate,21,22);
+insert into vote(vote_no, vote_type, vote_date, answer_no, member_no)
+values(vote_no_SEQ.nextval, 1, sysdate,22,23);
+insert into vote(vote_no, vote_type, vote_date, answer_no, member_no)
+values(vote_no_SEQ.nextval, 1, sysdate,23,24);
+insert into vote(vote_no, vote_type, vote_date, answer_no, member_no)
+values(vote_no_SEQ.nextval, 1, sysdate,24,25);
+insert into vote(vote_no, vote_type, vote_date, answer_no, member_no)
+values(vote_no_SEQ.nextval, 1, sysdate,26,26);
+insert into vote(vote_no, vote_type, vote_date, answer_no, member_no)
+values(vote_no_SEQ.nextval, 1, sysdate,27,27);
+insert into vote(vote_no, vote_type, vote_date, answer_no, member_no)
+values(vote_no_SEQ.nextval, 1, sysdate,27,28);
+insert into vote(vote_no, vote_type, vote_date, answer_no, member_no)
+values(vote_no_SEQ.nextval, 1, sysdate,27,29);
+insert into vote(vote_no, vote_type, vote_date, answer_no, member_no)
+values(vote_no_SEQ.nextval, 1, sysdate,28,30);
+insert into vote(vote_no, vote_type, vote_date, answer_no, member_no)
+values(vote_no_SEQ.nextval, 1, sysdate,28,21);
+insert into vote(vote_no, vote_type, vote_date, answer_no, member_no)
+values(vote_no_SEQ.nextval, 1, sysdate,29,22);
+insert into vote(vote_no, vote_type, vote_date, answer_no, member_no)
+values(vote_no_SEQ.nextval, 1, sysdate,29,23);
+insert into vote(vote_no, vote_type, vote_date, answer_no, member_no)
+values(vote_no_SEQ.nextval, 1, sysdate,30,24);
+insert into vote(vote_no, vote_type, vote_date, answer_no, member_no)
+values(vote_no_SEQ.nextval, 1, sysdate,30,25);
+insert into vote(vote_no, vote_type, vote_date, answer_no, member_no)
+values(vote_no_SEQ.nextval, 1, sysdate,30,26);
+insert into vote(vote_no, vote_type, vote_date, answer_no, member_no)
+values(vote_no_SEQ.nextval, 1, sysdate,31,27);
+insert into vote(vote_no, vote_type, vote_date, answer_no, member_no)
+values(vote_no_SEQ.nextval, 1, sysdate,31,28);
+insert into vote(vote_no, vote_type, vote_date, answer_no, member_no)
+values(vote_no_SEQ.nextval, 1, sysdate,31,29);
+insert into vote(vote_no, vote_type, vote_date, answer_no, member_no)
+values(vote_no_SEQ.nextval, 1, sysdate,33,30);
+insert into vote(vote_no, vote_type, vote_date, answer_no, member_no)
+values(vote_no_SEQ.nextval, 1, sysdate,34,21);
+insert into vote(vote_no, vote_type, vote_date, answer_no, member_no)
+values(vote_no_SEQ.nextval, 1, sysdate,35,22);
+insert into vote(vote_no, vote_type, vote_date, answer_no, member_no)
+values(vote_no_SEQ.nextval, 1, sysdate,36,23);
+insert into vote(vote_no, vote_type, vote_date, answer_no, member_no)
+values(vote_no_SEQ.nextval, 1, sysdate,37,24);
+insert into vote(vote_no, vote_type, vote_date, answer_no, member_no)
+values(vote_no_SEQ.nextval, 1, sysdate,38,25);
+insert into vote(vote_no, vote_type, vote_date, answer_no, member_no)
+values(vote_no_SEQ.nextval, 1, sysdate,39,26);
+insert into vote(vote_no, vote_type, vote_date, answer_no, member_no)
+values(vote_no_SEQ.nextval, 1, sysdate,40,27);
+insert into vote(vote_no, vote_type, vote_date, answer_no, member_no)
+values(vote_no_SEQ.nextval, 1, sysdate,41,28);
+insert into vote(vote_no, vote_type, vote_date, answer_no, member_no)
+values(vote_no_SEQ.nextval, 1, sysdate,41,29);
+insert into vote(vote_no, vote_type, vote_date, answer_no, member_no)
+values(vote_no_SEQ.nextval, 1, sysdate,41,30);
+insert into vote(vote_no, vote_type, vote_date, answer_no, member_no)
+values(vote_no_SEQ.nextval, 1, sysdate,42,21);
+insert into vote(vote_no, vote_type, vote_date, answer_no, member_no)
+values(vote_no_SEQ.nextval, 1, sysdate,42,22);
+insert into vote(vote_no, vote_type, vote_date, answer_no, member_no)
+values(vote_no_SEQ.nextval, 1, sysdate,43,23);
+insert into vote(vote_no, vote_type, vote_date, answer_no, member_no)
+values(vote_no_SEQ.nextval, 1, sysdate,43,24);
+insert into vote(vote_no, vote_type, vote_date, answer_no, member_no)
+values(vote_no_SEQ.nextval, 1, sysdate,44,25);
+insert into vote(vote_no, vote_type, vote_date, answer_no, member_no)
+values(vote_no_SEQ.nextval, 1, sysdate,44,26);
+insert into vote(vote_no, vote_type, vote_date, answer_no, member_no)
+values(vote_no_SEQ.nextval, 1, sysdate,44,27);
+insert into vote(vote_no, vote_type, vote_date, answer_no, member_no)
+values(vote_no_SEQ.nextval, 1, sysdate,45,28);
+insert into vote(vote_no, vote_type, vote_date, answer_no, member_no)
+values(vote_no_SEQ.nextval, 1, sysdate,45,29);
+insert into vote(vote_no, vote_type, vote_date, answer_no, member_no)
+values(vote_no_SEQ.nextval, 1, sysdate,46,30);
+insert into vote(vote_no, vote_type, vote_date, answer_no, member_no)
+values(vote_no_SEQ.nextval, 1, sysdate,46,21);
+insert into vote(vote_no, vote_type, vote_date, answer_no, member_no)
+values(vote_no_SEQ.nextval, 1, sysdate,46,22);
+insert into vote(vote_no, vote_type, vote_date, answer_no, member_no)
+values(vote_no_SEQ.nextval, 1, sysdate,47,23);
+insert into vote(vote_no, vote_type, vote_date, answer_no, member_no)
+values(vote_no_SEQ.nextval, 1, sysdate,47,24);
+insert into vote(vote_no, vote_type, vote_date, answer_no, member_no)
+values(vote_no_SEQ.nextval, 1, sysdate,48,25);
+insert into vote(vote_no, vote_type, vote_date, answer_no, member_no)
+values(vote_no_SEQ.nextval, 1, sysdate,48,26);
+insert into vote(vote_no, vote_type, vote_date, answer_no, member_no)
+values(vote_no_SEQ.nextval, 1, sysdate,49,27);
+insert into vote(vote_no, vote_type, vote_date, answer_no, member_no)
+values(vote_no_SEQ.nextval, 1, sysdate,50,28);
+insert into vote(vote_no, vote_type, vote_date, answer_no, member_no)
+values(vote_no_SEQ.nextval, 1, sysdate,51,29);
+insert into vote(vote_no, vote_type, vote_date, answer_no, member_no)
+values(vote_no_SEQ.nextval, 1, sysdate,52,30);
+insert into vote(vote_no, vote_type, vote_date, answer_no, member_no)
+values(vote_no_SEQ.nextval, 1, sysdate,53,21);
+insert into vote(vote_no, vote_type, vote_date, answer_no, member_no)
+values(vote_no_SEQ.nextval, 1, sysdate,54,22);
+insert into vote(vote_no, vote_type, vote_date, answer_no, member_no)
+values(vote_no_SEQ.nextval, 1, sysdate,54,23);
+insert into vote(vote_no, vote_type, vote_date, answer_no, member_no)
+values(vote_no_SEQ.nextval, 1, sysdate,55,24);
+insert into vote(vote_no, vote_type, vote_date, answer_no, member_no)
+values(vote_no_SEQ.nextval, 1, sysdate,55,25);
+insert into vote(vote_no, vote_type, vote_date, answer_no, member_no)
+values(vote_no_SEQ.nextval, 1, sysdate,55,26);
+insert into vote(vote_no, vote_type, vote_date, answer_no, member_no)
+values(vote_no_SEQ.nextval, 1, sysdate,56,27);
+insert into vote(vote_no, vote_type, vote_date, answer_no, member_no)
+values(vote_no_SEQ.nextval, 1, sysdate,56,28);
+insert into vote(vote_no, vote_type, vote_date, answer_no, member_no)
+values(vote_no_SEQ.nextval, 1, sysdate,57,29);
+insert into vote(vote_no, vote_type, vote_date, answer_no, member_no)
+values(vote_no_SEQ.nextval, 1, sysdate,57,30);
+insert into vote(vote_no, vote_type, vote_date, answer_no, member_no)
+values(vote_no_SEQ.nextval, 1, sysdate,57,21);
+insert into vote(vote_no, vote_type, vote_date, answer_no, member_no)
+values(vote_no_SEQ.nextval, 1, sysdate,57,22);
+insert into vote(vote_no, vote_type, vote_date, answer_no, member_no)
+values(vote_no_SEQ.nextval, 1, sysdate,58,23);
+insert into vote(vote_no, vote_type, vote_date, answer_no, member_no)
+values(vote_no_SEQ.nextval, 1, sysdate,59,24);
+insert into vote(vote_no, vote_type, vote_date, answer_no, member_no)
+values(vote_no_SEQ.nextval, 1, sysdate,60,25);
+insert into vote(vote_no, vote_type, vote_date, answer_no, member_no)
+values(vote_no_SEQ.nextval, 1, sysdate,61,26);
+insert into vote(vote_no, vote_type, vote_date, answer_no, member_no)
+values(vote_no_SEQ.nextval, 1, sysdate,61,27);
+insert into vote(vote_no, vote_type, vote_date, answer_no, member_no)
+values(vote_no_SEQ.nextval, 1, sysdate,61,28);
+insert into vote(vote_no, vote_type, vote_date, answer_no, member_no)
+values(vote_no_SEQ.nextval, 1, sysdate,62,29);
+insert into vote(vote_no, vote_type, vote_date, answer_no, member_no)
+values(vote_no_SEQ.nextval, 1, sysdate,62,30);
+insert into vote(vote_no, vote_type, vote_date, answer_no, member_no)
+values(vote_no_SEQ.nextval, 1, sysdate,63,21);
+insert into vote(vote_no, vote_type, vote_date, answer_no, member_no)
+values(vote_no_SEQ.nextval, 1, sysdate,63,22);
+insert into vote(vote_no, vote_type, vote_date, answer_no, member_no)
+values(vote_no_SEQ.nextval, 1, sysdate,63,23);
+insert into vote(vote_no, vote_type, vote_date, answer_no, member_no)
+values(vote_no_SEQ.nextval, 1, sysdate,63,24);
+insert into vote(vote_no, vote_type, vote_date, answer_no, member_no)
+values(vote_no_SEQ.nextval, 1, sysdate,64,25);
+insert into vote(vote_no, vote_type, vote_date, answer_no, member_no)
+values(vote_no_SEQ.nextval, 1, sysdate,64,26);
+insert into vote(vote_no, vote_type, vote_date, answer_no, member_no)
+values(vote_no_SEQ.nextval, 1, sysdate,64,27);
+insert into vote(vote_no, vote_type, vote_date, answer_no, member_no)
+values(vote_no_SEQ.nextval, 1, sysdate,64,28);
+insert into vote(vote_no, vote_type, vote_date, answer_no, member_no)
+values(vote_no_SEQ.nextval, 1, sysdate,65,29);
+insert into vote(vote_no, vote_type, vote_date, answer_no, member_no)
+values(vote_no_SEQ.nextval, 1, sysdate,65,30);
+insert into vote(vote_no, vote_type, vote_date, answer_no, member_no)
+values(vote_no_SEQ.nextval, 1, sysdate,66,21);
+insert into vote(vote_no, vote_type, vote_date, answer_no, member_no)
+values(vote_no_SEQ.nextval, 1, sysdate,67,22);
+insert into vote(vote_no, vote_type, vote_date, answer_no, member_no)
+values(vote_no_SEQ.nextval, 1, sysdate,68,23);
+insert into vote(vote_no, vote_type, vote_date, answer_no, member_no)
+values(vote_no_SEQ.nextval, 1, sysdate,69,24);
+insert into vote(vote_no, vote_type, vote_date, answer_no, member_no)
+values(vote_no_SEQ.nextval, 1, sysdate,69,25);
+insert into vote(vote_no, vote_type, vote_date, answer_no, member_no)
+values(vote_no_SEQ.nextval, 1, sysdate,69,26);
+insert into vote(vote_no, vote_type, vote_date, answer_no, member_no)
+values(vote_no_SEQ.nextval, 1, sysdate,69,27);
+insert into vote(vote_no, vote_type, vote_date, answer_no, member_no)
+values(vote_no_SEQ.nextval, 1, sysdate,69,28);
+insert into vote(vote_no, vote_type, vote_date, answer_no, member_no)
+values(vote_no_SEQ.nextval, 1, sysdate,69,29);
+insert into vote(vote_no, vote_type, vote_date, answer_no, member_no)
+values(vote_no_SEQ.nextval, 1, sysdate,70,30);
 
 
 /*알림 등록*/
