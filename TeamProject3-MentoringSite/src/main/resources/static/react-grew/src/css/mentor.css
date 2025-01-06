@@ -51,6 +51,12 @@
   outline: none;
 }
 
+.mentor-edit-headline{
+  height: 40px;
+}
+.mentor-edit-introduce{
+  height: 350px;
+}
 .mentor-edit-career-container {
   display: flex;
   justify-content: space-between;
@@ -70,7 +76,6 @@
 /* 텍스트 영역 스타일 */
 .mentor-edit-textarea {
   resize: none;
-  height: 100px;
 }
 
 /* 선택 박스 스타일 */
