@@ -8,6 +8,9 @@ import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 
 import com.itwill.jpa.dto.member_information.MemberDto;
 import com.itwill.jpa.entity.member_information.Member;
@@ -56,8 +59,9 @@ class MemberRepositoryTest {
 	}
 	
 //	@Test
-//	void testfindByMemberRoleOrderByMemberJoinDateAsc() {
-//		List<Member> memberList = memberRepository.findByMemberRoleOrderByMemberJoinDateAsc(Role.ROLE_MENTEE);
+//	void findByMentorProfile_MentorStatusOrderByMemberNoDesc() {
+//		Pageable pageable = PageRequest.of(0, 10);
+//		Page<Member> memberList = memberRepository.findByMentorProfile_MentorStatusOrderByMemberNoDesc(3,pageable);
 //		List<MemberDto> memberDtoList = new ArrayList<>();
 //		
 //		for (Member member : memberList) {
