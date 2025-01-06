@@ -1238,37 +1238,37 @@ values(chat_room_no_SEQ.nextval, 7500, sysdate, null, 2, 13);
 insert into chat_room_status (chat_room_no, chat_room_name, chat_room_status, member_no, chat_room_status_no) 
 values (1, '김진영님과 이도현님의 채팅방', 7600, 1, chat_room_status_no_SEQ.nextval);
 insert into chat_room_status (chat_room_no, chat_room_name, chat_room_status, member_no, chat_room_status_no) 
-values (1, '김진영님과 이도현님의 채팅방', 7600, 6, chat_room_status_no_SEQ.nextval);
+values (1, '김진영님과 이도현님의 채팅방', 7600, 2, chat_room_status_no_SEQ.nextval);
 insert into chat_room_status (chat_room_no, chat_room_name, chat_room_status, member_no, chat_room_status_no) 
 values (2, '이도현님에게 채팅방을 신청했습니다.', 7500, 4, chat_room_status_no_SEQ.nextval);
 insert into chat_room_status (chat_room_no, chat_room_name, chat_room_status, member_no, chat_room_status_no) 
-values (2, '문준형님에게서 채팅방 신청이 도착했습니다.', 7500, 6, chat_room_status_no_SEQ.nextval);
+values (2, '문준형님에게서 채팅방 신청이 도착했습니다.', 7500, 2, chat_room_status_no_SEQ.nextval);
 insert into chat_room_status (chat_room_no, chat_room_name, chat_room_status, member_no, chat_room_status_no) 
 values (3, '박은미님과 이도현님의 채팅방', 7600, 5, chat_room_status_no_SEQ.nextval);
 insert into chat_room_status (chat_room_no, chat_room_name, chat_room_status, member_no, chat_room_status_no) 
-values (3, '박은미님과 이도현님의 채팅방', 7600, 6, chat_room_status_no_SEQ.nextval);
+values (3, '박은미님과 이도현님의 채팅방', 7600, 2, chat_room_status_no_SEQ.nextval);
 insert into chat_room_status (chat_room_no, chat_room_name, chat_room_status, member_no, chat_room_status_no) 
-values (4, '송대현님에게 채팅방을 신청했습니다.', 7500, 6, chat_room_status_no_SEQ.nextval);
+values (4, '송대현님에게 채팅방을 신청했습니다.', 7500, 2, chat_room_status_no_SEQ.nextval);
 insert into chat_room_status (chat_room_no, chat_room_name, chat_room_status, member_no, chat_room_status_no) 
 values (4, '이도현님에게서 채팅방 신청이 도착했습니다.', 7500, 8, chat_room_status_no_SEQ.nextval);
 insert into chat_room_status (chat_room_no, chat_room_name, chat_room_status, member_no, chat_room_status_no) 
-values (5, '양한수님에게 채팅방을 신청했습니다.', 7500, 6, chat_room_status_no_SEQ.nextval);
+values (5, '양한수님에게 채팅방을 신청했습니다.', 7500, 2, chat_room_status_no_SEQ.nextval);
 insert into chat_room_status (chat_room_no, chat_room_name, chat_room_status, member_no, chat_room_status_no) 
 values (5, '이도현님에게서 채팅방 신청이 도착했습니다.', 7500, 9, chat_room_status_no_SEQ.nextval);
 insert into chat_room_status (chat_room_no, chat_room_name, chat_room_status, member_no, chat_room_status_no) 
-values (6, '이도현님과 이도현님의 채팅방', 7600, 6, chat_room_status_no_SEQ.nextval);
+values (6, '이도현님과 이도현님의 채팅방', 7600, 2, chat_room_status_no_SEQ.nextval);
 insert into chat_room_status (chat_room_no, chat_room_name, chat_room_status, member_no, chat_room_status_no) 
 values (6, '이도현님과 이도현님의 채팅방', 7600, 10, chat_room_status_no_SEQ.nextval);
 insert into chat_room_status (chat_room_no, chat_room_name, chat_room_status, member_no, chat_room_status_no) 
-values (7, '이도현님과 김민수님의 채팅방', 7600, 6, chat_room_status_no_SEQ.nextval);
+values (7, '이도현님과 김민수님의 채팅방', 7600, 2, chat_room_status_no_SEQ.nextval);
 insert into chat_room_status (chat_room_no, chat_room_name, chat_room_status, member_no, chat_room_status_no) 
 values (7, '이도현님과 김민수님의 채팅방', 7600, 11, chat_room_status_no_SEQ.nextval);
 insert into chat_room_status (chat_room_no, chat_room_name, chat_room_status, member_no, chat_room_status_no) 
-values (8, '이도현님과 이서준님의 채팅방', 7600, 6, chat_room_status_no_SEQ.nextval);
+values (8, '이도현님과 이서준님의 채팅방', 7600, 2, chat_room_status_no_SEQ.nextval);
 insert into chat_room_status (chat_room_no, chat_room_name, chat_room_status, member_no, chat_room_status_no) 
 values (8, '이도현님과 이서준님의 채팅방', 7600, 12, chat_room_status_no_SEQ.nextval);
 insert into chat_room_status (chat_room_no, chat_room_name, chat_room_status, member_no, chat_room_status_no) 
-values (9, '이도현님과 박지우님의 채팅방', 7600, 6, chat_room_status_no_SEQ.nextval);
+values (9, '이도현님과 박지우님의 채팅방', 7600, 2, chat_room_status_no_SEQ.nextval);
 insert into chat_room_status (chat_room_no, chat_room_name, chat_room_status, member_no, chat_room_status_no) 
 values (9, '이도현님과 박지우님의 채팅방', 7600, 13, chat_room_status_no_SEQ.nextval);
 
