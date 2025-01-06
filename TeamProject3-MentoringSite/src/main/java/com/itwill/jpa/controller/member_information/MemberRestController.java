@@ -29,6 +29,7 @@ import com.itwill.jpa.dto.member_information.MemberDto;
 import com.itwill.jpa.dto.member_information.MemberDtoAndTempCode;
 import com.itwill.jpa.entity.member_information.Member;
 import com.itwill.jpa.entity.member_information.MentorProfile;
+import com.itwill.jpa.exception.CustomException;
 import com.itwill.jpa.response.Response;
 import com.itwill.jpa.response.ResponseMessage;
 import com.itwill.jpa.response.ResponseStatusCode;
@@ -78,68 +79,84 @@ public class MemberRestController {
 	@Operation(summary = "아이디 중복 검사")
 	@GetMapping("/check-memberId")
 	public ResponseEntity<Response> checkIdDupl(@RequestParam(name = "memberId") String memberId){
-		
-		Boolean checkIdDupl = memberService.checkIdDupl(memberId);
-
-		Response response = new Response();
-		
 		//응답 객체 생성
-		
-		if(checkIdDupl == true) {
-			//응답객체에 코드, 메시지, 객체 설정
-			response.setStatus(ResponseStatusCode.DUPLICATION_MENBER_ID);
-			response.setMessage(ResponseMessage.DUPLICATION_MENBER_ID);
-			response.setData(null);
-		}
+		Response response = new Response();
 		
 		//인코딩 타입 설정
 		HttpHeaders httpHeaders = new HttpHeaders();
 		httpHeaders.setContentType(new MediaType(MediaType.APPLICATION_JSON, Charset.forName("UTF-8")));
 		
-		//반환할 응답Entity 생성
-		ResponseEntity<Response> responseEntity =
-				 new ResponseEntity<Response>(response, httpHeaders, HttpStatus.OK);
-		
-		//반환
-		return responseEntity;
-				
+		try {
+			Boolean checkIdDupl = memberService.checkIdDupl(memberId);
+			
+			
+			if(checkIdDupl == true) {
+				//응답객체에 코드, 메시지, 객체 설정
+				response.setStatus(ResponseStatusCode.DUPLICATION_MENBER_ID);
+				response.setMessage(ResponseMessage.DUPLICATION_MENBER_ID);
+				response.setData(null);
+			}
+			
+			//반환할 응답Entity 생성
+			ResponseEntity<Response> responseEntity =
+					 new ResponseEntity<Response>(response, httpHeaders, HttpStatus.OK);
+			
+			//반환
+			return responseEntity;
+			
+		} catch (CustomException e) {
+			response.setStatus(e.getStatusCode());  // CustomException에서 제공된 상태 코드
+		    response.setMessage(e.getMessage());    // CustomException에서 제공된 메시지
+		    response.setData(e.getCause().getMessage()); // 클라이언트에는 간단한 에러 메시지만 제공
+		    
+		    // ResponseEntity로 응답 반환
+	        return new ResponseEntity<Response>(response, httpHeaders, HttpStatus.OK);  
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 	
 	/* 이메일 중복 */
 	@Operation(summary = "이메일 중복 검사")
 	@GetMapping("/check-memberEmail")
 	public ResponseEntity<Response> checkEmailDupl(@RequestParam(name = "memberEmail") String memberEmail){
-		
-		Boolean checkEmailDupl = memberService.checkEmailDupl(memberEmail);
-
-		Response response = new Response();
-		
 		//응답 객체 생성
-		
-		if(checkEmailDupl == false) {
-			//응답객체에 코드, 메시지, 객체 설정
-			response.setStatus(ResponseStatusCode.DUPLICATION_MENBER_EMAIL);
-			response.setMessage(ResponseMessage.DUPLICATION_MENBER_EMAIL);
-			response.setData(null);
-		}
-		
-		if(checkEmailDupl == true) {
-			//응답객체에 코드, 메시지, 객체 설정
-			response.setStatus(ResponseStatusCode.CONFIRM_EMAIL_SUCCESS);
-			response.setMessage(ResponseMessage.CONFIRM_EMAIL_SUCCESS);
-			response.setData(null);
-		}
+		Response response = new Response();
 		
 		//인코딩 타입 설정
 		HttpHeaders httpHeaders = new HttpHeaders();
 		httpHeaders.setContentType(new MediaType(MediaType.APPLICATION_JSON, Charset.forName("UTF-8")));
 		
-		//반환할 응답Entity 생성
-		ResponseEntity<Response> responseEntity =
-				 new ResponseEntity<Response>(response, httpHeaders, HttpStatus.OK);
+		try {
+			Boolean checkEmailDupl = memberService.checkEmailDupl(memberEmail);
+
+			if(checkEmailDupl == true) {
+				//응답객체에 코드, 메시지, 객체 설정
+				response.setStatus(ResponseStatusCode.CONFIRM_EMAIL_SUCCESS);
+				response.setMessage(ResponseMessage.CONFIRM_EMAIL_SUCCESS);
+				response.setData(null);
+			}
+			
+			//반환할 응답Entity 생성
+			ResponseEntity<Response> responseEntity =
+					 new ResponseEntity<Response>(response, httpHeaders, HttpStatus.OK);
+			
+			//반환
+			return responseEntity;
+			
+		} catch (CustomException e) {
+			response.setStatus(e.getStatusCode());  // CustomException에서 제공된 상태 코드
+		    response.setMessage(e.getMessage());    // CustomException에서 제공된 메시지
+		    response.setData(e.getCause().getMessage()); // 클라이언트에는 간단한 에러 메시지만 제공
+		    
+		    // ResponseEntity로 응답 반환
+	        return new ResponseEntity<Response>(response, httpHeaders, HttpStatus.OK);  
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
 		
-		//반환
-		return responseEntity;
 				
 	}
 	

@@ -200,8 +200,17 @@ export const MemberJoinFormPage = () => {
         case responseStatus.CREATED_MEMBER_FAIL:
           toast.error("가입이 실패하였습니다.");
           break;
+        case responseStatus.NOT_FOUND_MEMBER:
+          toast.error("정보를 다시 입력해주세요.");
+          break;
+        case responseStatus.DUPLICATION_MEMBER_ID:
+          toast.error("아이디가 중복되었습니다.");
+          break;
+        case responseStatus.DUPLICATION_MEMBER_EMAIL:
+          toast.error("이메일이 중복되었습니다.");
+          break;
         default:
-          toast.error("에러가 발생하였습니다..");
+          toast.error("에러가 발생하였습니다.");
           break;
       }
 
