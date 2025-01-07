@@ -74,7 +74,7 @@ values(interest_no_SEQ.nextval, 1, 4);
 
 /***** 테스트용 아이디 등록(멘티) *****/
 INSERT INTO member (member_no,member_id,member_password,member_email,member_name,member_points,member_status,member_join_date,member_report_count,member_role,member_provider) 
-VALUES (member_no_SEQ.nextval, 'qwer1234', '{bcrypt}$2a$10$2Vj/MwAon9U1UFSHcF8DSe9VtT86qtIFmWo2.tocHk1Px1NAXFU3K', 'zszz5434@gmail.com', '이도현', 500, 1, '25/01/01', 0, 'ROLE_MENTOR', 'Email');
+VALUES (member_no_SEQ.nextval, 'qwer1234', '{bcrypt}$2a$10$2Vj/MwAon9U1UFSHcF8DSe9VtT86qtIFmWo2.tocHk1Px1NAXFU3K', 'zszz5434@gmail.com', '이도현', 500, 1, '25/01/01', 0, 'ROLE_MENTEE', 'Email');
 insert into interest (interest_no, member_no, category_no) 
 values(interest_no_SEQ.nextval, 2, 23);
 insert into interest (interest_no, member_no, category_no) 
@@ -84,7 +84,7 @@ values(interest_no_SEQ.nextval, 2, 25);
 
 /***** 테스트용 아이디 등록(멘토) *****/
 INSERT INTO mentor_profile(mentor_profile_no, mentor_introduce, mentor_rating, mentor_mentoring_count, mentor_image, mentor_activity_count, mentor_follow_count, mentor_status, category_no, member_no, mentor_headline)
-VALUES (mentor_profile_no_SEQ.NEXTVAL, '안녕하세요, 이도현 멘토입니다.', 5, 10, '/images/mentor-profile/15.jpeg', 100, 50, 3, 2, 2, '반갑습니다.');
+VALUES (mentor_profile_no_SEQ.NEXTVAL, '안녕하세요, 이도현 멘토입니다.', 5, 10, '/images/mentor-profile/15.jpeg', 0, 0, 3, 2, 2, '반갑습니다.');
 INSERT INTO career(CAREER_NO, CAREER_COMPANY_NAME, CAREER_JOB_TITLE, CAREER_START_DATE, CAREER_END_DATE, MENTOR_PROFILE_NO)
 VALUES(career_no_SEQ.nextval, '한샘', '경력자입니다', '2020.01.01', '2024.01.01', 1);
 
@@ -991,6 +991,8 @@ VALUES(follow_no_SEQ.nextval,2,16);
 INSERT INTO follow(follow_no,mentee_member_no,mentor_member_no)
 VALUES(follow_no_SEQ.nextval,2,17);
 INSERT INTO follow(follow_no,mentee_member_no,mentor_member_no)
+VALUES(follow_no_SEQ.nextval,1,2);
+INSERT INTO follow(follow_no,mentee_member_no,mentor_member_no)
 VALUES(follow_no_SEQ.nextval,3,2);
 INSERT INTO follow(follow_no,mentee_member_no,mentor_member_no)
 VALUES(follow_no_SEQ.nextval,4,2);
@@ -999,35 +1001,30 @@ VALUES(follow_no_SEQ.nextval,5,7);
 
 /* 신고 등록 */
 INSERT INTO report(report_no,  report_type, report_target,report_reason, report_content, report_date, report_status, resolved_date, member_no) 
-VALUES (report_no_SEQ.nextval, 'ANSWER' , 1, 1,'욕함요', sysdate, 1, sysdate , 2);
+VALUES (report_no_SEQ.nextval, 'ANSWER' , 1, 1,'답변에 비속어가 있어요', '2024-12-31', 1, '2024-12-31', 5);
 INSERT INTO report(report_no,  report_type, report_target,report_reason, report_content, report_date, report_status, resolved_date, member_no) 
-VALUES (report_no_SEQ.nextval, 'MEMBER' , 1, 3,'광고쟁이', sysdate, 1, sysdate , 1);
+VALUES (report_no_SEQ.nextval, 'ANSWER' , 2, 2,'답변 내용이 광고 같아요.', '2025-01-01', 1, '2024-12-31', 5);
 INSERT INTO report(report_no,  report_type, report_target,report_reason, report_content, report_date, report_status, resolved_date, member_no) 
-VALUES (report_no_SEQ.nextval, 'INQUIRY', 1, 4,'욕쟁이', sysdate, 1, sysdate , 3);
+VALUES (report_no_SEQ.nextval, 'ANSWER' , 3, 1,'사람 기분 나쁘게 하는 욕설이 섞여 있어요 ㅜ ', '2025-01-02', 1, '2025-01-02', 5);
 INSERT INTO report(report_no,  report_type, report_target,report_reason, report_content, report_date, report_status, resolved_date, member_no) 
-VALUES (report_no_SEQ.nextval, 'ANSWER' , 2, 1,'나쁜사람', sysdate, 1, sysdate , 4);
+VALUES (report_no_SEQ.nextval, 'MEMBER' , 1, 2,'본인 프로그램 홍보해요', sysdate, 1, sysdate , 4);
 INSERT INTO report(report_no,  report_type, report_target,report_reason, report_content, report_date, report_status, resolved_date, member_no) 
-VALUES (report_no_SEQ.nextval, 'MEMBER' , 5, 3,'스팸', sysdate, 1, sysdate , 2);
+VALUES (report_no_SEQ.nextval, 'MEMBER' , 1, 1, '저한테 욕하고 뭐라하고 너무 짜증나여 고소 하고 싶어요 ', sysdate, 1, sysdate , 5);
 INSERT INTO report(report_no,  report_type, report_target,report_reason, report_content, report_date, report_status, resolved_date, member_no) 
-VALUES (report_no_SEQ.nextval, 'INQUIRY', 2, 4,'별로임', sysdate, 1, sysdate , 1);
+VALUES (report_no_SEQ.nextval, 'MEMBER' , 17, 6,'뭐라는지 모르겠어요 멘토 자격이 없어 보입니다. ', sysdate, 1, sysdate , 2);
 INSERT INTO report(report_no,  report_type, report_target,report_reason, report_content, report_date, report_status, resolved_date, member_no) 
-VALUES (report_no_SEQ.nextval, 'INQUIRY', 3, 4,'욕쟁이', sysdate, 1, sysdate , 3);
+VALUES (report_no_SEQ.nextval, 'MEMBER' , 18, 3,'성적으로 기분나쁘게 표현하네요', sysdate, 1, sysdate , 1);
 INSERT INTO report(report_no,  report_type, report_target,report_reason, report_content, report_date, report_status, resolved_date, member_no) 
-VALUES (report_no_SEQ.nextval, 'ANSWER' , 4, 1,'나쁜사람', sysdate, 1, sysdate , 4);
+VALUES (report_no_SEQ.nextval, 'INQUIRY', 4, 1, '질문에 욕설이나 비속어가 너무 많습니다.' , sysdate, 1, sysdate , 2);
 INSERT INTO report(report_no,  report_type, report_target,report_reason, report_content, report_date, report_status, resolved_date, member_no) 
-VALUES (report_no_SEQ.nextval, 'MEMBER' , 9, 3,'스팸', sysdate, 1, sysdate , 2);
+VALUES (report_no_SEQ.nextval, 'INQUIRY', 5, 2,'질문이 아니라 본인 홍보하고 있는거 같아요 ', sysdate, 1, sysdate , 3);
 INSERT INTO report(report_no,  report_type, report_target,report_reason, report_content, report_date, report_status, resolved_date, member_no) 
-VALUES (report_no_SEQ.nextval, 'INQUIRY', 7, 4,'별로임', sysdate, 1, sysdate , 1);
+VALUES (report_no_SEQ.nextval, 'INQUIRY', 6, 3,'질문과 상관없는 성적인 내용이 너무 많고 별로에요', sysdate, 1, sysdate , 3);
 INSERT INTO report(report_no,  report_type, report_target,report_reason, report_content, report_date, report_status, resolved_date, member_no) 
-VALUES (report_no_SEQ.nextval, 'INQUIRY', 8, 4,'별로임', sysdate, 1, sysdate , 1);
+VALUES (report_no_SEQ.nextval, 'INQUIRY', 7, 4,'폭력적인 내용이 너무 많아요 ㅜㅜ ', sysdate, 1, sysdate , 3);
 INSERT INTO report(report_no,  report_type, report_target,report_reason, report_content, report_date, report_status, resolved_date, member_no) 
-VALUES (report_no_SEQ.nextval, 'INQUIRY', 6, 4,'욕쟁이', sysdate, 1, sysdate , 3);
-INSERT INTO report(report_no,  report_type, report_target,report_reason, report_content, report_date, report_status, resolved_date, member_no) 
-VALUES (report_no_SEQ.nextval, 'ANSWER' , 6, 1,'나쁜사람', sysdate, 1, sysdate , 4);
-INSERT INTO report(report_no,  report_type, report_target,report_reason, report_content, report_date, report_status, resolved_date, member_no) 
-VALUES (report_no_SEQ.nextval, 'MEMBER' , 16, 3,'스팸', sysdate, 1, sysdate , 2);
-INSERT INTO report(report_no,  report_type, report_target,report_reason, report_content, report_date, report_status, resolved_date, member_no) 
-VALUES (report_no_SEQ.nextval, 'INQUIRY', 11, 4,'별로임', sysdate, 1, sysdate , 1);
+VALUES (report_no_SEQ.nextval, 'INQUIRY', 8, 5,'개인정보 유출이 되고 있엉요!!', sysdate, 1, sysdate , 3);
+
 
 /* 질문 등록 */
 insert into inquiry(inquiry_no,inquiry_title, inquiry_content, inquiry_date, inquiry_status, inquiry_views, category_no, member_no)
