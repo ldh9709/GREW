@@ -81,4 +81,7 @@ public interface MemberService {
 	
 	//토큰 재생성
 	Map<String, String> regenerateTokens(Authentication authentication, Member updateMember);
+	
+	//토큰 재생성(MentorProfileNo)
+	Map<String, String> regenerateTokensByMentorProfileNo(Authentication authentication, Integer mentorProfileNo);
 }

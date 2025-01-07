@@ -557,6 +557,26 @@ public class MemberServiceImpl implements MemberService {
 
         return tokens;
 	}
+	
+	/* 토큰 재생성 메소드 */
+	public Map<String, String> regenerateTokensByMentorProfileNo(Authentication authentication, Integer mentorProfileNo) {
+        PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
+        Map<String, Object> claims = principalDetails.getClaims();
+        
+        // 필요한 권한 정보 갱신
+        claims.put("mentorProfileNo", mentorProfileNo);
+
+        // 새 토큰 생성
+        String newAccessToken = JWTUtil.generateToken(claims, 60); // 60분
+        String newRefreshToken = JWTUtil.generateToken(claims, 60 * 24); // 24시간
+
+        // 토큰을 반환
+        Map<String, String> tokens = new HashMap<>();
+        tokens.put("accessToken", newAccessToken);
+        tokens.put("refreshToken", newRefreshToken);
+
+        return tokens;
+	}
 
 	
 	
