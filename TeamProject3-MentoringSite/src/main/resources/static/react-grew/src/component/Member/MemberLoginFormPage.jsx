@@ -29,12 +29,16 @@ const MemberLoginFormPage = () => {
 
         login(responseJsonObject.accessToken);
 
-        /* 멘토 프로필 START */
-        const mentorProfileResponse = await memberApi.getMentorProfile(responseJsonObject.mentorProfileNo);
-        // categoryNo가 26인지 확인
-        const isMentorCategory = mentorProfileResponse?.data?.categoryNo === 26;
-        // 역할에 따라 페이지 이동
-        navigate(isMentorCategory ? "/mentor/join" : "/main");
+        if(responseJsonObject.mentorProfileNo !== 0) {
+          /* 멘토 프로필 START */
+          const mentorProfileResponse = await memberApi.getMentorProfile(responseJsonObject.mentorProfileNo);
+          // categoryNo가 26인지 확인
+          const isMentorCategory = mentorProfileResponse?.data?.categoryNo === 26;
+          // 역할에 따라 페이지 이동
+          navigate(isMentorCategory ? "/mentor/join" : "/main");
+        } else {
+          navigate('/main');
+        }
 
       } else {
         console.log("responseJsonObject.status : ", responseJsonObject.status);
