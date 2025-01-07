@@ -247,7 +247,7 @@ export const mentorProfileUpdateAction = async (mentorProfileNo, mentor, token) 
             mentorHeadline: mentor.mentorHeadline,
             careerDtos: mentor.careerDtos,
             mentorImage: mentor.mentorImage,
-          })
+        })
     });
 
     const resultJsonObject = await response.json();

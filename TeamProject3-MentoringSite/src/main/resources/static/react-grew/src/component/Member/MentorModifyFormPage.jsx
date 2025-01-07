@@ -180,35 +180,38 @@ const MentorEditForm = () => {
 
   const mentorProfileUpdateAction = async () => {
     try {
+      let check = true;
       mentor.careerDtos.every((career) => {
-        if (career.startDate && career.endDate) {
-          const startDate = new Date(career.startDate);
-          const endDate = new Date(career.endDate);
+        if (career.careerStartDate && career.careerEndDate) {
+          const startDate = new Date(career.careerStartDate);
+          const endDate = new Date(career.careerEndDate);
           if (endDate <= startDate) {
             alert(
-              `시작일(${career.startDate})은 종료일(${career.endDate})보다 이전이어야 합니다. 날짜를 수정해주세요.`
+              `시작일(${career.careerStartDate})은 종료일(${career.careerEndDate})보다 이전이어야 합니다. 날짜를 수정해주세요.`
             );
-            return false; // 유효성 검사 실패
+            check = false; // 유효성 검사 실패
           }
         }
         return true; // 유효성 검사 통과
       });
       if (mentorImage) {
-        await uploadImage(); // 생성된 번호로 이미지 업로드
-      } else {
+        await uploadImage();
+      } else if(!mentorImage){
         alert("이미지를 선택하지 않아 기존의 이미지가 적용되었습니다.");
       }
-      const response = await memberApi.mentorProfileUpdateAction(mentorProfileNo, mentor, token);
-      if (response.status === responseStatus.UPDATE_MENTOR_PROFILE_SUCCESS_CODE) {
-        alert("멘토 정보 수정 성공");
-        const response = await memberApi.updateMemberRole(token, "ROLE_MENTEE");
-        if (response.status === 2012) {
-          // 기존 쿠키 삭제
-          login(response.data.accessToken);
+      if(check){
+        const response = await memberApi.mentorProfileUpdateAction(mentorProfileNo, mentor, token);
+        if (response.status === responseStatus.UPDATE_MENTOR_PROFILE_SUCCESS_CODE) {
+          alert("멘토 정보 수정 성공");
+          const response = await memberApi.updateMemberRole(token, "ROLE_MENTEE");
+          if (response.status === 2012) {
+            // 기존 쿠키 삭제
+            login(response.data.accessToken);
+          }
+          navigate("/main");
+        } else {
+          alert("수정 실패");
         }
-        navigate("/main");
-      } else {
-        alert("수정 실패");
       }
     } catch (err) {
       console.error("수정 실패:", err);
