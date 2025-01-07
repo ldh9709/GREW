@@ -16,8 +16,9 @@ export default function MemberSummary({triggerUpdate}) {
 
   /* Context에 저장된 토큰, 멤버정보 */
   const { token, member, login } = useMemberAuth();
-
   const navigate = useNavigate();
+
+  if(!token) navigate("/");
 
   console.log("token쳌", token);
   console.log("member쳌", member);
