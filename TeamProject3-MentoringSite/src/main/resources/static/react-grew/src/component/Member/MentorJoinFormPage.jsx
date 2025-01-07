@@ -1,5 +1,5 @@
 import "../../css/mentorJoin.css";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import * as responseStatus from "../../api/responseStatusCode";
 import * as memberApi from "../../api/memberApi";
 import * as categoryApi from "../../api/categoryApi";
@@ -10,13 +10,15 @@ const MentorJoinForm = () => {
   /***** Context 가져오기 START *****/
   const auth = useMemberAuth(); // 사용자 인증 정보를 가져온다
   const token = auth?.token || null; // 사용자 인증 토큰
+  const login = auth.login; //사용자 로그인 관련(토큰 수정)
   const member = auth?.member || {}; // 사용자 관련 정보 객체
   const mentorProfileNo = token ? member.mentorProfileNo : null; // 사용자 멘토 프로필 번호
   /***** Context 가져오기 END *****/
   
   /* 이미지 파일을 위한 메소드 선언 */
   const [mentorImage, setMentorImage] = useState(null); // 이미지 파일
-
+  const [imagePreview, setImagePreview] = useState(""); // 이미지 미리보기 URL
+  const fileInputRef = useRef(null); // file input 참조
 
   /***** 네비게이트 *****/
   const navigate = useNavigate();
@@ -180,10 +182,11 @@ const MentorJoinForm = () => {
         // Step 3: 이미지 업로드 (필수 이미지가 있다면)
         if (mentorImage) {
           await uploadImage(responseJsonObject.data.mentorProfileNo); // 생성된 번호로 이미지 업로드
+          console.log("responseJsonObject : ", responseJsonObject);
         } else {
           alert("이미지 없이 멘토 프로필이 저장되었습니다.");
         }
-  
+        await login(token);
         // 완료 후 페이지 이동
         navigate("/member/profile");
     } catch (error) {
@@ -194,11 +197,22 @@ const MentorJoinForm = () => {
   /***** 멘토 생성 버튼 END *****/
   
   const handleImageChange = (e) => {
-    setMentorImage(e.target.files[0]);
-    setMentor((prevMentor) => ({
-      ...prevMentor,
-      [e.target.name]: `/upload/mentor-profile/${mentorProfileNo}/${e.target.files[0].name}`,
-    }));
+    const file = e.target.files[0];
+    if (file) {
+      // 이전 미리보기 URL 해제
+      if (imagePreview) {
+        URL.revokeObjectURL(imagePreview);
+      }
+
+      const previewUrl = URL.createObjectURL(file);
+      setMentorImage(file);
+      setImagePreview(previewUrl);
+
+      setMentor((prevMentor) => ({
+        ...prevMentor,
+        [e.target.name]: `/upload/mentor-profile/${mentorProfileNo}/${file.name}`,
+      }));
+    }
   }
 
   const uploadImage= async (mentorProfileNo) => {
@@ -208,10 +222,23 @@ const MentorJoinForm = () => {
       return;
     }
 
+    const formData = new FormData();
+    formData.append("file", mentorImage);
+
+
     const response = await memberApi.uploadMentorProfileImage(mentorProfileNo, mentorImage);
     console.log("이미지 업로드 response : ", response);
   }
   
+  useEffect(() => {
+    // 미리보기 URL 변경 시 이전 URL 해제
+    return () => {
+      if (imagePreview) {
+        URL.revokeObjectURL(imagePreview);
+      }
+    };
+  }, [imagePreview]);
+
   
   return (
     <div className="mentor-join-container">
@@ -355,10 +382,16 @@ const MentorJoinForm = () => {
             className="form-group-profileImage"
             id="profileImage"
             name="profileImage"
+            ref={fileInputRef}
             onChange={handleImageChange}
             accept="image/*"
             required
           />
+          {imagePreview && (
+            <div className="image-preview">
+              <img src={imagePreview} alt="Preview" />
+            </div>
+          )}
         </div>
         {/* 제출 버튼 */}
         <div className="mentor-submit-container">

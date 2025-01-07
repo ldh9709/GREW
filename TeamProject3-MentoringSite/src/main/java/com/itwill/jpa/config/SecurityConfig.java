@@ -81,8 +81,8 @@ public class SecurityConfig {
 	    "/mentor-profile/create-profile", // 멘토 프로필 생성
 	    "/mentor-profile/*/create-dumy-profile", // 멘토 더미 프로필 생성
 	    "/mentor-profile/status/*", // 멘토 프로필 상태변경
-	    "/mentor-profile/*/upload-image", // 멘토 프로필 이미지 업로드 => 토큰 걸림
 	    "/mentor-profile/modify/*", // 멘토 프로필 수정
+	    "/mentor-profile/*/upload-image", // 멘토 프로필 이미지 업로드 => 토큰 걸림
 	   
 		/***************************************************************/
 		
