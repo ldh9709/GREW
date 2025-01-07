@@ -162,12 +162,15 @@ export const adminCategoryInquiry = async (categoryNo, page, token, size) => {
       }
     );
     if (!response.ok) {
+      console.error("HTTP 응답 오류", response.status);
       throw new Error(`HTTP error! status: ${response.status}`);
     }
 
     const responseJsonObject = await response.json();
+    console.log("Response Data:", responseJsonObject);// 응답 데이터 구조 확인
     return responseJsonObject;
   } catch (error) {
+    console.error("응답 오류:", error);
     throw error;
   }
 };
