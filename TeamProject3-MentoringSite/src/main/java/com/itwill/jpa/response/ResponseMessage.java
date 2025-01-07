@@ -164,13 +164,17 @@ public class ResponseMessage {
 	public static final String CHATTING_STATUS_CHANGE_FAIE = "상태 변경 실패";
 	public static final String SEND_CHATTING_SUCCESS = "채팅방 요청 전송 완료";
 	public static final String SEND_CHATTING_FAIL = "채팅방 요청 전송 실패";
-	public static final String CHATTING_LIST_SUCCESS = "채팅방 리스트 출력";
-	public static final String CHATTING_LIST_FAIE = "채팅방 리스트 출력";
+	public static final String CHATTING_LIST_SUCCESS = "채팅방 리스트 출력 성공";
+	public static final String CHATTING_LIST_FAIE = "채팅방 리스트 출력 실패";
 	public static final String CHATTING_NAME = "채팅방 제목 출력 성공";
 	public static final String CHATTING_NAME_CHANGE = "채팅방 제목 변경 성공";
-	public static final String CHATTING_MESSAGE_SUCCESS = "채팅방 대화 목록 출력";
-	public static final String CHATTING_MESSAGE_FAIE = "채팅방 대화 목록 출력";
-	public static final String READ_MESSAGE = "채팅방 대화 목록 출력";
+	public static final String CHATTING_MESSAGE_SUCCESS = "채팅방 대화 목록 출력 성공";
+	public static final String CHATTING_MESSAGE_FAIE = "채팅방 대화 목록 출력 실패";
+	public static final String CREATE_MESSAGE_SUCCESS = "메세지 생성 성공";
+	public static final String CREATE_MESSAGE_FAIE = "메세지 생성 실패";
+	public static final String READ_MESSAGE = "메세지 읽음";
+	public static final String CHOICE_MESSAGE_SUCCESS = "메세지 정보 보기 성공";
+	public static final String CHOICE_MESSAGE_FAIE = "메세지 정보 보기 실패";
 	
 	/******************* REVIEW 메시지 **********************/
 	public static final String CREATED_REVIEW_SUCCESS = "리뷰 등록 성공.";

@@ -42,14 +42,14 @@ export default function AdminMentorBoard () {
         window.open(url, "_blank"); // 새 탭에서 열기
     };
 
-    const handleSearchChange = (e) => {
+   {/*} const handleSearchChange = (e) => {
         setSearch(e.target.value); // 검색어 변경 시
-    };
+    };*/}
 
-    const handleSearchSubmit = (e) => {
+    {/*const handleSearchSubmit = (e) => {
         e.preventDefault(); // 폼 제출 시 페이지 리로드 방지
         fetchBoards(); // 검색 결과를 가져오기
-    };
+    };*/}
 
     return(
         <div className="admin-table-container">

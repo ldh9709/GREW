@@ -167,7 +167,7 @@ public class MemberRestController {
 				
 	}
 	
-	@Operation(summary = "인증번호 발송")
+	@Operation(summary = "회원가입 시 이메일 인증번호 발송")
 	@PostMapping("/sendJoinCode")
 	public ResponseEntity<Response> sendJoinCode(@RequestBody MemberDto.JoinFormDto joinFormDto) {
 		
