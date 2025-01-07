@@ -48,7 +48,7 @@ public class FollowRestController {
 	/*팔로우 여부 체크*/
 	@Operation(summary = "팔로우 등록여부 체크")
 	@SecurityRequirement(name = "BearerAuth")//API 엔드포인트가 인증을 요구한다는 것을 문서화(Swagger에서 JWT인증을 명시
-	@PreAuthorize("hasRole('MENTEE')")//ROLE이 MENTEE인 사람만 접근 가능
+	//@PreAuthorize("hasRole('MENTEE')")//ROLE이 MENTEE인 사람만 접근 가능
 	@GetMapping("/is-exist/{mentorNo}")
 	public ResponseEntity<Response> checkFollow(Authentication authentication, @PathVariable("mentorNo") String mentorNo){
 		

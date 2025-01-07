@@ -29,6 +29,7 @@ import com.itwill.jpa.dto.member_information.MemberDto;
 import com.itwill.jpa.dto.member_information.MemberDtoAndTempCode;
 import com.itwill.jpa.entity.member_information.Member;
 import com.itwill.jpa.entity.member_information.MentorProfile;
+import com.itwill.jpa.exception.CustomException;
 import com.itwill.jpa.response.Response;
 import com.itwill.jpa.response.ResponseMessage;
 import com.itwill.jpa.response.ResponseStatusCode;
@@ -71,82 +72,100 @@ public class MemberRestController {
 	private ChatRoomService chatRoomService;
 	@Autowired
 	private ReviewService reviewService;
-	
-	
+	@Autowired
+	private EmailService emailService;
 	
 	/* 아이디 중복 */
 	@Operation(summary = "아이디 중복 검사")
 	@GetMapping("/check-memberId")
 	public ResponseEntity<Response> checkIdDupl(@RequestParam(name = "memberId") String memberId){
-		
-		Boolean checkIdDupl = memberService.checkIdDupl(memberId);
-
-		Response response = new Response();
-		
 		//응답 객체 생성
-		
-		if(checkIdDupl == true) {
-			//응답객체에 코드, 메시지, 객체 설정
-			response.setStatus(ResponseStatusCode.DUPLICATION_MENBER_ID);
-			response.setMessage(ResponseMessage.DUPLICATION_MENBER_ID);
-			response.setData(null);
-		}
+		Response response = new Response();
 		
 		//인코딩 타입 설정
 		HttpHeaders httpHeaders = new HttpHeaders();
 		httpHeaders.setContentType(new MediaType(MediaType.APPLICATION_JSON, Charset.forName("UTF-8")));
 		
-		//반환할 응답Entity 생성
-		ResponseEntity<Response> responseEntity =
-				 new ResponseEntity<Response>(response, httpHeaders, HttpStatus.OK);
-		
-		//반환
-		return responseEntity;
-				
+		try {
+			Boolean checkIdDupl = memberService.checkIdDupl(memberId);
+			
+			
+			if(checkIdDupl == true) {
+				//응답객체에 코드, 메시지, 객체 설정
+				response.setStatus(ResponseStatusCode.DUPLICATION_MENBER_ID);
+				response.setMessage(ResponseMessage.DUPLICATION_MENBER_ID);
+				response.setData(null);
+			}
+			
+			//반환할 응답Entity 생성
+			ResponseEntity<Response> responseEntity =
+					 new ResponseEntity<Response>(response, httpHeaders, HttpStatus.OK);
+			
+			//반환
+			return responseEntity;
+			
+		} catch (CustomException e) {
+			response.setStatus(e.getStatusCode());  // CustomException에서 제공된 상태 코드
+		    response.setMessage(e.getMessage());    // CustomException에서 제공된 메시지
+		    
+		    // ResponseEntity로 응답 반환
+	        return new ResponseEntity<Response>(response, httpHeaders, HttpStatus.OK);  
+		} catch (Exception e) {
+			// 일반 예외 처리
+	        e.printStackTrace();
+	        response.setStatus(ResponseStatusCode.INTERNAL_SERVER_ERROR);
+	        response.setMessage(ResponseMessage.INTERNAL_SERVER_ERROR);
+	        return new ResponseEntity<Response>(response, httpHeaders, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
 	}
 	
 	/* 이메일 중복 */
 	@Operation(summary = "이메일 중복 검사")
 	@GetMapping("/check-memberEmail")
 	public ResponseEntity<Response> checkEmailDupl(@RequestParam(name = "memberEmail") String memberEmail){
-		
-		Boolean checkEmailDupl = memberService.checkEmailDupl(memberEmail);
-
-		Response response = new Response();
-		
 		//응답 객체 생성
-		
-		if(checkEmailDupl == false) {
-			//응답객체에 코드, 메시지, 객체 설정
-			response.setStatus(ResponseStatusCode.DUPLICATION_MENBER_EMAIL);
-			response.setMessage(ResponseMessage.DUPLICATION_MENBER_EMAIL);
-			response.setData(null);
-		}
-		
-		if(checkEmailDupl == true) {
-			//응답객체에 코드, 메시지, 객체 설정
-			response.setStatus(ResponseStatusCode.CONFIRM_EMAIL_SUCCESS);
-			response.setMessage(ResponseMessage.CONFIRM_EMAIL_SUCCESS);
-			response.setData(null);
-		}
+		Response response = new Response();
 		
 		//인코딩 타입 설정
 		HttpHeaders httpHeaders = new HttpHeaders();
 		httpHeaders.setContentType(new MediaType(MediaType.APPLICATION_JSON, Charset.forName("UTF-8")));
 		
-		//반환할 응답Entity 생성
-		ResponseEntity<Response> responseEntity =
-				 new ResponseEntity<Response>(response, httpHeaders, HttpStatus.OK);
+		try {
+			Boolean checkEmailDupl = memberService.checkEmailDupl(memberEmail);
+
+			if(checkEmailDupl == true) {
+				//응답객체에 코드, 메시지, 객체 설정
+				response.setStatus(ResponseStatusCode.CONFIRM_EMAIL_SUCCESS);
+				response.setMessage(ResponseMessage.CONFIRM_EMAIL_SUCCESS);
+			} else {
+				//응답객체에 코드, 메시지, 객체 설정
+				response.setStatus(ResponseStatusCode.DUPLICATION_MENBER_EMAIL);
+				response.setMessage(ResponseMessage.DUPLICATION_MENBER_EMAIL);
+			}
+			
+			//반환할 응답Entity 생성
+			ResponseEntity<Response> responseEntity =
+					 new ResponseEntity<Response>(response, httpHeaders, HttpStatus.OK);
+			
+			//반환
+			return responseEntity;
+			
+		} catch (CustomException e) {
+			// ResponseEntity로 응답 반환
+			response.setStatus(e.getStatusCode());  // CustomException에서 제공된 상태 코드
+		    response.setMessage(e.getMessage());    // CustomException에서 제공된 메시지
+	        return new ResponseEntity<Response>(response, httpHeaders, HttpStatus.OK);
+	        
+		} catch (Exception e) {
+			// 일반 예외 처리
+	        e.printStackTrace();
+	        response.setStatus(ResponseStatusCode.INTERNAL_SERVER_ERROR);
+	        response.setMessage(ResponseMessage.INTERNAL_SERVER_ERROR);
+	        return new ResponseEntity<Response>(response, httpHeaders, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
 		
-		//반환
-		return responseEntity;
 				
 	}
-	
-	
-	@Autowired
-	private EmailService emailService;
-	
 	
 	@Operation(summary = "인증번호 발송")
 	@PostMapping("/sendJoinCode")
@@ -175,41 +194,48 @@ public class MemberRestController {
 	@Operation(summary = "회원가입/관심사 입력")
 	@PostMapping("/createMember")
 	public ResponseEntity<Response> createMember(@Valid	@RequestBody MemberDtoAndTempCode memberJoinDto) {
-		
-		MemberDto memberDto = memberJoinDto.getMemberDto();
-		System.out.println("MEMBERDTO : >>> " + memberDto);
-		Integer tempCode = memberJoinDto.getTempCode();
-		System.out.println("TEMPCODE : >>>" + tempCode);
-		
+		//반환 객체 설정
 		Response response = new Response();
-		
-		//인증번호가 맞는지 확인
-		boolean isChecked = memberService.certificationCode(memberDto.getMemberEmail(), tempCode);
-		
-		System.out.println("isChecked : " + isChecked);
-		if(!isChecked) {
-			response.setStatus(ResponseStatusCode.CREATED_MEMBER_FAIL);
-			response.setMessage(ResponseMessage.CREATED_MEMBER_FAIL);
-		}
-		
-		
-		System.out.println(">>>>>saveMember memberDto : " + memberDto);
-		Member member = memberService.saveMember(memberDto);
-		System.out.println(">>>>>MEMBER member : " + member);
-		
-		response.setStatus(ResponseStatusCode.CREATED_MEMBER_SUCCESS);
-		response.setMessage(ResponseMessage.CREATED_MEMBER_SUCCESS);
 		
 		//인코딩 타입 설정
 		HttpHeaders httpHeaders = new HttpHeaders();
 		httpHeaders.setContentType(new MediaType(MediaType.APPLICATION_JSON, Charset.forName("UTF-8")));
 		
-		//반환할 응답Entity 생성
-		ResponseEntity<Response> responseEntity =
-				 new ResponseEntity<Response>(response, httpHeaders, HttpStatus.OK);
+		try {
+			
+			//memberJoinDto를 나눔
+			MemberDto memberDto = memberJoinDto.getMemberDto();
+			Integer tempCode = memberJoinDto.getTempCode();
+			
+			//인증번호가 맞는지 확인
+			boolean isChecked = memberService.certificationCode(memberDto.getMemberEmail(), tempCode);
+			
+			//인증번호 맞으면 회원가입 완료
+			Member member = memberService.saveMember(memberDto);
+			
+			response.setStatus(ResponseStatusCode.CREATED_MEMBER_SUCCESS);
+			response.setMessage(ResponseMessage.CREATED_MEMBER_SUCCESS);
+			
+			//반환할 응답Entity 생성
+			ResponseEntity<Response> responseEntity =
+					 new ResponseEntity<Response>(response, httpHeaders, HttpStatus.OK);
 			
 			return responseEntity;
+			
+		} catch (CustomException e) {
+			response.setStatus(e.getStatusCode());  // CustomException에서 제공된 상태 코드
+		    response.setMessage(e.getMessage());    // CustomException에서 제공된 메시지
+		    // ResponseEntity로 응답 반환
+	        return new ResponseEntity<Response>(response, httpHeaders, HttpStatus.OK);  
+	        
+		} catch (Exception e) {
+	        // 일반 예외 처리
+	        e.printStackTrace();
+	        response.setStatus(ResponseStatusCode.INTERNAL_SERVER_ERROR);
+	        response.setMessage(ResponseMessage.INTERNAL_SERVER_ERROR);
+	        return new ResponseEntity<Response>(response, httpHeaders, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
+	}
 	
 	/*** 
 	 * 회원 저장(멘토까지)
@@ -256,11 +282,10 @@ public class MemberRestController {
 			return responseEntity;
 		}
 	
-	/* 회원 정보 보기 */
-	@SecurityRequirement(name = "BearerAuth")//API 엔드포인트가 인증을 요구한다는 것을 문서화(Swagger에서 JWT인증을 명시
+	/* 특정 회원 정보 보기 */
 	@Operation(summary = "회원 정보 보기")
-	@GetMapping("/member-info")
-	public ResponseEntity<Response> getMember(@RequestParam(name = "memberNo") Long memberNo) {
+	@GetMapping("/member-info/{memberNo}")
+	public ResponseEntity<Response> getMember(@PathVariable(name = "memberNo") Long memberNo) {
 		
 		//번호로 멤버 객체 찾기
 		Member member = memberService.getMember(memberNo);

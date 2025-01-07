@@ -198,7 +198,7 @@ const MentorEditForm = () => {
       } else {
         alert("이미지를 선택하지 않아 기존의 이미지가 적용되었습니다.");
       }
-      const response = await memberApi.mentorProfileUpdateAction(mentorProfileNo, mentor);
+      const response = await memberApi.mentorProfileUpdateAction(mentorProfileNo, mentor, token);
       if (response.status === responseStatus.UPDATE_MENTOR_PROFILE_SUCCESS_CODE) {
         alert("멘토 정보 수정 성공");
         const response = await memberApi.updateMemberRole(token, "ROLE_MENTEE");

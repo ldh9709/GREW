@@ -89,7 +89,7 @@ export default function AdminMemberDetail({mentor, onClose, refreshMentorData}) 
          
                 </div>
             </div>
-            <div className="mentor-actions">
+            <div className="admin-mentor-actions">
                 <button className="approve-btn" onClick={handleApproval}>승인</button>
                 <button className="reject-btn" onClick={handleReject}>반려</button>
             </div>

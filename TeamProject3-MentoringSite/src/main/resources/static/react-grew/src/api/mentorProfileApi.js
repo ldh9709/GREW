@@ -66,7 +66,7 @@ export const updateMentorProfile = async (
   mentorProfileDto
 ) => {
   const response = await fetch(
-    `${BACKEND_SERVER}/mentor-profile/${mentorProfileNo}`,
+    `${BACKEND_SERVER}/mentor-profile/modify/${mentorProfileNo}`,
     {
       method: "PUT",
       headers: { "Content-Type": "application/json;charset=UTF-8" },
@@ -237,8 +237,6 @@ export const getMentorProfileByMemberNo = async (memberNo) => {
   return responseJsonObject;
 };
 
-///////////////////////////////////////////////////////////////////////////////////////////
-// PARENT_CATEGORY_NO 기준 팔로우 순 멘토 리스트 조회
 /**
  *  대분류 카테고리의 팔로우 순 멘토 리스트 조회
  */
