@@ -66,6 +66,7 @@ public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
             // Kakao 추가 로직
         	oauth2UserInfo= new KakaoUserInfo(oauth2User.getAttributes());
         }
+        
         // 인증 제공자의 이름을 가져옴
         String name = oauth2UserInfo.getName();
         // 인증 제공자의 이메일을 가져옴
@@ -75,11 +76,6 @@ public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
         String password = passwordEncoder.encode("password" + UUID.randomUUID().toString().substring(0, 6));
 
         Member findMember = memberRepository.findByMemberEmail(email);
-        
-        // 사용자 상태(memberStatus) 확인
-        if (findMember.getMemberStatus() == 2) {
-            throw new BadCredentialsException("탈퇴한 사용자입니다.");
-        }
         
         if (findMember == null) {
             findMember = Member.toSecurityEntity(MemberSecurityDto.JoinOAuth2()
