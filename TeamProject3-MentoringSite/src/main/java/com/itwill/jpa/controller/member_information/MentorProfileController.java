@@ -327,13 +327,14 @@ public class MentorProfileController {
 		Response response = new Response();
 		try {
 			// 🔥 멘토 프로필 수정 서비스 호출
-			mentorProfileService.updateMentorProfile(mentorProfileNo, mentorProfileDto);
+			MentorProfile mentorProfile = mentorProfileService.updateMentorProfile(mentorProfileNo, mentorProfileDto);
 			
 
 			// 🔥 성공 응답 생성
 			response.setStatus(ResponseStatusCode.UPDATE_MENTOR_PROFILE_SUCCESS_CODE);
 			response.setMessage(ResponseMessage.UPDATE_MENTOR_PROFILE_SUCCESS);
-
+			response.setData(mentorProfile);
+			
 			return ResponseEntity.status(HttpStatus.OK).body(response);
 		} catch (CustomException e) {
 			// ⚠️ CustomException이 발생한 경우 예외 정보를 클라이언트에 전달

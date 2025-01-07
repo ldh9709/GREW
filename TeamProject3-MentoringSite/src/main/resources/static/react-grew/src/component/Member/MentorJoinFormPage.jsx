@@ -167,31 +167,44 @@ const MentorJoinForm = () => {
     try {
       // Step 1: 멘토 프로필 생성
       let responseJsonObject = null;
-      if(mentorProfileNo === 0){
+      let check = true;
+      mentor.careerDtos.every((career) => {
+        if (career.careerStartDate && career.careerEndDate) {
+          const startDate = new Date(career.careerStartDate);
+          const endDate = new Date(career.careerEndDate);
+          if (endDate <= startDate) {
+            alert(
+              `시작일(${career.careerStartDate})은 종료일(${career.careerEndDate})보다 이전이어야 합니다. 날짜를 수정해주세요.`
+            );
+            check = false; // 유효성 검사 실패
+          }
+        }
+        return true; // 유효성 검사 통과
+      });
+
+      if(mentorProfileNo === 0 && check){
         responseJsonObject = await memberApi.mentorProfileCreateAction(token, mentor);
-        console.log("멘토 가입 responseJsonObject : ", responseJsonObject)
-      }else{
+      }else if (check){
         responseJsonObject = await memberApi.mentorProfileUpdateAction(mentorProfileNo, mentor);
       }
 
       if (responseJsonObject.status === responseStatus.UPDATE_MENTOR_PROFILE_SUCCESS_CODE || responseJsonObject.status === responseStatus.CREATED_MENTOR_PROFILE_SUCCESS_CODE) {
-        alert("멘토 정보 등록 성공");
+        alert("멘토 신청 성공");
         navigate("/member/profile");
       } else {
         alert("등록 실패");
       }
-  
         // Step 3: 이미지 업로드 (필수 이미지가 있다면)
-        if (mentorImage) {
-          await uploadImage(responseJsonObject.data.mentorProfileNo); // 생성된 번호로 이미지 업로드
-          console.log("responseJsonObject : ", responseJsonObject);
-        } else {
-          alert("이미지 없이 멘토 프로필이 저장되었습니다.");
-        }
-
+      if (mentorImage && responseJsonObject) {
+        await uploadImage(responseJsonObject.data.mentorProfileNo); // 생성된 번호로 이미지 업로드
+      } else {
+        alert("이미지 없이 멘토 프로필이 저장되었습니다.");
+      }
+      if(responseJsonObject.appdata){
         await login(responseJsonObject.addData.accessToken);
-        // 완료 후 페이지 이동
-        navigate("/member/profile");
+      }
+      // 완료 후 페이지 이동
+      navigate("/member/profile");
     } catch (error) {
       console.error("프로필 생성 중 오류 발생:", error);
       alert("프로필 생성 중 오류가 발생했습니다.");
