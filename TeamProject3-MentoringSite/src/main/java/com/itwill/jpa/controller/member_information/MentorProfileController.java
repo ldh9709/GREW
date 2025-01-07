@@ -11,6 +11,7 @@ import com.itwill.jpa.response.Response;
 import com.itwill.jpa.response.ResponseMessage;
 import com.itwill.jpa.response.ResponseStatusCode;
 import com.itwill.jpa.service.member_information.CareerService;
+import com.itwill.jpa.service.member_information.MemberService;
 import com.itwill.jpa.service.member_information.MentorProfileService;
 import com.itwill.jpa.util.HttpStatusMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,8 +27,11 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import io.swagger.v3.oas.annotations.Operation;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletResponse;
 
 import java.nio.charset.Charset;
+import java.util.Base64;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -35,7 +39,9 @@ import java.util.Map;
 @RestController
 @RequestMapping("/mentor-profile")
 public class MentorProfileController {
-
+	
+	@Autowired
+	private MemberService memberService;
 	@Autowired
 	private MentorProfileService mentorProfileService;
 	@Autowired
@@ -100,7 +106,8 @@ public class MentorProfileController {
 	@PreAuthorize("hasRole('MENTEE')")
 	@PostMapping("/create-profile")
 	public ResponseEntity<Response> saveMentorProfile(Authentication authentication,
-			@RequestBody MentorProfileDto mentorProfileDto) {
+			@RequestBody MentorProfileDto mentorProfileDto,
+			HttpServletResponse res) {
 		
 		//PrincipalDetails에서 memberNo를 가져옴
 		PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
@@ -108,17 +115,44 @@ public class MentorProfileController {
 		System.out.println("멘토 프로필 생성 memberNo : " + memberNo);
 		
 		MentorProfile mentorProfile = mentorProfileService.saveMentorProfile(memberNo, mentorProfileDto);
+		Integer mentorProfileNo = mentorProfile.getMentorProfileNo().intValue();
+		
+		//토큰 재생성
+		Map<String, String> tokens = memberService.regenerateTokensByMentorProfileNo(authentication, mentorProfileNo);
+		
+		//토큰 생성 후 http응답 헤더에 포함
+		HttpHeaders httpHeaders=new HttpHeaders();
+		httpHeaders.add("Authorization", "Bearer " + tokens.get("accessToken"));
+		httpHeaders.add("Refresh-Token", tokens.get("refreshToken"));
+		
+		//쿠키 설정
+		// 4. JSON 문자열 생성 후 Base64로 인코딩
+        String jsonValue = String.format("{\"accessToken\": \"%s\", \"refreshToken\": \"%s\"}", tokens.get("accessToken"), tokens.get("refreshToken"));
+        String encodedValue = Base64.getEncoder().encodeToString(jsonValue.getBytes());
+        
+        // 5. 쿠키 설정
+        Cookie cookie = new Cookie("member", encodedValue); // Base64로 인코딩된 값 저장
+        cookie.setHttpOnly(false); // JavaScript에서 접근 가능
+        cookie.setSecure(false); // HTTPS에서만 전송 (개발 환경에서는 false)
+        cookie.setPath("/");
+        cookie.setMaxAge(60 * 60 * 24); // 1일
+
+        res.addCookie(cookie);
 		
 		Response response = new Response();
 		response.setStatus(ResponseStatusCode.CREATED_MENTOR_PROFILE_SUCCESS_CODE);
 		response.setMessage(ResponseMessage.CREATED_MENTOR_PROFILE_SUCCESS);
 		response.setData(mentorProfile);
+		response.setAddData(tokens);
 		
-		return ResponseEntity.status(HttpStatus.CREATED).body(response);
+		ResponseEntity<Response> responseEntity = 
+				new ResponseEntity<Response>(response, httpHeaders, HttpStatus.OK);
+		
+		return responseEntity;
 	}
 
 	/**
-	 * 멘토 프로필을 생성합니다.
+	 * 멘토 더미 프로필을 생성합니다.
 	 */
 	@Operation(summary = "멘토 더미 프로필 생성")
 	@PostMapping("/{memberNo}/create-dumy-profile")
@@ -293,13 +327,14 @@ public class MentorProfileController {
 		Response response = new Response();
 		try {
 			// 🔥 멘토 프로필 수정 서비스 호출
-			mentorProfileService.updateMentorProfile(mentorProfileNo, mentorProfileDto);
+			MentorProfile mentorProfile = mentorProfileService.updateMentorProfile(mentorProfileNo, mentorProfileDto);
 			
 
 			// 🔥 성공 응답 생성
 			response.setStatus(ResponseStatusCode.UPDATE_MENTOR_PROFILE_SUCCESS_CODE);
 			response.setMessage(ResponseMessage.UPDATE_MENTOR_PROFILE_SUCCESS);
-
+			response.setData(mentorProfile);
+			
 			return ResponseEntity.status(HttpStatus.OK).body(response);
 		} catch (CustomException e) {
 			// ⚠️ CustomException이 발생한 경우 예외 정보를 클라이언트에 전달

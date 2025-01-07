@@ -385,7 +385,7 @@
   width: 300px; height: 100%;
   position: absolute;
   top: -30px; right: -380px;
-  padding: 0px 20px ;
+  padding: 20px ;
   border: 1px solid #ccc;
   background-color: #fff;
 }
@@ -428,10 +428,10 @@
 }
 
 .admin-report-textarea{
-  width: 230px;
+  width: 260px;
   min-height: 200px;
   padding: 10px;
-  margin-top: 10px;
+  margin: 10px;
   border: 1px solid #ddd;
   border-radius: 5px;
   resize: none;
@@ -443,7 +443,7 @@
   display: flex;
   justify-content: center;
   gap: 10px;
-  margin-top: 10px;
+  margin: 10px 0px;
 }
 .report-detail-button button {
   padding: 10px 50px;

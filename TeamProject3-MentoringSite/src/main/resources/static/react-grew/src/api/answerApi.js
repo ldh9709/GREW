@@ -107,7 +107,7 @@ export const updateAnswer = async (sendJsonObject,token) => {
 };
 //답변등록
 export const writeAnswer = async (sendJsonObject,inquiryNo,token) => {
-  const response = await fetch(`${BACKEND_SERVER}/answer/${inquiryNo}`, {
+  const response = await fetch(`${BACKEND_SERVER}/answer/create/${inquiryNo}`, {
     method: "POST", // HTTP 메서드
     headers: {
       "Content-Type": "application/json;charset=UTF-8", // 요청 헤더 설정

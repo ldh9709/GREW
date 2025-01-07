@@ -43,8 +43,8 @@ public class ChatMessageRestController {
 	public ResponseEntity<Response> saveMessage(@RequestBody ChatMessageDto chatMessageDto){
 		Response response = new Response();
 		ChatMessageDto chatMessage =  ChatMessageDto.toDto(chatMessageService.createChatMessage(chatMessageDto));
-		response.setStatus(ResponseStatusCode.SEND_CHATTING_SUCCESS);
-		response.setMessage(ResponseMessage.SEND_CHATTING_SUCCESS);
+		response.setStatus(ResponseStatusCode.CREATE_MESSAGE_SUCCESS);
+		response.setMessage(ResponseMessage.CREATE_MESSAGE_SUCCESS);
 		response.setData(chatMessage);
 		chatMessage.setChatRoomNo(chatMessageDto.getChatRoomNo());
 		chatMessage.setMemberNo(chatMessageDto.getMemberNo());
@@ -86,6 +86,8 @@ public class ChatMessageRestController {
 		chatMessage.setBase64Image(base64);
 		response.setStatus(ResponseStatusCode.CHATTING_LIST_SUCCESS);
 		response.setMessage(ResponseMessage.CHATTING_LIST_SUCCESS);
+		response.setStatus(ResponseStatusCode.CHOICE_MESSAGE_SUCCESS);
+		response.setMessage(ResponseMessage.CHOICE_MESSAGE_SUCCESS);
 		
 		response.setData(chatMessage);
 		HttpHeaders httpHeaders = new HttpHeaders();
@@ -103,8 +105,8 @@ public class ChatMessageRestController {
 		Response response = new Response();
 		PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
 		int count = chatMessageService.countChatMessageIsRead(chatRoomNo,principalDetails.getMemberNo());
-		response.setStatus(ResponseStatusCode.CHATTING_LIST_SUCCESS);
-		response.setMessage(ResponseMessage.CHATTING_LIST_SUCCESS);
+		response.setStatus(ResponseStatusCode.CHATTING_MESSAGE_SUCCESS);
+		response.setMessage(ResponseMessage.CHATTING_MESSAGE_SUCCESS);
 		response.setData(count);
 		HttpHeaders httpHeaders = new HttpHeaders();
 		httpHeaders.setContentType(new MediaType(MediaType.APPLICATION_JSON, Charset.forName("UTF-8")));

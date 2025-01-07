@@ -41,7 +41,7 @@ export const AuthProvider = ({ children }) => {
   
     //로그아웃 시에 실행
   const logout = () => {
-    removeCookie("member"); // 쿠키 삭제
+    // removeCookie("member"); // 쿠키 삭제
     setMember({
       token: null,
       member: null,

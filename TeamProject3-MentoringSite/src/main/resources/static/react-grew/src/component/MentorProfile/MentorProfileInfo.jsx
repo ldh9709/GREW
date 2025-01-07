@@ -72,7 +72,7 @@ export default function MentorProfileInfo({ mentorProfile }) {
   const handleQuestionButtonClick = async () => {
       if(member.memberRole === "ROLE_MENTEE"){
       await ChattingApi.createChatting(member.memberNo, mentorProfile.memberNo);
-      
+      alert("멘토링이 신청되었습니다. 채팅창을 확인해 주세요.")
       }else {
       alert("멘티 회원만 가능한 서비스입니다.");
       }

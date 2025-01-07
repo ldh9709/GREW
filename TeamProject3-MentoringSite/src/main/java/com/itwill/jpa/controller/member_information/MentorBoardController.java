@@ -52,8 +52,8 @@ public class MentorBoardController {
         Page<MentorBoardDto> mentorBoards = mentorBoardService.getMentorBoardsSortedByDate(status, page, size);
 
         Response response = new Response();
-        response.setStatus(ResponseStatusCode.READ_MEMBER_LIST_SUCCESS);
-        response.setMessage(ResponseMessage.READ_MEMBER_LIST_SUCCESS);
+        response.setStatus(ResponseStatusCode.READ_MENTOR_BOARD_LIST_SUCCESS);
+        response.setMessage(ResponseMessage.READ_MENTOR_BOARD_LIST_SUCCESS);
         response.setData(mentorBoards);
 
         HttpHeaders headers = new HttpHeaders();
@@ -212,8 +212,8 @@ public class MentorBoardController {
         );
 
         Response response = new Response();
-        response.setStatus(ResponseStatusCode.UPDATE_MEMBER_SUCCESS);
-        response.setMessage(ResponseMessage.UPDATE_MEMBER_SUCCESS);
+        response.setStatus(ResponseStatusCode.INCREASE_VIEW_MENTOR_NBOARD_SUCCESS);
+        response.setMessage(ResponseMessage.INCREASE_VIEW_MENTOR_NBOARD_SUCCESS);
         response.setData(updatedBoard);
 
         HttpHeaders headers = new HttpHeaders();
@@ -237,8 +237,8 @@ public class MentorBoardController {
         Page<MentorBoardDto> sortedBoards = mentorBoardService.findByMentorBoardOrderByView(page, size);
 
         Response response = new Response();
-        response.setStatus(ResponseStatusCode.READ_MEMBER_LIST_SUCCESS);
-        response.setMessage(ResponseMessage.READ_MEMBER_LIST_SUCCESS);
+        response.setStatus(ResponseStatusCode.READ_MENTOR_BOARD_LIST_SUCCESS);
+        response.setMessage(ResponseMessage.READ_MENTOR_BOARD_LIST_SUCCESS);
         response.setData(sortedBoards);
 
         HttpHeaders headers = new HttpHeaders();
@@ -281,8 +281,8 @@ public class MentorBoardController {
         Page<MentorBoardDto> sortedBoards = mentorBoardService.getMentorBoardsSortedByDate(page, size);
 
         Response response = new Response();
-        response.setStatus(ResponseStatusCode.READ_MEMBER_LIST_SUCCESS);
-        response.setMessage(ResponseMessage.READ_MEMBER_LIST_SUCCESS);
+        response.setStatus(ResponseStatusCode.READ_MENTOR_BOARD_LIST_SUCCESS);
+        response.setMessage(ResponseMessage.READ_MENTOR_BOARD_LIST_SUCCESS);
         response.setData(sortedBoards);
 
         HttpHeaders headers = new HttpHeaders();
@@ -309,8 +309,8 @@ public class MentorBoardController {
         Page<MentorBoardDto> mentorBoards = mentorBoardService.findByMember(memberNo, page, size);
 
         Response response = new Response();
-        response.setStatus(ResponseStatusCode.READ_MEMBER_LIST_SUCCESS);
-        response.setMessage(ResponseMessage.READ_MEMBER_LIST_SUCCESS);
+        response.setStatus(ResponseStatusCode.READ_MENTOR_BOARD_LIST_SUCCESS);
+        response.setMessage(ResponseMessage.READ_MENTOR_BOARD_LIST_SUCCESS);
         response.setData(mentorBoards);
 
         HttpHeaders headers = new HttpHeaders();
@@ -339,8 +339,8 @@ public class MentorBoardController {
 
         // 응답 생성
         Response response = new Response();
-        response.setStatus(ResponseStatusCode.READ_MEMBER_LIST_SUCCESS);
-        response.setMessage(ResponseMessage.READ_MEMBER_LIST_SUCCESS);
+        response.setStatus(ResponseStatusCode.READ_MENTOR_BOARD_LIST_SUCCESS);
+        response.setMessage(ResponseMessage.READ_MENTOR_BOARD_LIST_SUCCESS);
         response.setData(mentorBoards);
 
         HttpHeaders headers = new HttpHeaders();
@@ -403,8 +403,8 @@ public class MentorBoardController {
         Page<MentorBoardDto> mentorBoards = mentorBoardService.getByCategoryMentorBoardOrderByView(categoryNo, page, size);
 
         Response response = new Response();
-        response.setStatus(ResponseStatusCode.READ_MEMBER_LIST_SUCCESS);
-        response.setMessage(ResponseMessage.READ_MEMBER_LIST_SUCCESS);
+        response.setStatus(ResponseStatusCode.READ_MENTOR_BOARD_LIST_SUCCESS);
+        response.setMessage(ResponseMessage.READ_MENTOR_BOARD_LIST_SUCCESS);
         response.setData(mentorBoards);
 
         HttpHeaders headers = new HttpHeaders();
@@ -422,8 +422,8 @@ public class MentorBoardController {
         Page<MentorBoardDto> mentorBoards = mentorBoardService.getByParentCategoryMentorBoardOrderByView(categoryNo, page, size);
 
         Response response = new Response();
-        response.setStatus(ResponseStatusCode.READ_MEMBER_LIST_SUCCESS);
-        response.setMessage(ResponseMessage.READ_MEMBER_LIST_SUCCESS);
+        response.setStatus(ResponseStatusCode.READ_MENTOR_BOARD_LIST_SUCCESS);
+        response.setMessage(ResponseMessage.READ_MENTOR_BOARD_LIST_SUCCESS);
         response.setData(mentorBoards);
 
         HttpHeaders headers = new HttpHeaders();
@@ -441,8 +441,8 @@ public class MentorBoardController {
         Page<MentorBoardDto> mentorBoards = mentorBoardService.getByCategoryMentorBoardOrderByDate(categoryNo, page, size);
 
         Response response = new Response();
-        response.setStatus(ResponseStatusCode.READ_MEMBER_LIST_SUCCESS);
-        response.setMessage(ResponseMessage.READ_MEMBER_LIST_SUCCESS);
+        response.setStatus(ResponseStatusCode.READ_MENTOR_BOARD_LIST_SUCCESS);
+        response.setMessage(ResponseMessage.READ_MENTOR_BOARD_LIST_SUCCESS);
         response.setData(mentorBoards);
 
         HttpHeaders headers = new HttpHeaders();
@@ -460,8 +460,8 @@ public class MentorBoardController {
         Page<MentorBoardDto> mentorBoards = mentorBoardService.getByParentCategoryMentorBoardOrderByDate(categoryNo, page, size);
 
         Response response = new Response();
-        response.setStatus(ResponseStatusCode.READ_MEMBER_LIST_SUCCESS);
-        response.setMessage(ResponseMessage.READ_MEMBER_LIST_SUCCESS);
+        response.setStatus(ResponseStatusCode.READ_MENTOR_BOARD_LIST_SUCCESS);
+        response.setMessage(ResponseMessage.READ_MENTOR_BOARD_LIST_SUCCESS);
         response.setData(mentorBoards);
 
         HttpHeaders headers = new HttpHeaders();
@@ -481,8 +481,8 @@ public class MentorBoardController {
         Page<MentorBoardDto> sortedBoards = mentorBoardService.getMentorBoardsByStatusAndSortedByViews(status, page, size);
 
         Response response = new Response();
-        response.setStatus(ResponseStatusCode.READ_MEMBER_LIST_SUCCESS);
-        response.setMessage(ResponseMessage.READ_MEMBER_LIST_SUCCESS);
+        response.setStatus(ResponseStatusCode.READ_MENTOR_BOARD_LIST_SUCCESS);
+        response.setMessage(ResponseMessage.READ_MENTOR_BOARD_LIST_SUCCESS);
         response.setData(sortedBoards);
 
         HttpHeaders headers = new HttpHeaders();

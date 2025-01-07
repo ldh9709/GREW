@@ -34,8 +34,8 @@ export default function HeaderMenu() {
   // 로그아웃 처리
   const handleLogoutAction = async () => {
     try {
-      navigate("/");
-      await logout();
+      // await logout();
+      navigate(`/main`);
       auth.logout();
       alert("로그아웃하셨습니다.");
     } catch (error) {

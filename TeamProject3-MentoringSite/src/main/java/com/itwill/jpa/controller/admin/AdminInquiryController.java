@@ -63,11 +63,11 @@ public class AdminInquiryController {
 	@PreAuthorize("hasRole('ADMIN')")
 	@Operation(summary = "질문 게시글 전체 조회 (카테고리별, 최신 순)")
 	@GetMapping("/category/{categoryNo}")
-	public ResponseEntity<Response> getAdminCategoryInquiriesSortedByDate(@PathVariable(name = "categoryNo") Long categoryNo,
+	public ResponseEntity<Response> getByParentCategoryInquiryOrderByDate(@PathVariable(name = "categoryNo") Long parentsCategoryNo,
 			@RequestParam(name = "page",defaultValue = "0") int page,  // 기본값은 0 페이지
 			@RequestParam(name = "size",defaultValue = "10") int size) {
 			// 카테고리별 최신 순으로 질문 목록을 가져옴
-		Page<InquiryDto> inquiryDtos = inquiryService.getByCategoryInquiryOrderByDate(categoryNo,page,size);
+		Page<InquiryDto> inquiryDtos = inquiryService.getByParentCategoryInquiryOrderByDate(parentsCategoryNo,page,size);
 		 // 응답 객체 생성 및 상태 코드 설정
 		Response response = new Response();
 		response.setStatus(ResponseStatusCode.READ_INQUIRY_LIST_SUCCESS);// 상태 코드: 성공

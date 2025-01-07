@@ -56,6 +56,8 @@ public class ResponseMessage {
     public static final String IMAGE_UPLOAD_FAIL = "이미지 업로드에 실패했습니다.";
     public static final String MEMBER_NOT_FOUND = "해당 멤버를 찾을 수 없습니다."; 
     public static final String NOT_A_MENTOR = "해당 멤버는 멘토가 아닙니다."; 
+    public static final String INCREASE_VIEW_MENTOR_NBOARD_SUCCESS = "멘토 보드 조회수 증가 성공"; 
+    public static final String INCREASE_VIEW_MENTOR_NBOARD_FAIL = "멘토 보드 조회수 증가 실패"; 
     /******************* MENTOR PROFILE 메시지 ************************/
     public static final String CREATED_MENTOR_PROFILE_SUCCESS = "멘토 프로필 등록 성공";
     public static final String READ_MENTOR_PROFILE_SUCCESS = "멘토 프로필 상세 조회 성공";
@@ -162,13 +164,17 @@ public class ResponseMessage {
 	public static final String CHATTING_STATUS_CHANGE_FAIE = "상태 변경 실패";
 	public static final String SEND_CHATTING_SUCCESS = "채팅방 요청 전송 완료";
 	public static final String SEND_CHATTING_FAIL = "채팅방 요청 전송 실패";
-	public static final String CHATTING_LIST_SUCCESS = "채팅방 리스트 출력";
-	public static final String CHATTING_LIST_FAIE = "채팅방 리스트 출력";
+	public static final String CHATTING_LIST_SUCCESS = "채팅방 리스트 출력 성공";
+	public static final String CHATTING_LIST_FAIE = "채팅방 리스트 출력 실패";
 	public static final String CHATTING_NAME = "채팅방 제목 출력 성공";
 	public static final String CHATTING_NAME_CHANGE = "채팅방 제목 변경 성공";
-	public static final String CHATTING_MESSAGE_SUCCESS = "채팅방 대화 목록 출력";
-	public static final String CHATTING_MESSAGE_FAIE = "채팅방 대화 목록 출력";
-	public static final String READ_MESSAGE = "채팅방 대화 목록 출력";
+	public static final String CHATTING_MESSAGE_SUCCESS = "채팅방 대화 목록 출력 성공";
+	public static final String CHATTING_MESSAGE_FAIE = "채팅방 대화 목록 출력 실패";
+	public static final String CREATE_MESSAGE_SUCCESS = "메세지 생성 성공";
+	public static final String CREATE_MESSAGE_FAIE = "메세지 생성 실패";
+	public static final String READ_MESSAGE = "메세지 읽음";
+	public static final String CHOICE_MESSAGE_SUCCESS = "메세지 정보 보기 성공";
+	public static final String CHOICE_MESSAGE_FAIE = "메세지 정보 보기 실패";
 	
 	/******************* REVIEW 메시지 **********************/
 	public static final String CREATED_REVIEW_SUCCESS = "리뷰 등록 성공.";
