@@ -2303,14 +2303,14 @@ values(answer_no_SEQ.nextval, '당뇨 식단을 구성할 때 중요한 것은 �
 
 /* 채팅방 요정 등록 */
 insert into chat_room (chat_room_no, chat_room_status, chat_room_start_date, chat_room_end_date, mentee_no, mentor_no)
-values(chat_room_no_SEQ.nextval, 7600, sysdate, null, 1, 2);
+values(chat_room_no_SEQ.nextval, 7100, sysdate, null, 1, 2);
 insert into chat_room (chat_room_no, chat_room_status, chat_room_start_date, chat_room_end_date, mentee_no, mentor_no)
-values(chat_room_no_SEQ.nextval, 7600, sysdate, null, 4, 2);
+values(chat_room_no_SEQ.nextval, 7100, sysdate, null, 4, 2);
 insert into chat_room (chat_room_no, chat_room_status, chat_room_start_date, chat_room_end_date, mentee_no, mentor_no)
-values(chat_room_no_SEQ.nextval, 7500, sysdate, null, 5, 2);
+values(chat_room_no_SEQ.nextval, 7100, sysdate, null, 5, 2);
 
 insert into chat_room (chat_room_no, chat_room_status, chat_room_start_date, chat_room_end_date, mentee_no, mentor_no)
-values(chat_room_no_SEQ.nextval, 7500, sysdate, null, 2, 8);
+values(chat_room_no_SEQ.nextval, 7100, sysdate, null, 2, 8);
 insert into chat_room (chat_room_no, chat_room_status, chat_room_start_date, chat_room_end_date, mentee_no, mentor_no)
 values(chat_room_no_SEQ.nextval, 7000, sysdate, null, 2, 9);
 insert into chat_room (chat_room_no, chat_room_status, chat_room_start_date, chat_room_end_date, mentee_no, mentor_no)
@@ -2318,28 +2318,46 @@ values(chat_room_no_SEQ.nextval, 7100, sysdate, null, 2, 10);
 insert into chat_room (chat_room_no, chat_room_status, chat_room_start_date, chat_room_end_date, mentee_no, mentor_no)
 values(chat_room_no_SEQ.nextval, 7200, sysdate, null, 2, 11);
 insert into chat_room (chat_room_no, chat_room_status, chat_room_start_date, chat_room_end_date, mentee_no, mentor_no)
-values(chat_room_no_SEQ.nextval, 7200, sysdate, null, 2, 12);
+values(chat_room_no_SEQ.nextval, 7000, sysdate, null, 2, 12);
 insert into chat_room (chat_room_no, chat_room_status, chat_room_start_date, chat_room_end_date, mentee_no, mentor_no)
-values(chat_room_no_SEQ.nextval, 7500, sysdate, null, 2, 13);
+values(chat_room_no_SEQ.nextval, 7100, sysdate, null, 2, 13);
+insert into chat_room (chat_room_no, chat_room_status, chat_room_start_date, chat_room_end_date, mentee_no, mentor_no)
+values(chat_room_no_SEQ.nextval, 7100, sysdate, null, 2, 22);
+insert into chat_room (chat_room_no, chat_room_status, chat_room_start_date, chat_room_end_date, mentee_no, mentor_no)
+values(chat_room_no_SEQ.nextval, 7100, sysdate, null, 2, 5);
+insert into chat_room (chat_room_no, chat_room_status, chat_room_start_date, chat_room_end_date, mentee_no, mentor_no)
+values(chat_room_no_SEQ.nextval, 7100, sysdate, null, 12, 11);
+insert into chat_room (chat_room_no, chat_room_status, chat_room_start_date, chat_room_end_date, mentee_no, mentor_no)
+values(chat_room_no_SEQ.nextval, 7100, sysdate, null, 1, 11);
+insert into chat_room (chat_room_no, chat_room_status, chat_room_start_date, chat_room_end_date, mentee_no, mentor_no)
+values(chat_room_no_SEQ.nextval, 7100, sysdate, null, 2, 28);
+insert into chat_room (chat_room_no, chat_room_status, chat_room_start_date, chat_room_end_date, mentee_no, mentor_no)
+values(chat_room_no_SEQ.nextval, 7100, sysdate, null, 2, 17);
+insert into chat_room (chat_room_no, chat_room_status, chat_room_start_date, chat_room_end_date, mentee_no, mentor_no)
+values(chat_room_no_SEQ.nextval, 7100, sysdate, null, 6, 11);
+insert into chat_room (chat_room_no, chat_room_status, chat_room_start_date, chat_room_end_date, mentee_no, mentor_no)
+values(chat_room_no_SEQ.nextval, 7100, sysdate, null, 4, 28);
+insert into chat_room (chat_room_no, chat_room_status, chat_room_start_date, chat_room_end_date, mentee_no, mentor_no)
+values(chat_room_no_SEQ.nextval, 7100, sysdate, null, 44, 17);
+insert into chat_room (chat_room_no, chat_room_status, chat_room_start_date, chat_room_end_date, mentee_no, mentor_no)
+values(chat_room_no_SEQ.nextval, 7100, sysdate, null, 37, 11);
+insert into chat_room (chat_room_no, chat_room_status, chat_room_start_date, chat_room_end_date, mentee_no, mentor_no)
+values(chat_room_no_SEQ.nextval, 7100, sysdate, null, 21, 28);
+insert into chat_room (chat_room_no, chat_room_status, chat_room_start_date, chat_room_end_date, mentee_no, mentor_no)
+values(chat_room_no_SEQ.nextval, 7100, sysdate, null, 28, 17);
+insert into chat_room (chat_room_no, chat_room_status, chat_room_start_date, chat_room_end_date, mentee_no, mentor_no)
+values(chat_room_no_SEQ.nextval, 7100, sysdate, null, 32, 11);
+insert into chat_room (chat_room_no, chat_room_status, chat_room_start_date, chat_room_end_date, mentee_no, mentor_no)
+values(chat_room_no_SEQ.nextval, 7100, sysdate, null, 40, 28);
+insert into chat_room (chat_room_no, chat_room_status, chat_room_start_date, chat_room_end_date, mentee_no, mentor_no)
+values(chat_room_no_SEQ.nextval, 7100, sysdate, null, 12, 17);
+insert into chat_room (chat_room_no, chat_room_status, chat_room_start_date, chat_room_end_date, mentee_no, mentor_no)
+values(chat_room_no_SEQ.nextval, 7100, sysdate, null, 17, 11);
+insert into chat_room (chat_room_no, chat_room_status, chat_room_start_date, chat_room_end_date, mentee_no, mentor_no)
+values(chat_room_no_SEQ.nextval, 7100, sysdate, null, 11, 28);
+insert into chat_room (chat_room_no, chat_room_status, chat_room_start_date, chat_room_end_date, mentee_no, mentor_no)
+values(chat_room_no_SEQ.nextval, 7100, sysdate, null, 33, 17);
 
-insert into chat_room (chat_room_no, chat_room_status, chat_room_start_date, chat_room_end_date, mentee_no, mentor_no)
-values(chat_room_no_SEQ.nextval, 7100, sysdate, null, 3, 8);
-insert into chat_room (chat_room_no, chat_room_status, chat_room_start_date, chat_room_end_date, mentee_no, mentor_no)
-values(chat_room_no_SEQ.nextval, 7100, sysdate, null, 3, 9);
-insert into chat_room (chat_room_no, chat_room_status, chat_room_start_date, chat_room_end_date, mentee_no, mentor_no)
-values(chat_room_no_SEQ.nextval, 7100, sysdate, null, 4, 10);
-insert into chat_room (chat_room_no, chat_room_status, chat_room_start_date, chat_room_end_date, mentee_no, mentor_no)
-values(chat_room_no_SEQ.nextval, 7100, sysdate, null, 5, 11);
-insert into chat_room (chat_room_no, chat_room_status, chat_room_start_date, chat_room_end_date, mentee_no, mentor_no)
-values(chat_room_no_SEQ.nextval, 7100, sysdate, null, 6, 12);
-insert into chat_room (chat_room_no, chat_room_status, chat_room_start_date, chat_room_end_date, mentee_no, mentor_no)
-values(chat_room_no_SEQ.nextval, 7100, sysdate, null, 7, 13);
-insert into chat_room (chat_room_no, chat_room_status, chat_room_start_date, chat_room_end_date, mentee_no, mentor_no)
-values(chat_room_no_SEQ.nextval, 7100, sysdate, null, 8, 9);
-insert into chat_room (chat_room_no, chat_room_status, chat_room_start_date, chat_room_end_date, mentee_no, mentor_no)
-values(chat_room_no_SEQ.nextval, 7100, sysdate, null, 9, 2);
-insert into chat_room (chat_room_no, chat_room_status, chat_room_start_date, chat_room_end_date, mentee_no, mentor_no)
-values(chat_room_no_SEQ.nextval, 7100, sysdate, null, 10, 44);
 
 /* 채팅방 활성화 등록 */
 insert into chat_room_status (chat_room_no, chat_room_name, chat_room_status, member_no, chat_room_status_no) 
@@ -2363,9 +2381,9 @@ values (5, '양한수님에게 채팅방을 신청했습니다.', 7500, 2, chat_
 insert into chat_room_status (chat_room_no, chat_room_name, chat_room_status, member_no, chat_room_status_no) 
 values (5, '이도현님에게서 채팅방 신청이 도착했습니다.', 7500, 9, chat_room_status_no_SEQ.nextval);
 insert into chat_room_status (chat_room_no, chat_room_name, chat_room_status, member_no, chat_room_status_no) 
-values (6, '이도현님과 이도현님의 채팅방', 7600, 2, chat_room_status_no_SEQ.nextval);
+values (6, '이도현님과 이지현님의 채팅방', 7600, 2, chat_room_status_no_SEQ.nextval);
 insert into chat_room_status (chat_room_no, chat_room_name, chat_room_status, member_no, chat_room_status_no) 
-values (6, '이도현님과 이도현님의 채팅방', 7600, 10, chat_room_status_no_SEQ.nextval);
+values (6, '이도현님과 이지현님의 채팅방', 7600, 10, chat_room_status_no_SEQ.nextval);
 insert into chat_room_status (chat_room_no, chat_room_name, chat_room_status, member_no, chat_room_status_no) 
 values (7, '이도현님과 김민수님의 채팅방', 7600, 2, chat_room_status_no_SEQ.nextval);
 insert into chat_room_status (chat_room_no, chat_room_name, chat_room_status, member_no, chat_room_status_no) 
@@ -2378,6 +2396,94 @@ insert into chat_room_status (chat_room_no, chat_room_name, chat_room_status, me
 values (9, '이도현님과 박지우님의 채팅방', 7600, 2, chat_room_status_no_SEQ.nextval);
 insert into chat_room_status (chat_room_no, chat_room_name, chat_room_status, member_no, chat_room_status_no) 
 values (9, '이도현님과 박지우님의 채팅방', 7600, 13, chat_room_status_no_SEQ.nextval);
+insert into chat_room_status (chat_room_no, chat_room_name, chat_room_status, member_no, chat_room_status_no) 
+values (10, '이도현님과 김태윤님의 채팅방', 7600, 2, chat_room_status_no_SEQ.nextval);
+insert into chat_room_status (chat_room_no, chat_room_name, chat_room_status, member_no, chat_room_status_no) 
+values (10, '이도현님과 김태윤님의 채팅방', 7600, 22, chat_room_status_no_SEQ.nextval);
+insert into chat_room_status (chat_room_no, chat_room_name, chat_room_status, member_no, chat_room_status_no) 
+values (11, '이도현님과 나문정님의 채팅방', 7600, 2, chat_room_status_no_SEQ.nextval);
+insert into chat_room_status (chat_room_no, chat_room_name, chat_room_status, member_no, chat_room_status_no) 
+values (11, '이도현님과 나문정님의 채팅방', 7600, 5, chat_room_status_no_SEQ.nextval);
+
+insert into chat_room_status (chat_room_no, chat_room_name, chat_room_status, member_no, chat_room_status_no) 
+values (12, '이서준님과 김민수님의 채팅방', 7600, 12, chat_room_status_no_SEQ.nextval);
+insert into chat_room_status (chat_room_no, chat_room_name, chat_room_status, member_no, chat_room_status_no) 
+values (12, '이서준님과 김민수님의 채팅방', 7600, 11, chat_room_status_no_SEQ.nextval);
+
+insert into chat_room_status (chat_room_no, chat_room_name, chat_room_status, member_no, chat_room_status_no) 
+values (13, '이서준님과 김민수님의 채팅방', 7600, 1, chat_room_status_no_SEQ.nextval);
+insert into chat_room_status (chat_room_no, chat_room_name, chat_room_status, member_no, chat_room_status_no) 
+values (13, '이서준님과 김민수님의 채팅방', 7600, 11, chat_room_status_no_SEQ.nextval);
+
+insert into chat_room_status (chat_room_no, chat_room_name, chat_room_status, member_no, chat_room_status_no) 
+values (14, '이도현님과 최유진님의 채팅방', 7600, 2, chat_room_status_no_SEQ.nextval);
+insert into chat_room_status (chat_room_no, chat_room_name, chat_room_status, member_no, chat_room_status_no) 
+values (14, '이도현님과 최유진님의 채팅방', 7600, 28, chat_room_status_no_SEQ.nextval);
+
+insert into chat_room_status (chat_room_no, chat_room_name, chat_room_status, member_no, chat_room_status_no) 
+values (15, '이도현님과 김도윤님의 채팅방', 7600, 2, chat_room_status_no_SEQ.nextval);
+insert into chat_room_status (chat_room_no, chat_room_name, chat_room_status, member_no, chat_room_status_no) 
+values (15, '이도현님과 김도윤님의 채팅방', 7600, 17, chat_room_status_no_SEQ.nextval);
+
+insert into chat_room_status (chat_room_no, chat_room_name, chat_room_status, member_no, chat_room_status_no) 
+values (16, '문준형님과 김민수님의 채팅방', 7600, 6, chat_room_status_no_SEQ.nextval);
+insert into chat_room_status (chat_room_no, chat_room_name, chat_room_status, member_no, chat_room_status_no) 
+values (16, '문준형님과 김민수님의 채팅방', 7600, 11, chat_room_status_no_SEQ.nextval);
+
+insert into chat_room_status (chat_room_no, chat_room_name, chat_room_status, member_no, chat_room_status_no) 
+values (17, '김찬영님과 최유진님의 채팅방', 7600, 4, chat_room_status_no_SEQ.nextval);
+insert into chat_room_status (chat_room_no, chat_room_name, chat_room_status, member_no, chat_room_status_no) 
+values (17, '김찬영님과 최유진님의 채팅방', 7600, 28, chat_room_status_no_SEQ.nextval);
+
+insert into chat_room_status (chat_room_no, chat_room_name, chat_room_status, member_no, chat_room_status_no) 
+values (18, '한유진님과 김도윤님의 채팅방', 7600, 44, chat_room_status_no_SEQ.nextval);
+insert into chat_room_status (chat_room_no, chat_room_name, chat_room_status, member_no, chat_room_status_no) 
+values (18, '한유진님과 김도윤님의 채팅방', 7600, 17, chat_room_status_no_SEQ.nextval);
+
+insert into chat_room_status (chat_room_no, chat_room_name, chat_room_status, member_no, chat_room_status_no) 
+values (19, '이서윤님과 김민수님의 채팅방', 7600, 37, chat_room_status_no_SEQ.nextval);
+insert into chat_room_status (chat_room_no, chat_room_name, chat_room_status, member_no, chat_room_status_no) 
+values (19, '이서윤님과 김민수님의 채팅방', 7600, 11, chat_room_status_no_SEQ.nextval);
+
+insert into chat_room_status (chat_room_no, chat_room_name, chat_room_status, member_no, chat_room_status_no) 
+values (20, '김윤하님과 최유진님의 채팅방', 7600, 21, chat_room_status_no_SEQ.nextval);
+insert into chat_room_status (chat_room_no, chat_room_name, chat_room_status, member_no, chat_room_status_no) 
+values (20, '김윤하님과 최유진님의 채팅방', 7600, 28, chat_room_status_no_SEQ.nextval);
+
+insert into chat_room_status (chat_room_no, chat_room_name, chat_room_status, member_no, chat_room_status_no) 
+values (21, '최유진님과 김도윤님의 채팅방', 7600, 28, chat_room_status_no_SEQ.nextval);
+insert into chat_room_status (chat_room_no, chat_room_name, chat_room_status, member_no, chat_room_status_no) 
+values (21, '최유진님과 김도윤님의 채팅방', 7600, 17, chat_room_status_no_SEQ.nextval);
+
+insert into chat_room_status (chat_room_no, chat_room_name, chat_room_status, member_no, chat_room_status_no) 
+values (22, '박정민님과 김민수님의 채팅방', 7600, 32, chat_room_status_no_SEQ.nextval);
+insert into chat_room_status (chat_room_no, chat_room_name, chat_room_status, member_no, chat_room_status_no) 
+values (22, '박정민님과 김민수님의 채팅방', 7600, 11, chat_room_status_no_SEQ.nextval);
+
+insert into chat_room_status (chat_room_no, chat_room_name, chat_room_status, member_no, chat_room_status_no) 
+values (23, '이서준님과 김민수님의 채팅방', 7600, 40, chat_room_status_no_SEQ.nextval);
+insert into chat_room_status (chat_room_no, chat_room_name, chat_room_status, member_no, chat_room_status_no) 
+values (23, '이서준님과 김민수님의 채팅방', 7600, 28, chat_room_status_no_SEQ.nextval);
+
+insert into chat_room_status (chat_room_no, chat_room_name, chat_room_status, member_no, chat_room_status_no) 
+values (24, '정민호님과 김도윤님의 채팅방', 7600, 12, chat_room_status_no_SEQ.nextval);
+insert into chat_room_status (chat_room_no, chat_room_name, chat_room_status, member_no, chat_room_status_no) 
+values (24, '정민호님과 김도윤님의 채팅방', 7600, 17, chat_room_status_no_SEQ.nextval);
+
+insert into chat_room_status (chat_room_no, chat_room_name, chat_room_status, member_no, chat_room_status_no) 
+values (25, '김도윤님과 김민수님의 채팅방', 7600, 17, chat_room_status_no_SEQ.nextval);
+insert into chat_room_status (chat_room_no, chat_room_name, chat_room_status, member_no, chat_room_status_no) 
+values (25, '김도윤님과 김민수님의 채팅방', 7600, 11, chat_room_status_no_SEQ.nextval);
+
+insert into chat_room_status (chat_room_no, chat_room_name, chat_room_status, member_no, chat_room_status_no) 
+values (26, '김민수님과 김민수님의 채팅방', 7600, 11, chat_room_status_no_SEQ.nextval);
+insert into chat_room_status (chat_room_no, chat_room_name, chat_room_status, member_no, chat_room_status_no) 
+values (26, '김민수님과 김민수님의 채팅방', 7600, 28, chat_room_status_no_SEQ.nextval);
+
+insert into chat_room_status (chat_room_no, chat_room_name, chat_room_status, member_no, chat_room_status_no) 
+values (27, '이서준님과 김도윤님의 채팅방', 7600, 33, chat_room_status_no_SEQ.nextval);
+insert into chat_room_status (chat_room_no, chat_room_name, chat_room_status, member_no, chat_room_status_no) 
+values (27, '이서준님과 김도윤님의 채팅방', 7600, 17, chat_room_status_no_SEQ.nextval);
 
 
 
@@ -2409,45 +2515,92 @@ insert into review (review_no, review_title, review_status, review_content, revi
 values (review_no_SEQ.nextval, '정말 만족스러운 경험이었어요!', 1, '멘토님 덕분에 많은 도움이 되었어요. 처음에는 긴장했지만, 멘토님이 친절하게 설명해 주셔서 이해가 잘 됐어요. 정말 감사해요!', 5, sysdate, 1);
 
 insert into review (review_no, review_title, review_status, review_content, review_score, review_date, chat_room_no)
-values (review_no_SEQ.nextval, '좀 아쉬운 부분이 있었어요', 1, '멘토님은 좋은 분이시지만, 제가 기대한 내용과는 조금 달랐어요. 그래도 유익한 시간은 되었어요.', 3, sysdate, 1);
+values (review_no_SEQ.nextval, '좀 아쉬운 부분이 있었어요', 1, '멘토님은 좋은 분이시지만, 제가 기대한 내용과는 조금 달랐어요. 그래도 유익한 시간은 되었어요.', 3, sysdate, 2);
 insert into review (review_no, review_title, review_status, review_content, review_score, review_date, chat_room_no)
-values (review_no_SEQ.nextval, '좀 아쉬운 부분이 많았어요', 1, '멘토님은 좋은 분이시지만, 제가 기대한 내용과는 조금 달랐어요. 그래도 유익한 시간은 되었어요.', 3, sysdate, 1);
+values (review_no_SEQ.nextval, '좀 아쉬운 부분이 많았어요', 1, '멘토님은 좋은 분이시지만, 제가 기대한 내용과는 조금 달랐어요. 그래도 유익한 시간은 되었어요.', 3, sysdate, 3);
 
 insert into review (review_no, review_title, review_status, review_content, review_score, review_date, chat_room_no)
-values (review_no_SEQ.nextval, '완벽한 멘토링!', 1, '정말 최고였어요! 멘토님의 조언 덕분에 고민이 해결됐고, 실질적인 도움을 많이 받았습니다. 추천드려요!', 5, sysdate, 1);
+values (review_no_SEQ.nextval, '완벽한 멘토링!', 1, '정말 최고였어요! 멘토님의 조언 덕분에 고민이 해결됐고, 실질적인 도움을 많이 받았습니다. 추천드려요!', 5, sysdate, 4);
 
 insert into review (review_no, review_title, review_status, review_content, review_score, review_date, chat_room_no)
-values (review_no_SEQ.nextval, '멘토님이 너무 친절했어요', 1, '멘토님이 너무 친절하고 잘 설명해 주셔서 편하게 질문할 수 있었습니다. 덕분에 많은 도움이 되었어요. 감사합니다!', 4, sysdate, 2);
+values (review_no_SEQ.nextval, '멘토님이 너무 친절했어요', 1, '멘토님이 너무 친절하고 잘 설명해 주셔서 편하게 질문할 수 있었습니다. 덕분에 많은 도움이 되었어요. 감사합니다!', 4, sysdate, 5);
 
 insert into review (review_no, review_title, review_status, review_content, review_score, review_date, chat_room_no)
-values (review_no_SEQ.nextval, '조금 아쉬웠어요', 1, '멘토님의 경험은 풍부하셨지만, 제 상황에 맞는 구체적인 예시를 더 들어주셨으면 좋았을 것 같아요.', 2, sysdate, 2);
+values (review_no_SEQ.nextval, '조금 아쉬웠어요', 1, '멘토님의 경험은 풍부하셨지만, 제 상황에 맞는 구체적인 예시를 더 들어주셨으면 좋았을 것 같아요.', 2, sysdate, 1);
 
 insert into review (review_no, review_title, review_status, review_content, review_score, review_date, chat_room_no)
 values (review_no_SEQ.nextval, '좋은 경험이었어요', 1, '멘토님의 조언이 정말 도움이 되었어요. 다만, 약간의 시간이 부족했던 점은 아쉬웠습니다.', 4, sysdate, 2);
 
 insert into review (review_no, review_title, review_status, review_content, review_score, review_date, chat_room_no)
-values (review_no_SEQ.nextval, '다시 만나고 싶은 멘토!', 1, '멘토님은 정말 따뜻하고 친절하세요. 어려운 질문도 잘 설명해 주셔서 큰 도움이 되었어요.', 5, sysdate, 3);
+values (review_no_SEQ.nextval, '다시 만나고 싶은 멘토!', 1, '멘토님은 정말 따뜻하고 친절하세요. 어려운 질문도 잘 설명해 주셔서 큰 도움이 되었어요.', 5, sysdate, 10);
 
 insert into review (review_no, review_title, review_status, review_content, review_score, review_date, chat_room_no)
-values (review_no_SEQ.nextval, '기대보다 부족했던 멘토링', 1, '멘토님의 말씀이 유익하지 않아서 기대했던 만큼의 도움을 받지 못했습니다. 조금 아쉬워요.', 2, sysdate, 4);
+values (review_no_SEQ.nextval, '기대보다 부족했던 멘토링', 1, '멘토님의 말씀이 유익하지 않아서 기대했던 만큼의 도움을 받지 못했습니다. 조금 아쉬워요.', 2, sysdate, 11);
 
 insert into review (review_no, review_title, review_status, review_content, review_score, review_date, chat_room_no)
-values (review_no_SEQ.nextval, '조금 더 구체적인 피드백을 원했어요', 1, '멘토님은 좋으셨지만, 제 상황에 대해 좀 더 구체적인 조언을 듣고 싶었어요. 전반적으로 괜찮은 경험이었습니다.', 3, sysdate, 5);
+values (review_no_SEQ.nextval, '조금 더 구체적인 피드백을 원했어요', 1, '멘토님은 좋으셨지만, 제 상황에 대해 좀 더 구체적인 조언을 듣고 싶었어요. 전반적으로 괜찮은 경험이었습니다.', 3, sysdate, 12);
 
 insert into review (review_no, review_title, review_status, review_content, review_score, review_date, chat_room_no)
-values (review_no_SEQ.nextval, '매우 만족했습니다!', 1, '멘토님의 지도 덕분에 많은 것이 변했습니다. 제가 원하는 방향으로 도움을 주셔서 매우 만족했습니다. 감사해요!', 5, sysdate, 6);
+values (review_no_SEQ.nextval, '매우 만족했습니다!', 1, '멘토님의 지도 덕분에 많은 것이 변했습니다. 제가 원하는 방향으로 도움을 주셔서 매우 만족했습니다. 감사해요!', 5, sysdate, 10);
 
 insert into review (review_no, review_title, review_status, review_content, review_score, review_date, chat_room_no)
-values (review_no_SEQ.nextval, '좋은 경험이었어요', 1, '멘토님이 친절하시고 세심하게 도와주셨습니다. 덕분에 많은 도움이 되었습니다.', 4, sysdate, 6);
+values (review_no_SEQ.nextval, '좋은 경험이었어요', 1, '멘토님이 친절하시고 세심하게 도와주셨습니다. 덕분에 많은 도움이 되었습니다.', 4, sysdate, 11);
 
+insert into review (review_no, review_title, review_status, review_content, review_score, review_date, chat_room_no)
+values (review_no_SEQ.nextval, '완벽한 멘토링!', 1, '정말 최고였어요! 멘토님의 조언 덕분에 고민이 해결됐고, 실질적인 도움을 많이 받았습니다. 추천드려요!', 5, sysdate, 12);
 
 
 insert into review (review_no, review_title, review_status, review_content, review_score, review_date, chat_room_no)
-values (review_no_SEQ.nextval, '도움이 많이 되었어요', 1, '멘토님 덕분에 여러 문제를 해결할 수 있었어요. 구체적인 피드백을 통해 많은 것을 배우게 되었습니다.', 5, sysdate, 9);
+values (review_no_SEQ.nextval, '도움이 많이 되었어요', 1, '멘토님 덕분에 여러 문제를 해결할 수 있었어요. 구체적인 피드백을 통해 많은 것을 배우게 되었습니다.', 5, sysdate, 10);
 
 insert into review (review_no, review_title, review_status, review_content, review_score, review_date, chat_room_no)
 values (review_no_SEQ.nextval, '아쉬운 부분도 있었어요', 1, '멘토님이 좋은 사람임에도 불구하고, 제가 기대한 대로는 진행되지 않아 조금 아쉬웠어요. 하지만 도움이 되는 부분도 있었습니다.', 3, sysdate, 9);
 
+
+insert into review (review_no, review_title, review_status, review_content, review_score, review_date, chat_room_no)
+values (review_no_SEQ.nextval, '좀 아쉬운 부분이 많았어요', 1, '멘토님은 좋은 분이시지만, 제가 기대한 내용과는 조금 달랐어요. 그래도 유익한 시간은 되었어요.', 3, sysdate, 13);
+
+insert into review (review_no, review_title, review_status, review_content, review_score, review_date, chat_room_no)
+values (review_no_SEQ.nextval, '완벽한 멘토링!', 1, '정말 최고였어요! 멘토님의 조언 덕분에 고민이 해결됐고, 실질적인 도움을 많이 받았습니다. 추천드려요!', 5, sysdate, 14);
+
+insert into review (review_no, review_title, review_status, review_content, review_score, review_date, chat_room_no)
+values (review_no_SEQ.nextval, '멘토님이 너무 친절했어요', 1, '멘토님이 너무 친절하고 잘 설명해 주셔서 편하게 질문할 수 있었습니다. 덕분에 많은 도움이 되었어요. 감사합니다!', 4, sysdate, 15);
+
+insert into review (review_no, review_title, review_status, review_content, review_score, review_date, chat_room_no)
+values (review_no_SEQ.nextval, '조금 아쉬웠어요', 1, '멘토님의 경험은 풍부하셨지만, 제 상황에 맞는 구체적인 예시를 더 들어주셨으면 좋았을 것 같아요.', 2, sysdate, 16);
+
+insert into review (review_no, review_title, review_status, review_content, review_score, review_date, chat_room_no)
+values (review_no_SEQ.nextval, '좋은 경험이었어요', 1, '멘토님의 조언이 정말 도움이 되었어요. 다만, 약간의 시간이 부족했던 점은 아쉬웠습니다.', 4, sysdate, 17);
+
+insert into review (review_no, review_title, review_status, review_content, review_score, review_date, chat_room_no)
+values (review_no_SEQ.nextval, '다시 만나고 싶은 멘토!', 1, '멘토님은 정말 따뜻하고 친절하세요. 어려운 질문도 잘 설명해 주셔서 큰 도움이 되었어요.', 5, sysdate, 18);
+
+insert into review (review_no, review_title, review_status, review_content, review_score, review_date, chat_room_no)
+values (review_no_SEQ.nextval, '기대보다 부족했던 멘토링', 1, '멘토님의 말씀이 유익하지 않아서 기대했던 만큼의 도움을 받지 못했습니다. 조금 아쉬워요.', 2, sysdate, 19);
+
+insert into review (review_no, review_title, review_status, review_content, review_score, review_date, chat_room_no)
+values (review_no_SEQ.nextval, '조금 더 구체적인 피드백을 원했어요', 1, '멘토님은 좋으셨지만, 제 상황에 대해 좀 더 구체적인 조언을 듣고 싶었어요. 전반적으로 괜찮은 경험이었습니다.', 3, sysdate, 20);
+
+insert into review (review_no, review_title, review_status, review_content, review_score, review_date, chat_room_no)
+values (review_no_SEQ.nextval, '매우 만족했습니다!', 1, '멘토님의 지도 덕분에 많은 것이 변했습니다. 제가 원하는 방향으로 도움을 주셔서 매우 만족했습니다. 감사해요!', 5, sysdate, 21);
+
+insert into review (review_no, review_title, review_status, review_content, review_score, review_date, chat_room_no)
+values (review_no_SEQ.nextval, '좋은 경험이었어요', 1, '멘토님이 친절하시고 세심하게 도와주셨습니다. 덕분에 많은 도움이 되었습니다.', 4, sysdate, 22);
+
+insert into review (review_no, review_title, review_status, review_content, review_score, review_date, chat_room_no)
+values (review_no_SEQ.nextval, '완벽한 멘토링!', 1, '정말 최고였어요! 멘토님의 조언 덕분에 고민이 해결됐고, 실질적인 도움을 많이 받았습니다. 추천드려요!', 5, sysdate, 23);
+
+insert into review (review_no, review_title, review_status, review_content, review_score, review_date, chat_room_no)
+values (review_no_SEQ.nextval, '조금 아쉬웠어요', 1, '멘토님의 경험은 풍부하셨지만, 제 상황에 맞는 구체적인 예시를 더 들어주셨으면 좋았을 것 같아요.', 2, sysdate, 24);
+
+insert into review (review_no, review_title, review_status, review_content, review_score, review_date, chat_room_no)
+values (review_no_SEQ.nextval, '좋은 경험이었어요', 1, '멘토님의 조언이 정말 도움이 되었어요. 다만, 약간의 시간이 부족했던 점은 아쉬웠습니다.', 4, sysdate, 25);
+
+insert into review (review_no, review_title, review_status, review_content, review_score, review_date, chat_room_no)
+values (review_no_SEQ.nextval, '다시 만나고 싶은 멘토!', 1, '멘토님은 정말 따뜻하고 친절하세요. 어려운 질문도 잘 설명해 주셔서 큰 도움이 되었어요.', 5, sysdate, 26);
+
+insert into review (review_no, review_title, review_status, review_content, review_score, review_date, chat_room_no)
+values (review_no_SEQ.nextval, '조금 더 구체적인 피드백을 원했어요', 1, '멘토님은 좋으셨지만, 제 상황에 대해 좀 더 구체적인 조언을 듣고 싶었어요. 전반적으로 괜찮은 경험이었습니다.', 3, sysdate, 27);
 
 /* 추천 등록 */
 insert into vote(vote_no, vote_type, vote_date, answer_no, member_no)

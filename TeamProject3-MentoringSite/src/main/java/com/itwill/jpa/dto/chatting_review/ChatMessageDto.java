@@ -28,6 +28,8 @@ public class ChatMessageDto {
     
     private long chatRoomNo;
     
+    private String base64Image;
+    
  // DTO -> 엔티티 변환
     public static ChatMessageDto toDto(ChatMessage chatMessageEntity) {
         return ChatMessageDto.builder()

@@ -35,53 +35,6 @@ const ChattingMessage = ({ roomId, roomName, Status, mentorNo }) => {
     return `${year}년 ${month}월 ${day}일`;
   };
 
-  // 채팅 메시지 로드
-  const chatMessages = async (username) => {
-    const responseJsonObject = await ChattingApi.viewChatMessage(roomId);
-
-    const backMessage = responseJsonObject.data.map((msg) => ({
-      memberName: msg.memberName,
-      chatMessageDate: msg.chatMessageDate,
-      chatMessageContent: msg.chatMessageContent,
-      chatMessageCheck: msg.chatMessageCheck,
-      type: msg.memberName === username ? "sent" : "received", // 메시지 유형 설정
-      imageData: msg.imageData || null,
-      chatMessageNo: msg.chatMessageNo,
-    }));
-    setMessages(backMessage);
-
-    // 읽지 않은 메시지 중 자신의 메시지가 아닌 것만 필터링
-    const unreadMessages = responseJsonObject.data.filter(
-      (msg) => msg.chatMessageCheck === 1 && msg.memberName !== username
-    );
-
-    // 읽음 상태 업데이트 요청
-    if (unreadMessages.length > 0) {
-      //안읽은 채팅이 있는지 확인
-      Promise.all(
-        //Promise.all은 배열이 완료될 때까지 기다린 뒤 .then 블록을 실행
-        unreadMessages.map((msg) =>
-          ChattingApi.readChatMessage(msg.chatMessageNo)
-        )
-      ).then(() => {
-        // 읽음 상태를 업데이트한 메시지를 반영
-        setHasUnreadMessages(true); // 상태 업데이트
-        setMessages(
-          (
-            prevMessages //react객체안에 업데이트 된 정보를 담음
-          ) =>
-            prevMessages.map((msg) =>
-              unreadMessages.some(
-                (unreadMsg) => unreadMsg.chatMessageNo === msg.chatMessageNo
-              )
-                ? { ...msg, chatMessageCheck: 0 } // 읽음 상태로 변경
-                : msg
-            )
-        );
-      });
-    }
-  };
-
   const chatRoomCompleted = async () => {
     const responseJsonObject = await ChattingApi.completedChatRoom(roomId);
     setRoomStatus(responseJsonObject.status);
@@ -115,43 +68,15 @@ const ChattingMessage = ({ roomId, roomName, Status, mentorNo }) => {
       stompClient.current = new StompClient({
         webSocketFactory: () => socket,
         onConnect: () => {
-          stompClient.current.subscribe(
-            `/topic/messages/${roomId}`,
-            (response) => {
-              // 서버에서 소켓내용을 받아옴
-              const message = JSON.parse(response.body);
-              if (!message.chatMessageDate) {
-                message.chatMessageDate = new Date().toISOString(); // ISO 8601 형식으로 현재 시간 설정
-              }
-              const messageType =
-                message.memberName === username ? "sent" : "received";
-              setMessages((prevMessages) => [
-                ...prevMessages,
-                {
-                  ...message,
-                  type: messageType,
-                  isImageLoaded: !!message.imageData, // 이미지가 있으면 로드된 상태로 설정
-                },
-              ]);
-            }
-          );
           // 이미지 메시지 구독
           stompClient.current.subscribe(
             `/topic/images/${roomId}`,
             (imageresponse) => {
-              console.log("이미지 메시지 응답", imageresponse.body);
               const imageMessage = JSON.parse(imageresponse.body);
-
-              console.log("실시간 이미지 메시지", imageMessage);
-
+              console.log(imageMessage);
               // 이미지 메시지의 type을 명시적으로 설정
               const imagemessageType =
                 imageMessage.memberName === username ? "sent" : "received";
-              console.log("username: " + username);
-              console.log(
-                "imageMessage.memberName: " + imageMessage.memberName
-              );
-              console.log("image message type: " + imagemessageType);
 
               // 메시지를 상태에 추가
               setMessages((prevMessages) => [
@@ -162,15 +87,53 @@ const ChattingMessage = ({ roomId, roomName, Status, mentorNo }) => {
                   chatMessageDate: imageMessage.chatMessageDate
                     ? new Date(imageMessage.chatMessageDate).toLocaleString()
                     : new Date().toISOString(),
-                  chatMessageCheck: imageMessage.chatMessageCheck,
                   memberName: imageMessage.memberName,
                   imageNo: imageMessage.imageNo,
-                  imageData: imageMessage.imageBlob, // base64 이미지
+                  imageData: imageMessage.base64Image, // base64 이미지
                   type: imagemessageType, // 'sent' 또는 'received'로 타입 설정
                 },
               ]);
             }
           );
+          stompClient.current.subscribe(
+            `/topic/messages/${roomId}`,
+            (response) => {
+              // 서버에서 소켓내용을 받아옴
+              const message = JSON.parse(response.body);
+              if (!message.chatMessageDate) {
+                message.chatMessageDate = new Date().toISOString(); // ISO 8601 형식으로 현재 시간 설정
+              }
+              console.log(message);
+              const messageType =
+                message.memberName === username ? "sent" : "received";
+              if (message.chatMessageContent !== "이미지") {
+                setMessages((prevMessages) => [
+                  ...prevMessages,
+                  {
+                    chatMessageNo: message.chatMessageNo,
+                    chatMessageContent: message.chatMessageContent,
+                    chatMessageDate: message.chatMessageDate,
+                    chatMessageCheck: message.chatMessageCheck,
+                    memberName: message.memberName,
+                    imageData: message.imageBlob || null,
+                    type: messageType,
+                  },
+                ]);
+              }
+
+              // 읽음 상태 업데이트 요청
+              if (message.memberName !== username) {
+                stompClient.current.publish({
+                  destination: `/app/chat/read/${roomId}`,
+                  body: JSON.stringify(message),
+                });
+              }
+            }
+          );
+
+          stompClient.current.subscribe(`/topic/read-status/${roomId}`, () => {
+            chatMessages(username);
+          });
         },
       });
 
@@ -184,13 +147,80 @@ const ChattingMessage = ({ roomId, roomName, Status, mentorNo }) => {
     }
   }, [roomId, username]);
 
+  // 채팅 메시지 로드
+  const chatMessages = async (username) => {
+    const responseJsonObject = await ChattingApi.viewChatMessage(roomId);
+    console.log(responseJsonObject.data);
+    const backMessage = responseJsonObject.data.map((msg) => ({
+      memberName: msg.memberName,
+      chatMessageDate: msg.chatMessageDate,
+      chatMessageContent: msg.chatMessageContent,
+      chatMessageCheck: msg.chatMessageCheck,
+      type: msg.memberName === username ? "sent" : "received", // 메시지 유형 설정
+      imageData: msg.imageData,
+      chatMessageNo: msg.chatMessageNo,
+    }));
+
+    setMessages(backMessage); // 초기 메시지 설정
+
+    // 읽지 않은 메시지 중 자신의 메시지가 아닌 것만 필터링
+    const unreadMessages = responseJsonObject.data.filter(
+      (msg) => msg.chatMessageCheck === 1 && msg.memberName !== username
+    );
+
+    // 읽음 상태 업데이트 요청
+    if (unreadMessages.length > 0) {
+      //안읽은 채팅이 있는지 확인
+      Promise.all(
+        //Promise.all은 배열이 완료될 때까지 기다린 뒤 .then 블록을 실행
+        unreadMessages.map((msg) =>
+          ChattingApi.readChatMessage(msg.chatMessageNo)
+        )
+      ).then(() => {
+        // 읽음 상태를 업데이트한 메시지를 반영
+        setHasUnreadMessages(true); // 상태 업데이트
+        setMessages(
+          (
+            prevMessages //react객체안에 업데이트 된 정보를 담음
+          ) =>
+            prevMessages.map((msg) =>
+              unreadMessages.some(
+                (unreadMsg) => unreadMsg.chatMessageNo === msg.chatMessageNo
+              )
+                ? { ...msg, chatMessageCheck: 0 } // 읽음 상태로 변경
+                : msg
+            )
+        );
+      });
+    }
+
+    const loadImages = async () => {
+      const updatedMessages = await Promise.all(
+        backMessage.map(async (msg) => {
+          if (msg.chatMessageContent === "이미지" && msg.chatMessageNo) {
+            // 이미지 로딩 중으로 설정
+            msg.isLoadingImage = true;
+
+            // 이미지가 없으면 서버에서 가져오기
+            const base64Image = await fetchImageData(msg.chatMessageNo);
+            if (base64Image) {
+              return { ...msg, imageData: base64Image, isLoadingImage: false }; // 로딩 완료 후 이미지 데이터 추가
+            }
+          }
+          return msg; // 이미지가 없으면 그대로 반환
+        })
+      );
+      setMessages(updatedMessages); // 업데이트된 메시지 상태를 설정
+    };
+    loadImages(backMessage); // 이미지 로딩 함수 실행
+  };
   // 메시지 전송 후 스크롤 제어
   useEffect(() => {
     if (chatContainerRef.current) {
       chatContainerRef.current.scrollTop =
         chatContainerRef.current.scrollHeight;
     }
-  }, [messages]); // 메시지가 추가될 때만 스크롤 이동
+  }, [messages.length]); // 메시지가 추가될 때만 스크롤 이동
 
   // 메시지 전송 처리
   const handleSendMessage = (event) => {
@@ -275,8 +305,8 @@ const ChattingMessage = ({ roomId, roomName, Status, mentorNo }) => {
           };
           img.src = reader.result;
         };
-        setSelectedImage();
         reader.readAsDataURL(selectedImage);
+        setSelectedImage(null); // 선택된 이미지 초기화
       }
     }
   };
@@ -307,34 +337,6 @@ const ChattingMessage = ({ roomId, roomName, Status, mentorNo }) => {
       return null;
     }
   };
-
-  useEffect(() => {
-    const loadImages = async () => {
-      const updatedMessages = await Promise.all(
-        messages.map(async (msg) => {
-          if (msg.chatMessageContent === "이미지" && msg.chatMessageNo) {
-            // 이미지가 이미 로드된 경우에는 로드하지 않음
-            if (msg.imageData || msg.isLoadingImage) {
-              return msg; // 이미지가 이미 있으면 그대로 반환
-            }
-
-            // 이미지 로딩 중으로 설정
-            msg.isLoadingImage = true;
-
-            // 이미지가 없으면 서버에서 가져오기
-            const base64Image = await fetchImageData(msg.chatMessageNo);
-            if (base64Image) {
-              return { ...msg, imageData: base64Image, isLoadingImage: false }; // 로딩 완료 후 이미지 데이터 추가
-            }
-          }
-          return msg; // 이미지가 없으면 그대로 반환
-        })
-      );
-      setMessages(updatedMessages); // 업데이트된 메시지 상태를 설정
-    };
-
-    loadImages(); // 이미지 로딩 함수 실행
-  }, [messages.length]); // messages 상태가 변경될 때마다 실행
 
   // 이미지 파일 선택 처리
   const handleImageSelect = (event) => {

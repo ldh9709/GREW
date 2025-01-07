@@ -63,12 +63,13 @@ public class ChatController {
 	public ChatMessageDto sendMessage(@DestinationVariable("roomId") String roomId, @Payload ChatMessageDto message) {
 	    if (message.getMemberName() != null) {
 	        // 실제로 메시지가 들어왔을 때 확인
-	    	
 	    	System.out.println(message);
 	        System.out.println("memberName : " + message.getMemberName());
 	        System.out.println("ChatContent : " + message.getChatMessageContent());
 	        Long ChatMessageNo = chatMessageService.createChatMessage(message).getChatMessageNo();
 	        message.setChatMessageNo(ChatMessageNo);
+	        
+	        
 	    }
 	    return message;
 	}
@@ -77,8 +78,6 @@ public class ChatController {
 	@SendTo("/topic/images/{roomId}")
 	public ChatMessageImageDto sendImage(@DestinationVariable("roomId") Long roomId,@Payload Map<String, String> request) {
 	    ChatRoom chatRoom = ChatRoom.toEntity(chatRoomService.getChatRoom(roomId));
-	    System.out.println("챗룸 : "+chatRoom);
-	    System.out.println("chatroomNo : "+chatRoom.getChatRoomNo());
 		// 클라이언트에서 받은 이미지 Blob (Base64 형식)
 	    String imageBlob = request.get("imageBlob");
 	    String chatRoomNo = request.get("chatRoomNo");  // roomId 받기
@@ -124,6 +123,7 @@ public class ChatController {
 	    chatMessage.setChatRoomNo(Integer.parseInt(chatRoomNo));  // 받은 chatRoomNo 설정
 	    chatMessage.setMemberNo(member.getMemberNo());     // 받은 memberNo 설정
 	    chatMessage.setMemberName(member.getMemberName());
+	    chatMessage.setBase64Image(base64Image);
 
 	    
 	    // 메시지 저장

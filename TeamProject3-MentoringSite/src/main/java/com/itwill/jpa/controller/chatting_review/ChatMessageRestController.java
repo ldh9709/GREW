@@ -81,6 +81,9 @@ public class ChatMessageRestController {
 	public ResponseEntity<Response> getChatMessageByChatMessageNo(@PathVariable(name="chatmessageNo") Long chatmessageNo){
 		Response response = new Response();
 		ChatMessageDto chatMessage =  ChatMessageDto.toDto(chatMessageService.getChatMessageByNo(chatmessageNo));
+		ChatMessageImageDto image = chatMessageImageService.GetImageByChatMessageNo(chatmessageNo);
+		String base64 = chatMessageImageService.GetBase64ImageByChatImageNo(image.getImageNo());
+		chatMessage.setBase64Image(base64);
 		response.setStatus(ResponseStatusCode.CHATTING_LIST_SUCCESS);
 		response.setMessage(ResponseMessage.CHATTING_LIST_SUCCESS);
 		

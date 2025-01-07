@@ -22,12 +22,12 @@ const ChatRoomList = ({ onRoomClick }) => {
     if (member?.memberName) {
       // memberName이 있을 때만 WebSocket 연결을 시작
       let socket;
-            
+
       try {
-        socket = new SockJS('http://localhost:8080/chat');
+        socket = new SockJS("http://localhost:8080/chat");
       } catch (error) {
-        console.error('Failed to connect to localhost, trying ngrok...');
-        socket = new SockJS('https://f8eb-175-123-27-55.ngrok-free.app/chat');
+        console.error("Failed to connect to localhost, trying ngrok...");
+        socket = new SockJS("https://f8eb-175-123-27-55.ngrok-free.app/chat");
       }
 
       // StompClient 생성
@@ -39,13 +39,13 @@ const ChatRoomList = ({ onRoomClick }) => {
             `/topic/messages/member/${member.memberNo}`,
             (response) => {
               const message = JSON.parse(response.body);
-             
+
               setRooms((prevRooms) =>
                 prevRooms.map((room) =>
                   room.chatRoomNo === message.chatRoomNo
                     ? {
                         ...room,
-                        countIsRead: room.countIsRead+1 , // 읽지 않은 메시지 수 증가
+                        countIsRead: room.countIsRead + 1, // 읽지 않은 메시지 수 증가
                         lastedMessage: message.chatMessageContent, // 최신 메시지 업데이트
                       }
                     : room
@@ -65,7 +65,6 @@ const ChatRoomList = ({ onRoomClick }) => {
         }
       };
     }
-
   }, [member]); // member가 변경될 때마다 useEffect 실행
 
   const chatRoomList = async (page) => {
@@ -170,7 +169,14 @@ const ChatRoomList = ({ onRoomClick }) => {
             <li
               key={room.chatRoomNo} // 고유 키 설정 (React에서 반복문에 필수)
               className="chat-room-item"
-              onClick={() => onRoomClick(room.chatRoomNo, room.chatRoomName, room.chatRoomStatus, room.mentorNo)}
+              onClick={() =>
+                onRoomClick(
+                  room.chatRoomNo,
+                  room.chatRoomName,
+                  room.chatRoomStatus,
+                  room.mentorNo
+                )
+              }
               // 채팅방 클릭 시 부모 컴포넌트에 해당 채팅방 id 전달
             >
               <div className="chat-room-first">
@@ -215,7 +221,10 @@ const ChatRoomList = ({ onRoomClick }) => {
                             <div
                               onClick={(e) => e.stopPropagation()} // 클릭 이벤트 전파 방지
                             >
-                              <ReportModal onClose={handleCloseModal} report={report} />
+                              <ReportModal
+                                onClose={handleCloseModal}
+                                report={report}
+                              />
                             </div>
                           )}
                           <button

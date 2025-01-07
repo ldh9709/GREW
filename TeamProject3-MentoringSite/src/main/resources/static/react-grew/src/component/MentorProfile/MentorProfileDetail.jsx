@@ -83,25 +83,23 @@ export default function MentorProfileDetail() {
           setReviews(reviewsData);
           setTotalPages(reviewsResponse.data.totalPages);
         } else {
-          setReviews([]);
+          setReviews([]); // 리뷰가 없으면 빈 배열
         }
       }
     } catch (error) {
       setError("리뷰 가져오는 중 오류가 발생했습니다.");
-      navigate("/mentor-profile/list", { replace: true });
+      setLoading(false); // 오류가 발생해도 로딩 상태는 종료
     } finally {
-      setLoading(false);
+      setLoading(false); // 로딩 종료
     }
   };
-
+  useEffect(() => {
+    fetchReview(currentPage);
+  }, [currentPage]);
   useEffect(() => {
     fetchMentorProfile();
     fetchMentorBoards();
   }, [mentorProfileNo]);
-
-  useEffect(() => {
-    fetchReview(currentPage);
-  }, [currentPage, itemsPerPage]);
 
   const fetchCategoryName = async (categoryNo) => {
     try {
@@ -146,7 +144,7 @@ export default function MentorProfileDetail() {
   const paginate = (pageNumber) => {
     setCurrentPage(pageNumber);
   };
-  // 페이지네이션 버튼 표시 (3개씩 끊어서 표시)
+  // 페이지네이션 버튼 표시
   const pageNumbers = [];
   const pagesToShow = 10; // 한 번에 보여줄 페이지 수
   const startPage =
@@ -156,6 +154,7 @@ export default function MentorProfileDetail() {
   for (let i = startPage; i <= endPage; i++) {
     pageNumbers.push(i);
   }
+
   const maskName = (name) => {
     if (name.length <= 2) {
       return name[0] + "*".repeat(name.length - 1);
@@ -267,58 +266,32 @@ export default function MentorProfileDetail() {
         ) : (
           <p>리뷰가 없습니다.</p>
         )}
-      </div>
-      {/* 페이지네이션 버튼 */}
-      <div className="pagenation1">
-        {/* 이전 버튼 */}
-        <button
-          className="common-pagination-arrow"
-          disabled={currentPage === 1}
-          onClick={() => paginate(currentPage - 1)}
-        >
-          &lt;
-        </button>
-        {startPage > 1 && (
-          <button onClick={() => paginate(startPage - 1)}>이전</button>
-        )}{" "}
-        {/* 페이지 번호 버튼 */}
-        {pageNumbers.map((number) => (
-          <button
-            key={number}
-            className={`common-pagination-number ${
-              currentPage === number ? "active" : ""
-            }`}
-            onClick={() => paginate(number)}
-          >
-            {number}
-          </button>
-        ))}
-        {/* 다음 버튼 */}
-        <button
-          className="common-pagination-arrow"
-          disabled={currentPage === totalPages}
-          onClick={() => paginate(currentPage + 1)}
-        >
-          &gt;
-        </button>
+        {/* 페이지네이션 */}
+        <PagenationItem
+          currentPage={currentPage}
+          totalPages={totalPages}
+          paginate={paginate}
+        />
       </div>
 
       <div className="mentor-boards">
-  <h3>멘토 보드</h3>
-  {boards.length > 0 ? (
-    <div className="mentor-board-list">
-      {boards.map((board) => (
-        <MentorBoardItem
-          key={board.mentorBoardNo}
-          board={board}
-          onClick={() => navigate(`/mentor-board/detail/${board.mentorBoardNo}`)}
-        />
-      ))}
-    </div>
-  ) : (
-    <p>등록된 멘토 보드가 없습니다.</p>
-  )}
-</div>
+        <h3>멘토 보드</h3>
+        {boards.length > 0 ? (
+          <div className="mentor-board-list">
+            {boards.map((board) => (
+              <MentorBoardItem
+                key={board.mentorBoardNo}
+                board={board}
+                onClick={() =>
+                  navigate(`/mentor-board/detail/${board.mentorBoardNo}`)
+                }
+              />
+            ))}
+          </div>
+        ) : (
+          <p>등록된 멘토 보드가 없습니다.</p>
+        )}
+      </div>
     </div>
   );
 }
