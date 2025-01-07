@@ -77,7 +77,12 @@ public class SecurityConfig {
 		"/mentor-profile/*/image-url", // 멘토 프로필 이미지 URL 조회
 		
 		/***************************************************************/
-	   
+	    "/mentor-profile/my-profile/mentor-rating", // 자신의 멘토 프로필 mentor_rating 조회
+	    "/mentor-profile/create-profile", // 멘토 프로필 생성
+	    "/mentor-profile/*/create-dumy-profile", // 멘토 더미 프로필 생성
+	    "/mentor-profile/status/*", // 멘토 프로필 상태변경
+	    "/mentor-profile/modify/*", // 멘토 프로필 수정
+	    "/mentor-profile/*/upload-image", // 멘토 프로필 이미지 업로드 => 토큰 걸림
 	   
 		/***************************************************************/
 		
@@ -164,12 +169,7 @@ public class SecurityConfig {
 	    "/member/status/*", //멤버 상태 변경
 	    
 	    /***** MENTOR PROFILE *****/
-	    "/mentor-profile/my-profile/mentor-rating", // 자신의 멘토 프로필 mentor_rating 조회
-	    "/mentor-profile/create-profile", // 멘토 프로필 생성
-	    "/mentor-profile/*/create-dumy-profile", // 멘토 더미 프로필 생성
-	    "/mentor-profile/status/*", // 멘토 프로필 상태변경
-	    "/mentor-profile/*/upload-image", // 멘토 프로필 이미지 업로드
-	    "/mentor-profile/modify/*", // 멘토 프로필 수정 => 링크 수정해야함
+
 	   
 	    /***** MENTOR BOARD *****/
 	    "/mentor-board", // 멘토 보드 등록
@@ -313,9 +313,9 @@ public class SecurityConfig {
 		      	  
 		      	  .requestMatchers(MENTEE_AUTHENTICATED).hasRole("MENTEE") //MENTEE만 접근 가능
 		      	  
-		      	  .requestMatchers(MENTOR_AUTHENTICATED).hasRole("MENTOR") //MENTEE만 접근 가능
+		      	  .requestMatchers(MENTOR_AUTHENTICATED).hasRole("MENTOR") //MENTOR만 접근 가능
 		      	  
-		      	  .requestMatchers(ADMIN_AUTHENTICATED).hasRole("ADMIN") //MENTEE만 접근 가능
+		      	  .requestMatchers(ADMIN_AUTHENTICATED).hasRole("ADMIN") //ADMIN만 접근 가능
 		      	  
 		      	  .requestMatchers(MENTEE_MENTOR_AUTHENTICATED).hasAnyRole("MENTEE" , "MENTOR") //MENTEE, MENTOR만 접근 가능
 		      	  

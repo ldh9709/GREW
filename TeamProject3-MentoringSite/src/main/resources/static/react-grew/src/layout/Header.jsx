@@ -35,7 +35,7 @@ export default function HeaderMenu() {
   const handleLogoutAction = async () => {
     try {
       navigate("/");
-      await logout();
+      //await logout();
       auth.logout();
       alert("로그아웃하셨습니다.");
     } catch (error) {

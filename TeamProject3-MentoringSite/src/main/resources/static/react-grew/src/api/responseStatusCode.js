@@ -37,5 +37,5 @@ export const INPUT_NULL = 2068; // NULL 값 입력
 
 
 //MENTOR 성공 코드
-export const CREATED_MENTOR_PROFILE_SUCCESS_CODE = 2350; //멘토 가입 성공
-export const UPDATE_MENTOR_PROFILE_SUCCESS_CODE = 2365
+export const CREATED_MENTOR_PROFILE_SUCCESS_CODE = 2351; //멘토 가입 성공
+export const UPDATE_MENTOR_PROFILE_SUCCESS_CODE = 2361 //멘토 수정 성공
