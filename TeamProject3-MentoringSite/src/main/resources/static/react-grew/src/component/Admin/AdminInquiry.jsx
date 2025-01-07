@@ -58,12 +58,14 @@ export function AdminInquiry() {
         window.open(url, "_blank");
     }
 
-    const handleHideInquiry = async (inquiryNo) => {// "가려두기" 상태        
-        const response = await adminApi.hideInquiry(token, inquiryNo);
-        console.log('Response',response);
-        if (response.status===5200) {            
-            fetchBoards();
-        }        
+    const handleHideInquiry = async (inquiryNo) => {// "가려두기" 상태     
+        const confirmation = window.confirm('게시글을 삭제하시겠습니까?')
+        if(confirmation){
+            const response = await adminApi.hideInquiry(token, inquiryNo);
+            if (response.status===5200) {            
+                fetchBoards();
+            }        
+        }
     }
 
     return (
@@ -87,7 +89,7 @@ export function AdminInquiry() {
                         <th>조회수</th>
                         <th>카테고리</th>
                         <th>작성자</th>
-                        <th>상태변경</th>
+                        <th>삭제</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -102,7 +104,7 @@ export function AdminInquiry() {
                             <td><button className="hide-button" onClick={(e) => { 
                                     e.stopPropagation(); // 클릭 이벤트가 부모(tr)로 전파되지 않도록 함
                                     handleHideInquiry(board.inquiryNo);
-                                }}>가려두기                                
+                                }}>삭제                                
                             </button>
                             </td>
                         </tr>
