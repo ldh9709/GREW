@@ -275,7 +275,7 @@ export default function MentorProfileDetail() {
       </div>
 
       <div className="mentor-boards">
-        <h3>멘토 보드</h3>
+        <h3>멘토 컨텐츠</h3>
         {boards.length > 0 ? (
           <div className="mentor-board-list">
             {boards.map((board) => (
