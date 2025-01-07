@@ -220,7 +220,7 @@ public class SecurityConfig {
 		"/member/mentor-summary", //멘토 활동 내역 요약	
 		
 		/***** Answer *****/
-	    "/answer/*", // 답변 등록
+	    "/answer/create/*", // 답변 등록
 	    "/answer/delete/*", // 답변 삭제
 	    "/answer/update/*" // 답변 수정	
 	    

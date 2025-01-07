@@ -221,19 +221,19 @@ const ChattingMessage = ({ roomId, roomName, Status, mentorNo }) => {
           const img = new Image();
           img.onload = () => {
             // 최대 파일 크기 (5MB 이하로 제한)
-            const MAX_FILE_SIZE_KB = 50000;
+            const MAX_FILE_SIZE_KB = 1000000;
             const imageSizeInMB = selectedImage.size / (128 * 128); // 이미지 크기(MB)
 
             if (imageSizeInMB > MAX_FILE_SIZE_KB) {
               alert(
-                "이미지가 너무 큽니다. 최대 50KB 이하의 이미지만 업로드 가능합니다."
+                "이미지가 너무 큽니다. 최대 1MB 이하의 이미지만 업로드 가능합니다."
               );
               return;
             }
 
             // 리사이즈할 크기 설정 (예: 최대 500px)
-            const MAX_WIDTH = 500;
-            const MAX_HEIGHT = 500;
+            const MAX_WIDTH = 250;
+            const MAX_HEIGHT = 250;
 
             const canvas = document.createElement("canvas");
             const ctx = canvas.getContext("2d");
@@ -339,10 +339,10 @@ const ChattingMessage = ({ roomId, roomName, Status, mentorNo }) => {
   // 이미지 파일 선택 처리
   const handleImageSelect = (event) => {
     const file = event.target.files[0];
-    const MAX_FILE_SIZE_KB = 50000;
+    const MAX_FILE_SIZE_KB = 1000000;
     if (file && file.size > MAX_FILE_SIZE_KB) {
       console.log(file.size);
-      alert("이미지 크기가 너무 큽니다. 50000kB 이하의 이미지를 선택해주세요.");
+      alert("이미지 크기가 너무 큽니다. 1MB 이하의 이미지를 선택해주세요.");
     } else {
       setSelectedImage(file);
     }

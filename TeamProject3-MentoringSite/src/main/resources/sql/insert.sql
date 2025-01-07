@@ -2303,14 +2303,14 @@ values(answer_no_SEQ.nextval, '당뇨 식단을 구성할 때 중요한 것은 �
 
 /* 채팅방 요정 등록 */
 insert into chat_room (chat_room_no, chat_room_status, chat_room_start_date, chat_room_end_date, mentee_no, mentor_no)
-values(chat_room_no_SEQ.nextval, 7100, sysdate, null, 1, 2);
+values(chat_room_no_SEQ.nextval, 7600, sysdate, null, 1, 2);
 insert into chat_room (chat_room_no, chat_room_status, chat_room_start_date, chat_room_end_date, mentee_no, mentor_no)
-values(chat_room_no_SEQ.nextval, 7000, sysdate, null, 4, 2);
+values(chat_room_no_SEQ.nextval, 7600, sysdate, null, 4, 2);
 insert into chat_room (chat_room_no, chat_room_status, chat_room_start_date, chat_room_end_date, mentee_no, mentor_no)
-values(chat_room_no_SEQ.nextval, 7200, sysdate, null, 5, 2);
+values(chat_room_no_SEQ.nextval, 7500, sysdate, null, 5, 2);
 
 insert into chat_room (chat_room_no, chat_room_status, chat_room_start_date, chat_room_end_date, mentee_no, mentor_no)
-values(chat_room_no_SEQ.nextval, 7000, sysdate, null, 2, 8);
+values(chat_room_no_SEQ.nextval, 7500, sysdate, null, 2, 8);
 insert into chat_room (chat_room_no, chat_room_status, chat_room_start_date, chat_room_end_date, mentee_no, mentor_no)
 values(chat_room_no_SEQ.nextval, 7000, sysdate, null, 2, 9);
 insert into chat_room (chat_room_no, chat_room_status, chat_room_start_date, chat_room_end_date, mentee_no, mentor_no)
@@ -2322,6 +2322,24 @@ values(chat_room_no_SEQ.nextval, 7200, sysdate, null, 2, 12);
 insert into chat_room (chat_room_no, chat_room_status, chat_room_start_date, chat_room_end_date, mentee_no, mentor_no)
 values(chat_room_no_SEQ.nextval, 7500, sysdate, null, 2, 13);
 
+insert into chat_room (chat_room_no, chat_room_status, chat_room_start_date, chat_room_end_date, mentee_no, mentor_no)
+values(chat_room_no_SEQ.nextval, 7100, sysdate, null, 3, 8);
+insert into chat_room (chat_room_no, chat_room_status, chat_room_start_date, chat_room_end_date, mentee_no, mentor_no)
+values(chat_room_no_SEQ.nextval, 7100, sysdate, null, 3, 9);
+insert into chat_room (chat_room_no, chat_room_status, chat_room_start_date, chat_room_end_date, mentee_no, mentor_no)
+values(chat_room_no_SEQ.nextval, 7100, sysdate, null, 4, 10);
+insert into chat_room (chat_room_no, chat_room_status, chat_room_start_date, chat_room_end_date, mentee_no, mentor_no)
+values(chat_room_no_SEQ.nextval, 7100, sysdate, null, 5, 11);
+insert into chat_room (chat_room_no, chat_room_status, chat_room_start_date, chat_room_end_date, mentee_no, mentor_no)
+values(chat_room_no_SEQ.nextval, 7100, sysdate, null, 6, 12);
+insert into chat_room (chat_room_no, chat_room_status, chat_room_start_date, chat_room_end_date, mentee_no, mentor_no)
+values(chat_room_no_SEQ.nextval, 7100, sysdate, null, 7, 13);
+insert into chat_room (chat_room_no, chat_room_status, chat_room_start_date, chat_room_end_date, mentee_no, mentor_no)
+values(chat_room_no_SEQ.nextval, 7100, sysdate, null, 8, 9);
+insert into chat_room (chat_room_no, chat_room_status, chat_room_start_date, chat_room_end_date, mentee_no, mentor_no)
+values(chat_room_no_SEQ.nextval, 7100, sysdate, null, 9, 2);
+insert into chat_room (chat_room_no, chat_room_status, chat_room_start_date, chat_room_end_date, mentee_no, mentor_no)
+values(chat_room_no_SEQ.nextval, 7100, sysdate, null, 10, 44);
 
 /* 채팅방 활성화 등록 */
 insert into chat_room_status (chat_room_no, chat_room_name, chat_room_status, member_no, chat_room_status_no) 
