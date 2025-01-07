@@ -51,8 +51,7 @@ public class ReviewRestController {
 	
 	@Operation(summary = "리뷰 등록")
 	@SecurityRequirement(name = "BearerAuth") // API 엔드포인트가 인증을 요구한다는 것을 문서화(Swagger에서 JWT인증을 명시
-	@PreAuthorize("hasRole('MENTEE')") // ROLE이 MENTEE인 사람만 접근 가능 멘토로 변경해야함
-	@PostMapping
+	@PostMapping("/create")
 	public ResponseEntity<Response> insertReview(@RequestBody ReviewDto reviewDto){
 		
 
@@ -124,7 +123,7 @@ public class ReviewRestController {
 		return responseEntity;
 	}
 	@Operation(summary = "리뷰 상세보기")
-	@GetMapping("/{reviewNo}")
+	@GetMapping("/detail/{reviewNo}")
 	public ResponseEntity<Response> selectReviewByReviewNo(@PathVariable(name="reviewNo") Long reviewNo){
 		
 		Response response = new Response();

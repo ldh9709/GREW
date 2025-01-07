@@ -1,11 +1,10 @@
 import { useMemberAuth } from "../../../util/AuthContext";
 import React, { useEffect, useState } from "react";
-import image from "../../../image/images.jpeg";
 import * as chattingApi from "../../../api/chattingApi";
 import * as memberApi from "../../../api/memberApi";
 import * as reviewApi from "../../../api/reviewApi";
 import { useNavigate } from "react-router-dom";
-import { getMentorProfileByMemberNo } from "../../../api/answerApi";
+import { getMentorProfileByMemberNo } from "../../../api/mentorProfileApi";
 import PagenationItem from "../../PagenationItem";
 
 export default function MemberCounselList() {
@@ -18,7 +17,7 @@ export default function MemberCounselList() {
   const [totalPages, setTotalPages] = useState(0);
 
   const fetchName = async (memberNo) => {
-    const response = await memberApi.memberInfo(token, memberNo);
+    const response = await memberApi.getMemberByMemberNo(memberNo);
     console.log(response.data);
     return response.data.memberName;
   };
@@ -34,19 +33,29 @@ export default function MemberCounselList() {
         const updateRooms = await Promise.all(
           chatRooms.map(async (chat) => {
             const searchName = await fetchName(chat.mentorNo);
-
             // 멘토 프로필 조회
-            const mentorProfileResponse = await getMentorProfileByMemberNo(
-              chat.mentorNo
-            ); 
+            const mentorProfileResponse = await getMentorProfileByMemberNo(chat.mentorNo); 
             const mentorProfileNo =
-              mentorProfileResponse?.data?.mentorProfileNo || null; 
+              mentorProfileResponse?.data?.mentorProfileNo || null;
             const mentorImage =
-              mentorProfileResponse?.data?.mentorImage || "/default-image.png"; 
+              mentorProfileResponse?.data?.mentorImage || "/default-image.png";
+
+            // 리뷰를 작성했는지 여부 확인
+            const reviewList = await reviewApi.listReviewByMember(
+              mentorProfileNo,
+              0,
+              6,
+              token
+            );
+            const isReview = reviewList.data.content.some(
+              (review) => review.memberNo === chat.menteeNo
+            );
+
             return {
               ...chat,
               searchName,
-              mentorProfileNo, 
+              isReview, // isReview가 true/false로 결정
+              mentorProfileNo,
               mentorImage,
             };
           })
@@ -71,7 +80,7 @@ export default function MemberCounselList() {
             const isReview = reviewList.data.content.some(
               (review) => review.memberNo === chat.menteeNo
             );
-
+            console.log("isReview:", isReview);
             const menteeProfileResponse = await getMentorProfileByMemberNo(
               chat.menteeNo
             );
@@ -84,18 +93,17 @@ export default function MemberCounselList() {
               ...chat,
               searchName,
               isReview,
-              mentorProfileNo, 
-              mentorImage, 
+              mentorProfileNo,
+              mentorImage,
             };
           })
         );
         setCounselList(updateRooms);
         setTotalPages(response.data.totalPages);
-       
       }
     } catch (error) {
       console.log("상담내역 조회 실패", error);
-    }finally{
+    } finally {
       setLoading(false);
     }
   };
@@ -151,78 +159,84 @@ export default function MemberCounselList() {
 
   return (
     <>
-      {loading ? <div></div>  :
-      <div className="tab-content tab-counsel tab-bottom">
-        {counselList.length === 0 ? (
-          <p> 진행한 상담내역이 없습니다. </p>
-        ) : member.memberRole === "ROLE_MENTEE" ? (
-          <ul className="mentor-list">
-            {counselList.map((counsel, index) => (
-              <li className="mentor-counsel-item" key={index}>
-                <div>
-                  <img src={counsel.mentorImage} alt="프로필 이미지" />
-                </div>
-                <div>
-                  <p className="mentor-name">
-                    {counsel.searchName} 멘토{console.log(counsel)}
-                  </p>
-                  <p className="mentor-status">
-                    상담 상태: {counselStatus(counsel.chatRoomStatus)}
-                  </p>
-                </div>
-                <button
-                  className={`review-button ${
-                    counsel.chatRoomStatus === 7200 ? "active" : ""
-                  }`}
-                  onClick={() =>
-                    handleReview(counsel.chatRoomNo, counsel.menteeNo)
-                  }
-                >
-                  리뷰 작성
-                </button>
-              </li>
-            ))}
-          </ul>
-        ) : (
-          <ul className="mentee-list">
-            {counselList.map((counsel, index) => (
-              <li className="mentee-counsel-item" key={index}>
-                <div>
-                  <p className="mentee-name">멘티명: {counsel.searchName}</p>
-                  <p className="counsel-date">
-                    상담 기간:{" "}
-                    {counsel.chatRoomStartDate
-                      ? counsel.chatRoomStartDate.substring(0, 10)
-                      : ""}{" "}
-                    ~{" "}
-                    {counsel.chatRoomEndDate
-                      ? counsel.chatRoomEndDate.substring(0, 10)
-                      : ""}
-                  </p>
-                  <p className="counsel-date">
-                    리뷰여부: {!counsel.isReview ? "미작성" : "작성"}
-                  </p>
-                  <div
-                    className={`counsel-type ${
-                      counsel.chatRoomStatus === 7200 ? "green white" : ""
-                    }`}
-                  >
-                    {counselStatus(counsel.chatRoomStatus)}
+      {loading ? (
+        <div></div>
+      ) : (
+        <div className="tab-content tab-counsel tab-bottom">
+          {counselList.length === 0 ? (
+            <p> 진행한 상담내역이 없습니다. </p>
+          ) : member.memberRole === "ROLE_MENTEE" ? (
+            <ul className="mentor-list">
+              {counselList.map((counsel, index) => (
+                <li className="mentor-counsel-item" key={index}>
+                  <div>
+                    <img src={counsel.mentorImage} alt="프로필 이미지" />
                   </div>
-                </div>
-              </li>
-            ))}
-          </ul>
-        )}
-        <div className="mypage-pagenation">
-          <PagenationItem
-            currentPage={currentPage}
-            totalPages={totalPages}
-            paginate={paginate}
-          />
+                  <div>
+                    <p className="mentor-name">
+                      {counsel.searchName} 멘토
+                      {console.log(counsel)}
+                    </p>
+                    <p className="mentor-status">
+                      상담 상태: {counselStatus(counsel.chatRoomStatus)}
+                    </p>
+                  </div>
+                  {/* 리뷰 작성 버튼 표시 조건: 상담 상태가 '완료'이며, 리뷰가 아직 작성되지 않았을 경우 */}
+                  {counsel.chatRoomStatus === 7200 && !counsel.isReview && (
+                    <button
+                      className={`review-button ${
+                        !counsel.isReview ? "active" : ""
+                      }`}
+                      onClick={() =>
+                        handleReview(counsel.chatRoomNo, counsel.menteeNo)
+                      }
+                    >
+                      리뷰 작성
+                    </button>
+                  )}
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <ul className="mentee-list">
+              {counselList.map((counsel, index) => (
+                <li className="mentee-counsel-item" key={index}>
+                  <div>
+                    <p className="mentee-name">멘티명: {counsel.searchName}</p>
+                    <p className="counsel-date">
+                      상담 기간:{" "}
+                      {counsel.chatRoomStartDate
+                        ? counsel.chatRoomStartDate.substring(0, 10)
+                        : ""}{" "}
+                      ~{" "}
+                      {counsel.chatRoomEndDate
+                        ? counsel.chatRoomEndDate.substring(0, 10)
+                        : ""}
+                    </p>
+                    <p className="counsel-date">
+                      리뷰여부: {!counsel.isReview ? "미작성" : "작성"}
+                    </p>
+                    <div
+                      className={`counsel-type ${
+                        counsel.chatRoomStatus === 7200 ? "green white" : ""
+                      }`}
+                    >
+                      {counselStatus(counsel.chatRoomStatus)}
+                    </div>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          )}
+          <div className="mypage-pagenation">
+            <PagenationItem
+              currentPage={currentPage}
+              totalPages={totalPages}
+              paginate={paginate}
+            />
+          </div>
         </div>
-      </div>
-      }
+      )}
     </>
   );
 }

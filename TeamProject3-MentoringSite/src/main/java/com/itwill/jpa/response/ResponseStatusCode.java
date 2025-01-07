@@ -168,7 +168,11 @@ public class ResponseStatusCode {
 	public static final int CHATTING_NAME_CHANGE = 7030;
 	public static final int CHATTING_MESSAGE_SUCCESS = 7040;
 	public static final int CHATTING_MESSAGE_FAIE = 7041;
-	public static final int READ_MESSAGE = 7050;
+	public static final int CREATE_MESSAGE_SUCCESS = 7050;
+	public static final int CREATE_MESSAGE_FAIE = 7051;
+	public static final int READ_MESSAGE = 7060;
+	public static final int CHOICE_MESSAGE_SUCCESS = 7070;
+	public static final int CHOICE_MESSAGE_FAIE = 7071;
 	
 	
 	/******************* REVIEW 메시지 **********************/

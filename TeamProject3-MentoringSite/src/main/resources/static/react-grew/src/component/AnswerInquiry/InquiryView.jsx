@@ -41,10 +41,9 @@ function InquiryView() {
         member.memberNo
       );
       setMentorProFileStatus(response.data.mentorStatus);
-      console.log(response.data.mentorStatus);
     }
   };
-  useEffect(() => {
+  useEffect(() => { 
     (async () => {
       const responseJsonObject = await inquiryApi.viewInquiry(inquiryNo);
 

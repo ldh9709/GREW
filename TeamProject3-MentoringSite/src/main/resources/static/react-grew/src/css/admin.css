@@ -343,7 +343,7 @@
   color: #333;
 }
 
-.mentor-actions {
+.admin-mentor-actions {
   display: flex;
   justify-content: center;
   gap: 20px;
@@ -478,8 +478,9 @@
   cursor: pointer;
 }
 
+
 /*멘토게시글 검색 영역-(보류중)*/
-.search-container {
+/* .search-container {
   margin-bottom: 20px;
 }
 
@@ -492,4 +493,4 @@
 .search-container button {
   padding: 8px 12px;
   cursor: pointer;
-}
+} */

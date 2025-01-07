@@ -18,6 +18,8 @@ public class ChatMessageImageDto {
     private Long chatRoomNo;
     private Long memberNo;
     
+    private String memberName;
+    
     private String base64Image;  // Base64 이미지 문자열 필드
 
 

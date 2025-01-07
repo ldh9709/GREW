@@ -5,29 +5,19 @@ import java.util.Arrays;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.config.oauth2.client.CommonOAuth2Provider;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.oauth2.client.web.OAuth2AuthorizationRequestRedirectFilter;
-import org.springframework.security.oauth2.client.web.OAuth2AuthorizationRequestResolver;
-import org.springframework.security.oauth2.client.web.OAuth2LoginAuthenticationFilter;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
-import com.itwill.jpa.auth.FormLoginFailureHandler;
 import com.itwill.jpa.auth.PrincipalDetailsService;
 import com.itwill.jpa.auth.PrincipalOauth2UserService;
-import com.itwill.jpa.repository.member_information.MemberRepository;
 import com.itwill.jpa.security.filter.JWTCheckFilter;
 import com.itwill.jpa.security.handler.APIAuthLoginSuccessHandler;
 import com.itwill.jpa.security.handler.APILoginFailHandler;
@@ -37,35 +27,6 @@ import com.itwill.jpa.security.handler.APILoginSuccessHandler;
 @EnableWebSecurity(debug = true)//Spring Security의 설정을 활성화
 @EnableMethodSecurity
 public class SecurityConfig {
-	/*
-	 * Spring Security가 제공하는 OAuth2 Provider의 기본 설정값을 제공하는 유틸리티 클래스
-	 * Google, Facebook, GitHub 등 기본적으로 지원되는 OAuth2 제공자들의 ClientRegistration 정보를 간단히 생성가능
-	 */
-	//CommonOAuth2Provider provider;
-	
-	/*
-	 * OAuth2 인증 과정을 시작하는 필터
-	 * 사용자가  /oauth2/authorization/{registrationId} URL로 접근하면 인증 요청을 생성하고 
-	 * 사용자를 인증 제공자의 로그인 화면으로 리다이렉트
-	 */
-	//OAuth2AuthorizationRequestRedirectFilter redirectFilter;
-	
-	/*
-	 * OAuth2 인증 요청을 생성하기 위한 인터페이스
-	 * ClientRegistration 정보를 기반으로, 인증 요청(OAuth2AuthorizationRequest)을 생성]
-	 * 인증 요청에 추가 파라미터를 포함하거나 커스터마이징이 필요한 경우 사용
-	 */
-	//OAuth2AuthorizationRequestResolver resolver;
-	
-	/*
-	 * OAuth2 로그인 후 인증 코드를 교환하여 Access Token을 가져오고, 사용자 정보를 로드하는 필터.
-	 * /login/oauth2/code/{registrationId} 경로로 들어오는 요청을 처리
-	 * 1. 인증 서버에서 받은 Authorization Code를 사용하여 Access Token을 요청
-	 * 2. Access Token을 사용해 사용자 정보를 가져오고, 이를 기반으로 OAuth2User 객체 생성
-	 * 3. 사용자 정보를 기반으로 인증 객체(OAuth2AuthenticationToken)를 생성하고 인증 상태로 설정.
-	 */
-	//OAuth2LoginAuthenticationFilter authenticationFilter;
-	
 	
 	//OAuth2 로그인 시(SNS) 사용자 정보를 처리하는 서비스
 	@Autowired
@@ -75,20 +36,212 @@ public class SecurityConfig {
 	@Autowired
 	private PrincipalDetailsService principalDetailsService;
 	
-
-	
-	//로그인 실패 시 동작을 정의하는 핸들러.
-	//@Autowired
-	//private FormLoginFailureHandler formLoginFailureHandler;
-	
-	public static final String apiMemberPattern = "/member/**";
-	  
-	public static final String[] 
-			SwaggerPatterns = {"/swagger-resources/**", "/swagger-ui/**", "/v3/api-docs/**","/v3/api-docs", "/swagger-ui.html", "/login", apiMemberPattern };
+//	public static final String apiMemberPattern = "/member/**";
+//	  
+//	public static final String[] 
+//			SwaggerPatterns = {"/swagger-resources/**", "/swagger-ui/**", "/v3/api-docs/**","/v3/api-docs", "/swagger-ui.html", "/login", apiMemberPattern };
 	
 	//인증 없이 접근 가능한 경로 정의
-	private final String[] whitelist = { };
+	private final String[] whitelist = {
+		"/**", //모든 경로
+		/***** MEMBER *****/
+		"/login", //로그인
+		"/oauth2/**", //SNS로그인
+		"/member/check-memberId", //아이디 중복 검사
+		"/member/check-memberEmail", //이메일 중복 검사
+		"/membe/sendJoinCode", //인증번호 발송
+		"/member/createMember", //회원가입/관심사 입력
+		"/member/createMember/mento", //회원가입/관심사 입력/멘토더미데이터
+		"/member/member-info", //회원 정보 보기
+		
+		/***** MENTOR PROFILE *****/
+		"/mentor-profile/*", // 멘토 프로필 상세보기
+		"/mentor-profile/status/*", // 특정 상태의 멘토 목록 조회 페이징
+		"/mentor-profile/search/*", // 멘토 검색 기능 페이징
+		"/mentor-profile/*/member_no", // 멘토의 멤버번호 조회
+		"/mentor-profile/category/*", // 카테고리별 멘토 리스트 조회
+		"/mentor-profile/category/*/follow", // 팔로우 순으로 CATEGORY_NO별 멘토 리스트 조회
+		"/mentor-profile/category/*/mentoring", // 멘토링 횟수 순으로 CATEGORY_NO별 멘토 리스트 조회
+		"/mentor-profile/category/*/activity", // 활동 수 순으로 CATEGORY_NO별 멘토 리스트 조회
+		"/mentor-profile/*/parent/follow", // 팔로우 순으로 대분류 카테고리의 멘토 리스트 조회
+		"/mentor-profile/*/parent/mentoring", // 멘토링 횟수 순으로 대분류 카테고리의 멘토 리스트 조회
+		"/mentor-profile/*/parent/activity", // 활동 순으로 대분류 카테고리의 멘토 리스트 조회
+		"/mentor-profile/follow-count", // 팔로우 수 순으로 멘토 목록 조회
+		"/mentor-profile/mentoring-count", // 멘토링 횟수 순으로 멘토 목록 조회
+		"/mentor-profile/activity-count", // 활동 수 순으로 멘토 목록 조회
+		"/mentor-profile/*/mentoring-count", // 멘토의 멘토링 횟수 조회
+		"/mentor-profile/*/follow-count", // 멘토의 팔로우 수 조회
+		"/mentor-profile/*/activity-count", // 멘토의 활동 수 조회
+		"/mentor-profile/rating", // 별점 순 멘토 순위
+		"/mentor-profile/career/*", // 경력 데이터 가져오기
+		"/mentor-profile/*/image-url", // 멘토 프로필 이미지 URL 조회
+		
+		/***************************************************************/
+	   
+	   
+		/***************************************************************/
+		
+		/***** MENTOR BOARD *****/
+	    "/mentor-board/sorted/*", // 멘토 보드 리스트 - sorted/{status}
+	    "/mentor-board/*", // 멘토 보드 상세 조회 - {mentorBoardNo}
+	    "/mentor-board/*/views", // 멘토 보드 조회수 증가 - {mentorBoardNo}/views
+	    "/mentor-board/sorted/views", // 멘토 보드 조회수 기준 페이징
+	    "/mentor-board/search/*", // 멘토 보드 검색 기능 페이징 - /search/{search}
+	    "/mentor-board/sorted/date/other", // 멘토 보드 날짜 기준 페이징
+	    "/mentor-board/list/*", // 멘토 작성 콘텐츠 (프로필 페이지 용도) - {mentorProfileNo}
+	    "/mentor-board/*/upload-image", // 이미지 업로드 엔드포인트 - {mentorBoardNo}/upload-image
+	    "/mentor-board/*/image-url", // 이미지 URL 가져오기 엔드포인트 - {mentorBoardNo}/image-url
+	    "/mentor-board/*/view-count", // 카테고리별 멘토 콘텐츠 리스트 출력(조회수 기준) - {categoryNo}/view-count
+	    "/mentor-board/*/parent/view-count", // 카테고리별(대분류) 멘토 콘텐츠 리스트 출력(조회수 기준) - {categoryNo}/parent/view-count
+	    "/mentor-board/*/date", // 카테고리별 멘토 콘텐츠 리스트 출력(최신순) - {categoryNo}/date
+	    "/mentor-board/*/parent/date", // 카테고리별(대분류) 멘토 콘텐츠 리스트 출력(최신순) - {categoryNo}/parent/date
+	    "/mentor-board/sorted/views/status", // 멘토 보드 리스트 상태값, 조회수 기준 출력 - 출처 불명? 미사용?
+		
+	    /***** Answer *****/
+	    "/answer/accept/*", // 답변 채택
+	    "/answer/*/answer-vote", // 질문에 작성된 답변 조회(추천)
+	    "/answer/*/answer-date", // 질문에 작성된 답변 조회(최신)
+	    "/answer/*/category-vote", // 카테고리별 답변 조회(추천)
+	    "/answer/*/category-date", // 카테고리별 답변 조회(최신)
+	    "/answer/view/*", // 답변 상세보기
+	    "/answer/recently-vote", // 최근 3일간 추천 베스트
+	    "/answer/isAnswer", // 본인 답변 유무
+	    "/answer/count-answer/*", // 한 질문의 답변 수
+	    
+	    /***** INQUIRY *****/
+	    "/inquiry/view/*", // 질문 보기
+	    "/inquiry/increase/*", // 질문 조회수 증가
+	    "/inquiry/*/answer-count", // 답변 수 많은 순 카테고리별 질문 출력
+	    "/inquiry/*/parent/answer-count", // 답변 수 많은 순 카테고리별(대분류) 질문 출력
+	    "/inquiry/*/view-count", // 조회수 순 카테고리별 질문 출력
+	    "/inquiry/*/parent/view-count", // 조회수 순 카테고리별(대분류) 질문 출력
+	    "/inquiry/*/date", // 최신순 카테고리별 질문 출력
+	    "/inquiry/*/parent/date", // 최신순 카테고리별(대분류) 질문 출력
+	    "/inquiry/answer-count", // 답변 수 순으로 전체 질문 출력
+	    "/inquiry/view-count", // 조회수 순으로 전체 질문 출력
+	    "/inquiry/date", // 최신순으로 전체 질문 출력
+	    "/inquiry/search/*", // 검색 기능
+	    "/inquiry/find/*", // 질문 번호로 객체 찾기
+	    
+	    /***** VOTE *****/
+	    "/*/votes", // 추천 - 비추천 값
+		
+	    /***** ALARMS *****/
+	    "/alarms/*/redirect", // 알림 클릭 시 URL 전송
+	    "/alarms/alarms", // 한 명의 알림 리스트 출력
+	    "/alarms/all/isread", // 한 명의 알림 전체 읽음 처리
+	    "/alarms/delete", // 선택 알림 삭제
+	    "/alarms/delete/all", // 멤버 알림 전체 삭제
+	    "/alarms/is-read/*", // 알림 한 개 읽음 표시
+	    "/alarms/is-read/count", // 안 읽은 알림 개수
+	    "/alarms/find-alarm", // 알람 객체 찾기	
+	    
+	    /***** FOLLOW *****/
+	    "/follow/mentor/*", // 팔로워 수 조회
+	    "/follow/is-exist/*", // 팔로우 등록 여부 체크
+	    
+	    /***** CHATROOM *****/
+	    "/chatroom/create/*", // 채팅방 신청
+	    "/chatroom/active/*", // 채팅방 활성화
+	    "/chatroom/completed/*", // 활동 종료
+	    "/chatroom/rejected/*", // 멘토가 요청을 수락하지 않음
+	    "/chatroom/canceled/*", // 멘티가 요청을 철회함
+	    "/chatroom/closed/*", // 관리자가 비정상적인 요청 종료
+	    "/chatroom/messages/*", // 채팅방 대화 목록
+	    "/chatmessage/update/*", // 읽음 상태 변경
+	    "/chatmessage/*", // 특정 메시지 선택
+	    
+	    /***** REVIEW *****/
+	    "/review/detail/*" //리뷰 보기
+	};
 	
+	//인증이 필요한 경로 정의
+	private static final String[] AUTHENTICATED = {
+		/***** MEMBER *****/
+	    "/member/profile", //회원(본인) 정보 보기
+	    "/member/profile/modify", //회원 정보 수정
+	    "/member/profile/delete", //회원 탈퇴
+	    "/member/status/*", //멤버 상태 변경
+	    
+	    /***** MENTOR PROFILE *****/
+	    "/mentor-profile/my-profile/mentor-rating", // 자신의 멘토 프로필 mentor_rating 조회
+	    "/mentor-profile/create-profile", // 멘토 프로필 생성
+	    "/mentor-profile/*/create-dumy-profile", // 멘토 더미 프로필 생성
+	    "/mentor-profile/status/*", // 멘토 프로필 상태변경
+	    "/mentor-profile/*/upload-image", // 멘토 프로필 이미지 업로드
+	    "/mentor-profile/modify/*", // 멘토 프로필 수정 => 링크 수정해야함
+	   
+	    /***** MENTOR BOARD *****/
+	    "/mentor-board", // 멘토 보드 등록
+	    "/mentor-board/modify/*", // 멘토 보드 수정 - {mentorBoardNo}
+	    "/mentor-board/*/status", // 멘토 보드 삭제(상태변경) - {mentorBoardNo}/status
+	    "/mentor-board/list/member", // 멘토 작성 콘텐츠 (마이페이지 용도)
+	    
+	    /***** VOTE *****/
+	    "/vote/*/upvote", // 추천
+	    "/vote/*/downvote", // 비추천
+	    
+	    /***** FOLLOW *****/
+	    "/follow", // 팔로우 신청
+	    "/follow/*", // 팔로우 멘토 멤버 번호로 조회
+	    "/follow/followList", // 팔로우 리스트 조회
+	    "/follow/cancel/*", // 팔로우 번호로 취소	 
+	    
+	    /***** REPORT *****/
+	    "/report", // 신고 등록
+	    
+	    /***** CHATROOM *****/
+	    "/chatroom/leave/*", // 채팅방 나감
+	    "/chatroom/list", // 채팅방 리스트 (멘토, 멘티 구분)
+	    "/chatroom/list/active", // 채팅방 활동 리스트
+	    "/chatroom/list/wait", // 채팅방 대기 리스트
+	    "/chatroom/name/*", // 채팅방 제목 변경
+	    "/chatmessage/count/message", // 안 읽은 메시지 갯수
+	    
+	    /***** REVIEW *****/
+	    "/review/create" //리뷰 작성
+	};
+	
+	//멘티 인증이 필요한 경로 정의
+	private static final String[] MENTEE_AUTHENTICATED = {
+		/***** MEMBER *****/
+		"/member/mentee-summary", //멘티 활동 내역 요약	
+		
+	    /***** INQUIRY *****/
+	    "/inquiry", // 질문 등록
+	    "/inquiry/update/*", // 질문 수정
+	    "/inquiry/delete/*", // 질문 삭제
+	    "/inquiry/list/member" // 내가 작성한 질문 내역		
+	};
+	
+	//멘토 인증이 필요한 경로 정의
+	private static final String[] MENTOR_AUTHENTICATED = {
+		/***** MEMBER *****/
+		"/member/mentor-summary", //멘토 활동 내역 요약	
+		
+		/***** Answer *****/
+	    "/answer/create/*", // 답변 등록
+	    "/answer/delete/*", // 답변 삭제
+	    "/answer/update/*" // 답변 수정	
+	    
+	};
+	
+	//관리자 인증이 필요한 경로 정의
+	private static final String[] ADMIN_AUTHENTICATED = {
+		"/admin/**" //어드민 전체
+	};
+	
+	//멘티 혹은 멘토 인증이 필요한 경로 정의
+	private static final String[] MENTEE_MENTOR_AUTHENTICATED = {
+		/***** Answer *****/
+		"/answer" //내가작성한답변내역
+
+	};
+	
+	//모든 인증이 가능한 경로 정의
+	private static final String[] MENTEE_MENTOR_ADMIN_AUTHENTICATED = {
+		"/member/update-role/**", //회원 권한 수정
+	};
 	
 	/* Spring Security에서 HTTP 요청에 대한 보안 설정을 구성 */
 	@Bean
@@ -155,9 +308,21 @@ public class SecurityConfig {
 		httpSecurity.authorizeHttpRequests((authorizeHttpRequestsConfig) -> {
 		      // swagger설정
 		      authorizeHttpRequestsConfig
-		      	  .requestMatchers("/profile").authenticated()//끝이 profile인 URL은 인증된 사용자만 접근 가능
-		      	  //.requestMatchers("/profile").hasRole("MENTEE")//끝이 profile인 URL은 MENTEE만 접근 가능
-			      .requestMatchers("/**","/login","/oauth2/**").permitAll()
+		      
+		      	  .requestMatchers(AUTHENTICATED).authenticated()//인증된 사용자만 접근 가능
+		      	  
+		      	  .requestMatchers(MENTEE_AUTHENTICATED).hasRole("MENTEE") //MENTEE만 접근 가능
+		      	  
+		      	  .requestMatchers(MENTOR_AUTHENTICATED).hasRole("MENTOR") //MENTEE만 접근 가능
+		      	  
+		      	  .requestMatchers(ADMIN_AUTHENTICATED).hasRole("ADMIN") //MENTEE만 접근 가능
+		      	  
+		      	  .requestMatchers(MENTEE_MENTOR_AUTHENTICATED).hasAnyRole("MENTEE" , "MENTOR") //MENTEE, MENTOR만 접근 가능
+		      	  
+		      	  .requestMatchers(MENTEE_MENTOR_ADMIN_AUTHENTICATED).hasAnyRole("MENTEE", "MENTOR", "ADMIN") //MENTEE, MENTOR만 접근 가능
+		      	  
+			      .requestMatchers(whitelist).permitAll() //인증 없이 접근 가능
+			      
 			      .anyRequest().authenticated();
 		    });
 		

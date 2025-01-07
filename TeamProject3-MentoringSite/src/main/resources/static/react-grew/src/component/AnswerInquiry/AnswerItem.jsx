@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import "../../css/styles.css";
 import * as answerApi from "../../api/answerApi";
 import * as categoryApi from "../../api/categoryApi";
+import * as mentorProfileApi from "../../api/mentorProfileApi"
 import { useNavigate } from "react-router-dom";
 import { useMemberAuth } from "../../util/AuthContext";
 import ReportModal from "../Report/ReportModal";
@@ -32,7 +33,7 @@ export default function AnswerItem({ answer }) {
   };
 
   const fetchMentorProfile = async () => {
-    const response = await answerApi.getMentorProfileByMemberNo(
+    const response = await mentorProfileApi.getMentorProfileByMemberNo(
       answer.memberNo
     );
     setMentorProFile(response.data);

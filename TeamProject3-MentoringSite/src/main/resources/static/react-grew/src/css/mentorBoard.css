@@ -243,9 +243,15 @@
   position: relative;
   min-height: 350px;
   margin: 30px 10px;
-  padding-bottom: px;
+  padding-bottom: 20px; /* 기존 px를 명시적으로 수정 */
   font-size: 19px;
   color: #333;
+
+  /* 줄바꿈 및 긴 단어 처리 */
+  white-space: pre-wrap; /* 줄바꿈을 유지하고 자동 줄바꿈 활성화 */
+  word-wrap: break-word; /* 단어 단위로 줄바꿈 */
+  overflow-wrap: break-word; /* 긴 단어도 줄바꿈 */
+  line-height: 1.6; /* 줄 간격 조정 */
 }
 
 .mentor-info-card {

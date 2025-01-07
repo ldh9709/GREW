@@ -232,13 +232,14 @@ export const mentorProfileCreateAction = async (token, mentor) => {
 }
 
 //멘토 프로필 생성(수정)
-export const mentorProfileUpdateAction = async (mentorProfileNo, mentor) => {
+export const mentorProfileUpdateAction = async (mentorProfileNo, mentor, token) => {
     console.log("mentorProfileUpdateAction mentorProfileNo: ", mentorProfileNo);
     console.log("mentorProfileUpdateAction mentor: ", mentor);
-    const response = await fetch(`${BACKEND_SERVER}/mentor-profile/${mentorProfileNo}`, {
+    const response = await fetch(`${BACKEND_SERVER}/mentor-profile/modify/${mentorProfileNo}`, {
         method:'PUT', 
         headers:{
-            'Content-type':'application/json'
+            'Content-type':'application/json',
+            'Authorization': `Bearer ${token}` // Authorization 헤더에 JWT 토큰 추가
         },
         body: JSON.stringify({
             categoryNo: mentor.categoryNo,
@@ -301,21 +302,6 @@ export const updateMemberRole = async(token,role) => {
         },
     })
 
-    const responseJsonObject = await response.json();
-    return responseJsonObject;
-}
-
-//회원 전체 조회
-
-//특정 회원 조회
-export const memberInfo = async (token,memberNo) => {
-    const response = await fetch(`${BACKEND_SERVER}/member/member-info?memberNo=${memberNo}`, {
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${token}`
-        }
-    });
     const responseJsonObject = await response.json();
     return responseJsonObject;
 }
@@ -398,7 +384,7 @@ export const mentorSummary = async (token) => {
 //멤버 넘버로 멤버객체찾기
 export const getMemberByMemberNo = async (memberNo) => {
 
-    const response = await fetch(`${BACKEND_SERVER}/member/member-info?memberNo=${memberNo}`,{
+    const response = await fetch(`${BACKEND_SERVER}/member/member-info/${memberNo}`,{
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',

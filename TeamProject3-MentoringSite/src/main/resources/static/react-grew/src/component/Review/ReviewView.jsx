@@ -58,6 +58,12 @@ export default function ReviewDetailPage() {
       </div>
     );
   };
+  const maskName = (name) => {
+    if (name.length <= 2) {
+      return name[0] + "*".repeat(name.length - 1);
+    }
+    return name[0] + "*".repeat(name.length - 2) + name[name.length - 1];
+  };
 
   return (
     <div className="review-detail-container">
@@ -76,7 +82,7 @@ export default function ReviewDetailPage() {
           {/* 리뷰 작성일 */}
         </div>
         <div>
-          <span>작성자: {review.menteeName}</span> {/* 멘티 이름 */}
+          <span>작성자: {maskName(review.menteeName)}</span> {/* 멘티 이름 */}
         </div>
       </div>
     </div>

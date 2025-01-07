@@ -107,7 +107,7 @@ export const updateAnswer = async (sendJsonObject,token) => {
 };
 //답변등록
 export const writeAnswer = async (sendJsonObject,inquiryNo,token) => {
-  const response = await fetch(`${BACKEND_SERVER}/answer/${inquiryNo}`, {
+  const response = await fetch(`${BACKEND_SERVER}/answer/create/${inquiryNo}`, {
     method: "POST", // HTTP 메서드
     headers: {
       "Content-Type": "application/json;charset=UTF-8", // 요청 헤더 설정
@@ -147,17 +147,7 @@ export const listAnswerByMemberNo = async (token, page) => {
   const responseJsonObject = await response.json();
   return responseJsonObject;
 };
-//멤버 넘버로 멘토프로필 조회
-export const getMentorProfileByMemberNo = async (memberNo) => {
-  const response = await fetch(`${BACKEND_SERVER}/mentor-profile/mentor-profile/${memberNo}`, {
-    method: 'GET',
-    headers: {
-      "Content-Type": "application/json;charset=UTF-8", // 요청 헤더 설정
-    }
-  })
-  const responseJsonObject = await response.json();
-  return responseJsonObject;
-};
+
 //질문에 본인 답변 유무
 export const isAnswerByInquiryNo = async (inquiryNo,memberNo) => {
   const response = await fetch(`${BACKEND_SERVER}/answer/isAnswer?inquiryNo=${inquiryNo}&memberNo=${memberNo}`, {

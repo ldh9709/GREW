@@ -35,15 +35,13 @@ public class PrincipalDetails implements UserDetails, OAuth2User {
 	//일반 로그인 시 사용
 	public PrincipalDetails(MemberSecurityDto member) {
 		this.member = member;
-		System.out.println("<<<<<PrincipalDetailsMember1 : " + this.member);
 	}
+	
 	//SNS 로그인 시 사용
 	public PrincipalDetails(MemberSecurityDto member, Oauth2UserInfo oauth2UserInfo) {
 		this.member = member;
-		System.out.println("<<<<<PrincipalDetailsMember2 : " + this.member);
 		
 		this.oauth2UserInfo = oauth2UserInfo;
-		System.out.println("<<<<<PrincipalDetailsOauth2UserInfo : " + this.oauth2UserInfo);
 	}
 	
 	//해당 유저의 권한 목록 반환

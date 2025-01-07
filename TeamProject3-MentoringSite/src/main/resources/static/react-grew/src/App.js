@@ -47,7 +47,6 @@ import InquirySearchList from "./component/AnswerInquiry/InquirySearchList";
 import MentorBoardSearchList from "./component/MentorBoard/MentorBoardSearchList";
 import ReviewWriteFormPage from "./component/Review/ReviewWriteFormPage";
 import ReviewView from "./component/Review/ReviewView";
-import ReviewListPage from "./component/Review/ReviewList";
 import ForbiddenPage from "./component/ForbiddenPage";
 import MentorProfileItem from "./component/MentorProfile/MentorProfileItem";
 
@@ -56,7 +55,6 @@ import AdminRoutes from "./routes/AdminRoutes";
 /* 신고 모달 */
 import ReportModal from "./component/Report/ReportModal";
 import MemberMaskedFindIdFormPage from "./component/Member/MemberMaskedFindIdFormPage";
-
 
 function App() {
   const location = useLocation(); // 현재 URL 경로를 가져옴
@@ -100,7 +98,10 @@ function App() {
               />
               <Route path="/member/login" element={<MemberLoginFormPage />} />
               <Route path="/member/profile" element={<MemberMypage />} />
-              <Route path="//profile/:tab" element={<MemberProfileLayoutFormPage />} />
+              <Route
+                path="//profile/:tab"
+                element={<MemberProfileLayoutFormPage />}
+              />
               <Route
                 path="/member/profile/edit"
                 element={<MemberProfileFormPage />}
@@ -127,10 +128,7 @@ function App() {
                 path="/mentor-profile/search"
                 element={<MentorSearchList />}
               />
-              <Route
-                path="/inquiry/search"
-                element={<InquirySearchList />}
-              />
+              <Route path="/inquiry/search" element={<InquirySearchList />} />
               {/* Mentor페이지 */}
               <Route path="/mentor/join" element={<MentorJoinFormPage />} />
               <Route
@@ -223,7 +221,6 @@ function App() {
               />
               <Route path="/review/:reviewNo" element={<ReviewView />} />{" "}
               {/* 상세 페이지 라우팅 */}
-              <Route path="/review/reviewList" element={<ReviewListPage />} />
               <Route path="/inquiry" element={<InqiuryList />} />
               <Route path="/inquiry/:inquiryNo" element={<InqiuryView />} />
               <Route path="/inquiry/write" element={<InquiryWriteFormpage />} />
