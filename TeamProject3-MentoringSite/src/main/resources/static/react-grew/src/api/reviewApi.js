@@ -12,7 +12,7 @@ GET /review/reviewList                : 전체 리뷰 목록 출력
 
 // 리뷰 등록
 export const writeReview = async (reviewDto, token) => {
-  const response = await fetch(`${BACKEND_SERVER}/review`, {
+  const response = await fetch(`${BACKEND_SERVER}/review/create`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json;charset=UTF-8", // 요청 헤더 설정
@@ -48,7 +48,7 @@ export const deleteReview = async (reviewNo) => {
 
 // 리뷰 상세보기
 export const viewReview = async (reviewNo) => {
-  const response = await fetch(`${BACKEND_SERVER}/review/${reviewNo}`, {
+  const response = await fetch(`${BACKEND_SERVER}/review/detail/${reviewNo}`, {
     method: "GET",
   });
   const responseJsonObject = await response.json();
