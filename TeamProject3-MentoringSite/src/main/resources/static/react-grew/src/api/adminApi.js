@@ -150,7 +150,7 @@ export const updateReportStatusForAdmin = async (token, reportNo, status) => {
 };
 
 //카테고리별 게시판 목록 가져오기
-export const adminCategoryInquiry = async (categoryNo, page, token, size) => {
+export const adminCategoryInquiry = async (token, categoryNo, page, size) => {  
   try {
     const response = await fetch(
       `${BACKEND_SERVER}/admin/inquiry/category/${categoryNo}?page=${page}&size=${size}`,{
@@ -162,15 +162,12 @@ export const adminCategoryInquiry = async (categoryNo, page, token, size) => {
       }
     );
     if (!response.ok) {
-      console.error("HTTP 응답 오류", response.status);
       throw new Error(`HTTP error! status: ${response.status}`);
     }
 
-    const responseJsonObject = await response.json();
-    console.log("Response Data:", responseJsonObject);// 응답 데이터 구조 확인
+    const responseJsonObject = await response.json();    
     return responseJsonObject;
-  } catch (error) {
-    console.error("응답 오류:", error);
+  } catch (error) {    
     throw error;
   }
 };

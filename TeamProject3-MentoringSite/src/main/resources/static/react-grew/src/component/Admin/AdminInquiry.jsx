@@ -12,6 +12,7 @@ export function AdminInquiry() {
     const [totalPages, setTotalPages] = useState(1); // 전체 페이지 수
     const [currentPage, setCurrentPage] = useState(1); // 현재 페이지
     const [search, setSearch] = useState("");// 검색어
+    
     // 게시판 목록 가져오기
     const fetchBoards = async () => {           
         try {
@@ -24,8 +25,8 @@ export function AdminInquiry() {
             if (response && response.data) {
                 setBoards(response.data.content || []);
                 setTotalPages(response.data.totalPages || 0);
+                console.log("응답 데이터: ",response);
                 if(response.status===5300){
-                    console.log('READ_INQUIRY_LIST_SUCCESS');
                 }
             } else {
                 throw new Error("응답 데이터가 유효하지 않습니다.");                
@@ -44,16 +45,13 @@ export function AdminInquiry() {
         setPage(pageNumber - 1);
         setCurrentPage(pageNumber);
     };
-    /*
+    
     const handleCategoryChange = (event) => {
         const selectedCategory = event.target.value;        
         setCategory(selectedCategory);
-        setCurrentPage(0);
+        setCurrentPage(1);
     };
-    */
-   
-
-   
+      
     
     const handleMoveInquiry = async (board) => {///inquiry/
         const url = `/inquiry/${board}`;
@@ -63,25 +61,23 @@ export function AdminInquiry() {
     const handleHideInquiry = async (inquiryNo) => {// "가려두기" 상태        
         const response = await adminApi.hideInquiry(token, inquiryNo);
         console.log('Response',response);
-        if (response.status===5200) {
-            // 상태 변경 성공 시 게시판 목록을 새로 고침
-            console.log('DELETE_INQUIRY_SUCCESS');
+        if (response.status===5200) {            
             fetchBoards();
         }        
     }
 
     return (
         <div className="admin-table-container">          
-        {/*<div className="dropdown">
-            <select  value={category}>
+        <div className="dropdown">
+            <select  value={category} onChange={handleCategoryChange}>
                 <option value="ALL">전체</option>
-                <option value="직무 상담">직무 상담</option>
-                <option value="학습/교육">학습/교육</option>
-                <option value="예술/창작">예술/창작</option>
-                <option value="창업/비지니스">창업/비지니스</option>
-                <option value="건강/운동">건강/운동</option>
+                <option value={1}>직무 상담</option>
+                <option value={5}>학습/교육</option>
+                <option value={9}>예술/창작</option>
+                <option value={15}>창업/비지니스</option>
+                <option value={22}>건강/운동</option>
             </select>
-        </div>*/}  
+        </div>
             <table className="admin-table">
                 <thead>
                     <tr>
