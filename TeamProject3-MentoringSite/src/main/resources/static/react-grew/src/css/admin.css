@@ -98,6 +98,7 @@
     font-size: 24px;
 }
 
+
 /* 테이블 컨테이너 */
 .admin-table-container{
   position: relative;
@@ -118,6 +119,12 @@
   background-color: #fff;
   margin-bottom: 20px;
   cursor: pointer;
+}
+/*dropdown style(Inquiry)*/
+.dropdown-style {
+  position: "absolute";
+  top: "10px";
+  right: "10px";
 }
 
 /* 전체 테이블 스타일 */
@@ -378,7 +385,7 @@
   width: 300px; height: 100%;
   position: absolute;
   top: -30px; right: -380px;
-  padding: 0px 20px ;
+  padding: 20px ;
   border: 1px solid #ccc;
   background-color: #fff;
 }
@@ -421,10 +428,10 @@
 }
 
 .admin-report-textarea{
-  width: 230px;
+  width: 260px;
   min-height: 200px;
   padding: 10px;
-  margin-top: 10px;
+  margin: 10px;
   border: 1px solid #ddd;
   border-radius: 5px;
   resize: none;
@@ -436,7 +443,7 @@
   display: flex;
   justify-content: center;
   gap: 10px;
-  margin-top: 10px;
+  margin: 10px 0px;
 }
 .report-detail-button button {
   padding: 10px 50px;
@@ -478,19 +485,3 @@
   cursor: pointer;
 }
 
-
-/*멘토게시글 검색 영역-(보류중)*/
-/* .search-container {
-  margin-bottom: 20px;
-}
-
-.search-container input {
-  padding: 8px;
-  width: 200px;
-  margin-right: 10px;
-}
-
-.search-container button {
-  padding: 8px 12px;
-  cursor: pointer;
-} */

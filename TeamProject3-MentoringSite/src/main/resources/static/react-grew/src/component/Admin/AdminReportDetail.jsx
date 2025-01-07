@@ -54,8 +54,8 @@ export default function AdminReportDetail({report, onClose, fetchReports}) {
                 <span className="report-label">사유</span>
                 <span className="report-value">{reportUtil.reasonName(report.reportReason)}</span>
             </div>
+            <span className="report-label">내용</span>
             <div className="report-detail-content">
-                <span className="report-label">내용</span>
                 <textarea
                 className="admin-report-textarea"
                 value={report.reportContent}
