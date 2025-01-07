@@ -76,6 +76,7 @@ public class JWTCheckFilter extends OncePerRequestFilter {
 		|| path.startsWith("/mentor-profile/follow-count") 
 		|| path.startsWith("/mentor-profile/activity-count") 
 		|| path.startsWith("/mentor-profile/mentor-rating") 
+		|| path.startsWith("/mentor-profile/modify/") 
 
 		
 		|| path.startsWith("/mentor-board/upload-image") 
