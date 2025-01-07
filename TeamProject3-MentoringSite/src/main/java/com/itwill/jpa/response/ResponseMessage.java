@@ -56,6 +56,8 @@ public class ResponseMessage {
     public static final String IMAGE_UPLOAD_FAIL = "이미지 업로드에 실패했습니다.";
     public static final String MEMBER_NOT_FOUND = "해당 멤버를 찾을 수 없습니다."; 
     public static final String NOT_A_MENTOR = "해당 멤버는 멘토가 아닙니다."; 
+    public static final String INCREASE_VIEW_MENTOR_NBOARD_SUCCESS = "멘토 보드 조회수 증가 성공"; 
+    public static final String INCREASE_VIEW_MENTOR_NBOARD_FAIL = "멘토 보드 조회수 증가 실패"; 
     /******************* MENTOR PROFILE 메시지 ************************/
     public static final String CREATED_MENTOR_PROFILE_SUCCESS = "멘토 프로필 등록 성공";
     public static final String READ_MENTOR_PROFILE_SUCCESS = "멘토 프로필 상세 조회 성공";

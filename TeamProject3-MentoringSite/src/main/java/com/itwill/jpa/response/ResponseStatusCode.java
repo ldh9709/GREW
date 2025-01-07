@@ -61,6 +61,8 @@ public class ResponseStatusCode {
 	public static final int IMAGE_UPLOAD_FAIL = 2360; // 이미지 업로드 실패
 	public static final int MEMBER_NOT_FOUND = 2370; // 멤버를 찾을 수 없음 
 	public static final int NOT_A_MENTOR = 2375; // 멘토가 아님
+	public static final int INCREASE_VIEW_MENTOR_NBOARD_SUCCESS = 2376; // 조회수 증가 성공 
+	public static final int INCREASE_VIEW_MENTOR_NBOARD_FAIL = 2377; // 조회수 증가 실패
 	/******************* MENTOR PROFILE 메시지 코드 ************************/
     public static final int CREATED_MENTOR_PROFILE_SUCCESS_CODE = 2350;
     public static final int READ_MENTOR_PROFILE_SUCCESS_CODE = 2355;
