@@ -313,9 +313,9 @@ public class SecurityConfig {
 		      	  
 		      	  .requestMatchers(MENTEE_AUTHENTICATED).hasRole("MENTEE") //MENTEE만 접근 가능
 		      	  
-		      	  .requestMatchers(MENTOR_AUTHENTICATED).hasRole("MENTOR") //MENTEE만 접근 가능
+		      	  .requestMatchers(MENTOR_AUTHENTICATED).hasRole("MENTOR") //MENTOR만 접근 가능
 		      	  
-		      	  .requestMatchers(ADMIN_AUTHENTICATED).hasRole("ADMIN") //MENTEE만 접근 가능
+		      	  .requestMatchers(ADMIN_AUTHENTICATED).hasRole("ADMIN") //ADMIN만 접근 가능
 		      	  
 		      	  .requestMatchers(MENTEE_MENTOR_AUTHENTICATED).hasAnyRole("MENTEE" , "MENTOR") //MENTEE, MENTOR만 접근 가능
 		      	  

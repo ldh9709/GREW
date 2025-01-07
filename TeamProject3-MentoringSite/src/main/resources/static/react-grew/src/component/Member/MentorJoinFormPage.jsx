@@ -169,9 +169,11 @@ const MentorJoinForm = () => {
       let responseJsonObject = null;
       if(mentorProfileNo === 0){
         responseJsonObject = await memberApi.mentorProfileCreateAction(token, mentor);
+        console.log("멘토 가입 responseJsonObject : ", responseJsonObject)
       }else{
         responseJsonObject = await memberApi.mentorProfileUpdateAction(mentorProfileNo, mentor);
       }
+
       if (responseJsonObject.status === responseStatus.UPDATE_MENTOR_PROFILE_SUCCESS_CODE || responseJsonObject.status === responseStatus.CREATED_MENTOR_PROFILE_SUCCESS_CODE) {
         alert("멘토 정보 등록 성공");
         navigate("/member/profile");
@@ -186,7 +188,8 @@ const MentorJoinForm = () => {
         } else {
           alert("이미지 없이 멘토 프로필이 저장되었습니다.");
         }
-        await login(token);
+
+        await login(responseJsonObject.addData.accessToken);
         // 완료 후 페이지 이동
         navigate("/member/profile");
     } catch (error) {
