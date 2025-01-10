@@ -28,8 +28,7 @@
       BE/FE 팀장<br>
       <a href="https://github.com/rickyshu">@나문정</a>
       <ul>
-        <li>팔로우</li>
-        <li>신고</li>
+        <li>팔로우, 신고</li>
         <li>어드민</li>
         <li>총괄</li>
       </ul>
