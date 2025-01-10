@@ -33,7 +33,6 @@
         <li>총괄</li>
       </ul>
     </td>
-    
     <td align="center">
       <img src="https://via.placeholder.com/100" width="100" height="100" alt="김진영"><br>
       <b>김진영</b><br>
@@ -45,7 +44,6 @@
         <li>총괄</li>
       </ul>
     </td>
-    
     <td align="center">
       <img src="https://via.placeholder.com/100" width="100" height="100" alt="김찬영"><br>
       <b>김찬영</b><br>
