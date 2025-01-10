@@ -53,7 +53,6 @@
         <li>리뷰</li>
         <li>채팅 이미지</li>
         <li>웹소켓</li>
-        
       </ul>
     </td>
     <td align="center">
