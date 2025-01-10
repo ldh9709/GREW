@@ -116,4 +116,4 @@
 </table>
 
 <h3>Architecture Diagram & Stack</h3>
-<img src="https://github.com/user-attachments/assets/8bd6d8c8-8ec3-4934-843a-4c5c4ff51efb" alt="아키텍쳐" width="100" height="100">
+<img src="https://github.com/user-attachments/assets/8bd6d8c8-8ec3-4934-843a-4c5c4ff51efb" alt="아키텍쳐" width="720" height="540">
