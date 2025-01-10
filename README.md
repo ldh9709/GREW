@@ -76,10 +76,7 @@
       BE/FE<br>
       <a href="https://github.com/lunius94">@박은미</a><br>
       <ul>
-        <li>댓글 CRUD</li>
-        <li>검색 및 정렬 기능</li>
-        <li>좋아요 기능</li>
-        <li>AWS CodePipeline 배포 자동화</li>
+        <li>어드민li>
       </ul>
     </td>
     <td align="center">
@@ -89,7 +86,9 @@
       <a href="https://github.com/xyz-wr">@송대현</a><br>
       <ul>
         <li>알림</li>
-        <li>페이징</li>
+        <li>댓글</li>
+        <li>검색 및 정렬 기능</li>
+        <li>좋아요 기능</li>
       </ul>
     </td>
     <td align="center">
@@ -100,6 +99,7 @@
       <ul>
         <li>멘토 컨텐츠</li>
         <li>이미지 업로드</li>
+        <li>검색 및 정렬 기능</li>
       </ul>
     </td>
     <td align="center">
