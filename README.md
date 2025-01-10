@@ -63,8 +63,6 @@
       <ul>
         <li>멘토 프로필</li>
         <li>멘토 컨텐츠</li>
-        <li><li>
-        <li><li>
       </ul>
     </td>
   </tr>
@@ -77,9 +75,6 @@
       <a href="https://github.com/lunius94">@박은미</a><br>
       <ul>
         <li>어드민<li>
-        <li><li>
-        <li><li>
-        <li><li>
       </ul>
     </td>
     <td align="center">
