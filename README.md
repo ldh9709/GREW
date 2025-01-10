@@ -27,24 +27,25 @@
       FE 팀장<br>
       <a href="https://github.com/rickyshu">@rickyshu</a><br>
       <ul>
-        <li>포트폴리오 상세 페이지</li>
-        <li>회원가입 페이지</li>
-        <li>헤더 컴포넌트 (다크/라이트 모드)</li>
-        <li>tokenClient(api)</li>
+        <li>팔로우</li>
+        <li>신고</li>
+        <li>어드민</li>
+        <li>총괄</li>
       </ul>
     </td>
+    
     <td align="center">
       <img src="https://via.placeholder.com/100" width="100" height="100" alt="김진영"><br>
       <b>김진영</b><br>
       FE<br>
       <a href="https://github.com/938938">@938938</a><br>
       <ul>
-        <li>로그인 및 상태 관리</li>
-        <li>사용자 관리 페이지</li>
-        <li>다크 모드 구현</li>
-        <li>API 연동</li>
+        <li>웹소켓</li>
+        <li>채팅</li>
+        <li>총괄</li>
       </ul>
     </td>
+    
     <td align="center">
       <img src="https://via.placeholder.com/100" width="100" height="100" alt="김찬영"><br>
       <b>김찬영</b><br>
