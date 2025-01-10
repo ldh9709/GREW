@@ -129,6 +129,3 @@
     </td>
   </tr>
 </table>
-
-<h3> Architecture Diagram & Stack </h3>
-<hr style="border: 1px solid black;">
