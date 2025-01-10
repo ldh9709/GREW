@@ -21,11 +21,12 @@
 
 <table>
   <tr>
+    
     <td align="center">
-      <img src="https://via.placeholder.com/100" width="100" height="100" alt="이호인"/><br>
-      <b>이호인</b><br>
-      FE / 팀장<br>
-      <a href="https://github.com/rickyshu">@rickyshu</a><br>
+      <img src="https://via.placeholder.com/100" width="100" height="100" alt="나문정"/><br>
+      <b>나문정</b><br>
+       1팀장<br>
+      <a href="https://github.com/rickyshu">@사용자깃험아이디</a><br>
       <ul>
         <li>포트폴리오 상세 페이지</li>
         <li>회원가입 페이지</li>
@@ -33,66 +34,102 @@
         <li>tokenClient(api)</li>
       </ul>
     </td>
+    
     <td align="center">
-      <img src="https://via.placeholder.com/100" width="100" height="100" alt="곽지현"/><br>
-      <b>곽지현</b><br>
-      FE<br>
-      <a href="https://github.com/938938">@938938</a><br>
+      <img src="https://via.placeholder.com/100" width="100" height="100" alt="김진영"/><br>
+      <b>김진영</b><br>
+      2팀장<br>
+      <a href="https://github.com/938938">@사용자깃험아이디</a><br>
       <ul>
-        <li>사용자 페이지</li>
+        <li>포트폴리오 상세 페이지</li>
+        <li>회원가입 페이지</li>
+        <li>헤더 컴포넌트(다크/라이트 모드)</li>
+        <li>tokenClient(api)</li>
       </ul>
     </td>
+    
     <td align="center">
-      <img src="https://via.placeholder.com/100" width="100" height="100" alt="박윤환"/><br>
-      <b>박윤환</b><br>
-      FE<br>
-      <a href="https://github.com/yunhwan98">@yunhwan98</a><br>
+      <img src="https://via.placeholder.com/100" width="100" height="100" alt="김찬영"/><br>
+      <b>김찬영</b><br>
+      <br>
+      <a href="https://github.com/yunhwan98">@사용자깃험아이디</a><br>
       <ul>
-        <li>로그인 페이지 및 상태관리</li>
-        <li>이메일 추가 페이지</li>
-        <li>포트폴리오 작성, 수정 페이지</li>
+        <li>포트폴리오 상세 페이지</li>
+        <li>회원가입 페이지</li>
+        <li>헤더 컴포넌트(다크/라이트 모드)</li>
+        <li>tokenClient(api)</li>
       </ul>
     </td>
+    
     <td align="center">
-      <img src="https://via.placeholder.com/100" width="100" height="100" alt="태강희"/><br>
-      <b>태강희</b><br>
-      FE<br>
-      <a href="https://github.com/khkh0109">@khkh0109</a><br>
+      <img src="https://via.placeholder.com/100" width="100" height="100" alt="문준형"/><br>
+      <b>문준형</b><br>
+      <br>
+      <a href="https://github.com/khkh0109">@사용자깃험아이디</a><br>
       <ul>
-        <li>메인 피드 페이지</li>
-        <li>서비스 소개 페이지</li>
-        <li>404 페이지</li>
-        <li>푸터, 카드 컴포넌트</li>
+        <li>포트폴리오 상세 페이지</li>
+        <li>회원가입 페이지</li>
+        <li>헤더 컴포넌트(다크/라이트 모드)</li>
+        <li>tokenClient(api)</li>
       </ul>
     </td>
+    
   </tr>
+  
   <tr>
     <td align="center">
-      <img src="https://via.placeholder.com/100" width="100" height="100" alt="이태민"/><br>
-      <b>이태민</b><br>
-      BE / 팀장<br>
+      <img src="https://via.placeholder.com/100" width="100" height="100" alt="박은미"/><br>
+      <b>박은미</b><br>
+      <br>
       <a href="https://github.com/lunius94">@lunius94</a><br>
       <ul>
-        <li>댓글 CRUD</li>
-        <li>포트폴리오 검색, 정렬 기능</li>
-        <li>좋아요 기능 구현</li>
-        <li>AWS CodePipeline을 통한 배포 자동화</li>
+        <li>포트폴리오 상세 페이지</li>
+        <li>회원가입 페이지</li>
+        <li>헤더 컴포넌트(다크/라이트 모드)</li>
+        <li>tokenClient(api)</li>
       </ul>
     </td>
+    
     <td align="center">
-      <img src="https://via.placeholder.com/100" width="100" height="100" alt="박미정"/><br>
-      <b>박미정</b><br>
+      <img src="https://via.placeholder.com/100" width="100" height="100" alt="송대현"/><br>
+      <b>송대현</b><br>
       BE<br>
       <a href="https://github.com/xyz-wr">@xyz-wr</a><br>
       <ul>
-        <li>포트폴리오 CRUD</li>
-        <li>S3</li>
+        <li>포트폴리오 상세 페이지</li>
+        <li>회원가입 페이지</li>
+        <li>헤더 컴포넌트(다크/라이트 모드)</li>
+        <li>tokenClient(api)</li>
       </ul>
     </td>
+    
     <td align="center">
-      <img src="https://via.placeholder.com/100" width="100" height="100" alt="정윤호"/><br>
-      <b>정윤호</b><br>
+      <img src="https://via.placeholder.com/100" width="100" height="100" alt="양한수"/><br>
+      <b>양한수</b><br>
       BE<br>
-      <a href="https://github.com/yun
+      <a href="https://github.com/xyz-wr">@xyz-wr</a><br>
+      <ul>
+        <li>포트폴리오 상세 페이지</li>
+        <li>회원가입 페이지</li>
+        <li>헤더 컴포넌트(다크/라이트 모드)</li>
+        <li>tokenClient(api)</li>
+      </ul>
+    </td>
+    
+    <td align="center">
+      <img src="https://via.placeholder.com/100" width="100" height="100" alt="이도현"/><br>
+      <b>이도현</b><br>
+      BE<br>
+      <a href="https://github.com/xyz-wr">@xyz-wr</a><br>
+      <ul>
+        <li>포트폴리오 상세 페이지</li>
+        <li>회원가입 페이지</li>
+        <li>헤더 컴포넌트(다크/라이트 모드)</li>
+        <li>tokenClient(api)</li>
+      </ul>
+    </td>
+  </tr>
+</table>
+    
 
 
