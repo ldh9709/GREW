@@ -109,6 +109,7 @@
         <li>JWT 인증 및 토큰 관리</li>
         <li>OAuth 로그인 구현</li>
         <li>회원 관리</li>
+        <li>멘토 프로필</li>
       </ul>
     </td>
   </tr>
