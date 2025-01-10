@@ -11,7 +11,7 @@
 <ul>
   <li><b>팀명:</b> 멘토와 멘티</li>
   <li><b>프로젝트 명:</b> GREW</li>
-  <li><b>프로젝트 기간:</b> 2023.01.01 - 2023.06.30</li>
+  <li><b>프로젝트 기간:</b> 2024.12.01 - 2025.01.08</li>
   <li><b>배포 링크:</b> <a href="https://grew.com">https://grew.com</a></li>
   <li><b>팀 문서:</b> <a href="https://docs.grew.com">팀 문서 링크</a></li>
 </ul>
