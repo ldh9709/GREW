@@ -18,10 +18,9 @@
 
 ## 👩‍💻 Team Member
 
-<table>
+<table style="table-layout: fixed; width: 100%;">
   <tr>
-    <!-- 첫 번째 줄 -->
-    <td align="center">
+    <td style="width: 25%; text-align: center;">
       <img src="https://via.placeholder.com/100" width="100" height="100" alt="나문정"><br>
       <b>나문정</b><br>
       BE/FE 팀장<br>
@@ -32,8 +31,8 @@
         <li>어드민</li>
         <li>총괄</li>
       </ul>
-      </td>
-    <td align="center">
+    </td>
+    <td style="width: 25%; text-align: center;">
       <img src="https://via.placeholder.com/100" width="100" height="100" alt="김진영"><br>
       <b>김진영</b><br>
       BE/FE<br>
@@ -44,7 +43,7 @@
         <li>총괄</li>
       </ul>
     </td>
-    <td align="center">
+    <td style="width: 25%; text-align: center;">
       <img src="https://via.placeholder.com/100" width="100" height="100" alt="김찬영"><br>
       <b>김찬영</b><br>
       BE/FE<br>
@@ -55,7 +54,7 @@
         <li>웹소켓</li>
       </ul>
     </td>
-    <td align="center">
+    <td style="width: 25%; text-align: center;">
       <img src="https://via.placeholder.com/100" width="100" height="100" alt="문준형"><br>
       <b>문준형</b><br>
       BE/FE<br>
@@ -67,17 +66,16 @@
     </td>
   </tr>
   <tr>
-    <!-- 두 번째 줄 -->
-    <td align="center">
+    <td style="width: 25%; text-align: center;">
       <img src="https://via.placeholder.com/100" width="100" height="100" alt="박은미"><br>
       <b>박은미</b><br>
       BE/FE<br>
       <a href="https://github.com/lunius94">@박은미</a><br>
       <ul>
-        <li>어드민<li>
+        <li>어드민</li>
       </ul>
     </td>
-    <td align="center">
+    <td style="width: 25%; text-align: center;">
       <img src="https://via.placeholder.com/100" width="100" height="100" alt="송대현"><br>
       <b>송대현</b><br>
       BE/FE<br>
@@ -89,7 +87,7 @@
         <li>좋아요 기능</li>
       </ul>
     </td>
-    <td align="center">
+    <td style="width: 25%; text-align: center;">
       <img src="https://via.placeholder.com/100" width="100" height="100" alt="양한수"><br>
       <b>양한수</b><br>
       BE<br>
@@ -100,7 +98,7 @@
         <li>검색 및 정렬 기능</li>
       </ul>
     </td>
-    <td align="center">
+    <td style="width: 25%; text-align: center;">
       <img src="https://via.placeholder.com/100" width="100" height="100" alt="이도현"><br>
       <b>이도현</b><br>
       BE/FE<br>
