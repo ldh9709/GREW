@@ -67,7 +67,6 @@
     </td>
   </tr>
   <tr>
-    <!-- 두 번째 줄 -->
     <td align="center">
       <img src="https://via.placeholder.com/100" width="100" height="100" alt="박은미"><br>
       <b>박은미</b><br>
