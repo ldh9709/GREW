@@ -35,7 +35,7 @@
       </ul>
     </td>
     <td align="center">
-      <img src="(https://github.com/user-attachments/assets/c2c2265b-fc06-4ed7-883b-ff4b43fac5c4)" width="100" height="100" alt="김진영"/><br>
+      <img src="https://github.com/user-attachments/assets/eae62a00-6bc1-4315-b780-822fb576bd5c" width="100" height="100" alt="김진영"/><br>
       <b>김진영</b><br>
       BE/FE<br>
       <a href="https://github.com/938938">@김진영</a>
