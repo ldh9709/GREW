@@ -98,7 +98,6 @@
         <li>멘토 컨텐츠</li>
         <li>이미지 업로드</li>
         <li>검색 및 정렬 기능</li>
-        <li><li>
       </ul>
     </td>
     <td align="center">
