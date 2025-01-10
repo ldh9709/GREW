@@ -34,8 +34,6 @@
       </ul>
       </td>
     <td align="center">
-    
-
       <img src="https://via.placeholder.com/100" width="100" height="100" alt="김진영"><br>
       <b>김진영</b><br>
       BE/FE<br>
