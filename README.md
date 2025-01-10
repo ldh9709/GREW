@@ -22,7 +22,7 @@
   <tr>
     <!-- 첫 번째 줄 -->
     <td align="center">
-      <img src="https://via.placeholder.com/100" width="100" height="100" alt="나문정"><br>
+      <img src="https://github.com/user-attachments/assets/c3f80874-ae53-4c6c-ba25-e1b90b77d3bc" width="100" height="100" alt="나문정"><br>
       <b>나문정</b><br>
       BE/FE 팀장<br>
       <a href="https://github.com/rickyshu">@나문정</a><br>
@@ -34,6 +34,8 @@
       </ul>
       </td>
     <td align="center">
+    
+
       <img src="https://via.placeholder.com/100" width="100" height="100" alt="김진영"><br>
       <b>김진영</b><br>
       BE/FE<br>
