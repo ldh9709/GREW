@@ -114,3 +114,6 @@
     </td>
   </tr>
 </table>
+
+<h3>Architecture Diagram & Stack</h3>
+![아키텍쳐](https://github.com/user-attachments/assets/62b98778-e813-4386-a562-d4e647dfde80)
