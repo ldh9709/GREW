@@ -116,4 +116,4 @@
 </table>
 
 <h3>Architecture Diagram & Stack</h3>
-![아키텍쳐](https://github.com/user-attachments/assets/62b98778-e813-4386-a562-d4e647dfde80)
+![아키텍쳐](https://github.com/user-attachments/assets/8bd6d8c8-8ec3-4934-843a-4c5c4ff51efb)
