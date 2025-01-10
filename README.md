@@ -51,7 +51,7 @@
     <td align="center">
       <img src="https://via.placeholder.com/100" width="100" height="100" alt="김찬영"/><br>
       <b>김찬영</b><br>
-      <br>
+      BE/FE<br>
       <a href="https://github.com/yunhwan98">@yunhwan98</a><br>
       <ul>
         <li>포트폴리오 상세 페이지</li>
@@ -64,7 +64,7 @@
     <td align="center">
       <img src="https://via.placeholder.com/100" width="100" height="100" alt="문준형"/><br>
       <b>문준형</b><br>
-      <br>
+      BE/FE<br>
       <a href="https://github.com/khkh0109">@khkh0109</a><br>
       <ul>
         <li>포트폴리오 상세 페이지</li>
@@ -79,7 +79,7 @@
     <td align="center">
       <img src="https://via.placeholder.com/100" width="100" height="100" alt="박은미"/><br>
       <b>박은미</b><br>
-      <br>
+      BE/FE<br>
       <a href="https://github.com/lunius94">@lunius94</a><br>
       <ul>
         <li>포트폴리오 상세 페이지</li>
@@ -92,7 +92,7 @@
     <td align="center">
       <img src="https://via.placeholder.com/100" width="100" height="100" alt="송대현"/><br>
       <b>송대현</b><br>
-      <br>
+      BE/FE<br>
       <a href="https://github.com/xyz-wr">@xyz-wr</a><br>
       <ul>
         <li>포트폴리오 상세 페이지</li>
@@ -105,7 +105,7 @@
     <td align="center">
       <img src="https://via.placeholder.com/100" width="100" height="100" alt="양한수"/><br>
       <b>양한수</b><br>
-      <br>
+      BE/FE<br>
       <a href="https://github.com/xyz-wr">@xyz-wr</a><br>
       <ul>
         <li>포트폴리오 상세 페이지</li>
@@ -118,7 +118,7 @@
     <td align="center">
       <img src="https://via.placeholder.com/100" width="100" height="100" alt="이도현"/><br>
       <b>이도현</b><br>
-      <br>
+      BE/FE<br>
       <a href="https://github.com/xyz-wr">@xyz-wr</a><br>
       <ul>
         <li>포트폴리오 상세 페이지</li>
