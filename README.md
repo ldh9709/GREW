@@ -26,11 +26,13 @@
       <b>나문정</b><br>
       FE 팀장<br>
       <a href="https://github.com/rickyshu">@나문정</a><br>
+      <ul>
         <li>팔로우</li>
         <li>신고</li>
         <li>어드민</li>
         <li>총괄</li>
-    </td>
+      </ul>
+      </td>
     <td align="center">
       <img src="https://via.placeholder.com/100" width="100" height="100" alt="김진영"><br>
       <b>김진영</b><br>
