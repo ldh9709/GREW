@@ -75,6 +75,7 @@
       <a href="https://github.com/lunius94">@박은미</a><br>
       <ul>
         <li>어드민<li>
+        <li>권한 관리<li>
       </ul>
     </td>
     <td align="center">
