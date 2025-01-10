@@ -42,6 +42,7 @@
         <li>웹소켓</li>
         <li>채팅</li>
         <li>총괄</li>
+        <li><li>
       </ul>
     </td>
     <td align="center">
@@ -53,6 +54,7 @@
         <li>리뷰</li>
         <li>채팅 이미지</li>
         <li>웹소켓</li>
+        <li><li>
       </ul>
     </td>
     <td align="center">
@@ -63,6 +65,8 @@
       <ul>
         <li>멘토 프로필</li>
         <li>멘토 컨텐츠</li>
+        <li><li>
+        <li><li>
       </ul>
     </td>
   </tr>
@@ -75,6 +79,9 @@
       <a href="https://github.com/lunius94">@박은미</a><br>
       <ul>
         <li>어드민<li>
+        <li><li>
+        <li><li>
+        <li><li>
       </ul>
     </td>
     <td align="center">
@@ -98,6 +105,7 @@
         <li>멘토 컨텐츠</li>
         <li>이미지 업로드</li>
         <li>검색 및 정렬 기능</li>
+        <li><li>
       </ul>
     </td>
     <td align="center">
