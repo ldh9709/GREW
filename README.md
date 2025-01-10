@@ -74,7 +74,7 @@
       BE/FE<br>
       <a href="https://github.com/lunius94">@박은미</a><br>
       <ul>
-        <li>어드민li>
+        <li>어드민<li>
       </ul>
     </td>
     <td align="center">
