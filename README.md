@@ -42,7 +42,6 @@
         <li>웹소켓</li>
         <li>채팅</li>
         <li>총괄</li>
-        <li><li>
       </ul>
     </td>
     <td align="center">
@@ -54,7 +53,6 @@
         <li>리뷰</li>
         <li>채팅 이미지</li>
         <li>웹소켓</li>
-        <li><li>
       </ul>
     </td>
     <td align="center">
