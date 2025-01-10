@@ -1,11 +1,11 @@
 ![logo](https://github.com/user-attachments/assets/7734c451-ade9-40b2-b575-19779300498a)
 
-![해핑](https://github.com/user-attachments/assets/227dd03d-92a0-41d8-bfae-7c416469b9fa)
-![초롱핑](https://github.com/user-attachments/assets/26b4c2b2-a5d5-401f-8268-9125eb939fd7)
-![아자핑](https://github.com/user-attachments/assets/15ccede9-c932-477b-9a3a-be5bc5e96987)
-![샤샤핑](https://github.com/user-attachments/assets/ca27f1f7-ac26-44b3-9658-1aa45edd5cc4)
-![빛나핑](https://github.com/user-attachments/assets/974659b9-cfe5-446d-a672-5cfdc85a8e0e)
-![말랑핑](https://github.com/user-attachments/assets/bf45b332-4b3b-4f6f-9418-377420dc1b89)
+![해핑]()
+![초롱핑]()
+![아자핑]()
+![샤샤핑]()
+![빛나핑]()
+![말랑핑]()
 ![똑똑핑]()
 
 # 멘토링을 통한 개인의 성장과 발전! 멘토·멘티 매칭 플랫폼, GREW
@@ -43,7 +43,7 @@
       </ul>
     </td>
     <td align="center">
-      <img src="[https://via.placeholder.com/100](https://github.com/user-attachments/assets/c2c2265b-fc06-4ed7-883b-ff4b43fac5c4)" width="100" height="100" alt="김진영"/><br>
+      <img src="(https://github.com/user-attachments/assets/c2c2265b-fc06-4ed7-883b-ff4b43fac5c4)" width="100" height="100" alt="김진영"/><br>
       <b>김진영</b><br>
       BE/FE<br>
       <a href="https://github.com/938938">@김진영</a>
@@ -54,7 +54,7 @@
       </ul>
     </td>
     <td align="center">
-      <img src="https://via.placeholder.com/100" width="100" height="100" alt="김찬영"/><br>
+      <img src="https://github.com/user-attachments/assets/15ccede9-c932-477b-9a3a-be5bc5e96987" width="100" height="100" alt="김찬영"/><br>
       <b>김찬영</b><br>
       BE/FE<br>
       <a href="https://github.com/yunhwan98">@김찬영</a>
@@ -65,7 +65,7 @@
       </ul>
     </td>
     <td align="center">
-      <img src="https://via.placeholder.com/100" width="100" height="100" alt="문준형"/><br>
+      <img src="https://github.com/user-attachments/assets/227dd03d-92a0-41d8-bfae-7c416469b9fa" width="100" height="100" alt="문준형"/><br>
       <b>문준형</b><br>
       BE/FE<br>
       <a href="https://github.com/khkh0109">@문준형</a>
@@ -77,7 +77,7 @@
   </tr>
   <tr>
     <td align="center">
-      <img src="https://via.placeholder.com/100" width="100" height="100" alt="박은미"/><br>
+      <img src="https://github.com/user-attachments/assets/974659b9-cfe5-446d-a672-5cfdc85a8e0e" width="100" height="100" alt="박은미"/><br>
       <b>박은미</b><br>
       BE/FE<br>
       <a href="https://github.com/lunius94">@박은미</a>
@@ -87,7 +87,7 @@
       </ul>
     </td>
     <td align="center">
-      <img src="https://via.placeholder.com/100" width="100" height="100" alt="송대현"/><br>
+      <img src="https://github.com/user-attachments/assets/26b4c2b2-a5d5-401f-8268-9125eb939fd7" width="100" height="100" alt="송대현"/><br>
       <b>송대현</b><br>
       BE/FE<br>
       <a href="https://github.com/xyz-wr">@송대현</a>
@@ -99,7 +99,7 @@
       </ul>
     </td>
     <td align="center">
-      <img src="https://via.placeholder.com/100" width="100" height="100" alt="양한수"/><br>
+      <img src="https://github.com/user-attachments/assets/ca27f1f7-ac26-44b3-9658-1aa45edd5cc4" width="100" height="100" alt="양한수"/><br>
       <b>양한수</b><br>
       BE<br>
       <a href="https://github.com/xyz-wr">@양한수</a>
@@ -110,7 +110,7 @@
       </ul>
     </td>
     <td align="center">
-      <img src="https://via.placeholder.com/100" width="100" height="100" alt="이도현"/><br>
+      <img src="https://github.com/user-attachments/assets/bf45b332-4b3b-4f6f-9418-377420dc1b89" width="100" height="100" alt="이도현"/><br>
       <b>이도현</b><br>
       BE/FE<br>
       <a href="https://github.com/xyz-wr">@이도현</a>
