@@ -61,10 +61,8 @@
       BE/FE<br>
       <a href="https://github.com/khkh0109">@문준형</a><br>
       <ul>
-        <li>프로젝트 구조 설계</li>
-        <li>AWS 배포</li>
-        <li>CI/CD 파이프라인 구성</li>
-        <li>테스트 코드 작성</li>
+        <li>멘토 프로필</li>
+        <li>멘토 컨텐츠</li>
       </ul>
     </td>
   </tr>
