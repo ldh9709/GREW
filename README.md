@@ -24,7 +24,7 @@
     <td align="center">
       <img src="https://via.placeholder.com/100" width="100" height="100" alt="나문정"><br>
       <b>나문정</b><br>
-      FE 팀장<br>
+      BE/FE 팀장<br>
       <a href="https://github.com/rickyshu">@나문정</a><br>
       <ul>
         <li>팔로우</li>
@@ -36,7 +36,7 @@
     <td align="center">
       <img src="https://via.placeholder.com/100" width="100" height="100" alt="김진영"><br>
       <b>김진영</b><br>
-      FE<br>
+      BE/FE<br>
       <a href="https://github.com/938938">@김진영</a><br>
       <ul>
         <li>웹소켓</li>
@@ -47,19 +47,19 @@
     <td align="center">
       <img src="https://via.placeholder.com/100" width="100" height="100" alt="김찬영"><br>
       <b>김찬영</b><br>
-      BE<br>
+      BE/FE<br>
       <a href="https://github.com/yunhwan98">@김찬영</a><br>
       <ul>
-        <li>데이터베이스 설계</li>
-        <li>OAuth 로그인 구현</li>
-        <li>JWT 인증</li>
-        <li>REST API 설계</li>
+        <li>리뷰</li>
+        <li>채팅 이미지</li>
+        <li>웹소켓</li>
+        
       </ul>
     </td>
     <td align="center">
       <img src="https://via.placeholder.com/100" width="100" height="100" alt="문준형"><br>
       <b>문준형</b><br>
-      BE<br>
+      BE/FE<br>
       <a href="https://github.com/khkh0109">@문준형</a><br>
       <ul>
         <li>프로젝트 구조 설계</li>
@@ -74,7 +74,7 @@
     <td align="center">
       <img src="https://via.placeholder.com/100" width="100" height="100" alt="박은미"><br>
       <b>박은미</b><br>
-      BE<br>
+      BE/FE<br>
       <a href="https://github.com/lunius94">@박은미</a><br>
       <ul>
         <li>댓글 CRUD</li>
@@ -86,13 +86,11 @@
     <td align="center">
       <img src="https://via.placeholder.com/100" width="100" height="100" alt="송대현"><br>
       <b>송대현</b><br>
-      BE<br>
+      BE/FE<br>
       <a href="https://github.com/xyz-wr">@송대현</a><br>
       <ul>
-        <li>포트폴리오 CRUD</li>
-        <li>S3 파일 업로드</li>
-        <li>JWT 인증 및 토큰 관리</li>
-        <li>API 최적화</li>
+        <li>알림</li>
+        <li>페이징</li>
       </ul>
     </td>
     <td align="center">
@@ -101,22 +99,19 @@
       BE<br>
       <a href="https://github.com/xyz-wr">@양한수</a><br>
       <ul>
-        <li>유저 엔티티 설계</li>
-        <li>시큐리티 설정</li>
-        <li>OAuth 로그인 구현</li>
-        <li>포트폴리오 검색 API</li>
+        <li>멘토 컨텐츠</li>
+        <li>이미지 업로드</li>
       </ul>
     </td>
     <td align="center">
       <img src="https://via.placeholder.com/100" width="100" height="100" alt="이도현"><br>
       <b>이도현</b><br>
-      BE<br>
+      BE/FE<br>
       <a href="https://github.com/xyz-wr">@이도현</a><br>
       <ul>
-        <li>데이터베이스 마이그레이션</li>
-        <li>테스트 자동화</li>
-        <li>배포 파이프라인 관리</li>
-        <li>로깅 및 에러 처리</li>
+        <li>JWT 인증 및 토큰 관리</li>
+        <li>OAuth 로그인 구현</li>
+        <li>회원 관리</li>
       </ul>
     </td>
   </tr>
