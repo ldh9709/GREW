@@ -21,118 +21,84 @@
 ## 👩‍💻 Team Member
 
 <table>
-  <thead>
-    <tr>
-      <th style="text-align: center;">이미지</th>
-      <th style="text-align: center;">이름</th>
-      <th style="text-align: center;">본인이 한 내용</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td align="center">
-        <img src="https://github.com/user-attachments/assets/c3f80874-ae53-4c6c-ba25-e1b90b77d3bc" width="100" height="100" alt="나문정"/>
-      </td>
-      <td align="center">
-        <b>나문정</b><br>
-        BE/FE 1팀장<br>
-        <a href="https://github.com/rickyshu">@나문정</a>
-      </td>
-      <td>
-        <ul>
-          <li>팔로우, 신고</li>
-          <li>어드민</li>
-          <li>총괄</li>
-        </ul>
-      </td>
-    </tr>
-    <tr>
-      <td align="center">
-        <img src="https://github.com/user-attachments/assets/eae62a00-6bc1-4315-b780-822fb576bd5c" width="100" height="100" alt="김진영"/>
-      </td>
-      <td align="center">
-        <b>김진영</b><br>
-        BE/FE 2팀장<br>
-        <a href="https://github.com/938938">@김진영</a>
-      </td>
-      <td>
-        <ul>
-          <li>웹소켓</li>
-          <li>채팅</li>
-          <li>총괄</li>
-        </ul>
-      </td>
-    </tr>
-    <tr>
-      <td align="center">
-        <img src="https://github.com/user-attachments/assets/15ccede9-c932-477b-9a3a-be5bc5e96987" width="100" height="100" alt="김찬영"/>
-      </td>
-      <td align="center">
-        <b>김찬영</b><br>
-        BE/FE<br>
-        <a href="https://github.com/yunhwan98">@김찬영</a>
-      </td>
-      <td>
-        <ul>
-          <li>리뷰</li>
-          <li>채팅 이미지</li>
-          <li>웹소켓</li>
-        </ul>
-      </td>
-    </tr>
-    <tr>
-      <td align="center">
-        <img src="https://github.com/user-attachments/assets/227dd03d-92a0-41d8-bfae-7c416469b9fa" width="100" height="100" alt="문준형"/>
-      </td>
-      <td align="center">
-        <b>문준형</b><br>
-        BE/FE<br>
-        <a href="https://github.com/khkh0109">@문준형</a>
-      </td>
-      <td>
-        <ul>
-          <li>멘토 프로필</li>
-          <li>멘토 컨텐츠</li>
-          <li>이미지 업로드</li>
-        </ul>
-      </td>
-    </tr>
-    <tr>
-      <td align="center">
-        <img src="https://github.com/user-attachments/assets/974659b9-cfe5-446d-a672-5cfdc85a8e0e" width="100" height="100" alt="박은미"/>
-      </td>
-      <td align="center">
-        <b>박은미</b><br>
-        BE/FE<br>
-        <a href="https://github.com/lunius94">@박은미</a>
-      </td>
-      <td>
-        <ul>
-          <li>어드민</li>
-          <li>권한 관리</li>
-          <li>검색 및 정렬 기능</li>
-        </ul>
-      </td>
-    </tr>
-    <tr>
-      <td align="center">
-        <img src="https://github.com/user-attachments/assets/26b4c2b2-a5d5-401f-8268-9125eb939fd7" width="100" height="100" alt="송대현"/>
-      </td>
-      <td align="center">
-        <b>송대현</b><br>
-        BE/FE<br>
-        <a href="https://github.com/xyz-wr">@송대현</a>
-      </td>
-      <td>
-        <ul>
-          <li>알림</li>
-          <li>댓글</li>
-          <li>검색 및 정렬 기능</li>
-          <li>좋아요 기능</li>
-        </ul>
-      </td>
-    </tr>
-  </tbody>
+  <tr>
+    <!-- 첫 번째 행: 이미지 -->
+    <td align="center">
+      <img src="https://github.com/user-attachments/assets/c3f80874-ae53-4c6c-ba25-e1b90b77d3bc" width="100" height="100" alt="나문정"/>
+    </td>
+    <td align="center">
+      <img src="https://github.com/user-attachments/assets/eae62a00-6bc1-4315-b780-822fb576bd5c" width="100" height="100" alt="김진영"/>
+    </td>
+  </tr>
+  <tr>
+    <!-- 두 번째 행: 이름 -->
+    <td align="center">
+      <b>나문정</b><br>
+      BE/FE 1팀장<br>
+      <a href="https://github.com/rickyshu">@나문정</a>
+    </td>
+    <td align="center">
+      <b>김진영</b><br>
+      BE/FE 2팀장<br>
+      <a href="https://github.com/938938">@김진영</a>
+    </td>
+  </tr>
+  <tr>
+    <!-- 세 번째 행: 본인 역할 -->
+    <td>
+      <ul>
+        <li>팔로우, 신고</li>
+        <li>어드민</li>
+        <li>총괄</li>
+      </ul>
+    </td>
+    <td>
+      <ul>
+        <li>웹소켓</li>
+        <li>채팅</li>
+        <li>총괄</li>
+      </ul>
+    </td>
+  </tr>
+  <tr>
+    <!-- 네 번째 행: 이미지 -->
+    <td align="center">
+      <img src="https://github.com/user-attachments/assets/15ccede9-c932-477b-9a3a-be5bc5e96987" width="100" height="100" alt="김찬영"/>
+    </td>
+    <td align="center">
+      <img src="https://github.com/user-attachments/assets/227dd03d-92a0-41d8-bfae-7c416469b9fa" width="100" height="100" alt="문준형"/>
+    </td>
+  </tr>
+  <tr>
+    <!-- 다섯 번째 행: 이름 -->
+    <td align="center">
+      <b>김찬영</b><br>
+      BE/FE<br>
+      <a href="https://github.com/yunhwan98">@김찬영</a>
+    </td>
+    <td align="center">
+      <b>문준형</b><br>
+      BE/FE<br>
+      <a href="https://github.com/khkh0109">@문준형</a>
+    </td>
+  </tr>
+  <tr>
+    <!-- 여섯 번째 행: 본인 역할 -->
+    <td>
+      <ul>
+        <li>리뷰</li>
+        <li>채팅 이미지</li>
+        <li>웹소켓</li>
+      </ul>
+    </td>
+    <td>
+      <ul>
+        <li>멘토 프로필</li>
+        <li>멘토 컨텐츠</li>
+        <li>이미지 업로드</li>
+      </ul>
+    </td>
+  </tr>
 </table>
 
 ---
