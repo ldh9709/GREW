@@ -52,7 +52,7 @@
 <br/>
 
 ## Docs
-🔗 [테이블 명세서]([https://gleaming-random-882.notion.site/API-143697bf650d80d4aff1f0c2ee858902?pvs=4](https://docs.google.com/spreadsheets/d/1gDbkN_rdSKef2xf1PhucVAKwJfAvm0yz3JI0ef4hh_A/edit?usp=sharing))
+🔗 [테이블 명세서](https://docs.google.com/spreadsheets/d/1gDbkN_rdSKef2xf1PhucVAKwJfAvm0yz3JI0ef4hh_A/edit?usp=sharing)
 <br/>
 🔗 [API 명세서 ](https://gleaming-random-882.notion.site/API-143697bf650d80d4aff1f0c2ee858902?pvs=4)
 <br/>
