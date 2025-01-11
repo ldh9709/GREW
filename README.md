@@ -94,7 +94,7 @@
     <td align="center">
       <img src="https://github.com/user-attachments/assets/ca27f1f7-ac26-44b3-9658-1aa45edd5cc4" width="100" height="100" alt="양한수"/><br>
       <b>양한수</b><br>
-      BE<br>
+      BE/FE<br>
       <a href="https://github.com/xyz-wr">@양한수</a>
       <ul>
         <li>멘토 컨텐츠</li>
