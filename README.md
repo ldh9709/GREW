@@ -74,9 +74,9 @@
       </td>
       <td>
         <ul>
-          <li>웹소켓</li>
           <li>리뷰</li>
           <li>채팅 이미지</li>
+          <li>웹소켓</li>
         </ul>
       </td>
     </tr>
@@ -129,6 +129,41 @@
           <li>댓글</li>
           <li>검색 및 정렬 기능</li>
           <li>좋아요 기능</li>
+        </ul>
+      </td>
+    </tr>
+    <tr>
+      <td align="center">
+        <img src="https://github.com/user-attachments/assets/ca27f1f7-ac26-44b3-9658-1aa45edd5cc4" width="100" height="100" alt="양한수"/>
+      </td>
+      <td align="center">
+        <b>양한수</b><br>
+        BE<br>
+        <a href="https://github.com/xyz-wr">@양한수</a>
+      </td>
+      <td>
+        <ul>
+          <li>멘토 컨텐츠</li>
+          <li>이미지 업로드</li>
+          <li>검색 및 정렬 기능</li>
+        </ul>
+      </td>
+    </tr>
+    <tr>
+      <td align="center">
+        <img src="https://github.com/user-attachments/assets/bf45b332-4b3b-4f6f-9418-377420dc1b89" width="100" height="100" alt="이도현"/>
+      </td>
+      <td align="center">
+        <b>이도현</b><br>
+        BE/FE<br>
+        <a href="https://github.com/xyz-wr">@이도현</a>
+      </td>
+      <td>
+        <ul>
+          <li>JWT 인증 및 토큰 관리</li>
+          <li>OAuth 로그인 구현</li>
+          <li>회원 관리</li>
+          <li>멘토 프로필</li>
         </ul>
       </td>
     </tr>
