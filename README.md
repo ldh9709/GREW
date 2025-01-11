@@ -25,9 +25,12 @@
   <tr>
     <td align="center">
       <img src="https://github.com/user-attachments/assets/c3f80874-ae53-4c6c-ba25-e1b90b77d3bc" width="100" height="100" alt="나문정"/><br>
+      <hr style="width:80%;">
+      <b>1팀장</b><br>
+      <hr style="width:80%;">
       <b>나문정</b><br>
-      BE/FE 1팀장<br>
-      <a href="https://github.com/rickyshu">@나문정</a>
+      <a href="https://github.com/rickyshu">@나문정</a><br>
+      <hr style="width:80%;">
       <ul>
         <li>팔로우, 신고</li>
         <li>어드민</li>
@@ -36,9 +39,12 @@
     </td>
     <td align="center">
       <img src="https://github.com/user-attachments/assets/eae62a00-6bc1-4315-b780-822fb576bd5c" width="100" height="100" alt="김진영"/><br>
+      <hr style="width:80%;">
+      <b>2팀장</b><br>
+      <hr style="width:80%;">
       <b>김진영</b><br>
-      BE/FE 2팀장<br>
-      <a href="https://github.com/938938">@김진영</a>
+      <a href="https://github.com/938938">@김진영</a><br>
+      <hr style="width:80%;">
       <ul>
         <li>웹소켓</li>
         <li>채팅</li>
@@ -47,9 +53,12 @@
     </td>
     <td align="center">
       <img src="https://github.com/user-attachments/assets/15ccede9-c932-477b-9a3a-be5bc5e96987" width="100" height="100" alt="김찬영"/><br>
+      <hr style="width:80%;">
+      <b>BE/FE</b><br>
+      <hr style="width:80%;">
       <b>김찬영</b><br>
-      BE/FE<br>
-      <a href="https://github.com/yunhwan98">@김찬영</a>
+      <a href="https://github.com/yunhwan98">@김찬영</a><br>
+      <hr style="width:80%;">
       <ul>
         <li>리뷰</li>
         <li>채팅 이미지</li>
@@ -58,9 +67,12 @@
     </td>
     <td align="center">
       <img src="https://github.com/user-attachments/assets/227dd03d-92a0-41d8-bfae-7c416469b9fa" width="100" height="100" alt="문준형"/><br>
+      <hr style="width:80%;">
+      <b>BE/FE</b><br>
+      <hr style="width:80%;">
       <b>문준형</b><br>
-      BE/FE<br>
-      <a href="https://github.com/khkh0109">@문준형</a>
+      <a href="https://github.com/khkh0109">@문준형</a><br>
+      <hr style="width:80%;">
       <ul>
         <li>멘토 프로필</li>
         <li>멘토 컨텐츠</li>
@@ -73,9 +85,12 @@
   <tr>
     <td align="center">
       <img src="https://github.com/user-attachments/assets/974659b9-cfe5-446d-a672-5cfdc85a8e0e" width="100" height="100" alt="박은미"/><br>
+      <hr style="width:80%;">
+      <b>BE/FE</b><br>
+      <hr style="width:80%;">
       <b>박은미</b><br>
-      BE/FE<br>
-      <a href="https://github.com/lunius94">@박은미</a>
+      <a href="https://github.com/lunius94">@박은미</a><br>
+      <hr style="width:80%;">
       <ul>
         <li>어드민</li>
         <li>권한 관리</li>
@@ -84,9 +99,12 @@
     </td>
     <td align="center">
       <img src="https://github.com/user-attachments/assets/26b4c2b2-a5d5-401f-8268-9125eb939fd7" width="100" height="100" alt="송대현"/><br>
+      <hr style="width:80%;">
+      <b>BE/FE</b><br>
+      <hr style="width:80%;">
       <b>송대현</b><br>
-      BE/FE<br>
-      <a href="https://github.com/xyz-wr">@송대현</a>
+      <a href="https://github.com/xyz-wr">@송대현</a><br>
+      <hr style="width:80%;">
       <ul>
         <li>알림</li>
         <li>댓글</li>
@@ -96,9 +114,12 @@
     </td>
     <td align="center">
       <img src="https://github.com/user-attachments/assets/ca27f1f7-ac26-44b3-9658-1aa45edd5cc4" width="100" height="100" alt="양한수"/><br>
+      <hr style="width:80%;">
+      <b>BE</b><br>
+      <hr style="width:80%;">
       <b>양한수</b><br>
-      BE<br>
-      <a href="https://github.com/xyz-wr">@양한수</a>
+      <a href="https://github.com/xyz-wr">@양한수</a><br>
+      <hr style="width:80%;">
       <ul>
         <li>멘토 컨텐츠</li>
         <li>이미지 업로드</li>
@@ -107,9 +128,12 @@
     </td>
     <td align="center">
       <img src="https://github.com/user-attachments/assets/bf45b332-4b3b-4f6f-9418-377420dc1b89" width="100" height="100" alt="이도현"/><br>
+      <hr style="width:80%;">
+      <b>BE/FE</b><br>
+      <hr style="width:80%;">
       <b>이도현</b><br>
-      BE/FE<br>
-      <a href="https://github.com/xyz-wr">@이도현</a>
+      <a href="https://github.com/xyz-wr">@이도현</a><br>
+      <hr style="width:80%;">
       <ul>
         <li>JWT 인증 및 토큰 관리</li>
         <li>OAuth 로그인 구현</li>
