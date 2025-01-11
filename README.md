@@ -21,7 +21,7 @@
 ## 👩‍💻 Team Member
 
 <table>
-  <!-- 첫 번째 행 -->
+  <!-- 첫 번째 줄 -->
   <tr>
     <td align="center">
       <img src="https://github.com/user-attachments/assets/c3f80874-ae53-4c6c-ba25-e1b90b77d3bc" width="100" height="100" alt="나문정"/><br>
@@ -69,7 +69,7 @@
     </td>
   </tr>
 
-  <!-- 두 번째 행 -->
+  <!-- 두 번째 줄 -->
   <tr>
     <td align="center">
       <img src="https://github.com/user-attachments/assets/974659b9-cfe5-446d-a672-5cfdc85a8e0e" width="100" height="100" alt="박은미"/><br>
