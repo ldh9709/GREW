@@ -21,8 +21,9 @@
 ## 👩‍💻 Team Member
 
 <table>
+  <!-- 첫 번째 행 -->
   <tr>
-    <td align="center" style="padding: 5px;">
+    <td align="center" style="padding: 10px;">
       <img src="https://github.com/user-attachments/assets/c3f80874-ae53-4c6c-ba25-e1b90b77d3bc" width="80" height="80" alt="나문정"/><br>
       <b>1팀장</b><br>
       <b>나문정</b><br>
@@ -33,7 +34,7 @@
         <li>총괄</li>
       </ul>
     </td>
-    <td align="center" style="padding: 5px;">
+    <td align="center" style="padding: 10px;">
       <img src="https://github.com/user-attachments/assets/eae62a00-6bc1-4315-b780-822fb576bd5c" width="80" height="80" alt="김진영"/><br>
       <b>2팀장</b><br>
       <b>김진영</b><br>
@@ -44,7 +45,7 @@
         <li>총괄</li>
       </ul>
     </td>
-    <td align="center" style="padding: 5px;">
+    <td align="center" style="padding: 10px;">
       <img src="https://github.com/user-attachments/assets/15ccede9-c932-477b-9a3a-be5bc5e96987" width="80" height="80" alt="김찬영"/><br>
       <b>BE/FE</b><br>
       <b>김찬영</b><br>
@@ -55,7 +56,7 @@
         <li>웹소켓</li>
       </ul>
     </td>
-    <td align="center" style="padding: 5px;">
+    <td align="center" style="padding: 10px;">
       <img src="https://github.com/user-attachments/assets/227dd03d-92a0-41d8-bfae-7c416469b9fa" width="80" height="80" alt="문준형"/><br>
       <b>BE/FE</b><br>
       <b>문준형</b><br>
@@ -67,8 +68,10 @@
       </ul>
     </td>
   </tr>
+
+  <!-- 두 번째 행 -->
   <tr>
-    <td align="center" style="padding: 5px;">
+    <td align="center" style="padding: 10px;">
       <img src="https://github.com/user-attachments/assets/974659b9-cfe5-446d-a672-5cfdc85a8e0e" width="80" height="80" alt="박은미"/><br>
       <b>BE/FE</b><br>
       <b>박은미</b><br>
@@ -79,7 +82,7 @@
         <li>검색 및 정렬 기능</li>
       </ul>
     </td>
-    <td align="center" style="padding: 5px;">
+    <td align="center" style="padding: 10px;">
       <img src="https://github.com/user-attachments/assets/26b4c2b2-a5d5-401f-8268-9125eb939fd7" width="80" height="80" alt="송대현"/><br>
       <b>BE/FE</b><br>
       <b>송대현</b><br>
@@ -91,7 +94,7 @@
         <li>좋아요 기능</li>
       </ul>
     </td>
-    <td align="center" style="padding: 5px;">
+    <td align="center" style="padding: 10px;">
       <img src="https://github.com/user-attachments/assets/ca27f1f7-ac26-44b3-9658-1aa45edd5cc4" width="80" height="80" alt="양한수"/><br>
       <b>BE</b><br>
       <b>양한수</b><br>
@@ -102,7 +105,7 @@
         <li>검색 및 정렬 기능</li>
       </ul>
     </td>
-    <td align="center" style="padding: 5px;">
+    <td align="center" style="padding: 10px;">
       <img src="https://github.com/user-attachments/assets/bf45b332-4b3b-4f6f-9418-377420dc1b89" width="80" height="80" alt="이도현"/><br>
       <b>BE/FE</b><br>
       <b>이도현</b><br>
