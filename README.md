@@ -25,7 +25,7 @@
     <td align="center">
       <img src="https://github.com/user-attachments/assets/c3f80874-ae53-4c6c-ba25-e1b90b77d3bc" width="100" height="100" alt="나문정"/><br>
       <b>나문정</b><br>
-      BE/FE 팀장<br>
+      BE/FE 1팀장<br>
       <a href="https://github.com/rickyshu">@나문정</a>
       <ul>
         <li>팔로우, 신고</li>
@@ -36,7 +36,7 @@
     <td align="center">
       <img src="https://github.com/user-attachments/assets/eae62a00-6bc1-4315-b780-822fb576bd5c" width="100" height="100" alt="김진영"/><br>
       <b>김진영</b><br>
-      BE/FE<br>
+      BE/FE 2팀장장<br>
       <a href="https://github.com/938938">@김진영</a>
       <ul>
         <li>웹소켓</li>
@@ -63,6 +63,7 @@
       <ul>
         <li>멘토 프로필</li>
         <li>멘토 컨텐츠</li>
+        <li>이미지 업로드</li>
       </ul>
     </td>
   </tr>
@@ -75,6 +76,7 @@
       <ul>
         <li>어드민</li>
         <li>권한 관리</li>
+        <li>검색 및 정렬기능</li>
       </ul>
     </td>
     <td align="center">
