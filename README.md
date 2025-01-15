@@ -38,6 +38,7 @@
 
 <br/>
 <br/>
+## ERD
 
 ## Architecture Diagram & Stack
 <img src="https://github.com/user-attachments/assets/8bd6d8c8-8ec3-4934-843a-4c5c4ff51efb" alt="아키텍처" width="720" height="540">
