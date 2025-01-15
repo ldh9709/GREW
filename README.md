@@ -1,5 +1,6 @@
 <div align=center>
-<img src="https://github.com/user-attachments/assets/7734c451-ade9-40b2-b575-19779300498a"/>
+<img src="https://github.com/user-attachments/assets/7734c451-ade9-40b2-b575-19779300498a" width="400"/>
+
 
 # 멘토링을 통한 개인의 성장과 발전! 멘토·멘티 매칭 플랫폼, GREW
 
