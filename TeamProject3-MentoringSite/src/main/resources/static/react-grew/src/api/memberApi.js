@@ -60,7 +60,7 @@ export const loginAction = async (sendJsonObject) => {
     form.append('username', sendJsonObject.memberId)
     form.append('password', sendJsonObject.memberPassword)
 
-    const response = await axios.post("http://localhost:8080/login", form, header,);
+    const response = await axios.post(`${BACKEND_SERVER}/login`, form, header,);
     console.log("Response : ", response);
     return response.data;
 }

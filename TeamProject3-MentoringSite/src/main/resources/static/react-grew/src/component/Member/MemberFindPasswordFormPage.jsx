@@ -43,7 +43,7 @@ const MemberFindPasswordForm = () => {
             switch(response.status) {
                 case responseStatus.PASSWORD_RESET_SUCCESS:
                     toast.success("이메일로 임시 비밀번호가 전송되었습니다.");
-                    navigate('/login');
+                    navigate('/member/login');
                     break;
                 case responseStatus.NOT_FOUND_MEMBER:
                     toast.error("이메일과 일치하는 회원이 없습니다.");
