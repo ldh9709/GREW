@@ -1,5 +1,6 @@
 <div align=center>
-<img src="https://github.com/user-attachments/assets/7734c451-ade9-40b2-b575-19779300498a"/>
+<img src="https://github.com/user-attachments/assets/7734c451-ade9-40b2-b575-19779300498a" width="400"/>
+
 
 # 멘토링을 통한 개인의 성장과 발전! 멘토·멘티 매칭 플랫폼, GREW
 
@@ -31,12 +32,13 @@
 |![avatar5](https://github.com/user-attachments/assets/974659b9-cfe5-446d-a672-5cfdc85a8e0e)|![avatar6](https://github.com/user-attachments/assets/26b4c2b2-a5d5-401f-8268-9125eb939fd7)|![avatar7](https://github.com/user-attachments/assets/ca27f1f7-ac26-44b3-9658-1aa45edd5cc4)|![avatar8](https://github.com/user-attachments/assets/bf45b332-4b3b-4f6f-9418-377420dc1b89)|
 |:---:|:---:|:---:|:---:|
 | **박은미** <br> BE/FE <br> [@박은미](https://github.com/hornheart)| **송대현** <br> BE/FE <br> [@송대현](https://github.com/jonadan0322)| **양한수** <br> BE/FE <br> [@양한수](https://github.com/apk1207)| **이도현** <br> BE/FE <br> [@이도현](https://github.com/ldh9709)|
-| - 어드민 <br> - 권한 관리 <br> - 검색 및 정렬 기능 | - 알림 <br> - 댓글 <br> - 검색 및 정렬 기능 <br> - 좋아요 기능 | - 멘토 컨텐츠 <br> - 이미지 업로드 <br> - 검색 및 정렬 기능 | - JWT 인증 및 토큰 관리 <br> - OAuth 로그인 구현 <br> - 회원 관리 <br> - 멘토 프로필 |
+| - 어드민 <br> - 권한 관리 <br> - 검색 및 정렬 기능 | -질문게시판 <br> - 알림 <br> - 검색 및 정렬 기능 <br> - 좋아요 기능 | - 멘토 컨텐츠 <br> - 이미지 업로드 <br> - 검색 및 정렬 기능 | - JWT 인증 및 토큰 관리 <br> - OAuth 로그인 구현 <br> - 회원 관리 <br> - 멘토 프로필 |
 
 </div>
 
 <br/>
 <br/>
+## ERD
 
 ## Architecture Diagram & Stack
 <img src="https://github.com/user-attachments/assets/8bd6d8c8-8ec3-4934-843a-4c5c4ff51efb" alt="아키텍처" width="720" height="540">
