@@ -51,6 +51,9 @@
 
 <br/>
 <br/>
+## ERD
+<img src=https://github.com/user-attachments/assets/4a83c86b-e7b5-4a54-a7ad-c971f82f8760"/>
+
 
 ## 📖Docs
 🔗 [테이블 명세서](https://docs.google.com/spreadsheets/d/1gDbkN_rdSKef2xf1PhucVAKwJfAvm0yz3JI0ef4hh_A/edit?usp=sharing)
