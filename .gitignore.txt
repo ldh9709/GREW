@@ -1,1 +1,0 @@
-/TeamProject3-MentoringSite/src/main/resources/application.properties
