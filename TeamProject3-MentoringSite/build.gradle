@@ -61,8 +61,8 @@ dependencies {
 	implementation 'com.h2database:h2'
 	implementation 'org.springframework.boot:spring-boot-starter-websocket'  // WebSocket 지원
     implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'  // Thymeleaf 지원 (HTML 템플릿)
-    implementation 'org.springframework.boot:spring-boot-starter-messaging'
-    implementation 'org.springframework.messaging:spring-messaging'
+    //implementation 'org.springframework.boot:spring-boot-starter-messaging'
+    //implementation 'org.springframework.messaging:spring-messaging'
 	
 }
 tasks.named('test') {
