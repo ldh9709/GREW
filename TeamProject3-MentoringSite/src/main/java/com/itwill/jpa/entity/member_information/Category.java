@@ -38,12 +38,15 @@ public class Category {
     private Category parentCategory;
     
     @OneToMany(mappedBy = "category", fetch = FetchType.LAZY)
+    @Builder.Default
     private List<MentorProfile> mentorProfiles = new ArrayList<>();
     
     @OneToMany(mappedBy = "category", fetch = FetchType.LAZY)
+    @Builder.Default
     private List<Interest> interests = new ArrayList<>();
     
     @OneToMany(mappedBy = "parentCategory", fetch = FetchType.LAZY, orphanRemoval = true)
+    @Builder.Default
     private List<Category> childCategories = new ArrayList<>();
     
     @PrePersist

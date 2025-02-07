@@ -54,7 +54,9 @@ public class Review {
     private Integer reviewScore;
 
     @Column(name="review_date", updatable = false)
+    @Builder.Default
     private LocalDateTime reviewDate = LocalDateTime.now();
+
     
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="chat_room_no")
@@ -64,10 +66,6 @@ public class Review {
     @PrePersist
     public void setDefaultValues() {
         if (this.reviewDate == null) this.reviewDate = LocalDateTime.now();
-
-        
-        
-        
 
         if(this.reviewStatus==0||this.reviewStatus==null)this.reviewStatus=1;
     }

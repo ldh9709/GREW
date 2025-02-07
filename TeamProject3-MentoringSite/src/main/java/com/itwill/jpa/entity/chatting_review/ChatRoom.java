@@ -42,7 +42,8 @@ public class ChatRoom {
 	private Integer chatRoomStatus;
 	
 	@Column(name = "chat_room_start_date")
-	private LocalDateTime chatRoomStartDate;
+	@Builder.Default
+	private LocalDateTime chatRoomStartDate = LocalDateTime.now();
 	
 	@Column(name = "chat_room_end_date")
 	private LocalDateTime chatRoomEndDate;
@@ -55,16 +56,18 @@ public class ChatRoom {
     @JoinColumn(name = "mentor_no")
     private Member mentor;
 	
-	
     @OneToMany(mappedBy = "chatRoom", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
-    private List<ChatRoomStatus> chatRoomStatusList = new ArrayList<ChatRoomStatus>();
+    @Builder.Default
+    private List<ChatRoomStatus> chatRoomStatusList = new ArrayList<>();
     
     @OneToMany(mappedBy = "chatRoom", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
-    private List<Review> reviews = new ArrayList<Review>();
+    @Builder.Default
+    private List<Review> reviews = new ArrayList<>();
     
     @OneToMany(mappedBy = "chatRoom", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
     @OrderBy("chatMessageNo ASC")
-    private List<ChatMessage> chatMessages= new ArrayList<ChatMessage>();
+    @Builder.Default
+    private List<ChatMessage> chatMessages = new ArrayList<>();
 	
     public static ChatRoom toEntity(ChatRoomDto mentoringRequestDto) {
         return ChatRoom.builder()
@@ -77,3 +80,4 @@ public class ChatRoom {
                 .build();
     }
 }
+	

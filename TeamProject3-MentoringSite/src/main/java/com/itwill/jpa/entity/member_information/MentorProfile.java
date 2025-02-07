@@ -43,6 +43,7 @@ public class MentorProfile {
     private Category category;
 
     @OneToMany(mappedBy = "mentorProfile", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
+    @Builder.Default
     private List<Career> careers = new ArrayList<>();
 
     @Column(name="mentor_introduce")
