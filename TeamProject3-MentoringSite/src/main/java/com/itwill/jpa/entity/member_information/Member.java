@@ -61,7 +61,7 @@ public class Member {
 
     @Column(name = "member_password")
     @Size(min = 8, message = "비밀번호는 최소 8자 이상이어야 합니다.")
-    @Pattern(regexp = "^(?=.*[a-zA-Z])(?=.*\d)(?=.*[@$!%*?&]).*$", message = "비밀번호는 대문자, 소문자, 숫자, 특수문자 중 두 가지 이상을 포함해야 합니다.")
+    @Pattern(regexp = "^(?=.*[a-zA-Z])(?=.*\\d)(?=.*[@$!%*?&]).*$", message = "비밀번호는 대문자, 소문자, 숫자, 특수문자 중 두 가지 이상을 포함해야 합니다.")
     private String memberPassword;
 
     @Column(name = "member_email")
@@ -141,7 +141,7 @@ public class Member {
 
     @OneToMany(mappedBy = "member", fetch = FetchType.LAZY)
     @Builder.Default
-    private List<Inquiry> Inquirys = new ArrayList<>();
+    private List<Inquiry> inquiries = new ArrayList<>();
 
     @OneToMany(mappedBy = "member", fetch = FetchType.LAZY)
     @Builder.Default
