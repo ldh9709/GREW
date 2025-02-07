@@ -167,4 +167,19 @@ public class Member {
                 .memberProvider(memberDto.getMemberProvider())
                 .build();
     }
+    
+	//흥미 추가
+	public void addInterests(Interest interest) {
+		interests.add(interest);
+		interest.setMember(this);
+		System.out.println(">>>>>>>>>>addInterests : " + interest);
+	}
+	
+	//비밀번호 변경
+	public void changePassword(String newPassword) {
+		System.out.println("this.memberPassword(1) : "+ this.memberPassword);
+		this.memberPassword = newPassword;
+		System.out.println("this.memberPassword(2) : "+ this.memberPassword);
+		System.out.println("newPassword : "+ newPassword);
+	}
 }
