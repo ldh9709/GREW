@@ -64,6 +64,8 @@ dependencies {
     //implementation 'org.springframework.boot:spring-boot-starter-messaging'
     //implementation 'org.springframework.messaging:spring-messaging'
 	
+	/* net.bytebuddy 관련 패키지 */
+	implementation 'net.bytebuddy:byte-buddy:1.12.18'
 }
 tasks.named('test') {
 	useJUnitPlatform()
