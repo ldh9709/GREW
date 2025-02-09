@@ -14,6 +14,7 @@ const MemberLoginFormPage = () => {
     memberId: "",
     memberPassword: "",
   });
+  const BACKEND_SERVER = "http://localhost:8080";
 
   const handleChangeLoginForm = (e) => {
     setMember({ ...member, [e.target.name]: e.target.value });
@@ -71,13 +72,13 @@ const MemberLoginFormPage = () => {
         </Link>
         <h3 className="member-login-sub-title">- SNS 간편 로그인 -</h3>
         <div className="member-sns-login-group">
-            <Link to="http://localhost:8080/oauth2/authorization/google">
+        <Link to={`${BACKEND_SERVER}/oauth2/authorization/google`}>
                 <img src={google} alt="Google" className="member-sns-icon" />
             </Link>
-            <Link to="http://localhost:8080/oauth2/authorization/naver">
+            <Link to={`${BACKEND_SERVER}/oauth2/authorization/naver`}>
                 <img src={naver} alt="Naver" className="member-sns-icon" />
             </Link>
-            <Link to="http://localhost:8080/oauth2/authorization/kakao">
+            <Link to={`${BACKEND_SERVER}/oauth2/authorization/kakao`}>
                 <img src={kakao} alt="Kakao" className="member-sns-icon" />
             </Link>
           </div>
