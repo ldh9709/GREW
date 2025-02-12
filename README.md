@@ -22,7 +22,7 @@
 ## 🧑🏻‍💻 Team Member
 <div align=center>
   
-|![avatar1]([https://github.com/user-attachments/assets/b14f398c-e209-443b-b597-d94fe75fbdd5](https://github.com/user-attachments/assets/866d0fed-c2a9-49d8-a773-7ec2a1f73ca9))|![avatar2](https://github.com/user-attachments/assets/d6d41412-eeab-497f-af0a-b6a0ae7b0b88)|![avatar3](https://github.com/user-attachments/assets/0ee8d9a1-c25b-4bb8-a8e7-e56a059c92a8)|![avatar4](https://github.com/user-attachments/assets/71ecf5e9-e5c4-4d20-82f1-a74770c59e38)|
+|![avatar1](https://github.com/user-attachments/assets/e455a119-73b7-4414-b63b-6efac5e7db96)|![avatar2](https://github.com/user-attachments/assets/d6d41412-eeab-497f-af0a-b6a0ae7b0b88)|![avatar3](https://github.com/user-attachments/assets/0ee8d9a1-c25b-4bb8-a8e7-e56a059c92a8)|![avatar4](https://github.com/user-attachments/assets/71ecf5e9-e5c4-4d20-82f1-a74770c59e38)|
 |:---:|:---:|:---:|:---:|
 | **나문정** <br> BE/FE 1팀장 <br> [@나문정](https://github.com/imun46)| **김진영** <br> BE/FE 2팀장 <br> [@김진영](https://github.com/Gosem7)| **김찬영** <br> BE/FE <br> [@김찬영](https://github.com/kctml2935)| **문준형** <br> BE/FE <br> [@문준형](https://github.com/Cloudorair)|
 | - 팔로우, 신고 <br> - 어드민 <br> - 총괄 | - 웹소켓 <br> - 채팅 <br> - 총괄 | - 리뷰 <br> - 채팅 이미지 <br> - 웹소켓 | - 멘토 프로필 <br> - 멘토 컨텐츠 <br> - 이미지 업로드 |
@@ -63,5 +63,4 @@
 <br/>
 🔗 [ERD 및 아키텍쳐](https://gleaming-random-882.notion.site/ERD-174697bf650d8058b37bdc1006687290)
 <br/>
-
 
