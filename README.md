@@ -1,7 +1,6 @@
 <div align=center>
 <img src="https://github.com/user-attachments/assets/7734c451-ade9-40b2-b575-19779300498a" width="400"/>
 
-
 # 멘토링을 통한 개인의 성장과 발전! 멘토·멘티 매칭 플랫폼, GREW
 
 **한 그루의 나무**처럼 깊은 뿌리를 내리고 단단하게 성장하는 과정을 나타낸다는 뜻의 GREW는  
@@ -23,7 +22,7 @@
 ## 🧑🏻‍💻 Team Member
 <div align=center>
   
-|![avatar1](https://github.com/user-attachments/assets/c3f80874-ae53-4c6c-ba25-e1b90b77d3bc)|![avatar2](https://github.com/user-attachments/assets/eae62a00-6bc1-4315-b780-822fb576bd5c)|![avatar3](https://github.com/user-attachments/assets/15ccede9-c932-477b-9a3a-be5bc5e96987)|![avatar4](https://github.com/user-attachments/assets/227dd03d-92a0-41d8-bfae-7c416469b9fa)|
+|![avatar1](https://github.com/user-attachments/assets/b14f398c-e209-443b-b597-d94fe75fbdd5)|![avatar2](https://github.com/user-attachments/assets/eae62a00-6bc1-4315-b780-822fb576bd5c)|![avatar3](https://github.com/user-attachments/assets/15ccede9-c932-477b-9a3a-be5bc5e96987)|![avatar4](https://github.com/user-attachments/assets/227dd03d-92a0-41d8-bfae-7c416469b9fa)|
 |:---:|:---:|:---:|:---:|
 | **나문정** <br> BE/FE 1팀장 <br> [@나문정](https://github.com/imun46)| **김진영** <br> BE/FE 2팀장 <br> [@김진영](https://github.com/Gosem7)| **김찬영** <br> BE/FE <br> [@김찬영](https://github.com/kctml2935)| **문준형** <br> BE/FE <br> [@문준형](https://github.com/Cloudorair)|
 | - 팔로우, 신고 <br> - 어드민 <br> - 총괄 | - 웹소켓 <br> - 채팅 <br> - 총괄 | - 리뷰 <br> - 채팅 이미지 <br> - 웹소켓 | - 멘토 프로필 <br> - 멘토 컨텐츠 <br> - 이미지 업로드 |
